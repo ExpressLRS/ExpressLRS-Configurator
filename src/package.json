@@ -1,0 +1,17 @@
+{
+  "name": "expresslrs-configurator",
+  "productName": "ExpressLRS Configurator",
+  "version": "0.1.0",
+  "description": "Cross platform configuration tool for the ExpressLRS firmware",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "ExpressLRS Configurator",
+    "url": "https://github.com/expresslrs-configurator"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
+    "postinstall": "yarn electron-rebuild"
+  },
+  "license": "GPL-3.0-or-later",
+  "dependencies": {}
+}
