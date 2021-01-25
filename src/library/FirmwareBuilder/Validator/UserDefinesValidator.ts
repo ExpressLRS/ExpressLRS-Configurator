@@ -1,5 +1,5 @@
-import {UserDefine} from '../Model/UserDefine';
-import {UserDefineKey} from '../Enum/UserDefineKey';
+import { UserDefine } from '../Model/UserDefine';
+import { UserDefineKey } from '../Enum/UserDefineKey';
 
 export default class UserDefinesValidator {
   validateRegulatoryDomains(data: UserDefine[]): Error[] {
@@ -14,12 +14,18 @@ export default class UserDefinesValidator {
       UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
     ];
 
-    const regulatoryDefines = data.filter(({key}) => regulatoryDomainKeys.includes(key));
+    const regulatoryDefines = data.filter(({ key }) =>
+      regulatoryDomainKeys.includes(key)
+    );
     if (regulatoryDefines.length === 0) {
-      results.push(new Error('You must choose a regulatory domain for your device'));
+      results.push(
+        new Error('You must choose a regulatory domain for your device')
+      );
     }
     if (regulatoryDefines.length > 1) {
-      results.push(new Error('You must choose single regulatory domain for your device'));
+      results.push(
+        new Error('You must choose single regulatory domain for your device')
+      );
     }
 
     return results;
@@ -28,14 +34,18 @@ export default class UserDefinesValidator {
   validateBindingPhrase(data: UserDefine[]): Error[] {
     const results: Error[] = [];
 
-    const option = data.find(({key}) => (key === UserDefineKey.BINDING_PHRASE));
+    const option = data.find(({ key }) => key === UserDefineKey.BINDING_PHRASE);
 
     if (option && option.value && option.value.length === 0) {
-      results.push(new Error('Custom binding phrase selected, but not entered'));
+      results.push(
+        new Error('Custom binding phrase selected, but not entered')
+      );
     }
 
     if (option && option.value && option.value.length < 10) {
-      results.push(new Error('Custom binding phrase is shorter than 10 characters'));
+      results.push(
+        new Error('Custom binding phrase is shorter than 10 characters')
+      );
     }
 
     return results;
@@ -44,10 +54,14 @@ export default class UserDefinesValidator {
   validateStartupMelody(data: UserDefine[]): Error[] {
     const results: Error[] = [];
 
-    const option = data.find(({key}) => (key === UserDefineKey.MY_STARTUP_MELODY));
+    const option = data.find(
+      ({ key }) => key === UserDefineKey.MY_STARTUP_MELODY
+    );
 
     if (option && option.value && option.value.length === 0) {
-      results.push(new Error('Custom startup melody selected, but not entered'));
+      results.push(
+        new Error('Custom startup melody selected, but not entered')
+      );
     }
 
     return results;
@@ -56,7 +70,7 @@ export default class UserDefinesValidator {
   validateArmChannel(data: UserDefine[]): Error[] {
     const results: Error[] = [];
 
-    const option = data.find(({key}) => (key === UserDefineKey.ARM_CHANNEL));
+    const option = data.find(({ key }) => key === UserDefineKey.ARM_CHANNEL);
 
     if (option && option.value && option.value.length === 0) {
       results.push(new Error('Arm channel selected, but not entered'));

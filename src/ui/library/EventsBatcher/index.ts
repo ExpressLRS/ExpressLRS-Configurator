@@ -1,8 +1,12 @@
 export default class EventsBatcher<T> {
   buffer: T[];
+
   updateEveryMs: number;
+
   lastUpdate: number;
+
   timeout: ReturnType<typeof setTimeout> | null;
+
   subscribers: ((calls: T[]) => void)[];
 
   constructor(batchDuration: number) {

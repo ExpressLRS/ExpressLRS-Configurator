@@ -29,3 +29,5 @@ export enum UserDefineKey {
   JUST_BEEP_ONCE = 'DJUST_BEEP_ONCE',
   MY_STARTUP_MELODY = 'DMY_STARTUP_MELODY',
 }
+
+export default UserDefineKey;

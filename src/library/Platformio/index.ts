@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable no-await-in-loop */
 import fs from 'fs';
 import path from 'path';
 import child_process from 'child_process';
-import Commander, {CommandResult, NoOpFunc, OnOutputFunc} from '../Commander';
+import Commander, { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 
 interface PlatformioCoreState {
   core_version: string;
@@ -30,25 +32,38 @@ export default class Platformio {
       throw new Error('python executable not found');
     }
     const getPlatformioPath = path.join(__dirname, './get-platformio.py');
-    return new Commander().runCommand(pyExec, [getPlatformioPath], {
-      env: this.env,
-    }, onUpdate);
+    return new Commander().runCommand(
+      pyExec,
+      [getPlatformioPath],
+      {
+        env: this.env,
+      },
+      onUpdate
+    );
   }
 
   async checkCore(): Promise<CommandResult> {
     const pyExec = await this.findPythonExecutable(this.env?.PATH!);
     const getPlatformioPath = path.join(__dirname, './get-platformio.py');
-    return new Commander().runCommand(pyExec, [getPlatformioPath, 'check', 'core'], {
-      env: this.env,
-    });
+    return new Commander().runCommand(
+      pyExec,
+      [getPlatformioPath, 'check', 'core'],
+      {
+        env: this.env,
+      }
+    );
   }
 
   async checkPython(): Promise<CommandResult> {
     const pyExec = await this.findPythonExecutable(this.env?.PATH!);
     const getPlatformioPath = path.join(__dirname, './get-platformio.py');
-    return new Commander().runCommand(pyExec, [getPlatformioPath, 'check', 'python'], {
-      env: this.env,
-    });
+    return new Commander().runCommand(
+      pyExec,
+      [getPlatformioPath, 'check', 'python'],
+      {
+        env: this.env,
+      }
+    );
   }
 
   async verifyDependencies(): Promise<boolean> {
@@ -59,19 +74,28 @@ export default class Platformio {
 
   async findPythonExecutable(envPath: string): Promise<string> {
     const IS_WINDOWS = process.platform.startsWith('win');
-    const exenames = IS_WINDOWS ? ['python.exe'] : ['python3', 'python', 'python2'];
+    const exenames = IS_WINDOWS
+      ? ['python.exe']
+      : ['python3', 'python', 'python2'];
     const pythonAssertCode = [
       'import sys',
       'assert sys.version_info >= (2, 7)',
       'print(sys.executable)',
     ];
+    // eslint-disable-next-line no-restricted-syntax
     for (const location of envPath.split(path.delimiter)) {
+      // eslint-disable-next-line no-restricted-syntax
       for (const exename of exenames) {
-        const executable = path.normalize(path.join(location, exename)).replace(/"/g, '');
+        const executable = path
+          .normalize(path.join(location, exename))
+          .replace(/"/g, '');
         try {
           if (
             fs.existsSync(executable) &&
-            (await new Commander().runCommand(executable, ['-c', pythonAssertCode.join(';')]))
+            (await new Commander().runCommand(executable, [
+              '-c',
+              pythonAssertCode.join(';'),
+            ]))
           ) {
             return executable;
           }
@@ -90,7 +114,13 @@ export default class Platformio {
     );
     const pyExec = await this.findPythonExecutable(this.env?.PATH!);
     const getPlatformioPath = path.join(__dirname, './get-platformio.py');
-    const cmdArgs = [getPlatformioPath, 'check', 'core', '--dump-state', statePath];
+    const cmdArgs = [
+      getPlatformioPath,
+      'check',
+      'core',
+      '--dump-state',
+      statePath,
+    ];
     const result = await new Commander().runCommand(pyExec, cmdArgs, {
       env: this.env,
     });
@@ -120,23 +150,56 @@ export default class Platformio {
     return state.python_exe;
   }
 
-  async runPIOCommand(args: string[], options: child_process.SpawnOptions, onOutput: OnOutputFunc = NoOpFunc) {
+  async runPIOCommand(
+    args: string[],
+    options: child_process.SpawnOptions,
+    onOutput: OnOutputFunc = NoOpFunc
+  ) {
     console.log('pio cmd', args);
     const pyExec = await this.getCorePythonExe();
     console.log('py exec path', pyExec);
     const baseArgs = ['-m', 'platformio'];
-    return new Commander().runCommand(pyExec, [...baseArgs, ...args], options, onOutput);
+    return new Commander().runCommand(
+      pyExec,
+      [...baseArgs, ...args],
+      options,
+      onOutput
+    );
   }
 
-  async build(projectDir: string, environment: string, onUpdate: OnOutputFunc = NoOpFunc) {
-    return this.runPIOCommand(["run", "--project-dir", projectDir, "--environment", environment], {
-      env: this.env,
-    }, onUpdate);
+  async build(
+    projectDir: string,
+    environment: string,
+    onUpdate: OnOutputFunc = NoOpFunc
+  ) {
+    return this.runPIOCommand(
+      ['run', '--project-dir', projectDir, '--environment', environment],
+      {
+        env: this.env,
+      },
+      onUpdate
+    );
   }
 
-  async flash(projectDir: string, environment: string, onUpdate: OnOutputFunc = NoOpFunc) {
-    return this.runPIOCommand(["run", "--project-dir", projectDir, "--environment", environment, "--target", "upload"], {
-      env: this.env,
-    }, onUpdate);
+  async flash(
+    projectDir: string,
+    environment: string,
+    onUpdate: OnOutputFunc = NoOpFunc
+  ) {
+    return this.runPIOCommand(
+      [
+        'run',
+        '--project-dir',
+        projectDir,
+        '--environment',
+        environment,
+        '--target',
+        'upload',
+      ],
+      {
+        env: this.env,
+      },
+      onUpdate
+    );
   }
 }

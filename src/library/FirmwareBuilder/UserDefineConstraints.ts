@@ -1,6 +1,7 @@
-import {UserDefineCategory} from './Enum/UserDefineCategory';
-import {UserDefineKey} from './Enum/UserDefineKey';
-import {DeviceTarget} from './Enum/DeviceTarget';
+/* eslint-disable @typescript-eslint/naming-convention */
+import { UserDefineCategory } from './Enum/UserDefineCategory';
+import { UserDefineKey } from './Enum/UserDefineKey';
+import { DeviceTarget } from './Enum/DeviceTarget';
 
 export type UserDefinesByCategory = {
   [key in UserDefineCategory]: UserDefineKey[];
@@ -18,14 +19,10 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_AU_915,
         UserDefineKey.REGULATORY_DOMAIN_EU_868,
-        UserDefineKey.REGULATORY_DOMAIN_FCC_915
+        UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.NO_SYNC_ON_ARM,
         UserDefineKey.ARM_CHANNEL,
@@ -49,14 +46,10 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_AU_915,
         UserDefineKey.REGULATORY_DOMAIN_EU_868,
-        UserDefineKey.REGULATORY_DOMAIN_FCC_915
+        UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.NO_SYNC_ON_ARM,
         UserDefineKey.ARM_CHANNEL,
@@ -78,14 +71,10 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_AU_915,
         UserDefineKey.REGULATORY_DOMAIN_EU_868,
-        UserDefineKey.REGULATORY_DOMAIN_FCC_915
+        UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.NO_SYNC_ON_ARM,
         UserDefineKey.ARM_CHANNEL,
@@ -107,102 +96,74 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_AU_915,
         UserDefineKey.REGULATORY_DOMAIN_EU_868,
-        UserDefineKey.REGULATORY_DOMAIN_FCC_915
+        UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.FAST_SYNC,
         UserDefineKey.LOCK_ON_FIRST_CONNECTION,
         UserDefineKey.LOCK_ON_50HZ,
       ],
-      [UserDefineCategory.CompatibilityOptions]: [
-        UserDefineKey.UART_INVERTED,
-      ],
+      [UserDefineCategory.CompatibilityOptions]: [UserDefineKey.UART_INVERTED],
       [UserDefineCategory.OtherOptions]: [],
     };
     const Frsky_RX_R9SLIMPLUS = {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_AU_915,
         UserDefineKey.REGULATORY_DOMAIN_EU_868,
-        UserDefineKey.REGULATORY_DOMAIN_FCC_915
+        UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.FAST_SYNC,
         UserDefineKey.LOCK_ON_FIRST_CONNECTION,
         UserDefineKey.LOCK_ON_50HZ,
       ],
-      [UserDefineCategory.CompatibilityOptions]: [
-        UserDefineKey.UART_INVERTED,
-      ],
+      [UserDefineCategory.CompatibilityOptions]: [UserDefineKey.UART_INVERTED],
       [UserDefineCategory.OtherOptions]: [],
     };
     const Frsky_RX_R9MX = {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_AU_915,
         UserDefineKey.REGULATORY_DOMAIN_EU_868,
-        UserDefineKey.REGULATORY_DOMAIN_FCC_915
+        UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.FAST_SYNC,
         UserDefineKey.LOCK_ON_FIRST_CONNECTION,
         UserDefineKey.LOCK_ON_50HZ,
       ],
-      [UserDefineCategory.CompatibilityOptions]: [
-        UserDefineKey.UART_INVERTED,
-      ],
+      [UserDefineCategory.CompatibilityOptions]: [UserDefineKey.UART_INVERTED],
       [UserDefineCategory.OtherOptions]: [],
     };
     const Jumper_RX_R900MINI = {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_AU_915,
         UserDefineKey.REGULATORY_DOMAIN_EU_868,
-        UserDefineKey.REGULATORY_DOMAIN_FCC_915
+        UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.FAST_SYNC,
         UserDefineKey.LOCK_ON_FIRST_CONNECTION,
         UserDefineKey.LOCK_ON_50HZ,
       ],
-      [UserDefineCategory.CompatibilityOptions]: [
-        UserDefineKey.UART_INVERTED,
-      ],
+      [UserDefineCategory.CompatibilityOptions]: [UserDefineKey.UART_INVERTED],
       [UserDefineCategory.OtherOptions]: [],
     };
     const DIY_900_TX_TTGO_V1_SX127x = {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_AU_915,
         UserDefineKey.REGULATORY_DOMAIN_EU_868,
-        UserDefineKey.REGULATORY_DOMAIN_FCC_915
+        UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.NO_SYNC_ON_ARM,
         UserDefineKey.ARM_CHANNEL,
@@ -218,14 +179,10 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_AU_915,
         UserDefineKey.REGULATORY_DOMAIN_EU_868,
-        UserDefineKey.REGULATORY_DOMAIN_FCC_915
+        UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.NO_SYNC_ON_ARM,
         UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE,
@@ -241,14 +198,10 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_AU_915,
         UserDefineKey.REGULATORY_DOMAIN_EU_868,
-        UserDefineKey.REGULATORY_DOMAIN_FCC_915
+        UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.NO_SYNC_ON_ARM,
         UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE,
@@ -264,14 +217,10 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_AU_915,
         UserDefineKey.REGULATORY_DOMAIN_EU_868,
-        UserDefineKey.REGULATORY_DOMAIN_FCC_915
+        UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.NO_SYNC_ON_ARM,
         UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE,
@@ -287,14 +236,10 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_AU_915,
         UserDefineKey.REGULATORY_DOMAIN_EU_868,
-        UserDefineKey.REGULATORY_DOMAIN_FCC_915
+        UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.FAST_SYNC,
         UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE,
@@ -310,12 +255,8 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.NO_SYNC_ON_ARM,
         UserDefineKey.ARM_CHANNEL,
@@ -324,9 +265,7 @@ export default class UserDefineConstraints {
         UserDefineKey.LOCK_ON_FIRST_CONNECTION,
         UserDefineKey.LOCK_ON_50HZ,
       ],
-      [UserDefineCategory.CompatibilityOptions]: [
-        UserDefineKey.UART_INVERTED,
-      ],
+      [UserDefineCategory.CompatibilityOptions]: [UserDefineKey.UART_INVERTED],
       [UserDefineCategory.OtherOptions]: [
         UserDefineKey.AUTO_WIFI_ON_BOOT,
         UserDefineKey.JUST_BEEP_ONCE,
@@ -337,12 +276,8 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.NO_SYNC_ON_ARM,
         UserDefineKey.ARM_CHANNEL,
@@ -351,9 +286,7 @@ export default class UserDefineConstraints {
         UserDefineKey.LOCK_ON_FIRST_CONNECTION,
         UserDefineKey.LOCK_ON_50HZ,
       ],
-      [UserDefineCategory.CompatibilityOptions]: [
-        UserDefineKey.UART_INVERTED,
-      ],
+      [UserDefineCategory.CompatibilityOptions]: [UserDefineKey.UART_INVERTED],
       [UserDefineCategory.OtherOptions]: [
         UserDefineKey.AUTO_WIFI_ON_BOOT,
         UserDefineKey.JUST_BEEP_ONCE,
@@ -364,12 +297,8 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.NO_SYNC_ON_ARM,
         UserDefineKey.ARM_CHANNEL,
@@ -378,9 +307,7 @@ export default class UserDefineConstraints {
         UserDefineKey.LOCK_ON_FIRST_CONNECTION,
         UserDefineKey.LOCK_ON_50HZ,
       ],
-      [UserDefineCategory.CompatibilityOptions]: [
-        UserDefineKey.UART_INVERTED,
-      ],
+      [UserDefineCategory.CompatibilityOptions]: [UserDefineKey.UART_INVERTED],
       [UserDefineCategory.OtherOptions]: [
         UserDefineKey.AUTO_WIFI_ON_BOOT,
         UserDefineKey.JUST_BEEP_ONCE,
@@ -392,20 +319,14 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.FAST_SYNC,
         UserDefineKey.LOCK_ON_FIRST_CONNECTION,
         UserDefineKey.LOCK_ON_50HZ,
       ],
-      [UserDefineCategory.CompatibilityOptions]: [
-        UserDefineKey.UART_INVERTED,
-      ],
+      [UserDefineCategory.CompatibilityOptions]: [UserDefineKey.UART_INVERTED],
       [UserDefineCategory.OtherOptions]: [
         UserDefineKey.AUTO_WIFI_ON_BOOT,
         UserDefineKey.JUST_BEEP_ONCE,
@@ -416,20 +337,14 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.FAST_SYNC,
         UserDefineKey.LOCK_ON_FIRST_CONNECTION,
         UserDefineKey.LOCK_ON_50HZ,
       ],
-      [UserDefineCategory.CompatibilityOptions]: [
-        UserDefineKey.UART_INVERTED,
-      ],
+      [UserDefineCategory.CompatibilityOptions]: [UserDefineKey.UART_INVERTED],
       [UserDefineCategory.OtherOptions]: [
         UserDefineKey.AUTO_WIFI_ON_BOOT,
         UserDefineKey.JUST_BEEP_ONCE,
@@ -440,20 +355,14 @@ export default class UserDefineConstraints {
       [UserDefineCategory.RegulatoryDomains]: [
         UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
       ],
-      [UserDefineCategory.BindingPhrase]: [
-        UserDefineKey.BINDING_PHRASE,
-      ],
-      [UserDefineCategory.HybridSwitches]: [
-        UserDefineKey.HYBRID_SWITCHES_8,
-      ],
+      [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+      [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
       [UserDefineCategory.PerformanceOptions]: [
         UserDefineKey.FAST_SYNC,
         UserDefineKey.LOCK_ON_FIRST_CONNECTION,
         UserDefineKey.LOCK_ON_50HZ,
       ],
-      [UserDefineCategory.CompatibilityOptions]: [
-        UserDefineKey.UART_INVERTED,
-      ],
+      [UserDefineCategory.CompatibilityOptions]: [UserDefineKey.UART_INVERTED],
       [UserDefineCategory.OtherOptions]: [
         UserDefineKey.AUTO_WIFI_ON_BOOT,
         UserDefineKey.JUST_BEEP_ONCE,

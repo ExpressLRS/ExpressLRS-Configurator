@@ -1,19 +1,21 @@
+import { IpcMainEvent } from 'electron';
 import Mutex from '../../../library/Mutex';
-import {MainResponseType} from '../../../ipc';
-import {findGitExecutable} from '../../../library/FirmwareDownloader';
+import { MainResponseType } from '../../../ipc';
+import { findGitExecutable } from '../../../library/FirmwareDownloader';
 import Platformio from '../../../library/Platformio';
-import {IpcMainEvent} from 'electron';
 
 export enum ConfiguratorDependency {
   Git = 'git',
   Python = 'python',
+  // TODO: eslint bug
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   Platformio = 'platformio',
 }
 
 export interface CheckDependenciesResponseBody {
   success: boolean;
   message?: string;
-  presentDependencies: ConfiguratorDependency[]
+  presentDependencies: ConfiguratorDependency[];
   missingDependencies: ConfiguratorDependency[];
 }
 
@@ -24,10 +26,12 @@ interface CheckDependenciesHandlerProps {
 
 export default class CheckDependenciesHandler {
   private mutex: Mutex;
+
   private PATH: string;
+
   private platformio: Platformio;
 
-  constructor({platformio, PATH}: CheckDependenciesHandlerProps) {
+  constructor({ platformio, PATH }: CheckDependenciesHandlerProps) {
     this.mutex = new Mutex();
     this.PATH = PATH;
     this.platformio = platformio;
@@ -78,7 +82,7 @@ export default class CheckDependenciesHandler {
         missingDependencies: [],
         message: `Failed to check dependencies: ${e}`,
         success: false,
-      })
+      });
     }
   }
 }

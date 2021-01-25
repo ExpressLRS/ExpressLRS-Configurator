@@ -1,11 +1,9 @@
-import {
-  makeStyles,
-} from '@material-ui/core';
-import React, {FunctionComponent, useState} from 'react';
-import Omnibox, {Option} from '../Omnibox';
-import {DeviceTarget} from '../../../library/FirmwareBuilder/Enum/DeviceTarget';
+import { makeStyles } from '@material-ui/core';
+import React, { FunctionComponent, useState } from 'react';
+import Omnibox, { Option } from '../Omnibox';
+import { DeviceTarget } from '../../../library/FirmwareBuilder/Enum/DeviceTarget';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
@@ -17,21 +15,24 @@ interface FirmwareVersionCardProps {
   onChange: (data: DeviceTarget) => void;
 }
 
-export const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (props) => {
-  const {
-    onChange,
-    currentTarget,
-  } = props;
+const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
+  props
+) => {
+  const { onChange, currentTarget } = props;
   const styles = useStyles();
   const options: Option[] = Object.keys(DeviceTarget).map((target) => ({
     label: target,
     value: target,
   }));
 
-  const [currentValue, setCurrentValue] = useState<Option | null>(currentTarget ? {
-    label: currentTarget,
-    value: currentTarget,
-  } : null);
+  const [currentValue, setCurrentValue] = useState<Option | null>(
+    currentTarget
+      ? {
+          label: currentTarget,
+          value: currentTarget,
+        }
+      : null
+  );
   const onDeviceChange = (value: string | null) => {
     if (value === null) {
       setCurrentValue(null);
@@ -45,7 +46,12 @@ export const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (pr
   };
   return (
     <div className={styles.root}>
-      <Omnibox title="Device target" currentValue={currentValue} onChange={onDeviceChange} options={options}/>
+      <Omnibox
+        title="Device target"
+        currentValue={currentValue}
+        onChange={onDeviceChange}
+        options={options}
+      />
     </div>
   );
 };

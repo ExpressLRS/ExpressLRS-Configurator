@@ -1,4 +1,4 @@
-import {UserDefineKey} from '../Enum/UserDefineKey';
+import { UserDefineKey } from '../Enum/UserDefineKey';
 
 export interface UserDefine {
   key: UserDefineKey;

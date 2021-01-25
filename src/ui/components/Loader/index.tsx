@@ -1,5 +1,5 @@
-import {CircularProgress, makeStyles} from '@material-ui/core';
-import React, {FunctionComponent} from 'react';
+import { CircularProgress, makeStyles } from '@material-ui/core';
+import React, { FunctionComponent } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,13 +13,17 @@ interface LoaderProps {
   loading: boolean;
 }
 
-export const Loader: FunctionComponent<LoaderProps> = ({loading}) => {
+const Loader: FunctionComponent<LoaderProps> = ({ loading }) => {
   const styles = useStyles();
   return (
     <>
-      {loading && <div className={styles.root}>
-        <CircularProgress/>
-      </div>}
+      {loading && (
+        <div className={styles.root}>
+          <CircularProgress />
+        </div>
+      )}
     </>
   );
 };
+
+export default Loader;

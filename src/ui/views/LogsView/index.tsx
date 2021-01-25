@@ -1,8 +1,15 @@
-import {Card, CardContent, Container, Divider, makeStyles, Typography} from '@material-ui/core';
-import React, {FunctionComponent} from 'react';
+import {
+  Card,
+  CardContent,
+  Container,
+  Divider,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
+import React, { FunctionComponent } from 'react';
+import ListIcon from '@material-ui/icons/List';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
-import ListIcon from '@material-ui/icons/List';
 import CardTitle from '../../components/CardTitle';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,18 +25,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const LogsView: FunctionComponent = () => {
+const LogsView: FunctionComponent = () => {
   const styles = useStyles();
-
   return (
     <main className={styles.root}>
-      <Sidebar/>
+      <Sidebar />
       <div className={styles.content}>
-        <Header/>
+        <Header />
         <Container className={styles.main}>
           <Card>
-            <CardTitle icon={<ListIcon/>} title="Logs"/>
-            <Divider/>
+            <CardTitle icon={<ListIcon />} title="Logs" />
+            <Divider />
             <CardContent>
               <Typography variant="h6">Todo:</Typography>
               <ul>

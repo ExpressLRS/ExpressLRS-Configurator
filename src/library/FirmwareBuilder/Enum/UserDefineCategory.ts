@@ -6,3 +6,5 @@ export enum UserDefineCategory {
   CompatibilityOptions = 'COMPATIBILITY_OPTIONS',
   OtherOptions = 'OTHER_OPTIONS',
 }
+
+export default UserDefineCategory;

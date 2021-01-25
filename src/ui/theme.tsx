@@ -1,10 +1,6 @@
-import {
-  createMuiTheme,
-  ThemeOptions,
-  Theme,
-} from "@material-ui/core"
+import { createMuiTheme, ThemeOptions, Theme } from '@material-ui/core';
 
-export const defaultTheme: Theme = createMuiTheme()
+export const defaultTheme: Theme = createMuiTheme();
 
 export const themeConfig: ThemeOptions = {
   // shadows: Array(25).fill('none') as Shadows,
@@ -14,10 +10,10 @@ export const themeConfig: ThemeOptions = {
   palette: {
     mode: 'dark',
     primary: {
-      main: "#90caf9",
+      main: '#90caf9',
     },
     secondary: {
-      main: "#f48fb1",
+      main: '#f48fb1',
     },
   },
   components: {
@@ -49,7 +45,7 @@ export const themeConfig: ThemeOptions = {
           '&$selected': {
             backgroundColor: 'rgba(144, 202, 249, 0.40)',
           },
-        }
+        },
       },
     },
     MuiAutocomplete: {
@@ -63,6 +59,6 @@ export const themeConfig: ThemeOptions = {
       },
     },
   },
-}
+};
 
-export default createMuiTheme(themeConfig)
+export default createMuiTheme(themeConfig);

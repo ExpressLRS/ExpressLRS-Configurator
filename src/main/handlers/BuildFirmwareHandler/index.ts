@@ -1,18 +1,18 @@
-import {app, IpcMainEvent, shell} from 'electron';
-import Mutex from '../../../library/Mutex';
-import {
-  MainResponseType,
-  PushMessageType,
-} from '../../../ipc';
-import Platformio from '../../../library/Platformio';
-import {findGitExecutable, GitFirmwareDownloader} from '../../../library/FirmwareDownloader';
+import { app, IpcMainEvent, shell } from 'electron';
 import path from 'path';
 import mkdirp from 'mkdirp';
-import {Config} from '../../../config';
+import Mutex from '../../../library/Mutex';
+import { MainResponseType, PushMessageType } from '../../../ipc';
+import Platformio from '../../../library/Platformio';
+import {
+  findGitExecutable,
+  GitFirmwareDownloader,
+} from '../../../library/FirmwareDownloader';
+import { Config } from '../../../config';
 import UserDefinesTxtBuilder from '../../../library/FirmwareBuilder/UserDefinesTxtBuilder';
 import FirmwareBuilder from '../../../library/FirmwareBuilder';
-import {DeviceTarget} from '../../../library/FirmwareBuilder/Enum/DeviceTarget';
-import {UserDefine} from '../../../library/FirmwareBuilder/Model/UserDefine';
+import { DeviceTarget } from '../../../library/FirmwareBuilder/Enum/DeviceTarget';
+import { UserDefine } from '../../../library/FirmwareBuilder/Model/UserDefine';
 
 export enum BuildFirmWareProgressNotificationType {
   Success = 'SUCCESS',
@@ -83,7 +83,7 @@ export interface BuildFirmWareProgressNotificationData {
 }
 
 export interface BuildFlashFirmwareRequestBody {
-  type: JobType,
+  type: JobType;
   firmware: FirmwareVersionData;
   target: DeviceTarget;
   userDefinesMode: UserDefinesMode;
@@ -93,18 +93,28 @@ export interface BuildFlashFirmwareRequestBody {
 
 export default class BuildFirmwareHandler {
   private mutex: Mutex;
+
   private PATH: string;
+
   private platformio: Platformio;
+
   private builder: FirmwareBuilder;
 
-  constructor({PATH, platformio, firmwareBuilder}: BuildFirmwareHandlerProps) {
+  constructor({
+    PATH,
+    platformio,
+    firmwareBuilder,
+  }: BuildFirmwareHandlerProps) {
     this.mutex = new Mutex();
     this.PATH = PATH;
     this.platformio = platformio;
     this.builder = firmwareBuilder;
   }
 
-  async processRequest(event: IpcMainEvent, req: BuildFlashFirmwareRequestBody) {
+  async processRequest(
+    event: IpcMainEvent,
+    req: BuildFlashFirmwareRequestBody
+  ) {
     if (this.mutex.isLocked()) {
       console.error('there is another build/flash request in progress...');
       return;
@@ -159,7 +169,11 @@ export default class BuildFirmwareHandler {
         });
         return;
       }
-      const firmwaresPath = path.join(app.getPath('userData'), 'firmwares', 'git', 'src');
+      const firmwaresPath = path.join(
+        app.getPath('userData'),
+        'firmwares',
+        'git'
+      );
       await mkdirp(firmwaresPath);
       const firmwareDownload = new GitFirmwareDownloader({
         baseDirectory: firmwaresPath,
@@ -174,20 +188,33 @@ export default class BuildFirmwareHandler {
       let firmwarePath = '';
       switch (req.firmware.source) {
         case FirmwareSource.GitTag:
-          const tagResult = await firmwareDownload.checkoutTag(Config.git.url, req.firmware.gitTag);
+          const tagResult = await firmwareDownload.checkoutTag(
+            Config.git.url,
+            req.firmware.gitTag
+          );
           firmwarePath = tagResult.path;
           break;
         case FirmwareSource.GitBranch:
-          const branchResult = await firmwareDownload.checkoutTag(Config.git.url, req.firmware.gitBranch);
+          const branchResult = await firmwareDownload.checkoutTag(
+            Config.git.url,
+            req.firmware.gitBranch
+          );
           firmwarePath = branchResult.path;
           break;
         case FirmwareSource.GitCommit:
-          const commitResult = await firmwareDownload.checkoutTag(Config.git.url, req.firmware.gitTag);
+          const commitResult = await firmwareDownload.checkoutTag(
+            Config.git.url,
+            req.firmware.gitTag
+          );
           firmwarePath = commitResult.path;
           break;
         case FirmwareSource.Local:
           firmwarePath = req.firmware.localPath;
           break;
+        default:
+          throw new Error(
+            `unsupported firmware source: ${req.firmware.source}`
+          );
       }
 
       updateProgress({
@@ -203,6 +230,11 @@ export default class BuildFirmwareHandler {
           break;
         case UserDefinesMode.UserInterface:
           userDefines = userDefinesBuilder.build(req.userDefines);
+          break;
+        default:
+          throw new Error(
+            `unsupported user defines mode: ${req.userDefinesMode}`
+          );
       }
 
       updateProgress({
@@ -210,7 +242,12 @@ export default class BuildFirmwareHandler {
         type: BuildFirmWareProgressNotificationType.Info,
         step: BuildFirmwareStep.BUILDING_FIRMWARE,
       });
-      const compileResult = await this.builder.build(req.target, userDefines, firmwarePath, sendLogs);
+      const compileResult = await this.builder.build(
+        req.target,
+        userDefines,
+        firmwarePath,
+        sendLogs
+      );
       console.log('compile result', compileResult.success, compileResult.code);
       if (!compileResult.success) {
         sendResponse({
@@ -223,7 +260,9 @@ export default class BuildFirmwareHandler {
 
       if (req.type === JobType.Build && compileResult.success) {
         // TODO: toggle / inject via constructor?
-        shell.showItemInFolder(this.builder.getFirmwareBinPath(req.target, firmwarePath));
+        shell.showItemInFolder(
+          this.builder.getFirmwareBinPath(req.target, firmwarePath)
+        );
       }
 
       if (req.type === JobType.Build) {
@@ -238,7 +277,11 @@ export default class BuildFirmwareHandler {
         type: BuildFirmWareProgressNotificationType.Info,
         step: BuildFirmwareStep.FLASHING_FIRMWARE,
       });
-      const flashResult = await this.builder.flash(req.target, firmwarePath, sendLogs);
+      const flashResult = await this.builder.flash(
+        req.target,
+        firmwarePath,
+        sendLogs
+      );
       if (!flashResult.success) {
         sendResponse({
           success: false,

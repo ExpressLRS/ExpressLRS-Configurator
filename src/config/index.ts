@@ -11,8 +11,11 @@ interface IConfig {
 
 export const Config: IConfig = {
   git: {
+    cloneUrl: 'https://github.com/AlessandroAU/ExpressLRS',
     url: 'https://github.com/AlessandroAU/ExpressLRS',
     owner: 'AlessandroAU',
     repositoryName: 'ExpressLRS',
-  }
+  },
 };
+
+export default Config;

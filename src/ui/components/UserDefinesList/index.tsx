@@ -1,4 +1,5 @@
-import React, {FunctionComponent} from 'react';
+/* eslint-disable react/jsx-no-bind */
+import React, { FunctionComponent } from 'react';
 import {
   Checkbox,
   List,
@@ -8,9 +9,9 @@ import {
   makeStyles,
   TextField,
 } from '@material-ui/core';
-import {UserDefineKey} from '../../../library/FirmwareBuilder/Enum/UserDefineKey';
+import { UserDefineKey } from '../../../library/FirmwareBuilder/Enum/UserDefineKey';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   option: {
     padding: `${theme.spacing(1, 2)} !important`,
   },
@@ -39,27 +40,25 @@ interface UserDefinesListProps {
   onChange: (data: UserDefineOption) => void;
 }
 
-export const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
+const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
   const styles = useStyles();
-  const {
-    options,
-    whitelistKeys,
-    onChange,
-  } = props;
+  const { options, whitelistKeys, onChange } = props;
   const onChecked = (data: UserDefineKey) => {
-    const opt = options.find(({key}) => key === data);
+    const opt = options.find(({ key }) => key === data);
     if (opt !== undefined) {
       onChange({
         ...opt,
-        checked: !opt.checked
+        checked: !opt.checked,
       });
     } else {
       throw new Error(`user define key ${data} not found`);
     }
   };
 
-  const onUserDefineValueChange = (data: UserDefineKey) => (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    const opt = options.find(({key}) => key === data);
+  const onUserDefineValueChange = (data: UserDefineKey) => (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    const opt = options.find(({ key }) => key === data);
     if (opt !== undefined) {
       const update = {
         ...opt,
@@ -73,15 +72,20 @@ export const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) 
 
   let opts = options;
   if (whitelistKeys && whitelistKeys?.length > 0) {
-    opts = opts.filter(({key}) => (whitelistKeys.indexOf(key) > -1));
+    opts = opts.filter(({ key }) => whitelistKeys.indexOf(key) > -1);
   }
   return (
     <List>
       {opts.map((item) => {
         return (
           <React.Fragment key={item.key}>
-            <ListItem dense className={styles.option} selected={item.checked} button
-                      onClick={onChecked.bind(this, item.key)}>
+            <ListItem
+              dense
+              className={styles.option}
+              selected={item.checked}
+              button
+              onClick={onChecked.bind(this, item.key)}
+            >
               <ListItemIcon className={styles.icon}>
                 <Checkbox
                   edge="start"
@@ -90,31 +94,46 @@ export const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) 
                   disableRipple
                 />
               </ListItemIcon>
-              <ListItemText primary={item.label}/>
+              <ListItemText primary={item.label} />
               {/* this could be used to show helpful information */}
-              {/*<ListItemSecondaryAction>*/}
-              {/*  <Tooltip title="tooltip" >*/}
-              {/*    <QuestionIcon/>*/}
-              {/*  </Tooltip>*/}
-              {/*</ListItemSecondaryAction>*/}
+              {/* <ListItemSecondaryAction> */}
+              {/*  <Tooltip title="tooltip" > */}
+              {/*    <QuestionIcon/> */}
+              {/*  </Tooltip> */}
+              {/* </ListItemSecondaryAction> */}
             </ListItem>
-            {(item.key === UserDefineKey.BINDING_PHRASE && item.checked) &&
-            <ListItem className={styles.complimentaryItem}>
-              <TextField size="small" onBlur={onUserDefineValueChange(item.key)} fullWidth
-                         label="Custom binding phrase"/>
-            </ListItem>}
+            {item.key === UserDefineKey.BINDING_PHRASE && item.checked && (
+              <ListItem className={styles.complimentaryItem}>
+                <TextField
+                  size="small"
+                  onBlur={onUserDefineValueChange(item.key)}
+                  fullWidth
+                  label="Custom binding phrase"
+                />
+              </ListItem>
+            )}
 
-            {(item.key === UserDefineKey.ARM_CHANNEL && item.checked) &&
-            <ListItem className={styles.complimentaryItem}>
-              <TextField size="small" onBlur={onUserDefineValueChange(item.key)} fullWidth
-                         label="Arm channel"/>
-            </ListItem>}
+            {item.key === UserDefineKey.ARM_CHANNEL && item.checked && (
+              <ListItem className={styles.complimentaryItem}>
+                <TextField
+                  size="small"
+                  onBlur={onUserDefineValueChange(item.key)}
+                  fullWidth
+                  label="Arm channel"
+                />
+              </ListItem>
+            )}
 
-            {(item.key === UserDefineKey.MY_STARTUP_MELODY && item.checked) &&
-            <ListItem className={styles.complimentaryItem}>
-              <TextField size="small" onBlur={onUserDefineValueChange(item.key)} fullWidth
-                         label="Startup melody"/>
-            </ListItem>}
+            {item.key === UserDefineKey.MY_STARTUP_MELODY && item.checked && (
+              <ListItem className={styles.complimentaryItem}>
+                <TextField
+                  size="small"
+                  onBlur={onUserDefineValueChange(item.key)}
+                  fullWidth
+                  label="Startup melody"
+                />
+              </ListItem>
+            )}
           </React.Fragment>
         );
       })}

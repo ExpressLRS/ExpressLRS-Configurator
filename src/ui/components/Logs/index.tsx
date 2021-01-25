@@ -14,7 +14,7 @@ interface LogsProps {
   data: string;
 }
 
-export const Logs: FunctionComponent<LogsProps> = memo(({data}) => {
+const Logs: FunctionComponent<LogsProps> = memo(({data}) => {
   const styles = useStyles();
   const container = useRef<HTMLDivElement>(null);
   useEffect(() => {

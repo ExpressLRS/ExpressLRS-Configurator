@@ -1,5 +1,5 @@
-import React from 'react';
-import {FunctionComponent} from 'react';
+import React, { FunctionComponent } from 'react';
+
 import {
   Divider,
   Drawer,
@@ -13,7 +13,7 @@ import {
 import BuildIcon from '@material-ui/icons/Build';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ListIcon from '@material-ui/icons/List';
-import {matchPath, useLocation, Link} from "react-router-dom";
+import { matchPath, useLocation, Link } from 'react-router-dom';
 
 const drawerWidth = 230;
 const useStyles = makeStyles((theme) => ({
@@ -32,11 +32,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Sidebar: FunctionComponent = () => {
+const Sidebar: FunctionComponent = () => {
   const styles = useStyles();
 
   const location = useLocation();
-  const configuratorActive = matchPath(location.pathname, '/configurator') !== null;
+  const configuratorActive =
+    matchPath(location.pathname, '/configurator') !== null;
   const settingsActive = matchPath(location.pathname, '/settings') !== null;
   const logsActive = matchPath(location.pathname, '/logs') !== null;
 
@@ -48,29 +49,46 @@ export const Sidebar: FunctionComponent = () => {
         paper: styles.drawerPaper,
       }}
     >
-      <Toolbar/>
-      <Divider/>
+      <Toolbar />
+      <Divider />
       <div className={styles.drawerContainer}>
         <List>
-          <ListItem component={Link} to="/configurator" selected={configuratorActive} className={styles.menuItem}
-                    button>
+          <ListItem
+            component={Link}
+            to="/configurator"
+            selected={configuratorActive}
+            className={styles.menuItem}
+            button
+          >
             <ListItemIcon>
-              <BuildIcon/>
+              <BuildIcon />
             </ListItemIcon>
-            <ListItemText primary="Configurator"/>
+            <ListItemText primary="Configurator" />
           </ListItem>
 
-          <ListItem component={Link} to="/settings" selected={settingsActive} className={styles.menuItem} button>
+          <ListItem
+            component={Link}
+            to="/settings"
+            selected={settingsActive}
+            className={styles.menuItem}
+            button
+          >
             <ListItemIcon>
-              <SettingsIcon/>
+              <SettingsIcon />
             </ListItemIcon>
-            <ListItemText primary="Settings"/>
+            <ListItemText primary="Settings" />
           </ListItem>
-          <ListItem component={Link} to="/logs" selected={logsActive} className={styles.menuItem} button>
+          <ListItem
+            component={Link}
+            to="/logs"
+            selected={logsActive}
+            className={styles.menuItem}
+            button
+          >
             <ListItemIcon>
-              <ListIcon/>
+              <ListIcon />
             </ListItemIcon>
-            <ListItemText primary="Logs"/>
+            <ListItemText primary="Logs" />
           </ListItem>
         </List>
       </div>

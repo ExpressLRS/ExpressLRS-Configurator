@@ -4,9 +4,9 @@
 
 import webpack from 'webpack';
 import path from 'path';
-import { merge } from 'webpack-merge';
+import {merge} from 'webpack-merge';
 import baseConfig from './webpack.config.base';
-import { dependencies } from '../../package.json';
+import {dependencies} from '../../package.json';
 import CheckNodeEnv from '../scripts/CheckNodeEnv';
 
 CheckNodeEnv('development');
@@ -30,7 +30,7 @@ export default merge(baseConfig, {
   module: require('./webpack.config.renderer.dev.babel').default.module,
 
   entry: {
-    renderer: Object.keys(dependencies || {}),
+    renderer: Object.keys(dependencies || {}).filter((dep) => dep !== 'autosuggest-highlight'),
   },
 
   output: {

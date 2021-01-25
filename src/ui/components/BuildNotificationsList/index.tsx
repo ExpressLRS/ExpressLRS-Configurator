@@ -1,9 +1,10 @@
-import React, {FunctionComponent} from 'react';
+import React, { FunctionComponent } from 'react';
+import { Alert, makeStyles } from '@material-ui/core';
 import {
   BuildFirmWareProgressNotificationData,
-  BuildFirmWareProgressNotificationType, BuildFirmwareStep
+  BuildFirmWareProgressNotificationType,
+  BuildFirmwareStep,
 } from '../../../main/handlers/BuildFirmwareHandler';
-import {Alert, makeStyles} from '@material-ui/core';
 
 interface BuildNotificationsListProps {
   notifications: BuildFirmWareProgressNotificationData[];
@@ -15,9 +16,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = ({notifications}) => {
+const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = ({
+  notifications,
+}) => {
   const styles = useStyles();
-  const toSeverity = (item: BuildFirmWareProgressNotificationType): 'error' | 'info' | 'success' => {
+  const toSeverity = (
+    item: BuildFirmWareProgressNotificationType
+  ): 'error' | 'info' | 'success' => {
     switch (item) {
       case BuildFirmWareProgressNotificationType.Error:
         return 'error';
@@ -25,8 +30,10 @@ export const BuildNotificationsList: FunctionComponent<BuildNotificationsListPro
         return 'info';
       case BuildFirmWareProgressNotificationType.Success:
         return 'success';
+      default:
+        return 'info';
     }
-  }
+  };
   // TODO: this should be used for translations
   const toText = (step: BuildFirmwareStep): string => {
     switch (step) {
@@ -39,16 +46,20 @@ export const BuildNotificationsList: FunctionComponent<BuildNotificationsListPro
       case BuildFirmwareStep.BUILDING_FIRMWARE:
         return 'Compiling firmware';
       case BuildFirmwareStep.FLASHING_FIRMWARE:
-        return 'Flashing device'
+        return 'Flashing device';
+      default:
+        return '';
     }
-    return '';
   };
   return (
     <>
       {notifications.map((item, idx) => {
         return (
-          <React.Fragment key={idx}>
-            <Alert className={styles.notification} severity={toSeverity(item.type)}>
+          <React.Fragment key={`${idx}-${item.step}`}>
+            <Alert
+              className={styles.notification}
+              severity={toSeverity(item.type)}
+            >
               {item?.step !== undefined && toText(item.step)}
             </Alert>
           </React.Fragment>

@@ -11,13 +11,11 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import {app, BrowserWindow, ipcMain, IpcMainEvent, shell} from 'electron';
-import {autoUpdater} from 'electron-updater';
+import { app, BrowserWindow, ipcMain, IpcMainEvent, shell } from 'electron';
+import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
-import {
-  MainRequestType,
-} from './ipc';
+import { MainRequestType } from './ipc';
 import Platformio from './library/Platformio';
 import CheckDependenciesHandler from './main/handlers/CheckDependenciesHandler';
 import InstallDependenciesHandler from './main/handlers/InstallDependenciesHandler';
@@ -70,8 +68,8 @@ const createWindow = async () => {
   }
 
   const RESOURCES_PATH = app.isPackaged
-    ? path.join(process.resourcesPath, 'resources')
-    : path.join(__dirname, '../resources');
+    ? path.join(process.resourcesPath, 'assets')
+    : path.join(__dirname, '../assets');
 
   const getAssetPath = (...paths: string[]): string => {
     return path.join(RESOURCES_PATH, ...paths);
@@ -107,6 +105,7 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
+  // mainWindow.setMenuBarVisibility(false);
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
@@ -167,5 +166,8 @@ const buildFirmwareHandler = new BuildFirmwareHandler({
   PATH: process.env.PATH!,
   platformio,
   firmwareBuilder: new FirmwareBuilder(platformio),
-})
-ipcMain.on(MainRequestType.BuildFlashFirmware, buildFirmwareHandler.processRequest.bind(buildFirmwareHandler));
+});
+ipcMain.on(
+  MainRequestType.BuildFlashFirmware,
+  buildFirmwareHandler.processRequest.bind(buildFirmwareHandler)
+);

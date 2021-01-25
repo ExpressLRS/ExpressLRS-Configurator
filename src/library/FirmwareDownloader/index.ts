@@ -1,4 +1,5 @@
-import simpleGit, {SimpleGit, SimpleGitOptions} from 'simple-git';
+/* eslint-disable no-await-in-loop */
+import simpleGit, { SimpleGit, SimpleGitOptions } from 'simple-git';
 import * as fs from 'fs';
 import path from 'path';
 import Commander from '../Commander';
@@ -15,7 +16,10 @@ export interface FirmwareResult {
 export interface IFirmwareDownloader {
   checkoutTag(repository: string, tagName: string): Promise<FirmwareResult>;
 
-  checkoutBranch(repository: string, branchName: string): Promise<FirmwareResult>;
+  checkoutBranch(
+    repository: string,
+    branchName: string
+  ): Promise<FirmwareResult>;
 
   checkoutCommit(repository: string, commit: string): Promise<FirmwareResult>;
 }
@@ -23,9 +27,13 @@ export interface IFirmwareDownloader {
 export const findGitExecutable = async (envPath: string): Promise<string> => {
   const IS_WINDOWS = process.platform.startsWith('win');
   const exenames = IS_WINDOWS ? ['git.exe', 'git'] : ['git'];
+  // eslint-disable-next-line no-restricted-syntax
   for (const location of envPath.split(path.delimiter)) {
+    // eslint-disable-next-line no-restricted-syntax
     for (const exename of exenames) {
-      const executable = path.normalize(path.join(location, exename)).replace(/"/g, '');
+      const executable = path
+        .normalize(path.join(location, exename))
+        .replace(/"/g, '');
       try {
         if (
           fs.existsSync(executable) &&
@@ -39,13 +47,14 @@ export const findGitExecutable = async (envPath: string): Promise<string> => {
     }
   }
   throw new Error('git exec not found');
-}
+};
 
 export class GitFirmwareDownloader implements IFirmwareDownloader {
   baseDirectory: string;
+
   git: SimpleGit;
 
-  constructor({baseDirectory, gitBinaryLocation}: FirmwareDownloaderProps) {
+  constructor({ baseDirectory, gitBinaryLocation }: FirmwareDownloaderProps) {
     this.baseDirectory = baseDirectory;
     const options: SimpleGitOptions = {
       baseDir: this.baseDirectory,
@@ -56,14 +65,16 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
   }
 
   async syncRepo(repository: string): Promise<void> {
-    const isTargetDirectoryEmpty: boolean = await new Promise((resolve, reject) => {
-      fs.readdir(this.baseDirectory, (err, data) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(data.length === 0);
-      })
-    });
+    const isTargetDirectoryEmpty: boolean = await new Promise(
+      (resolve, reject) => {
+        fs.readdir(this.baseDirectory, (err, data) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(data.length === 0);
+        });
+      }
+    );
 
     if (isTargetDirectoryEmpty) {
       await this.git.clone(repository, this.baseDirectory, [
@@ -71,37 +82,44 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
         '--filter=blob:none',
       ]);
 
-      await this.git.raw("sparse-checkout", "set", "src");
+      await this.git.raw('sparse-checkout', 'set', 'src');
     } else {
       await this.git.stash();
 
-      await this.git.fetch([
-        '--tags',
-      ]);
+      await this.git.fetch(['--tags']);
     }
   }
 
-  async checkoutTag(repository: string, tagName: string): Promise<FirmwareResult> {
+  async checkoutTag(
+    repository: string,
+    tagName: string
+  ): Promise<FirmwareResult> {
     await this.syncRepo(repository);
     await this.git.checkout(tagName);
     return {
-      path: this.baseDirectory,
+      path: path.join(this.baseDirectory, 'src'),
     };
   }
 
-  async checkoutBranch(repository: string, branch: string): Promise<FirmwareResult> {
+  async checkoutBranch(
+    repository: string,
+    branch: string
+  ): Promise<FirmwareResult> {
     await this.syncRepo(repository);
     await this.git.checkout(`origin/${branch}`);
     return {
-      path: this.baseDirectory,
+      path: path.join(this.baseDirectory, 'src'),
     };
   }
 
-  async checkoutCommit(repository: string, commit: string): Promise<FirmwareResult> {
+  async checkoutCommit(
+    repository: string,
+    commit: string
+  ): Promise<FirmwareResult> {
     await this.syncRepo(repository);
     await this.git.checkout(commit);
     return {
-      path: this.baseDirectory,
+      path: path.join(this.baseDirectory, 'src'),
     };
   }
 }

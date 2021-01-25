@@ -1,12 +1,15 @@
-import React, {FunctionComponent} from 'react';
-import {Alert, AlertTitle} from '@material-ui/core';
-import {BuildFirmwareErrorType, BuildFlashFirmwareResponseBody} from '../../../main/handlers/BuildFirmwareHandler';
+import React, { FunctionComponent } from 'react';
+import { Alert, AlertTitle } from '@material-ui/core';
+import {
+  BuildFirmwareErrorType,
+  BuildFlashFirmwareResponseBody,
+} from '../../../main/handlers/BuildFirmwareHandler';
 
 interface BuildResponseProps {
   response: BuildFlashFirmwareResponseBody | null;
 }
 
-export const BuildResponse: FunctionComponent<BuildResponseProps> = ({response}) => {
+const BuildResponse: FunctionComponent<BuildResponseProps> = ({ response }) => {
   // TODO: translations
   const toTitle = (errorType: BuildFirmwareErrorType | undefined): string => {
     if (errorType === null || errorType === undefined) {
@@ -25,18 +28,21 @@ export const BuildResponse: FunctionComponent<BuildResponseProps> = ({response})
         return 'Build error';
       case BuildFirmwareErrorType.FlashError:
         return 'Flash error';
+      default:
+        return '';
     }
-    return 'Error';
   };
   return (
     <>
-      {response !== null && response.success && <Alert severity="success">
-        Success!
-      </Alert>}
-      {response !== null && !response.success && <Alert severity="error">
-        <AlertTitle>{toTitle(response?.errorType)}</AlertTitle>
-        {response?.message}
-      </Alert>}
+      {response !== null && response.success && (
+        <Alert severity="success">Success!</Alert>
+      )}
+      {response !== null && !response.success && (
+        <Alert severity="error">
+          <AlertTitle>{toTitle(response?.errorType)}</AlertTitle>
+          {response?.message}
+        </Alert>
+      )}
     </>
   );
 };

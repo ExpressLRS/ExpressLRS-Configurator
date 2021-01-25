@@ -1,18 +1,31 @@
-import Header from '../../components/Header';
-import React, {FunctionComponent, useEffect, useRef, useState} from 'react';
-import {Button, Card, CardContent, Container, Divider, makeStyles,} from '@material-ui/core';
-import FirmwareVersionForm from '../../components/FirmwareVersionForm';
-import {Config} from '../../../config';
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import {
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Divider,
+  makeStyles,
+} from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { ipcRenderer, IpcRendererEvent } from 'electron';
+import Header from '../../components/Header';
+import FirmwareVersionForm from '../../components/FirmwareVersionForm';
+import { Config } from '../../../config';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
-import {DeviceTarget} from '../../../library/FirmwareBuilder/Enum/DeviceTarget';
-import DeviceOptionsForm, {DeviceOptionsFormData} from '../../components/DeviceOptionsForm';
+import { DeviceTarget } from '../../../library/FirmwareBuilder/Enum/DeviceTarget';
+import DeviceOptionsForm, {
+  DeviceOptionsFormData,
+} from '../../components/DeviceOptionsForm';
 import Sidebar from '../../components/Sidebar';
-import {MainRequestType, MainResponseType, PushMessageType,} from '../../../ipc';
+import {
+  MainRequestType,
+  MainResponseType,
+  PushMessageType,
+} from '../../../ipc';
 import ShowAlerts from '../../components/ShowAlerts';
 import UserDefinesValidator from '../../../library/FirmwareBuilder/Validator/UserDefinesValidator';
 import CardTitle from '../../components/CardTitle';
-import {ipcRenderer, IpcRendererEvent} from 'electron';
 import EventsBatcher from '../../library/EventsBatcher';
 import Logs from '../../components/Logs';
 import {
@@ -22,17 +35,20 @@ import {
   FirmwareSource,
   FirmwareVersionData,
   JobType,
-  UserDefinesMode
+  UserDefinesMode,
 } from '../../../main/handlers/BuildFirmwareHandler';
 import BuildProgressBar from '../../components/BuildProgressBar';
 import BuildNotificationsList from '../../components/BuildNotificationsList';
 import BuildResponse from '../../components/BuildResponse';
-import UserDefineConstraints, {UserDefinesByCategory} from '../../../library/FirmwareBuilder/UserDefineConstraints';
-import {UserDefine} from '../../../library/FirmwareBuilder/Model/UserDefine';
+import UserDefineConstraints, {
+  UserDefinesByCategory,
+} from '../../../library/FirmwareBuilder/UserDefineConstraints';
+import { UserDefine } from '../../../library/FirmwareBuilder/Model/UserDefine';
 
-export const validFirmwareVersionData = (data: FirmwareVersionData): Error[] => {
+export const validFirmwareVersionData = (
+  data: FirmwareVersionData
+): Error[] => {
   const errors: Error[] = [];
-  console.log(data);
   switch (data.source) {
     case FirmwareSource.Local:
       if (!(data.localPath.length > 0)) {
@@ -54,9 +70,11 @@ export const validFirmwareVersionData = (data: FirmwareVersionData): Error[] => 
         errors.push(new Error('Firmware release is not selected'));
       }
       break;
+    default:
+      throw new Error(`unknown firmware data source: ${data.source}`);
   }
   return errors;
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,23 +102,38 @@ const userDefineConstrains = new UserDefineConstraints();
 const ConfiguratorView: FunctionComponent = () => {
   const styles = useStyles();
 
-  const [viewState, setViewState] = useState<ViewState>(ViewState.Configuration);
+  const [viewState, setViewState] = useState<ViewState>(
+    ViewState.Configuration
+  );
 
-  const [progressNotifications, setProgressNotifications] = useState<BuildFirmWareProgressNotificationData[]>([]);
-  const progressNotificationsRef = useRef<BuildFirmWareProgressNotificationData[]>([]);
-  const [lastProgressNotification, setLastProgressNotification] = useState<BuildFirmWareProgressNotificationData | null>(null);
+  const [progressNotifications, setProgressNotifications] = useState<
+    BuildFirmWareProgressNotificationData[]
+  >([]);
+  const progressNotificationsRef = useRef<
+    BuildFirmWareProgressNotificationData[]
+  >([]);
+  const [
+    lastProgressNotification,
+    setLastProgressNotification,
+  ] = useState<BuildFirmWareProgressNotificationData | null>(null);
   useEffect(() => {
-    const listener = ((_event: IpcRendererEvent, args: BuildFirmWareProgressNotificationData) => {
+    const listener = (
+      _event: IpcRendererEvent,
+      args: BuildFirmWareProgressNotificationData
+    ) => {
       console.log('receives progress notification', args);
       const newNotificationsList = [...progressNotificationsRef.current, args];
       progressNotificationsRef.current = newNotificationsList;
       setProgressNotifications(newNotificationsList);
       setLastProgressNotification(args);
-    });
+    };
     ipcRenderer.on(PushMessageType.FlashFirmWareProgressNotification, listener);
     return () => {
       progressNotificationsRef.current = [];
-      ipcRenderer.removeListener(PushMessageType.FlashFirmWareProgressNotification, listener);
+      ipcRenderer.removeListener(
+        PushMessageType.FlashFirmWareProgressNotification,
+        listener
+      );
     };
   }, []);
 
@@ -115,7 +148,7 @@ const ConfiguratorView: FunctionComponent = () => {
       const newLogsList = [...logsRef.current, ...newLogs];
       logsRef.current = newLogsList;
       setLogs(newLogsList.join(''));
-    })
+    });
     const handler = (_event: IpcRendererEvent, args: string) => {
       eventsBatcher.enqueue(args);
     };
@@ -123,6 +156,88 @@ const ConfiguratorView: FunctionComponent = () => {
     return () => {
       logsRef.current = [];
       ipcRenderer.removeListener(PushMessageType.BuildFlashLogEntry, handler);
+    };
+  }, []);
+
+  const [
+    firmwareVersionData,
+    setFirmwareVersionData,
+  ] = useState<FirmwareVersionData | null>(null);
+  const [firmwareVersionErrors, setFirmwareVersionErrors] = useState<Error[]>(
+    []
+  );
+  const onFirmwareVersionData = (data: FirmwareVersionData) => {
+    setFirmwareVersionErrors([]);
+    setFirmwareVersionData(data);
+  };
+
+  const [deviceTarget, setDeviceTarget] = useState<DeviceTarget | null>(null);
+  const [deviceTargetErrors, setDeviceTargetErrors] = useState<Error[]>([]);
+  const onDeviceTarget = (data: DeviceTarget) => {
+    setDeviceTargetErrors([]);
+    setDeviceTarget(data);
+  };
+
+  const [deviceOptionsFormData, setDeviceOptionsFormData] = useState<
+    DeviceOptionsFormData
+  >({
+    userDefinesTxt: '',
+    userDefinesMode: UserDefinesMode.UserInterface,
+    userDefineOptions: [],
+  });
+  const [deviceOptionsErrors, setDeviceOptionsErrors] = useState<Error[]>([]);
+  const [
+    deviceOptionCategories,
+    setDeviceOptionCategories,
+  ] = useState<UserDefinesByCategory | null>(null);
+  useEffect(() => {
+    if (deviceTarget === null) {
+      setDeviceOptionCategories(null);
+    } else {
+      setDeviceOptionCategories(
+        userDefineConstrains.getCategorizedByTarget(deviceTarget)
+      );
+      const allowedOptions = userDefineConstrains.getByTarget(deviceTarget);
+      const options = allowedOptions.map((key) => {
+        return {
+          key,
+          checked: false,
+          label: key,
+          value: '',
+        };
+      });
+      setDeviceOptionsFormData({
+        userDefinesMode: deviceOptionsFormData?.userDefinesMode,
+        userDefinesTxt: deviceOptionsFormData?.userDefinesTxt,
+        userDefineOptions: options,
+      });
+    }
+  }, [deviceTarget]);
+
+  const onUserDefines = (data: DeviceOptionsFormData) => {
+    setDeviceOptionsErrors([]);
+
+    setDeviceOptionsFormData(data);
+  };
+
+  const [buildInProgress, setBuildInProgress] = useState<boolean>(false);
+  const [
+    response,
+    setResponse,
+  ] = useState<BuildFlashFirmwareResponseBody | null>(null);
+  useEffect(() => {
+    const handler = (
+      _event: IpcRendererEvent,
+      res: BuildFlashFirmwareResponseBody
+    ) => {
+      console.log('flash firmware RESPONSE', res);
+      setBuildInProgress(false);
+      setResponse(res);
+    };
+    ipcRenderer.on(MainResponseType.BuildFlashFirmware, handler);
+
+    return () => {
+      ipcRenderer.removeListener(MainResponseType.BuildFlashFirmware, handler);
     };
   }, []);
 
@@ -140,77 +255,10 @@ const ConfiguratorView: FunctionComponent = () => {
     setResponse(null);
   };
 
-  const [firmwareVersionData, setFirmwareVersionData] = useState<FirmwareVersionData | null>(null);
-  const [firmwareVersionErrors, setFirmwareVersionErrors] = useState<Error[]>([]);
-  const onFirmwareVersionData = (data: FirmwareVersionData) => {
-    setFirmwareVersionErrors([]);
-    setFirmwareVersionData(data);
-  };
-
-  const [deviceTarget, setDeviceTarget] = useState<DeviceTarget | null>(null);
-  const [deviceTargetErrors, setDeviceTargetErrors] = useState<Error[]>([]);
-  const onDeviceTarget = (data: DeviceTarget) => {
-    setDeviceTargetErrors([]);
-    setDeviceTarget(data);
-  };
-
-  const [deviceOptionsFormData, setDeviceOptionsFormData] = useState<DeviceOptionsFormData>({
-    userDefinesTxt: '',
-    userDefinesMode: UserDefinesMode.UserInterface,
-    userDefineOptions: [],
-  });
-  const [deviceOptionsErrors, setDeviceOptionsErrors] = useState<Error[]>([]);
-  const [deviceOptionCategories, setDeviceOptionCategories] = useState<UserDefinesByCategory | null>(null);
-  useEffect(() => {
-    if (deviceTarget === null) {
-      setDeviceOptionCategories(null);
-    } else {
-      setDeviceOptionCategories(userDefineConstrains.getCategorizedByTarget(deviceTarget));
-      const allowedOptions = userDefineConstrains.getByTarget(deviceTarget);
-      const options = allowedOptions.map((key) => {
-        return {
-          key,
-          checked: false,
-          label: key,
-          value: '',
-        };
-      });
-      setDeviceOptionsFormData({
-        userDefinesMode: deviceOptionsFormData?.userDefinesMode!,
-        userDefinesTxt: deviceOptionsFormData?.userDefinesTxt!,
-        userDefineOptions: options,
-      });
-    }
-  }, [deviceTarget]);
-
-  const onUserDefines = (data: DeviceOptionsFormData) => {
-    setDeviceOptionsErrors([]);
-
-    setDeviceOptionsFormData(data);
-  };
-
   const onBack = () => {
     reset();
     setViewState(ViewState.Configuration);
   };
-
-  const onBuild = () => (sendJob(JobType.Build));
-  const onBuildAndFlash = () => (sendJob(JobType.BuildAndFlash));
-
-  const [buildInProgress, setBuildInProgress] = useState<boolean>(false);
-  const [response, setResponse] = useState<BuildFlashFirmwareResponseBody | null>(null);
-  useEffect(() => {
-    const handler = (_event: IpcRendererEvent, res: BuildFlashFirmwareResponseBody) => {
-      console.log('flash firmware RESPONSE', res);
-      setBuildInProgress(false);
-      setResponse(res);
-    };
-    ipcRenderer.on(MainResponseType.BuildFlashFirmware, handler);
-
-    return () => {
-      ipcRenderer.removeListener(MainResponseType.BuildFlashFirmware, handler);
-    };
-  }, []);
 
   const sendJob = (type: JobType) => {
     reset();
@@ -220,7 +268,7 @@ const ConfiguratorView: FunctionComponent = () => {
       setFirmwareVersionErrors([new Error('Please select firmware source')]);
       return;
     }
-    const sourceErrors = validFirmwareVersionData(firmwareVersionData)
+    const sourceErrors = validFirmwareVersionData(firmwareVersionData);
     if (sourceErrors.length > 0) {
       setFirmwareVersionErrors(sourceErrors);
       return;
@@ -234,20 +282,23 @@ const ConfiguratorView: FunctionComponent = () => {
 
     // Validate device options
     if (deviceOptionsFormData === null) {
-      setDeviceTargetErrors([new Error('Please configure your device options')]);
+      setDeviceTargetErrors([
+        new Error('Please configure your device options'),
+      ]);
       return;
     }
 
-    const userDefines: UserDefine[] = deviceOptionsFormData?.userDefineOptions.map((item): UserDefine | null => {
-      if (item.checked) {
-        return {
-          key: item.key,
-          value: item.value,
-        };
-      } else {
+    const userDefines: UserDefine[] = deviceOptionsFormData?.userDefineOptions
+      .map((item): UserDefine | null => {
+        if (item.checked) {
+          return {
+            key: item.key,
+            value: item.value,
+          };
+        }
         return null;
-      }
-    }).filter((item): item is UserDefine => (item != null));
+      })
+      .filter((item): item is UserDefine => item != null);
 
     switch (deviceOptionsFormData.userDefinesMode) {
       case UserDefinesMode.Manual:
@@ -258,6 +309,9 @@ const ConfiguratorView: FunctionComponent = () => {
           setDeviceOptionsErrors(errs);
           return;
         }
+        break;
+      default:
+        break;
     }
 
     const req: BuildFlashFirmwareRequestBody = {
@@ -273,98 +327,129 @@ const ConfiguratorView: FunctionComponent = () => {
     ipcRenderer.send(MainRequestType.BuildFlashFirmware, req);
   };
 
+  const onBuild = () => sendJob(JobType.Build);
+  const onBuildAndFlash = () => sendJob(JobType.BuildAndFlash);
+
   return (
     <main className={styles.root}>
-      <Sidebar/>
+      <Sidebar />
       <div className={styles.content}>
-        <Header/>
+        <Header />
         <Container className={styles.main}>
-          {viewState === ViewState.Configuration && <Card>
-            <CardTitle icon={<SettingsIcon/>} title="Firmware version"/>
-            <Divider/>
-            <CardContent>
-              <FirmwareVersionForm
-                onChange={onFirmwareVersionData}
-                data={firmwareVersionData}
-                repositoryOwner={Config.git.owner}
-                repositoryName={Config.git.repositoryName}
-              />
-              <ShowAlerts severity="error" messages={firmwareVersionErrors}/>
-            </CardContent>
-            <Divider/>
-
-            <CardTitle icon={<SettingsIcon/>} title="Target"/>
-            <Divider/>
-            <CardContent>
-              <DeviceTargetForm currentTarget={deviceTarget} onChange={onDeviceTarget}/>
-              <ShowAlerts severity="error" messages={deviceTargetErrors}/>
-            </CardContent>
-            <Divider/>
-
-            <CardTitle icon={<SettingsIcon/>} title="Device options"/>
-            <Divider/>
-            <CardContent>
-              <DeviceOptionsForm
-                deviceOptions={deviceOptionsFormData}
-                categories={deviceOptionCategories}
-                target={deviceTarget}
-                onChange={onUserDefines}
-              />
-              <ShowAlerts severity="error" messages={deviceOptionsErrors}/>
-            </CardContent>
-            <Divider/>
-
-            <CardTitle icon={<SettingsIcon/>} title="Actions"/>
-            <Divider/>
-            <CardContent>
-              <Button className={styles.button} size="large" variant="contained" onClick={onBuild}>Build</Button>
-              <Button className={styles.button} size="large" variant="contained" onClick={onBuildAndFlash}>
-                Build & Flash
-              </Button>
-            </CardContent>
-            <Divider/>
-          </Card>}
-
-          {viewState === ViewState.Compiling && <Card>
-            <CardTitle icon={<SettingsIcon/>} title="Build"/>
-            <Divider/>
-            <CardContent>
-              <BuildProgressBar inProgress={buildInProgress} progressNotification={lastProgressNotification}/>
-              <BuildNotificationsList notifications={progressNotifications}/>
-            </CardContent>
-
-            {logs.length > 0 && <>
-              <CardTitle icon={<SettingsIcon/>} title="Logs"/>
-              <Divider/>
+          {viewState === ViewState.Configuration && (
+            <Card>
+              <CardTitle icon={<SettingsIcon />} title="Firmware version" />
+              <Divider />
               <CardContent>
-                <Logs data={logs}/>
+                <FirmwareVersionForm
+                  onChange={onFirmwareVersionData}
+                  data={firmwareVersionData}
+                  repositoryOwner={Config.git.owner}
+                  repositoryName={Config.git.repositoryName}
+                />
+                <ShowAlerts severity="error" messages={firmwareVersionErrors} />
               </CardContent>
-              <Divider/>
-            </>}
-            {response !== null && <>
-              <CardTitle icon={<SettingsIcon/>} title="Result"/>
-              <Divider/>
+              <Divider />
+
+              <CardTitle icon={<SettingsIcon />} title="Target" />
+              <Divider />
               <CardContent>
-                <BuildResponse response={response}/>
+                <DeviceTargetForm
+                  currentTarget={deviceTarget}
+                  onChange={onDeviceTarget}
+                />
+                <ShowAlerts severity="error" messages={deviceTargetErrors} />
               </CardContent>
-              <Divider/>
-            </>}
-            {!buildInProgress && <>
-              <CardTitle icon={<SettingsIcon/>} title="Actions"/>
-              <Divider/>
+              <Divider />
+
+              <CardTitle icon={<SettingsIcon />} title="Device options" />
+              <Divider />
+              <CardContent>
+                <DeviceOptionsForm
+                  deviceOptions={deviceOptionsFormData}
+                  categories={deviceOptionCategories}
+                  target={deviceTarget}
+                  onChange={onUserDefines}
+                />
+                <ShowAlerts severity="error" messages={deviceOptionsErrors} />
+              </CardContent>
+              <Divider />
+
+              <CardTitle icon={<SettingsIcon />} title="Actions" />
+              <Divider />
               <CardContent>
                 <Button
                   className={styles.button}
-                  color="primary"
                   size="large"
                   variant="contained"
-                  onClick={onBack}
+                  onClick={onBuild}
                 >
-                  Back
+                  Build
+                </Button>
+                <Button
+                  className={styles.button}
+                  size="large"
+                  variant="contained"
+                  onClick={onBuildAndFlash}
+                >
+                  Build & Flash
                 </Button>
               </CardContent>
-            </>}
-          </Card>}
+              <Divider />
+            </Card>
+          )}
+
+          {viewState === ViewState.Compiling && (
+            <Card>
+              <CardTitle icon={<SettingsIcon />} title="Build" />
+              <Divider />
+              <CardContent>
+                <BuildProgressBar
+                  inProgress={buildInProgress}
+                  progressNotification={lastProgressNotification}
+                />
+                <BuildNotificationsList notifications={progressNotifications} />
+              </CardContent>
+
+              {logs.length > 0 && (
+                <>
+                  <CardTitle icon={<SettingsIcon />} title="Logs" />
+                  <Divider />
+                  <CardContent>
+                    <Logs data={logs} />
+                  </CardContent>
+                  <Divider />
+                </>
+              )}
+              {response !== null && (
+                <>
+                  <CardTitle icon={<SettingsIcon />} title="Result" />
+                  <Divider />
+                  <CardContent>
+                    <BuildResponse response={response} />
+                  </CardContent>
+                  <Divider />
+                </>
+              )}
+              {!buildInProgress && (
+                <>
+                  <CardTitle icon={<SettingsIcon />} title="Actions" />
+                  <Divider />
+                  <CardContent>
+                    <Button
+                      className={styles.button}
+                      color="primary"
+                      size="large"
+                      variant="contained"
+                      onClick={onBack}
+                    >
+                      Back
+                    </Button>
+                  </CardContent>
+                </>
+              )}
+            </Card>
+          )}
         </Container>
       </div>
     </main>

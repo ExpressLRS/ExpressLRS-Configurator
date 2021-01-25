@@ -1,10 +1,7 @@
+import { IpcMainEvent } from 'electron';
 import Mutex from '../../../library/Mutex';
-import {
-  MainResponseType,
-  PushMessageType
-} from '../../../ipc';
+import { MainResponseType, PushMessageType } from '../../../ipc';
 import Platformio from '../../../library/Platformio';
-import {IpcMainEvent} from 'electron';
 
 interface InstallDependenciesHandlerProps {
   platformio: Platformio;
@@ -17,9 +14,10 @@ export interface InstallDependenciesResponseBody {
 
 export default class InstallDependenciesHandler {
   private mutex: Mutex;
+
   private platformio: Platformio;
 
-  constructor({platformio}: InstallDependenciesHandlerProps) {
+  constructor({ platformio }: InstallDependenciesHandlerProps) {
     this.mutex = new Mutex();
     this.platformio = platformio;
   }

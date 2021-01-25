@@ -39,7 +39,7 @@ export default class MenuBuilder {
 
   setupDevelopmentEnvironment(): void {
     this.mainWindow.webContents.on('context-menu', (_, props) => {
-      const {x, y} = props;
+      const { x, y } = props;
 
       Menu.buildFromTemplate([
         {
@@ -48,7 +48,7 @@ export default class MenuBuilder {
             this.mainWindow.webContents.inspectElement(x, y);
           },
         },
-      ]).popup({window: this.mainWindow});
+      ]).popup({ window: this.mainWindow });
     });
   }
 
@@ -62,7 +62,7 @@ export default class MenuBuilder {
         },
         // { type: 'separator' },
         // { label: 'Services', submenu: [] },
-        {type: 'separator'},
+        { type: 'separator' },
         {
           label: 'Hide Configurator',
           accelerator: 'Command+H',
@@ -73,8 +73,8 @@ export default class MenuBuilder {
           accelerator: 'Command+Shift+H',
           selector: 'hideOtherApplications:',
         },
-        {label: 'Show All', selector: 'unhideAllApplications:'},
-        {type: 'separator'},
+        { label: 'Show All', selector: 'unhideAllApplications:' },
+        { type: 'separator' },
         {
           label: 'Quit',
           accelerator: 'Command+Q',
@@ -87,12 +87,12 @@ export default class MenuBuilder {
     const subMenuEdit: DarwinMenuItemConstructorOptions = {
       label: 'Edit',
       submenu: [
-        {label: 'Undo', accelerator: 'Command+Z', selector: 'undo:'},
-        {label: 'Redo', accelerator: 'Shift+Command+Z', selector: 'redo:'},
-        {type: 'separator'},
-        {label: 'Cut', accelerator: 'Command+X', selector: 'cut:'},
-        {label: 'Copy', accelerator: 'Command+C', selector: 'copy:'},
-        {label: 'Paste', accelerator: 'Command+V', selector: 'paste:'},
+        { label: 'Undo', accelerator: 'Command+Z', selector: 'undo:' },
+        { label: 'Redo', accelerator: 'Shift+Command+Z', selector: 'redo:' },
+        { type: 'separator' },
+        { label: 'Cut', accelerator: 'Command+X', selector: 'cut:' },
+        { label: 'Copy', accelerator: 'Command+C', selector: 'copy:' },
+        { label: 'Paste', accelerator: 'Command+V', selector: 'paste:' },
         {
           label: 'Select All',
           accelerator: 'Command+A',
@@ -146,9 +146,9 @@ export default class MenuBuilder {
           accelerator: 'Command+M',
           selector: 'performMiniaturize:',
         },
-        {label: 'Close', accelerator: 'Command+W', selector: 'performClose:'},
-        {type: 'separator'},
-        {label: 'Bring All to Front', selector: 'arrangeInFront:'},
+        { label: 'Close', accelerator: 'Command+W', selector: 'performClose:' },
+        { type: 'separator' },
+        { label: 'Bring All to Front', selector: 'arrangeInFront:' },
       ],
     };
     const subMenuHelp: MenuItemConstructorOptions = {
@@ -157,7 +157,9 @@ export default class MenuBuilder {
         {
           label: 'GitHub',
           click() {
-            shell.openExternal('https://www.github.com/expresslrs/expresslrs-configurator');
+            shell.openExternal(
+              'https://www.github.com/expresslrs/expresslrs-configurator'
+            );
           },
         },
         // {
@@ -216,41 +218,41 @@ export default class MenuBuilder {
           process.env.NODE_ENV === 'development' ||
           process.env.DEBUG_PROD === 'true'
             ? [
-              {
-                label: '&Reload',
-                accelerator: 'Ctrl+R',
-                click: () => {
-                  this.mainWindow.webContents.reload();
+                {
+                  label: '&Reload',
+                  accelerator: 'Ctrl+R',
+                  click: () => {
+                    this.mainWindow.webContents.reload();
+                  },
                 },
-              },
-              {
-                label: 'Toggle &Full Screen',
-                accelerator: 'F11',
-                click: () => {
-                  this.mainWindow.setFullScreen(
-                    !this.mainWindow.isFullScreen()
-                  );
+                {
+                  label: 'Toggle &Full Screen',
+                  accelerator: 'F11',
+                  click: () => {
+                    this.mainWindow.setFullScreen(
+                      !this.mainWindow.isFullScreen()
+                    );
+                  },
                 },
-              },
-              {
-                label: 'Toggle &Developer Tools',
-                accelerator: 'Alt+Ctrl+I',
-                click: () => {
-                  this.mainWindow.webContents.toggleDevTools();
+                {
+                  label: 'Toggle &Developer Tools',
+                  accelerator: 'Alt+Ctrl+I',
+                  click: () => {
+                    this.mainWindow.webContents.toggleDevTools();
+                  },
                 },
-              },
-            ]
+              ]
             : [
-              {
-                label: 'Toggle &Full Screen',
-                accelerator: 'F11',
-                click: () => {
-                  this.mainWindow.setFullScreen(
-                    !this.mainWindow.isFullScreen()
-                  );
+                {
+                  label: 'Toggle &Full Screen',
+                  accelerator: 'F11',
+                  click: () => {
+                    this.mainWindow.setFullScreen(
+                      !this.mainWindow.isFullScreen()
+                    );
+                  },
                 },
-              },
-            ],
+              ],
       },
       {
         label: 'Help',
@@ -258,7 +260,9 @@ export default class MenuBuilder {
           {
             label: 'Learn More',
             click() {
-              shell.openExternal('https://github.com/expresslrs/expresslrs-configurator');
+              shell.openExternal(
+                'https://github.com/expresslrs/expresslrs-configurator'
+              );
             },
           },
           // {
