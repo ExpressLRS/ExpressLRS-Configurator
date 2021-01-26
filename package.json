@@ -1,5 +1,5 @@
 {
-  "name": "expresslrs-configurator",
+  "name": "@expresslrs/configurator",
   "productName": "ExpressLRS Configurator",
   "description": "Cross platform build & configuration tool for the ExpressLRS firmware",
   "scripts": {
