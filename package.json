@@ -94,14 +94,7 @@
     "type": "git",
     "url": "git+https://github.com/expresslrs/expresslrs-configurator"
   },
-  "contributors": [
-    {
-      "name": "Julius Jurgelėnas",
-      "email": "julius@jurgelenas.lt",
-      "url": "https://github.com/jurgelenas"
-    }
-  ],
-  "license": "GPL-3.0-only",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": ""
   },
