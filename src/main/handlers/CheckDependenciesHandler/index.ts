@@ -58,7 +58,7 @@ export default class CheckDependenciesHandler {
         missingDependencies.push(ConfiguratorDependency.Git);
       }
 
-      const pythonCheck = await this.platformio.checkCore();
+      const pythonCheck = await this.platformio.checkPython();
       if (!pythonCheck.success) {
         missingDependencies.push(ConfiguratorDependency.Python);
       } else {
