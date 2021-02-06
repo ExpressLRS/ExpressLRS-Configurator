@@ -150,12 +150,18 @@ export default class BuildFirmwareHandler {
 
       const coreCheck = await this.platformio.checkCore();
       if (!coreCheck.success) {
-        sendResponse({
-          success: false,
-          message: `platformio error: ${coreCheck.stderr} ${coreCheck.stdout}`,
-          errorType: BuildFirmwareErrorType.PlatformioDependencyError,
-        });
-        return;
+        sendLogs(
+          'Failed to find Platformio on your computer. Trying to install it automatically...'
+        );
+        const platformioInstallResult = await this.platformio.install(sendLogs);
+        if (!platformioInstallResult.success) {
+          sendResponse({
+            success: false,
+            message: `platformio error: ${platformioInstallResult.stderr} ${platformioInstallResult.stdout}`,
+            errorType: BuildFirmwareErrorType.PlatformioDependencyError,
+          });
+          return;
+        }
       }
 
       let gitPath = '';
@@ -248,7 +254,6 @@ export default class BuildFirmwareHandler {
         firmwarePath,
         sendLogs
       );
-      console.log('compile result', compileResult.success, compileResult.code);
       if (!compileResult.success) {
         sendResponse({
           success: false,
@@ -259,7 +264,6 @@ export default class BuildFirmwareHandler {
       }
 
       if (req.type === JobType.Build && compileResult.success) {
-        // TODO: toggle / inject via constructor?
         shell.showItemInFolder(
           this.builder.getFirmwareBinPath(req.target, firmwarePath)
         );
