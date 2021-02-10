@@ -1,0 +1,9 @@
+query targetDeviceOptions($target: DeviceTarget!) {
+  targetDeviceOptions(target: $target) {
+    type
+    key
+    enabled
+    enumValues
+    value
+  }
+}

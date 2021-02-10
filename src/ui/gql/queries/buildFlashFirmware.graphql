@@ -1,0 +1,8 @@
+mutation buildFlashFirmware($input: BuildFlashFirmwareInput!) {
+  buildFlashFirmware(input: $input) {
+    success
+    errorType
+    message
+    firmwareBinPath
+  }
+}

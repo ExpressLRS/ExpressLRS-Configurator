@@ -9,6 +9,30 @@ ExpressLRS Configurator is a cross-platform build & configuration tool for the
 - [Discord Chat](https://discord.gg/dS6ReFY)
 - [Facebook Group](https://www.facebook.com/groups/636441730280366)
 
+## Architecture
+
+```
+ - - - - - - - - - - - - - - - - - - - -
+|          ExpressLRS-Configurator      |
+|                   |                   |
+|     renderer      |        main       |
+|                   |                   |
+|   configurator <----->  api-server    |
+|                   |          |        |
+|                   |          V        |
+|                   |      platformio   |
+|_ _ _ _ _ _ _ _ _ _|_ _ _ _ _ | _ _ _ _|
+                               V
+                      ExpressLRS hardware
+```
+
+This Electron application is split into two parts: a local API server that does all the work, and a UI layer. Both of
+these application layers communicate within each other using Graphql protocol.
+
+Heavy use of TypeScript and `@graphql-codegen/cli` is made throughout the repository to ensure the datatypes transmitted
+between the API and UI layers are consistent at compile-time and Graphql ensuring the datatypes are consistent at
+runtime.
+
 ## Starting Development
 
 Prerequisites
@@ -21,8 +45,16 @@ Prerequisites
 Start the app in the dev environment:
 
 ```bash
-yarn
+yarn install --frozen-lockfile
 yarn start
+```
+
+## Other useful cli commands
+
+Generate TypeScript types from Graphql schema and Queries located in [src/ui/gql/queries](src/ui/gql/queries):
+
+```bash
+yarn run gql-codegen
 ```
 
 ## Credits

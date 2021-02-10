@@ -13,6 +13,8 @@ interface OmniboxProps {
   options: Option[];
   onChange: (value: string | null) => void;
   currentValue: Option | null;
+  disabled?: boolean;
+  loading?: boolean;
 }
 
 const Omnibox: FunctionComponent<OmniboxProps> = ({
@@ -20,6 +22,8 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
   currentValue,
   onChange,
   title,
+  disabled = false,
+  loading = false,
 }) => {
   const onInputChange = (_event: any, opt: Option | null) => {
     if (opt && opt.value) {
@@ -34,6 +38,9 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
       options={options}
       disablePortal
       autoHighlight
+      fullWidth
+      loading={loading}
+      disabled={disabled}
       getOptionLabel={(option) => option.label}
       getOptionSelected={(option, otherOption) =>
         option.value === otherOption.value

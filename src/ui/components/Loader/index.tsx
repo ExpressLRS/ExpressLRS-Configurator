@@ -11,14 +11,18 @@ const useStyles = makeStyles((theme) => ({
 
 interface LoaderProps {
   loading: boolean;
+  className?: string;
 }
 
-const Loader: FunctionComponent<LoaderProps> = ({ loading }) => {
+const Loader: FunctionComponent<LoaderProps> = ({
+  loading,
+  className = '',
+}) => {
   const styles = useStyles();
   return (
     <>
       {loading && (
-        <div className={styles.root}>
+        <div className={`${styles.root} ${className}`}>
           <CircularProgress />
         </div>
       )}

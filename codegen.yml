@@ -1,0 +1,18 @@
+overwrite: true
+schema: 'http://localhost:3500/graphql'
+generates:
+  src/ui/gql/generated/types.ts:
+    documents:
+      - './src/ui/**/*.graphql'
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      immutableTypes: true
+      namingConvention:
+        enumValues: 'keep'
+
+  graphql.schema.json:
+    plugins:
+      - 'introspection'

@@ -11,11 +11,11 @@ import {
   Toolbar,
 } from '@material-ui/core';
 import BuildIcon from '@material-ui/icons/Build';
-import SettingsIcon from '@material-ui/icons/Settings';
+// import SettingsIcon from '@material-ui/icons/Settings';
 import ListIcon from '@material-ui/icons/List';
 import { matchPath, useLocation, Link } from 'react-router-dom';
 
-const drawerWidth = 230;
+const drawerWidth = 205;
 const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
@@ -38,7 +38,7 @@ const Sidebar: FunctionComponent = () => {
   const location = useLocation();
   const configuratorActive =
     matchPath(location.pathname, '/configurator') !== null;
-  const settingsActive = matchPath(location.pathname, '/settings') !== null;
+  // const settingsActive = matchPath(location.pathname, '/settings') !== null;
   const logsActive = matchPath(location.pathname, '/logs') !== null;
 
   return (
@@ -66,18 +66,19 @@ const Sidebar: FunctionComponent = () => {
             <ListItemText primary="Configurator" />
           </ListItem>
 
-          <ListItem
-            component={Link}
-            to="/settings"
-            selected={settingsActive}
-            className={styles.menuItem}
-            button
-          >
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItem>
+          {/* <ListItem */}
+          {/*  component={Link} */}
+          {/*  to="/settings" */}
+          {/*  selected={settingsActive} */}
+          {/*  className={styles.menuItem} */}
+          {/*  button */}
+          {/* > */}
+          {/*  <ListItemIcon> */}
+          {/*    <SettingsIcon /> */}
+          {/*  </ListItemIcon> */}
+          {/*  <ListItemText primary="Settings" /> */}
+          {/* </ListItem> */}
+
           <ListItem
             component={Link}
             to="/logs"

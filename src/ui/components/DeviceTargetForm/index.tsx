@@ -1,10 +1,18 @@
 import { makeStyles } from '@material-ui/core';
 import React, { FunctionComponent, useState } from 'react';
 import Omnibox, { Option } from '../Omnibox';
-import { DeviceTarget } from '../../../library/FirmwareBuilder/Enum/DeviceTarget';
+import {
+  DeviceTarget,
+  useAvailableFirmwareTargetsQuery,
+} from '../../gql/generated/types';
+import Loader from '../Loader';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+  loader: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
@@ -20,10 +28,13 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
 ) => {
   const { onChange, currentTarget } = props;
   const styles = useStyles();
-  const options: Option[] = Object.keys(DeviceTarget).map((target) => ({
-    label: target,
-    value: target,
-  }));
+
+  const { loading, data } = useAvailableFirmwareTargetsQuery();
+  const options: Option[] =
+    data?.availableFirmwareTargets?.map((target) => ({
+      label: target,
+      value: target,
+    })) ?? [];
 
   const [currentValue, setCurrentValue] = useState<Option | null>(
     currentTarget
@@ -51,7 +62,9 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
         currentValue={currentValue}
         onChange={onDeviceChange}
         options={options}
+        loading={loading}
       />
+      <Loader className={styles.loader} loading={loading} />
     </div>
   );
 };

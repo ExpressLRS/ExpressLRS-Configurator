@@ -9,7 +9,12 @@ import {
   makeStyles,
   TextField,
 } from '@material-ui/core';
-import { UserDefineKey } from '../../../library/FirmwareBuilder/Enum/UserDefineKey';
+import {
+  UserDefine,
+  UserDefineKey,
+  UserDefineKind,
+} from '../../gql/generated/types';
+import Omnibox from '../Omnibox';
 
 const useStyles = makeStyles((theme) => ({
   option: {
@@ -27,28 +32,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export interface UserDefineOption {
-  key: UserDefineKey;
-  checked: boolean;
-  label: string;
-  value: string;
-}
-
 interface UserDefinesListProps {
-  options: UserDefineOption[];
-  whitelistKeys?: UserDefineKey[];
-  onChange: (data: UserDefineOption) => void;
+  options: UserDefine[];
+  onChange: (data: UserDefine) => void;
 }
 
 const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
   const styles = useStyles();
-  const { options, whitelistKeys, onChange } = props;
+  const { options, onChange } = props;
   const onChecked = (data: UserDefineKey) => {
     const opt = options.find(({ key }) => key === data);
     if (opt !== undefined) {
       onChange({
         ...opt,
-        checked: !opt.checked,
+        enabled: !opt.enabled,
       });
     } else {
       throw new Error(`user define key ${data} not found`);
@@ -70,31 +67,53 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
     }
   };
 
-  let opts = options;
-  if (whitelistKeys && whitelistKeys?.length > 0) {
-    opts = opts.filter(({ key }) => whitelistKeys.indexOf(key) > -1);
-  }
+  const onEnumValueChange = (data: UserDefineKey) => (value: string | null) => {
+    const opt = options.find(({ key }) => key === data);
+    if (opt !== undefined) {
+      const update = {
+        ...opt,
+        value,
+      };
+      onChange(update);
+    } else {
+      throw new Error(`user define key ${data} not found`);
+    }
+  };
+
+  const inputLabel = (key: UserDefineKey): string => {
+    switch (key) {
+      case UserDefineKey.ARM_CHANNEL:
+        return 'Arm channel';
+      case UserDefineKey.BINDING_PHRASE:
+        return 'Custom binding phrase';
+      case UserDefineKey.MY_STARTUP_MELODY:
+        return 'My startup melody';
+      default:
+        return 'Value';
+    }
+  };
+
   return (
     <List>
-      {opts.map((item) => {
+      {options.map((item) => {
         return (
           <React.Fragment key={item.key}>
             <ListItem
               dense
               className={styles.option}
-              selected={item.checked}
+              selected={item.enabled}
               button
               onClick={onChecked.bind(this, item.key)}
             >
               <ListItemIcon className={styles.icon}>
                 <Checkbox
                   edge="start"
-                  checked={item.checked}
+                  checked={item.enabled}
                   tabIndex={-1}
                   disableRipple
                 />
               </ListItemIcon>
-              <ListItemText primary={item.label} />
+              <ListItemText primary={item.key} />
               {/* this could be used to show helpful information */}
               {/* <ListItemSecondaryAction> */}
               {/*  <Tooltip title="tooltip" > */}
@@ -102,35 +121,35 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
               {/*  </Tooltip> */}
               {/* </ListItemSecondaryAction> */}
             </ListItem>
-            {item.key === UserDefineKey.BINDING_PHRASE && item.checked && (
-              <ListItem className={styles.complimentaryItem}>
-                <TextField
-                  size="small"
-                  onBlur={onUserDefineValueChange(item.key)}
-                  fullWidth
-                  label="Custom binding phrase"
-                />
-              </ListItem>
+            {item.type === UserDefineKind.Text && item.enabled && (
+              <>
+                <ListItem className={styles.complimentaryItem}>
+                  <TextField
+                    size="small"
+                    onBlur={onUserDefineValueChange(item.key)}
+                    defaultValue={item.value}
+                    fullWidth
+                    label={inputLabel(item.key)}
+                  />
+                </ListItem>
+              </>
             )}
 
-            {item.key === UserDefineKey.ARM_CHANNEL && item.checked && (
+            {item.type === UserDefineKind.Enum && item.enabled && (
               <ListItem className={styles.complimentaryItem}>
-                <TextField
-                  size="small"
-                  onBlur={onUserDefineValueChange(item.key)}
-                  fullWidth
-                  label="Arm channel"
-                />
-              </ListItem>
-            )}
-
-            {item.key === UserDefineKey.MY_STARTUP_MELODY && item.checked && (
-              <ListItem className={styles.complimentaryItem}>
-                <TextField
-                  size="small"
-                  onBlur={onUserDefineValueChange(item.key)}
-                  fullWidth
-                  label="Startup melody"
+                <Omnibox
+                  title={inputLabel(item.key)}
+                  currentValue={{
+                    value: item.value ?? '',
+                    label: item.value ?? '',
+                  }}
+                  onChange={onEnumValueChange(item.key)}
+                  options={
+                    item?.enumValues?.map((opt) => ({
+                      value: opt,
+                      label: opt,
+                    })) ?? []
+                  }
                 />
               </ListItem>
             )}

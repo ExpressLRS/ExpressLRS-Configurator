@@ -1,0 +1,5 @@
+subscription buildLogUpdates {
+  buildLogUpdates {
+    data
+  }
+}
