@@ -44,6 +44,7 @@ module.exports = (api) => {
       require('@babel/plugin-proposal-do-expressions'),
 
       // Stage 2
+      'babel-plugin-transform-typescript-metadata',
       [require('@babel/plugin-proposal-decorators'), { legacy: true }],
       require('@babel/plugin-proposal-function-sent'),
       require('@babel/plugin-proposal-export-namespace-from'),

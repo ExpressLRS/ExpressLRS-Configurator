@@ -8,65 +8,60 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { ipcRenderer, IpcRendererEvent } from 'electron';
+import { ipcRenderer } from 'electron';
 import Header from '../../components/Header';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
-import { Config } from '../../../config';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
-import { DeviceTarget } from '../../../library/FirmwareBuilder/Enum/DeviceTarget';
 import DeviceOptionsForm, {
   DeviceOptionsFormData,
 } from '../../components/DeviceOptionsForm';
 import Sidebar from '../../components/Sidebar';
-import {
-  MainRequestType,
-  MainResponseType,
-  PushMessageType,
-} from '../../../ipc';
 import ShowAlerts from '../../components/ShowAlerts';
-import UserDefinesValidator from '../../../library/FirmwareBuilder/Validator/UserDefinesValidator';
 import CardTitle from '../../components/CardTitle';
 import EventsBatcher from '../../library/EventsBatcher';
 import Logs from '../../components/Logs';
-import {
-  BuildFirmWareProgressNotificationData,
-  BuildFlashFirmwareRequestBody,
-  BuildFlashFirmwareResponseBody,
-  FirmwareSource,
-  FirmwareVersionData,
-  JobType,
-  UserDefinesMode,
-} from '../../../main/handlers/BuildFirmwareHandler';
 import BuildProgressBar from '../../components/BuildProgressBar';
 import BuildNotificationsList from '../../components/BuildNotificationsList';
+import {
+  BuildFlashFirmwareInput,
+  BuildJobType,
+  BuildProgressNotification,
+  DeviceTarget,
+  FirmwareSource,
+  FirmwareVersionDataInput,
+  useBuildFlashFirmwareMutation,
+  useBuildLogUpdatesSubscription,
+  useBuildProgressNotificationsSubscription,
+  UserDefinesMode,
+  useTargetDeviceOptionsLazyQuery,
+} from '../../gql/generated/types';
+import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
-import UserDefineConstraints, {
-  UserDefinesByCategory,
-} from '../../../library/FirmwareBuilder/UserDefineConstraints';
-import { UserDefine } from '../../../library/FirmwareBuilder/Model/UserDefine';
+import { IpcRequest, OpenFileLocationRequestBody } from '../../../ipc';
+import UserDefinesValidator from './UserDefinesValidator';
 
-export const validFirmwareVersionData = (
-  data: FirmwareVersionData
+export const validateFirmwareVersionData = (
+  data: FirmwareVersionDataInput
 ): Error[] => {
   const errors: Error[] = [];
   switch (data.source) {
     case FirmwareSource.Local:
-      if (!(data.localPath.length > 0)) {
+      if (!(data.localPath && data.localPath.length > 0)) {
         errors.push(new Error('Local path is empty'));
       }
       break;
     case FirmwareSource.GitCommit:
-      if (!(data.gitCommit.length > 0)) {
+      if (!(data.gitCommit && data.gitCommit.length > 0)) {
         errors.push(new Error('Git commit hash is empty'));
       }
       break;
     case FirmwareSource.GitBranch:
-      if (!(data.gitBranch.length > 0)) {
+      if (!(data.gitBranch && data.gitBranch.length > 0)) {
         errors.push(new Error('Git branch is not selected'));
       }
       break;
     case FirmwareSource.GitTag:
-      if (!(data.gitTag.length > 0)) {
+      if (!(data.gitTag && data.gitTag.length > 0)) {
         errors.push(new Error('Firmware release is not selected'));
       }
       break;
@@ -97,8 +92,6 @@ enum ViewState {
   Compiling = 'https://xkcd.com/303/',
 }
 
-const userDefineConstrains = new UserDefineConstraints();
-
 const ConfiguratorView: FunctionComponent = () => {
   const styles = useStyles();
 
@@ -107,66 +100,61 @@ const ConfiguratorView: FunctionComponent = () => {
   );
 
   const [progressNotifications, setProgressNotifications] = useState<
-    BuildFirmWareProgressNotificationData[]
+    BuildProgressNotification[]
   >([]);
-  const progressNotificationsRef = useRef<
-    BuildFirmWareProgressNotificationData[]
-  >([]);
+  const progressNotificationsRef = useRef<BuildProgressNotification[]>([]);
   const [
     lastProgressNotification,
     setLastProgressNotification,
-  ] = useState<BuildFirmWareProgressNotificationData | null>(null);
-  useEffect(() => {
-    const listener = (
-      _event: IpcRendererEvent,
-      args: BuildFirmWareProgressNotificationData
-    ) => {
-      console.log('receives progress notification', args);
-      const newNotificationsList = [...progressNotificationsRef.current, args];
-      progressNotificationsRef.current = newNotificationsList;
-      setProgressNotifications(newNotificationsList);
-      setLastProgressNotification(args);
-    };
-    ipcRenderer.on(PushMessageType.FlashFirmWareProgressNotification, listener);
-    return () => {
-      progressNotificationsRef.current = [];
-      ipcRenderer.removeListener(
-        PushMessageType.FlashFirmWareProgressNotification,
-        listener
-      );
-    };
-  }, []);
+  ] = useState<BuildProgressNotification | null>(null);
+
+  useBuildProgressNotificationsSubscription({
+    onSubscriptionData: (options) => {
+      const args = options.subscriptionData.data?.buildProgressNotifications;
+      if (args !== undefined) {
+        const newNotificationsList = [
+          ...progressNotificationsRef.current,
+          args,
+        ];
+        progressNotificationsRef.current = newNotificationsList;
+        setProgressNotifications(newNotificationsList);
+        setLastProgressNotification(args);
+      }
+    },
+  });
 
   /*
     We batch log events in order to save React.js state updates and rendering performance.
    */
   const [logs, setLogs] = useState<string>('');
   const logsRef = useRef<string[]>([]);
+  const eventsBatcherRef = useRef<EventsBatcher<string> | null>(null);
   useEffect(() => {
-    const eventsBatcher = new EventsBatcher<string>(250);
-    eventsBatcher.onBatch((newLogs) => {
+    eventsBatcherRef.current = new EventsBatcher<string>(200);
+    eventsBatcherRef.current.onBatch((newLogs) => {
       const newLogsList = [...logsRef.current, ...newLogs];
       logsRef.current = newLogsList;
       setLogs(newLogsList.join(''));
     });
-    const handler = (_event: IpcRendererEvent, args: string) => {
-      eventsBatcher.enqueue(args);
-    };
-    ipcRenderer.on(PushMessageType.BuildFlashLogEntry, handler);
-    return () => {
-      logsRef.current = [];
-      ipcRenderer.removeListener(PushMessageType.BuildFlashLogEntry, handler);
-    };
   }, []);
+  useBuildLogUpdatesSubscription({
+    fetchPolicy: 'network-only',
+    onSubscriptionData: (options) => {
+      const args = options.subscriptionData.data?.buildLogUpdates.data;
+      if (args !== undefined && eventsBatcherRef.current !== null) {
+        eventsBatcherRef.current.enqueue(args);
+      }
+    },
+  });
 
   const [
     firmwareVersionData,
     setFirmwareVersionData,
-  ] = useState<FirmwareVersionData | null>(null);
+  ] = useState<FirmwareVersionDataInput | null>(null);
   const [firmwareVersionErrors, setFirmwareVersionErrors] = useState<Error[]>(
     []
   );
-  const onFirmwareVersionData = (data: FirmwareVersionData) => {
+  const onFirmwareVersionData = (data: FirmwareVersionDataInput) => {
     setFirmwareVersionErrors([]);
     setFirmwareVersionData(data);
   };
@@ -185,61 +173,73 @@ const ConfiguratorView: FunctionComponent = () => {
     userDefinesMode: UserDefinesMode.UserInterface,
     userDefineOptions: [],
   });
-  const [deviceOptionsErrors, setDeviceOptionsErrors] = useState<Error[]>([]);
   const [
-    deviceOptionCategories,
-    setDeviceOptionCategories,
-  ] = useState<UserDefinesByCategory | null>(null);
+    fetchOptions,
+    {
+      loading: loadingOptions,
+      data: deviceOptionsResponse,
+      error: deviceOptionsResponseError,
+    },
+  ] = useTargetDeviceOptionsLazyQuery();
+
   useEffect(() => {
+    console.log('TRYING TO RESET ALL DEVICE OPTIONS');
     if (deviceTarget === null) {
-      setDeviceOptionCategories(null);
-    } else {
-      setDeviceOptionCategories(
-        userDefineConstrains.getCategorizedByTarget(deviceTarget)
-      );
-      const allowedOptions = userDefineConstrains.getByTarget(deviceTarget);
-      const options = allowedOptions.map((key) => {
-        return {
-          key,
-          checked: false,
-          label: key,
-          value: '',
-        };
-      });
       setDeviceOptionsFormData({
-        userDefinesMode: deviceOptionsFormData?.userDefinesMode,
-        userDefinesTxt: deviceOptionsFormData?.userDefinesTxt,
-        userDefineOptions: options,
+        userDefinesTxt: '',
+        userDefinesMode: UserDefinesMode.UserInterface,
+        userDefineOptions: [],
+      });
+    } else {
+      setDeviceOptionsFormData({
+        ...deviceOptionsFormData,
+        userDefineOptions: [],
+      });
+      fetchOptions({
+        variables: {
+          target: deviceTarget,
+        },
       });
     }
   }, [deviceTarget]);
 
-  const onUserDefines = (data: DeviceOptionsFormData) => {
-    setDeviceOptionsErrors([]);
+  useEffect(() => {
+    console.log(
+      'TRYING TO RESET ALL DEVICE OPTIONS 222222222222222222222222222'
+    );
+    if (
+      deviceOptionsResponse?.targetDeviceOptions?.length &&
+      deviceOptionsResponse?.targetDeviceOptions?.length > 0
+    ) {
+      setDeviceOptionsFormData({
+        ...deviceOptionsFormData,
+        userDefineOptions: [...deviceOptionsResponse?.targetDeviceOptions],
+      });
+    }
+  }, [deviceOptionsResponse]);
 
+  const onUserDefines = (data: DeviceOptionsFormData) => {
     setDeviceOptionsFormData(data);
   };
 
-  const [buildInProgress, setBuildInProgress] = useState<boolean>(false);
   const [
-    response,
-    setResponse,
-  ] = useState<BuildFlashFirmwareResponseBody | null>(null);
-  useEffect(() => {
-    const handler = (
-      _event: IpcRendererEvent,
-      res: BuildFlashFirmwareResponseBody
-    ) => {
-      console.log('flash firmware RESPONSE', res);
-      setBuildInProgress(false);
-      setResponse(res);
-    };
-    ipcRenderer.on(MainResponseType.BuildFlashFirmware, handler);
+    buildFlashFirmwareMutation,
+    {
+      loading: buildInProgress,
+      data: response,
+      error: buildFlashErrorResponse,
+    },
+  ] = useBuildFlashFirmwareMutation();
 
-    return () => {
-      ipcRenderer.removeListener(MainResponseType.BuildFlashFirmware, handler);
-    };
-  }, []);
+  useEffect(() => {
+    const arg = response?.buildFlashFirmware?.firmwareBinPath;
+    if (arg !== undefined && arg !== null && arg?.length > 0) {
+      const body: OpenFileLocationRequestBody = {
+        path: arg,
+      };
+      ipcRenderer.send(IpcRequest.OpenFileLocation, body);
+    }
+  }, [response]);
 
   const reset = () => {
     logsRef.current = [];
@@ -247,12 +247,9 @@ const ConfiguratorView: FunctionComponent = () => {
     setLogs('');
     setFirmwareVersionErrors([]);
     setDeviceTargetErrors([]);
-    setDeviceOptionsErrors([]);
 
     setProgressNotifications([]);
     setLastProgressNotification(null);
-
-    setResponse(null);
   };
 
   const onBack = () => {
@@ -260,15 +257,23 @@ const ConfiguratorView: FunctionComponent = () => {
     setViewState(ViewState.Configuration);
   };
 
-  const sendJob = (type: JobType) => {
+  const [
+    deviceOptionsValidationErrors,
+    setDeviceOptionsValidationErrors,
+  ] = useState<Error[] | null>(null);
+  const [currentJobType, setCurrentJobType] = useState<BuildJobType>(
+    BuildJobType.Build
+  );
+  const sendJob = (type: BuildJobType) => {
     reset();
+    setCurrentJobType(type);
 
     // Validate firmware source
     if (firmwareVersionData === null) {
       setFirmwareVersionErrors([new Error('Please select firmware source')]);
       return;
     }
-    const sourceErrors = validFirmwareVersionData(firmwareVersionData);
+    const sourceErrors = validateFirmwareVersionData(firmwareVersionData);
     if (sourceErrors.length > 0) {
       setFirmwareVersionErrors(sourceErrors);
       return;
@@ -288,25 +293,15 @@ const ConfiguratorView: FunctionComponent = () => {
       return;
     }
 
-    const userDefines: UserDefine[] = deviceOptionsFormData?.userDefineOptions
-      .map((item): UserDefine | null => {
-        if (item.checked) {
-          return {
-            key: item.key,
-            value: item.value,
-          };
-        }
-        return null;
-      })
-      .filter((item): item is UserDefine => item != null);
-
     switch (deviceOptionsFormData.userDefinesMode) {
       case UserDefinesMode.Manual:
         break;
       case UserDefinesMode.UserInterface:
-        const errs = new UserDefinesValidator().validate(userDefines);
+        const errs = new UserDefinesValidator().validate(
+          deviceOptionsFormData.userDefineOptions
+        );
         if (errs.length > 0) {
-          setDeviceOptionsErrors(errs);
+          setDeviceOptionsValidationErrors(errs);
           return;
         }
         break;
@@ -314,21 +309,30 @@ const ConfiguratorView: FunctionComponent = () => {
         break;
     }
 
-    const req: BuildFlashFirmwareRequestBody = {
+    const input: BuildFlashFirmwareInput = {
       type,
       firmware: firmwareVersionData,
       target: deviceTarget,
       userDefinesTxt: deviceOptionsFormData.userDefinesTxt,
       userDefinesMode: deviceOptionsFormData.userDefinesMode,
-      userDefines,
+      userDefines: deviceOptionsFormData.userDefineOptions.map((item) => ({
+        key: item.key,
+        value: item.value,
+        enabled: item.enabled,
+        enumValues: item.enumValues,
+        type: item.type,
+      })),
     };
+    buildFlashFirmwareMutation({
+      variables: {
+        input,
+      },
+    });
     setViewState(ViewState.Compiling);
-    setBuildInProgress(true);
-    ipcRenderer.send(MainRequestType.BuildFlashFirmware, req);
   };
 
-  const onBuild = () => sendJob(JobType.Build);
-  const onBuildAndFlash = () => sendJob(JobType.BuildAndFlash);
+  const onBuild = () => sendJob(BuildJobType.Build);
+  const onBuildAndFlash = () => sendJob(BuildJobType.BuildAndFlash);
 
   return (
     <main className={styles.root}>
@@ -344,8 +348,6 @@ const ConfiguratorView: FunctionComponent = () => {
                 <FirmwareVersionForm
                   onChange={onFirmwareVersionData}
                   data={firmwareVersionData}
-                  repositoryOwner={Config.git.owner}
-                  repositoryName={Config.git.repositoryName}
                 />
                 <ShowAlerts severity="error" messages={firmwareVersionErrors} />
               </CardContent>
@@ -367,11 +369,18 @@ const ConfiguratorView: FunctionComponent = () => {
               <CardContent>
                 <DeviceOptionsForm
                   deviceOptions={deviceOptionsFormData}
-                  categories={deviceOptionCategories}
                   target={deviceTarget}
                   onChange={onUserDefines}
                 />
-                <ShowAlerts severity="error" messages={deviceOptionsErrors} />
+                <ShowAlerts
+                  severity="error"
+                  messages={deviceOptionsResponseError}
+                />
+                <ShowAlerts
+                  severity="error"
+                  messages={deviceOptionsValidationErrors}
+                />
+                <Loader loading={loadingOptions} />
               </CardContent>
               <Divider />
 
@@ -406,9 +415,15 @@ const ConfiguratorView: FunctionComponent = () => {
               <CardContent>
                 <BuildProgressBar
                   inProgress={buildInProgress}
+                  jobType={currentJobType}
                   progressNotification={lastProgressNotification}
                 />
                 <BuildNotificationsList notifications={progressNotifications} />
+
+                <ShowAlerts
+                  severity="error"
+                  messages={buildFlashErrorResponse}
+                />
               </CardContent>
 
               {logs.length > 0 && (
@@ -421,12 +436,12 @@ const ConfiguratorView: FunctionComponent = () => {
                   <Divider />
                 </>
               )}
-              {response !== null && (
+              {response !== undefined && (
                 <>
                   <CardTitle icon={<SettingsIcon />} title="Result" />
                   <Divider />
                   <CardContent>
-                    <BuildResponse response={response} />
+                    <BuildResponse response={response?.buildFlashFirmware} />
                   </CardContent>
                   <Divider />
                 </>

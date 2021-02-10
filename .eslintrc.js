@@ -10,7 +10,8 @@ module.exports = {
     'no-case-declarations': 'off',
     'no-plusplus': 'off',
     'promise/always-return': 'off',
-    'class-methods-use-this': 'warn',
+    'class-methods-use-this': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,

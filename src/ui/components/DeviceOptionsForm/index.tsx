@@ -11,11 +11,13 @@ import {
   Typography,
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
-import { DeviceTarget } from '../../../library/FirmwareBuilder/Enum/DeviceTarget';
-import { UserDefineCategory } from '../../../library/FirmwareBuilder/Enum/UserDefineCategory';
-import UserDefinesList, { UserDefineOption } from '../UserDefinesList';
-import { UserDefinesMode } from '../../../main/handlers/BuildFirmwareHandler';
-import { UserDefinesByCategory } from '../../../library/FirmwareBuilder/UserDefineConstraints';
+import UserDefinesList from '../UserDefinesList';
+import {
+  DeviceTarget,
+  UserDefine,
+  UserDefineKey,
+  UserDefinesMode,
+} from '../../gql/generated/types';
 
 const useStyles = makeStyles((theme) => ({
   categoryTitle: {
@@ -45,23 +47,103 @@ const useStyles = makeStyles((theme) => ({
 
 export interface DeviceOptionsFormData {
   userDefinesMode: UserDefinesMode;
-  userDefineOptions: UserDefineOption[];
+  userDefineOptions: UserDefine[];
   userDefinesTxt: string;
 }
 
 interface DeviceOptionsFormProps {
   target: DeviceTarget | null;
-  categories: UserDefinesByCategory | null;
   deviceOptions: DeviceOptionsFormData;
   onChange: (data: DeviceOptionsFormData) => void;
 }
 
+enum UserDefineCategory {
+  RegulatoryDomains = 'REGULATORY_DOMAINS',
+  BindingPhrase = 'BINDING_PHRASE',
+  HybridSwitches = 'HYBRID_SWITCHES',
+  PerformanceOptions = 'PERFORMANCE_OPTIONS',
+  CompatibilityOptions = 'COMPATIBILITY_OPTIONS',
+  OtherOptions = 'OTHER_OPTIONS',
+}
+
+export type UserDefinesByCategory = {
+  [key in UserDefineCategory]: UserDefine[];
+};
+
+export type UserDefinesKeysByCategory = {
+  [key in UserDefineCategory]: UserDefineKey[];
+};
+
+const userDefinesToCategories = (
+  userDefines: UserDefine[]
+): UserDefinesByCategory => {
+  const result: UserDefinesByCategory = {
+    [UserDefineCategory.RegulatoryDomains]: [],
+    [UserDefineCategory.BindingPhrase]: [],
+    [UserDefineCategory.HybridSwitches]: [],
+    [UserDefineCategory.PerformanceOptions]: [],
+    [UserDefineCategory.CompatibilityOptions]: [],
+    [UserDefineCategory.OtherOptions]: [],
+  };
+
+  const keysToCategories: UserDefinesKeysByCategory = {
+    [UserDefineCategory.RegulatoryDomains]: [
+      UserDefineKey.REGULATORY_DOMAIN_AU_915,
+      UserDefineKey.REGULATORY_DOMAIN_EU_868,
+      UserDefineKey.REGULATORY_DOMAIN_FCC_915,
+      UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
+    ],
+    [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
+    [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
+    [UserDefineCategory.PerformanceOptions]: [
+      UserDefineKey.FAST_SYNC,
+      UserDefineKey.NO_SYNC_ON_ARM,
+      UserDefineKey.ARM_CHANNEL,
+      UserDefineKey.FEATURE_OPENTX_SYNC,
+      UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE,
+      UserDefineKey.LOCK_ON_FIRST_CONNECTION,
+      UserDefineKey.LOCK_ON_50HZ,
+    ],
+    [UserDefineCategory.CompatibilityOptions]: [
+      UserDefineKey.UART_INVERTED,
+      UserDefineKey.R9M_UNLOCK_HIGHER_POWER,
+    ],
+    [UserDefineCategory.OtherOptions]: [
+      UserDefineKey.AUTO_WIFI_ON_BOOT,
+      UserDefineKey.USE_ESP8266_BACKPACK,
+      UserDefineKey.JUST_BEEP_ONCE,
+      UserDefineKey.MY_STARTUP_MELODY,
+    ],
+  };
+
+  const defineToCategory = (key: UserDefineKey): UserDefineCategory => {
+    const cats: UserDefineCategory[] = Object.keys(
+      keysToCategories
+    ) as UserDefineCategory[];
+    for (let i = 0; i < cats.length; i++) {
+      const defineCategory = cats[i];
+      if (keysToCategories[defineCategory].indexOf(key) > -1) {
+        return cats[i];
+      }
+    }
+    throw new Error(`failed to find category for ${key}`);
+  };
+
+  userDefines.forEach((userDefine) => {
+    result[defineToCategory(userDefine.key)].push(userDefine);
+  });
+
+  return result;
+};
+
 const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
   props
 ) => {
-  const { target, categories, deviceOptions, onChange } = props;
   const styles = useStyles();
-  const onOptionUpdate = (data: UserDefineOption) => {
+  const { target, deviceOptions, onChange } = props;
+  const categories = userDefinesToCategories(deviceOptions.userDefineOptions);
+
+  const onOptionUpdate = (data: UserDefine) => {
     const updatedOptions = deviceOptions?.userDefineOptions.map((opt) => {
       if (opt.key === data.key) {
         return {
@@ -76,7 +158,7 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
     //     if (opt.key !== data.key) {
     //       return {
     //         ...opt,
-    //         checked: false,
+    //         enabled: false,
     //       };
     //     } else {
     //       return opt;
@@ -164,11 +246,8 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                       Regulatory domains
                     </Typography>
                     <UserDefinesList
-                      options={deviceOptions.userDefineOptions}
+                      options={categories[UserDefineCategory.RegulatoryDomains]}
                       onChange={onOptionUpdate}
-                      whitelistKeys={
-                        categories[UserDefineCategory.RegulatoryDomains]
-                      }
                     />
                   </>
                 )}
@@ -176,11 +255,8 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <>
                     <Typography variant="h6">Binding phrase setup</Typography>
                     <UserDefinesList
-                      options={deviceOptions.userDefineOptions}
+                      options={categories[UserDefineCategory.BindingPhrase]}
                       onChange={onOptionUpdate}
-                      whitelistKeys={
-                        categories[UserDefineCategory.BindingPhrase]
-                      }
                     />
                   </>
                 )}
@@ -188,11 +264,8 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <>
                     <Typography variant="h6">Hybrid switches</Typography>
                     <UserDefinesList
-                      options={deviceOptions.userDefineOptions}
+                      options={categories[UserDefineCategory.HybridSwitches]}
                       onChange={onOptionUpdate}
-                      whitelistKeys={
-                        categories[UserDefineCategory.HybridSwitches]
-                      }
                     />
                   </>
                 )}
@@ -201,11 +274,10 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <>
                     <Typography variant="h6">Compat options</Typography>
                     <UserDefinesList
-                      options={deviceOptions.userDefineOptions}
-                      onChange={onOptionUpdate}
-                      whitelistKeys={
+                      options={
                         categories[UserDefineCategory.CompatibilityOptions]
                       }
+                      onChange={onOptionUpdate}
                     />
                   </>
                 )}
@@ -217,11 +289,10 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <>
                     <Typography variant="h6">Performance options</Typography>
                     <UserDefinesList
-                      options={deviceOptions.userDefineOptions}
-                      onChange={onOptionUpdate}
-                      whitelistKeys={
+                      options={
                         categories[UserDefineCategory.PerformanceOptions]
                       }
+                      onChange={onOptionUpdate}
                     />
                   </>
                 )}
@@ -229,11 +300,8 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <>
                     <Typography variant="h6">Other options</Typography>
                     <UserDefinesList
-                      options={deviceOptions.userDefineOptions}
+                      options={categories[UserDefineCategory.OtherOptions]}
                       onChange={onOptionUpdate}
-                      whitelistKeys={
-                        categories[UserDefineCategory.OtherOptions]
-                      }
                     />
                   </>
                 )}

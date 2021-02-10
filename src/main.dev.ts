@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 /* eslint global-require: off, no-console: off */
 
 /**
@@ -11,16 +12,13 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, ipcMain, IpcMainEvent, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import mkdirp from 'mkdirp';
 import MenuBuilder from './menu';
-import { MainRequestType } from './ipc';
-import Platformio from './library/Platformio';
-import CheckDependenciesHandler from './main/handlers/CheckDependenciesHandler';
-import InstallDependenciesHandler from './main/handlers/InstallDependenciesHandler';
-import BuildFirmwareHandler from './main/handlers/BuildFirmwareHandler';
-import FirmwareBuilder from './library/FirmwareBuilder';
+import ApiServer from './api';
+import { IpcRequest, OpenFileLocationRequestBody } from './ipc';
 
 export default class AppUpdater {
   constructor() {
@@ -31,6 +29,7 @@ export default class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+const localServer: ApiServer = new ApiServer();
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -49,7 +48,7 @@ if (
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS'];
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'APOLLO_DEVELOPER_TOOLS'];
 
   return installer
     .default(
@@ -75,17 +74,47 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
+  // TODO: fix logging here
+  console.log('trying to get port');
+  const port = await ApiServer.getPort(3500);
+  console.log('received port: ', port);
+
+  console.log('starting local server...');
+  const firmwaresPath = path.join(app.getPath('userData'), 'firmwares', 'git');
+  await mkdirp(firmwaresPath);
+  await localServer.start(
+    {
+      git: {
+        cloneUrl: 'https://github.com/AlessandroAU/ExpressLRS',
+        url: 'https://github.com/AlessandroAU/ExpressLRS',
+        owner: 'AlessandroAU',
+        repositoryName: 'ExpressLRS',
+      },
+      firmwaresPath,
+      PATH: process.env.PATH ?? '',
+      env: process.env,
+    },
+    port
+  );
+  console.log('server started...');
+
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 1400,
+    height: 920,
     icon: getAssetPath('icon.png'),
+    // TODO: improve electron.js security
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false,
     },
   });
 
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
+  const apiUrl = `http://localhost:${port}/graphql`;
+  const subscriptionsUrl = `ws://localhost:${port}/graphql`;
+  mainWindow.loadURL(
+    `file://${__dirname}/index.html?api_url=${apiUrl}&subscriptions_url=${subscriptionsUrl}`
+  );
 
   // TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
@@ -115,12 +144,10 @@ const createWindow = async () => {
     shell.openExternal(url);
   });
 
-  // TODO: it is likely that this app will not be using automatic updates - remove.
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   // new AppUpdater();
 };
-
 /**
  * Add event listeners...
  */
@@ -129,6 +156,7 @@ app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
   if (process.platform !== 'darwin') {
+    localServer.stop();
     app.quit();
   }
 });
@@ -143,31 +171,9 @@ app.on('activate', () => {
   }
 });
 
-/*
-  TODO: extract this code to IPC Router module
- */
-const platformio = new Platformio(process.env);
-const checkDependenciesHandler = new CheckDependenciesHandler({
-  PATH: process.env.PATH!,
-  platformio,
-});
-ipcMain.on(MainRequestType.CheckDependencies, async (event: IpcMainEvent) => {
-  await checkDependenciesHandler.processRequest(event);
-});
-
-const installDependenciesHandler = new InstallDependenciesHandler({
-  platformio,
-});
-ipcMain.on(MainRequestType.InstallDependencies, async (event: IpcMainEvent) => {
-  await installDependenciesHandler.processRequest(event);
-});
-
-const buildFirmwareHandler = new BuildFirmwareHandler({
-  PATH: process.env.PATH!,
-  platformio,
-  firmwareBuilder: new FirmwareBuilder(platformio),
-});
 ipcMain.on(
-  MainRequestType.BuildFlashFirmware,
-  buildFirmwareHandler.processRequest.bind(buildFirmwareHandler)
+  IpcRequest.OpenFileLocation,
+  (_, arg: OpenFileLocationRequestBody) => {
+    shell.showItemInFolder(arg.path);
+  }
 );

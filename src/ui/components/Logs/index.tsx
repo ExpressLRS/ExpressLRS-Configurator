@@ -6,8 +6,12 @@ const useStyles = makeStyles(() => ({
     minHeight: '500px',
     maxHeight: '500px',
     overflowY: 'auto',
-    overflowX: 'hidden'
+    overflowX: 'hidden',
   },
+  logs: {
+    whiteSpace: 'pre-wrap',
+    wordWrap: 'break-word',
+  }
 }));
 
 interface LogsProps {
@@ -24,7 +28,7 @@ const Logs: FunctionComponent<LogsProps> = memo(({data}) => {
   }, [data]);
   return (
     <div ref={container} className={styles.root}>
-      <pre>
+      <pre className={styles.logs}>
         <code>{data}</code>
       </pre>
     </div>

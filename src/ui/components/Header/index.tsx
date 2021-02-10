@@ -7,8 +7,10 @@ import {
   IconButton,
 } from '@material-ui/core';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import { Config } from '../../config';
 import LogotypeIcon from '../../../../assets/logotype.svg';
-import { Config } from '../../../config';
+import DiscordIcon from '../../../../assets/DiscordIcon.svg';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -33,6 +35,14 @@ const useStyles = makeStyles((theme) => ({
   link: {
     margin: '0 0 0 10px',
   },
+  facebookIcon: {
+    fontSize: '1.2em !important',
+    marginTop: '-2px',
+  },
+  discordIcon: {
+    width: '24px',
+    height: 'auto',
+  },
 }));
 
 interface HeaderProps {
@@ -40,23 +50,48 @@ interface HeaderProps {
 }
 
 const Header: FunctionComponent<HeaderProps> = memo(({ className }) => {
-  const classes = useStyles();
+  const styles = useStyles();
   return (
     <AppBar position="static" color="default" className={className}>
-      <Toolbar className={classes.toolbar}>
-        <div className={classes.logotype}>
+      <Toolbar className={styles.toolbar}>
+        <div className={styles.logotype}>
           <img
             src={LogotypeIcon}
-            className={classes.logotypeIcon}
+            className={styles.logotypeIcon}
             alt="ExpressLrs Configurator"
           />
-          <Typography variant="h4" className={classes.title}>
+          <Typography variant="h4" className={styles.title}>
             ExpressLRS Configurator
           </Typography>
         </div>
-        <div className={classes.social}>
-          <div className={classes.link}>
-            <IconButton href={Config.git.url} target="_blank" rel="noreferrer">
+        <div className={styles.social}>
+          <div className={styles.link}>
+            <IconButton
+              href={Config.discordUrl}
+              target="_blank"
+              title="Discord"
+              rel="noreferrer noreferrer"
+            >
+              <img src={DiscordIcon} className={styles.discordIcon} alt="" />
+            </IconButton>
+          </div>
+          <div className={styles.link}>
+            <IconButton
+              href={Config.facebookGroupUrl}
+              target="_blank"
+              title="Facebook group"
+              rel="noreferrer noreferrer"
+            >
+              <FacebookIcon className={styles.facebookIcon} />
+            </IconButton>
+          </div>
+          <div className={styles.link}>
+            <IconButton
+              href={Config.githubRepositoryUrl}
+              target="_blank"
+              title="Github"
+              rel="noreferrer noreferrer"
+            >
               <GitHubIcon />
             </IconButton>
           </div>

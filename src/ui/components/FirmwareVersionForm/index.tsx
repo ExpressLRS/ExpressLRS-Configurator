@@ -9,12 +9,13 @@ import {
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
-import OctopusGitHubClient from '../../library/GitHubClient';
 import Omnibox from '../Omnibox';
 import {
   FirmwareSource,
-  FirmwareVersionData,
-} from '../../../main/handlers/BuildFirmwareHandler';
+  FirmwareVersionDataInput,
+  useGetBranchesLazyQuery,
+  useGetTagsLazyQuery,
+} from '../../gql/generated/types';
 
 const useStyles = makeStyles((theme) => ({
   tabs: {
@@ -34,20 +35,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface FirmwareVersionCardProps {
-  repositoryOwner: string;
-  repositoryName: string;
-  data: FirmwareVersionData | null;
-  onChange: (data: FirmwareVersionData) => void;
+  data: FirmwareVersionDataInput | null;
+  onChange: (data: FirmwareVersionDataInput) => void;
 }
 
 const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   props
 ) => {
-  const { onChange, repositoryOwner, repositoryName, data } = props;
+  const { onChange, data } = props;
   const styles = useStyles();
-
-  const [loading, setLoading] = useState<boolean>(true);
-  const [errors, setErrors] = useState<string>('');
 
   const [firmwareSource, setFirmwareSource] = useState<FirmwareSource>(
     data?.source || FirmwareSource.GitTag
@@ -59,7 +55,24 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     setFirmwareSource(value);
   };
 
-  const [gitTags, setGitTags] = useState<string[]>([]);
+  const [
+    queryGitTags,
+    { loading: gitTagsLoading, data: gitTagsResponse, error: tagsError },
+  ] = useGetTagsLazyQuery();
+
+  const [
+    queryGitBranches,
+    {
+      loading: gitBranchesLoading,
+      data: gitBranchesResponse,
+      error: branchesError,
+    },
+  ] = useGetBranchesLazyQuery();
+
+  const loading = gitTagsLoading || gitBranchesLoading;
+  const gitTags = gitTagsResponse?.gitTags ?? [];
+  const gitBranches = gitBranchesResponse?.gitBranches ?? [];
+
   const [currentGitTag, setCurrentGitTag] = useState<string>(
     data?.gitTag || ''
   );
@@ -71,7 +84,6 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     setCurrentGitTag(name);
   };
 
-  const [gitBranches, setGitBranches] = useState<string[]>([]);
   const [currentGitBranch, setCurrentGitBranch] = useState<string>(
     data?.gitBranch || ''
   );
@@ -93,56 +105,24 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   };
 
   useEffect(() => {
-    setGitTags([]);
-    setGitBranches([]);
     setGitCommit('');
     setLocalPath('');
 
     switch (firmwareSource) {
       case FirmwareSource.GitTag:
-        setLoading(true);
-        new OctopusGitHubClient()
-          .loadTags(repositoryOwner, repositoryName)
-          .then((tags) => {
-            setLoading(false);
-            if (tags.length === 0) {
-              setErrors('No releases found');
-            } else {
-              setGitTags(tags);
-            }
-          })
-          .catch((errs) => {
-            setLoading(false);
-            setErrors(errs);
-          });
+        queryGitTags();
         break;
       case FirmwareSource.GitBranch:
-        setLoading(true);
-        new OctopusGitHubClient()
-          .loadBranches(repositoryOwner, repositoryName)
-          .then((branches) => {
-            setLoading(false);
-            if (branches.length === 0) {
-              setErrors('No releases found');
-              return;
-            }
-            setGitBranches(branches);
-          })
-          .catch((errs) => {
-            setLoading(false);
-            setErrors(errs);
-          });
+        queryGitBranches();
         break;
       case FirmwareSource.GitCommit:
-        setLoading(false);
         break;
       case FirmwareSource.Local:
-        setLoading(false);
         break;
       default:
         throw new Error(`unknown firmware source: ${firmwareSource}`);
     }
-  }, [firmwareSource, repositoryName, repositoryOwner]);
+  }, [firmwareSource]);
 
   useEffect(() => {
     onChange({
@@ -168,7 +148,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         <Tab label="Local" value={FirmwareSource.Local} />
       </Tabs>
 
-      {firmwareSource === FirmwareSource.GitTag && (
+      {firmwareSource === FirmwareSource.GitTag && gitTags !== undefined && (
         <>
           <div className={styles.tabContents}>
             {!loading && (
@@ -187,32 +167,33 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         </>
       )}
 
-      {firmwareSource === FirmwareSource.GitBranch && (
-        <>
-          <Alert severity="warning" className={styles.dangerZone}>
-            <AlertTitle>DANGER ZONE</AlertTitle>
-            Use these sources only if you know what you are doing or was
-            instructed by project developers
-          </Alert>
-          <div className={styles.tabContents}>
-            {!loading && (
-              <Omnibox
-                title="Git branches"
-                options={gitBranches.map((branch) => ({
-                  label: branch,
-                  value: branch,
-                }))}
-                currentValue={
-                  currentGitBranch === ''
-                    ? null
-                    : { label: currentGitBranch, value: currentGitBranch }
-                }
-                onChange={onGitBranch}
-              />
-            )}
-          </div>
-        </>
-      )}
+      {firmwareSource === FirmwareSource.GitBranch &&
+        gitBranches !== undefined && (
+          <>
+            <Alert severity="warning" className={styles.dangerZone}>
+              <AlertTitle>DANGER ZONE</AlertTitle>
+              Use these sources only if you know what you are doing or was
+              instructed by project developers
+            </Alert>
+            <div className={styles.tabContents}>
+              {!loading && (
+                <Omnibox
+                  title="Git branches"
+                  options={gitBranches.map((branch) => ({
+                    label: branch,
+                    value: branch,
+                  }))}
+                  currentValue={
+                    currentGitBranch === ''
+                      ? null
+                      : { label: currentGitBranch, value: currentGitBranch }
+                  }
+                  onChange={onGitBranch}
+                />
+              )}
+            </div>
+          </>
+        )}
 
       {firmwareSource === FirmwareSource.GitCommit && (
         <>
@@ -253,7 +234,8 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       )}
 
       <Loader loading={loading} />
-      <ShowAlerts severity="error" messages={errors} />
+      <ShowAlerts severity="error" messages={branchesError} />
+      <ShowAlerts severity="error" messages={tagsError} />
     </>
   );
 };
