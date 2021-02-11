@@ -59,9 +59,9 @@ yarn run gql-codegen
 
 ## Screenshots
 
-![Main screen](docs/main_screen.png)
+![Main screen](docs/screenshots/main_screen.png)
 
-![Compile result](docs/compile_result.png)
+![Compile result](docs/screenshots/compile_result.png)
 
 ## Credits
 
