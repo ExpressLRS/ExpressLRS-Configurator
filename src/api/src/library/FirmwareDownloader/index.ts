@@ -60,6 +60,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
       baseDir: this.baseDirectory,
       binary: gitBinaryLocation,
       maxConcurrentProcesses: 1,
+      config: [],
     };
     this.git = simpleGit(options);
   }

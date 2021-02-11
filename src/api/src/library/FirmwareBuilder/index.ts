@@ -15,9 +15,6 @@ export default class FirmwareBuilder {
   ): Promise<CommandResult> {
     const userDefinesPath = path.join(firmwarePath, 'user_defines.txt');
     await this.writeToFile(userDefines, userDefinesPath);
-    console.log(
-      `building for ${target} with user defines ${userDefines} at ${firmwarePath}`
-    );
 
     return this.platformio.build(firmwarePath, target, onOutput);
   }
@@ -31,7 +28,6 @@ export default class FirmwareBuilder {
     firmwarePath: string,
     onOutput: OnOutputFunc = NoOpFunc
   ): Promise<CommandResult> {
-    console.log(`flashing ${target} at ${firmwarePath}`);
     return this.platformio.flash(firmwarePath, target, onOutput);
   }
 

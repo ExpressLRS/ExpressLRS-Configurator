@@ -1,16 +1,18 @@
 import {
+  Button,
   Card,
   CardContent,
   Container,
   Divider,
   makeStyles,
-  Typography,
 } from '@material-ui/core';
 import React, { FunctionComponent } from 'react';
 import ListIcon from '@material-ui/icons/List';
+import { ipcRenderer } from 'electron';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import CardTitle from '../../components/CardTitle';
+import { IpcRequest } from '../../../ipc';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
 
 const LogsView: FunctionComponent = () => {
   const styles = useStyles();
+  const onLogs = () => {
+    ipcRenderer.send(IpcRequest.OpenLogsFolder);
+  };
   return (
     <main className={styles.root}>
       <Sidebar />
@@ -37,11 +42,14 @@ const LogsView: FunctionComponent = () => {
             <CardTitle icon={<ListIcon />} title="Logs" />
             <Divider />
             <CardContent>
-              <Typography variant="h6">Todo:</Typography>
-              <ul>
-                <li>Debugging information</li>
-                <li>Logs display</li>
-              </ul>
+              <Button
+                color="primary"
+                size="large"
+                variant="contained"
+                onClick={onLogs}
+              >
+                Open logs folder
+              </Button>
             </CardContent>
           </Card>
         </Container>

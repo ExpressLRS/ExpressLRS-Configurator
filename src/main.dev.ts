@@ -16,9 +16,47 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import mkdirp from 'mkdirp';
+import winston from 'winston';
 import MenuBuilder from './menu';
 import ApiServer from './api';
 import { IpcRequest, OpenFileLocationRequestBody } from './ipc';
+import WinstonLoggerService from './api/src/logger/WinstonLogger';
+
+const logsPath = path.join(app.getPath('userData'), 'logs');
+const logsFilename = 'expressslrs-configurator.log';
+const winstonLogger = winston.createLogger({
+  level: 'debug',
+  format: winston.format.simple(),
+  defaultMeta: {},
+  transports: [
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.prettyPrint(),
+        winston.format.timestamp()
+      ),
+    }),
+    new winston.transports.File({
+      dirname: logsPath,
+      filename: logsFilename,
+      maxFiles: 10,
+      maxsize: 5_000_000, // in bytes
+      format: winston.format.combine(
+        winston.format.prettyPrint(),
+        winston.format.timestamp()
+      ),
+    }),
+  ],
+});
+const logger = new WinstonLoggerService(winstonLogger);
+process.on('uncaughtException', (err) => {
+  logger.error(`uncaughtException ${err.message}`, err.stack);
+});
+process.on('unhandledRejection', (err) => {
+  logger.error(`unhandledRejection: ${err}`);
+});
+
+let mainWindow: BrowserWindow | null = null;
+const localServer: ApiServer = new ApiServer();
 
 export default class AppUpdater {
   constructor() {
@@ -27,9 +65,6 @@ export default class AppUpdater {
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
-
-let mainWindow: BrowserWindow | null = null;
-const localServer: ApiServer = new ApiServer();
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -55,7 +90,9 @@ const installExtensions = async () => {
       extensions.map((name) => installer[name]),
       forceDownload
     )
-    .catch(console.log);
+    .catch((err: Error) => {
+      logger.error(err);
+    });
 };
 
 const createWindow = async () => {
@@ -74,12 +111,11 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
-  // TODO: fix logging here
-  console.log('trying to get port');
+  logger.log('trying to get port');
   const port = await ApiServer.getPort(3500);
-  console.log('received port: ', port);
+  logger.log(`received unused port: ${port}`);
 
-  console.log('starting local server...');
+  logger.log('starting server...');
   const firmwaresPath = path.join(app.getPath('userData'), 'firmwares', 'git');
   await mkdirp(firmwaresPath);
   await localServer.start(
@@ -94,9 +130,10 @@ const createWindow = async () => {
       PATH: process.env.PATH ?? '',
       env: process.env,
     },
+    logger,
     port
   );
-  console.log('server started...');
+  logger.log('server started');
 
   mainWindow = new BrowserWindow({
     show: false,
@@ -161,7 +198,12 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.whenReady().then(createWindow).catch(console.log);
+app
+  .whenReady()
+  .then(createWindow)
+  .catch((err: Error) => {
+    logger.error(err);
+  });
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
@@ -177,3 +219,7 @@ ipcMain.on(
     shell.showItemInFolder(arg.path);
   }
 );
+
+ipcMain.on(IpcRequest.OpenLogsFolder, () => {
+  shell.showItemInFolder(`${logsPath}/${logsFilename}`);
+});
