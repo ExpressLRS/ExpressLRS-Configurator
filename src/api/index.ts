@@ -9,6 +9,8 @@ import FirmwareService from './src/services/Firmware';
 import Platformio from './src/library/Platformio';
 import FirmwareBuilder from './src/library/FirmwareBuilder';
 import PubSubToken from './src/pubsub/PubSubToken';
+import { LoggerService } from './src/logger';
+import LoggerToken from './src/logger/LoggerToken';
 
 // importing for side effects
 // eslint-disable-next-line import/extensions
@@ -25,10 +27,15 @@ export default class ApiServer {
     return getPort({ port });
   }
 
-  async start(config: IConfig, port: number): Promise<http.Server> {
+  async start(
+    config: IConfig,
+    logger: LoggerService,
+    port: number
+  ): Promise<http.Server> {
     const pubSub = new PubSub();
     Container.set([{ id: ConfigToken, value: config }]);
     Container.set([{ id: PubSubToken, value: pubSub }]);
+    Container.set([{ id: LoggerToken, value: logger }]);
 
     const platformio = new Platformio(config.env);
     Container.set(
@@ -38,7 +45,8 @@ export default class ApiServer {
         config.firmwaresPath,
         platformio,
         new FirmwareBuilder(platformio),
-        pubSub
+        pubSub,
+        logger
       )
     );
 

@@ -18,6 +18,7 @@ import {
 import UserDefinesTxtFactory from '../../factories/UserDefinesTxtFactory';
 import Platformio from '../../library/Platformio';
 import FirmwareBuilder from '../../library/FirmwareBuilder';
+import { LoggerService } from '../../logger';
 
 export interface GitRepo {
   url: string;
@@ -62,7 +63,8 @@ export default class FirmwareService {
     private firmwaresPath: string,
     private platformio: Platformio,
     private builder: FirmwareBuilder,
-    private pubSub: PubSubEngine
+    private pubSub: PubSubEngine,
+    private logger: LoggerService
   ) {
     this.mutex = new Mutex();
   }
@@ -71,6 +73,10 @@ export default class FirmwareService {
     type: BuildProgressNotificationType,
     step: BuildFirmwareStep
   ): Promise<void> {
+    this.logger?.log('build progress notification', {
+      type,
+      step,
+    });
     return this.pubSub!.publish(PubSubTopic.BuildProgressNotification, {
       type,
       step,
@@ -78,6 +84,9 @@ export default class FirmwareService {
   }
 
   private async updateLogs(data: string): Promise<void> {
+    this.logger?.log('logs stream output', {
+      data,
+    });
     return this.pubSub!.publish(PubSubTopic.BuildLogsUpdate, {
       data,
     });
@@ -87,8 +96,13 @@ export default class FirmwareService {
     params: BuildFlashFirmwareParams,
     gitRepo: GitRepo
   ): Promise<BuildFlashFirmwareResult> {
+    this.logger?.log('received build firmware request', {
+      params,
+      gitRepo,
+    });
+
     if (this.mutex.isLocked()) {
-      console.error('there is another build/flash request in progress...');
+      this.logger?.error('there is another build/flash request in progress...');
       return new BuildFlashFirmwareResult(
         false,
         'there is another build/flash request in progress...',
@@ -104,6 +118,10 @@ export default class FirmwareService {
       );
       const pythonCheck = await this.platformio.checkPython();
       if (!pythonCheck.success) {
+        this.logger?.error('python dependency check error', undefined, {
+          stderr: pythonCheck.stderr,
+          stdout: pythonCheck.stdout,
+        });
         return new BuildFlashFirmwareResult(
           false,
           `Python dependency error: ${pythonCheck.stderr} ${pythonCheck.stdout}`,
@@ -116,12 +134,20 @@ export default class FirmwareService {
         await this.updateLogs(
           'Failed to find Platformio on your computer. Trying to install it automatically...'
         );
+        this.logger?.error('platformio dependency check error', undefined, {
+          stderr: coreCheck.stderr,
+          stdout: coreCheck.stdout,
+        });
         const platformioInstallResult = await this.platformio.install(
           (output) => {
             this.updateLogs(output);
           }
         );
         if (!platformioInstallResult.success) {
+          this.logger?.error('platformio installation error', undefined, {
+            stderr: platformioInstallResult.stderr,
+            stdout: platformioInstallResult.stdout,
+          });
           return new BuildFlashFirmwareResult(
             false,
             `platformio error: ${platformioInstallResult.stderr} ${platformioInstallResult.stdout}`,
@@ -134,12 +160,19 @@ export default class FirmwareService {
       try {
         gitPath = await findGitExecutable(this.PATH);
       } catch (e) {
+        this.logger?.error('failed to find git', e.stack, {
+          PATH: this.PATH,
+          err: e,
+        });
         return new BuildFlashFirmwareResult(
           false,
           `${e}`,
           BuildFirmwareErrorType.GitDependencyError
         );
       }
+      this.logger?.log('git path', {
+        gitPath,
+      });
 
       const firmwareDownload = new GitFirmwareDownloader({
         baseDirectory: this.firmwaresPath,
@@ -181,6 +214,9 @@ export default class FirmwareService {
             `unsupported firmware source: ${params.firmware.source}`
           );
       }
+      this.logger?.log('firmware path', {
+        firmwarePath,
+      });
 
       await this.updateProgress(
         BuildProgressNotificationType.Info,
@@ -200,6 +236,9 @@ export default class FirmwareService {
             `unsupported user defines mode: ${params.userDefinesMode}`
           );
       }
+      this.logger?.log('user_defines.txt', {
+        userDefines,
+      });
 
       await this.updateProgress(
         BuildProgressNotificationType.Info,
@@ -214,6 +253,10 @@ export default class FirmwareService {
         }
       );
       if (!compileResult.success) {
+        this.logger?.error('compile error', undefined, {
+          stderr: compileResult.stderr,
+          stdout: compileResult.stdout,
+        });
         return new BuildFlashFirmwareResult(
           false,
           compileResult.stderr,
@@ -247,6 +290,10 @@ export default class FirmwareService {
         }
       );
       if (!flashResult.success) {
+        this.logger?.error('flash error', undefined, {
+          stderr: flashResult.stderr,
+          stdout: flashResult.stdout,
+        });
         return new BuildFlashFirmwareResult(
           false,
           flashResult.stderr,
@@ -256,6 +303,7 @@ export default class FirmwareService {
 
       return new BuildFlashFirmwareResult(true);
     } catch (e) {
+      this.logger?.error('generic error', e.trace);
       return new BuildFlashFirmwareResult(
         false,
         `Error: ${e}`,
