@@ -57,6 +57,12 @@ Generate TypeScript types from Graphql schema and Queries located in [src/ui/gql
 yarn run gql-codegen
 ```
 
+## Screenshots
+
+![Main screen](docs/main_screen.png)
+
+![Compile result](docs/compile_result.png)
+
 ## Credits
 
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
