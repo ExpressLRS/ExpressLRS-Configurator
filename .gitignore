@@ -49,5 +49,6 @@ npm-debug.log.*
 *.sass.d.ts
 *.scss.d.ts
 
+src/api/src/library/Platformio/.piocore-*
 temp*
 release
