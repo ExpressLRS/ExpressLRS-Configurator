@@ -66,6 +66,12 @@ export default class ApiServer {
     });
 
     this.server = this.app.listen({ port });
+
+    /*
+      I know, crazy. It is 45 minutes, but on slower network connection it might take a while to download
+      and install all Platformio dependencies and build firmware.
+     */
+    this.server.setTimeout(45 * 60 * 1000);
     server.installSubscriptionHandlers(this.server);
 
     return this.server;
