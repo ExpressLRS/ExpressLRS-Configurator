@@ -16,6 +16,11 @@
     "test": "jest --passWithNoTests",
     "gql-codegen": "graphql-codegen --config codegen.yml"
   },
+  "author": {
+    "name": "ExpressLRS Configurator Contributors",
+    "email": "info@expresslrs.org",
+    "url": "https://github.com/jurgelenas/expresslrs-configurator/graphs/contributors"
+  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "cross-env NODE_ENV=development eslint --cache"
@@ -73,6 +78,9 @@
     },
     "linux": {
       "target": [
+        "deb",
+        "rpm",
+        "snap",
         "AppImage"
       ],
       "category": "Development"

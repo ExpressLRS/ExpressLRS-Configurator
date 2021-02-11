@@ -5,8 +5,9 @@
   "description": "Cross platform configuration tool for the ExpressLRS firmware",
   "main": "./main.prod.js",
   "author": {
-    "name": "ExpressLRS Configurator",
-    "url": "https://github.com/expresslrs-configurator"
+    "name": "ExpressLRS Configurator Contributors",
+    "email": "info@expresslrs.org",
+    "url": "https://github.com/jurgelenas/expresslrs-configurator/graphs/contributors"
   },
   "scripts": {
     "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
