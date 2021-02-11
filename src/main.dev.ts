@@ -50,9 +50,11 @@ const winstonLogger = winston.createLogger({
 const logger = new WinstonLoggerService(winstonLogger);
 process.on('uncaughtException', (err) => {
   logger.error(`uncaughtException ${err.message}`, err.stack);
+  process.exit(1);
 });
 process.on('unhandledRejection', (err) => {
   logger.error(`unhandledRejection: ${err}`);
+  process.exit(1);
 });
 
 let mainWindow: BrowserWindow | null = null;
@@ -117,6 +119,39 @@ const createWindow = async () => {
 
   logger.log('starting server...');
   const firmwaresPath = path.join(app.getPath('userData'), 'firmwares', 'git');
+  const assetsPath = app.isPackaged
+    ? path.join(process.resourcesPath, 'assets')
+    : path.join(__dirname, '../assets');
+
+  const getPlatformioPath = path.join(
+    assetsPath,
+    'dependencies/get-platformio.py'
+  );
+
+  /*
+    We manually prepend $PATH on Windows machines with portable Git and Python locations.
+   */
+  let PATH = process.env.PATH ?? '';
+  const isWindows = process.platform.startsWith('win');
+  if (isWindows) {
+    const portablePythonLocation = path.join(
+      assetsPath,
+      'dependencies/windows_amd64/python-portable-windows_amd64-3.7.7'
+    );
+    const portableGitLocation = path.join(
+      assetsPath,
+      'dependencies/windows_amd64/PortableGit/bin'
+    );
+    const prependPATH = (pth: string, item: string): string => {
+      if (pth.length > 0) {
+        return `${item}${path.delimiter}${pth}`;
+      }
+      return item;
+    };
+    PATH = prependPATH(PATH, portablePythonLocation);
+    PATH = prependPATH(PATH, portableGitLocation);
+  }
+
   await mkdirp(firmwaresPath);
   await localServer.start(
     {
@@ -127,7 +162,8 @@ const createWindow = async () => {
         repositoryName: 'ExpressLRS',
       },
       firmwaresPath,
-      PATH: process.env.PATH ?? '',
+      getPlatformioPath,
+      PATH,
       env: process.env,
     },
     logger,
@@ -203,6 +239,7 @@ app
   .then(createWindow)
   .catch((err: Error) => {
     logger.error(err);
+    process.exit(1);
   });
 
 app.on('activate', () => {

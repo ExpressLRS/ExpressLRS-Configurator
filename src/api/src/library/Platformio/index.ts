@@ -20,21 +20,21 @@ interface PlatformioCoreState {
 }
 
 export default class Platformio {
-  constructor(private env: NodeJS.ProcessEnv) {
-    if (typeof env.PATH !== 'string') {
-      throw new Error('env.PATH is not defined');
-    }
-  }
+  constructor(
+    private getPlatformioPath: string,
+    private PATH: string,
+    private env: NodeJS.ProcessEnv
+  ) {}
 
   async install(onUpdate: OnOutputFunc = NoOpFunc): Promise<CommandResult> {
-    const pyExec = await this.findPythonExecutable(this.env?.PATH!);
+    const pyExec = await this.findPythonExecutable(this.PATH);
     if (pyExec === null) {
       throw new Error('python executable not found');
     }
-    const getPlatformioPath = path.join(__dirname, './get-platformio.py');
+    // const getPlatformioPath = path.join(__dirname, './get-platformio.py');
     return new Commander().runCommand(
       pyExec,
-      [getPlatformioPath],
+      [this.getPlatformioPath],
       {
         env: this.env,
       },
@@ -43,11 +43,11 @@ export default class Platformio {
   }
 
   async checkCore(): Promise<CommandResult> {
-    const pyExec = await this.findPythonExecutable(this.env?.PATH!);
-    const getPlatformioPath = path.join(__dirname, './get-platformio.py');
+    const pyExec = await this.findPythonExecutable(this.PATH);
+    // const getPlatformioPath = path.join(__dirname, './get-platformio.py');
     return new Commander().runCommand(
       pyExec,
-      [getPlatformioPath, 'check', 'core'],
+      [this.getPlatformioPath, 'check', 'core'],
       {
         env: this.env,
       }
@@ -55,11 +55,11 @@ export default class Platformio {
   }
 
   async checkPython(): Promise<CommandResult> {
-    const pyExec = await this.findPythonExecutable(this.env?.PATH!);
-    const getPlatformioPath = path.join(__dirname, './get-platformio.py');
+    const pyExec = await this.findPythonExecutable(this.PATH);
+    // const getPlatformioPath = path.join(__dirname, './get-platformio.py');
     return new Commander().runCommand(
       pyExec,
-      [getPlatformioPath, 'check', 'python'],
+      [this.getPlatformioPath, 'check', 'python'],
       {
         env: this.env,
       }
@@ -104,6 +104,7 @@ export default class Platformio {
         }
       }
     }
+
     throw new Error('python not found');
   }
 
@@ -113,9 +114,9 @@ export default class Platformio {
       `core-dump-${Math.round(Math.random() * 1000000)}.json`
     );
     const pyExec = await this.findPythonExecutable(this.env?.PATH!);
-    const getPlatformioPath = path.join(__dirname, './get-platformio.py');
+    // const getPlatformioPath = path.join(__dirname, './get-platformio.py');
     const cmdArgs = [
-      getPlatformioPath,
+      this.getPlatformioPath,
       'check',
       'core',
       '--dump-state',

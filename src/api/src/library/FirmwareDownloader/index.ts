@@ -27,6 +27,7 @@ export interface IFirmwareDownloader {
 export const findGitExecutable = async (envPath: string): Promise<string> => {
   const IS_WINDOWS = process.platform.startsWith('win');
   const exenames = IS_WINDOWS ? ['git.exe', 'git'] : ['git'];
+
   // eslint-disable-next-line no-restricted-syntax
   for (const location of envPath.split(path.delimiter)) {
     // eslint-disable-next-line no-restricted-syntax

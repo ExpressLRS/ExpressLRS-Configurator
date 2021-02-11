@@ -17,6 +17,8 @@ import LoggerToken from './src/logger/LoggerToken';
 import './src/graphql/enum/DeviceTarget';
 // eslint-disable-next-line import/extensions
 import './src/graphql/enum/UserDefineKey';
+import FirmwareResolver from "./src/graphql/resolvers/Firmware.resolver";
+import SourcesResolver from "./src/graphql/resolvers/Sources.resolver";
 
 export default class ApiServer {
   app: Express | undefined;
@@ -37,7 +39,11 @@ export default class ApiServer {
     Container.set([{ id: PubSubToken, value: pubSub }]);
     Container.set([{ id: LoggerToken, value: logger }]);
 
-    const platformio = new Platformio(config.env);
+    const platformio = new Platformio(
+      config.getPlatformioPath,
+      config.PATH,
+      config.env
+    );
     Container.set(
       FirmwareService,
       new FirmwareService(
@@ -51,7 +57,7 @@ export default class ApiServer {
     );
 
     const schema = await buildSchema({
-      resolvers: [`${__dirname}/src/**/*.resolver.ts`],
+      resolvers: [FirmwareResolver, SourcesResolver],
       container: Container,
       pubSub,
     });

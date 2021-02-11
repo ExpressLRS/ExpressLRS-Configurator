@@ -55,7 +55,10 @@
       "hardenedRuntime": true,
       "entitlements": "assets/entitlements.mac.plist",
       "entitlementsInherit": "assets/entitlements.mac.plist",
-      "gatekeeperAssess": false
+      "gatekeeperAssess": false,
+      "files": [
+        "!assets/dependencies/windows_amd64"
+      ]
     },
     "dmg": {
       "contents": [
@@ -82,7 +85,10 @@
         "snap",
         "AppImage"
       ],
-      "category": "Development"
+      "category": "Development",
+      "files": [
+        "!assets/dependencies/windows_amd64"
+      ]
     },
     "directories": {
       "app": "src",
@@ -100,7 +106,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/expresslrs/expresslrs-configurator"
+    "url": "git+https://github.com/jurgelenas/expresslrs-configurator"
   },
   "license": "GPL-3.0-or-later",
   "bugs": {

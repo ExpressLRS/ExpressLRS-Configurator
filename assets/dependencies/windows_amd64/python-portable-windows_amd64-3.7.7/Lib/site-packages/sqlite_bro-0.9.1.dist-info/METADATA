@@ -1,0 +1,85 @@
+Metadata-Version: 2.1
+Name: sqlite-bro
+Version: 0.9.1
+Summary: a graphic SQLite Client in 1 Python file
+Home-page: https://github.com/stonebig/sqlite_bro
+Author: stonebig
+Author-email: write_pull_requests_to_stonebig@github.com
+License: MIT license
+Keywords: sqlite,gui,ttk,sql
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Education
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+
+sqlite_bro : a graphic SQLite browser in 1 Python file
+======================================================
+
+sqlite_bro is a tool to browse SQLite databases with 
+any basic python installation.
+
+
+Features
+--------
+
+* Tabular browsing of a SQLite database 
+
+* Import/Export of .csv files with auto-detection
+
+* Import/Export of .sql script
+
+* Export of database creation .sql script
+
+* Support of sql-embedded Python functions
+
+* Easy to distribute : 1 Python source file, 2.7/3.4+ compatible
+
+* Easy to start : just launch sqlite_bro
+
+* Easy to learn : Welcome example, minimal interface
+
+* Easy to teach : Character size, SQL + SQL result export on a click
+
+Installation
+------------
+
+You can install, upgrade, uninstall sqlite_bro.py with these commands::
+
+  $ apt-get install python3-tk # apt-get install python-tk if you are using python2
+  $ pip install sqlite_bro
+  $ pip install --upgrade sqlite_bro
+  $ pip uninstall sqlite_bro
+
+or just launch latest version from IPython with %load https://raw.githubusercontent.com/stonebig/sqlite_bro/master/sqlite_bro/sqlite_bro.py
+or just copy the file 'sqlite_bro.py' to any pc (with python installed)
+
+Example usage 
+-------------
+
+::
+
+  $ sqlite_bro
+
+Screenshot
+----------
+
+.. image:: https://raw.githubusercontent.com/stonebig/sqlite_bro/master/docs/sqlite_bro.GIF
+
+Links
+-----
+
+* `Fork me on GitHub <http://github.com/stonebig/sqlite_bro>`_
+
+

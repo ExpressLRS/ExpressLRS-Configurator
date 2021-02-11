@@ -1,0 +1,3 @@
+[console_scripts]
+sqlite_bro = sqlite_bro.sqlite_bro:_main
+

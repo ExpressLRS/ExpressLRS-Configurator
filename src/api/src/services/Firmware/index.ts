@@ -303,7 +303,9 @@ export default class FirmwareService {
 
       return new BuildFlashFirmwareResult(true);
     } catch (e) {
-      this.logger?.error('generic error', e.trace);
+      this.logger?.error('generic error', e.trace, {
+        err: e,
+      });
       return new BuildFlashFirmwareResult(
         false,
         `Error: ${e}`,
