@@ -1,7 +1,16 @@
-*       text    eol=lf
+*       text=auto    eol=lf
 *.exe   binary
 *.png   binary
 *.jpg   binary
 *.jpeg  binary
 *.ico   binary
 *.icns  binary
+*.dll   binary
+*.db     binary
+*.p      binary
+*.pkl    binary
+*.pickle binary
+*.pyc    binary
+*.pyd    binary
+*.pyo    binary
+*.lib   binary

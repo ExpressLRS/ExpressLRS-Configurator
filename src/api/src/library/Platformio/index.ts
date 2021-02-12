@@ -88,14 +88,18 @@ export default class Platformio {
           .normalize(path.join(location, exename))
           .replace(/"/g, '');
         try {
+          let res: CommandResult | null = null;
           if (
             fs.existsSync(executable) &&
-            (await new Commander().runCommand(executable, [
+            // eslint-disable-next-line no-cond-assign
+            (res = await new Commander().runCommand(executable, [
               '-c',
               pythonAssertCode.join(';'),
             ]))
           ) {
-            return executable;
+            if (res.success) {
+              return executable;
+            }
           }
         } catch (err) {
           console.warn(executable, err);
