@@ -82,8 +82,7 @@
     "linux": {
       "target": [
         "zip",
-        "deb",
-        "snap"
+        "deb"
       ],
       "category": "Development",
       "files": [
