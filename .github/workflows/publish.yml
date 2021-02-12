@@ -14,6 +14,10 @@ jobs:
         os: [macos-latest]
 
     steps:
+      - name: Setup snapcraft
+        run: |
+          brew install snapcraft
+
       - name: Checkout git repo
         uses: actions/checkout@v1
 
