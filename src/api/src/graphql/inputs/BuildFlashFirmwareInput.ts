@@ -5,7 +5,7 @@ import DeviceTarget from '../../library/FirmwareBuilder/Enum/DeviceTarget';
 import UserDefinesMode from '../../models/enum/UserDefinesMode';
 import UserDefineInput from './UserDefineInput';
 
-@InputType()
+@InputType('BuildFlashFirmwareInput')
 export default class BuildFlashFirmwareInput {
   @Field(() => BuildJobType)
   type: BuildJobType;

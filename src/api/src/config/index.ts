@@ -7,6 +7,7 @@ export interface IConfig {
   PATH: string;
   env: NodeJS.ProcessEnv;
   getPlatformioPath: string;
+  platformioStateTempStoragePath: string;
 }
 
 export const ConfigToken = new Token<IConfig>('CONFIG_TOKEN');

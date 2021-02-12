@@ -57,7 +57,7 @@
       "entitlementsInherit": "assets/entitlements.mac.plist",
       "gatekeeperAssess": false,
       "files": [
-        "!assets/dependencies/windows_amd64"
+        "!dependencies/windows_amd64/*"
       ]
     },
     "dmg": {
@@ -87,7 +87,20 @@
       ],
       "category": "Development",
       "files": [
-        "!assets/dependencies/windows_amd64"
+        "!dependencies/windows_amd64/**"
+      ]
+    },
+    "snap": {
+      "stagePackages": [
+        "default",
+        "git",
+        "python3"
+      ]
+    },
+    "deb": {
+      "depends": [
+        "git",
+        "python3"
       ]
     },
     "directories": {
@@ -97,6 +110,9 @@
     },
     "extraResources": [
       "./assets/**"
+    ],
+    "extraFiles": [
+      "dependencies"
     ],
     "publish": {
       "provider": "github",
@@ -269,7 +285,7 @@
     "express": "^4.17.1",
     "extract-zip": "^2.0.1",
     "get-port": "^5.1.1",
-    "graphql": "^15.5.0",
+    "graphql": "15.5.0",
     "graphql-subscriptions": "^1.2.0",
     "history": "^5.0.0",
     "http": "^0.0.1-security",

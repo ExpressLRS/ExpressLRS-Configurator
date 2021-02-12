@@ -2,7 +2,7 @@ import { Field, ObjectType } from 'type-graphql';
 import UserDefineKind from './enum/UserDefineKind';
 import UserDefineKey from '../library/FirmwareBuilder/Enum/UserDefineKey';
 
-@ObjectType()
+@ObjectType('UserDefine')
 export default class UserDefine {
   @Field(() => UserDefineKind)
   type: UserDefineKind;

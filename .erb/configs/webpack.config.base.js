@@ -36,6 +36,12 @@ export default {
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
     modules: [path.join(__dirname, '../src'), 'node_modules'],
+    /*
+      Workaround for https://github.com/apollographql/apollo-server/issues/4637#issuecomment-706813287
+     */
+    alias: {
+      graphql$: path.resolve(__dirname, '../../node_modules/graphql/index.js'),
+    },
   },
 
   plugins: [

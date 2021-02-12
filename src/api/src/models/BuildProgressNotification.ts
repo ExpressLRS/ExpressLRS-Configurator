@@ -3,7 +3,7 @@ import BuildFirmwareStep from './enum/FirmwareBuildStep';
 import BuildProgressNotificationType from './enum/BuildProgressNotificationType';
 import { BuildProgressNotificationPayload } from '../services/Firmware';
 
-@ObjectType()
+@ObjectType('BuildProgressNotification')
 export default class BuildProgressNotification
   implements BuildProgressNotificationPayload {
   @Field(() => BuildProgressNotificationType)

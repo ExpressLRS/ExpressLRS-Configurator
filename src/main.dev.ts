@@ -119,13 +119,14 @@ const createWindow = async () => {
 
   logger.log('starting server...');
   const firmwaresPath = path.join(app.getPath('userData'), 'firmwares', 'git');
-  const assetsPath = app.isPackaged
-    ? path.join(process.resourcesPath, 'assets')
-    : path.join(__dirname, '../assets');
+  const dependenciesPath = app.isPackaged
+    ? path.join(process.resourcesPath, '../dependencies')
+    : path.join(__dirname, '../dependencies');
 
-  const getPlatformioPath = path.join(
-    assetsPath,
-    'dependencies/get-platformio.py'
+  const getPlatformioPath = path.join(dependenciesPath, 'get-platformio.py');
+  const platformioStateTempStoragePath = path.join(
+    dependenciesPath,
+    'platformio-temp-state-storage'
   );
 
   /*
@@ -135,12 +136,12 @@ const createWindow = async () => {
   const isWindows = process.platform.startsWith('win');
   if (isWindows) {
     const portablePythonLocation = path.join(
-      assetsPath,
-      'dependencies/windows_amd64/python-portable-windows_amd64-3.7.7'
+      dependenciesPath,
+      'windows_amd64/python-portable-windows_amd64-3.7.7'
     );
     const portableGitLocation = path.join(
-      assetsPath,
-      'dependencies/windows_amd64/PortableGit/bin'
+      dependenciesPath,
+      'windows_amd64/PortableGit/bin'
     );
     const prependPATH = (pth: string, item: string): string => {
       if (pth.length > 0) {
@@ -163,6 +164,7 @@ const createWindow = async () => {
       },
       firmwaresPath,
       getPlatformioPath,
+      platformioStateTempStoragePath,
       PATH,
       env: process.env,
     },

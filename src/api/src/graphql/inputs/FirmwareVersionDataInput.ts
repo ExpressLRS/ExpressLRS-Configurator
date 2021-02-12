@@ -1,7 +1,7 @@
 import { Field, InputType } from 'type-graphql';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 
-@InputType()
+@InputType('FirmwareVersionDataInput')
 export default class FirmwareVersionDataInput {
   @Field(() => FirmwareSource)
   source: FirmwareSource;

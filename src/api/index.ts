@@ -41,6 +41,7 @@ export default class ApiServer {
 
     const platformio = new Platformio(
       config.getPlatformioPath,
+      config.platformioStateTempStoragePath,
       config.PATH,
       config.env
     );
@@ -63,8 +64,6 @@ export default class ApiServer {
     });
     const server = new ApolloServer({
       schema,
-      debug: true,
-      context: () => ({ config }),
     });
     this.app = express();
     server.applyMiddleware({

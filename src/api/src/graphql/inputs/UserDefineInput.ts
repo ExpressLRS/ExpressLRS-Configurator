@@ -2,7 +2,7 @@ import { Field, InputType } from 'type-graphql';
 import UserDefineKind from '../../models/enum/UserDefineKind';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 
-@InputType()
+@InputType('UserDefineInput')
 export default class UserDefineInput {
   @Field(() => UserDefineKind)
   type: UserDefineKind;
