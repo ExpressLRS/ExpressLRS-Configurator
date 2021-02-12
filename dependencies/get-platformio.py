@@ -25,9 +25,8 @@ UEsDBBQAAAAIAGxOnVATZ7w/9gAAAEYBAAAcAAAAc2VtYW50aWNfdmVyc2lvbi9fX2luaXRfXy5weUWP
 """
 
 
-def create_temp_dir():
+def create_temp_dir(cur_dir):
     try:
-        cur_dir = os.path.dirname(os.path.realpath(__file__))
         tmp_dir = tempfile.mkdtemp(dir=cur_dir, prefix=".piocore-installer-")
         testscript_path = os.path.join(tmp_dir, "test.py")
         with open(testscript_path, "w") as fp:
@@ -47,7 +46,7 @@ def bootstrap():
 
 
 def main():
-    runtime_tmp_dir = create_temp_dir()
+    runtime_tmp_dir = create_temp_dir(os.environ["PLATFORMIO_INSTALLER_TMPDIR"])
     os.environ["TMPDIR"] = runtime_tmp_dir
     tmp_dir = tempfile.mkdtemp(dir=runtime_tmp_dir)
     try:

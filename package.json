@@ -81,13 +81,25 @@
     },
     "linux": {
       "target": [
+        "zip",
         "deb",
-        "snap",
-        "AppImage"
+        "snap"
       ],
       "category": "Development",
       "files": [
         "!dependencies/windows_amd64/**"
+      ]
+    },
+    "rpm": {
+      "depends": [
+        "git",
+        "python3"
+      ]
+    },
+    "pacman": {
+      "depends": [
+        "git",
+        "python3"
       ]
     },
     "snap": {
@@ -100,7 +112,13 @@
     "deb": {
       "depends": [
         "git",
-        "python3"
+        "python3",
+        "gconf2",
+        "gconf-service",
+        "libnotify4",
+        "libappindicator1",
+        "libxtst6",
+        "libnss3"
       ]
     },
     "directories": {

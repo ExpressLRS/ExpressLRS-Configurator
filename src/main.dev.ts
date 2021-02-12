@@ -125,7 +125,7 @@ const createWindow = async () => {
 
   const getPlatformioPath = path.join(dependenciesPath, 'get-platformio.py');
   const platformioStateTempStoragePath = path.join(
-    dependenciesPath,
+    app.getPath('userData'),
     'platformio-temp-state-storage'
   );
 
@@ -154,6 +154,8 @@ const createWindow = async () => {
   }
 
   await mkdirp(firmwaresPath);
+  const localApiServerEnv = process.env;
+  localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = app.getPath('userData');
   await localServer.start(
     {
       git: {
@@ -166,7 +168,7 @@ const createWindow = async () => {
       getPlatformioPath,
       platformioStateTempStoragePath,
       PATH,
-      env: process.env,
+      env: localApiServerEnv,
     },
     logger,
     port
