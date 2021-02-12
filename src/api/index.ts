@@ -11,14 +11,14 @@ import FirmwareBuilder from './src/library/FirmwareBuilder';
 import PubSubToken from './src/pubsub/PubSubToken';
 import { LoggerService } from './src/logger';
 import LoggerToken from './src/logger/LoggerToken';
+import FirmwareResolver from './src/graphql/resolvers/Firmware.resolver';
+import SourcesResolver from './src/graphql/resolvers/Sources.resolver';
 
 // importing for side effects
 // eslint-disable-next-line import/extensions
 import './src/graphql/enum/DeviceTarget';
 // eslint-disable-next-line import/extensions
 import './src/graphql/enum/UserDefineKey';
-import FirmwareResolver from "./src/graphql/resolvers/Firmware.resolver";
-import SourcesResolver from "./src/graphql/resolvers/Sources.resolver";
 
 export default class ApiServer {
   app: Express | undefined;
