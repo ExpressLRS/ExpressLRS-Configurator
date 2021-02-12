@@ -39,7 +39,7 @@ src/renderer.prod.js.map
 src/style.css
 src/style.css.map
 dist
-dll
+.erb/dll
 main.js
 main.js.map
 
