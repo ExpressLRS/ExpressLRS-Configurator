@@ -50,4 +50,4 @@ npm-debug.log.*
 *.scss.d.ts
 
 /src/api/src/library/Platformio/.piocore-*
-/release
+__pycache__
