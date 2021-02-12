@@ -134,7 +134,7 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "expresslrs",
+      "owner": "jurgelenas",
       "repo": "expresslrs-configurator"
     }
   },
