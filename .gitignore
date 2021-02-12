@@ -20,8 +20,8 @@ coverage
 .lock-wscript
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
-.eslintcache
+/build/Release
+/.eslintcache
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
@@ -31,17 +31,17 @@ node_modules
 .DS_Store
 
 # App packaged
-release
-src/main.prod.js
-src/main.prod.js.map
-src/renderer.prod.js
-src/renderer.prod.js.map
-src/style.css
-src/style.css.map
-dist
-.erb/dll
-main.js
-main.js.map
+/release
+/src/main.prod.js
+/src/main.prod.js.map
+/src/renderer.prod.js
+/src/renderer.prod.js.map
+/src/style.css
+/src/style.css.map
+/src/dist
+/.erb/dll
+/main.js
+/main.js.map
 
 .idea
 npm-debug.log.*
@@ -49,6 +49,5 @@ npm-debug.log.*
 *.sass.d.ts
 *.scss.d.ts
 
-src/api/src/library/Platformio/.piocore-*
-temp*
-release
+/src/api/src/library/Platformio/.piocore-*
+/release
