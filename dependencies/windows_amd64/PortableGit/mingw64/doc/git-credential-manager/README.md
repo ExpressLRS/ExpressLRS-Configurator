@@ -1,11 +1,12 @@
-# Git Credential Manager for Windows 
+# Git Credential Manager for Windows
+
 [![GitHub Release](https://img.shields.io/github/release/microsoft/git-credential-manager-for-windows.svg?style=flat-square)](https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases)
 [![Build status](https://img.shields.io/appveyor/ci/whoisj/git-credential-manager-for-windows.svg?style=flat-square)](https://ci.appveyor.com/project/whoisj/git-credential-manager-for-windows/branch/master)
 [![Coverity Scan Build Status](https://img.shields.io/coverity/scan/11371.svg?style=flat-square)](https://scan.coverity.com/projects/git-credential-manager-for-windows)
 [![GitHub Downloads](https://img.shields.io/github/downloads/Microsoft/Git-Credential-Manager-for-Windows/total.svg?style=flat-square)](https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases)
 [![@MicrosoftGit on Twitter](https://img.shields.io/twitter/follow/microsoftgit.svg?style=social&label=Follow%20%40microsoftgit)](https://twitter.com/microsoftgit)
 
-* * *
+---
 
 ## NOTICE: Experiencing GitHub push/fetch problems?
 
@@ -25,20 +26,20 @@ If, after updating Git for Windows, you are still having problems authenticating
 
 If you are experiencing issue when using **Visual Studio**, please read **[Unable to connect to GitHub with Visual Studio](https://developercommunity.visualstudio.com/content/problem/201457/unable-to-connect-to-github-due-to-tls-12-only-cha.html)**.
 
-* * *
+---
 
 The [Git Credential Manager for Windows](https://github.com/Microsoft/Git-Credential-Manager-for-Windows) (GCM) provides secure Git credential storage for Windows. It's the successor to the [Windows Credential Store for Git](https://gitcredentialstore.codeplex.com/) (git-credential-winstore), which is no longer maintained. Compared to Git's built-in credential storage for Windows ([wincred](https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage)), which provides single-factor authentication support working on any HTTP enabled Git repository, GCM provides multi-factor authentication support for [Azure DevOps](https://dev.azure.com/), [Team Foundation Server](Docs/Faq.md#q-i-thought-microsoft-was-maintaining-this-why-does-the-gcm-not-work-as-expected-with-tfs), GitHub, and Bitbucket.
 
 This project includes:
 
-* Secure password storage in the Windows Credential Store.
-* Multi-factor authentication support for Azure DevOps.
-* Two-factor authentication support for GitHub.
-* Two-factor authentication support for Bitbucket.
-* Personal Access Token generation and usage support for Azure DevOps, GitHub, and Bitbucket.
-* Non-interactive mode support for Azure DevOps backed by Azure Directory.
-* NTLM/Kerberos authentication for Team Foundation Server ([see notes](Docs/Faq.md#q-i-thought-microsoft-was-maintaining-this-why-does-the-gcm-not-work-as-expected-with-tfs)).
-* Optional settings for [build agent optimization](Docs/Automation.md).
+- Secure password storage in the Windows Credential Store.
+- Multi-factor authentication support for Azure DevOps.
+- Two-factor authentication support for GitHub.
+- Two-factor authentication support for Bitbucket.
+- Personal Access Token generation and usage support for Azure DevOps, GitHub, and Bitbucket.
+- Non-interactive mode support for Azure DevOps backed by Azure Directory.
+- NTLM/Kerberos authentication for Team Foundation Server ([see notes](Docs/Faq.md#q-i-thought-microsoft-was-maintaining-this-why-does-the-gcm-not-work-as-expected-with-tfs)).
+- Optional settings for [build agent optimization](Docs/Automation.md).
 
 ## Community
 
@@ -74,21 +75,21 @@ To build and install the GCM yourself, clone the sources, open the solution file
 
 ### Additional Resources
 
-* [Credential Manager Usage](Docs/CredentialManager.md)
-* [Askpass Usage](Docs/Askpass.md)
-* [Configuration Options](Docs/Configuration.md)
-* [Build Agent and Automation Support](Docs/Automation.md)
-* [Bitbucket Specific Details](Docs/Bitbucket.md)
-* [Frequently Asked Questions](Docs/Faq.md)
-* [Development and Debugging](Docs/Development.md)
+- [Credential Manager Usage](Docs/CredentialManager.md)
+- [Askpass Usage](Docs/Askpass.md)
+- [Configuration Options](Docs/Configuration.md)
+- [Build Agent and Automation Support](Docs/Automation.md)
+- [Bitbucket Specific Details](Docs/Bitbucket.md)
+- [Frequently Asked Questions](Docs/Faq.md)
+- [Development and Debugging](Docs/Development.md)
 
 ## Contribute
 
 There are many ways to contribute.
 
-* [Submit bugs](https://github.com/Microsoft/Git-Credential-Manager-for-Windows/issues) and help us verify fixes as they are checked in.
-* Review [code changes](https://github.com/Microsoft/Git-Credential-Manager-for-Windows/pulls).
-* Contribute bug fixes and features.
+- [Submit bugs](https://github.com/Microsoft/Git-Credential-Manager-for-Windows/issues) and help us verify fixes as they are checked in.
+- Review [code changes](https://github.com/Microsoft/Git-Credential-Manager-for-Windows/pulls).
+- Contribute bug fixes and features.
 
 ### Code Contributions
 

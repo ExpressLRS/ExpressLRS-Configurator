@@ -1,4 +1,4 @@
-*       text=auto    eol=lf
+*       text=auto
 *.exe   binary
 *.png   binary
 *.jpg   binary
@@ -6,11 +6,7 @@
 *.ico   binary
 *.icns  binary
 *.dll   binary
-*.db     binary
-*.p      binary
-*.pkl    binary
-*.pickle binary
-*.pyc    binary
-*.pyd    binary
-*.pyo    binary
-*.lib   binary
+*.py   binary eol=lf
+.h text eol=crlf
+.ps1 text eol=crlf
+.bat text eol=crlf
