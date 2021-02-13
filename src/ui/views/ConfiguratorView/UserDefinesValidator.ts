@@ -41,9 +41,17 @@ export default class UserDefinesValidator {
       );
     }
 
-    if (option && option.enabled && option.value && option.value.length < 10) {
+    const minLength = 6;
+    if (
+      option &&
+      option.enabled &&
+      option.value &&
+      option.value.length < minLength
+    ) {
       results.push(
-        new Error('Custom binding phrase is shorter than 10 characters')
+        new Error(
+          `Custom binding phrase must be longer than ${minLength} characters`
+        )
       );
     }
 
