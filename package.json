@@ -56,6 +56,7 @@
       "entitlements": "assets/entitlements.mac.plist",
       "entitlementsInherit": "assets/entitlements.mac.plist",
       "gatekeeperAssess": false,
+      "category": "public.app-category.developer-tools",
       "files": [
         "!dependencies/windows_amd64/*"
       ]
@@ -82,7 +83,9 @@
     "linux": {
       "target": [
         "zip",
-        "deb"
+        "deb",
+        "pacman",
+        "rpm"
       ],
       "category": "Development",
       "files": [
