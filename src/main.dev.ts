@@ -12,7 +12,7 @@ import 'reflect-metadata';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, shell, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import mkdirp from 'mkdirp';
@@ -47,14 +47,49 @@ const winstonLogger = winston.createLogger({
     }),
   ],
 });
+
 const logger = new WinstonLoggerService(winstonLogger);
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+const handleFatalError = (err: Error | object | null | undefined) => {
+  logger.error(`handling fatal error: ${err}`);
+  try {
+    // eslint-disable-next-line promise/no-promise-in-callback
+    dialog
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      .showMessageBox(undefined, {
+        type: 'error',
+        buttons: ['Okay'],
+        title: 'Oops! Something went wrong!',
+        detail: 'Help us improve your experience by sending an error report',
+        message: `Error: ${err}`,
+      })
+      .then(() => {
+        console.log('received resp from message box');
+        process.exit(1);
+      })
+      .catch((dialogErr) => {
+        logger.error('failed to show error dialog', dialogErr.stack);
+        process.exit(1);
+      });
+  } catch (e) {
+    /*
+      This API can be called safely before the ready event the app module emits, it is usually used to report errors
+      in early stage of startup. If called before the app readyevent on Linux, the message will be emitted to stderr,
+      and no GUI dialog will appear.
+     */
+    dialog.showErrorBox('Oops! Something went wrong!', `Error: ${err}`);
+    process.exit(1);
+  }
+};
 process.on('uncaughtException', (err) => {
   logger.error(`uncaughtException ${err.message}`, err.stack);
-  process.exit(1);
+  handleFatalError(err);
 });
 process.on('unhandledRejection', (err) => {
   logger.error(`unhandledRejection: ${err}`);
-  process.exit(1);
+  handleFatalError(err);
 });
 
 let mainWindow: BrowserWindow | null = null;
@@ -212,6 +247,7 @@ const createWindow = async () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
+
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {
@@ -255,8 +291,8 @@ app
   .whenReady()
   .then(createWindow)
   .catch((err: Error) => {
-    logger.error(err);
-    process.exit(1);
+    logger.error(`createWindow error ${err}`);
+    handleFatalError(err);
   });
 
 app.on('activate', () => {
