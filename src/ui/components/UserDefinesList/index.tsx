@@ -5,6 +5,7 @@ import {
   List,
   ListItem,
   ListItemIcon,
+  ListItemSecondaryAction,
   ListItemText,
   makeStyles,
   TextField,
@@ -15,6 +16,7 @@ import {
   UserDefineKind,
 } from '../../gql/generated/types';
 import Omnibox from '../Omnibox';
+import UserDefineDescription from '../UserDefineDescription';
 
 const useStyles = makeStyles((theme) => ({
   option: {
@@ -113,13 +115,10 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                   disableRipple
                 />
               </ListItemIcon>
-              <ListItemText primary={item.key} />
-              {/* this could be used to show helpful information */}
-              {/* <ListItemSecondaryAction> */}
-              {/*  <Tooltip title="tooltip" > */}
-              {/*    <QuestionIcon/> */}
-              {/*  </Tooltip> */}
-              {/* </ListItemSecondaryAction> */}
+              <ListItemText>{item.key}</ListItemText>
+              <ListItemSecondaryAction>
+                <UserDefineDescription userDefine={item.key} />
+              </ListItemSecondaryAction>
             </ListItem>
             {item.type === UserDefineKind.Text && item.enabled && (
               <>

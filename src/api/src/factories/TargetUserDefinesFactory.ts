@@ -22,7 +22,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
         UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
+        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6', 'AUX7', 'AUX8'],
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),

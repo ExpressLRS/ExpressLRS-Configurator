@@ -12,6 +12,7 @@ module.exports = {
     'promise/always-return': 'off',
     'class-methods-use-this': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'jsx-a11y/accessible-emoji': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,
