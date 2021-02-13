@@ -262,7 +262,7 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                 {categories[UserDefineCategory.CompatibilityOptions]?.length >
                   0 && (
                   <>
-                    <Typography variant="h6">Compat options</Typography>
+                    <Typography variant="h6">Compatibility options</Typography>
                     <UserDefinesList
                       options={
                         categories[UserDefineCategory.CompatibilityOptions]
