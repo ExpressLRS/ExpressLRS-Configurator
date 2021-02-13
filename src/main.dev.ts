@@ -275,5 +275,5 @@ ipcMain.on(
 );
 
 ipcMain.on(IpcRequest.OpenLogsFolder, () => {
-  shell.showItemInFolder(`${logsPath}/${logsFilename}`);
+  shell.showItemInFolder(path.join(logsPath, logsFilename));
 });
