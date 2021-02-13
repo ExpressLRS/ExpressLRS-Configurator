@@ -166,9 +166,10 @@ const ConfiguratorView: FunctionComponent = () => {
     setDeviceTarget(data);
   };
 
-  const [deviceOptionsFormData, setDeviceOptionsFormData] = useState<
-    DeviceOptionsFormData
-  >({
+  const [
+    deviceOptionsFormData,
+    setDeviceOptionsFormData,
+  ] = useState<DeviceOptionsFormData>({
     userDefinesTxt: '',
     userDefinesMode: UserDefinesMode.UserInterface,
     userDefineOptions: [],
@@ -183,7 +184,6 @@ const ConfiguratorView: FunctionComponent = () => {
   ] = useTargetDeviceOptionsLazyQuery();
 
   useEffect(() => {
-    console.log('TRYING TO RESET ALL DEVICE OPTIONS');
     if (deviceTarget === null) {
       setDeviceOptionsFormData({
         userDefinesTxt: '',
@@ -204,9 +204,6 @@ const ConfiguratorView: FunctionComponent = () => {
   }, [deviceTarget]);
 
   useEffect(() => {
-    console.log(
-      'TRYING TO RESET ALL DEVICE OPTIONS 222222222222222222222222222'
-    );
     if (
       deviceOptionsResponse?.targetDeviceOptions?.length &&
       deviceOptionsResponse?.targetDeviceOptions?.length > 0

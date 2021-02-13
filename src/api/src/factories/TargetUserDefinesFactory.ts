@@ -27,13 +27,9 @@ export default class TargetUserDefinesFactory {
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
       UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
       // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
       UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK),
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
@@ -56,14 +52,7 @@ export default class TargetUserDefinesFactory {
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
-      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
       // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK),
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
@@ -86,14 +75,7 @@ export default class TargetUserDefinesFactory {
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
-      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
       // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK),
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
@@ -118,7 +100,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
+      UserDefine.Boolean(UserDefineKey.USE_R9MM_R9MINI_SBUS),
     ];
 
     const Frsky_RX_R9SLIMPLUS: UserDefine[] = [
@@ -140,8 +122,6 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FAST_SYNC),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
     ];
 
     const Frsky_RX_R9MX: UserDefine[] = [
@@ -163,8 +143,6 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FAST_SYNC),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
     ];
 
     const Jumper_RX_R900MINI: UserDefine[] = [
@@ -186,8 +164,6 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FAST_SYNC),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
     ];
 
     const DIY_900_TX_TTGO_V1_SX127x: UserDefine[] = [
@@ -208,16 +184,8 @@ export default class TargetUserDefinesFactory {
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED),
-      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
-      // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK),
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
 
     const DIY_900_TX_TTGO_V2_SX127x: UserDefine[] = [
@@ -238,16 +206,8 @@ export default class TargetUserDefinesFactory {
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED),
-      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
-      // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK),
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
 
     const DIY_900_TX_ESP32_SX127x_E19: UserDefine[] = [
@@ -268,16 +228,8 @@ export default class TargetUserDefinesFactory {
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED),
-      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
-      // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK),
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
 
     const DIY_900_TX_ESP32_SX127x_RFM95: UserDefine[] = [
@@ -298,16 +250,8 @@ export default class TargetUserDefinesFactory {
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED),
-      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
-      // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK),
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
 
     const DIY_900_RX_ESP8285_SX127x: UserDefine[] = [
@@ -329,8 +273,8 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FAST_SYNC),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
+      // other options
+      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
     ];
 
     const DIY_2400_TX_ESP32_SX1280_Mini: UserDefine[] = [
@@ -349,16 +293,9 @@ export default class TargetUserDefinesFactory {
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
+      UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED),
-      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
-      // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK),
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
 
     const DIY_2400_TX_ESP32_SX1280_E28: UserDefine[] = [
@@ -377,16 +314,9 @@ export default class TargetUserDefinesFactory {
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
+      UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED),
-      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
-      // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK),
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
 
     const DIY_2400_TX_ESP32_SX1280_LORA1280F27: UserDefine[] = [
@@ -400,16 +330,9 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
+      UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED),
-      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
-      // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK),
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
 
     const GHOST_ATTO_2400_RX: UserDefine[] = [
@@ -424,8 +347,6 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FAST_SYNC),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
     ];
 
     const DIY_2400_RX_ESP8285_SX1280: UserDefine[] = [
@@ -440,8 +361,9 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FAST_SYNC),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
+      UserDefine.Boolean(UserDefineKey.USE_500HZ),
+      // other options
+      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
     ];
 
     const DIY_2400_RX_STM32_CCG_Nano_v0_5: UserDefine[] = [
@@ -456,8 +378,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FAST_SYNC),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
+      UserDefine.Boolean(UserDefineKey.USE_500HZ),
     ];
 
     const data: DeviceOptionsByTarget = {

@@ -103,10 +103,13 @@ const userDefinesToCategories = (
       UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE,
       UserDefineKey.LOCK_ON_FIRST_CONNECTION,
       UserDefineKey.LOCK_ON_50HZ,
+      UserDefineKey.USE_500HZ,
     ],
     [UserDefineCategory.CompatibilityOptions]: [
       UserDefineKey.UART_INVERTED,
+      UserDefineKey.USE_UART2,
       UserDefineKey.R9M_UNLOCK_HIGHER_POWER,
+      UserDefineKey.USE_R9MM_R9MINI_SBUS,
     ],
     [UserDefineCategory.OtherOptions]: [
       UserDefineKey.AUTO_WIFI_ON_BOOT,
@@ -152,19 +155,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
       }
       return opt;
     });
-    // TODO: to force only one regulatory option
-    // if (categories[UserDefineCategory.RegulatoryDomains].indexOf(data.key) > -1) {
-    //   updatedOptions = updatedOptions.map((opt) => {
-    //     if (opt.key !== data.key) {
-    //       return {
-    //         ...opt,
-    //         enabled: false,
-    //       };
-    //     } else {
-    //       return opt;
-    //     }
-    //   });
-    // }
     onChange({
       ...deviceOptions,
       userDefineOptions: updatedOptions,

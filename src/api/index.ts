@@ -64,6 +64,7 @@ export default class ApiServer {
     });
     const server = new ApolloServer({
       schema,
+      introspection: true,
     });
     this.app = express();
     server.applyMiddleware({

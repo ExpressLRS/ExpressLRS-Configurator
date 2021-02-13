@@ -11,7 +11,6 @@ interface BuildResponseProps {
 
 const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
   ({ response }) => {
-    console.log(response);
     // TODO: translations
     const toTitle = (errorType: BuildFirmwareErrorType | undefined): string => {
       if (errorType === null || errorType === undefined) {

@@ -18,125 +18,17 @@ export type Scalars = {
   Float: number;
 };
 
-export type BuildFlashFirmwareResult = {
-  readonly __typename?: 'BuildFlashFirmwareResult';
-  readonly success: Scalars['Boolean'];
-  readonly errorType?: Maybe<BuildFirmwareErrorType>;
-  readonly message?: Maybe<Scalars['String']>;
-  readonly firmwareBinPath?: Maybe<Scalars['String']>;
+export type Query = {
+  readonly __typename?: 'Query';
+  readonly availableFirmwareTargets: ReadonlyArray<DeviceTarget>;
+  readonly targetDeviceOptions: ReadonlyArray<UserDefine>;
+  readonly gitBranches: ReadonlyArray<Scalars['String']>;
+  readonly gitTags: ReadonlyArray<Scalars['String']>;
 };
 
-export enum BuildFirmwareErrorType {
-  PythonDependencyError = 'PythonDependencyError',
-  PlatformioDependencyError = 'PlatformioDependencyError',
-  GitDependencyError = 'GitDependencyError',
-  BuildError = 'BuildError',
-  FlashError = 'FlashError',
-  GenericError = 'GenericError',
-}
-
-export type UserDefine = {
-  readonly __typename?: 'UserDefine';
-  readonly type: UserDefineKind;
-  readonly key: UserDefineKey;
-  readonly enabled: Scalars['Boolean'];
-  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
-  readonly value?: Maybe<Scalars['String']>;
+export type QueryTargetDeviceOptionsArgs = {
+  target: DeviceTarget;
 };
-
-export enum UserDefineKind {
-  Boolean = 'Boolean',
-  Text = 'Text',
-  Enum = 'Enum',
-}
-
-export enum UserDefineKey {
-  BINDING_PHRASE = 'BINDING_PHRASE',
-  REGULATORY_DOMAIN_AU_915 = 'REGULATORY_DOMAIN_AU_915',
-  REGULATORY_DOMAIN_EU_868 = 'REGULATORY_DOMAIN_EU_868',
-  REGULATORY_DOMAIN_AU_433 = 'REGULATORY_DOMAIN_AU_433',
-  REGULATORY_DOMAIN_EU_433 = 'REGULATORY_DOMAIN_EU_433',
-  REGULATORY_DOMAIN_FCC_915 = 'REGULATORY_DOMAIN_FCC_915',
-  REGULATORY_DOMAIN_ISM_2400 = 'REGULATORY_DOMAIN_ISM_2400',
-  HYBRID_SWITCHES_8 = 'HYBRID_SWITCHES_8',
-  FAST_SYNC = 'FAST_SYNC',
-  R9M_UNLOCK_HIGHER_POWER = 'R9M_UNLOCK_HIGHER_POWER',
-  NO_SYNC_ON_ARM = 'NO_SYNC_ON_ARM',
-  ARM_CHANNEL = 'ARM_CHANNEL',
-  FEATURE_OPENTX_SYNC = 'FEATURE_OPENTX_SYNC',
-  FEATURE_OPENTX_SYNC_AUTOTUNE = 'FEATURE_OPENTX_SYNC_AUTOTUNE',
-  LOCK_ON_FIRST_CONNECTION = 'LOCK_ON_FIRST_CONNECTION',
-  LOCK_ON_50HZ = 'LOCK_ON_50HZ',
-  UART_INVERTED = 'UART_INVERTED',
-  USE_R9MM_R9MINI_SBUS = 'USE_R9MM_R9MINI_SBUS',
-  AUTO_WIFI_ON_BOOT = 'AUTO_WIFI_ON_BOOT',
-  USE_ESP8266_BACKPACK = 'USE_ESP8266_BACKPACK',
-  JUST_BEEP_ONCE = 'JUST_BEEP_ONCE',
-  MY_STARTUP_MELODY = 'MY_STARTUP_MELODY',
-}
-
-export type BuildProgressNotification = {
-  readonly __typename?: 'BuildProgressNotification';
-  readonly type: BuildProgressNotificationType;
-  readonly step?: Maybe<BuildFirmwareStep>;
-  readonly message?: Maybe<Scalars['String']>;
-};
-
-export enum BuildProgressNotificationType {
-  Success = 'Success',
-  Info = 'Info',
-  Error = 'Error',
-}
-
-export enum BuildFirmwareStep {
-  VERIFYING_BUILD_SYSTEM = 'VERIFYING_BUILD_SYSTEM',
-  DOWNLOADING_FIRMWARE = 'DOWNLOADING_FIRMWARE',
-  BUILDING_USER_DEFINES = 'BUILDING_USER_DEFINES',
-  BUILDING_FIRMWARE = 'BUILDING_FIRMWARE',
-  FLASHING_FIRMWARE = 'FLASHING_FIRMWARE',
-}
-
-export type BuildLogUpdate = {
-  readonly __typename?: 'BuildLogUpdate';
-  readonly data: Scalars['String'];
-};
-
-export type FirmwareVersionDataInput = {
-  readonly source?: Maybe<FirmwareSource>;
-  readonly gitTag?: Maybe<Scalars['String']>;
-  readonly gitBranch?: Maybe<Scalars['String']>;
-  readonly gitCommit?: Maybe<Scalars['String']>;
-  readonly localPath?: Maybe<Scalars['String']>;
-};
-
-export enum FirmwareSource {
-  GitTag = 'GitTag',
-  GitBranch = 'GitBranch',
-  GitCommit = 'GitCommit',
-  Local = 'Local',
-}
-
-export type UserDefineInput = {
-  readonly type?: Maybe<UserDefineKind>;
-  readonly key?: Maybe<UserDefineKey>;
-  readonly enabled?: Maybe<Scalars['Boolean']>;
-  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
-  readonly value?: Maybe<Scalars['String']>;
-};
-
-export type BuildFlashFirmwareInput = {
-  readonly type?: Maybe<BuildJobType>;
-  readonly firmware?: Maybe<FirmwareVersionDataInput>;
-  readonly target?: Maybe<DeviceTarget>;
-  readonly userDefinesMode?: Maybe<UserDefinesMode>;
-  readonly userDefines?: Maybe<ReadonlyArray<UserDefineInput>>;
-  readonly userDefinesTxt?: Maybe<Scalars['String']>;
-};
-
-export enum BuildJobType {
-  Build = 'Build',
-  BuildAndFlash = 'BuildAndFlash',
-}
 
 export enum DeviceTarget {
   Frsky_TX_R9M_via_STLINK = 'Frsky_TX_R9M_via_STLINK',
@@ -172,22 +64,47 @@ export enum DeviceTarget {
   DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough = 'DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough',
 }
 
-export enum UserDefinesMode {
-  UserInterface = 'UserInterface',
-  Manual = 'Manual',
+export type UserDefine = {
+  readonly __typename?: 'UserDefine';
+  readonly type: UserDefineKind;
+  readonly key: UserDefineKey;
+  readonly enabled: Scalars['Boolean'];
+  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
+  readonly value?: Maybe<Scalars['String']>;
+};
+
+export enum UserDefineKind {
+  Boolean = 'Boolean',
+  Text = 'Text',
+  Enum = 'Enum',
 }
 
-export type Query = {
-  readonly __typename?: 'Query';
-  readonly availableFirmwareTargets: ReadonlyArray<DeviceTarget>;
-  readonly targetDeviceOptions: ReadonlyArray<UserDefine>;
-  readonly gitBranches: ReadonlyArray<Scalars['String']>;
-  readonly gitTags: ReadonlyArray<Scalars['String']>;
-};
-
-export type QueryTargetDeviceOptionsArgs = {
-  target: DeviceTarget;
-};
+export enum UserDefineKey {
+  BINDING_PHRASE = 'BINDING_PHRASE',
+  REGULATORY_DOMAIN_AU_915 = 'REGULATORY_DOMAIN_AU_915',
+  REGULATORY_DOMAIN_EU_868 = 'REGULATORY_DOMAIN_EU_868',
+  REGULATORY_DOMAIN_AU_433 = 'REGULATORY_DOMAIN_AU_433',
+  REGULATORY_DOMAIN_EU_433 = 'REGULATORY_DOMAIN_EU_433',
+  REGULATORY_DOMAIN_FCC_915 = 'REGULATORY_DOMAIN_FCC_915',
+  REGULATORY_DOMAIN_ISM_2400 = 'REGULATORY_DOMAIN_ISM_2400',
+  HYBRID_SWITCHES_8 = 'HYBRID_SWITCHES_8',
+  FAST_SYNC = 'FAST_SYNC',
+  R9M_UNLOCK_HIGHER_POWER = 'R9M_UNLOCK_HIGHER_POWER',
+  NO_SYNC_ON_ARM = 'NO_SYNC_ON_ARM',
+  ARM_CHANNEL = 'ARM_CHANNEL',
+  FEATURE_OPENTX_SYNC = 'FEATURE_OPENTX_SYNC',
+  FEATURE_OPENTX_SYNC_AUTOTUNE = 'FEATURE_OPENTX_SYNC_AUTOTUNE',
+  LOCK_ON_FIRST_CONNECTION = 'LOCK_ON_FIRST_CONNECTION',
+  LOCK_ON_50HZ = 'LOCK_ON_50HZ',
+  USE_UART2 = 'USE_UART2',
+  UART_INVERTED = 'UART_INVERTED',
+  USE_R9MM_R9MINI_SBUS = 'USE_R9MM_R9MINI_SBUS',
+  AUTO_WIFI_ON_BOOT = 'AUTO_WIFI_ON_BOOT',
+  USE_ESP8266_BACKPACK = 'USE_ESP8266_BACKPACK',
+  JUST_BEEP_ONCE = 'JUST_BEEP_ONCE',
+  MY_STARTUP_MELODY = 'MY_STARTUP_MELODY',
+  USE_500HZ = 'USE_500HZ',
+}
 
 export type Mutation = {
   readonly __typename?: 'Mutation';
@@ -198,10 +115,95 @@ export type MutationBuildFlashFirmwareArgs = {
   input: BuildFlashFirmwareInput;
 };
 
+export type BuildFlashFirmwareResult = {
+  readonly __typename?: 'BuildFlashFirmwareResult';
+  readonly success: Scalars['Boolean'];
+  readonly errorType?: Maybe<BuildFirmwareErrorType>;
+  readonly message?: Maybe<Scalars['String']>;
+  readonly firmwareBinPath?: Maybe<Scalars['String']>;
+};
+
+export enum BuildFirmwareErrorType {
+  PythonDependencyError = 'PythonDependencyError',
+  PlatformioDependencyError = 'PlatformioDependencyError',
+  GitDependencyError = 'GitDependencyError',
+  BuildError = 'BuildError',
+  FlashError = 'FlashError',
+  GenericError = 'GenericError',
+}
+
+export type BuildFlashFirmwareInput = {
+  readonly type?: Maybe<BuildJobType>;
+  readonly firmware?: Maybe<FirmwareVersionDataInput>;
+  readonly target?: Maybe<DeviceTarget>;
+  readonly userDefinesMode?: Maybe<UserDefinesMode>;
+  readonly userDefines?: Maybe<ReadonlyArray<UserDefineInput>>;
+  readonly userDefinesTxt?: Maybe<Scalars['String']>;
+};
+
+export enum BuildJobType {
+  Build = 'Build',
+  BuildAndFlash = 'BuildAndFlash',
+}
+
+export type FirmwareVersionDataInput = {
+  readonly source?: Maybe<FirmwareSource>;
+  readonly gitTag?: Maybe<Scalars['String']>;
+  readonly gitBranch?: Maybe<Scalars['String']>;
+  readonly gitCommit?: Maybe<Scalars['String']>;
+  readonly localPath?: Maybe<Scalars['String']>;
+};
+
+export enum FirmwareSource {
+  GitTag = 'GitTag',
+  GitBranch = 'GitBranch',
+  GitCommit = 'GitCommit',
+  Local = 'Local',
+}
+
+export enum UserDefinesMode {
+  UserInterface = 'UserInterface',
+  Manual = 'Manual',
+}
+
+export type UserDefineInput = {
+  readonly type?: Maybe<UserDefineKind>;
+  readonly key?: Maybe<UserDefineKey>;
+  readonly enabled?: Maybe<Scalars['Boolean']>;
+  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
+  readonly value?: Maybe<Scalars['String']>;
+};
+
 export type Subscription = {
   readonly __typename?: 'Subscription';
   readonly buildProgressNotifications: BuildProgressNotification;
   readonly buildLogUpdates: BuildLogUpdate;
+};
+
+export type BuildProgressNotification = {
+  readonly __typename?: 'BuildProgressNotification';
+  readonly type: BuildProgressNotificationType;
+  readonly step?: Maybe<BuildFirmwareStep>;
+  readonly message?: Maybe<Scalars['String']>;
+};
+
+export enum BuildProgressNotificationType {
+  Success = 'Success',
+  Info = 'Info',
+  Error = 'Error',
+}
+
+export enum BuildFirmwareStep {
+  VERIFYING_BUILD_SYSTEM = 'VERIFYING_BUILD_SYSTEM',
+  DOWNLOADING_FIRMWARE = 'DOWNLOADING_FIRMWARE',
+  BUILDING_USER_DEFINES = 'BUILDING_USER_DEFINES',
+  BUILDING_FIRMWARE = 'BUILDING_FIRMWARE',
+  FLASHING_FIRMWARE = 'FLASHING_FIRMWARE',
+}
+
+export type BuildLogUpdate = {
+  readonly __typename?: 'BuildLogUpdate';
+  readonly data: Scalars['String'];
 };
 
 export type AvailableFirmwareTargetsQueryVariables = Exact<{
@@ -311,6 +313,7 @@ export function useAvailableFirmwareTargetsQuery(
     AvailableFirmwareTargetsQueryVariables
   >(AvailableFirmwareTargetsDocument, baseOptions);
 }
+
 export function useAvailableFirmwareTargetsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     AvailableFirmwareTargetsQuery,
@@ -322,6 +325,7 @@ export function useAvailableFirmwareTargetsLazyQuery(
     AvailableFirmwareTargetsQueryVariables
   >(AvailableFirmwareTargetsDocument, baseOptions);
 }
+
 export type AvailableFirmwareTargetsQueryHookResult = ReturnType<
   typeof useAvailableFirmwareTargetsQuery
 >;
@@ -375,12 +379,11 @@ export function useBuildFlashFirmwareMutation(
     BuildFlashFirmwareMutationVariables
   >(BuildFlashFirmwareDocument, baseOptions);
 }
+
 export type BuildFlashFirmwareMutationHookResult = ReturnType<
   typeof useBuildFlashFirmwareMutation
 >;
-export type BuildFlashFirmwareMutationResult = Apollo.MutationResult<
-  BuildFlashFirmwareMutation
->;
+export type BuildFlashFirmwareMutationResult = Apollo.MutationResult<BuildFlashFirmwareMutation>;
 export type BuildFlashFirmwareMutationOptions = Apollo.BaseMutationOptions<
   BuildFlashFirmwareMutation,
   BuildFlashFirmwareMutationVariables
@@ -419,12 +422,11 @@ export function useBuildLogUpdatesSubscription(
     BuildLogUpdatesSubscriptionVariables
   >(BuildLogUpdatesDocument, baseOptions);
 }
+
 export type BuildLogUpdatesSubscriptionHookResult = ReturnType<
   typeof useBuildLogUpdatesSubscription
 >;
-export type BuildLogUpdatesSubscriptionResult = Apollo.SubscriptionResult<
-  BuildLogUpdatesSubscription
->;
+export type BuildLogUpdatesSubscriptionResult = Apollo.SubscriptionResult<BuildLogUpdatesSubscription>;
 export const BuildProgressNotificationsDocument = gql`
   subscription buildProgressNotifications {
     buildProgressNotifications {
@@ -461,12 +463,11 @@ export function useBuildProgressNotificationsSubscription(
     BuildProgressNotificationsSubscriptionVariables
   >(BuildProgressNotificationsDocument, baseOptions);
 }
+
 export type BuildProgressNotificationsSubscriptionHookResult = ReturnType<
   typeof useBuildProgressNotificationsSubscription
 >;
-export type BuildProgressNotificationsSubscriptionResult = Apollo.SubscriptionResult<
-  BuildProgressNotificationsSubscription
->;
+export type BuildProgressNotificationsSubscriptionResult = Apollo.SubscriptionResult<BuildProgressNotificationsSubscription>;
 export const TargetDeviceOptionsDocument = gql`
   query targetDeviceOptions($target: DeviceTarget!) {
     targetDeviceOptions(target: $target) {
@@ -506,6 +507,7 @@ export function useTargetDeviceOptionsQuery(
     TargetDeviceOptionsQueryVariables
   >(TargetDeviceOptionsDocument, baseOptions);
 }
+
 export function useTargetDeviceOptionsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     TargetDeviceOptionsQuery,
@@ -517,6 +519,7 @@ export function useTargetDeviceOptionsLazyQuery(
     TargetDeviceOptionsQueryVariables
   >(TargetDeviceOptionsDocument, baseOptions);
 }
+
 export type TargetDeviceOptionsQueryHookResult = ReturnType<
   typeof useTargetDeviceOptionsQuery
 >;
@@ -559,6 +562,7 @@ export function useGetBranchesQuery(
     baseOptions
   );
 }
+
 export function useGetBranchesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     GetBranchesQuery,
@@ -570,6 +574,7 @@ export function useGetBranchesLazyQuery(
     baseOptions
   );
 }
+
 export type GetBranchesQueryHookResult = ReturnType<typeof useGetBranchesQuery>;
 export type GetBranchesLazyQueryHookResult = ReturnType<
   typeof useGetBranchesLazyQuery
@@ -607,6 +612,7 @@ export function useGetTagsQuery(
     baseOptions
   );
 }
+
 export function useGetTagsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>
 ) {
@@ -615,6 +621,7 @@ export function useGetTagsLazyQuery(
     baseOptions
   );
 }
+
 export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>;
 export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>;
 export type GetTagsQueryResult = Apollo.QueryResult<
