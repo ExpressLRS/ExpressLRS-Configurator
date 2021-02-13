@@ -1,0 +1,413 @@
+'\" t
+.\"     Title: git-switch
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 02/08/2021
+.\"    Manual: Git Manual
+.\"    Source: Git 2.30.1
+.\"  Language: English
+.\"
+.TH "GIT\-SWITCH" "1" "02/08/2021" "Git 2\&.30\&.1" "Git Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+git-switch \- Switch branches
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit switch\fR [<options>] [\-\-no\-guess] <branch>
+\fIgit switch\fR [<options>] \-\-detach [<start\-point>]
+\fIgit switch\fR [<options>] (\-c|\-C) <new\-branch> [<start\-point>]
+\fIgit switch\fR [<options>] \-\-orphan <new\-branch>
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Switch to a specified branch\&. The working tree and the index are updated to match the branch\&. All new commits will be added to the tip of this branch\&.
+.sp
+Optionally a new branch could be created with either \fB\-c\fR, \fB\-C\fR, automatically from a remote branch of same name (see \fB\-\-guess\fR), or detach the working tree from any branch with \fB\-\-detach\fR, along with switching\&.
+.sp
+Switching branches does not require a clean index and working tree (i\&.e\&. no differences compared to \fBHEAD\fR)\&. The operation is aborted however if the operation leads to loss of local changes, unless told otherwise with \fB\-\-discard\-changes\fR or \fB\-\-merge\fR\&.
+.sp
+THIS COMMAND IS EXPERIMENTAL\&. THE BEHAVIOR MAY CHANGE\&.
+.SH "OPTIONS"
+.PP
+<branch>
+.RS 4
+Branch to switch to\&.
+.RE
+.PP
+<new\-branch>
+.RS 4
+Name for the new branch\&.
+.RE
+.PP
+<start\-point>
+.RS 4
+The starting point for the new branch\&. Specifying a
+\fB<start\-point>\fR
+allows you to create a branch based on some other point in history than where HEAD currently points\&. (Or, in the case of
+\fB\-\-detach\fR, allows you to inspect and detach from some other point\&.)
+.sp
+You can use the
+\fB@{\-N}\fR
+syntax to refer to the N\-th last branch/commit switched to using "git switch" or "git checkout" operation\&. You may also specify
+\fB\-\fR
+which is synonymous to
+\fB@{\-1}\fR\&. This is often used to switch quickly between two branches, or to undo a branch switch by mistake\&.
+.sp
+As a special case, you may use
+\fBA\&.\&.\&.B\fR
+as a shortcut for the merge base of
+\fBA\fR
+and
+\fBB\fR
+if there is exactly one merge base\&. You can leave out at most one of
+\fBA\fR
+and
+\fBB\fR, in which case it defaults to
+\fBHEAD\fR\&.
+.RE
+.PP
+\-c <new\-branch>, \-\-create <new\-branch>
+.RS 4
+Create a new branch named
+\fB<new\-branch>\fR
+starting at
+\fB<start\-point>\fR
+before switching to the branch\&. This is a convenient shortcut for:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git branch <new\-branch>
+$ git switch <new\-branch>
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.RE
+.PP
+\-C <new\-branch>, \-\-force\-create <new\-branch>
+.RS 4
+Similar to
+\fB\-\-create\fR
+except that if
+\fB<new\-branch>\fR
+already exists, it will be reset to
+\fB<start\-point>\fR\&. This is a convenient shortcut for:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git branch \-f <new\-branch>
+$ git switch <new\-branch>
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.RE
+.PP
+\-d, \-\-detach
+.RS 4
+Switch to a commit for inspection and discardable experiments\&. See the "DETACHED HEAD" section in
+\fBgit-checkout\fR(1)
+for details\&.
+.RE
+.PP
+\-\-guess, \-\-no\-guess
+.RS 4
+If
+\fB<branch>\fR
+is not found but there does exist a tracking branch in exactly one remote (call it
+\fB<remote>\fR) with a matching name, treat as equivalent to
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git switch \-c <branch> \-\-track <remote>/<branch>
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+If the branch exists in multiple remotes and one of them is named by the
+\fBcheckout\&.defaultRemote\fR
+configuration variable, we\(cqll use that one for the purposes of disambiguation, even if the
+\fB<branch>\fR
+isn\(cqt unique across all remotes\&. Set it to e\&.g\&.
+\fBcheckout\&.defaultRemote=origin\fR
+to always checkout remote branches from there if
+\fB<branch>\fR
+is ambiguous but exists on the
+\fIorigin\fR
+remote\&. See also
+\fBcheckout\&.defaultRemote\fR
+in
+\fBgit-config\fR(1)\&.
+.sp
+\fB\-\-guess\fR
+is the default behavior\&. Use
+\fB\-\-no\-guess\fR
+to disable it\&.
+.sp
+The default behavior can be set via the
+\fBcheckout\&.guess\fR
+configuration variable\&.
+.RE
+.PP
+\-f, \-\-force
+.RS 4
+An alias for
+\fB\-\-discard\-changes\fR\&.
+.RE
+.PP
+\-\-discard\-changes
+.RS 4
+Proceed even if the index or the working tree differs from
+\fBHEAD\fR\&. Both the index and working tree are restored to match the switching target\&. If
+\fB\-\-recurse\-submodules\fR
+is specified, submodule content is also restored to match the switching target\&. This is used to throw away local changes\&.
+.RE
+.PP
+\-m, \-\-merge
+.RS 4
+If you have local modifications to one or more files that are different between the current branch and the branch to which you are switching, the command refuses to switch branches in order to preserve your modifications in context\&. However, with this option, a three\-way merge between the current branch, your working tree contents, and the new branch is done, and you will be on the new branch\&.
+.sp
+When a merge conflict happens, the index entries for conflicting paths are left unmerged, and you need to resolve the conflicts and mark the resolved paths with
+\fBgit add\fR
+(or
+\fBgit rm\fR
+if the merge should result in deletion of the path)\&.
+.RE
+.PP
+\-\-conflict=<style>
+.RS 4
+The same as
+\fB\-\-merge\fR
+option above, but changes the way the conflicting hunks are presented, overriding the
+\fBmerge\&.conflictStyle\fR
+configuration variable\&. Possible values are "merge" (default) and "diff3" (in addition to what is shown by "merge" style, shows the original contents)\&.
+.RE
+.PP
+\-q, \-\-quiet
+.RS 4
+Quiet, suppress feedback messages\&.
+.RE
+.PP
+\-\-progress, \-\-no\-progress
+.RS 4
+Progress status is reported on the standard error stream by default when it is attached to a terminal, unless
+\fB\-\-quiet\fR
+is specified\&. This flag enables progress reporting even if not attached to a terminal, regardless of
+\fB\-\-quiet\fR\&.
+.RE
+.PP
+\-t, \-\-track
+.RS 4
+When creating a new branch, set up "upstream" configuration\&.
+\fB\-c\fR
+is implied\&. See
+\fB\-\-track\fR
+in
+\fBgit-branch\fR(1)
+for details\&.
+.sp
+If no
+\fB\-c\fR
+option is given, the name of the new branch will be derived from the remote\-tracking branch, by looking at the local part of the refspec configured for the corresponding remote, and then stripping the initial part up to the "*"\&. This would tell us to use
+\fBhack\fR
+as the local branch when branching off of
+\fBorigin/hack\fR
+(or
+\fBremotes/origin/hack\fR, or even
+\fBrefs/remotes/origin/hack\fR)\&. If the given name has no slash, or the above guessing results in an empty name, the guessing is aborted\&. You can explicitly give a name with
+\fB\-c\fR
+in such a case\&.
+.RE
+.PP
+\-\-no\-track
+.RS 4
+Do not set up "upstream" configuration, even if the
+\fBbranch\&.autoSetupMerge\fR
+configuration variable is true\&.
+.RE
+.PP
+\-\-orphan <new\-branch>
+.RS 4
+Create a new
+\fIorphan\fR
+branch, named
+\fB<new\-branch>\fR\&. All tracked files are removed\&.
+.RE
+.PP
+\-\-ignore\-other\-worktrees
+.RS 4
+\fBgit switch\fR
+refuses when the wanted ref is already checked out by another worktree\&. This option makes it check the ref out anyway\&. In other words, the ref can be held by more than one worktree\&.
+.RE
+.PP
+\-\-recurse\-submodules, \-\-no\-recurse\-submodules
+.RS 4
+Using
+\fB\-\-recurse\-submodules\fR
+will update the content of all active submodules according to the commit recorded in the superproject\&. If nothing (or
+\fB\-\-no\-recurse\-submodules\fR) is used, submodules working trees will not be updated\&. Just like
+\fBgit-submodule\fR(1), this will detach
+\fBHEAD\fR
+of the submodules\&.
+.RE
+.SH "EXAMPLES"
+.sp
+The following command switches to the "master" branch:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git switch master
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+After working in the wrong branch, switching to the correct branch would be done using:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git switch mytopic
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+However, your "wrong" branch and correct "mytopic" branch may differ in files that you have modified locally, in which case the above switch would fail like this:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git switch mytopic
+error: You have local changes to \*(Aqfrotz\*(Aq; not switching branches\&.
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+You can give the \fB\-m\fR flag to the command, which would try a three\-way merge:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git switch \-m mytopic
+Auto\-merging frotz
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+After this three\-way merge, the local modifications are \fInot\fR registered in your index file, so \fBgit diff\fR would show you what changes you made since the tip of the new branch\&.
+.sp
+To switch back to the previous branch before we switched to mytopic (i\&.e\&. "master" branch):
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git switch \-
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+You can grow a new branch from any commit\&. For example, switch to "HEAD~3" and create branch "fixup":
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git switch \-c fixup HEAD~3
+Switched to a new branch \*(Aqfixup\*(Aq
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+If you want to start a new branch from a remote branch of the same name:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git switch new\-topic
+Branch \*(Aqnew\-topic\*(Aq set up to track remote branch \*(Aqnew\-topic\*(Aq from \*(Aqorigin\*(Aq
+Switched to a new branch \*(Aqnew\-topic\*(Aq
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+To check out commit \fBHEAD~3\fR for temporary inspection or experiment without creating a new branch:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git switch \-\-detach HEAD~3
+HEAD is now at 9fc9555312 Merge branch \*(Aqcc/shared\-index\-permbits\*(Aq
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+If it turns out whatever you have done is worth keeping, you can always create a new name for it (without switching away):
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git switch \-c good\-surprises
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.SH "SEE ALSO"
+.sp
+\fBgit-checkout\fR(1), \fBgit-branch\fR(1)
+.SH "GIT"
+.sp
+Part of the \fBgit\fR(1) suite

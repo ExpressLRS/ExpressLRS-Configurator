@@ -130,10 +130,17 @@ const createWindow = async () => {
   );
 
   /*
-    We manually prepend $PATH on Windows machines with portable Git and Python locations.
+    We manually prepend $PATH on Windows and macOS machines with portable Git and Python locations.
    */
   let PATH = process.env.PATH ?? '';
+  const prependPATH = (pth: string, item: string): string => {
+    if (pth.length > 0) {
+      return `${item}${path.delimiter}${pth}`;
+    }
+    return item;
+  };
   const isWindows = process.platform.startsWith('win');
+  const isMacOS = process.platform.startsWith('darwin');
   if (isWindows) {
     const portablePythonLocation = path.join(
       dependenciesPath,
@@ -143,12 +150,18 @@ const createWindow = async () => {
       dependenciesPath,
       'windows_amd64/PortableGit/bin'
     );
-    const prependPATH = (pth: string, item: string): string => {
-      if (pth.length > 0) {
-        return `${item}${path.delimiter}${pth}`;
-      }
-      return item;
-    };
+    PATH = prependPATH(PATH, portablePythonLocation);
+    PATH = prependPATH(PATH, portableGitLocation);
+  }
+  if (isMacOS) {
+    const portablePythonLocation = path.join(
+      dependenciesPath,
+      'darwin_amd64/python-portable-darwin-3.8.4/bin'
+    );
+    const portableGitLocation = path.join(
+      dependenciesPath,
+      'darwin_amd64/git/2.30.1/bin'
+    );
     PATH = prependPATH(PATH, portablePythonLocation);
     PATH = prependPATH(PATH, portableGitLocation);
   }

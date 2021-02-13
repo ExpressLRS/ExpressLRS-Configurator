@@ -2,7 +2,7 @@
 import simpleGit, { SimpleGit, SimpleGitOptions } from 'simple-git';
 import * as fs from 'fs';
 import path from 'path';
-import Commander from '../Commander';
+import Commander, {CommandResult} from '../Commander';
 
 interface FirmwareDownloaderProps {
   baseDirectory: string;
@@ -36,11 +36,17 @@ export const findGitExecutable = async (envPath: string): Promise<string> => {
         .normalize(path.join(location, exename))
         .replace(/"/g, '');
       try {
+        let res: CommandResult | null = null;
         if (
           fs.existsSync(executable) &&
-          (await new Commander().runCommand(executable, ['--version']))
+          // eslint-disable-next-line no-cond-assign
+          (res = await new Commander().runCommand(executable, ['--version']))
         ) {
-          return executable;
+          console.log('tested git exec', executable);
+          if (res.success) {
+            console.log('confirmed git exec', executable);
+            return executable;
+          }
         }
       } catch (err) {
         console.warn(executable, err);

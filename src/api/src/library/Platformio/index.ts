@@ -97,7 +97,9 @@ export default class Platformio {
               pythonAssertCode.join(';'),
             ]))
           ) {
+            console.log('tested python exec', executable);
             if (res.success) {
+              console.log('confirmed python exec', executable);
               return executable;
             }
           }

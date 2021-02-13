@@ -78,6 +78,9 @@
     "win": {
       "target": [
         "nsis"
+      ],
+      "files": [
+        "!dependencies/darwin_amd64/*"
       ]
     },
     "linux": {
@@ -89,7 +92,8 @@
       ],
       "category": "Development",
       "files": [
-        "!dependencies/windows_amd64/**"
+        "!dependencies/windows_amd64/**",
+        "!dependencies/darwin_amd64/**"
       ]
     },
     "rpm": {

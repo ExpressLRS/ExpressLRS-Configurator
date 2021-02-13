@@ -1,0 +1,237 @@
+'\" t
+.\"     Title: git-sparse-checkout
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 02/08/2021
+.\"    Manual: Git Manual
+.\"    Source: Git 2.30.1
+.\"  Language: English
+.\"
+.TH "GIT\-SPARSE\-CHECKOU" "1" "02/08/2021" "Git 2\&.30\&.1" "Git Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+git-sparse-checkout \- Initialize and modify the sparse\-checkout configuration, which reduces the checkout to a set of paths given by a list of patterns\&.
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit sparse\-checkout <subcommand> [options]\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Initialize and modify the sparse\-checkout configuration, which reduces the checkout to a set of paths given by a list of patterns\&.
+.sp
+THIS COMMAND IS EXPERIMENTAL\&. ITS BEHAVIOR, AND THE BEHAVIOR OF OTHER COMMANDS IN THE PRESENCE OF SPARSE\-CHECKOUTS, WILL LIKELY CHANGE IN THE FUTURE\&.
+.SH "COMMANDS"
+.PP
+\fIlist\fR
+.RS 4
+Describe the patterns in the sparse\-checkout file\&.
+.RE
+.PP
+\fIinit\fR
+.RS 4
+Enable the
+\fBcore\&.sparseCheckout\fR
+setting\&. If the sparse\-checkout file does not exist, then populate it with patterns that match every file in the root directory and no other directories, then will remove all directories tracked by Git\&. Add patterns to the sparse\-checkout file to repopulate the working directory\&.
+.sp
+To avoid interfering with other worktrees, it first enables the
+\fBextensions\&.worktreeConfig\fR
+setting and makes sure to set the
+\fBcore\&.sparseCheckout\fR
+setting in the worktree\-specific config file\&.
+.sp
+When
+\fB\-\-cone\fR
+is provided, the
+\fBcore\&.sparseCheckoutCone\fR
+setting is also set, allowing for better performance with a limited set of patterns (see
+\fICONE PATTERN SET\fR
+below)\&.
+.RE
+.PP
+\fIset\fR
+.RS 4
+Write a set of patterns to the sparse\-checkout file, as given as a list of arguments following the
+\fIset\fR
+subcommand\&. Update the working directory to match the new patterns\&. Enable the core\&.sparseCheckout config setting if it is not already enabled\&.
+.sp
+When the
+\fB\-\-stdin\fR
+option is provided, the patterns are read from standard in as a newline\-delimited list instead of from the arguments\&.
+.sp
+When
+\fBcore\&.sparseCheckoutCone\fR
+is enabled, the input list is considered a list of directories instead of sparse\-checkout patterns\&. The command writes patterns to the sparse\-checkout file to include all files contained in those directories (recursively) as well as files that are siblings of ancestor directories\&. The input format matches the output of
+\fBgit ls\-tree \-\-name\-only\fR\&. This includes interpreting pathnames that begin with a double quote (") as C\-style quoted strings\&.
+.RE
+.PP
+\fIadd\fR
+.RS 4
+Update the sparse\-checkout file to include additional patterns\&. By default, these patterns are read from the command\-line arguments, but they can be read from stdin using the
+\fB\-\-stdin\fR
+option\&. When
+\fBcore\&.sparseCheckoutCone\fR
+is enabled, the given patterns are interpreted as directory names as in the
+\fIset\fR
+subcommand\&.
+.RE
+.PP
+\fIreapply\fR
+.RS 4
+Reapply the sparsity pattern rules to paths in the working tree\&. Commands like merge or rebase can materialize paths to do their work (e\&.g\&. in order to show you a conflict), and other sparse\-checkout commands might fail to sparsify an individual file (e\&.g\&. because it has unstaged changes or conflicts)\&. In such cases, it can make sense to run
+\fBgit sparse\-checkout reapply\fR
+later after cleaning up affected paths (e\&.g\&. resolving conflicts, undoing or committing changes, etc\&.)\&.
+.RE
+.PP
+\fIdisable\fR
+.RS 4
+Disable the
+\fBcore\&.sparseCheckout\fR
+config setting, and restore the working directory to include all files\&. Leaves the sparse\-checkout file intact so a later
+\fIgit sparse\-checkout init\fR
+command may return the working directory to the same state\&.
+.RE
+.SH "SPARSE CHECKOUT"
+.sp
+"Sparse checkout" allows populating the working directory sparsely\&. It uses the skip\-worktree bit (see \fBgit-update-index\fR(1)) to tell Git whether a file in the working directory is worth looking at\&. If the skip\-worktree bit is set, then the file is ignored in the working directory\&. Git will not populate the contents of those files, which makes a sparse checkout helpful when working in a repository with many files, but only a few are important to the current user\&.
+.sp
+The \fB$GIT_DIR/info/sparse\-checkout\fR file is used to define the skip\-worktree reference bitmap\&. When Git updates the working directory, it updates the skip\-worktree bits in the index based on this file\&. The files matching the patterns in the file will appear in the working directory, and the rest will not\&.
+.sp
+To enable the sparse\-checkout feature, run \fBgit sparse\-checkout init\fR to initialize a simple sparse\-checkout file and enable the \fBcore\&.sparseCheckout\fR config setting\&. Then, run \fBgit sparse\-checkout set\fR to modify the patterns in the sparse\-checkout file\&.
+.sp
+To repopulate the working directory with all files, use the \fBgit sparse\-checkout disable\fR command\&.
+.SH "FULL PATTERN SET"
+.sp
+By default, the sparse\-checkout file uses the same syntax as \fB\&.gitignore\fR files\&.
+.sp
+While \fB$GIT_DIR/info/sparse\-checkout\fR is usually used to specify what files are included, you can also specify what files are \fInot\fR included, using negative patterns\&. For example, to remove the file \fBunwanted\fR:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+/*
+!unwanted
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.SH "CONE PATTERN SET"
+.sp
+The full pattern set allows for arbitrary pattern matches and complicated inclusion/exclusion rules\&. These can result in O(N*M) pattern matches when updating the index, where N is the number of patterns and M is the number of paths in the index\&. To combat this performance issue, a more restricted pattern set is allowed when \fBcore\&.sparseCheckoutCone\fR is enabled\&.
+.sp
+The accepted patterns in the cone pattern set are:
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 1.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  1." 4.2
+.\}
+\fBRecursive:\fR
+All paths inside a directory are included\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 2.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  2." 4.2
+.\}
+\fBParent:\fR
+All files immediately inside a directory are included\&.
+.RE
+.sp
+In addition to the above two patterns, we also expect that all files in the root directory are included\&. If a recursive pattern is added, then all leading directories are added as parent patterns\&.
+.sp
+By default, when running \fBgit sparse\-checkout init\fR, the root directory is added as a parent pattern\&. At this point, the sparse\-checkout file contains the following patterns:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+/*
+!/*/
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+This says "include everything in root, but nothing two levels below root\&."
+.sp
+When in cone mode, the \fBgit sparse\-checkout set\fR subcommand takes a list of directories instead of a list of sparse\-checkout patterns\&. In this mode, the command \fBgit sparse\-checkout set A/B/C\fR sets the directory \fBA/B/C\fR as a recursive pattern, the directories \fBA\fR and \fBA/B\fR are added as parent patterns\&. The resulting sparse\-checkout file is now
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+/*
+!/*/
+/A/
+!/A/*/
+/A/B/
+!/A/B/*/
+/A/B/C/
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+Here, order matters, so the negative patterns are overridden by the positive patterns that appear lower in the file\&.
+.sp
+If \fBcore\&.sparseCheckoutCone=true\fR, then Git will parse the sparse\-checkout file expecting patterns of these types\&. Git will warn if the patterns do not match\&. If the patterns do match the expected format, then Git will use faster hash\- based algorithms to compute inclusion in the sparse\-checkout\&.
+.sp
+In the cone mode case, the \fBgit sparse\-checkout list\fR subcommand will list the directories that define the recursive patterns\&. For the example sparse\-checkout file above, the output is as follows:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git sparse\-checkout list
+A/B/C
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+If \fBcore\&.ignoreCase=true\fR, then the pattern\-matching algorithm will use a case\-insensitive check\&. This corrects for case mismatched filenames in the \fIgit sparse\-checkout set\fR command to reflect the expected cone in the working directory\&.
+.SH "SUBMODULES"
+.sp
+If your repository contains one or more submodules, then submodules are populated based on interactions with the \fBgit submodule\fR command\&. Specifically, \fBgit submodule init \-\- <path>\fR will ensure the submodule at \fB<path>\fR is present, while \fBgit submodule deinit [\-f] \-\- <path>\fR will remove the files for the submodule at \fB<path>\fR (including any untracked files, uncommitted changes, and unpushed history)\&. Similar to how sparse\-checkout removes files from the working tree but still leaves entries in the index, deinitialized submodules are removed from the working directory but still have an entry in the index\&.
+.sp
+Since submodules may have unpushed changes or untracked files, removing them could result in data loss\&. Thus, changing sparse inclusion/exclusion rules will not cause an already checked out submodule to be removed from the working copy\&. Said another way, just as \fBcheckout\fR will not cause submodules to be automatically removed or initialized even when switching between branches that remove or add submodules, using \fBsparse\-checkout\fR to reduce or expand the scope of "interesting" files will not cause submodules to be automatically deinitialized or initialized either\&.
+.sp
+Further, the above facts mean that there are multiple reasons that "tracked" files might not be present in the working copy: sparsity pattern application from sparse\-checkout, and submodule initialization state\&. Thus, commands like \fBgit grep\fR that work on tracked files in the working copy may return results that are limited by either or both of these restrictions\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-read-tree\fR(1) \fBgitignore\fR(5)
+.SH "GIT"
+.sp
+Part of the \fBgit\fR(1) suite

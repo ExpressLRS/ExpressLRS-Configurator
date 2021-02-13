@@ -1,0 +1,1861 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 9.0.0rc2" />
+<title>Git hash function transition</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overridden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Git hash function transition</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_objective">Objective</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Migrate Git from SHA-1 to a stronger hash function.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_background">Background</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>At its core, the Git version control system is a content addressable
+filesystem. It uses the SHA-1 hash function to name content. For
+example, files, directories, and revisions are referred to by hash
+values unlike in other traditional version control systems where files
+or versions are referred to via sequential numbers. The use of a hash
+function to address its content delivers a few advantages:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Integrity checking is easy. Bit flips, for example, are easily
+  detected, as the hash of corrupted content does not match its name.
+</p>
+</li>
+<li>
+<p>
+Lookup of objects is fast.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Using a cryptographically secure hash function brings additional
+advantages:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Object names can be signed and third parties can trust the hash to
+  address the signed object and all objects it references.
+</p>
+</li>
+<li>
+<p>
+Communication using Git protocol and out of band communication
+  methods have a short reliable string that can be used to reliably
+  address stored content.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Over time some flaws in SHA-1 have been discovered by security
+researchers. On 23 February 2017 the SHAttered attack
+(<a href="https://shattered.io">https://shattered.io</a>) demonstrated a practical SHA-1 hash collision.</p></div>
+<div class="paragraph"><p>Git v2.13.0 and later subsequently moved to a hardened SHA-1
+implementation by default, which isn&#8217;t vulnerable to the SHAttered
+attack.</p></div>
+<div class="paragraph"><p>Thus Git has in effect already migrated to a new hash that isn&#8217;t SHA-1
+and doesn&#8217;t share its vulnerabilities, its new hash function just
+happens to produce exactly the same output for all known inputs,
+except two PDFs published by the SHAttered researchers, and the new
+implementation (written by those researchers) claims to detect future
+cryptanalytic collision attacks.</p></div>
+<div class="paragraph"><p>Regardless, it&#8217;s considered prudent to move past any variant of SHA-1
+to a new hash. There&#8217;s no guarantee that future attacks on SHA-1 won&#8217;t
+be published in the future, and those attacks may not have viable
+mitigations.</p></div>
+<div class="paragraph"><p>If SHA-1 and its variants were to be truly broken, Git&#8217;s hash function
+could not be considered cryptographically secure any more. This would
+impact the communication of hash values because we could not trust
+that a given hash value represented the known good version of content
+that the speaker intended.</p></div>
+<div class="paragraph"><p>SHA-1 still possesses the other properties such as fast object lookup
+and safe error checking, but other hash functions are equally suitable
+that are believed to be cryptographically secure.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_goals">Goals</h2>
+<div class="sectionbody">
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+The transition to SHA-256 can be done one local repository at a time.
+</p>
+<div class="olist loweralpha"><ol class="loweralpha">
+<li>
+<p>
+Requiring no action by any other party.
+</p>
+</li>
+<li>
+<p>
+A SHA-256 repository can communicate with SHA-1 Git servers
+      (push/fetch).
+</p>
+</li>
+<li>
+<p>
+Users can use SHA-1 and SHA-256 identifiers for objects
+      interchangeably (see "Object names on the command line", below).
+</p>
+</li>
+<li>
+<p>
+New signed objects make use of a stronger hash function than
+      SHA-1 for their security guarantees.
+</p>
+</li>
+</ol></div>
+</li>
+<li>
+<p>
+Allow a complete transition away from SHA-1.
+</p>
+<div class="olist loweralpha"><ol class="loweralpha">
+<li>
+<p>
+Local metadata for SHA-1 compatibility can be removed from a
+      repository if compatibility with SHA-1 is no longer needed.
+</p>
+</li>
+</ol></div>
+</li>
+<li>
+<p>
+Maintainability throughout the process.
+</p>
+<div class="olist loweralpha"><ol class="loweralpha">
+<li>
+<p>
+The object format is kept simple and consistent.
+</p>
+</li>
+<li>
+<p>
+Creation of a generalized repository conversion tool.
+</p>
+</li>
+</ol></div>
+</li>
+</ol></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_non_goals">Non-Goals</h2>
+<div class="sectionbody">
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Add SHA-256 support to Git protocol. This is valuable and the
+   logical next step but it is out of scope for this initial design.
+</p>
+</li>
+<li>
+<p>
+Transparently improving the security of existing SHA-1 signed
+   objects.
+</p>
+</li>
+<li>
+<p>
+Intermixing objects using multiple hash functions in a single
+   repository.
+</p>
+</li>
+<li>
+<p>
+Taking the opportunity to fix other bugs in Git&#8217;s formats and
+   protocols.
+</p>
+</li>
+<li>
+<p>
+Shallow clones and fetches into a SHA-256 repository. (This will
+   change when we add SHA-256 support to Git protocol.)
+</p>
+</li>
+<li>
+<p>
+Skip fetching some submodules of a project into a SHA-256
+   repository. (This also depends on SHA-256 support in Git
+   protocol.)
+</p>
+</li>
+</ol></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_overview">Overview</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>We introduce a new repository format extension. Repositories with this
+extension enabled use SHA-256 instead of SHA-1 to name their objects.
+This affects both object names and object content --- both the names
+of objects and all references to other objects within an object are
+switched to the new hash function.</p></div>
+<div class="paragraph"><p>SHA-256 repositories cannot be read by older versions of Git.</p></div>
+<div class="paragraph"><p>Alongside the packfile, a SHA-256 repository stores a bidirectional
+mapping between SHA-256 and SHA-1 object names. The mapping is generated
+locally and can be verified using "git fsck". Object lookups use this
+mapping to allow naming objects using either their SHA-1 and SHA-256 names
+interchangeably.</p></div>
+<div class="paragraph"><p>"git cat-file" and "git hash-object" gain options to display an object
+in its sha1 form and write an object given its sha1 form. This
+requires all objects referenced by that object to be present in the
+object database so that they can be named using the appropriate name
+(using the bidirectional hash mapping).</p></div>
+<div class="paragraph"><p>Fetches from a SHA-1 based server convert the fetched objects into
+SHA-256 form and record the mapping in the bidirectional mapping table
+(see below for details). Pushes to a SHA-1 based server convert the
+objects being pushed into sha1 form so the server does not have to be
+aware of the hash function the client is using.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_detailed_design">Detailed Design</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_repository_format_extension">Repository format extension</h3>
+<div class="paragraph"><p>A SHA-256 repository uses repository format version <code>1</code> (see
+Documentation/technical/repository-version.txt) with extensions
+<code>objectFormat</code> and <code>compatObjectFormat</code>:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>[core]
+        repositoryFormatVersion = 1
+[extensions]
+        objectFormat = sha256
+        compatObjectFormat = sha1</code></pre>
+</div></div>
+<div class="paragraph"><p>The combination of setting <code>core.repositoryFormatVersion=1</code> and
+populating <code>extensions.*</code> ensures that all versions of Git later than
+<code>v0.99.9l</code> will die instead of trying to operate on the SHA-256
+repository, instead producing an error message.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code># Between v0.99.9l and v2.7.0
+$ git status
+fatal: Expected git repo version &lt;= 0, found 1
+# After v2.7.0
+$ git status
+fatal: unknown repository extensions found:
+        objectformat
+        compatobjectformat</code></pre>
+</div></div>
+<div class="paragraph"><p>See the "Transition plan" section below for more details on these
+repository extensions.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_object_names">Object names</h3>
+<div class="paragraph"><p>Objects can be named by their 40 hexadecimal digit sha1-name or 64
+hexadecimal digit sha256-name, plus names derived from those (see
+gitrevisions(7)).</p></div>
+<div class="paragraph"><p>The sha1-name of an object is the SHA-1 of the concatenation of its
+type, length, a nul byte, and the object&#8217;s sha1-content. This is the
+traditional &lt;sha1&gt; used in Git to name objects.</p></div>
+<div class="paragraph"><p>The sha256-name of an object is the SHA-256 of the concatenation of its
+type, length, a nul byte, and the object&#8217;s sha256-content.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_object_format">Object format</h3>
+<div class="paragraph"><p>The content as a byte sequence of a tag, commit, or tree object named
+by sha1 and sha256 differ because an object named by sha256-name refers to
+other objects by their sha256-names and an object named by sha1-name
+refers to other objects by their sha1-names.</p></div>
+<div class="paragraph"><p>The sha256-content of an object is the same as its sha1-content, except
+that objects referenced by the object are named using their sha256-names
+instead of sha1-names. Because a blob object does not refer to any
+other object, its sha1-content and sha256-content are the same.</p></div>
+<div class="paragraph"><p>The format allows round-trip conversion between sha256-content and
+sha1-content.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_object_storage">Object storage</h3>
+<div class="paragraph"><p>Loose objects use zlib compression and packed objects use the packed
+format described in Documentation/technical/pack-format.txt, just like
+today. The content that is compressed and stored uses sha256-content
+instead of sha1-content.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_pack_index">Pack index</h3>
+<div class="paragraph"><p>Pack index (.idx) files use a new v3 format that supports multiple
+hash functions. They have the following format (all integers are in
+network byte order):</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+A header appears at the beginning and consists of the following:
+</p>
+</li>
+<li>
+<p>
+The 4-byte pack index signature: <em>\377t0c</em>
+</p>
+</li>
+<li>
+<p>
+4-byte version number: 3
+</p>
+</li>
+<li>
+<p>
+4-byte length of the header section, including the signature and
+    version number
+</p>
+</li>
+<li>
+<p>
+4-byte number of objects contained in the pack
+</p>
+</li>
+<li>
+<p>
+4-byte number of object formats in this pack index: 2
+</p>
+</li>
+<li>
+<p>
+For each object format:
+</p>
+</li>
+<li>
+<p>
+4-byte format identifier (e.g., <em>sha1</em> for SHA-1)
+</p>
+</li>
+<li>
+<p>
+4-byte length in bytes of shortened object names. This is the
+      shortest possible length needed to make names in the shortened
+      object name table unambiguous.
+</p>
+</li>
+<li>
+<p>
+4-byte integer, recording where tables relating to this format
+      are stored in this index file, as an offset from the beginning.
+</p>
+</li>
+<li>
+<p>
+4-byte offset to the trailer from the beginning of this file.
+</p>
+</li>
+<li>
+<p>
+Zero or more additional key/value pairs (4-byte key, 4-byte
+    value). Only one key is supported: <em>PSRC</em>. See the "Loose objects
+    and unreachable objects" section for supported values and how this
+    is used.  All other keys are reserved. Readers must ignore
+    unrecognized keys.
+</p>
+</li>
+<li>
+<p>
+Zero or more NUL bytes. This can optionally be used to improve the
+  alignment of the full object name table below.
+</p>
+</li>
+<li>
+<p>
+Tables for the first object format:
+</p>
+</li>
+<li>
+<p>
+A sorted table of shortened object names.  These are prefixes of
+    the names of all objects in this pack file, packed together
+    without offset values to reduce the cache footprint of the binary
+    search for a specific object name.
+</p>
+</li>
+<li>
+<p>
+A table of full object names in pack order. This allows resolving
+    a reference to "the nth object in the pack file" (from a
+    reachability bitmap or from the next table of another object
+    format) to its object name.
+</p>
+</li>
+<li>
+<p>
+A table of 4-byte values mapping object name order to pack order.
+    For an object in the table of sorted shortened object names, the
+    value at the corresponding index in this table is the index in the
+    previous table for that same object.
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>This can be used to look up the object in reachability bitmaps or
+to look up its name in another object format.</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+A table of 4-byte CRC32 values of the packed object data, in the
+    order that the objects appear in the pack file. This is to allow
+    compressed data to be copied directly from pack to pack during
+    repacking without undetected data corruption.
+</p>
+</li>
+<li>
+<p>
+A table of 4-byte offset values. For an object in the table of
+    sorted shortened object names, the value at the corresponding
+    index in this table indicates where that object can be found in
+    the pack file. These are usually 31-bit pack file offsets, but
+    large offsets are encoded as an index into the next table with the
+    most significant bit set.
+</p>
+</li>
+<li>
+<p>
+A table of 8-byte offset entries (empty for pack files less than
+    2 GiB). Pack files are organized with heavily used objects toward
+    the front, so most object references should not need to refer to
+    this table.
+</p>
+</li>
+<li>
+<p>
+Zero or more NUL bytes.
+</p>
+</li>
+<li>
+<p>
+Tables for the second object format, with the same layout as above,
+  up to and not including the table of CRC32 values.
+</p>
+</li>
+<li>
+<p>
+Zero or more NUL bytes.
+</p>
+</li>
+<li>
+<p>
+The trailer consists of the following:
+</p>
+</li>
+<li>
+<p>
+A copy of the 20-byte SHA-256 checksum at the end of the
+    corresponding packfile.
+</p>
+</li>
+<li>
+<p>
+20-byte SHA-256 checksum of all of the above.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_loose_object_index">Loose object index</h3>
+<div class="paragraph"><p>A new file $GIT_OBJECT_DIR/loose-object-idx contains information about
+all loose objects. Its format is</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code># loose-object-idx
+(sha256-name SP sha1-name LF)*</code></pre>
+</div></div>
+<div class="paragraph"><p>where the object names are in hexadecimal format. The file is not
+sorted.</p></div>
+<div class="paragraph"><p>The loose object index is protected against concurrent writes by a
+lock file $GIT_OBJECT_DIR/loose-object-idx.lock. To add a new loose
+object:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Write the loose object to a temporary file, like today.
+</p>
+</li>
+<li>
+<p>
+Open loose-object-idx.lock with O_CREAT | O_EXCL to acquire the lock.
+</p>
+</li>
+<li>
+<p>
+Rename the loose object into place.
+</p>
+</li>
+<li>
+<p>
+Open loose-object-idx with O_APPEND and write the new object
+</p>
+</li>
+<li>
+<p>
+Unlink loose-object-idx.lock to release the lock.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>To remove entries (e.g. in "git pack-refs" or "git-prune"):</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Open loose-object-idx.lock with O_CREAT | O_EXCL to acquire the
+   lock.
+</p>
+</li>
+<li>
+<p>
+Write the new content to loose-object-idx.lock.
+</p>
+</li>
+<li>
+<p>
+Unlink any loose objects being removed.
+</p>
+</li>
+<li>
+<p>
+Rename to replace loose-object-idx, releasing the lock.
+</p>
+</li>
+</ol></div>
+</div>
+<div class="sect2">
+<h3 id="_translation_table">Translation table</h3>
+<div class="paragraph"><p>The index files support a bidirectional mapping between sha1-names
+and sha256-names. The lookup proceeds similarly to ordinary object
+lookups. For example, to convert a sha1-name to a sha256-name:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Look for the object in idx files. If a match is present in the
+    idx&#8217;s sorted list of truncated sha1-names, then:
+</p>
+<div class="olist loweralpha"><ol class="loweralpha">
+<li>
+<p>
+Read the corresponding entry in the sha1-name order to pack
+       name order mapping.
+</p>
+</li>
+<li>
+<p>
+Read the corresponding entry in the full sha1-name table to
+       verify we found the right object. If it is, then
+</p>
+</li>
+<li>
+<p>
+Read the corresponding entry in the full sha256-name table.
+       That is the object&#8217;s sha256-name.
+</p>
+</li>
+</ol></div>
+</li>
+<li>
+<p>
+Check for a loose object. Read lines from loose-object-idx until
+    we find a match.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>Step (1) takes the same amount of time as an ordinary object lookup:
+O(number of packs * log(objects per pack)). Step (2) takes O(number of
+loose objects) time. To maintain good performance it will be necessary
+to keep the number of loose objects low. See the "Loose objects and
+unreachable objects" section below for more details.</p></div>
+<div class="paragraph"><p>Since all operations that make new objects (e.g., "git commit") add
+the new objects to the corresponding index, this mapping is possible
+for all objects in the object store.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_reading_an_object_8217_s_sha1_content">Reading an object&#8217;s sha1-content</h3>
+<div class="paragraph"><p>The sha1-content of an object can be read by converting all sha256-names
+its sha256-content references to sha1-names using the translation table.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_fetch">Fetch</h3>
+<div class="paragraph"><p>Fetching from a SHA-1 based server requires translating between SHA-1
+and SHA-256 based representations on the fly.</p></div>
+<div class="paragraph"><p>SHA-1s named in the ref advertisement that are present on the client
+can be translated to SHA-256 and looked up as local objects using the
+translation table.</p></div>
+<div class="paragraph"><p>Negotiation proceeds as today. Any "have"s generated locally are
+converted to SHA-1 before being sent to the server, and SHA-1s
+mentioned by the server are converted to SHA-256 when looking them up
+locally.</p></div>
+<div class="paragraph"><p>After negotiation, the server sends a packfile containing the
+requested objects. We convert the packfile to SHA-256 format using
+the following steps:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+index-pack: inflate each object in the packfile and compute its
+   SHA-1. Objects can contain deltas in OBJ_REF_DELTA format against
+   objects the client has locally. These objects can be looked up
+   using the translation table and their sha1-content read as
+   described above to resolve the deltas.
+</p>
+</li>
+<li>
+<p>
+topological sort: starting at the "want"s from the negotiation
+   phase, walk through objects in the pack and emit a list of them,
+   excluding blobs, in reverse topologically sorted order, with each
+   object coming later in the list than all objects it references.
+   (This list only contains objects reachable from the "wants". If the
+   pack from the server contained additional extraneous objects, then
+   they will be discarded.)
+</p>
+</li>
+<li>
+<p>
+convert to sha256: open a new (sha256) packfile. Read the topologically
+   sorted list just generated. For each object, inflate its
+   sha1-content, convert to sha256-content, and write it to the sha256
+   pack. Record the new sha1&lt;&#8594;sha256 mapping entry for use in the idx.
+</p>
+</li>
+<li>
+<p>
+sort: reorder entries in the new pack to match the order of objects
+   in the pack the server generated and include blobs. Write a sha256 idx
+   file
+</p>
+</li>
+<li>
+<p>
+clean up: remove the SHA-1 based pack file, index, and
+   topologically sorted list obtained from the server in steps 1
+   and 2.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>Step 3 requires every object referenced by the new object to be in the
+translation table. This is why the topological sort step is necessary.</p></div>
+<div class="paragraph"><p>As an optimization, step 1 could write a file describing what non-blob
+objects each object it has inflated from the packfile references. This
+makes the topological sort in step 2 possible without inflating the
+objects in the packfile for a second time. The objects need to be
+inflated again in step 3, for a total of two inflations.</p></div>
+<div class="paragraph"><p>Step 4 is probably necessary for good read-time performance. "git
+pack-objects" on the server optimizes the pack file for good data
+locality (see Documentation/technical/pack-heuristics.txt).</p></div>
+<div class="paragraph"><p>Details of this process are likely to change. It will take some
+experimenting to get this to perform well.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_push">Push</h3>
+<div class="paragraph"><p>Push is simpler than fetch because the objects referenced by the
+pushed objects are already in the translation table. The sha1-content
+of each object being pushed can be read as described in the "Reading
+an object&#8217;s sha1-content" section to generate the pack written by git
+send-pack.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_signed_commits">Signed Commits</h3>
+<div class="paragraph"><p>We add a new field "gpgsig-sha256" to the commit object format to allow
+signing commits without relying on SHA-1. It is similar to the
+existing "gpgsig" field. Its signed payload is the sha256-content of the
+commit object with any "gpgsig" and "gpgsig-sha256" fields removed.</p></div>
+<div class="paragraph"><p>This means commits can be signed
+1. using SHA-1 only, as in existing signed commit objects
+2. using both SHA-1 and SHA-256, by using both gpgsig-sha256 and gpgsig
+   fields.
+3. using only SHA-256, by only using the gpgsig-sha256 field.</p></div>
+<div class="paragraph"><p>Old versions of "git verify-commit" can verify the gpgsig signature in
+cases (1) and (2) without modifications and view case (3) as an
+ordinary unsigned commit.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_signed_tags">Signed Tags</h3>
+<div class="paragraph"><p>We add a new field "gpgsig-sha256" to the tag object format to allow
+signing tags without relying on SHA-1. Its signed payload is the
+sha256-content of the tag with its gpgsig-sha256 field and "-----BEGIN PGP
+SIGNATURE-----" delimited in-body signature removed.</p></div>
+<div class="paragraph"><p>This means tags can be signed
+1. using SHA-1 only, as in existing signed tag objects
+2. using both SHA-1 and SHA-256, by using gpgsig-sha256 and an in-body
+   signature.
+3. using only SHA-256, by only using the gpgsig-sha256 field.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_mergetag_embedding">Mergetag embedding</h3>
+<div class="paragraph"><p>The mergetag field in the sha1-content of a commit contains the
+sha1-content of a tag that was merged by that commit.</p></div>
+<div class="paragraph"><p>The mergetag field in the sha256-content of the same commit contains the
+sha256-content of the same tag.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_submodules">Submodules</h3>
+<div class="paragraph"><p>To convert recorded submodule pointers, you need to have the converted
+submodule repository in place. The translation table of the submodule
+can be used to look up the new hash.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_loose_objects_and_unreachable_objects">Loose objects and unreachable objects</h3>
+<div class="paragraph"><p>Fast lookups in the loose-object-idx require that the number of loose
+objects not grow too high.</p></div>
+<div class="paragraph"><p>"git gc --auto" currently waits for there to be 6700 loose objects
+present before consolidating them into a packfile. We will need to
+measure to find a more appropriate threshold for it to use.</p></div>
+<div class="paragraph"><p>"git gc --auto" currently waits for there to be 50 packs present
+before combining packfiles. Packing loose objects more aggressively
+may cause the number of pack files to grow too quickly. This can be
+mitigated by using a strategy similar to Martin Fick&#8217;s exponential
+rolling garbage collection script:
+<a href="https://gerrit-review.googlesource.com/c/gerrit/+/35215">https://gerrit-review.googlesource.com/c/gerrit/+/35215</a></p></div>
+<div class="paragraph"><p>"git gc" currently expels any unreachable objects it encounters in
+pack files to loose objects in an attempt to prevent a race when
+pruning them (in case another process is simultaneously writing a new
+object that refers to the about-to-be-deleted object). This leads to
+an explosion in the number of loose objects present and disk space
+usage due to the objects in delta form being replaced with independent
+loose objects.  Worse, the race is still present for loose objects.</p></div>
+<div class="paragraph"><p>Instead, "git gc" will need to move unreachable objects to a new
+packfile marked as UNREACHABLE_GARBAGE (using the PSRC field; see
+below). To avoid the race when writing new objects referring to an
+about-to-be-deleted object, code paths that write new objects will
+need to copy any objects from UNREACHABLE_GARBAGE packs that they
+refer to new, non-UNREACHABLE_GARBAGE packs (or loose objects).
+UNREACHABLE_GARBAGE are then safe to delete if their creation time (as
+indicated by the file&#8217;s mtime) is long enough ago.</p></div>
+<div class="paragraph"><p>To avoid a proliferation of UNREACHABLE_GARBAGE packs, they can be
+combined under certain circumstances. If "gc.garbageTtl" is set to
+greater than one day, then packs created within a single calendar day,
+UTC, can be coalesced together. The resulting packfile would have an
+mtime before midnight on that day, so this makes the effective maximum
+ttl the garbageTtl + 1 day. If "gc.garbageTtl" is less than one day,
+then we divide the calendar day into intervals one-third of that ttl
+in duration. Packs created within the same interval can be coalesced
+together. The resulting packfile would have an mtime before the end of
+the interval, so this makes the effective maximum ttl equal to the
+garbageTtl * 4/3.</p></div>
+<div class="paragraph"><p>This rule comes from Thirumala Reddy Mutchukota&#8217;s JGit change
+<a href="https://git.eclipse.org/r/90465">https://git.eclipse.org/r/90465</a>.</p></div>
+<div class="paragraph"><p>The UNREACHABLE_GARBAGE setting goes in the PSRC field of the pack
+index. More generally, that field indicates where a pack came from:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+1 (PACK_SOURCE_RECEIVE) for a pack received over the network
+</p>
+</li>
+<li>
+<p>
+2 (PACK_SOURCE_AUTO) for a pack created by a lightweight
+   "gc --auto" operation
+</p>
+</li>
+<li>
+<p>
+3 (PACK_SOURCE_GC) for a pack created by a full gc
+</p>
+</li>
+<li>
+<p>
+4 (PACK_SOURCE_UNREACHABLE_GARBAGE) for potential garbage
+   discovered by gc
+</p>
+</li>
+<li>
+<p>
+5 (PACK_SOURCE_INSERT) for locally created objects that were
+   written directly to a pack file, e.g. from "git add ."
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>This information can be useful for debugging and for "gc --auto" to
+make appropriate choices about which packs to coalesce.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_caveats">Caveats</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_invalid_objects">Invalid objects</h3>
+<div class="paragraph"><p>The conversion from sha1-content to sha256-content retains any
+brokenness in the original object (e.g., tree entry modes encoded with
+leading 0, tree objects whose paths are not sorted correctly, and
+commit objects without an author or committer). This is a deliberate
+feature of the design to allow the conversion to round-trip.</p></div>
+<div class="paragraph"><p>More profoundly broken objects (e.g., a commit with a truncated "tree"
+header line) cannot be converted but were not usable by current Git
+anyway.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_shallow_clone_and_submodules">Shallow clone and submodules</h3>
+<div class="paragraph"><p>Because it requires all referenced objects to be available in the
+locally generated translation table, this design does not support
+shallow clone or unfetched submodules. Protocol improvements might
+allow lifting this restriction.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_alternates">Alternates</h3>
+<div class="paragraph"><p>For the same reason, a sha256 repository cannot borrow objects from a
+sha1 repository using objects/info/alternates or
+$GIT_ALTERNATE_OBJECT_REPOSITORIES.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_git_notes">git notes</h3>
+<div class="paragraph"><p>The "git notes" tool annotates objects using their sha1-name as key.
+This design does not describe a way to migrate notes trees to use
+sha256-names. That migration is expected to happen separately (for
+example using a file at the root of the notes tree to describe which
+hash it uses).</p></div>
+</div>
+<div class="sect2">
+<h3 id="_server_side_cost">Server-side cost</h3>
+<div class="paragraph"><p>Until Git protocol gains SHA-256 support, using SHA-256 based storage
+on public-facing Git servers is strongly discouraged. Once Git
+protocol gains SHA-256 support, SHA-256 based servers are likely not
+to support SHA-1 compatibility, to avoid what may be a very expensive
+hash re-encode during clone and to encourage peers to modernize.</p></div>
+<div class="paragraph"><p>The design described here allows fetches by SHA-1 clients of a
+personal SHA-256 repository because it&#8217;s not much more difficult than
+allowing pushes from that repository. This support needs to be guarded
+by a configuration option --- servers like git.kernel.org that serve a
+large number of clients would not be expected to bear that cost.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_meaning_of_signatures">Meaning of signatures</h3>
+<div class="paragraph"><p>The signed payload for signed commits and tags does not explicitly
+name the hash used to identify objects. If some day Git adopts a new
+hash function with the same length as the current SHA-1 (40
+hexadecimal digit) or SHA-256 (64 hexadecimal digit) objects then the
+intent behind the PGP signed payload in an object signature is
+unclear:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>object e7e07d5a4fcc2a203d9873968ad3e6bd4d7419d7
+type commit
+tag v2.12.0
+tagger Junio C Hamano &lt;gitster@pobox.com&gt; 1487962205 -0800</code></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>Git 2.12</code></pre>
+</div></div>
+<div class="paragraph"><p>Does this mean Git v2.12.0 is the commit with sha1-name
+e7e07d5a4fcc2a203d9873968ad3e6bd4d7419d7 or the commit with
+new-40-digit-hash-name e7e07d5a4fcc2a203d9873968ad3e6bd4d7419d7?</p></div>
+<div class="paragraph"><p>Fortunately SHA-256 and SHA-1 have different lengths. If Git starts
+using another hash with the same length to name objects, then it will
+need to change the format of signed payloads using that hash to
+address this issue.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_object_names_on_the_command_line">Object names on the command line</h3>
+<div class="paragraph"><p>To support the transition (see Transition plan below), this design
+supports four different modes of operation:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+("dark launch") Treat object names input by the user as SHA-1 and
+    convert any object names written to output to SHA-1, but store
+    objects using SHA-256.  This allows users to test the code with no
+    visible behavior change except for performance.  This allows
+    allows running even tests that assume the SHA-1 hash function, to
+    sanity-check the behavior of the new mode.
+</p>
+</li>
+<li>
+<p>
+("early transition") Allow both SHA-1 and SHA-256 object names in
+    input. Any object names written to output use SHA-1. This allows
+    users to continue to make use of SHA-1 to communicate with peers
+    (e.g. by email) that have not migrated yet and prepares for mode 3.
+</p>
+</li>
+<li>
+<p>
+("late transition") Allow both SHA-1 and SHA-256 object names in
+    input. Any object names written to output use SHA-256. In this
+    mode, users are using a more secure object naming method by
+    default.  The disruption is minimal as long as most of their peers
+    are in mode 2 or mode 3.
+</p>
+</li>
+<li>
+<p>
+("post-transition") Treat object names input by the user as
+    SHA-256 and write output using SHA-256. This is safer than mode 3
+    because there is less risk that input is incorrectly interpreted
+    using the wrong hash function.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>The mode is specified in configuration.</p></div>
+<div class="paragraph"><p>The user can also explicitly specify which format to use for a
+particular revision specifier and for output, overriding the mode. For
+example:</p></div>
+<div class="paragraph"><p></p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_choice_of_hash">Choice of Hash</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In early 2005, around the time that Git was written, Xiaoyun Wang,
+Yiqun Lisa Yin, and Hongbo Yu announced an attack finding SHA-1
+collisions in 2^69 operations. In August they published details.
+Luckily, no practical demonstrations of a collision in full SHA-1 were
+published until 10 years later, in 2017.</p></div>
+<div class="paragraph"><p>Git v2.13.0 and later subsequently moved to a hardened SHA-1
+implementation by default that mitigates the SHAttered attack, but
+SHA-1 is still believed to be weak.</p></div>
+<div class="paragraph"><p>The hash to replace this hardened SHA-1 should be stronger than SHA-1
+was: we would like it to be trustworthy and useful in practice for at
+least 10 years.</p></div>
+<div class="paragraph"><p>Some other relevant properties:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+A 256-bit hash (long enough to match common security practice; not
+   excessively long to hurt performance and disk usage).
+</p>
+</li>
+<li>
+<p>
+High quality implementations should be widely available (e.g., in
+   OpenSSL and Apple CommonCrypto).
+</p>
+</li>
+<li>
+<p>
+The hash function&#8217;s properties should match Git&#8217;s needs (e.g. Git
+   requires collision and 2nd preimage resistance and does not require
+   length extension resistance).
+</p>
+</li>
+<li>
+<p>
+As a tiebreaker, the hash should be fast to compute (fortunately
+   many contenders are faster than SHA-1).
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>We choose SHA-256.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_transition_plan">Transition plan</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Some initial steps can be implemented independently of one another:
+- adding a hash function API (vtable)
+- teaching fsck to tolerate the gpgsig-sha256 field
+- excluding gpgsig-* from the fields copied by "git commit --amend"
+- annotating tests that depend on SHA-1 values with a SHA1 test
+  prerequisite
+- using "struct object_id", GIT_MAX_RAWSZ, and GIT_MAX_HEXSZ
+  consistently instead of "unsigned char *" and the hardcoded
+  constants 20 and 40.
+- introducing index v3
+- adding support for the PSRC field and safer object pruning</p></div>
+<div class="paragraph"><p>The first user-visible change is the introduction of the objectFormat
+extension (without compatObjectFormat). This requires:
+- teaching fsck about this mode of operation
+- using the hash function API (vtable) when computing object names
+- signing objects and verifying signatures
+- rejecting attempts to fetch from or push to an incompatible
+  repository</p></div>
+<div class="paragraph"><p>Next comes introduction of compatObjectFormat:
+- implementing the loose-object-idx
+- translating object names between object formats
+- translating object content between object formats
+- generating and verifying signatures in the compat format
+- adding appropriate index entries when adding a new object to the
+  object store
+- --output-format option
+- configuration to specify default input and output format (see
+  "Object names on the command line" above)</p></div>
+<div class="paragraph"><p>The next step is supporting fetches and pushes to SHA-1 repositories:
+- allow pushes to a repository using the compat format
+- generate a topologically sorted list of the SHA-1 names of fetched
+  objects
+- convert the fetched packfile to sha256 format and generate an idx
+  file
+- re-sort to match the order of objects in the fetched packfile</p></div>
+<div class="paragraph"><p>The infrastructure supporting fetch also allows converting an existing
+repository. In converted repositories and new clones, end users can
+gain support for the new hash function without any visible change in
+behavior (see "dark launch" in the "Object names on the command line"
+section). In particular this allows users to verify SHA-256 signatures
+on objects in the repository, and it should ensure the transition code
+is stable in production in preparation for using it more widely.</p></div>
+<div class="paragraph"><p>Over time projects would encourage their users to adopt the "early
+transition" and then "late transition" modes to take advantage of the
+new, more futureproof SHA-256 object names.</p></div>
+<div class="paragraph"><p>When objectFormat and compatObjectFormat are both set, commands
+generating signatures would generate both SHA-1 and SHA-256 signatures
+by default to support both new and old users.</p></div>
+<div class="paragraph"><p>In projects using SHA-256 heavily, users could be encouraged to adopt
+the "post-transition" mode to avoid accidentally making implicit use
+of SHA-1 object names.</p></div>
+<div class="paragraph"><p>Once a critical mass of users have upgraded to a version of Git that
+can verify SHA-256 signatures and have converted their existing
+repositories to support verifying them, we can add support for a
+setting to generate only SHA-256 signatures. This is expected to be at
+least a year later.</p></div>
+<div class="paragraph"><p>That is also a good moment to advertise the ability to convert
+repositories to use SHA-256 only, stripping out all SHA-1 related
+metadata. This improves performance by eliminating translation
+overhead and security by avoiding the possibility of accidentally
+relying on the safety of SHA-1.</p></div>
+<div class="paragraph"><p>Updating Git&#8217;s protocols to allow a server to specify which hash
+functions it supports is also an important part of this transition. It
+is not discussed in detail in this document but this transition plan
+assumes it happens. :)</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_alternatives_considered">Alternatives considered</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_upgrading_everyone_working_on_a_particular_project_on_a_flag_day">Upgrading everyone working on a particular project on a flag day</h3>
+<div class="paragraph"><p>Projects like the Linux kernel are large and complex enough that
+flipping the switch for all projects based on the repository at once
+is infeasible.</p></div>
+<div class="paragraph"><p>Not only would all developers and server operators supporting
+developers have to switch on the same flag day, but supporting tooling
+(continuous integration, code review, bug trackers, etc) would have to
+be adapted as well. This also makes it difficult to get early feedback
+from some project participants testing before it is time for mass
+adoption.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_using_hash_functions_in_parallel">Using hash functions in parallel</h3>
+<div class="paragraph"><p>(e.g. <a href="https://lore.kernel.org/git/22708.8913.864049.452252@chiark.greenend.org.uk/">https://lore.kernel.org/git/22708.8913.864049.452252@chiark.greenend.org.uk/</a> )
+Objects newly created would be addressed by the new hash, but inside
+such an object (e.g. commit) it is still possible to address objects
+using the old hash function.
+* You cannot trust its history (needed for bisectability) in the
+  future without further work
+* Maintenance burden as the number of supported hash functions grows
+  (they will never go away, so they accumulate). In this proposal, by
+  comparison, converted objects lose all references to SHA-1.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_signed_objects_with_multiple_hashes">Signed objects with multiple hashes</h3>
+<div class="paragraph"><p>Instead of introducing the gpgsig-sha256 field in commit and tag objects
+for sha256-content based signatures, an earlier version of this design
+added "hash sha256 &lt;sha256-name&gt;" fields to strengthen the existing
+sha1-content based signatures.</p></div>
+<div class="paragraph"><p>In other words, a single signature was used to attest to the object
+content using both hash functions. This had some advantages:
+* Using one signature instead of two speeds up the signing process.
+* Having one signed payload with both hashes allows the signer to
+  attest to the sha1-name and sha256-name referring to the same object.
+* All users consume the same signature. Broken signatures are likely
+  to be detected quickly using current versions of git.</p></div>
+<div class="paragraph"><p>However, it also came with disadvantages:
+* Verifying a signed object requires access to the sha1-names of all
+  objects it references, even after the transition is complete and
+  translation table is no longer needed for anything else. To support
+  this, the design added fields such as "hash sha1 tree &lt;sha1-name&gt;"
+  and "hash sha1 parent &lt;sha1-name&gt;" to the sha256-content of a signed
+  commit, complicating the conversion process.
+* Allowing signed objects without a sha1 (for after the transition is
+  complete) complicated the design further, requiring a "nohash sha1"
+  field to suppress including "hash sha1" fields in the sha256-content
+  and signed payload.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_lazily_populated_translation_table">Lazily populated translation table</h3>
+<div class="paragraph"><p>Some of the work of building the translation table could be deferred to
+push time, but that would significantly complicate and slow down pushes.
+Calculating the sha1-name at object creation time at the same time it is
+being streamed to disk and having its sha256-name calculated should be
+an acceptable cost.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_document_history">Document History</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>2017-03-03
+<a href="mailto:bmwill@google.com">bmwill@google.com</a>, <a href="mailto:jonathantanmy@google.com">jonathantanmy@google.com</a>, <a href="mailto:jrnieder@gmail.com">jrnieder@gmail.com</a>,
+<a href="mailto:sbeller@google.com">sbeller@google.com</a></p></div>
+<div class="paragraph"><p>Initial version sent to
+<a href="http://lore.kernel.org/git/20170304011251.GA26789@aiede.mtv.corp.google.com">http://lore.kernel.org/git/20170304011251.GA26789@aiede.mtv.corp.google.com</a></p></div>
+<div class="paragraph"><p>2017-03-03 <a href="mailto:jrnieder@gmail.com">jrnieder@gmail.com</a>
+Incorporated suggestions from jonathantanmy and sbeller:
+* describe purpose of signed objects with each hash type
+* redefine signed object verification using object content under the
+  first hash function</p></div>
+<div class="paragraph"><p>2017-03-06 <a href="mailto:jrnieder@gmail.com">jrnieder@gmail.com</a>
+* Use SHA3-256 instead of SHA2 (thanks, Linus and brian m. carlson).[1][2]
+* Make sha3-based signatures a separate field, avoiding the need for
+  "hash" and "nohash" fields (thanks to peff[3]).
+* Add a sorting phase to fetch (thanks to Junio for noticing the need
+  for this).
+* Omit blobs from the topological sort during fetch (thanks to peff).
+* Discuss alternates, git notes, and git servers in the caveats
+  section (thanks to Junio Hamano, brian m. carlson[4], and Shawn
+  Pearce).
+* Clarify language throughout (thanks to various commenters,
+  especially Junio).</p></div>
+<div class="paragraph"><p>2017-09-27 <a href="mailto:jrnieder@gmail.com">jrnieder@gmail.com</a>, <a href="mailto:sbeller@google.com">sbeller@google.com</a>
+* use placeholder NewHash instead of SHA3-256
+* describe criteria for picking a hash function.
+* include a transition plan (thanks especially to Brandon Williams
+  for fleshing these ideas out)
+* define the translation table (thanks, Shawn Pearce[5], Jonathan
+  Tan, and Masaya Suzuki)
+* avoid loose object overhead by packing more aggressively in
+  "git gc --auto"</p></div>
+<div class="paragraph"><p>Later history:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>See the history of this file in git.git for the history of subsequent
+edits. This document history is no longer being maintained as it
+would now be superfluous to the commit log</code></pre>
+</div></div>
+<div class="paragraph"><p>[1] <a href="http://lore.kernel.org/git/CA+55aFzJtejiCjV0e43+<a href="mailto:9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com">9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com</a>/">http://lore.kernel.org/git/CA+55aFzJtejiCjV0e43+<a href="mailto:9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com">9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com</a>/</a>
+[2] <a href="http://lore.kernel.org/git/CA+55aFz+<a href="mailto:gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com">gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com</a>/">http://lore.kernel.org/git/CA+55aFz+<a href="mailto:gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com">gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com</a>/</a>
+[3] <a href="http://lore.kernel.org/git/20170306084353.nrns455dvkdsfgo5@sigill.intra.peff.net/">http://lore.kernel.org/git/20170306084353.nrns455dvkdsfgo5@sigill.intra.peff.net/</a>
+[4] <a href="http://lore.kernel.org/git/20170304224936.rqqtkdvfjgyezsht@genre.crustytoothpaste.net">http://lore.kernel.org/git/20170304224936.rqqtkdvfjgyezsht@genre.crustytoothpaste.net</a>
+[5] <a href="https://lore.kernel.org/git/CAJo=hJtoX9=<a href="mailto:AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com">AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com</a>/">https://lore.kernel.org/git/CAJo=hJtoX9=<a href="mailto:AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com">AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com</a>/</a></p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated
+ 2021-02-08 15:19:29 PST
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+'\" t
+.\"     Title: git-for-each-repo
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 02/08/2021
+.\"    Manual: Git Manual
+.\"    Source: Git 2.30.1
+.\"  Language: English
+.\"
+.TH "GIT\-FOR\-EACH\-REPO" "1" "02/08/2021" "Git 2\&.30\&.1" "Git Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+git-for-each-repo \- Run a Git command on a list of repositories
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit for\-each\-repo\fR \-\-config=<config> [\-\-] <arguments>
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Run a Git command on a list of repositories\&. The arguments after the known options or \fB\-\-\fR indicator are used as the arguments for the Git subprocess\&.
+.sp
+THIS COMMAND IS EXPERIMENTAL\&. THE BEHAVIOR MAY CHANGE\&.
+.sp
+For example, we could run maintenance on each of a list of repositories stored in a \fBmaintenance\&.repo\fR config variable using
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+git for\-each\-repo \-\-config=maintenance\&.repo maintenance run
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+This will run \fBgit \-C <repo> maintenance run\fR for each value \fB<repo>\fR in the multi\-valued config variable \fBmaintenance\&.repo\fR\&.
+.SH "OPTIONS"
+.PP
+\-\-config=<config>
+.RS 4
+Use the given config variable as a multi\-valued list storing absolute path names\&. Iterate on that list of paths to run the given arguments\&.
+.sp
+These config values are loaded from system, global, and local Git config, as available\&. If
+\fBgit for\-each\-repo\fR
+is run in a directory that is not a Git repository, then only the system and global config is used\&.
+.RE
+.SH "SUBPROCESS BEHAVIOR"
+.sp
+If any \fBgit \-C <repo> <arguments>\fR subprocess returns a non\-zero exit code, then the \fBgit for\-each\-repo\fR process returns that exit code without running more subprocesses\&.
+.sp
+Each \fBgit \-C <repo> <arguments>\fR subprocess inherits the standard file descriptors \fBstdin\fR, \fBstdout\fR, and \fBstderr\fR\&.
+.SH "GIT"
+.sp
+Part of the \fBgit\fR(1) suite

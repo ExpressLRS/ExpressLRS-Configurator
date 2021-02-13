@@ -1,0 +1,1196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 9.0.0rc2" />
+<title>How to recover an object from scratch</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overridden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>How to recover an object from scratch</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>I was recently presented with a repository with a corrupted packfile,
+and was asked if the data was recoverable. This post-mortem describes
+the steps I took to investigate and fix the problem. I thought others
+might find the process interesting, and it might help somebody in the
+same situation.</p></div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph"><p>Note: In this case, no good copy of the repository was available. For
+the much easier case where you can get the corrupted object from
+elsewhere, see <a href="recover-corrupted-blob-object.html">this howto</a>.</p></div>
+</div></div>
+<div class="paragraph"><p>I started with an fsck, which found a problem with exactly one object
+(I&#8217;ve used $pack and $obj below to keep the output readable, and also
+because I&#8217;ll refer to them later):</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>    $ git fsck
+    error: $pack SHA1 checksum mismatch
+    error: index CRC mismatch for object $obj from $pack at offset 51653873
+    error: inflate: data stream error (incorrect data check)
+    error: cannot unpack $obj from $pack at offset 51653873</code></pre>
+</div></div>
+<div class="paragraph"><p>The pack checksum failing means a byte is munged somewhere, and it is
+presumably in the object mentioned (since both the index checksum and
+zlib were failing).</p></div>
+<div class="paragraph"><p>Reading the zlib source code, I found that "incorrect data check" means
+that the adler-32 checksum at the end of the zlib data did not match the
+inflated data. So stepping the data through zlib would not help, as it
+did not fail until the very end, when we realize the CRC does not match.
+The problematic bytes could be anywhere in the object data.</p></div>
+<div class="paragraph"><p>The first thing I did was pull the broken data out of the packfile. I
+needed to know how big the object was, which I found out with:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>    $ git show-index &lt;$idx | cut -d' ' -f1 | sort -n | grep -A1 51653873
+    51653873
+    51664736</code></pre>
+</div></div>
+<div class="paragraph"><p>Show-index gives us the list of objects and their offsets. We throw away
+everything but the offsets, and then sort them so that our interesting
+offset (which we got from the fsck output above) is followed immediately
+by the offset of the next object. Now we know that the object data is
+10863 bytes long, and we can grab it with:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>  dd if=$pack of=object bs=1 skip=51653873 count=10863</code></pre>
+</div></div>
+<div class="paragraph"><p>I inspected a hexdump of the data, looking for any obvious bogosity
+(e.g., a 4K run of zeroes would be a good sign of filesystem
+corruption). But everything looked pretty reasonable.</p></div>
+<div class="paragraph"><p>Note that the "object" file isn&#8217;t fit for feeding straight to zlib; it
+has the git packed object header, which is variable-length. We want to
+strip that off so we can start playing with the zlib data directly. You
+can either work your way through it manually (the format is described in
+<a href="../technical/pack-format.html">Documentation/technical/pack-format.txt</a>),
+or you can walk through it in a debugger. I did the latter, creating a
+valid pack like:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>    # pack magic and version
+    printf 'PACK\0\0\0\2' &gt;tmp.pack
+    # pack has one object
+    printf '\0\0\0\1' &gt;&gt;tmp.pack
+    # now add our object data
+    cat object &gt;&gt;tmp.pack
+    # and then append the pack trailer
+    /path/to/git.git/t/helper/test-tool sha1 -b &lt;tmp.pack &gt;trailer
+    cat trailer &gt;&gt;tmp.pack</code></pre>
+</div></div>
+<div class="paragraph"><p>and then running "git index-pack tmp.pack" in the debugger (stop at
+unpack_raw_entry). Doing this, I found that there were 3 bytes of header
+(and the header itself had a sane type and size). So I stripped those
+off with:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>    dd if=object of=zlib bs=1 skip=3</code></pre>
+</div></div>
+<div class="paragraph"><p>I ran the result through zlib&#8217;s inflate using a custom C program. And
+while it did report the error, I did get the right number of output
+bytes (i.e., it matched git&#8217;s size header that we decoded above). But
+feeding the result back to "git hash-object" didn&#8217;t produce the same
+sha1. So there were some wrong bytes, but I didn&#8217;t know which. The file
+happened to be C source code, so I hoped I could notice something
+obviously wrong with it, but I didn&#8217;t. I even got it to compile!</p></div>
+<div class="paragraph"><p>I also tried comparing it to other versions of the same path in the
+repository, hoping that there would be some part of the diff that didn&#8217;t
+make sense. Unfortunately, this happened to be the only revision of this
+particular file in the repository, so I had nothing to compare against.</p></div>
+<div class="paragraph"><p>So I took a different approach. Working under the guess that the
+corruption was limited to a single byte, I wrote a program to munge each
+byte individually, and try inflating the result. Since the object was
+only 10K compressed, that worked out to about 2.5M attempts, which took
+a few minutes.</p></div>
+<div class="paragraph"><p>The program I used is here:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;zlib.h&gt;
+
+static int try_zlib(unsigned char *buf, int len)
+{
+        /* make this absurdly large so we don't have to loop */
+        static unsigned char out[1024*1024];
+        z_stream z;
+        int ret;
+
+        memset(&amp;z, 0, sizeof(z));
+        inflateInit(&amp;z);
+
+        z.next_in = buf;
+        z.avail_in = len;
+        z.next_out = out;
+        z.avail_out = sizeof(out);
+
+        ret = inflate(&amp;z, 0);
+        inflateEnd(&amp;z);
+        return ret &gt;= 0;
+}
+
+/* eye candy */
+static int counter = 0;
+static void progress(int sig)
+{
+        fprintf(stderr, "\r%d", counter);
+        alarm(1);
+}
+
+int main(void)
+{
+        /* oversized so we can read the whole buffer in */
+        unsigned char buf[1024*1024];
+        int len;
+        unsigned i, j;
+
+        signal(SIGALRM, progress);
+        alarm(1);
+
+        len = read(0, buf, sizeof(buf));
+        for (i = 0; i &lt; len; i++) {
+                unsigned char c = buf[i];
+                for (j = 0; j &lt;= 0xff; j++) {
+                        buf[i] = j;
+
+                        counter++;
+                        if (try_zlib(buf, len))
+                                printf("i=%d, j=%x\n", i, j);
+                }
+                buf[i] = c;
+        }
+
+        alarm(0);
+        fprintf(stderr, "\n");
+        return 0;
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>I compiled and ran with:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>  gcc -Wall -Werror -O3 munge.c -o munge -lz
+  ./munge &lt;zlib</code></pre>
+</div></div>
+<div class="paragraph"><p>There were a few false positives early on (if you write "no data" in the
+zlib header, zlib thinks it&#8217;s just fine :) ). But I got a hit about
+halfway through:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>  i=5642, j=c7</code></pre>
+</div></div>
+<div class="paragraph"><p>I let it run to completion, and got a few more hits at the end (where it
+was munging the CRC to match our broken data). So there was a good
+chance this middle hit was the source of the problem.</p></div>
+<div class="paragraph"><p>I confirmed by tweaking the byte in a hex editor, zlib inflating the
+result (no errors!), and then piping the output into "git hash-object",
+which reported the sha1 of the broken object. Success!</p></div>
+<div class="paragraph"><p>I fixed the packfile itself with:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>  chmod +w $pack
+  printf '\xc7' | dd of=$pack bs=1 seek=51659518 conv=notrunc
+  chmod -w $pack</code></pre>
+</div></div>
+<div class="paragraph"><p>The <code>\xc7</code> comes from the replacement byte our "munge" program found.
+The offset 51659518 is derived by taking the original object offset
+(51653873), adding the replacement offset found by "munge" (5642), and
+then adding back in the 3 bytes of git header we stripped.</p></div>
+<div class="paragraph"><p>After that, "git fsck" ran clean.</p></div>
+<div class="paragraph"><p>As for the corruption itself, I was lucky that it was indeed a single
+byte. In fact, it turned out to be a single bit. The byte 0xc7 was
+corrupted to 0xc5. So presumably it was caused by faulty hardware, or a
+cosmic ray.</p></div>
+<div class="paragraph"><p>And the aborted attempt to look at the inflated output to see what was
+wrong? I could have looked forever and never found it. Here&#8217;s the diff
+between what the corrupted data inflates to, versus the real data:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>  -       cp = strtok (arg, "+");
+  +       cp = strtok (arg, ".");</code></pre>
+</div></div>
+<div class="paragraph"><p>It tweaked one byte and still ended up as valid, readable C that just
+happened to do something totally different! One takeaway is that on a
+less unlucky day, looking at the zlib output might have actually been
+helpful, as most random changes would actually break the C code.</p></div>
+<div class="paragraph"><p>But more importantly, git&#8217;s hashing and checksumming noticed a problem
+that easily could have gone undetected in another system. The result
+still compiled, but would have caused an interesting bug (that would
+have been blamed on some random commit).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_adventure_continues_8230">The adventure continues&#8230;</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>I ended up doing this again! Same entity, new hardware. The assumption
+at this point is that the old disk corrupted the packfile, and then the
+corruption was migrated to the new hardware (because it was done by
+rsync or similar, and no fsck was done at the time of migration).</p></div>
+<div class="paragraph"><p>This time, the affected blob was over 20 megabytes, which was far too
+large to do a brute-force on. I followed the instructions above to
+create the <code>zlib</code> file. I then used the <code>inflate</code> program below to pull
+the corrupted data from that. Examining that output gave me a hint about
+where in the file the corruption was. But now I was working with the
+file itself, not the zlib contents. So knowing the sha1 of the object
+and the approximate area of the corruption, I used the <code>sha1-munge</code>
+program below to brute-force the correct byte.</p></div>
+<div class="paragraph"><p>Here&#8217;s the inflate program (it&#8217;s essentially <code>gunzip</code> but without the
+<code>.gz</code> header processing):</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;zlib.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char **argv)
+{
+        /*
+         * oversized so we can read the whole buffer in;
+         * this could actually be switched to streaming
+         * to avoid any memory limitations
+         */
+        static unsigned char buf[25 * 1024 * 1024];
+        static unsigned char out[25 * 1024 * 1024];
+        int len;
+        z_stream z;
+        int ret;
+
+        len = read(0, buf, sizeof(buf));
+        memset(&amp;z, 0, sizeof(z));
+        inflateInit(&amp;z);
+
+        z.next_in = buf;
+        z.avail_in = len;
+        z.next_out = out;
+        z.avail_out = sizeof(out);
+
+        ret = inflate(&amp;z, 0);
+        if (ret != Z_OK &amp;&amp; ret != Z_STREAM_END)
+                fprintf(stderr, "initial inflate failed (%d)\n", ret);
+
+        fprintf(stderr, "outputting %lu bytes", z.total_out);
+        fwrite(out, 1, z.total_out, stdout);
+        return 0;
+}</code></pre>
+</div></div>
+<div class="paragraph"><p>And here is the <code>sha1-munge</code> program:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;openssl/sha.h&gt;
+#include &lt;stdlib.h&gt;
+
+/* eye candy */
+static int counter = 0;
+static void progress(int sig)
+{
+        fprintf(stderr, "\r%d", counter);
+        alarm(1);
+}
+
+static const signed char hexval_table[256] = {
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 00-07 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 08-0f */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 10-17 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 18-1f */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 20-27 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 28-2f */
+          0,  1,  2,  3,  4,  5,  6,  7,                /* 30-37 */
+          8,  9, -1, -1, -1, -1, -1, -1,                /* 38-3f */
+         -1, 10, 11, 12, 13, 14, 15, -1,                /* 40-47 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 48-4f */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 50-57 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 58-5f */
+         -1, 10, 11, 12, 13, 14, 15, -1,                /* 60-67 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 68-67 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 70-77 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 78-7f */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 80-87 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 88-8f */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 90-97 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* 98-9f */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* a0-a7 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* a8-af */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* b0-b7 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* b8-bf */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* c0-c7 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* c8-cf */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* d0-d7 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* d8-df */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* e0-e7 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* e8-ef */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* f0-f7 */
+         -1, -1, -1, -1, -1, -1, -1, -1,                /* f8-ff */
+};
+
+static inline unsigned int hexval(unsigned char c)
+{
+return hexval_table[c];
+}
+
+static int get_sha1_hex(const char *hex, unsigned char *sha1)
+{
+        int i;
+        for (i = 0; i &lt; 20; i++) {
+                unsigned int val;
+                /*
+                 * hex[1]=='\0' is caught when val is checked below,
+                 * but if hex[0] is NUL we have to avoid reading
+                 * past the end of the string:
+                 */
+                if (!hex[0])
+                        return -1;
+                val = (hexval(hex[0]) &lt;&lt; 4) | hexval(hex[1]);
+                if (val &amp; ~0xff)
+                        return -1;
+                *sha1++ = val;
+                hex += 2;
+        }
+        return 0;
+}
+
+int main(int argc, char **argv)
+{
+        /* oversized so we can read the whole buffer in */
+        static unsigned char buf[25 * 1024 * 1024];
+        char header[32];
+        int header_len;
+        unsigned char have[20], want[20];
+        int start, len;
+        SHA_CTX orig;
+        unsigned i, j;
+
+        if (!argv[1] || get_sha1_hex(argv[1], want)) {
+                fprintf(stderr, "usage: sha1-munge &lt;sha1&gt; [start] &lt;file.in\n");
+                return 1;
+        }
+
+        if (argv[2])
+                start = atoi(argv[2]);
+        else
+                start = 0;
+
+        len = read(0, buf, sizeof(buf));
+        header_len = sprintf(header, "blob %d", len) + 1;
+        fprintf(stderr, "using header: %s\n", header);
+
+        /*
+         * We keep a running sha1 so that if you are munging
+         * near the end of the file, we do not have to re-sha1
+         * the unchanged earlier bytes
+         */
+        SHA1_Init(&amp;orig);
+        SHA1_Update(&amp;orig, header, header_len);
+        if (start)
+                SHA1_Update(&amp;orig, buf, start);
+
+        signal(SIGALRM, progress);
+        alarm(1);
+
+        for (i = start; i &lt; len; i++) {
+                unsigned char c;
+                SHA_CTX x;
+
+#if 0
+                /*
+                 * deletion -- this would not actually work in practice,
+                 * I think, because we've already committed to a
+                 * particular size in the header. Ditto for addition
+                 * below. In those cases, you'd have to do the whole
+                 * sha1 from scratch, or possibly keep three running
+                 * "orig" sha1 computations going.
+                 */
+                memcpy(&amp;x, &amp;orig, sizeof(x));
+                SHA1_Update(&amp;x, buf + i + 1, len - i - 1);
+                SHA1_Final(have, &amp;x);
+                if (!memcmp(have, want, 20))
+                        printf("i=%d, deletion\n", i);
+#endif
+
+                /*
+                 * replacement -- note that this tries each of the 256
+                 * possible bytes. If you suspect a single-bit flip,
+                 * it would be much shorter to just try the 8
+                 * bit-flipped variants.
+                 */
+                c = buf[i];
+                for (j = 0; j &lt;= 0xff; j++) {
+                        buf[i] = j;
+
+                        memcpy(&amp;x, &amp;orig, sizeof(x));
+                        SHA1_Update(&amp;x, buf + i, len - i);
+                        SHA1_Final(have, &amp;x);
+                        if (!memcmp(have, want, 20))
+                                printf("i=%d, j=%02x\n", i, j);
+                }
+                buf[i] = c;
+
+#if 0
+                /* addition */
+                for (j = 0; j &lt;= 0xff; j++) {
+                        unsigned char extra = j;
+                        memcpy(&amp;x, &amp;orig, sizeof(x));
+                        SHA1_Update(&amp;x, &amp;extra, 1);
+                        SHA1_Update(&amp;x, buf + i, len - i);
+                        SHA1_Final(have, &amp;x);
+                        if (!memcmp(have, want, 20))
+                                printf("i=%d, addition=%02x", i, j);
+                }
+#endif
+
+                SHA1_Update(&amp;orig, buf + i, 1);
+                counter++;
+        }
+
+        alarm(0);
+        fprintf(stderr, "\r%d\n", counter);
+        return 0;
+}</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Last updated
+ 2021-02-08 15:21:37 PST
+</div>
+</div>
+</body>
+</html>

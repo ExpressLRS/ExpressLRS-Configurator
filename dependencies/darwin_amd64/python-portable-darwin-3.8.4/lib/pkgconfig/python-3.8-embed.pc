@@ -1,0 +1,13 @@
+# See: man pkg-config
+prefix=/Users/platformio/Documents/portable-python-384-with-ssl-disable-shared-static-libs
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Python
+Description: Embed Python into an application
+Requires:
+Version: 3.8
+Libs.private: -ldl   -framework CoreFoundation
+Libs: -L${libdir} -lpython3.8
+Cflags: -I${includedir}/python3.8
