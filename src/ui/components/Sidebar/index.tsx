@@ -32,7 +32,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Sidebar: FunctionComponent = () => {
+interface SidebarProps {
+  navigationEnabled: boolean;
+}
+
+const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
   const styles = useStyles();
 
   const location = useLocation();
@@ -59,6 +63,7 @@ const Sidebar: FunctionComponent = () => {
             selected={configuratorActive}
             className={styles.menuItem}
             button
+            disabled={!navigationEnabled}
           >
             <ListItemIcon>
               <BuildIcon />
@@ -85,6 +90,7 @@ const Sidebar: FunctionComponent = () => {
             selected={logsActive}
             className={styles.menuItem}
             button
+            disabled={!navigationEnabled}
           >
             <ListItemIcon>
               <ListIcon />

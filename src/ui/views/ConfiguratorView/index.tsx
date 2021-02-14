@@ -85,6 +85,9 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginRight: `${theme.spacing(2)} !important`,
   },
+  longBuildDurationWarning: {
+    marginBottom: theme.spacing(1),
+  },
 }));
 
 enum ViewState {
@@ -238,6 +241,31 @@ const ConfiguratorView: FunctionComponent = () => {
     }
   }, [response]);
 
+  const [
+    longBuildDurationWarning,
+    setLongBuildDurationWarning,
+  ] = useState<boolean>(false);
+  const buildInProgressRef = useRef(buildInProgress);
+  buildInProgressRef.current = buildInProgress;
+  const slowBuildTimeoutRef = useRef<number | null>(null);
+  useEffect(() => {
+    if (buildInProgressRef.current) {
+      slowBuildTimeoutRef.current = window.setTimeout(() => {
+        setLongBuildDurationWarning(true);
+      }, 15 * 1000);
+    } else {
+      setLongBuildDurationWarning(false);
+      if (slowBuildTimeoutRef.current !== null) {
+        clearTimeout(slowBuildTimeoutRef.current);
+      }
+    }
+    return () => {
+      if (slowBuildTimeoutRef.current !== null) {
+        clearTimeout(slowBuildTimeoutRef.current);
+      }
+    };
+  }, [buildInProgress]);
+
   const reset = () => {
     logsRef.current = [];
     progressNotificationsRef.current = [];
@@ -333,7 +361,7 @@ const ConfiguratorView: FunctionComponent = () => {
 
   return (
     <main className={styles.root}>
-      <Sidebar />
+      <Sidebar navigationEnabled={!buildInProgress} />
       <div className={styles.content}>
         <Header />
         <Container className={styles.main}>
@@ -428,6 +456,14 @@ const ConfiguratorView: FunctionComponent = () => {
                   <CardTitle icon={<SettingsIcon />} title="Logs" />
                   <Divider />
                   <CardContent>
+                    {longBuildDurationWarning && (
+                      <div className={styles.longBuildDurationWarning}>
+                        <ShowAlerts
+                          severity="warning"
+                          messages="Sometimes builds take at least a few minutes. It is normal, especially for the first time builds."
+                        />
+                      </div>
+                    )}
                     <Logs data={logs} />
                   </CardContent>
                   <Divider />

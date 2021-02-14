@@ -34,7 +34,7 @@ const LogsView: FunctionComponent = () => {
   };
   return (
     <main className={styles.root}>
-      <Sidebar />
+      <Sidebar navigationEnabled />
       <div className={styles.content}>
         <Header />
         <Container className={styles.main}>
