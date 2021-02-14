@@ -2,7 +2,7 @@
 import simpleGit, { SimpleGit, SimpleGitOptions } from 'simple-git';
 import * as fs from 'fs';
 import path from 'path';
-import Commander, {CommandResult} from '../Commander';
+import Commander, { CommandResult } from '../Commander';
 
 interface FirmwareDownloaderProps {
   baseDirectory: string;

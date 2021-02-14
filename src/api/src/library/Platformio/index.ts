@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import child_process from 'child_process';
 import Commander, { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
+import { LoggerService } from '../../logger';
 
 interface PlatformioCoreState {
   core_version: string;
@@ -24,7 +25,8 @@ export default class Platformio {
     private getPlatformioPath: string,
     private stateTempStoragePath: string,
     private PATH: string,
-    private env: NodeJS.ProcessEnv
+    private env: NodeJS.ProcessEnv,
+    private logger: LoggerService
   ) {}
 
   async install(onUpdate: OnOutputFunc = NoOpFunc): Promise<CommandResult> {
@@ -97,14 +99,21 @@ export default class Platformio {
               pythonAssertCode.join(';'),
             ]))
           ) {
-            console.log('tested python exec', executable);
+            this.logger.log('testing python exec', {
+              executable,
+              stdout: res.stdout,
+              stderr: res.stderr,
+              success: res.success,
+            });
             if (res.success) {
-              console.log('confirmed python exec', executable);
               return executable;
             }
           }
         } catch (err) {
-          console.warn(executable, err);
+          this.logger.warn('got an exception in python search', {
+            executable,
+            err,
+          });
         }
       }
     }
@@ -117,7 +126,7 @@ export default class Platformio {
       this.stateTempStoragePath,
       `core-dump-${Math.round(Math.random() * 1000000)}.json`
     );
-    const pyExec = await this.findPythonExecutable(this.env?.PATH!);
+    const pyExec = await this.findPythonExecutable(this.PATH!);
     const cmdArgs = [
       this.getPlatformioPath,
       'check',
@@ -161,9 +170,13 @@ export default class Platformio {
     options: child_process.SpawnOptions,
     onOutput: OnOutputFunc = NoOpFunc
   ) {
-    console.log('pio cmd', args);
+    this.logger.log('pio cmd', {
+      args,
+    });
     const pyExec = await this.getCorePythonExe();
-    console.log('py exec path', pyExec);
+    this.logger.log('py exec path', {
+      pyExec,
+    });
     const baseArgs = ['-m', 'platformio'];
     return new Commander().runCommand(
       pyExec,

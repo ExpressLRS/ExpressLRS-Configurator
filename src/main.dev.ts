@@ -203,6 +203,7 @@ const createWindow = async () => {
 
   await mkdirp(firmwaresPath);
   const localApiServerEnv = process.env;
+  localApiServerEnv.PATH = PATH;
   localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = app.getPath('userData');
   await localServer.start(
     {

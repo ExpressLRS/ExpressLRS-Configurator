@@ -43,7 +43,8 @@ export default class ApiServer {
       config.getPlatformioPath,
       config.platformioStateTempStoragePath,
       config.PATH,
-      config.env
+      config.env,
+      logger
     );
     Container.set(
       FirmwareService,
