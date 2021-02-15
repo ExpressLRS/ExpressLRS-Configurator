@@ -1,12 +1,22 @@
-import { DeviceTarget, UserDefine } from '../gql/generated/types';
+import {
+  DeviceTarget,
+  UserDefine,
+  UserDefinesMode,
+} from '../gql/generated/types';
+
+export interface DeviceOptions {
+  userDefinesMode: UserDefinesMode;
+  userDefineOptions: UserDefine[];
+  userDefinesTxt: string;
+}
 
 export interface IApplicationStorage {
   SaveDeviceOptions(
     deviceTarget: DeviceTarget,
-    userDefines: UserDefine[]
+    deviceOptions: DeviceOptions
   ): Promise<void>;
 
-  GetDeviceOptions(deviceTarget: DeviceTarget): Promise<UserDefine[]>;
+  GetDeviceOptions(deviceTarget: DeviceTarget): Promise<DeviceOptions | null>;
 
   SetBindingPhrase(bindingPhrase: string): Promise<void>;
 
@@ -19,23 +29,25 @@ const BINDING_PHRASE_KEY = 'binding_phrase';
 export default class ApplicationStorage implements IApplicationStorage {
   async SaveDeviceOptions(
     deviceTarget: DeviceTarget,
-    userDefines: UserDefine[]
+    deviceOptions: DeviceOptions
   ): Promise<void> {
     const key = `${DEVICE_OPTIONS_BY_TARGET_KEYSPACE}.${deviceTarget}`;
-    localStorage.setItem(key, JSON.stringify(userDefines));
+    localStorage.setItem(key, JSON.stringify(deviceOptions));
   }
 
-  async GetDeviceOptions(deviceTarget: DeviceTarget): Promise<UserDefine[]> {
+  async GetDeviceOptions(
+    deviceTarget: DeviceTarget
+  ): Promise<DeviceOptions | null> {
     const key = `${DEVICE_OPTIONS_BY_TARGET_KEYSPACE}.${deviceTarget}`;
     const value = localStorage.getItem(key);
     if (value === null) {
-      return [];
+      return null;
     }
     try {
       return JSON.parse(value);
     } catch (e) {
       console.error(`failed to parse ${e}`);
-      return [];
+      return null;
     }
   }
 

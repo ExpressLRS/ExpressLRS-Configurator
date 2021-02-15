@@ -216,8 +216,8 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
             className={styles.textarea}
             multiline
             label="user_defines.txt"
-            onChange={onUserDefinesTxt}
-            value={deviceOptions.userDefinesTxt}
+            onBlur={onUserDefinesTxt}
+            defaultValue={deviceOptions.userDefinesTxt}
             fullWidth
             rows={10}
           />
