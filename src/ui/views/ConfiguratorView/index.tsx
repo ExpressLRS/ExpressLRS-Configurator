@@ -39,6 +39,9 @@ import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
 import { IpcRequest, OpenFileLocationRequestBody } from '../../../ipc';
 import UserDefinesValidator from './UserDefinesValidator';
+import ApplicationStorage from '../../storage';
+import persistDeviceUserDefines from '../../storage/commands/persistDeviceUserDefines';
+import mergeUserDefinesFromStorage from '../../storage/commands/mergeUserDefinesFromStorage';
 
 export const validateFirmwareVersionData = (
   data: FirmwareVersionDataInput
@@ -211,15 +214,36 @@ const ConfiguratorView: FunctionComponent = () => {
       deviceOptionsResponse?.targetDeviceOptions?.length &&
       deviceOptionsResponse?.targetDeviceOptions?.length > 0
     ) {
-      setDeviceOptionsFormData({
-        ...deviceOptionsFormData,
-        userDefineOptions: [...deviceOptionsResponse?.targetDeviceOptions],
+      const handleUpdate = async () => {
+        const storage = new ApplicationStorage();
+        const userDefineOptions = await mergeUserDefinesFromStorage(
+          storage,
+          deviceTarget,
+          [...deviceOptionsResponse.targetDeviceOptions]
+        );
+        setDeviceOptionsFormData({
+          ...deviceOptionsFormData,
+          userDefineOptions,
+        });
+      };
+      handleUpdate().catch((err) => {
+        console.error(`failed to update device options form data: ${err}`);
       });
     }
   }, [deviceOptionsResponse]);
 
   const onUserDefines = (data: DeviceOptionsFormData) => {
     setDeviceOptionsFormData(data);
+    if (deviceTarget !== null && data.userDefineOptions.length > 0) {
+      const storage = new ApplicationStorage();
+      persistDeviceUserDefines(
+        storage,
+        deviceTarget,
+        data.userDefineOptions
+      ).catch((err) => {
+        console.error(`failed to persist user defines: ${err}`);
+      });
+    }
   };
 
   const [
