@@ -222,6 +222,22 @@ export default class FirmwareService {
         BuildProgressNotificationType.Info,
         BuildFirmwareStep.BUILDING_USER_DEFINES
       );
+      if (params.userDefinesMode === UserDefinesMode.UserInterface) {
+        const compatCheck = await this.builder.checkDefaultUserDefinesCompatibilityAtPath(
+          firmwarePath,
+          params.userDefines
+            .filter((userDefine) => userDefine.enabled)
+            .map(({ key }) => key)
+        );
+        if (!compatCheck.compatible) {
+          return new BuildFlashFirmwareResult(
+            false,
+            `Downloaded firmware is not compatible with the following user defines: ${compatCheck.incompatibleKeys}`,
+            BuildFirmwareErrorType.BuildError
+          );
+        }
+      }
+
       const userDefinesBuilder = new UserDefinesTxtFactory();
       let userDefines = '';
       switch (params.userDefinesMode) {
