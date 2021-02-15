@@ -38,17 +38,31 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
     const toText = (key: UserDefineKey) => {
       switch (key) {
         case UserDefineKey.REGULATORY_DOMAIN_AU_433:
-          return '';
-        case UserDefineKey.REGULATORY_DOMAIN_AU_915:
-          return '';
         case UserDefineKey.REGULATORY_DOMAIN_EU_433:
-          return '';
-        case UserDefineKey.REGULATORY_DOMAIN_EU_868:
-          return '';
+        case UserDefineKey.REGULATORY_DOMAIN_AU_915:
         case UserDefineKey.REGULATORY_DOMAIN_FCC_915:
-          return '';
+        case UserDefineKey.REGULATORY_DOMAIN_EU_868:
+          return (
+            <p>
+              Consult{' '}
+              <a
+                target="_blank"
+                rel="noreferrer noreferrer"
+                href="https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html"
+              >
+                LoRaWAN Frequency Plans and Regulations
+              </a>{' '}
+              for a regulatory domain to use in your location.
+            </p>
+          );
         case UserDefineKey.REGULATORY_DOMAIN_ISM_2400:
-          return '';
+          return (
+            <p>
+              The ISM radio bands are portions of the radio spectrum reserved
+              internationally. You can use this regulatory domain safely in any
+              country.
+            </p>
+          );
         case UserDefineKey.BINDING_PHRASE:
           return (
             <p>
