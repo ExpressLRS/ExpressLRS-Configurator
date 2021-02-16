@@ -57,8 +57,9 @@
       "entitlementsInherit": "assets/entitlements.mac.plist",
       "gatekeeperAssess": false,
       "category": "public.app-category.developer-tools",
-      "files": [
-        "!dependencies/windows_amd64/*"
+      "extraFiles": [
+        "dependencies/darwin_amd64",
+        "dependencies/get-platformio.py"
       ]
     },
     "dmg": {
@@ -79,8 +80,9 @@
       "target": [
         "nsis"
       ],
-      "files": [
-        "!dependencies/darwin_amd64/*"
+      "extraFiles": [
+        "dependencies/windows_amd64",
+        "dependencies/get-platformio.py"
       ]
     },
     "linux": {
@@ -91,9 +93,8 @@
         "rpm"
       ],
       "category": "Development",
-      "files": [
-        "!dependencies/windows_amd64/**",
-        "!dependencies/darwin_amd64/**"
+      "extraFiles": [
+        "dependencies/get-platformio.py"
       ]
     },
     "rpm": {
@@ -134,9 +135,6 @@
     },
     "extraResources": [
       "./assets/**"
-    ],
-    "extraFiles": [
-      "dependencies"
     ],
     "publish": {
       "provider": "github",
