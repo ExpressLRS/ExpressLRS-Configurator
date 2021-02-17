@@ -173,14 +173,13 @@ export default class Platformio {
     this.logger.log('pio cmd', {
       args,
     });
-    const pyExec = await this.getCorePythonExe();
-    this.logger.log('py exec path', {
-      pyExec,
+    const state = await this.getPlatformioState();
+    this.logger.log('platformio state', {
+      state,
     });
-    const baseArgs = ['-m', 'platformio'];
     return new Commander().runCommand(
-      pyExec,
-      [...baseArgs, ...args],
+      state.platformio_exe,
+      [...args],
       options,
       onOutput
     );
