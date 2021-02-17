@@ -335,6 +335,25 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.UART_INVERTED),
     ];
 
+    const GHOST_2400_TX: UserDefine[] = [
+      // regulatory options
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400),
+      // binding
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      // hybrid switches
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      // performance options
+      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
+      UserDefine.Enum(
+        UserDefineKey.ARM_CHANNEL,
+        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
+        'AUX1'
+      ),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      UserDefine.Boolean(UserDefineKey.USE_500HZ),
+    ];
+
     const GHOST_ATTO_2400_RX: UserDefine[] = [
       // regulatory options
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400),
@@ -425,6 +444,8 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.DIY_2400_TX_ESP32_SX1280_Mini_via_UART]: DIY_2400_TX_ESP32_SX1280_Mini,
       [DeviceTarget.DIY_2400_TX_ESP32_SX1280_E28_via_UART]: DIY_2400_TX_ESP32_SX1280_E28,
       [DeviceTarget.DIY_2400_TX_ESP32_SX1280_LORA1280F27_via_UART]: DIY_2400_TX_ESP32_SX1280_LORA1280F27,
+
+      [DeviceTarget.GHOST_2400_TX_via_STLINK]: GHOST_2400_TX,
 
       // GHOST_ATTO_2400_RX
       [DeviceTarget.GHOST_ATTO_2400_RX_via_STLINK]: GHOST_ATTO_2400_RX,

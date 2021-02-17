@@ -303,6 +303,12 @@
             "deprecationReason": null
           },
           {
+            "name": "GHOST_2400_TX_via_STLINK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "GHOST_ATTO_2400_RX_via_STLINK",
             "description": null,
             "isDeprecated": false,
