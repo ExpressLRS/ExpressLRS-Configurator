@@ -37,7 +37,11 @@ import {
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
-import { IpcRequest, OpenFileLocationRequestBody } from '../../../ipc';
+import {
+  IpcRequest,
+  OpenFileLocationRequestBody,
+  UpdateBuildStatusRequestBody,
+} from '../../../ipc';
 import UserDefinesValidator from './UserDefinesValidator';
 import ApplicationStorage from '../../storage';
 import persistDeviceOptions from '../../storage/commands/persistDeviceOptions';
@@ -286,6 +290,17 @@ const ConfiguratorView: FunctionComponent = () => {
         clearTimeout(slowBuildTimeoutRef.current);
       }
     };
+  }, [buildInProgress]);
+
+  /*
+    Display Electron.js confirmation dialog if user wants to shutdown the app
+    when build is in progress.
+   */
+  useEffect(() => {
+    const body: UpdateBuildStatusRequestBody = {
+      buildInProgress: buildInProgressRef.current,
+    };
+    ipcRenderer.send(IpcRequest.UpdateBuildStatus, body);
   }, [buildInProgress]);
 
   const reset = () => {

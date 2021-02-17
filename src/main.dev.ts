@@ -19,7 +19,11 @@ import mkdirp from 'mkdirp';
 import winston from 'winston';
 import MenuBuilder from './menu';
 import ApiServer from './api';
-import { IpcRequest, OpenFileLocationRequestBody } from './ipc';
+import {
+  IpcRequest,
+  OpenFileLocationRequestBody,
+  UpdateBuildStatusRequestBody,
+} from './ipc';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
 
 const logsPath = path.join(app.getPath('userData'), 'logs');
@@ -235,6 +239,20 @@ const createWindow = async () => {
       contextIsolation: false,
     },
   });
+  mainWindow.on('close', (e) => {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    if (buildInProgress) {
+      const choice = dialog.showMessageBoxSync(mainWindow!, {
+        type: 'question',
+        buttons: ['Yes', 'No'],
+        title: 'Are you sure you want to quit?',
+        message: 'It looks like you have a build in progress',
+      });
+      if (choice === 1) {
+        e.preventDefault();
+      }
+    }
+  });
 
   const apiUrl = `http://localhost:${port}/graphql`;
   const subscriptionsUrl = `ws://localhost:${port}/graphql`;
@@ -304,13 +322,34 @@ app.on('activate', () => {
   }
 });
 
+/*
+  Handle IPC requests from the User Interface
+ */
 ipcMain.on(
   IpcRequest.OpenFileLocation,
   (_, arg: OpenFileLocationRequestBody) => {
+    logger.log('received a request to show item in folder', {
+      path: arg.path,
+    });
     shell.showItemInFolder(arg.path);
   }
 );
 
 ipcMain.on(IpcRequest.OpenLogsFolder, () => {
-  shell.showItemInFolder(path.join(logsPath, logsFilename));
+  const logsLocation = path.join(logsPath, logsFilename);
+  logger.log('received a request to logs path', {
+    logsLocation,
+  });
+  shell.showItemInFolder(logsPath);
 });
+
+let buildInProgress = false;
+ipcMain.on(
+  IpcRequest.UpdateBuildStatus,
+  (_, arg: UpdateBuildStatusRequestBody) => {
+    buildInProgress = arg.buildInProgress;
+    logger.log('received a request to update build status', {
+      arg,
+    });
+  }
+);
