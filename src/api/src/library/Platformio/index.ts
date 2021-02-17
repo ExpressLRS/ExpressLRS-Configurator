@@ -20,6 +20,13 @@ interface PlatformioCoreState {
   is_develop_core: boolean;
 }
 
+const prependPATH = (pth: string, item: string): string => {
+  if (pth.length > 0) {
+    return `${item}${path.delimiter}${pth}`;
+  }
+  return item;
+};
+
 export default class Platformio {
   constructor(
     private getPlatformioPath: string,
@@ -160,11 +167,6 @@ export default class Platformio {
     return coreState;
   }
 
-  async getCorePythonExe(): Promise<string> {
-    const state = await this.getPlatformioState();
-    return state.python_exe;
-  }
-
   async runPIOCommand(
     args: string[],
     options: child_process.SpawnOptions,
@@ -177,6 +179,18 @@ export default class Platformio {
     this.logger.log('platformio state', {
       state,
     });
+
+    if (
+      options?.env?.PATH?.length !== undefined &&
+      options?.env?.PATH?.length > 0 &&
+      state.penv_bin_dir.length > 0
+    ) {
+      options.env.PATH = prependPATH(options.env.PATH, state.penv_bin_dir);
+      this.logger.log('bundle platformio venv PATH with env PATH', {
+        newPath: options.env.PATH,
+      });
+    }
+
     return new Commander().runCommand(
       state.platformio_exe,
       [...args],
