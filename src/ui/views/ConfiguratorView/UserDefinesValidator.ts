@@ -35,17 +35,12 @@ export default class UserDefinesValidator {
 
     const option = data.find(({ key }) => key === UserDefineKey.BINDING_PHRASE);
 
-    if (option && option.enabled && option.value && option.value.length === 0) {
-      results.push(
-        new Error('Custom binding phrase selected, but not entered')
-      );
-    }
-
     const minLength = 6;
     if (
-      option &&
+      option !== undefined &&
       option.enabled &&
-      option.value &&
+      option.value !== undefined &&
+      option.value !== null &&
       option.value.length < minLength
     ) {
       results.push(

@@ -1,5 +1,6 @@
 import { DeviceTarget, UserDefineKey } from '../../gql/generated/types';
 import { DeviceOptions, IApplicationStorage } from '../index';
+import deviceTargetKey from '../deviceTargetKey';
 
 const persistDeviceOptions = async (
   storage: IApplicationStorage,
@@ -7,7 +8,10 @@ const persistDeviceOptions = async (
   deviceOptions: DeviceOptions
 ): Promise<void> => {
   if (deviceTarget !== null) {
-    await storage.SaveDeviceOptions(deviceTarget, deviceOptions);
+    await storage.SaveDeviceOptions(
+      deviceTargetKey(deviceTarget),
+      deviceOptions
+    );
 
     const bindingPhrase = deviceOptions.userDefineOptions.find(
       ({ key }) => key === UserDefineKey.BINDING_PHRASE

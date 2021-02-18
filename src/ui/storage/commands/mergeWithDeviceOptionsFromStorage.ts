@@ -4,6 +4,7 @@ import {
   UserDefineKey,
 } from '../../gql/generated/types';
 import { DeviceOptions, IApplicationStorage } from '../index';
+import deviceTargetKey from '../deviceTargetKey';
 
 const mergeWithDeviceOptionsFromStorage = async (
   storage: IApplicationStorage,
@@ -14,33 +15,38 @@ const mergeWithDeviceOptionsFromStorage = async (
     return deviceOptions;
   }
   const savedBindingPhrase = await storage.GetBindingPhrase();
-  const savedTargetOptions = await storage.GetDeviceOptions(deviceTarget);
+  const savedTargetOptions = await storage.GetDeviceOptions(
+    deviceTargetKey(deviceTarget)
+  );
+  const addOverrides = (deviceOption: UserDefine): UserDefine => {
+    if (
+      deviceOption.key === UserDefineKey.BINDING_PHRASE &&
+      savedBindingPhrase.length > 0
+    ) {
+      return {
+        ...deviceOption,
+        value: savedBindingPhrase,
+      };
+    }
+    return deviceOption;
+  };
   const userDefineOptions = deviceOptions.userDefineOptions.map(
     (deviceOption) => {
       if (savedTargetOptions === null) {
-        return deviceOption;
+        return addOverrides(deviceOption);
       }
       const savedOption = savedTargetOptions?.userDefineOptions.find(
         ({ key }) => key === deviceOption.key
       );
       if (savedOption === undefined) {
-        return deviceOption;
-      }
-
-      const { enabled } = savedOption;
-      let { value } = savedOption;
-      if (
-        deviceOption.key === UserDefineKey.BINDING_PHRASE &&
-        savedBindingPhrase.length > 0
-      ) {
-        value = savedBindingPhrase;
+        return addOverrides(deviceOption);
       }
       const opt: UserDefine = {
         ...deviceOption,
-        enabled,
-        value,
+        enabled: savedOption.enabled,
+        value: savedOption.value,
       };
-      return opt;
+      return addOverrides(opt);
     }
   );
   return {

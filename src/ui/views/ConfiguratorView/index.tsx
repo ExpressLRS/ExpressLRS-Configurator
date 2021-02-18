@@ -228,7 +228,6 @@ const ConfiguratorView: FunctionComponent = () => {
             userDefineOptions: [...deviceOptionsResponse.targetDeviceOptions],
           }
         );
-        console.log('merged values', userDefineOptions);
         setDeviceOptionsFormData(userDefineOptions);
       };
       handleUpdate().catch((err) => {
@@ -241,7 +240,6 @@ const ConfiguratorView: FunctionComponent = () => {
     setDeviceOptionsFormData(data);
     if (deviceTarget !== null) {
       const storage = new ApplicationStorage();
-      console.log('trying to persist', data);
       persistDeviceOptions(storage, deviceTarget, data).catch((err) => {
         console.error(`failed to persist user defines: ${err}`);
       });
@@ -303,12 +301,18 @@ const ConfiguratorView: FunctionComponent = () => {
     ipcRenderer.send(IpcRequest.UpdateBuildStatus, body);
   }, [buildInProgress]);
 
+  const [
+    deviceOptionsValidationErrors,
+    setDeviceOptionsValidationErrors,
+  ] = useState<Error[] | null>(null);
+
   const reset = () => {
     logsRef.current = [];
     progressNotificationsRef.current = [];
     setLogs('');
     setFirmwareVersionErrors([]);
     setDeviceTargetErrors([]);
+    setDeviceOptionsValidationErrors([]);
 
     setProgressNotifications([]);
     setLastProgressNotification(null);
@@ -319,10 +323,6 @@ const ConfiguratorView: FunctionComponent = () => {
     setViewState(ViewState.Configuration);
   };
 
-  const [
-    deviceOptionsValidationErrors,
-    setDeviceOptionsValidationErrors,
-  ] = useState<Error[] | null>(null);
   const [currentJobType, setCurrentJobType] = useState<BuildJobType>(
     BuildJobType.Build
   );
