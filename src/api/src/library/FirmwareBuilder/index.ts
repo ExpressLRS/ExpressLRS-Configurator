@@ -55,6 +55,16 @@ export default class FirmwareBuilder {
   }
 
   getFirmwareBinPath(target: DeviceTarget, firmwarePath: string): string {
+    const firmwareElrs = path.join(
+      firmwarePath,
+      '.pio',
+      'build',
+      target,
+      'firmware.elrs'
+    );
+    if (fs.existsSync(firmwareElrs)) {
+      return firmwareElrs;
+    }
     return path.join(firmwarePath, '.pio', 'build', target, 'firmware.bin');
   }
 
