@@ -53,6 +53,9 @@ const winstonLogger = winston.createLogger({
 });
 
 const logger = new WinstonLoggerService(winstonLogger);
+logger.log('environment information', {
+  env: process.env,
+});
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const handleFatalError = (err: Error | object | null | undefined) => {
@@ -154,7 +157,7 @@ const createWindow = async () => {
 
   logger.log('trying to get port');
   const port = await ApiServer.getPort(3500);
-  logger.log(`received unused port: ${port}`);
+  logger.log(`received unused port`, { port });
 
   logger.log('starting server...');
   const firmwaresPath = path.join(app.getPath('userData'), 'firmwares', 'git');
@@ -209,6 +212,9 @@ const createWindow = async () => {
   const localApiServerEnv = process.env;
   localApiServerEnv.PATH = PATH;
   localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = app.getPath('userData');
+  logger.log('local api server environment information', {
+    env: localApiServerEnv,
+  });
   await localServer.start(
     {
       git: {
