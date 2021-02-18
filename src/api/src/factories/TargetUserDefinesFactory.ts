@@ -15,7 +15,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -25,7 +25,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6', 'AUX7', 'AUX8'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
@@ -40,7 +40,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -50,7 +50,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
@@ -63,7 +63,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -73,7 +73,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
@@ -86,7 +86,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -109,7 +109,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -130,7 +130,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -151,7 +151,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -172,7 +172,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -182,7 +182,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED),
@@ -194,7 +194,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -204,7 +204,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED),
@@ -216,7 +216,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -226,7 +226,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED),
@@ -238,7 +238,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -248,7 +248,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED),
@@ -260,7 +260,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -279,9 +279,9 @@ export default class TargetUserDefinesFactory {
 
     const DIY_2400_TX_ESP32_SX1280_Mini: UserDefine[] = [
       // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -291,7 +291,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
@@ -300,9 +300,9 @@ export default class TargetUserDefinesFactory {
 
     const DIY_2400_TX_ESP32_SX1280_E28: UserDefine[] = [
       // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -312,7 +312,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
@@ -321,14 +321,14 @@ export default class TargetUserDefinesFactory {
 
     const DIY_2400_TX_ESP32_SX1280_LORA1280F27: UserDefine[] = [
       // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
@@ -337,9 +337,9 @@ export default class TargetUserDefinesFactory {
 
     const GHOST_2400_TX: UserDefine[] = [
       // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -349,16 +349,16 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
     ];
 
     const GHOST_ATTO_2400_RX: UserDefine[] = [
       // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -370,9 +370,9 @@ export default class TargetUserDefinesFactory {
 
     const DIY_2400_RX_ESP8285_SX1280: UserDefine[] = [
       // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
@@ -387,9 +387,9 @@ export default class TargetUserDefinesFactory {
 
     const DIY_2400_RX_STM32_CCG_Nano_v0_5: UserDefine[] = [
       // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
       // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE),
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
