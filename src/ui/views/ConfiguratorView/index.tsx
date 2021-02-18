@@ -1,5 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
 import {
+  Alert,
+  AlertTitle,
   Button,
   Card,
   CardContent,
@@ -93,6 +95,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: `${theme.spacing(2)} !important`,
   },
   longBuildDurationWarning: {
+    marginBottom: theme.spacing(1),
+  },
+  buildResponse: {
     marginBottom: theme.spacing(1),
   },
 }));
@@ -511,7 +516,18 @@ const ConfiguratorView: FunctionComponent = () => {
                   <CardTitle icon={<SettingsIcon />} title="Result" />
                   <Divider />
                   <CardContent>
-                    <BuildResponse response={response?.buildFlashFirmware} />
+                    <div className={styles.buildResponse}>
+                      <BuildResponse response={response?.buildFlashFirmware} />
+                    </div>
+                    {response?.buildFlashFirmware?.success &&
+                      currentJobType === BuildJobType.Build && (
+                        <>
+                          <Alert severity="info">
+                            <AlertTitle>Build notice</AlertTitle>
+                            Firmware binary file was opened in the file explorer
+                          </Alert>
+                        </>
+                      )}
                   </CardContent>
                   <Divider />
                 </>
