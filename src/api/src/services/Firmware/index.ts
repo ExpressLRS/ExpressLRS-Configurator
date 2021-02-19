@@ -256,6 +256,11 @@ export default class FirmwareService {
         userDefines,
       });
 
+      const platformioStateJson = await this.platformio.getPlatformioState();
+      this.logger?.log('platformio state json', {
+        platformioStateJson,
+      });
+
       await this.updateProgress(
         BuildProgressNotificationType.Info,
         BuildFirmwareStep.BUILDING_FIRMWARE
