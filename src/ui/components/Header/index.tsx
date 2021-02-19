@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   logotypeIcon: {
     marginRight: 12,
   },
+  version: {
+    fontSize: '0.4em',
+  },
   toolbar: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -61,7 +64,10 @@ const Header: FunctionComponent<HeaderProps> = memo(({ className }) => {
             alt="ExpressLrs Configurator"
           />
           <Typography variant="h4" className={styles.title}>
-            ExpressLRS Configurator
+            ExpressLRS Configurator{' '}
+            <span className={styles.version}>
+              v{process.env.EXPRESSLRS_CONFIGURATOR_VERSION}
+            </span>
           </Typography>
         </div>
         <div className={styles.social}>
