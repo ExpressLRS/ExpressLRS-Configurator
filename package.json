@@ -85,6 +85,10 @@
         "dependencies/get-platformio.py"
       ]
     },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
     "linux": {
       "target": [
         "zip",
