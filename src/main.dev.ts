@@ -99,6 +99,11 @@ process.on('unhandledRejection', (err) => {
   handleFatalError(err);
 });
 
+if (app.commandLine.hasSwitch('disable-gpu')) {
+  app.disableHardwareAcceleration();
+  app.commandLine.appendSwitch('disable-software-rasterizer');
+}
+
 let mainWindow: BrowserWindow | null = null;
 const localServer: ApiServer = new ApiServer();
 
