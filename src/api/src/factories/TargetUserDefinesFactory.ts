@@ -366,6 +366,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FAST_SYNC),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
+      UserDefine.Boolean(UserDefineKey.USE_500HZ),
     ];
 
     const DIY_2400_RX_ESP8285_SX1280: UserDefine[] = [
