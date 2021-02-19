@@ -1,5 +1,5 @@
 /* eslint-disable no-await-in-loop */
-import simpleGit, { SimpleGit, SimpleGitOptions } from 'simple-git';
+import simpleGit, { ResetMode, SimpleGit, SimpleGitOptions } from 'simple-git';
 import * as fs from 'fs';
 import path from 'path';
 import Commander, { CommandResult } from '../Commander';
@@ -92,8 +92,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
 
       await this.git.raw('sparse-checkout', 'set', 'src');
     } else {
-      await this.git.stash();
-
+      await this.git.reset(ResetMode.HARD);
       await this.git.fetch(['--tags']);
     }
   }
