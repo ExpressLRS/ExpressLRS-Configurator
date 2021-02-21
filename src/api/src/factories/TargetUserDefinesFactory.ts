@@ -185,7 +185,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
+      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
 
     const DIY_900_TX_TTGO_V2_SX127x: UserDefine[] = [
@@ -207,7 +207,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
+      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
 
     const DIY_900_TX_ESP32_SX127x_E19: UserDefine[] = [
@@ -229,7 +229,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
+      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
 
     const DIY_900_TX_ESP32_SX127x_RFM95: UserDefine[] = [
@@ -251,7 +251,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
+      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
 
     const DIY_900_RX_ESP8285_SX127x: UserDefine[] = [
@@ -295,7 +295,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
+      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
 
     const DIY_2400_TX_ESP32_SX1280_E28: UserDefine[] = [
@@ -316,7 +316,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
+      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
 
     const DIY_2400_TX_ESP32_SX1280_LORA1280F27: UserDefine[] = [
@@ -332,7 +332,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED),
+      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
 
     const GHOST_2400_TX: UserDefine[] = [
