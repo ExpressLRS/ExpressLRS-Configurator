@@ -1,7 +1,7 @@
 # ExpressLRS Configurator
 
 ExpressLRS Configurator is a cross-platform build & configuration tool for the
-[ExpressLRS](https://github.com/AlessandroAU/ExpressLRS) - open source RC link for RC applications.
+[ExpressLRS](https://github.com/ExpressLRS/ExpressLRS) - open source RC link for RC applications.
 
 ## Need help? Confused? Join the Community!
 
@@ -12,7 +12,7 @@ ExpressLRS Configurator is a cross-platform build & configuration tool for the
 
 We provide a standalone program for 64bit Windows, Linux and Mac.
 
-Download the installer from [Releases](https://github.com/jurgelenas/expresslrs-configurator/releases) page.
+Download the installer from [Releases](https://github.com/ExpressLRS/ExpressLRS-Configurator/releases) page.
 
 ### Notes
 

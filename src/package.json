@@ -7,7 +7,7 @@
   "author": {
     "name": "ExpressLRS Configurator Contributors",
     "email": "info@expresslrs.org",
-    "url": "https://github.com/jurgelenas/expresslrs-configurator/graphs/contributors"
+    "url": "https://github.com/ExpressLRS/ExpressLRS-Configurator/graphs/contributors"
   },
   "scripts": {
     "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
@@ -16,4 +16,3 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {}
 }
-

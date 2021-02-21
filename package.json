@@ -19,7 +19,7 @@
   "author": {
     "name": "ExpressLRS Configurator Contributors",
     "email": "info@expresslrs.org",
-    "url": "https://github.com/jurgelenas/expresslrs-configurator/graphs/contributors"
+    "url": "https://github.com/ExpressLRS/ExpressLRS-Configurator/graphs/contributors"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -142,13 +142,13 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "jurgelenas",
-      "repo": "expresslrs-configurator"
+      "owner": "ExpressLRS",
+      "repo": "ExpressLRS-Configurator"
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jurgelenas/expresslrs-configurator"
+    "url": "git+https://github.com/ExpressLRS/ExpressLRS-Configurator"
   },
   "license": "GPL-3.0-or-later",
   "bugs": {
