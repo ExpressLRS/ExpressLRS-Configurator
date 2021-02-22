@@ -223,8 +223,8 @@ const createWindow = async () => {
   await localServer.start(
     {
       git: {
-        cloneUrl: 'https://github.com/AlessandroAU/ExpressLRS',
-        url: 'https://github.com/AlessandroAU/ExpressLRS',
+        cloneUrl: 'https://github.com/ExpressLRS/ExpressLRS',
+        url: 'https://github.com/ExpressLRS/ExpressLRS',
         owner: 'AlessandroAU',
         repositoryName: 'ExpressLRS',
       },
