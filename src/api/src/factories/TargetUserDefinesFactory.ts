@@ -30,7 +30,7 @@ export default class TargetUserDefinesFactory {
       // compat
       UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
       // other options
-      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK),
+      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK, true),
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
