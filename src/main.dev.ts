@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 /* eslint global-require: off, no-console: off */
-
 /**
  * This module executes inside of electron's main process. You can start
  * electron renderer process from here and communicate with the other processes
@@ -12,7 +11,7 @@ import 'reflect-metadata';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, ipcMain, shell, dialog } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import mkdirp from 'mkdirp';
@@ -176,6 +175,10 @@ const createWindow = async () => {
     'platformio-temp-state-storage'
   );
 
+  await mkdirp(firmwaresPath);
+  const localApiServerEnv = process.env;
+  localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = app.getPath('userData');
+
   /*
     We manually prepend $PATH on Windows and macOS machines with portable Git and Python locations.
    */
@@ -207,16 +210,17 @@ const createWindow = async () => {
     );
     const portableGitLocation = path.join(
       dependenciesPath,
-      'darwin_amd64/git/2.30.1/bin'
+      'darwin_amd64/git-2.29.2/bin'
     );
     PATH = prependPATH(PATH, portablePythonLocation);
     PATH = prependPATH(PATH, portableGitLocation);
+    localApiServerEnv.GIT_EXEC_PATH = path.join(
+      dependenciesPath,
+      'darwin_amd64/git-2.29.2/libexec/git-core'
+    );
   }
-
-  await mkdirp(firmwaresPath);
-  const localApiServerEnv = process.env;
   localApiServerEnv.PATH = PATH;
-  localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = app.getPath('userData');
+
   logger.log('local api server environment information', {
     env: localApiServerEnv,
   });
