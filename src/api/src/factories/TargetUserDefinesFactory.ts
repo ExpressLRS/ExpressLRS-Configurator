@@ -96,7 +96,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC),
+      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       // compat
@@ -119,7 +119,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC),
+      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
     ];
@@ -140,7 +140,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC),
+      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
     ];
@@ -161,7 +161,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC),
+      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
     ];
@@ -270,7 +270,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC),
+      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       // other options
@@ -363,7 +363,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC),
+      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
@@ -378,7 +378,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC),
+      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
@@ -395,7 +395,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC),
+      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
