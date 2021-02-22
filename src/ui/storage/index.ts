@@ -1,7 +1,6 @@
 import {
   DeviceTarget,
   UserDefine,
-  UserDefineKey,
   UserDefinesMode,
 } from '../gql/generated/types';
 

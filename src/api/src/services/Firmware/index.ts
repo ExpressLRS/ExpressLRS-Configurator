@@ -1,5 +1,6 @@
 import { Service } from 'typedi';
 import { PubSubEngine } from 'graphql-subscriptions';
+import * as os from 'os';
 import BuildJobType from '../../models/enum/BuildJobType';
 import DeviceTarget from '../../library/FirmwareBuilder/Enum/DeviceTarget';
 import UserDefinesMode from '../../models/enum/UserDefinesMode';
@@ -123,6 +124,16 @@ export default class FirmwareService {
     return result;
   }
 
+  private osUsernameContainsAmpersand(): boolean {
+    if (
+      os.platform() === 'win32' &&
+      os.userInfo({ encoding: 'utf8' }).username.indexOf('&') > -1
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   async buildFlashFirmware(
     params: BuildFlashFirmwareParams,
     gitRepo: GitRepo
@@ -147,6 +158,16 @@ export default class FirmwareService {
         BuildProgressNotificationType.Info,
         BuildFirmwareStep.VERIFYING_BUILD_SYSTEM
       );
+
+      const badUsername = this.osUsernameContainsAmpersand();
+      if (badUsername) {
+        return new BuildFlashFirmwareResult(
+          false,
+          'Windows username contains & ampersand character. At this time it is not supported and build process will fail. Please change the Windows username.',
+          BuildFirmwareErrorType.GenericError
+        );
+      }
+
       const pythonCheck = await this.platformio.checkPython();
       if (!pythonCheck.success) {
         this.logger?.error('python dependency check error', undefined, {
