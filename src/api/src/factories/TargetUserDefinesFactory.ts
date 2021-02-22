@@ -96,9 +96,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.USE_R9MM_R9MINI_SBUS),
     ];
@@ -119,9 +117,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
     ];
 
     const Frsky_RX_R9MX: UserDefine[] = [
@@ -140,9 +136,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
     ];
 
     const Jumper_RX_R900MINI: UserDefine[] = [
@@ -161,9 +155,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
     ];
 
     const DIY_900_TX_TTGO_V1_SX127x: UserDefine[] = [
@@ -270,9 +262,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       // other options
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
     ];
@@ -363,9 +353,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
     ];
 
@@ -378,9 +366,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // other options
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
@@ -395,9 +381,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
     ];
 

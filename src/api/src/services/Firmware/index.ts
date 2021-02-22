@@ -19,6 +19,7 @@ import UserDefinesTxtFactory from '../../factories/UserDefinesTxtFactory';
 import Platformio from '../../library/Platformio';
 import FirmwareBuilder from '../../library/FirmwareBuilder';
 import { LoggerService } from '../../logger';
+import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 
 export interface GitRepo {
   url: string;
@@ -90,6 +91,36 @@ export default class FirmwareService {
     return this.pubSub!.publish(PubSubTopic.BuildLogsUpdate, {
       data,
     });
+  }
+
+  private processUserDefines(userDefines: UserDefine[]): UserDefine[] {
+    const overrideUserDefineTo = (
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      userDefines: UserDefine[],
+      defaultUserDefine: UserDefine
+    ): UserDefine[] => {
+      const exists =
+        userDefines.find(({ key }) => key === defaultUserDefine.key) !==
+        undefined;
+      if (exists) {
+        return userDefines.map((item) => {
+          if (item.key === defaultUserDefine.key) {
+            return defaultUserDefine;
+          }
+          return item;
+        });
+      }
+      return [...userDefines, defaultUserDefine];
+    };
+    const overrides = [
+      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ, false),
+    ];
+    let result = userDefines;
+    overrides.forEach((override) => {
+      result = overrideUserDefineTo(result, override);
+    });
+    return result;
   }
 
   async buildFlashFirmware(
@@ -245,7 +276,9 @@ export default class FirmwareService {
           userDefines = params.userDefinesTxt;
           break;
         case UserDefinesMode.UserInterface:
-          userDefines = userDefinesBuilder.build(params.userDefines);
+          userDefines = userDefinesBuilder.build(
+            this.processUserDefines(params.userDefines)
+          );
           break;
         default:
           throw new Error(

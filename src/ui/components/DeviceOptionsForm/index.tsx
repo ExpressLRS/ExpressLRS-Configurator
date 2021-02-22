@@ -250,15 +250,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                     />
                   </>
                 )}
-                {categories[UserDefineCategory.HybridSwitches]?.length > 0 && (
-                  <>
-                    <Typography variant="h6">Hybrid switches</Typography>
-                    <UserDefinesList
-                      options={categories[UserDefineCategory.HybridSwitches]}
-                      onChange={onOptionUpdate}
-                    />
-                  </>
-                )}
                 {categories[UserDefineCategory.CompatibilityOptions]?.length >
                   0 && (
                   <>
@@ -282,6 +273,15 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                       options={
                         categories[UserDefineCategory.PerformanceOptions]
                       }
+                      onChange={onOptionUpdate}
+                    />
+                  </>
+                )}
+                {categories[UserDefineCategory.HybridSwitches]?.length > 0 && (
+                  <>
+                    <Typography variant="h6">Hybrid switches</Typography>
+                    <UserDefinesList
+                      options={categories[UserDefineCategory.HybridSwitches]}
                       onChange={onOptionUpdate}
                     />
                   </>
