@@ -129,3 +129,9 @@ yarn run gql-codegen
 ## Credits
 
 - [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
+
+## Legal disclaimer
+
+The use and operation of this type of device may require a license, and some countries may forbid its use. It is
+entirely up to the end user to ensure compliance with local regulations. This is experimental software / hardware and
+there is no guarantee of stability or reliability. USE AT YOUR OWN RISK.
