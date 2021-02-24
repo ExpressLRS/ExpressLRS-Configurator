@@ -13,18 +13,6 @@ interface UserDefinesCompatiblityResult {
 export default class FirmwareBuilder {
   constructor(private platformio: Platformio) {}
 
-  async build(
-    target: DeviceTarget,
-    userDefines: string,
-    firmwarePath: string,
-    onOutput: OnOutputFunc = NoOpFunc
-  ): Promise<CommandResult> {
-    const userDefinesPath = path.join(firmwarePath, 'user_defines.txt');
-    await fs.promises.writeFile(userDefinesPath, userDefines);
-
-    return this.platformio.build(firmwarePath, target, onOutput);
-  }
-
   async checkDefaultUserDefinesCompatibilityAtPath(
     firmwarePath: string,
     keys: UserDefineKey[]
@@ -68,11 +56,28 @@ export default class FirmwareBuilder {
     return path.join(firmwarePath, '.pio', 'build', target, 'firmware.bin');
   }
 
-  async flash(
+  private async storeUserDefines(firmwarePath: string, userDefinesTxt: string) {
+    const userDefinesPath = path.join(firmwarePath, 'user_defines.txt');
+    await fs.promises.writeFile(userDefinesPath, userDefinesTxt);
+  }
+
+  async build(
     target: DeviceTarget,
+    userDefines: string,
     firmwarePath: string,
     onOutput: OnOutputFunc = NoOpFunc
   ): Promise<CommandResult> {
+    await this.storeUserDefines(firmwarePath, userDefines);
+    return this.platformio.build(firmwarePath, target, onOutput);
+  }
+
+  async flash(
+    target: DeviceTarget,
+    userDefines: string,
+    firmwarePath: string,
+    onOutput: OnOutputFunc = NoOpFunc
+  ): Promise<CommandResult> {
+    await this.storeUserDefines(firmwarePath, userDefines);
     return this.platformio.flash(firmwarePath, target, onOutput);
   }
 }

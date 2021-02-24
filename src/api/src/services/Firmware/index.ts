@@ -315,31 +315,31 @@ export default class FirmwareService {
         platformioStateJson,
       });
 
-      await this.updateProgress(
-        BuildProgressNotificationType.Info,
-        BuildFirmwareStep.BUILDING_FIRMWARE
-      );
-      const compileResult = await this.builder.build(
-        params.target,
-        userDefines,
-        firmwarePath,
-        (output) => {
-          this.updateLogs(output);
-        }
-      );
-      if (!compileResult.success) {
-        this.logger?.error('compile error', undefined, {
-          stderr: compileResult.stderr,
-          stdout: compileResult.stdout,
-        });
-        return new BuildFlashFirmwareResult(
-          false,
-          compileResult.stderr,
-          BuildFirmwareErrorType.BuildError
-        );
-      }
-
       if (params.type === BuildJobType.Build) {
+        await this.updateProgress(
+          BuildProgressNotificationType.Info,
+          BuildFirmwareStep.BUILDING_FIRMWARE
+        );
+        const compileResult = await this.builder.build(
+          params.target,
+          userDefines,
+          firmwarePath,
+          (output) => {
+            this.updateLogs(output);
+          }
+        );
+        if (!compileResult.success) {
+          this.logger?.error('compile error', undefined, {
+            stderr: compileResult.stderr,
+            stdout: compileResult.stdout,
+          });
+          return new BuildFlashFirmwareResult(
+            false,
+            compileResult.stderr,
+            BuildFirmwareErrorType.BuildError
+          );
+        }
+
         const firmwareBinPath = this.builder.getFirmwareBinPath(
           params.target,
           firmwarePath
@@ -352,28 +352,30 @@ export default class FirmwareService {
         );
       }
 
-      await this.updateProgress(
-        BuildProgressNotificationType.Info,
-        BuildFirmwareStep.FLASHING_FIRMWARE
-      );
-
-      const flashResult = await this.builder.flash(
-        params.target,
-        firmwarePath,
-        (output) => {
-          this.updateLogs(output);
-        }
-      );
-      if (!flashResult.success) {
-        this.logger?.error('flash error', undefined, {
-          stderr: flashResult.stderr,
-          stdout: flashResult.stdout,
-        });
-        return new BuildFlashFirmwareResult(
-          false,
-          flashResult.stderr,
-          BuildFirmwareErrorType.FlashError
+      if (params.type === BuildJobType.BuildAndFlash) {
+        await this.updateProgress(
+          BuildProgressNotificationType.Info,
+          BuildFirmwareStep.FLASHING_FIRMWARE
         );
+        const flashResult = await this.builder.flash(
+          params.target,
+          userDefines,
+          firmwarePath,
+          (output) => {
+            this.updateLogs(output);
+          }
+        );
+        if (!flashResult.success) {
+          this.logger?.error('flash error', undefined, {
+            stderr: flashResult.stderr,
+            stdout: flashResult.stdout,
+          });
+          return new BuildFlashFirmwareResult(
+            false,
+            flashResult.stderr,
+            BuildFirmwareErrorType.FlashError
+          );
+        }
       }
 
       return new BuildFlashFirmwareResult(true);
