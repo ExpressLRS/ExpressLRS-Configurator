@@ -122,9 +122,9 @@ yarn run gql-codegen
 
 ## Screenshots
 
-![Main screen](docs/screenshots/main_screen.png)
+![Main screen](docs/readme/screenshots/main_screen.png)
 
-![Compile result](docs/screenshots/compile_result.png)
+![Compile result](docs/readme/screenshots/compile_result.png)
 
 ## Credits
 
@@ -135,3 +135,5 @@ yarn run gql-codegen
 The use and operation of this type of device may require a license, and some countries may forbid its use. It is
 entirely up to the end user to ensure compliance with local regulations. This is experimental software / hardware and
 there is no guarantee of stability or reliability. USE AT YOUR OWN RISK.
+
+[![Join the community!](docs/readme/footer.png)](https://github.com/ExpressLRS/ExpressLRS/wiki#community)
