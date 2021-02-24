@@ -19,6 +19,7 @@ import winston from 'winston';
 import MenuBuilder from './menu';
 import ApiServer from './api';
 import {
+  ChooseFolderResponseBody,
   IpcRequest,
   OpenFileLocationRequestBody,
   UpdateBuildStatusRequestBody,
@@ -347,6 +348,27 @@ ipcMain.on(
       path: arg.path,
     });
     shell.showItemInFolder(arg.path);
+  }
+);
+
+ipcMain.handle(
+  IpcRequest.ChooseFolder,
+  async (): Promise<ChooseFolderResponseBody> => {
+    const result = await dialog.showOpenDialog({
+      title: 'Select firmware source folder',
+      message: 'Folder must contain platformio.ini file',
+      properties: ['openDirectory'],
+    });
+    if (result.canceled || result.filePaths.length === 0) {
+      return {
+        success: false,
+        directoryPath: '',
+      };
+    }
+    return {
+      success: true,
+      directoryPath: result.filePaths[0],
+    };
   }
 );
 

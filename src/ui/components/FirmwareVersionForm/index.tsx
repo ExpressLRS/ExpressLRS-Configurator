@@ -1,12 +1,14 @@
 import {
   Alert,
   AlertTitle,
+  Button,
   makeStyles,
   Tab,
   Tabs,
   TextField,
 } from '@material-ui/core';
 import React, { FunctionComponent, useEffect, useState } from 'react';
+import { ipcRenderer } from 'electron';
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 import Omnibox from '../Omnibox';
@@ -16,6 +18,7 @@ import {
   useGetBranchesLazyQuery,
   useGetTagsLazyQuery,
 } from '../../gql/generated/types';
+import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
 
 const useStyles = makeStyles((theme) => ({
   tabs: {
@@ -31,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
   loader: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
+  },
+  chooseFolderButton: {
+    marginTop: `${theme.spacing(1)} !important`,
   },
 }));
 
@@ -102,6 +108,19 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   const [localPath, setLocalPath] = useState<string>(data?.localPath || '');
   const onLocalPath = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocalPath(event.target.value);
+  };
+
+  const onChooseFolder = () => {
+    ipcRenderer
+      .invoke(IpcRequest.ChooseFolder)
+      .then((result: ChooseFolderResponseBody) => {
+        if (result.success) {
+          setLocalPath(result.directoryPath);
+        }
+      })
+      .catch((err) => {
+        console.log('failed to get local directory path: ', err);
+      });
   };
 
   useEffect(() => {
@@ -229,6 +248,16 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
               value={localPath}
               onChange={onLocalPath}
             />
+
+            <Button
+              color="secondary"
+              size="small"
+              variant="contained"
+              className={styles.chooseFolderButton}
+              onClick={onChooseFolder}
+            >
+              Choose folder
+            </Button>
           </div>
         </>
       )}
