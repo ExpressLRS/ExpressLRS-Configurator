@@ -93,7 +93,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
       await this.git.raw('sparse-checkout', 'set', 'src');
     } else {
       await this.git.reset(ResetMode.HARD);
-      await this.git.fetch(['--tags']);
+      await this.git.fetch(['--all']);
     }
   }
 
