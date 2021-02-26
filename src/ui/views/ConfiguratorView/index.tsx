@@ -546,6 +546,15 @@ const ConfiguratorView: FunctionComponent = () => {
                     >
                       Back
                     </Button>
+
+                    <Button
+                      className={styles.button}
+                      size="large"
+                      variant="contained"
+                      onClick={onBuildAndFlash}
+                    >
+                      Retry
+                    </Button>
                   </CardContent>
                 </>
               )}
