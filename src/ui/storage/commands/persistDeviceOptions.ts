@@ -8,7 +8,7 @@ const persistDeviceOptions = async (
   deviceOptions: DeviceOptions
 ): Promise<void> => {
   if (deviceTarget !== null) {
-    await storage.SaveDeviceOptions(
+    await storage.saveDeviceOptions(
       deviceTargetKey(deviceTarget),
       deviceOptions
     );
@@ -22,7 +22,7 @@ const persistDeviceOptions = async (
       bindingPhrase.value &&
       bindingPhrase.value?.length > 0
     ) {
-      await storage.SetBindingPhrase(bindingPhrase.value);
+      await storage.setBindingPhrase(bindingPhrase.value);
     }
   }
 };

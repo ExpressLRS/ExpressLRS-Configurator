@@ -14,8 +14,8 @@ const mergeWithDeviceOptionsFromStorage = async (
   if (deviceTarget === null) {
     return deviceOptions;
   }
-  const savedBindingPhrase = await storage.GetBindingPhrase();
-  const savedTargetOptions = await storage.GetDeviceOptions(
+  const savedBindingPhrase = await storage.getBindingPhrase();
+  const savedTargetOptions = await storage.getDeviceOptions(
     deviceTargetKey(deviceTarget)
   );
   const addOverrides = (deviceOption: UserDefine): UserDefine => {

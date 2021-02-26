@@ -19,6 +19,7 @@ import {
   useGetTagsLazyQuery,
 } from '../../gql/generated/types';
 import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
+import ApplicationStorage from '../../storage';
 
 const useStyles = makeStyles((theme) => ({
   tabs: {
@@ -110,6 +111,24 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     setLocalPath(event.target.value);
   };
 
+  useEffect(() => {
+    const storage = new ApplicationStorage();
+    storage
+      .getFirmwareSource()
+      .then((result) => {
+        if (result !== null) {
+          if (result.source) setFirmwareSource(result.source);
+          if (result.gitTag) setCurrentGitTag(result.gitTag);
+          if (result.gitCommit) setGitCommit(result.gitCommit);
+          if (result.gitBranch) setCurrentGitBranch(result.gitBranch);
+          if (result.localPath) setLocalPath(result.localPath);
+        }
+      })
+      .catch((err) => {
+        console.error('failed to get firmware source', err);
+      });
+  }, []);
+
   const onChooseFolder = () => {
     ipcRenderer
       .invoke(IpcRequest.ChooseFolder)
@@ -144,12 +163,17 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   }, [firmwareSource]);
 
   useEffect(() => {
-    onChange({
+    const updatedData = {
       source: firmwareSource,
       gitBranch: currentGitBranch,
       gitTag: currentGitTag,
       gitCommit,
       localPath,
+    };
+    onChange(updatedData);
+    const storage = new ApplicationStorage();
+    storage.setFirmwareSource(updatedData).catch((err) => {
+      console.error('failed to set firmware source', err);
     });
   }, [firmwareSource, currentGitBranch, currentGitTag, gitCommit, localPath]);
 
