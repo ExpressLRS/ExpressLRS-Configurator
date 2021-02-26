@@ -1,7 +1,10 @@
 import { Autocomplete, TextField } from '@material-ui/core';
-import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import React, { FunctionComponent } from 'react';
+import { FilterOptionsState } from '@material-ui/core/useAutocomplete/useAutocomplete';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { QuickScore } from 'quick-score';
 
 export interface Option {
   label: string;
@@ -15,6 +18,12 @@ interface OmniboxProps {
   currentValue: Option | null;
   disabled?: boolean;
   loading?: boolean;
+  groupBy?: (option: Option) => string;
+  getOptionLabel?: (option: Option) => string;
+}
+
+interface OptionWithMatches extends Option {
+  matches: [number, number][];
 }
 
 const Omnibox: FunctionComponent<OmniboxProps> = ({
@@ -24,6 +33,7 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
   title,
   disabled = false,
   loading = false,
+  groupBy,
 }) => {
   const onInputChange = (_event: any, opt: Option | null) => {
     if (opt && opt.value) {
@@ -32,12 +42,24 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
       onChange(null);
     }
   };
+  const filterOptions = (
+    values: Option[],
+    { inputValue }: FilterOptionsState<Option>
+  ): OptionWithMatches[] => {
+    return new QuickScore(values, ['label'])
+      .search(inputValue)
+      .map((result: { item: Option; matches: { label: number[][] } }) => {
+        return {
+          ...result.item,
+          matches: result.matches.label,
+        };
+      });
+  };
   return (
     <Autocomplete
       id={`omnibox-${title}`}
       options={options}
       disablePortal
-      autoHighlight
       fullWidth
       loading={loading}
       disabled={disabled}
@@ -50,12 +72,13 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
       renderInput={(params) => (
         <TextField {...params} label={title} margin="none" />
       )}
+      filterOptions={filterOptions}
+      groupBy={groupBy}
       value={currentValue}
       onChange={onInputChange}
-      renderOption={(props, option, { inputValue }) => {
-        const matches = match(option.label, inputValue);
-        const parts = parse(option.label, matches);
-
+      renderOption={(props, option) => {
+        const opt: OptionWithMatches = option as OptionWithMatches;
+        const parts = parse(option.label, opt.matches);
         return (
           <li {...props}>
             <div>
