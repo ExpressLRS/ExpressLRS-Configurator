@@ -110,6 +110,7 @@ export enum UserDefineKey {
 export type Mutation = {
   readonly __typename?: 'Mutation';
   readonly buildFlashFirmware: BuildFlashFirmwareResult;
+  readonly clearPlatformioCoreDir: ClearPlatformioCoreDirResult;
 };
 
 export type MutationBuildFlashFirmwareArgs = {
@@ -173,6 +174,12 @@ export type UserDefineInput = {
   readonly enabled?: Maybe<Scalars['Boolean']>;
   readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
   readonly value?: Maybe<Scalars['String']>;
+};
+
+export type ClearPlatformioCoreDirResult = {
+  readonly __typename?: 'ClearPlatformioCoreDirResult';
+  readonly success: Scalars['Boolean'];
+  readonly message?: Maybe<Scalars['String']>;
 };
 
 export type Subscription = {
@@ -253,6 +260,18 @@ export type BuildProgressNotificationsSubscription = {
   readonly buildProgressNotifications: {
     readonly __typename?: 'BuildProgressNotification';
   } & Pick<BuildProgressNotification, 'type' | 'step' | 'message'>;
+};
+
+export type ClearPlatformioCoreDirMutationVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type ClearPlatformioCoreDirMutation = {
+  readonly __typename?: 'Mutation';
+} & {
+  readonly clearPlatformioCoreDir: {
+    readonly __typename?: 'ClearPlatformioCoreDirResult';
+  } & Pick<ClearPlatformioCoreDirResult, 'success' | 'message'>;
 };
 
 export type TargetDeviceOptionsQueryVariables = Exact<{
@@ -469,6 +488,55 @@ export type BuildProgressNotificationsSubscriptionHookResult = ReturnType<
   typeof useBuildProgressNotificationsSubscription
 >;
 export type BuildProgressNotificationsSubscriptionResult = Apollo.SubscriptionResult<BuildProgressNotificationsSubscription>;
+export const ClearPlatformioCoreDirDocument = gql`
+  mutation clearPlatformioCoreDir {
+    clearPlatformioCoreDir {
+      success
+      message
+    }
+  }
+`;
+export type ClearPlatformioCoreDirMutationFn = Apollo.MutationFunction<
+  ClearPlatformioCoreDirMutation,
+  ClearPlatformioCoreDirMutationVariables
+>;
+
+/**
+ * __useClearPlatformioCoreDirMutation__
+ *
+ * To run a mutation, you first call `useClearPlatformioCoreDirMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useClearPlatformioCoreDirMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [clearPlatformioCoreDirMutation, { data, loading, error }] = useClearPlatformioCoreDirMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useClearPlatformioCoreDirMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ClearPlatformioCoreDirMutation,
+    ClearPlatformioCoreDirMutationVariables
+  >
+) {
+  return Apollo.useMutation<
+    ClearPlatformioCoreDirMutation,
+    ClearPlatformioCoreDirMutationVariables
+  >(ClearPlatformioCoreDirDocument, baseOptions);
+}
+
+export type ClearPlatformioCoreDirMutationHookResult = ReturnType<
+  typeof useClearPlatformioCoreDirMutation
+>;
+export type ClearPlatformioCoreDirMutationResult = Apollo.MutationResult<ClearPlatformioCoreDirMutation>;
+export type ClearPlatformioCoreDirMutationOptions = Apollo.BaseMutationOptions<
+  ClearPlatformioCoreDirMutation,
+  ClearPlatformioCoreDirMutationVariables
+>;
 export const TargetDeviceOptionsDocument = gql`
   query targetDeviceOptions($target: DeviceTarget!) {
     targetDeviceOptions(target: $target) {

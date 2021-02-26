@@ -20,6 +20,7 @@ import BuildProgressNotification from '../../models/BuildProgressNotification';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildLogUpdate from '../../models/BuildLogUpdate';
 import { ConfigToken, IConfig } from '../../config';
+import ClearPlatformioCoreDirResult from '../../models/ClearPlatformioCoreDirResult';
 
 @Service()
 @Resolver()
@@ -46,6 +47,19 @@ export default class FirmwareResolver {
     @Arg('input') input: BuildFlashFirmwareInput
   ): Promise<BuildFlashFirmwareResult> {
     return this.firmwareService.buildFlashFirmware(input, this.config.git);
+  }
+
+  @Mutation(() => ClearPlatformioCoreDirResult)
+  async clearPlatformioCoreDir(): Promise<ClearPlatformioCoreDirResult> {
+    try {
+      await this.firmwareService.clearPlatformioCoreDir();
+      return new ClearPlatformioCoreDirResult(true);
+    } catch (e) {
+      return new ClearPlatformioCoreDirResult(
+        false,
+        `Failed to clear platformio state: ${e}`
+      );
+    }
   }
 
   @Subscription(() => BuildProgressNotification, {

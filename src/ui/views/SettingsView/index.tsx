@@ -41,9 +41,6 @@ const SettingsView: FunctionComponent = () => {
               <ul>
                 <li>Display configurator version</li>
                 <li>Language selector</li>
-                <li>Git exec location</li>
-                <li>Python location</li>
-                <li>Platformio location</li>
               </ul>
             </CardContent>
           </Card>

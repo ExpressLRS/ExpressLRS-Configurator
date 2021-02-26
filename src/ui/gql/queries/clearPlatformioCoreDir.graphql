@@ -1,0 +1,6 @@
+mutation clearPlatformioCoreDir {
+  clearPlatformioCoreDir {
+    success
+    message
+  }
+}

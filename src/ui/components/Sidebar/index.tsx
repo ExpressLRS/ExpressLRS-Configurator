@@ -11,6 +11,7 @@ import {
   Toolbar,
 } from '@material-ui/core';
 import BuildIcon from '@material-ui/icons/Build';
+import HelpIcon from '@material-ui/icons/Help';
 // import SettingsIcon from '@material-ui/icons/Settings';
 import ListIcon from '@material-ui/icons/List';
 import { matchPath, useLocation, Link } from 'react-router-dom';
@@ -44,6 +45,7 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
     matchPath(location.pathname, '/configurator') !== null;
   // const settingsActive = matchPath(location.pathname, '/settings') !== null;
   const logsActive = matchPath(location.pathname, '/logs') !== null;
+  const supportActive = matchPath(location.pathname, '/support') !== null;
 
   return (
     <Drawer
@@ -96,6 +98,20 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
               <ListIcon />
             </ListItemIcon>
             <ListItemText primary="Logs" />
+          </ListItem>
+
+          <ListItem
+            component={Link}
+            to="/support"
+            selected={supportActive}
+            className={styles.menuItem}
+            button
+            disabled={!navigationEnabled}
+          >
+            <ListItemIcon>
+              <HelpIcon />
+            </ListItemIcon>
+            <ListItemText primary="Support" />
           </ListItem>
         </List>
       </div>

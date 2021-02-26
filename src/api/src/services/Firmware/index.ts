@@ -1,6 +1,8 @@
 import { Service } from 'typedi';
 import { PubSubEngine } from 'graphql-subscriptions';
 import * as os from 'os';
+import * as fs from 'fs';
+import rimraf from 'rimraf';
 import BuildJobType from '../../models/enum/BuildJobType';
 import DeviceTarget from '../../library/FirmwareBuilder/Enum/DeviceTarget';
 import UserDefinesMode from '../../models/enum/UserDefinesMode';
@@ -391,5 +393,31 @@ export default class FirmwareService {
     } finally {
       this.mutex.unlock();
     }
+  }
+
+  async clearPlatformioCoreDir(): Promise<void> {
+    const platformioStateJson = await this.platformio.getPlatformioState();
+    if (
+      platformioStateJson.core_dir === undefined ||
+      platformioStateJson.core_dir.length === 0 ||
+      platformioStateJson.core_dir.indexOf('.platformio') === -1
+    ) {
+      throw new Error(`core_dir is invalid: ${platformioStateJson.core_dir}`);
+    }
+
+    const statResult = await fs.promises.lstat(platformioStateJson.core_dir);
+    if (!statResult.isDirectory()) {
+      throw new Error(`core_dir is invalid: ${platformioStateJson.core_dir}`);
+    }
+
+    return new Promise((resolve, reject) => {
+      rimraf(platformioStateJson.core_dir, (err) => {
+        if (err) {
+          reject();
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 }

@@ -10,6 +10,7 @@ import client from './gql';
 import ConfiguratorView from './views/ConfiguratorView';
 import SettingsView from './views/SettingsView';
 import LogsView from './views/LogsView';
+import SupportView from './views/SupportView';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="/configurator" component={ConfiguratorView} />
             <Route path="/settings" component={SettingsView} />
             <Route path="/logs" component={LogsView} />
+            <Route path="/support" component={SupportView} />
           </Switch>
         </HashRouter>
       </ApolloProvider>
