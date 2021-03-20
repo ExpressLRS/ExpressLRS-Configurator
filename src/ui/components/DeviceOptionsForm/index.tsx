@@ -60,7 +60,7 @@ interface DeviceOptionsFormProps {
 enum UserDefineCategory {
   RegulatoryDomains = 'REGULATORY_DOMAINS',
   BindingPhrase = 'BINDING_PHRASE',
-  HybridSwitches = 'HYBRID_SWITCHES',
+  ExtraData = 'EXTRA_DATA',
   PerformanceOptions = 'PERFORMANCE_OPTIONS',
   CompatibilityOptions = 'COMPATIBILITY_OPTIONS',
   OtherOptions = 'OTHER_OPTIONS',
@@ -80,7 +80,7 @@ const userDefinesToCategories = (
   const result: UserDefinesByCategory = {
     [UserDefineCategory.RegulatoryDomains]: [],
     [UserDefineCategory.BindingPhrase]: [],
-    [UserDefineCategory.HybridSwitches]: [],
+    [UserDefineCategory.ExtraData]: [],
     [UserDefineCategory.PerformanceOptions]: [],
     [UserDefineCategory.CompatibilityOptions]: [],
     [UserDefineCategory.OtherOptions]: [],
@@ -94,7 +94,10 @@ const userDefinesToCategories = (
       UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
     ],
     [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
-    [UserDefineCategory.HybridSwitches]: [UserDefineKey.HYBRID_SWITCHES_8],
+    [UserDefineCategory.ExtraData]: [
+      UserDefineKey.HYBRID_SWITCHES_8,
+      UserDefineKey.ENABLE_TELEMETRY,
+    ],
     [UserDefineCategory.PerformanceOptions]: [
       UserDefineKey.FAST_SYNC,
       UserDefineKey.NO_SYNC_ON_ARM,
@@ -277,11 +280,11 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                     />
                   </>
                 )}
-                {categories[UserDefineCategory.HybridSwitches]?.length > 0 && (
+                {categories[UserDefineCategory.ExtraData]?.length > 0 && (
                   <>
-                    <Typography variant="h6">Hybrid switches</Typography>
+                    <Typography variant="h6">Extra data</Typography>
                     <UserDefinesList
-                      options={categories[UserDefineCategory.HybridSwitches]}
+                      options={categories[UserDefineCategory.ExtraData]}
                       onChange={onOptionUpdate}
                     />
                   </>

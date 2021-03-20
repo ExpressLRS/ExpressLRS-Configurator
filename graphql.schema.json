@@ -534,6 +534,12 @@
             "deprecationReason": null
           },
           {
+            "name": "ENABLE_TELEMETRY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "FAST_SYNC",
             "description": null,
             "isDeprecated": false,

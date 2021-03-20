@@ -18,6 +18,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -43,6 +44,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -66,6 +68,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -89,6 +92,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -110,6 +114,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -129,6 +134,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -148,6 +154,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -167,6 +174,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -189,6 +197,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -211,6 +220,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -233,6 +243,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -255,6 +266,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -274,6 +286,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -295,6 +308,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -316,6 +330,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
@@ -332,6 +347,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -351,6 +367,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
@@ -364,6 +381,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
@@ -379,6 +397,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),

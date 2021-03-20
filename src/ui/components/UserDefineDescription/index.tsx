@@ -159,6 +159,33 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </ol>
             </div>
           );
+        case UserDefineKey.ENABLE_TELEMETRY:
+          return (
+            <div>
+              <p>
+                Enable advanced telemetry support. This option must be enabled
+                on both <strong>TX</strong> and <strong>RX</strong>. The
+                following telemetry messages are supported:
+              </p>
+              <ul>
+                <li>GPS</li>
+                <li>BATTERY_SENSOR</li>
+                <li>ATTITUDE</li>
+                <li>DEVICE_INFO</li>
+                <li>FLIGHT_MODE</li>
+              </ul>
+              <p>
+                <strong>Note #1</strong>: Increase the telemetry rate with the
+                ExpressLRS lua script. Increase the rate until the sensor lost
+                warnings go away. It is normal to set it up to 1:16 with 200 Hz
+                refresh rate.
+              </p>
+              <p>
+                <strong>Note #2</strong>: It must be enabled together with{' '}
+                <strong>HYBRID_SWITCHES_8</strong>.
+              </p>
+            </div>
+          );
         case UserDefineKey.LOCK_ON_FIRST_CONNECTION:
           return (
             <p>
