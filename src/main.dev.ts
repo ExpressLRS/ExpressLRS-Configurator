@@ -230,7 +230,7 @@ const createWindow = async () => {
       git: {
         cloneUrl: 'https://github.com/ExpressLRS/ExpressLRS',
         url: 'https://github.com/ExpressLRS/ExpressLRS',
-        owner: 'AlessandroAU',
+        owner: 'ExpressLRS',
         repositoryName: 'ExpressLRS',
       },
       firmwaresPath,

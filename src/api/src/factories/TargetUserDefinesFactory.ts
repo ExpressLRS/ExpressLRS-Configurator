@@ -145,6 +145,50 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
     ];
 
+    const HappyModel_TX_ES915TX: UserDefine[] = [
+      // regulatory options
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      // binding
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
+      // hybrid switches
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      // performance options
+      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
+      UserDefine.Enum(
+        UserDefineKey.ARM_CHANNEL,
+        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6', 'AUX7', 'AUX8'],
+        'AUX1'
+      ),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // other options
+      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
+      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
+    ];
+
+    const HappyModel_RX_ES915RX: UserDefine[] = [
+      // regulatory options
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      // binding
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
+      // hybrid switches
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      // performance options
+      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
+      UserDefine.Enum(
+        UserDefineKey.ARM_CHANNEL,
+        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
+        'AUX1'
+      ),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+    ];
+
     const Jumper_RX_R900MINI: UserDefine[] = [
       // regulatory options
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
@@ -423,6 +467,12 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.Frsky_RX_R9SLIMPLUS_via_BetaflightPassthrough]: Frsky_RX_R9SLIMPLUS,
       [DeviceTarget.Frsky_RX_R9SLIMPLUS_OTA_via_STLINK]: Frsky_RX_R9SLIMPLUS,
       [DeviceTarget.Frsky_RX_R9SLIMPLUS_OTA_via_BetaflightPassthrough]: Frsky_RX_R9SLIMPLUS,
+
+      // Happymodel 915mhz
+      [DeviceTarget.HappyModel_TX_ES915TX_via_stock_BL]: HappyModel_TX_ES915TX,
+      [DeviceTarget.HappyModel_TX_ES915TX_via_STLINK]: HappyModel_TX_ES915TX,
+      [DeviceTarget.HappyModel_RX_ES915RX_via_STLINK]: HappyModel_RX_ES915RX,
+      [DeviceTarget.HappyModel_RX_ES915RX_via_BetaflightPassthrough]: HappyModel_RX_ES915RX,
 
       // R9MX RX
       [DeviceTarget.Frsky_RX_R9MX_via_STLINK]: Frsky_RX_R9MX,

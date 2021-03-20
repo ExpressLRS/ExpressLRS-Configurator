@@ -49,6 +49,13 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     [DeviceTarget.Frsky_RX_R9SLIMPLUS_OTA_via_BetaflightPassthrough]:
       'Frsky R9',
 
+    // Happymodel 915 Mhz
+    [DeviceTarget.HappyModel_TX_ES915TX_via_STLINK]: 'Happymodel 915 Mhz',
+    [DeviceTarget.HappyModel_TX_ES915TX_via_stock_BL]: 'Happymodel 915 Mhz',
+    [DeviceTarget.HappyModel_RX_ES915RX_via_STLINK]: 'Happymodel 915 Mhz',
+    [DeviceTarget.HappyModel_RX_ES915RX_via_BetaflightPassthrough]:
+      'Happymodel 915 Mhz',
+
     // R9MX RX
     [DeviceTarget.Frsky_RX_R9MX_via_STLINK]: 'Frsky R9',
     [DeviceTarget.Frsky_RX_R9MX_via_BetaflightPassthrough]: 'Frsky R9',

@@ -201,7 +201,8 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
           return (
             <p>
               This locks the RX at 50Hz mode from the power-up. Only recommended
-              for longrange, and partly redundant with LOCK_ON_FIRST_CONNECTION.
+              for long range, and partly redundant with
+              LOCK_ON_FIRST_CONNECTION.
             </p>
           );
         case UserDefineKey.JUST_BEEP_ONCE:
