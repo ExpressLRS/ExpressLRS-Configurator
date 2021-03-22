@@ -323,7 +323,7 @@
     "react-router-dom": "^5.2.0",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "^0.13.5",
-    "simple-git": "^2.35.2",
+    "simple-git": "^2.37.0",
     "source-map-support": "^0.5.19",
     "type-graphql": "^1.1.1",
     "typedi": "^0.10.0",

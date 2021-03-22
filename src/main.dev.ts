@@ -165,7 +165,11 @@ const createWindow = async () => {
   logger.log(`received unused port`, { port });
 
   logger.log('starting server...');
-  const firmwaresPath = path.join(app.getPath('userData'), 'firmwares', 'git');
+  const firmwaresPath = path.join(
+    app.getPath('userData'),
+    'firmwares',
+    'github'
+  );
   const dependenciesPath = app.isPackaged
     ? path.join(process.resourcesPath, '../dependencies')
     : path.join(__dirname, '../dependencies');
