@@ -247,16 +247,16 @@ export default class FirmwareService {
           firmwarePath = tagResult.path;
           break;
         case FirmwareSource.GitBranch:
-          const branchResult = await firmwareDownload.checkoutTag(
+          const branchResult = await firmwareDownload.checkoutBranch(
             gitRepo.url,
             params.firmware.gitBranch
           );
           firmwarePath = branchResult.path;
           break;
         case FirmwareSource.GitCommit:
-          const commitResult = await firmwareDownload.checkoutTag(
+          const commitResult = await firmwareDownload.checkoutCommit(
             gitRepo.url,
-            params.firmware.gitTag
+            params.firmware.gitCommit
           );
           firmwarePath = commitResult.path;
           break;
