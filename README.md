@@ -122,9 +122,9 @@ yarn run gql-codegen
 
 ## Screenshots
 
-![Main screen](docs/readme/screenshots/main_screen.png)
+![Main screen](docs/readme/screenshots/main_screen.jpg)
 
-![Compile result](docs/readme/screenshots/compile_result.png)
+![Compile result](docs/readme/screenshots/compile_result.jpg)
 
 ## Credits
 
