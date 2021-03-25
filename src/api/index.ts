@@ -19,6 +19,7 @@ import SourcesResolver from './src/graphql/resolvers/Sources.resolver';
 import './src/graphql/enum/DeviceTarget';
 // eslint-disable-next-line import/extensions
 import './src/graphql/enum/UserDefineKey';
+import UserDefinesBuilder from './src/services/UserDefinesBuilder';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -56,6 +57,12 @@ export default class ApiServer {
         pubSub,
         logger
       )
+    );
+
+    const rawRepoUrl = `https://raw.githubusercontent.com/${config.git.owner}/${config.git.repositoryName}`;
+    Container.set(
+      UserDefinesBuilder,
+      new UserDefinesBuilder(rawRepoUrl, logger)
     );
 
     const schema = await buildSchema({

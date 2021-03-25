@@ -14,7 +14,10 @@ enum UserDefineKey {
   // Performance options
   FAST_SYNC = 'DFAST_SYNC',
   // #unlocks >250mw output power for R9M (Fan mod suggested: https://github.com/AlessandroAU/ExpressLRS/wiki/R9M-Fan-Mod-Cover)
+  // deprecated in favour of DUNLOCK_HIGHER_POWER
   R9M_UNLOCK_HIGHER_POWER = 'DR9M_UNLOCK_HIGHER_POWER',
+  UNLOCK_HIGHER_POWER = 'DUNLOCK_HIGHER_POWER',
+
   NO_SYNC_ON_ARM = 'DNO_SYNC_ON_ARM',
   ARM_CHANNEL = 'DARM_CHANNEL',
   FEATURE_OPENTX_SYNC = 'DFEATURE_OPENTX_SYNC',

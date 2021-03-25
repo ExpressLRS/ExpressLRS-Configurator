@@ -1,5 +1,19 @@
-query targetDeviceOptions($target: DeviceTarget!) {
-  targetDeviceOptions(target: $target) {
+query targetDeviceOptions(
+  $target: DeviceTarget!,
+  $source: FirmwareSource!,
+  $gitTag: String!,
+  $gitBranch: String!,
+  $gitCommit: String!,
+  $localPath: String!
+) {
+  targetDeviceOptions(
+    target: $target,
+    source: $source,
+    gitTag: $gitTag,
+    gitBranch: $gitBranch,
+    gitCommit: $gitCommit,
+    localPath: $localPath
+  ) {
     type
     key
     enabled

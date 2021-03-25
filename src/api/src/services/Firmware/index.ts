@@ -276,7 +276,10 @@ export default class FirmwareService {
         BuildProgressNotificationType.Info,
         BuildFirmwareStep.BUILDING_USER_DEFINES
       );
-      if (params.userDefinesMode === UserDefinesMode.UserInterface) {
+      if (
+        params.userDefinesMode === UserDefinesMode.UserInterface &&
+        params.firmware.source !== FirmwareSource.Local
+      ) {
         const compatCheck = await this.builder.checkDefaultUserDefinesCompatibilityAtPath(
           firmwarePath,
           params.userDefines

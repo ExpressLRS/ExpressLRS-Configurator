@@ -199,7 +199,11 @@ const ConfiguratorView: FunctionComponent = () => {
   ] = useTargetDeviceOptionsLazyQuery();
 
   useEffect(() => {
-    if (deviceTarget === null) {
+    if (
+      deviceTarget === null ||
+      firmwareVersionData === null ||
+      validateFirmwareVersionData(firmwareVersionData).length > 0
+    ) {
       setDeviceOptionsFormData({
         userDefinesTxt: '',
         userDefinesMode: UserDefinesMode.UserInterface,
@@ -213,10 +217,15 @@ const ConfiguratorView: FunctionComponent = () => {
       fetchOptions({
         variables: {
           target: deviceTarget,
+          source: firmwareVersionData.source as FirmwareSource,
+          gitBranch: firmwareVersionData.gitBranch!,
+          gitTag: firmwareVersionData.gitTag!,
+          gitCommit: firmwareVersionData.gitCommit!,
+          localPath: firmwareVersionData.localPath!,
         },
       });
     }
-  }, [deviceTarget]);
+  }, [deviceTarget, firmwareVersionData]);
 
   useEffect(() => {
     if (
@@ -435,8 +444,8 @@ const ConfiguratorView: FunctionComponent = () => {
               <Divider />
               <CardContent>
                 <DeviceOptionsForm
-                  deviceOptions={deviceOptionsFormData}
                   target={deviceTarget}
+                  deviceOptions={deviceOptionsFormData}
                   onChange={onUserDefines}
                 />
                 <ShowAlerts

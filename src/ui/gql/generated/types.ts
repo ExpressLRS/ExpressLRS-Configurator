@@ -27,7 +27,12 @@ export type Query = {
 };
 
 export type QueryTargetDeviceOptionsArgs = {
-  target: DeviceTarget;
+  target?: Maybe<DeviceTarget>;
+  source?: Maybe<FirmwareSource>;
+  gitTag?: Maybe<Scalars['String']>;
+  gitBranch?: Maybe<Scalars['String']>;
+  gitCommit?: Maybe<Scalars['String']>;
+  localPath?: Maybe<Scalars['String']>;
 };
 
 export enum DeviceTarget {
@@ -96,6 +101,7 @@ export enum UserDefineKey {
   ENABLE_TELEMETRY = 'ENABLE_TELEMETRY',
   FAST_SYNC = 'FAST_SYNC',
   R9M_UNLOCK_HIGHER_POWER = 'R9M_UNLOCK_HIGHER_POWER',
+  UNLOCK_HIGHER_POWER = 'UNLOCK_HIGHER_POWER',
   NO_SYNC_ON_ARM = 'NO_SYNC_ON_ARM',
   ARM_CHANNEL = 'ARM_CHANNEL',
   FEATURE_OPENTX_SYNC = 'FEATURE_OPENTX_SYNC',
@@ -110,6 +116,13 @@ export enum UserDefineKey {
   JUST_BEEP_ONCE = 'JUST_BEEP_ONCE',
   MY_STARTUP_MELODY = 'MY_STARTUP_MELODY',
   USE_500HZ = 'USE_500HZ',
+}
+
+export enum FirmwareSource {
+  GitTag = 'GitTag',
+  GitBranch = 'GitBranch',
+  GitCommit = 'GitCommit',
+  Local = 'Local',
 }
 
 export type Mutation = {
@@ -160,13 +173,6 @@ export type FirmwareVersionDataInput = {
   readonly gitCommit?: Maybe<Scalars['String']>;
   readonly localPath?: Maybe<Scalars['String']>;
 };
-
-export enum FirmwareSource {
-  GitTag = 'GitTag',
-  GitBranch = 'GitBranch',
-  GitCommit = 'GitCommit',
-  Local = 'Local',
-}
 
 export enum UserDefinesMode {
   UserInterface = 'UserInterface',
@@ -281,6 +287,11 @@ export type ClearPlatformioCoreDirMutation = {
 
 export type TargetDeviceOptionsQueryVariables = Exact<{
   target: DeviceTarget;
+  source: FirmwareSource;
+  gitTag: Scalars['String'];
+  gitBranch: Scalars['String'];
+  gitCommit: Scalars['String'];
+  localPath: Scalars['String'];
 }>;
 
 export type TargetDeviceOptionsQuery = { readonly __typename?: 'Query' } & {
@@ -543,8 +554,22 @@ export type ClearPlatformioCoreDirMutationOptions = Apollo.BaseMutationOptions<
   ClearPlatformioCoreDirMutationVariables
 >;
 export const TargetDeviceOptionsDocument = gql`
-  query targetDeviceOptions($target: DeviceTarget!) {
-    targetDeviceOptions(target: $target) {
+  query targetDeviceOptions(
+    $target: DeviceTarget!
+    $source: FirmwareSource!
+    $gitTag: String!
+    $gitBranch: String!
+    $gitCommit: String!
+    $localPath: String!
+  ) {
+    targetDeviceOptions(
+      target: $target
+      source: $source
+      gitTag: $gitTag
+      gitBranch: $gitBranch
+      gitCommit: $gitCommit
+      localPath: $localPath
+    ) {
       type
       key
       enabled
@@ -567,6 +592,11 @@ export const TargetDeviceOptionsDocument = gql`
  * const { data, loading, error } = useTargetDeviceOptionsQuery({
  *   variables: {
  *      target: // value for 'target'
+ *      source: // value for 'source'
+ *      gitTag: // value for 'gitTag'
+ *      gitBranch: // value for 'gitBranch'
+ *      gitCommit: // value for 'gitCommit'
+ *      localPath: // value for 'localPath'
  *   },
  * });
  */

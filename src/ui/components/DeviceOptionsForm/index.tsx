@@ -111,7 +111,8 @@ const userDefinesToCategories = (
     [UserDefineCategory.CompatibilityOptions]: [
       UserDefineKey.UART_INVERTED,
       UserDefineKey.USE_UART2,
-      UserDefineKey.R9M_UNLOCK_HIGHER_POWER,
+      UserDefineKey.R9M_UNLOCK_HIGHER_POWER, // deprecated
+      UserDefineKey.UNLOCK_HIGHER_POWER,
       UserDefineKey.USE_R9MM_R9MINI_SBUS,
     ],
     [UserDefineCategory.OtherOptions]: [
@@ -210,7 +211,7 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
         deviceOptions.userDefinesMode === UserDefinesMode.UserInterface && (
           <Alert severity="info">
             <AlertTitle>Notice</AlertTitle>
-            Please select a device target first
+            Please select a firmware version and device target first
           </Alert>
         )}
       {deviceOptions.userDefinesMode === UserDefinesMode.Manual && (

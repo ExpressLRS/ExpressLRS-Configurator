@@ -316,6 +316,7 @@
     "history": "^5.0.0",
     "http": "^0.0.1-security",
     "mkdirp": "^1.0.4",
+    "node-fetch": "^2.6.1",
     "quick-score": "^0.0.10",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

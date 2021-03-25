@@ -30,6 +30,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
+      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
       // other options
       UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK, true),
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),

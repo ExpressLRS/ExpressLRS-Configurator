@@ -265,6 +265,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
             </p>
           );
         case UserDefineKey.R9M_UNLOCK_HIGHER_POWER:
+        case UserDefineKey.UNLOCK_HIGHER_POWER:
           return (
             <div>
               <p>
@@ -281,7 +282,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://github.com/AlessandroAU/ExpressLRS/wiki/R9M-Fan-Mod-Cover"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/R9M-Fan-Mod-Cover"
                 >
                   R9M Fan Mod Cover
                 </a>

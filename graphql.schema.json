@@ -47,15 +47,71 @@
                 "name": "target",
                 "description": null,
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "ENUM",
-                    "name": "DeviceTarget",
-                    "ofType": null
-                  }
+                  "kind": "ENUM",
+                  "name": "DeviceTarget",
+                  "ofType": null
                 },
-                "defaultValue": null,
+                "defaultValue": "DIY_2400_TX_ESP32_SX1280_E28_via_UART",
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "source",
+                "description": null,
+                "type": {
+                  "kind": "ENUM",
+                  "name": "FirmwareSource",
+                  "ofType": null
+                },
+                "defaultValue": "GitBranch",
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "gitTag",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": "\"\"",
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "gitBranch",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": "\"\"",
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "gitCommit",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": "\"\"",
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "localPath",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": "\"\"",
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -576,6 +632,12 @@
             "deprecationReason": null
           },
           {
+            "name": "UNLOCK_HIGHER_POWER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "NO_SYNC_ON_ARM",
             "description": null,
             "isDeprecated": false,
@@ -655,6 +717,41 @@
           },
           {
             "name": "USE_500HZ",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "FirmwareSource",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "GitTag",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GitBranch",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GitCommit",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "Local",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -1015,41 +1112,6 @@
         ],
         "interfaces": null,
         "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "FirmwareSource",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "GitTag",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GitBranch",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GitCommit",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Local",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
         "possibleTypes": null
       },
       {

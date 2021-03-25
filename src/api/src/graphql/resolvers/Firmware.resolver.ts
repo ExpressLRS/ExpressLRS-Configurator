@@ -1,5 +1,6 @@
 import {
   Arg,
+  Args,
   Mutation,
   Query,
   Resolver,
@@ -9,7 +10,6 @@ import {
 import { Inject, Service } from 'typedi';
 import DeviceTarget from '../../library/FirmwareBuilder/Enum/DeviceTarget';
 import UserDefine from '../../models/UserDefine';
-import TargetUserDefinesFactory from '../../factories/TargetUserDefinesFactory';
 import BuildFlashFirmwareInput from '../inputs/BuildFlashFirmwareInput';
 import BuildFlashFirmwareResult from '../../models/BuildFlashFirmwareResult';
 import FirmwareService, {
@@ -21,12 +21,15 @@ import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildLogUpdate from '../../models/BuildLogUpdate';
 import { ConfigToken, IConfig } from '../../config';
 import ClearPlatformioCoreDirResult from '../../models/ClearPlatformioCoreDirResult';
+import TargetDeviceOptionsArgs from '../args/FirmwareVersionDataInput';
+import UserDefinesBuilder from '../../services/UserDefinesBuilder';
 
 @Service()
 @Resolver()
 export default class FirmwareResolver {
   constructor(
     private firmwareService: FirmwareService,
+    private userDefinesBuilder: UserDefinesBuilder,
     @Inject(ConfigToken) private config: IConfig
   ) {}
 
@@ -37,9 +40,9 @@ export default class FirmwareResolver {
 
   @Query(() => [UserDefine])
   async targetDeviceOptions(
-    @Arg('target') target: DeviceTarget
+    @Args() args: TargetDeviceOptionsArgs
   ): Promise<UserDefine[]> {
-    return new TargetUserDefinesFactory().build(target);
+    return this.userDefinesBuilder.build(args);
   }
 
   @Mutation(() => BuildFlashFirmwareResult)
