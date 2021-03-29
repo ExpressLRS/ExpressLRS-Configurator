@@ -500,7 +500,9 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.DIY_2400_TX_ESP32_SX1280_E28_via_UART]: DIY_2400_TX_ESP32_SX1280_E28,
       [DeviceTarget.DIY_2400_TX_ESP32_SX1280_LORA1280F27_via_UART]: DIY_2400_TX_ESP32_SX1280_LORA1280F27,
 
+      // Ghost TX
       [DeviceTarget.GHOST_2400_TX_via_STLINK]: GHOST_2400_TX,
+      [DeviceTarget.GHOST_2400_TX_LITE_via_STLINK]: GHOST_2400_TX,
 
       // GHOST_ATTO_2400_RX
       [DeviceTarget.GHOST_ATTO_2400_RX_via_STLINK]: GHOST_ATTO_2400_RX,

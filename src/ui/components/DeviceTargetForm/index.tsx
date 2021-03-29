@@ -83,6 +83,7 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     [DeviceTarget.DIY_2400_TX_ESP32_SX1280_LORA1280F27_via_UART]: 'DIY 2.4 Ghz',
 
     [DeviceTarget.GHOST_2400_TX_via_STLINK]: 'ImmersionRC Ghost',
+    [DeviceTarget.GHOST_2400_TX_LITE_via_STLINK]: 'ImmersionRC Ghost',
 
     // GHOST_ATTO_2400_RX
     [DeviceTarget.GHOST_ATTO_2400_RX_via_STLINK]: 'ImmersionRC Ghost',
