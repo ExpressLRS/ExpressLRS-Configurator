@@ -9,6 +9,55 @@ export type DeviceOptionsByTarget = {
 
 export default class TargetUserDefinesFactory {
   build(target: DeviceTarget): UserDefine[] {
+    const NamimnoRC_VOYAGER_900_TX: UserDefine[] = [
+      // regulatory options
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      // binding
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
+      // hybrid switches
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      // performance options
+      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
+      UserDefine.Enum(
+        UserDefineKey.ARM_CHANNEL,
+        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6', 'AUX7', 'AUX8'],
+        'AUX1'
+      ),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // compat
+      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
+      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
+      // other options
+      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK, true),
+      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
+      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
+    ];
+    const NamimnoRC_VOYAGER_900_RX: UserDefine[] = [
+      // regulatory options
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      // binding
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
+      // hybrid switches
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      // performance options
+      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
+      UserDefine.Enum(
+        UserDefineKey.ARM_CHANNEL,
+        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
+        'AUX1'
+      ),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      // compat
+      UserDefine.Boolean(UserDefineKey.USE_R9MM_R9MINI_SBUS),
+    ];
+
     const Frsky_TX_R9M: UserDefine[] = [
       // regulatory options
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
@@ -450,6 +499,12 @@ export default class TargetUserDefinesFactory {
     ];
 
     const data: DeviceOptionsByTarget = {
+      // NamimnoRC VOYAGER 900
+      [DeviceTarget.NamimnoRC_VOYAGER_900_TX_via_STLINK]: NamimnoRC_VOYAGER_900_TX,
+      [DeviceTarget.NamimnoRC_VOYAGER_900_TX_via_WIFI]: NamimnoRC_VOYAGER_900_TX,
+      [DeviceTarget.NamimnoRC_VOYAGER_900_RX_via_STLINK]: NamimnoRC_VOYAGER_900_RX,
+      [DeviceTarget.NamimnoRC_VOYAGER_900_RX_via_BetaflightPassthrough]: NamimnoRC_VOYAGER_900_RX,
+
       // R9M TX
       [DeviceTarget.Frsky_TX_R9M_via_STLINK]: Frsky_TX_R9M,
       [DeviceTarget.Frsky_TX_R9M_via_stock_BL]: Frsky_TX_R9M,
