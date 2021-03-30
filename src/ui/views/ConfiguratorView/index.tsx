@@ -210,10 +210,6 @@ const ConfiguratorView: FunctionComponent = () => {
         userDefineOptions: [],
       });
     } else {
-      setDeviceOptionsFormData({
-        ...deviceOptionsFormData,
-        userDefineOptions: [],
-      });
       fetchOptions({
         variables: {
           target: deviceTarget,
@@ -443,11 +439,13 @@ const ConfiguratorView: FunctionComponent = () => {
               <CardTitle icon={<SettingsIcon />} title="Device options" />
               <Divider />
               <CardContent>
-                <DeviceOptionsForm
-                  target={deviceTarget}
-                  deviceOptions={deviceOptionsFormData}
-                  onChange={onUserDefines}
-                />
+                {!loadingOptions && (
+                  <DeviceOptionsForm
+                    target={deviceTarget}
+                    deviceOptions={deviceOptionsFormData}
+                    onChange={onUserDefines}
+                  />
+                )}
                 <ShowAlerts
                   severity="error"
                   messages={deviceOptionsResponseError}
