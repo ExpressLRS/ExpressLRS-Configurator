@@ -97,7 +97,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               This will automatically turn the wifi on for any module that has
               an ESP8285 on it if no connection is found after ~10 seconds from
               boot. This enables pushing firmware updates to the RX by
-              connecting to its wifi network and visiting 192.168.4.1
+              connecting to its wifi network and visiting 10.0.0.1
             </p>
           );
         case UserDefineKey.FAST_SYNC:
