@@ -295,7 +295,9 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
           return (
             <p>
               Enables compatibility with radios that output inverted CRSF, such
-              as the T8SG V2.
+              as the FrSky QX7, TBS Tango 2, RadioMaster TX16S. You want to keep
+              this enabled in most of the cases. If your radio is T8SG V2 or you
+              use Deviation firmware turn this setting off.
             </p>
           );
         case UserDefineKey.USE_500HZ:
