@@ -9,6 +9,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
   { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
   { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -349,10 +350,11 @@ export function useAvailableFirmwareTargetsQuery(
     AvailableFirmwareTargetsQueryVariables
   >
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
     AvailableFirmwareTargetsQuery,
     AvailableFirmwareTargetsQueryVariables
-  >(AvailableFirmwareTargetsDocument, baseOptions);
+  >(AvailableFirmwareTargetsDocument, options);
 }
 
 export function useAvailableFirmwareTargetsLazyQuery(
@@ -361,10 +363,11 @@ export function useAvailableFirmwareTargetsLazyQuery(
     AvailableFirmwareTargetsQueryVariables
   >
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
     AvailableFirmwareTargetsQuery,
     AvailableFirmwareTargetsQueryVariables
-  >(AvailableFirmwareTargetsDocument, baseOptions);
+  >(AvailableFirmwareTargetsDocument, options);
 }
 
 export type AvailableFirmwareTargetsQueryHookResult = ReturnType<
@@ -415,10 +418,11 @@ export function useBuildFlashFirmwareMutation(
     BuildFlashFirmwareMutationVariables
   >
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<
     BuildFlashFirmwareMutation,
     BuildFlashFirmwareMutationVariables
-  >(BuildFlashFirmwareDocument, baseOptions);
+  >(BuildFlashFirmwareDocument, options);
 }
 
 export type BuildFlashFirmwareMutationHookResult = ReturnType<
@@ -458,10 +462,11 @@ export function useBuildLogUpdatesSubscription(
     BuildLogUpdatesSubscriptionVariables
   >
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useSubscription<
     BuildLogUpdatesSubscription,
     BuildLogUpdatesSubscriptionVariables
-  >(BuildLogUpdatesDocument, baseOptions);
+  >(BuildLogUpdatesDocument, options);
 }
 
 export type BuildLogUpdatesSubscriptionHookResult = ReturnType<
@@ -499,10 +504,11 @@ export function useBuildProgressNotificationsSubscription(
     BuildProgressNotificationsSubscriptionVariables
   >
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useSubscription<
     BuildProgressNotificationsSubscription,
     BuildProgressNotificationsSubscriptionVariables
-  >(BuildProgressNotificationsDocument, baseOptions);
+  >(BuildProgressNotificationsDocument, options);
 }
 
 export type BuildProgressNotificationsSubscriptionHookResult = ReturnType<
@@ -544,10 +550,11 @@ export function useClearPlatformioCoreDirMutation(
     ClearPlatformioCoreDirMutationVariables
   >
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<
     ClearPlatformioCoreDirMutation,
     ClearPlatformioCoreDirMutationVariables
-  >(ClearPlatformioCoreDirDocument, baseOptions);
+  >(ClearPlatformioCoreDirDocument, options);
 }
 
 export type ClearPlatformioCoreDirMutationHookResult = ReturnType<
@@ -611,10 +618,11 @@ export function useTargetDeviceOptionsQuery(
     TargetDeviceOptionsQueryVariables
   >
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
     TargetDeviceOptionsQuery,
     TargetDeviceOptionsQueryVariables
-  >(TargetDeviceOptionsDocument, baseOptions);
+  >(TargetDeviceOptionsDocument, options);
 }
 
 export function useTargetDeviceOptionsLazyQuery(
@@ -623,10 +631,11 @@ export function useTargetDeviceOptionsLazyQuery(
     TargetDeviceOptionsQueryVariables
   >
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
     TargetDeviceOptionsQuery,
     TargetDeviceOptionsQueryVariables
-  >(TargetDeviceOptionsDocument, baseOptions);
+  >(TargetDeviceOptionsDocument, options);
 }
 
 export type TargetDeviceOptionsQueryHookResult = ReturnType<
@@ -666,9 +675,10 @@ export function useGetBranchesQuery(
     GetBranchesQueryVariables
   >
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<GetBranchesQuery, GetBranchesQueryVariables>(
     GetBranchesDocument,
-    baseOptions
+    options
   );
 }
 
@@ -678,9 +688,10 @@ export function useGetBranchesLazyQuery(
     GetBranchesQueryVariables
   >
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<GetBranchesQuery, GetBranchesQueryVariables>(
     GetBranchesDocument,
-    baseOptions
+    options
   );
 }
 
@@ -716,18 +727,20 @@ export const GetTagsDocument = gql`
 export function useGetTagsQuery(
   baseOptions?: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<GetTagsQuery, GetTagsQueryVariables>(
     GetTagsDocument,
-    baseOptions
+    options
   );
 }
 
 export function useGetTagsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<GetTagsQuery, GetTagsQueryVariables>(
     GetTagsDocument,
-    baseOptions
+    options
   );
 }
 
