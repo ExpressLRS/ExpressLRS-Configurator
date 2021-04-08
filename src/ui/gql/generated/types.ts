@@ -72,7 +72,7 @@ export enum DeviceTarget {
   GHOST_ATTO_2400_RX_via_BetaflightPassthrough = 'GHOST_ATTO_2400_RX_via_BetaflightPassthrough',
   DIY_2400_RX_ESP8285_SX1280_via_UART = 'DIY_2400_RX_ESP8285_SX1280_via_UART',
   DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough = 'DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough',
-  DIY_2400_RX_STM32_CCG_Nano_v0_5 = 'DIY_2400_RX_STM32_CCG_Nano_v0_5',
+  DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK = 'DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK',
   DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough = 'DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough',
   NamimnoRC_VOYAGER_900_TX_via_STLINK = 'NamimnoRC_VOYAGER_900_TX_via_STLINK',
   NamimnoRC_VOYAGER_900_TX_via_WIFI = 'NamimnoRC_VOYAGER_900_TX_via_WIFI',
@@ -356,7 +356,6 @@ export function useAvailableFirmwareTargetsQuery(
     AvailableFirmwareTargetsQueryVariables
   >(AvailableFirmwareTargetsDocument, options);
 }
-
 export function useAvailableFirmwareTargetsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     AvailableFirmwareTargetsQuery,
@@ -369,7 +368,6 @@ export function useAvailableFirmwareTargetsLazyQuery(
     AvailableFirmwareTargetsQueryVariables
   >(AvailableFirmwareTargetsDocument, options);
 }
-
 export type AvailableFirmwareTargetsQueryHookResult = ReturnType<
   typeof useAvailableFirmwareTargetsQuery
 >;
@@ -424,7 +422,6 @@ export function useBuildFlashFirmwareMutation(
     BuildFlashFirmwareMutationVariables
   >(BuildFlashFirmwareDocument, options);
 }
-
 export type BuildFlashFirmwareMutationHookResult = ReturnType<
   typeof useBuildFlashFirmwareMutation
 >;
@@ -468,7 +465,6 @@ export function useBuildLogUpdatesSubscription(
     BuildLogUpdatesSubscriptionVariables
   >(BuildLogUpdatesDocument, options);
 }
-
 export type BuildLogUpdatesSubscriptionHookResult = ReturnType<
   typeof useBuildLogUpdatesSubscription
 >;
@@ -510,7 +506,6 @@ export function useBuildProgressNotificationsSubscription(
     BuildProgressNotificationsSubscriptionVariables
   >(BuildProgressNotificationsDocument, options);
 }
-
 export type BuildProgressNotificationsSubscriptionHookResult = ReturnType<
   typeof useBuildProgressNotificationsSubscription
 >;
@@ -556,7 +551,6 @@ export function useClearPlatformioCoreDirMutation(
     ClearPlatformioCoreDirMutationVariables
   >(ClearPlatformioCoreDirDocument, options);
 }
-
 export type ClearPlatformioCoreDirMutationHookResult = ReturnType<
   typeof useClearPlatformioCoreDirMutation
 >;
@@ -624,7 +618,6 @@ export function useTargetDeviceOptionsQuery(
     TargetDeviceOptionsQueryVariables
   >(TargetDeviceOptionsDocument, options);
 }
-
 export function useTargetDeviceOptionsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     TargetDeviceOptionsQuery,
@@ -637,7 +630,6 @@ export function useTargetDeviceOptionsLazyQuery(
     TargetDeviceOptionsQueryVariables
   >(TargetDeviceOptionsDocument, options);
 }
-
 export type TargetDeviceOptionsQueryHookResult = ReturnType<
   typeof useTargetDeviceOptionsQuery
 >;
@@ -681,7 +673,6 @@ export function useGetBranchesQuery(
     options
   );
 }
-
 export function useGetBranchesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     GetBranchesQuery,
@@ -694,7 +685,6 @@ export function useGetBranchesLazyQuery(
     options
   );
 }
-
 export type GetBranchesQueryHookResult = ReturnType<typeof useGetBranchesQuery>;
 export type GetBranchesLazyQueryHookResult = ReturnType<
   typeof useGetBranchesLazyQuery
@@ -733,7 +723,6 @@ export function useGetTagsQuery(
     options
   );
 }
-
 export function useGetTagsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>
 ) {
@@ -743,7 +732,6 @@ export function useGetTagsLazyQuery(
     options
   );
 }
-
 export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>;
 export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>;
 export type GetTagsQueryResult = Apollo.QueryResult<

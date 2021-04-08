@@ -39,7 +39,7 @@ enum DeviceTarget {
   GHOST_ATTO_2400_RX_via_BetaflightPassthrough = 'GHOST_ATTO_2400_RX_via_BetaflightPassthrough',
   DIY_2400_RX_ESP8285_SX1280_via_UART = 'DIY_2400_RX_ESP8285_SX1280_via_UART',
   DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough = 'DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough',
-  DIY_2400_RX_STM32_CCG_Nano_v0_5 = 'DIY_2400_RX_STM32_CCG_Nano_v0_5',
+  DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK = 'DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK',
   DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough = 'DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough',
   NamimnoRC_VOYAGER_900_TX_via_STLINK = 'NamimnoRC_VOYAGER_900_TX_via_STLINK',
   NamimnoRC_VOYAGER_900_TX_via_WIFI = 'NamimnoRC_VOYAGER_900_TX_via_WIFI',
