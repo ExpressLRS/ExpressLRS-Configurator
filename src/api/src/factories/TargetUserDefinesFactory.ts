@@ -19,6 +19,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -68,6 +69,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -95,6 +97,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -119,6 +122,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -205,6 +209,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -269,6 +274,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -292,6 +298,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -315,6 +322,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -338,6 +346,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -381,6 +390,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -403,6 +413,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(
@@ -425,6 +436,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
@@ -442,6 +454,7 @@ export default class TargetUserDefinesFactory {
       // hybrid switches
       UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Enum(

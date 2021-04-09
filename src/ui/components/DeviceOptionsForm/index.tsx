@@ -97,6 +97,7 @@ const userDefinesToCategories = (
     [UserDefineCategory.ExtraData]: [
       UserDefineKey.HYBRID_SWITCHES_8,
       UserDefineKey.ENABLE_TELEMETRY,
+      UserDefineKey.TLM_REPORT_INTERVAL_MS,
     ],
     [UserDefineCategory.PerformanceOptions]: [
       UserDefineKey.FAST_SYNC,

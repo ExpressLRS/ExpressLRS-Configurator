@@ -11,6 +11,7 @@ enum UserDefineKey {
   // Hybrid switches
   HYBRID_SWITCHES_8 = 'DHYBRID_SWITCHES_8',
   ENABLE_TELEMETRY = 'DENABLE_TELEMETRY',
+  TLM_REPORT_INTERVAL_MS = 'DTLM_REPORT_INTERVAL_MS',
   // Performance options
   FAST_SYNC = 'DFAST_SYNC',
   // #unlocks >250mw output power for R9M (Fan mod suggested: https://github.com/AlessandroAU/ExpressLRS/wiki/R9M-Fan-Mod-Cover)

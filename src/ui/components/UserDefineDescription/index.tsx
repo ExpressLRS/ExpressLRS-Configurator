@@ -185,6 +185,23 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.TLM_REPORT_INTERVAL_MS:
+          return (
+            <div>
+              <p>
+                It makes the TX module send the telemetry data to the OpenTX
+                every 320 ms by default. This stops the telemetry lost warnings
+                when running a high telemetry ratio, or low rates like 50hz.
+              </p>
+              <p>
+                Default value is <strong>320LU</strong>. If you want to change
+                that you have to suffix your milliseconds value with{' '}
+                <strong>LU</strong>. For example, in order to specify 100 ms
+                telemetry update rate you have to enter it like this:{' '}
+                <strong>100LU</strong>.
+              </p>
+            </div>
+          );
         case UserDefineKey.LOCK_ON_FIRST_CONNECTION:
           return (
             <p>
