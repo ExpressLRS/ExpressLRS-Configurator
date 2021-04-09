@@ -189,6 +189,9 @@ const createWindow = async () => {
    */
   let PATH = process.env.PATH ?? '';
   const prependPATH = (pth: string, item: string): string => {
+    if (pth.indexOf(item) > -1) {
+      return pth;
+    }
     if (pth.length > 0) {
       return `${item}${path.delimiter}${pth}`;
     }
