@@ -121,17 +121,16 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
           return (
             <div>
               <p>
-                NB The switch mode MUST match on the transmitter and all
-                receivers that you use with it. Do not mix switch modes. Older
-                versions of the firmware (prior to November 30th 2020) dit not
-                check to make sure the transmitter and receiver are using the
-                same mode, so the switch positions could be misinterpreted
-                leading to unexpected behaviour, possibly including
-                unintentional arming. Current versions include a check that
-                should prevent receivers and transmitters with different switch
-                settings from establishing a link, but it is still recommended
-                to pick one switch mode and use it for all your transmitters and
-                receivers.
+                The switch mode MUST match on the transmitter and all receivers
+                that you use with it. Do not mix switch modes. Older versions of
+                the firmware (prior to November 30th 2020) dit not check to make
+                sure the transmitter and receiver are using the same mode, so
+                the switch positions could be misinterpreted leading to
+                unexpected behaviour, possibly including unintentional arming.
+                Current versions include a check that should prevent receivers
+                and transmitters with different switch settings from
+                establishing a link, but it is still recommended to pick one
+                switch mode and use it for all your transmitters and receivers.
               </p>
               <p>There are 2 available choices here.</p>
 
