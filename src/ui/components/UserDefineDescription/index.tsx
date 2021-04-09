@@ -200,6 +200,11 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 telemetry update rate you have to enter it like this:{' '}
                 <strong>100LU</strong>.
               </p>
+              <p>
+                Typically, you want to keep <strong>320LU</strong> value for
+                OpenTX based radios, and <strong>100LU</strong> for ErskyTx
+                ones.
+              </p>
             </div>
           );
         case UserDefineKey.LOCK_ON_FIRST_CONNECTION:
