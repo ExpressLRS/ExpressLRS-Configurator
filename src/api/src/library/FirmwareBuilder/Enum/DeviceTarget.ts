@@ -1,7 +1,5 @@
 /*
   Device targets from https://github.com/AlessandroAU/ExpressLRS/blob/master/src/platformio.ini
-
-  TODO: it might be a good idea to separate these by device type: TX, RX
 */
 enum DeviceTarget {
   Frsky_TX_R9M_via_STLINK = 'Frsky_TX_R9M_via_STLINK',
@@ -45,6 +43,12 @@ enum DeviceTarget {
   NamimnoRC_VOYAGER_900_TX_via_WIFI = 'NamimnoRC_VOYAGER_900_TX_via_WIFI',
   NamimnoRC_VOYAGER_900_RX_via_STLINK = 'NamimnoRC_VOYAGER_900_RX_via_STLINK',
   NamimnoRC_VOYAGER_900_RX_via_BetaflightPassthrough = 'NamimnoRC_VOYAGER_900_RX_via_BetaflightPassthrough',
+  NamimnoRC_FLASH_2400_TX_via_STLINK = 'NamimnoRC_FLASH_2400_TX_via_STLINK',
+  NamimnoRC_FLASH_2400_TX_via_WIFI = 'NamimnoRC_FLASH_2400_TX_via_WIFI',
+  NamimnoRC_FLASH_2400_RX_via_STLINK = 'NamimnoRC_FLASH_2400_RX_via_STLINK',
+  NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough = 'NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough',
+  FM30_TX_via_STLINK = 'FM30_TX_via_STLINK',
+  FM30_TX_via_DFU = 'FM30_TX_via_DFU',
 }
 
 export default DeviceTarget;

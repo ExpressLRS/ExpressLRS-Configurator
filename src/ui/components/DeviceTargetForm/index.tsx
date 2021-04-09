@@ -63,6 +63,17 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     [DeviceTarget.NamimnoRC_VOYAGER_900_RX_via_BetaflightPassthrough]:
       'NamimnoRC VOYAGER 900',
 
+    // NamimnoRC 2.4 Ghz
+    [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_STLINK]: 'NamimnoRC 2.4 Ghz',
+    [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_WIFI]: 'NamimnoRC 2.4 Ghz',
+    [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_STLINK]: 'NamimnoRC 2.4 Ghz',
+    [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough]:
+      'NamimnoRC 2.4 Ghz',
+
+    // FM30 TX
+    [DeviceTarget.FM30_TX_via_STLINK]: 'SIYI 2.4 Ghz',
+    [DeviceTarget.FM30_TX_via_DFU]: 'SIYI 2.4 Ghz',
+
     // R9MX RX
     [DeviceTarget.Frsky_RX_R9MX_via_STLINK]: 'Frsky R9',
     [DeviceTarget.Frsky_RX_R9MX_via_BetaflightPassthrough]: 'Frsky R9',
