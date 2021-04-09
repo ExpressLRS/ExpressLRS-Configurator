@@ -24,18 +24,22 @@ export default class UpdatesService {
       return new UpdatesAvailability(false);
     }
 
-    const newestVersion = semver.coerce(response.data[0].tag_name);
-    if (newestVersion === null) {
-      return new UpdatesAvailability(false);
+    for (let i = 0; i < response.data.length; i++) {
+      const release = response.data[i];
+      const newestVersion = semver.coerce(release.tag_name);
+      if (
+        newestVersion !== null &&
+        !release.prerelease &&
+        semver.gt(newestVersion, currentVersion)
+      ) {
+        return new UpdatesAvailability(
+          true,
+          newestVersion.format(),
+          release.html_url
+        );
+      }
     }
 
-    if (semver.gt(newestVersion, currentVersion)) {
-      return new UpdatesAvailability(
-        true,
-        newestVersion.format(),
-        response.data[0].html_url
-      );
-    }
     return new UpdatesAvailability(false);
   }
 }
