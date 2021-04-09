@@ -20,6 +20,8 @@ import './src/graphql/enum/DeviceTarget';
 // eslint-disable-next-line import/extensions
 import './src/graphql/enum/UserDefineKey';
 import UserDefinesBuilder from './src/services/UserDefinesBuilder';
+import UpdatesService from './src/services/Updates';
+import UpdatesResolver from './src/graphql/resolvers/Updates.resolver';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -58,6 +60,13 @@ export default class ApiServer {
         logger
       )
     );
+    Container.set(
+      UpdatesService,
+      new UpdatesService(
+        config.configuratorGit.owner,
+        config.configuratorGit.repositoryName
+      )
+    );
 
     const rawRepoUrl = `https://raw.githubusercontent.com/${config.git.owner}/${config.git.repositoryName}`;
     Container.set(
@@ -66,7 +75,7 @@ export default class ApiServer {
     );
 
     const schema = await buildSchema({
-      resolvers: [FirmwareResolver, SourcesResolver],
+      resolvers: [FirmwareResolver, SourcesResolver, UpdatesResolver],
       container: Container,
       pubSub,
     });

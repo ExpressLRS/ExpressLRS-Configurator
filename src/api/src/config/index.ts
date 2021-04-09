@@ -3,6 +3,7 @@ import { GitRepo } from '../services/Firmware';
 
 export interface IConfig {
   git: GitRepo;
+  configuratorGit: GitRepo;
   firmwaresPath: string;
   PATH: string;
   env: NodeJS.ProcessEnv;

@@ -25,6 +25,7 @@ export type Query = {
   readonly targetDeviceOptions: ReadonlyArray<UserDefine>;
   readonly gitBranches: ReadonlyArray<Scalars['String']>;
   readonly gitTags: ReadonlyArray<Scalars['String']>;
+  readonly checkForUpdates: UpdatesAvailability;
 };
 
 export type QueryTargetDeviceOptionsArgs = {
@@ -34,6 +35,10 @@ export type QueryTargetDeviceOptionsArgs = {
   gitBranch?: Maybe<Scalars['String']>;
   gitCommit?: Maybe<Scalars['String']>;
   localPath?: Maybe<Scalars['String']>;
+};
+
+export type QueryCheckForUpdatesArgs = {
+  currentVersion: Scalars['String'];
 };
 
 export enum DeviceTarget {
@@ -130,6 +135,13 @@ export enum FirmwareSource {
   GitCommit = 'GitCommit',
   Local = 'Local',
 }
+
+export type UpdatesAvailability = {
+  readonly __typename?: 'UpdatesAvailability';
+  readonly updateAvailable: Scalars['Boolean'];
+  readonly newestVersion: Scalars['String'];
+  readonly releaseUrl: Scalars['String'];
+};
 
 export type Mutation = {
   readonly __typename?: 'Mutation';
@@ -277,6 +289,19 @@ export type BuildProgressNotificationsSubscription = {
   readonly buildProgressNotifications: {
     readonly __typename?: 'BuildProgressNotification';
   } & Pick<BuildProgressNotification, 'type' | 'step' | 'message'>;
+};
+
+export type CheckForUpdatesQueryVariables = Exact<{
+  currentVersion: Scalars['String'];
+}>;
+
+export type CheckForUpdatesQuery = { readonly __typename?: 'Query' } & {
+  readonly checkForUpdates: {
+    readonly __typename?: 'UpdatesAvailability';
+  } & Pick<
+    UpdatesAvailability,
+    'updateAvailable' | 'newestVersion' | 'releaseUrl'
+  >;
 };
 
 export type ClearPlatformioCoreDirMutationVariables = Exact<{
@@ -510,6 +535,66 @@ export type BuildProgressNotificationsSubscriptionHookResult = ReturnType<
   typeof useBuildProgressNotificationsSubscription
 >;
 export type BuildProgressNotificationsSubscriptionResult = Apollo.SubscriptionResult<BuildProgressNotificationsSubscription>;
+export const CheckForUpdatesDocument = gql`
+  query checkForUpdates($currentVersion: String!) {
+    checkForUpdates(currentVersion: $currentVersion) {
+      updateAvailable
+      newestVersion
+      releaseUrl
+    }
+  }
+`;
+
+/**
+ * __useCheckForUpdatesQuery__
+ *
+ * To run a query within a React component, call `useCheckForUpdatesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCheckForUpdatesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCheckForUpdatesQuery({
+ *   variables: {
+ *      currentVersion: // value for 'currentVersion'
+ *   },
+ * });
+ */
+export function useCheckForUpdatesQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    CheckForUpdatesQuery,
+    CheckForUpdatesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<CheckForUpdatesQuery, CheckForUpdatesQueryVariables>(
+    CheckForUpdatesDocument,
+    options
+  );
+}
+export function useCheckForUpdatesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CheckForUpdatesQuery,
+    CheckForUpdatesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    CheckForUpdatesQuery,
+    CheckForUpdatesQueryVariables
+  >(CheckForUpdatesDocument, options);
+}
+export type CheckForUpdatesQueryHookResult = ReturnType<
+  typeof useCheckForUpdatesQuery
+>;
+export type CheckForUpdatesLazyQueryHookResult = ReturnType<
+  typeof useCheckForUpdatesLazyQuery
+>;
+export type CheckForUpdatesQueryResult = Apollo.QueryResult<
+  CheckForUpdatesQuery,
+  CheckForUpdatesQueryVariables
+>;
 export const ClearPlatformioCoreDirDocument = gql`
   mutation clearPlatformioCoreDir {
     clearPlatformioCoreDir {

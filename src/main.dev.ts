@@ -237,6 +237,12 @@ const createWindow = async () => {
         owner: 'ExpressLRS',
         repositoryName: 'ExpressLRS',
       },
+      configuratorGit: {
+        cloneUrl: 'https://github.com/ExpressLRS/ExpressLRS-Configurator',
+        url: 'https://github.com/ExpressLRS/ExpressLRS-Configurator',
+        owner: 'ExpressLRS',
+        repositoryName: 'ExpressLRS-Configurator',
+      },
       firmwaresPath,
       getPlatformioPath,
       platformioStateTempStoragePath,

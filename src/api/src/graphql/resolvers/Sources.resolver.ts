@@ -21,7 +21,7 @@ export default class SourcesResolver {
 
   @Query(() => [String])
   async gitTags() {
-    return new OctopusGitHubClient().loadTags(
+    return this.gitClient.loadTags(
       this.config.git.owner,
       this.config.git.repositoryName
     );

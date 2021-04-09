@@ -103,7 +103,7 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
       'DIY 2.4 Ghz',
 
     // DIY_2400_RX_STM32_CCG_Nano_v0_5
-    [DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5]: 'DIY 2.4 Ghz',
+    [DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK]: 'DIY 2.4 Ghz',
     [DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough]:
       'DIY 2.4 Ghz',
   };

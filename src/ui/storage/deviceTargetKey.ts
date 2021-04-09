@@ -42,9 +42,9 @@ const deviceTargetKey = (target: DeviceTarget): DeviceTarget => {
     case DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_UART:
     case DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough:
       return DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_UART;
-    case DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5:
+    case DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK:
     case DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough:
-      return DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5;
+      return DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK;
     default:
       return target;
   }
