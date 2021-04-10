@@ -22,6 +22,7 @@ import './src/graphql/enum/UserDefineKey';
 import UserDefinesBuilder from './src/services/UserDefinesBuilder';
 import UpdatesService from './src/services/Updates';
 import UpdatesResolver from './src/graphql/resolvers/Updates.resolver';
+import SerialMonitorResolver from './src/graphql/resolvers/SerialMonitor.resolver';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -75,7 +76,12 @@ export default class ApiServer {
     );
 
     const schema = await buildSchema({
-      resolvers: [FirmwareResolver, SourcesResolver, UpdatesResolver],
+      resolvers: [
+        FirmwareResolver,
+        SourcesResolver,
+        UpdatesResolver,
+        SerialMonitorResolver,
+      ],
       container: Container,
       pubSub,
     });
