@@ -49,6 +49,11 @@ enum DeviceTarget {
   NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough = 'NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough',
   FM30_TX_via_STLINK = 'FM30_TX_via_STLINK',
   FM30_TX_via_DFU = 'FM30_TX_via_DFU',
+  FM30_RX_MINI_via_STLINK = 'FM30_RX_MINI_via_STLINK',
+  FM30_RX_MINI_via_BetaflightPassthrough = 'FM30_RX_MINI_via_BetaflightPassthrough',
+  NeutronRC_900_RX_via_UART = 'NeutronRC_900_RX_via_UART',
+  NeutronRC_900_RX_via_BetaflightPassthrough = 'NeutronRC_900_RX_via_BetaflightPassthrough',
+  NeutronRC_900_RX_via_WIFI = 'NeutronRC_900_RX_via_WIFI',
 }
 
 export default DeviceTarget;

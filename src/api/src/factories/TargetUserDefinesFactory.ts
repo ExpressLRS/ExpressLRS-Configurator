@@ -94,8 +94,26 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
-      // compat
-      UserDefine.Boolean(UserDefineKey.USE_R9MM_R9MINI_SBUS),
+    ];
+
+    const NeutronRC_900_RX: UserDefine[] = [
+      // regulatory options
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      // binding
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
+      // hybrid switches
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      // performance options
+      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
+      UserDefine.Enum(
+        UserDefineKey.ARM_CHANNEL,
+        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
+        'AUX1'
+      ),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
     ];
 
     const Frsky_TX_R9M: UserDefine[] = [
@@ -529,6 +547,20 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
 
+    const FM30_RX: UserDefine[] = [
+      // regulatory options
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
+      // binding
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
+      // hybrid switches
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      // performance options
+      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.USE_500HZ),
+    ];
+
     const GHOST_ATTO_2400_RX: UserDefine[] = [
       // regulatory options
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
@@ -586,9 +618,16 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_STLINK]: NamimnoRC_FLASH_2400_RX,
       [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough]: NamimnoRC_FLASH_2400_RX,
 
-      // FM30_TX
+      // SIYI FM30
       [DeviceTarget.FM30_TX_via_STLINK]: FM30_TX,
       [DeviceTarget.FM30_TX_via_DFU]: FM30_TX,
+      [DeviceTarget.FM30_RX_MINI_via_STLINK]: FM30_RX,
+      [DeviceTarget.FM30_RX_MINI_via_BetaflightPassthrough]: FM30_RX,
+
+      // NeutronRC 900 Mhz
+      [DeviceTarget.NeutronRC_900_RX_via_UART]: NeutronRC_900_RX,
+      [DeviceTarget.NeutronRC_900_RX_via_BetaflightPassthrough]: NeutronRC_900_RX,
+      [DeviceTarget.NeutronRC_900_RX_via_WIFI]: NeutronRC_900_RX,
 
       // R9M TX
       [DeviceTarget.Frsky_TX_R9M_via_STLINK]: Frsky_TX_R9M,
