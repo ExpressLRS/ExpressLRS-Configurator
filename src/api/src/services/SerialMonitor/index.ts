@@ -38,13 +38,14 @@ export default class SerialMonitorService {
       baudRate,
     });
 
-    // Open errors will be emitted as an error event
     this.port.on('error', (err) => {
       this.sendLogs(`Serial port error: ${err.message}`);
       this.port = null;
     });
 
-    // this.port.on('');
+    this.port.on('data', (data) => {
+      this.sendLogs(data);
+    });
   }
 
   async disconnect(): Promise<void> {

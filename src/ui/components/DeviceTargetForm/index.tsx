@@ -73,6 +73,14 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     // FM30 TX
     [DeviceTarget.FM30_TX_via_STLINK]: 'SIYI 2.4 Ghz',
     [DeviceTarget.FM30_TX_via_DFU]: 'SIYI 2.4 Ghz',
+    [DeviceTarget.FM30_RX_MINI_via_STLINK]: 'SIYI 2.4 Ghz',
+    [DeviceTarget.FM30_RX_MINI_via_BetaflightPassthrough]: 'SIYI 2.4 Ghz',
+
+    // NeutronRC 900 Mhz
+    [DeviceTarget.NeutronRC_900_RX_via_UART]: 'NeutronRC 900 Mhz',
+    [DeviceTarget.NeutronRC_900_RX_via_BetaflightPassthrough]:
+      'NeutronRC 900 Mhz',
+    [DeviceTarget.NeutronRC_900_RX_via_WIFI]: 'NeutronRC 900 Mhz',
 
     // R9MX RX
     [DeviceTarget.Frsky_RX_R9MX_via_STLINK]: 'Frsky R9',
