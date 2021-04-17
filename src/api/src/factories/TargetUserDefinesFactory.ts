@@ -26,7 +26,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
@@ -67,7 +67,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
       UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
@@ -135,7 +135,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
       UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
@@ -163,7 +163,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
@@ -188,7 +188,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
@@ -275,7 +275,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
@@ -340,7 +340,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
@@ -364,7 +364,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
@@ -388,7 +388,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
@@ -412,7 +412,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
@@ -456,7 +456,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
@@ -479,7 +479,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
@@ -497,7 +497,7 @@ export default class TargetUserDefinesFactory {
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
@@ -520,7 +520,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
     ];
 
@@ -541,7 +541,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
