@@ -172,8 +172,27 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
           return (
             <div>
               <p>
-                This option lowers latency and should be kept enabled. This
-                option requires OpenTX 2.4 or above
+                This option lowers latency and{' '}
+                <strong>should be kept enabled</strong>. It requires{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.open-tx.org/downloads"
+                >
+                  OpenTX 2.3 Nightly builds
+                </a>{' '}
+                starting from the N473 build or above. It also will be supported
+                in OpenTX 2.4 and above. In order to install it, you will have
+                to use OpenTX companion application. As an alternative, the
+                ExpressLRS team has released their{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/tree/master/OpenTX"
+                >
+                  OpenTx build
+                </a>{' '}
+                with the required changes.
               </p>
               <p>
                 <a
@@ -191,8 +210,26 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
             <div>
               <p>
                 This option is more experimental and can lower the offset from
-                the radio by tuning it as close as possible to 0. This option
-                requires OpenTX 2.4 or above
+                the radio by tuning it as close as possible to 0. It requires{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.open-tx.org/downloads"
+                >
+                  OpenTX 2.3 Nightly builds
+                </a>{' '}
+                starting from the N473 build or above. It also will be supported
+                in OpenTX 2.4 and above. In order to install it, you will have
+                to use OpenTX companion application. As an alternative, the
+                ExpressLRS team has released their{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/tree/master/OpenTX"
+                >
+                  OpenTx build
+                </a>{' '}
+                with the required changes.
               </p>
               <p>
                 <a
@@ -523,8 +560,26 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
           return (
             <div>
               <p>
-                Enables 500Hz mode. Requires the ELRS Fork of OTX (2.3.10
-                Currently) to work properly.
+                Enables 500Hz mode. It requires{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.open-tx.org/downloads"
+                >
+                  OpenTX 2.3 Nightly builds
+                </a>{' '}
+                starting from the N473 build or above. It also will be supported
+                in OpenTX 2.4 and above. In order to install it, you will have
+                to use OpenTX companion application. As an alternative, the
+                ExpressLRS team has released their{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/tree/master/OpenTX"
+                >
+                  OpenTx build
+                </a>{' '}
+                with the required changes.
               </p>{' '}
               <p>
                 <a
