@@ -654,6 +654,15 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.HappyModel_RX_ES915RX_via_STLINK]: HappyModel_RX_ES915RX,
       [DeviceTarget.HappyModel_RX_ES915RX_via_BetaflightPassthrough]: HappyModel_RX_ES915RX,
 
+      // Happymodel 2.4 Ghz
+      [DeviceTarget.HappyModel_ES24TX_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280_E28,
+      [DeviceTarget.HappyModel_ES24TX_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280_E28,
+      [DeviceTarget.HappyModel_EP_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280,
+      [DeviceTarget.HappyModel_EP_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280,
+      [DeviceTarget.HappyModel_EP_2400_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280,
+      [DeviceTarget.HappyModel_PP_2400_RX_via_STLINK]: DIY_2400_RX_STM32_CCG_Nano_v0_5,
+      [DeviceTarget.HappyModel_PP_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_STM32_CCG_Nano_v0_5,
+
       // R9MX RX
       [DeviceTarget.Frsky_RX_R9MX_via_STLINK]: Frsky_RX_R9MX,
       [DeviceTarget.Frsky_RX_R9MX_via_BetaflightPassthrough]: Frsky_RX_R9MX,

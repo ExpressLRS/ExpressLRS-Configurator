@@ -56,6 +56,17 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     [DeviceTarget.HappyModel_RX_ES915RX_via_BetaflightPassthrough]:
       'Happymodel 915 Mhz',
 
+    // Happymodel 2.4 Ghz
+    [DeviceTarget.HappyModel_ES24TX_2400_TX_via_UART]: 'Happymodel 2.4 Ghz',
+    [DeviceTarget.HappyModel_ES24TX_2400_TX_via_WIFI]: 'Happymodel 2.4 Ghz',
+    [DeviceTarget.HappyModel_EP_2400_RX_via_UART]: 'Happymodel 2.4 Ghz',
+    [DeviceTarget.HappyModel_EP_2400_RX_via_BetaflightPassthrough]:
+      'Happymodel 2.4 Ghz',
+    [DeviceTarget.HappyModel_EP_2400_RX_via_WIFI]: 'Happymodel 2.4 Ghz',
+    [DeviceTarget.HappyModel_PP_2400_RX_via_STLINK]: 'Happymodel 2.4 Ghz',
+    [DeviceTarget.HappyModel_PP_2400_RX_via_BetaflightPassthrough]:
+      'Happymodel 2.4 Ghz',
+
     // NamimnoRC VOYAGER 900
     [DeviceTarget.NamimnoRC_VOYAGER_900_TX_via_STLINK]: 'NamimnoRC VOYAGER 900',
     [DeviceTarget.NamimnoRC_VOYAGER_900_TX_via_WIFI]: 'NamimnoRC VOYAGER 900',
