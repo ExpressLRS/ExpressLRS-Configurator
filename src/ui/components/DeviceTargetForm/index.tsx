@@ -118,6 +118,7 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
 
     // DIY_2400_RX_ESP8285_SX1280
     [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_UART]: 'DIY 2.4 Ghz',
+    [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_WIFI]: 'DIY 2.4 Ghz',
     [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough]:
       'DIY 2.4 Ghz',
 
