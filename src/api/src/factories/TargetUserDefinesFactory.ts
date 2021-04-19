@@ -15,7 +15,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -38,11 +38,11 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // other options
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
@@ -56,7 +56,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -84,7 +84,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
@@ -93,7 +93,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
     ];
 
     const NeutronRC_900_RX: UserDefine[] = [
@@ -104,7 +104,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
@@ -113,7 +113,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
     ];
 
     const Frsky_TX_R9M: UserDefine[] = [
@@ -124,7 +124,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -152,7 +152,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -177,7 +177,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -202,7 +202,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
@@ -211,7 +211,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       // compat
       UserDefine.Boolean(UserDefineKey.USE_R9MM_R9MINI_SBUS),
     ];
@@ -224,7 +224,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
@@ -233,7 +233,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
     ];
 
     const Frsky_RX_R9MX: UserDefine[] = [
@@ -244,7 +244,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
@@ -253,7 +253,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
     ];
 
     const HappyModel_TX_ES915TX: UserDefine[] = [
@@ -264,7 +264,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -289,7 +289,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
@@ -298,7 +298,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
     ];
 
     const Jumper_RX_R900MINI: UserDefine[] = [
@@ -309,7 +309,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
@@ -318,7 +318,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
     ];
 
     const DIY_900_TX_TTGO_V1_SX127x: UserDefine[] = [
@@ -329,7 +329,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -353,7 +353,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -377,7 +377,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -401,7 +401,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -425,7 +425,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
@@ -434,7 +434,7 @@ export default class TargetUserDefinesFactory {
         ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
         'AUX1'
       ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       // other options
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
     ];
@@ -445,7 +445,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -468,7 +468,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -491,7 +491,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -509,7 +509,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -530,7 +530,7 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
       // performance options
@@ -553,11 +553,11 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
     ];
 
@@ -567,11 +567,11 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
     ];
 
@@ -581,11 +581,11 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // other options
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
@@ -597,11 +597,11 @@ export default class TargetUserDefinesFactory {
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8),
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
       UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
       // performance options
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
     ];
 
