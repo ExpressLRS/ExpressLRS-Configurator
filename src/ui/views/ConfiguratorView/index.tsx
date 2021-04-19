@@ -48,6 +48,7 @@ import UserDefinesValidator from './UserDefinesValidator';
 import ApplicationStorage from '../../storage';
 import persistDeviceOptions from '../../storage/commands/persistDeviceOptions';
 import mergeWithDeviceOptionsFromStorage from '../../storage/commands/mergeWithDeviceOptionsFromStorage';
+import UserDefinesAdvisor from '../../components/UserDefinesAdvisor';
 
 export const validateFirmwareVersionData = (
   data: FirmwareVersionDataInput
@@ -461,6 +462,10 @@ const ConfiguratorView: FunctionComponent = () => {
               <CardTitle icon={<SettingsIcon />} title="Actions" />
               <Divider />
               <CardContent>
+                <UserDefinesAdvisor
+                  deviceOptionsFormData={deviceOptionsFormData}
+                />
+
                 <Button
                   className={styles.button}
                   size="large"
