@@ -17,6 +17,8 @@ export interface IApplicationStorage {
     deviceOptions: DeviceOptions
   ): Promise<void>;
 
+  removeDeviceOptions(deviceTarget: DeviceTarget): Promise<void>;
+
   getDeviceOptions(deviceTarget: DeviceTarget): Promise<DeviceOptions | null>;
 
   setBindingPhrase(bindingPhrase: string): Promise<void>;
@@ -55,6 +57,11 @@ export default class ApplicationStorage implements IApplicationStorage {
       console.error(`failed to parse ${e}`);
       return null;
     }
+  }
+
+  async removeDeviceOptions(deviceTarget: DeviceTarget): Promise<void> {
+    const key = `${DEVICE_OPTIONS_BY_TARGET_KEYSPACE}.${deviceTarget}`;
+    localStorage.removeItem(key);
   }
 
   async getFirmwareSource(): Promise<FirmwareVersionDataInput | null> {

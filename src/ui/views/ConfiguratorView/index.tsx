@@ -8,6 +8,7 @@ import {
   Container,
   Divider,
   makeStyles,
+  Tooltip,
 } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { ipcRenderer } from 'electron';
@@ -100,6 +101,14 @@ const useStyles = makeStyles((theme) => ({
   },
   buildResponse: {
     marginBottom: theme.spacing(1),
+  },
+  tooltip: {
+    paddingLeft: '1em',
+    paddingRight: '1em',
+    fontSize: '1.4em !important',
+    '& a': {
+      color: '#90caf9',
+    },
   },
 }));
 
@@ -246,6 +255,31 @@ const ConfiguratorView: FunctionComponent = () => {
       });
     }
   }, [deviceOptionsResponse]);
+
+  const onResetToDefaults = () => {
+    const handleReset = async () => {
+      if (deviceOptionsResponse === undefined || deviceTarget === null) {
+        // eslint-disable-next-line no-alert
+        alert(`deviceOptionsResponse is undefined`);
+        return;
+      }
+
+      const storage = new ApplicationStorage();
+      await storage.removeDeviceOptions(deviceTarget);
+      const userDefineOptions = await mergeWithDeviceOptionsFromStorage(
+        storage,
+        deviceTarget,
+        {
+          ...deviceOptionsFormData,
+          userDefineOptions: [...deviceOptionsResponse.targetDeviceOptions],
+        }
+      );
+      setDeviceOptionsFormData(userDefineOptions);
+    };
+    handleReset().catch((err) => {
+      console.error(`failed to reset device options form data: ${err}`);
+    });
+  };
 
   const onUserDefines = (data: DeviceOptionsFormData) => {
     setDeviceOptionsFormData(data);
@@ -437,7 +471,34 @@ const ConfiguratorView: FunctionComponent = () => {
               </CardContent>
               <Divider />
 
-              <CardTitle icon={<SettingsIcon />} title="Device options" />
+              <CardTitle
+                icon={<SettingsIcon />}
+                title={
+                  <>
+                    Device options{' '}
+                    {deviceOptionsFormData.userDefinesMode ===
+                      UserDefinesMode.UserInterface &&
+                      deviceTarget !== null &&
+                      !loadingOptions && (
+                        <Tooltip
+                          placement="top"
+                          arrow
+                          title={
+                            <div className={styles.tooltip}>
+                              Reset device options to the recommended defaults
+                              on this device target. Except for your custom
+                              binding phrase.
+                            </div>
+                          }
+                        >
+                          <Button onClick={onResetToDefaults} size="small">
+                            Reset
+                          </Button>
+                        </Tooltip>
+                      )}
+                  </>
+                }
+              />
               <Divider />
               <CardContent>
                 {!loadingOptions && (
