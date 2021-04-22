@@ -47,6 +47,28 @@ export default class TargetUserDefinesFactory {
       // other options
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
     ];
+    const NamimnoRC_FLASH_2400_ESP_RX: UserDefine[] = [
+      // regulatory options
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
+      // binding
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
+      // hybrid switches
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
+      // performance options
+      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
+      UserDefine.Enum(
+        UserDefineKey.ARM_CHANNEL,
+        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
+        'AUX1'
+      ),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      UserDefine.Boolean(UserDefineKey.USE_500HZ),
+      // compat
+      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+    ];
 
     const NamimnoRC_VOYAGER_900_TX: UserDefine[] = [
       // regulatory options
@@ -94,6 +116,27 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
+    ];
+    const NamimnoRC_VOYAGER_900_ESP_RX: UserDefine[] = [
+      // regulatory options
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      // binding
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
+      // hybrid switches
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      // performance options
+      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
+      UserDefine.Enum(
+        UserDefineKey.ARM_CHANNEL,
+        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
+        'AUX1'
+      ),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
+      // other options
+      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
     ];
 
     const NeutronRC_900_RX: UserDefine[] = [
@@ -611,12 +654,18 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.NamimnoRC_VOYAGER_900_TX_via_WIFI]: NamimnoRC_VOYAGER_900_TX,
       [DeviceTarget.NamimnoRC_VOYAGER_900_RX_via_STLINK]: NamimnoRC_VOYAGER_900_RX,
       [DeviceTarget.NamimnoRC_VOYAGER_900_RX_via_BetaflightPassthrough]: NamimnoRC_VOYAGER_900_RX,
+      [DeviceTarget.NamimnoRC_VOYAGER_900_ESP_RX_via_UART]: NamimnoRC_VOYAGER_900_ESP_RX,
+      [DeviceTarget.NamimnoRC_VOYAGER_900_ESP_RX_via_BetaflightPassthrough]: NamimnoRC_VOYAGER_900_ESP_RX,
+      [DeviceTarget.NamimnoRC_VOYAGER_900_ESP_RX_via_WIFI]: NamimnoRC_VOYAGER_900_ESP_RX,
 
       // NamimnoRC 2.4 Ghz
       [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_STLINK]: NamimnoRC_FLASH_2400_TX,
       [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_WIFI]: NamimnoRC_FLASH_2400_TX,
       [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_STLINK]: NamimnoRC_FLASH_2400_RX,
       [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough]: NamimnoRC_FLASH_2400_RX,
+      [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_UART]: NamimnoRC_FLASH_2400_ESP_RX,
+      [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_BetaflightPassthrough]: NamimnoRC_FLASH_2400_ESP_RX,
+      [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_WIFI]: NamimnoRC_FLASH_2400_ESP_RX,
 
       // SIYI FM30
       [DeviceTarget.FM30_TX_via_STLINK]: FM30_TX,
