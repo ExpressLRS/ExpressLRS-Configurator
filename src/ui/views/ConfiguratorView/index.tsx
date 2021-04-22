@@ -478,6 +478,15 @@ const ConfiguratorView: FunctionComponent = () => {
     setViewState(ViewState.Compiling);
   };
 
+  useEffect(() => {
+    if (
+      !buildInProgress &&
+      response?.buildFlashFirmware?.success !== undefined
+    ) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  }, [buildInProgress, response]);
+
   const onBuild = () => sendJob(BuildJobType.Build);
   const onBuildAndFlash = () => sendJob(BuildJobType.BuildAndFlash);
 
