@@ -335,6 +335,46 @@ const ConfiguratorView: FunctionComponent = () => {
     };
   }, [buildInProgress]);
 
+  const [luaScriptLocation, setLuaScriptLocation] = useState<string>('');
+  useEffect(() => {
+    const isTX = (item: DeviceTarget) => {
+      return item.indexOf('_TX_') > -1;
+    };
+    if (
+      deviceTarget === null ||
+      firmwareVersionData === null ||
+      !isTX(deviceTarget)
+    ) {
+      setLuaScriptLocation('');
+      return;
+    }
+
+    switch (firmwareVersionData.source) {
+      case FirmwareSource.Local:
+        setLuaScriptLocation('');
+        break;
+      case FirmwareSource.GitCommit:
+        setLuaScriptLocation(
+          `https://raw.githubusercontent.com/ExpressLRS/ExpressLRS/${firmwareVersionData.gitCommit}/src/lua/ELRS.lua`
+        );
+        break;
+      case FirmwareSource.GitBranch:
+        setLuaScriptLocation(
+          `https://raw.githubusercontent.com/ExpressLRS/ExpressLRS/${firmwareVersionData.gitBranch}/src/lua/ELRS.lua`
+        );
+        break;
+      case FirmwareSource.GitTag:
+        setLuaScriptLocation(
+          `https://raw.githubusercontent.com/ExpressLRS/ExpressLRS/${firmwareVersionData.gitTag}/src/lua/ELRS.lua`
+        );
+        break;
+      default:
+        throw new Error(
+          `unknown firmware data source: ${firmwareVersionData.source}`
+        );
+    }
+  }, [deviceTarget, firmwareVersionData]);
+
   /*
     Display Electron.js confirmation dialog if user wants to shutdown the app
     when build is in progress.
@@ -467,6 +507,16 @@ const ConfiguratorView: FunctionComponent = () => {
                   currentTarget={deviceTarget}
                   onChange={onDeviceTarget}
                 />
+                {luaScriptLocation.length > 0 && (
+                  <Button
+                    href={luaScriptLocation}
+                    target="_blank"
+                    size="small"
+                    download
+                  >
+                    Download LUA script
+                  </Button>
+                )}
                 <ShowAlerts severity="error" messages={deviceTargetErrors} />
               </CardContent>
               <Divider />
