@@ -46,6 +46,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // other options
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
     ];
     const NamimnoRC_FLASH_2400_ESP_RX: UserDefine[] = [
       // regulatory options
@@ -137,6 +138,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       // other options
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
     ];
 
     const NeutronRC_900_RX: UserDefine[] = [
@@ -480,6 +482,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       // other options
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
     ];
 
     const DIY_2400_TX_ESP32_SX1280_Mini: UserDefine[] = [
@@ -632,6 +635,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // other options
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
     ];
 
     const DIY_2400_RX_STM32_CCG_Nano_v0_5: UserDefine[] = [

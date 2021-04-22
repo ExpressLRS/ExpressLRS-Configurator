@@ -153,6 +153,30 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
+          return (
+            <div>
+              <p>
+                This will automatically turn the wifi on for any module that has
+                an ESP8285 on it if no connection is found after set amount of
+                seconds from boot. This enables pushing firmware updates to the
+                RX by connecting to its wifi network and visiting 10.0.0.1
+              </p>
+              <p>
+                Wifi internal is defined in <strong>seconds</strong>. Default is
+                20 seconds.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
         case UserDefineKey.FAST_SYNC:
           return (
             <div>

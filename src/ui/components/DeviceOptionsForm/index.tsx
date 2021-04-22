@@ -118,6 +118,7 @@ const userDefinesToCategories = (
     ],
     [UserDefineCategory.OtherOptions]: [
       UserDefineKey.AUTO_WIFI_ON_BOOT,
+      UserDefineKey.AUTO_WIFI_ON_INTERVAL,
       UserDefineKey.USE_ESP8266_BACKPACK,
       UserDefineKey.JUST_BEEP_ONCE,
       UserDefineKey.MY_STARTUP_MELODY,
