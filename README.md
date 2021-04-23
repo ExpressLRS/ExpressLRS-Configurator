@@ -1,5 +1,10 @@
 # ExpressLRS Configurator
 
+![Release](https://img.shields.io/github/v/release/ExpressLRS/ExpressLRS-Configurator?include_prereleases)
+![License](https://img.shields.io/github/license/ExpressLRS/ExpressLRS-Configurator)
+[![Chat](https://img.shields.io/discord/596350022191415318)](http://discord.gg/dS6ReFY)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-253B80.svg)](https://www.paypal.com/donate?hosted_button_id=FLHGG9DAFYQZU)
+
 ExpressLRS Configurator is a cross-platform build & configuration tool for the
 [ExpressLRS](https://github.com/ExpressLRS/ExpressLRS) - open source RC link for RC applications.
 
