@@ -43,35 +43,68 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
         case UserDefineKey.REGULATORY_DOMAIN_FCC_915:
         case UserDefineKey.REGULATORY_DOMAIN_EU_868:
           return (
-            <p>
-              Consult{' '}
-              <a
-                target="_blank"
-                rel="noreferrer noreferrer"
-                href="https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html"
-              >
-                LoRaWAN Frequency Plans and Regulations
-              </a>{' '}
-              for a regulatory domain to use in your location.
-            </p>
+            <div>
+              <p>
+                Consult{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html"
+                >
+                  LoRaWAN Frequency Plans and Regulations
+                </a>{' '}
+                for a regulatory domain to use in your location.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#regulatory-domain"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.REGULATORY_DOMAIN_ISM_2400:
           return (
-            <p>
-              The ISM radio bands are portions of the radio spectrum reserved
-              internationally. You can use this regulatory domain safely in any
-              country.
-            </p>
+            <div>
+              <p>
+                The ISM radio bands are portions of the radio spectrum reserved
+                internationally. You can use this regulatory domain safely in
+                any country.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#regulatory-domain"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.BINDING_PHRASE:
           return (
-            <p>
-              Both the TX and RX NEED to have the same binding phrase or
-              ExpressLRS will not work. Set something memorable, and limit to
-              alphanumeric phrases conforming to the Latin alphabet. This phrase
-              gets MD5 hashed and gets built into the binary you will be
-              flashing.
-            </p>
+            <div>
+              <p>
+                Both the TX and RX NEED to have the same binding phrase or
+                ExpressLRS will not work. Set something memorable, and limit to
+                alphanumeric phrases conforming to the Latin alphabet. This
+                phrase gets MD5 hashed and gets built into the binary you will
+                be flashing.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#binding-phrase"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.ARM_CHANNEL:
           return (
@@ -89,33 +122,164 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <br />
                 AUX8 - Channel 12
               </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#performance-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
             </div>
           );
         case UserDefineKey.AUTO_WIFI_ON_BOOT:
           return (
-            <p>
-              This will automatically turn the wifi on for any module that has
-              an ESP8285 on it if no connection is found after ~10 seconds from
-              boot. This enables pushing firmware updates to the RX by
-              connecting to its wifi network and visiting 10.0.0.1
-            </p>
+            <div>
+              <p>
+                This will automatically turn the wifi on for any module that has
+                an ESP8285 on it if no connection is found after ~10 seconds
+                from boot. This enables pushing firmware updates to the RX by
+                connecting to its wifi network and visiting 10.0.0.1
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
+        case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
+          return (
+            <div>
+              <p>
+                This will automatically turn the wifi on for any module that has
+                an ESP8285 on it if no connection is found after set amount of
+                seconds from boot. This enables pushing firmware updates to the
+                RX by connecting to its wifi network and visiting 10.0.0.1
+              </p>
+              <p>
+                Wifi internal is defined in <strong>seconds</strong>. Default is
+                20 seconds.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
+        case UserDefineKey.USE_DIVERSITY:
+          return (
+            <div>
+              <p>Experimental option that enables antenna switching.</p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#performance-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.FAST_SYNC:
-          return <p>Experimental option that adds faster initial syncing.</p>;
+          return (
+            <div>
+              <p>Experimental option that adds faster initial syncing.</p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#performance-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
         case UserDefineKey.FEATURE_OPENTX_SYNC:
           return (
-            <p>
-              This option lowers latency and should be kept enabled. This option
-              requires OpenTX 2.4 or above
-            </p>
+            <div>
+              <p>
+                This option lowers latency and{' '}
+                <strong>should be kept enabled</strong>. It requires{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.open-tx.org/downloads"
+                >
+                  OpenTX 2.3 Nightly builds
+                </a>{' '}
+                starting from the N473 build or above. It also will be supported
+                in OpenTX 2.4 and above. In order to install it, you will have
+                to use OpenTX companion application. As an alternative, the
+                ExpressLRS team has released their{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/tree/master/OpenTX"
+                >
+                  OpenTx build
+                </a>{' '}
+                with the required changes.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#performance-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE:
           return (
-            <p>
-              This option is more experimental and can lower the offset from the
-              radio by tuning it as close as possible to 0. This option requires
-              OpenTX 2.4 or above
-            </p>
+            <div>
+              <p>
+                This option is more experimental and can lower the offset from
+                the radio by tuning it as close as possible to 0. It requires{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.open-tx.org/downloads"
+                >
+                  OpenTX 2.3 Nightly builds
+                </a>{' '}
+                starting from the N473 build or above. It also will be supported
+                in OpenTX 2.4 and above. In order to install it, you will have
+                to use OpenTX companion application. As an alternative, the
+                ExpressLRS team has released their{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/tree/master/OpenTX"
+                >
+                  OpenTx build
+                </a>{' '}
+                with the required changes.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#performance-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.HYBRID_SWITCHES_8:
           return (
@@ -156,6 +320,15 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                   resolution is actually lost.
                 </li>
               </ol>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#switches"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
             </div>
           );
         case UserDefineKey.ENABLE_TELEMETRY:
@@ -183,6 +356,15 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <strong>Note #2</strong>: It must be enabled together with{' '}
                 <strong>HYBRID_SWITCHES_8</strong>.
               </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#telemetry"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
             </div>
           );
         case UserDefineKey.TLM_REPORT_INTERVAL_MS:
@@ -205,33 +387,75 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 OpenTX based radios, and <strong>100LU</strong> for ErskyTx
                 ones.
               </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#telemetry"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
             </div>
           );
         case UserDefineKey.LOCK_ON_FIRST_CONNECTION:
           return (
-            <p>
-              RF Mode Locking - Default mode is for the RX to cycle through the
-              available RF modes with 5s pauses going from highest to lowest
-              mode and finding which mode the Tx transmitting. This allows the
-              RX to cycle, but once a connection has been established, the Rx
-              will no longer cycle through the RF modes (until it receives a
-              power reset).
-            </p>
+            <div>
+              <p>
+                RF Mode Locking - Default mode is for the RX to cycle through
+                the available RF modes with 5s pauses going from highest to
+                lowest mode and finding which mode the Tx transmitting. This
+                allows the RX to cycle, but once a connection has been
+                established, the Rx will no longer cycle through the RF modes
+                (until it receives a power reset).
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#performance-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.LOCK_ON_50HZ:
           return (
-            <p>
-              This locks the RX at 50Hz mode from the power-up. Only recommended
-              for long range, and partly redundant with
-              LOCK_ON_FIRST_CONNECTION.
-            </p>
+            <div>
+              <p>
+                This locks the RX at 50Hz mode from the power-up. Only
+                recommended for long range, and partly redundant with
+                LOCK_ON_FIRST_CONNECTION.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#performance-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.JUST_BEEP_ONCE:
           return (
-            <p>
-              This sets if the TX only beeps one-time versus playing a startup
-              song.
-            </p>
+            <div>
+              <p>
+                This sets if the TX only beeps one-time versus playing a startup
+                song.
+              </p>{' '}
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.MY_STARTUP_MELODY:
           return (
@@ -270,20 +494,50 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 </a>{' '}
                 are useful resources.
               </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
             </div>
           );
         case UserDefineKey.NO_SYNC_ON_ARM:
           return (
-            <p>
-              Do not transmit sync packets while armed. If you are using a
-              different channel than the default you need to edit (or you may
-              not be able to gain sync safely - default is listed in ARM_CHANNEL
-              as AUX1 which is Channel 5). This is useful for racing as there is
-              less time & packets wasted on sending sync packets. HOWEVER if you
-              are doing serious long range, keep this turned off because in the
-              case of a sustained failsafe, link can not be regained while
-              armed.
-            </p>
+            <div>
+              <p>
+                Do not transmit sync packets while armed. If you are using a
+                different channel than the default you need to edit (or you may
+                not be able to gain sync safely - default is listed in
+                ARM_CHANNEL as AUX1 which is Channel 5). This is useful for
+                racing as there is less time & packets wasted on sending sync
+                packets. HOWEVER if you are doing serious long range, keep this
+                turned off because in the case of a sustained failsafe, link can
+                not be regained while armed.
+              </p>
+              <p>
+                <strong>
+                  This feature assumes that a low value of the arm switch is
+                  disarmed, and a high value is armed
+                </strong>
+                . If you have the arm switch reversed it will not work
+                correctly, and the link will not be established. For this reason
+                it may be best not to enable no sync on arm when you are first
+                setting up ExpressLRS as it can be a source of confusion.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#performance-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.R9M_UNLOCK_HIGHER_POWER:
         case UserDefineKey.UNLOCK_HIGHER_POWER:
@@ -310,55 +564,137 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 , a custom 3d printed backplate with room for a fan and extra
                 cooling to allow for maximum power (1-2W depending on the mod).
               </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#output-power-limit-r9m-only"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
             </div>
           );
         case UserDefineKey.UART_INVERTED:
           return (
-            <p>
-              Enables compatibility with radios that output inverted CRSF, such
-              as the FrSky QX7, TBS Tango 2, RadioMaster TX16S. You want to keep
-              this enabled in most of the cases. If your radio is T8SG V2 or you
-              use Deviation firmware turn this setting off.
-            </p>
+            <div>
+              <p>
+                Enables compatibility with radios that output inverted CRSF,
+                such as the FrSky QX7, TBS Tango 2, RadioMaster TX16S. You want
+                to keep this enabled in most of the cases. If your radio is T8SG
+                V2 or you use Deviation firmware turn this setting off.
+              </p>{' '}
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#compatability-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.USE_500HZ:
           return (
-            <p>
-              Enables 500Hz mode. Requires the ELRS Fork of OTX (2.3.10
-              Currently) to work properly.
-            </p>
+            <div>
+              <p>
+                Enables 500Hz mode. It requires{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.open-tx.org/downloads"
+                >
+                  OpenTX 2.3 Nightly builds
+                </a>{' '}
+                starting from the N473 build or above. It also will be supported
+                in OpenTX 2.4 and above. In order to install it, you will have
+                to use OpenTX companion application. As an alternative, the
+                ExpressLRS team has released their{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/tree/master/OpenTX"
+                >
+                  OpenTx build
+                </a>{' '}
+                with the required changes.
+              </p>{' '}
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.USE_ESP8266_BACKPACK:
           return (
-            <p>
-              This enables communication with the ESP Backpack for over-the-air
-              updates (DeviceTarget: FrSky_TX_R9M_via_WiFi) 🖥️ and debugging via
-              WebSocket 🔍
-            </p>
+            <div>
+              <p>
+                This enables communication with the ESP Backpack for
+                over-the-air updates (DeviceTarget: FrSky_TX_R9M_via_WiFi) 🖥️
+                and debugging via WebSocket 🔍
+              </p>{' '}
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.USE_R9MM_R9MINI_SBUS:
           return (
-            <p>
-              This is useful for F4 FCs which do not have an uninverted UART
-              option. This is only one way, so you lose the telemetry downlink
-              to your radio as well as passthrough flashing. This will output
-              out of the default S.BUS pin on your R9MM/R9Mini. set
-              serialrx_inverted = ON may also be needed within Betaflight for
-              compatibility
-            </p>
+            <div>
+              <p>
+                This is useful for F4 FCs which do not have an uninverted UART
+                option. This is only one way, so you lose the telemetry downlink
+                to your radio as well as passthrough flashing. This will output
+                out of the default S.BUS pin on your R9MM/R9Mini. set
+                serialrx_inverted = ON may also be needed within Betaflight for
+                compatibility
+              </p>{' '}
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#compatability-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         case UserDefineKey.USE_UART2:
           return (
-            <p>
-              This enables integration with Jye&apos;s{' '}
-              <a
-                target="_blank"
-                rel="noreferrer noreferrer"
-                href="https://github.com/JyeSmith/FENIX-rx5808-pro-diversity"
-              >
-                FENIX rx5805 pro-diversity module
-              </a>
-            </p>
+            <div>
+              <p>
+                This enables integration with Jye&apos;s{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/JyeSmith/FENIX-rx5808-pro-diversity"
+                >
+                  FENIX rx5805 pro-diversity module
+                </a>
+              </p>{' '}
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#compatability-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
           );
         default:
           return '';

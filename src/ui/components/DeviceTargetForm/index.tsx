@@ -56,11 +56,28 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     [DeviceTarget.HappyModel_RX_ES915RX_via_BetaflightPassthrough]:
       'Happymodel 915 Mhz',
 
+    // Happymodel 2.4 Ghz
+    [DeviceTarget.HappyModel_ES24TX_2400_TX_via_UART]: 'Happymodel 2.4 Ghz',
+    [DeviceTarget.HappyModel_ES24TX_2400_TX_via_WIFI]: 'Happymodel 2.4 Ghz',
+    [DeviceTarget.HappyModel_EP_2400_RX_via_UART]: 'Happymodel 2.4 Ghz',
+    [DeviceTarget.HappyModel_EP_2400_RX_via_BetaflightPassthrough]:
+      'Happymodel 2.4 Ghz',
+    [DeviceTarget.HappyModel_EP_2400_RX_via_WIFI]: 'Happymodel 2.4 Ghz',
+    [DeviceTarget.HappyModel_PP_2400_RX_via_STLINK]: 'Happymodel 2.4 Ghz',
+    [DeviceTarget.HappyModel_PP_2400_RX_via_BetaflightPassthrough]:
+      'Happymodel 2.4 Ghz',
+
     // NamimnoRC VOYAGER 900
     [DeviceTarget.NamimnoRC_VOYAGER_900_TX_via_STLINK]: 'NamimnoRC VOYAGER 900',
     [DeviceTarget.NamimnoRC_VOYAGER_900_TX_via_WIFI]: 'NamimnoRC VOYAGER 900',
     [DeviceTarget.NamimnoRC_VOYAGER_900_RX_via_STLINK]: 'NamimnoRC VOYAGER 900',
     [DeviceTarget.NamimnoRC_VOYAGER_900_RX_via_BetaflightPassthrough]:
+      'NamimnoRC VOYAGER 900',
+    [DeviceTarget.NamimnoRC_VOYAGER_900_ESP_RX_via_UART]:
+      'NamimnoRC VOYAGER 900',
+    [DeviceTarget.NamimnoRC_VOYAGER_900_ESP_RX_via_BetaflightPassthrough]:
+      'NamimnoRC VOYAGER 900',
+    [DeviceTarget.NamimnoRC_VOYAGER_900_ESP_RX_via_WIFI]:
       'NamimnoRC VOYAGER 900',
 
     // NamimnoRC 2.4 Ghz
@@ -69,6 +86,10 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_STLINK]: 'NamimnoRC 2.4 Ghz',
     [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough]:
       'NamimnoRC 2.4 Ghz',
+    [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_UART]: 'NamimnoRC 2.4 Ghz',
+    [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_BetaflightPassthrough]:
+      'NamimnoRC 2.4 Ghz',
+    [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_WIFI]: 'NamimnoRC 2.4 Ghz',
 
     // FM30 TX
     [DeviceTarget.FM30_TX_via_STLINK]: 'SIYI 2.4 Ghz',
@@ -118,6 +139,7 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
 
     // DIY_2400_RX_ESP8285_SX1280
     [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_UART]: 'DIY 2.4 Ghz',
+    [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_WIFI]: 'DIY 2.4 Ghz',
     [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough]:
       'DIY 2.4 Ghz',
 

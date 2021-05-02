@@ -3,7 +3,7 @@ import React, { FunctionComponent, memo } from 'react';
 
 interface CardTitleProps {
   icon: any;
-  title: string;
+  title: string | React.ReactElement;
 }
 
 const CardTitle: FunctionComponent<CardTitleProps> = memo(({ icon, title }) => {

@@ -8,6 +8,7 @@ import {
   Container,
   Divider,
   makeStyles,
+  Tooltip,
 } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { ipcRenderer } from 'electron';
@@ -48,6 +49,7 @@ import UserDefinesValidator from './UserDefinesValidator';
 import ApplicationStorage from '../../storage';
 import persistDeviceOptions from '../../storage/commands/persistDeviceOptions';
 import mergeWithDeviceOptionsFromStorage from '../../storage/commands/mergeWithDeviceOptionsFromStorage';
+import UserDefinesAdvisor from '../../components/UserDefinesAdvisor';
 
 export const validateFirmwareVersionData = (
   data: FirmwareVersionDataInput
@@ -99,6 +101,14 @@ const useStyles = makeStyles((theme) => ({
   },
   buildResponse: {
     marginBottom: theme.spacing(1),
+  },
+  tooltip: {
+    paddingLeft: '1em',
+    paddingRight: '1em',
+    fontSize: '1.4em !important',
+    '& a': {
+      color: '#90caf9',
+    },
   },
 }));
 
@@ -246,6 +256,31 @@ const ConfiguratorView: FunctionComponent = () => {
     }
   }, [deviceOptionsResponse]);
 
+  const onResetToDefaults = () => {
+    const handleReset = async () => {
+      if (deviceOptionsResponse === undefined || deviceTarget === null) {
+        // eslint-disable-next-line no-alert
+        alert(`deviceOptionsResponse is undefined`);
+        return;
+      }
+
+      const storage = new ApplicationStorage();
+      await storage.removeDeviceOptions(deviceTarget);
+      const userDefineOptions = await mergeWithDeviceOptionsFromStorage(
+        storage,
+        deviceTarget,
+        {
+          ...deviceOptionsFormData,
+          userDefineOptions: [...deviceOptionsResponse.targetDeviceOptions],
+        }
+      );
+      setDeviceOptionsFormData(userDefineOptions);
+    };
+    handleReset().catch((err) => {
+      console.error(`failed to reset device options form data: ${err}`);
+    });
+  };
+
   const onUserDefines = (data: DeviceOptionsFormData) => {
     setDeviceOptionsFormData(data);
     if (deviceTarget !== null) {
@@ -299,6 +334,46 @@ const ConfiguratorView: FunctionComponent = () => {
       }
     };
   }, [buildInProgress]);
+
+  const [luaScriptLocation, setLuaScriptLocation] = useState<string>('');
+  useEffect(() => {
+    const isTX = (item: DeviceTarget) => {
+      return item.indexOf('_TX_') > -1;
+    };
+    if (
+      deviceTarget === null ||
+      firmwareVersionData === null ||
+      !isTX(deviceTarget)
+    ) {
+      setLuaScriptLocation('');
+      return;
+    }
+
+    switch (firmwareVersionData.source) {
+      case FirmwareSource.Local:
+        setLuaScriptLocation('');
+        break;
+      case FirmwareSource.GitCommit:
+        setLuaScriptLocation(
+          `https://raw.githubusercontent.com/ExpressLRS/ExpressLRS/${firmwareVersionData.gitCommit}/src/lua/ELRS.lua`
+        );
+        break;
+      case FirmwareSource.GitBranch:
+        setLuaScriptLocation(
+          `https://raw.githubusercontent.com/ExpressLRS/ExpressLRS/${firmwareVersionData.gitBranch}/src/lua/ELRS.lua`
+        );
+        break;
+      case FirmwareSource.GitTag:
+        setLuaScriptLocation(
+          `https://raw.githubusercontent.com/ExpressLRS/ExpressLRS/${firmwareVersionData.gitTag}/src/lua/ELRS.lua`
+        );
+        break;
+      default:
+        throw new Error(
+          `unknown firmware data source: ${firmwareVersionData.source}`
+        );
+    }
+  }, [deviceTarget, firmwareVersionData]);
 
   /*
     Display Electron.js confirmation dialog if user wants to shutdown the app
@@ -403,6 +478,15 @@ const ConfiguratorView: FunctionComponent = () => {
     setViewState(ViewState.Compiling);
   };
 
+  useEffect(() => {
+    if (
+      !buildInProgress &&
+      response?.buildFlashFirmware?.success !== undefined
+    ) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  }, [buildInProgress, response]);
+
   const onBuild = () => sendJob(BuildJobType.Build);
   const onBuildAndFlash = () => sendJob(BuildJobType.BuildAndFlash);
 
@@ -432,11 +516,48 @@ const ConfiguratorView: FunctionComponent = () => {
                   currentTarget={deviceTarget}
                   onChange={onDeviceTarget}
                 />
+                {luaScriptLocation.length > 0 && (
+                  <Button
+                    href={luaScriptLocation}
+                    target="_blank"
+                    size="small"
+                    download
+                  >
+                    Download LUA script
+                  </Button>
+                )}
                 <ShowAlerts severity="error" messages={deviceTargetErrors} />
               </CardContent>
               <Divider />
 
-              <CardTitle icon={<SettingsIcon />} title="Device options" />
+              <CardTitle
+                icon={<SettingsIcon />}
+                title={
+                  <>
+                    Device options{' '}
+                    {deviceOptionsFormData.userDefinesMode ===
+                      UserDefinesMode.UserInterface &&
+                      deviceTarget !== null &&
+                      !loadingOptions && (
+                        <Tooltip
+                          placement="top"
+                          arrow
+                          title={
+                            <div className={styles.tooltip}>
+                              Reset device options to the recommended defaults
+                              on this device target. Except for your custom
+                              binding phrase.
+                            </div>
+                          }
+                        >
+                          <Button onClick={onResetToDefaults} size="small">
+                            Reset
+                          </Button>
+                        </Tooltip>
+                      )}
+                  </>
+                }
+              />
               <Divider />
               <CardContent>
                 {!loadingOptions && (
@@ -461,6 +582,10 @@ const ConfiguratorView: FunctionComponent = () => {
               <CardTitle icon={<SettingsIcon />} title="Actions" />
               <Divider />
               <CardContent>
+                <UserDefinesAdvisor
+                  deviceOptionsFormData={deviceOptionsFormData}
+                />
+
                 <Button
                   className={styles.button}
                   size="large"

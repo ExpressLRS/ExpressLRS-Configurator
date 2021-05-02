@@ -133,7 +133,6 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                 </ListItem>
               </>
             )}
-
             {item.type === UserDefineKind.Enum && item.enabled && (
               <ListItem className={styles.complimentaryItem}>
                 <Omnibox

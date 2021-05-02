@@ -338,6 +338,48 @@
             "deprecationReason": null
           },
           {
+            "name": "HappyModel_ES24TX_2400_TX_via_UART",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "HappyModel_ES24TX_2400_TX_via_WIFI",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "HappyModel_EP_2400_RX_via_UART",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "HappyModel_EP_2400_RX_via_BetaflightPassthrough",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "HappyModel_EP_2400_RX_via_WIFI",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "HappyModel_PP_2400_RX_via_STLINK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "HappyModel_PP_2400_RX_via_BetaflightPassthrough",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "HappyModel_TX_ES915TX_via_STLINK",
             "description": null,
             "isDeprecated": false,
@@ -446,6 +488,12 @@
             "deprecationReason": null
           },
           {
+            "name": "DIY_2400_RX_ESP8285_SX1280_via_WIFI",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough",
             "description": null,
             "isDeprecated": false,
@@ -488,6 +536,24 @@
             "deprecationReason": null
           },
           {
+            "name": "NamimnoRC_VOYAGER_900_ESP_RX_via_UART",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NamimnoRC_VOYAGER_900_ESP_RX_via_BetaflightPassthrough",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NamimnoRC_VOYAGER_900_ESP_RX_via_WIFI",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "NamimnoRC_FLASH_2400_TX_via_STLINK",
             "description": null,
             "isDeprecated": false,
@@ -507,6 +573,24 @@
           },
           {
             "name": "NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NamimnoRC_FLASH_2400_ESP_RX_via_UART",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NamimnoRC_FLASH_2400_ESP_RX_via_BetaflightPassthrough",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NamimnoRC_FLASH_2400_ESP_RX_via_WIFI",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -828,6 +912,18 @@
           },
           {
             "name": "AUTO_WIFI_ON_BOOT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "AUTO_WIFI_ON_INTERVAL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "USE_DIVERSITY",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

@@ -5,7 +5,7 @@ interface IConfig {
 }
 
 export const Config: IConfig = {
-  githubRepositoryUrl: 'https://github.com/AlessandroAU/ExpressLRS',
+  githubRepositoryUrl: 'https://github.com/ExpressLRS/ExpressLRS',
   facebookGroupUrl: 'https://www.facebook.com/groups/636441730280366',
   discordUrl: 'https://discord.gg/dS6ReFY',
 };
