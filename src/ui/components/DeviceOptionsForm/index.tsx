@@ -108,6 +108,7 @@ const userDefinesToCategories = (
       UserDefineKey.LOCK_ON_FIRST_CONNECTION,
       UserDefineKey.LOCK_ON_50HZ,
       UserDefineKey.USE_500HZ,
+      UserDefineKey.USE_DIVERSITY,
     ],
     [UserDefineCategory.CompatibilityOptions]: [
       UserDefineKey.UART_INVERTED,

@@ -177,6 +177,21 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.USE_DIVERSITY:
+          return (
+            <div>
+              <p>Experimental option that enables antenna switching.</p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#performance-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
         case UserDefineKey.FAST_SYNC:
           return (
             <div>

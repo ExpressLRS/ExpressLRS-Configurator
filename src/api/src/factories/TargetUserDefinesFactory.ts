@@ -279,6 +279,7 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
+      UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, true),
     ];
 
     const Frsky_RX_R9MX: UserDefine[] = [
@@ -605,6 +606,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
+      UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, true),
     ];
 
     const GHOST_ATTO_2400_RX: UserDefine[] = [
@@ -636,6 +638,7 @@ export default class TargetUserDefinesFactory {
       // other options
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
       UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
+      UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, false),
     ];
 
     const DIY_2400_RX_STM32_CCG_Nano_v0_5: UserDefine[] = [
