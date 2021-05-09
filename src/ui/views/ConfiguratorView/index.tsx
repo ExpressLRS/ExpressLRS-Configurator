@@ -50,6 +50,7 @@ import ApplicationStorage from '../../storage';
 import persistDeviceOptions from '../../storage/commands/persistDeviceOptions';
 import mergeWithDeviceOptionsFromStorage from '../../storage/commands/mergeWithDeviceOptionsFromStorage';
 import UserDefinesAdvisor from '../../components/UserDefinesAdvisor';
+import SerialDeviceSelect from '../../components/SerialDeviceSelect';
 
 export const validateFirmwareVersionData = (
   data: FirmwareVersionDataInput
@@ -386,6 +387,11 @@ const ConfiguratorView: FunctionComponent = () => {
     ipcRenderer.send(IpcRequest.UpdateBuildStatus, body);
   }, [buildInProgress]);
 
+  const [serialDevice, setSerialDevice] = useState<string | null>(null);
+  const onSerialDevice = (newSerialDevice: string | null) => {
+    setSerialDevice(newSerialDevice);
+  };
+
   const [
     deviceOptionsValidationErrors,
     setDeviceOptionsValidationErrors,
@@ -470,6 +476,9 @@ const ConfiguratorView: FunctionComponent = () => {
         type: item.type,
       })),
     };
+    if (serialDevice !== null) {
+      input.serialDevice = serialDevice;
+    }
     buildFlashFirmwareMutation({
       variables: {
         input,
@@ -586,22 +595,32 @@ const ConfiguratorView: FunctionComponent = () => {
                   deviceOptionsFormData={deviceOptionsFormData}
                 />
 
-                <Button
-                  className={styles.button}
-                  size="large"
-                  variant="contained"
-                  onClick={onBuild}
-                >
-                  Build
-                </Button>
-                <Button
-                  className={styles.button}
-                  size="large"
-                  variant="contained"
-                  onClick={onBuildAndFlash}
-                >
-                  Build & Flash
-                </Button>
+                <div>
+                  {deviceTarget !== null &&
+                    (deviceTarget.indexOf('_via_UART') > -1 ||
+                      deviceTarget.indexOf('_BetaflightPassthrough') > -1) && (
+                      <SerialDeviceSelect
+                        serialDevice={serialDevice}
+                        onChange={onSerialDevice}
+                      />
+                    )}
+                  <Button
+                    className={styles.button}
+                    size="large"
+                    variant="contained"
+                    onClick={onBuild}
+                  >
+                    Build
+                  </Button>
+                  <Button
+                    className={styles.button}
+                    size="large"
+                    variant="contained"
+                    onClick={onBuildAndFlash}
+                  >
+                    Build & Flash
+                  </Button>
+                </div>
               </CardContent>
               <Divider />
             </Card>

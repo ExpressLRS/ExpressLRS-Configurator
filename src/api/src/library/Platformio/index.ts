@@ -219,18 +219,24 @@ export default class Platformio {
   async flash(
     projectDir: string,
     environment: string,
+    serialPort: string | undefined,
     onUpdate: OnOutputFunc = NoOpFunc
   ) {
+    const params = [
+      'run',
+      '--project-dir',
+      projectDir,
+      '--environment',
+      environment,
+      '--target',
+      'upload',
+    ];
+    if (serialPort !== undefined && serialPort !== null) {
+      params.push('--upload-port');
+      params.push(serialPort);
+    }
     return this.runPIOCommand(
-      [
-        'run',
-        '--project-dir',
-        projectDir,
-        '--environment',
-        environment,
-        '--target',
-        'upload',
-      ],
+      params,
       {
         env: this.env,
       },

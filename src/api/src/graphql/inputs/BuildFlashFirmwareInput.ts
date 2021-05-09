@@ -10,6 +10,9 @@ export default class BuildFlashFirmwareInput {
   @Field(() => BuildJobType)
   type: BuildJobType;
 
+  @Field({ nullable: true })
+  serialDevice?: string;
+
   @Field(() => FirmwareVersionDataInput)
   firmware: FirmwareVersionDataInput;
 
