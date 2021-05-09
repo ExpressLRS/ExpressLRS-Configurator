@@ -26,6 +26,7 @@ export type Query = {
   readonly gitBranches: ReadonlyArray<Scalars['String']>;
   readonly gitTags: ReadonlyArray<Scalars['String']>;
   readonly checkForUpdates: UpdatesAvailability;
+  readonly availableDevicesList: ReadonlyArray<SerialPortInformation>;
 };
 
 export type QueryTargetDeviceOptionsArgs = {
@@ -136,10 +137,10 @@ export enum UserDefineKey {
   HYBRID_SWITCHES_8 = 'HYBRID_SWITCHES_8',
   ENABLE_TELEMETRY = 'ENABLE_TELEMETRY',
   TLM_REPORT_INTERVAL_MS = 'TLM_REPORT_INTERVAL_MS',
-  USE_DIVERSITY = 'USE_DIVERSITY',
   FAST_SYNC = 'FAST_SYNC',
   R9M_UNLOCK_HIGHER_POWER = 'R9M_UNLOCK_HIGHER_POWER',
   UNLOCK_HIGHER_POWER = 'UNLOCK_HIGHER_POWER',
+  USE_DIVERSITY = 'USE_DIVERSITY',
   NO_SYNC_ON_ARM = 'NO_SYNC_ON_ARM',
   ARM_CHANNEL = 'ARM_CHANNEL',
   FEATURE_OPENTX_SYNC = 'FEATURE_OPENTX_SYNC',
@@ -171,14 +172,26 @@ export type UpdatesAvailability = {
   readonly releaseUrl: Scalars['String'];
 };
 
+export type SerialPortInformation = {
+  readonly __typename?: 'SerialPortInformation';
+  readonly path: Scalars['String'];
+  readonly manufacturer: Scalars['String'];
+};
+
 export type Mutation = {
   readonly __typename?: 'Mutation';
   readonly buildFlashFirmware: BuildFlashFirmwareResult;
   readonly clearPlatformioCoreDir: ClearPlatformioCoreDirResult;
+  readonly connectToSerialDevice: SerialPortConnectResult;
+  readonly disconnectFromSerialDevice: SerialPortDisconnectResult;
 };
 
 export type MutationBuildFlashFirmwareArgs = {
   input: BuildFlashFirmwareInput;
+};
+
+export type MutationConnectToSerialDeviceArgs = {
+  input: SerialConnectionConfigInput;
 };
 
 export type BuildFlashFirmwareResult = {
@@ -239,10 +252,29 @@ export type ClearPlatformioCoreDirResult = {
   readonly message?: Maybe<Scalars['String']>;
 };
 
+export type SerialPortConnectResult = {
+  readonly __typename?: 'SerialPortConnectResult';
+  readonly success: Scalars['Boolean'];
+  readonly message?: Maybe<Scalars['String']>;
+};
+
+export type SerialConnectionConfigInput = {
+  readonly port?: Maybe<Scalars['String']>;
+  readonly baudRate?: Maybe<Scalars['Float']>;
+};
+
+export type SerialPortDisconnectResult = {
+  readonly __typename?: 'SerialPortDisconnectResult';
+  readonly success: Scalars['Boolean'];
+  readonly message?: Maybe<Scalars['String']>;
+};
+
 export type Subscription = {
   readonly __typename?: 'Subscription';
   readonly buildProgressNotifications: BuildProgressNotification;
   readonly buildLogUpdates: BuildLogUpdate;
+  readonly serialMonitorLogs: SerialMonitorLogUpdate;
+  readonly serialMonitorEvents: SerialMonitorEvent;
 };
 
 export type BuildProgressNotification = {
@@ -269,6 +301,36 @@ export enum BuildFirmwareStep {
 export type BuildLogUpdate = {
   readonly __typename?: 'BuildLogUpdate';
   readonly data: Scalars['String'];
+};
+
+export type SerialMonitorLogUpdate = {
+  readonly __typename?: 'SerialMonitorLogUpdate';
+  readonly data: Scalars['String'];
+};
+
+export type SerialMonitorEvent = {
+  readonly __typename?: 'SerialMonitorEvent';
+  readonly type: SerialMonitorEventType;
+};
+
+export enum SerialMonitorEventType {
+  Connecting = 'Connecting',
+  Connected = 'Connected',
+  Disconnected = 'Disconnected',
+  Error = 'Error',
+}
+
+export type AvailableDevicesListQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type AvailableDevicesListQuery = { readonly __typename?: 'Query' } & {
+  readonly availableDevicesList: ReadonlyArray<
+    { readonly __typename?: 'SerialPortInformation' } & Pick<
+      SerialPortInformation,
+      'path' | 'manufacturer'
+    >
+  >;
 };
 
 export type AvailableFirmwareTargetsQueryVariables = Exact<{
@@ -344,6 +406,18 @@ export type ClearPlatformioCoreDirMutation = {
   } & Pick<ClearPlatformioCoreDirResult, 'success' | 'message'>;
 };
 
+export type ConnectToSerialDeviceMutationVariables = Exact<{
+  input: SerialConnectionConfigInput;
+}>;
+
+export type ConnectToSerialDeviceMutation = {
+  readonly __typename?: 'Mutation';
+} & {
+  readonly connectToSerialDevice: {
+    readonly __typename?: 'SerialPortConnectResult';
+  } & Pick<SerialPortConnectResult, 'success' | 'message'>;
+};
+
 export type TargetDeviceOptionsQueryVariables = Exact<{
   target: DeviceTarget;
   source: FirmwareSource;
@@ -362,6 +436,18 @@ export type TargetDeviceOptionsQuery = { readonly __typename?: 'Query' } & {
   >;
 };
 
+export type DisconnectFromSerialDeviceMutationVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type DisconnectFromSerialDeviceMutation = {
+  readonly __typename?: 'Mutation';
+} & {
+  readonly disconnectFromSerialDevice: {
+    readonly __typename?: 'SerialPortDisconnectResult';
+  } & Pick<SerialPortDisconnectResult, 'success' | 'message'>;
+};
+
 export type GetBranchesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetBranchesQuery = { readonly __typename?: 'Query' } & Pick<
@@ -376,6 +462,88 @@ export type GetTagsQuery = { readonly __typename?: 'Query' } & Pick<
   'gitTags'
 >;
 
+export type SerialMonitorEventsSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type SerialMonitorEventsSubscription = {
+  readonly __typename?: 'Subscription';
+} & {
+  readonly serialMonitorEvents: {
+    readonly __typename?: 'SerialMonitorEvent';
+  } & Pick<SerialMonitorEvent, 'type'>;
+};
+
+export type SerialMonitorLogsSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type SerialMonitorLogsSubscription = {
+  readonly __typename?: 'Subscription';
+} & {
+  readonly serialMonitorLogs: {
+    readonly __typename?: 'SerialMonitorLogUpdate';
+  } & Pick<SerialMonitorLogUpdate, 'data'>;
+};
+
+export const AvailableDevicesListDocument = gql`
+  query availableDevicesList {
+    availableDevicesList {
+      path
+      manufacturer
+    }
+  }
+`;
+
+/**
+ * __useAvailableDevicesListQuery__
+ *
+ * To run a query within a React component, call `useAvailableDevicesListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAvailableDevicesListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAvailableDevicesListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAvailableDevicesListQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    AvailableDevicesListQuery,
+    AvailableDevicesListQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    AvailableDevicesListQuery,
+    AvailableDevicesListQueryVariables
+  >(AvailableDevicesListDocument, options);
+}
+export function useAvailableDevicesListLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    AvailableDevicesListQuery,
+    AvailableDevicesListQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    AvailableDevicesListQuery,
+    AvailableDevicesListQueryVariables
+  >(AvailableDevicesListDocument, options);
+}
+export type AvailableDevicesListQueryHookResult = ReturnType<
+  typeof useAvailableDevicesListQuery
+>;
+export type AvailableDevicesListLazyQueryHookResult = ReturnType<
+  typeof useAvailableDevicesListLazyQuery
+>;
+export type AvailableDevicesListQueryResult = Apollo.QueryResult<
+  AvailableDevicesListQuery,
+  AvailableDevicesListQueryVariables
+>;
 export const AvailableFirmwareTargetsDocument = gql`
   query availableFirmwareTargets {
     availableFirmwareTargets
@@ -672,6 +840,56 @@ export type ClearPlatformioCoreDirMutationOptions = Apollo.BaseMutationOptions<
   ClearPlatformioCoreDirMutation,
   ClearPlatformioCoreDirMutationVariables
 >;
+export const ConnectToSerialDeviceDocument = gql`
+  mutation connectToSerialDevice($input: SerialConnectionConfigInput!) {
+    connectToSerialDevice(input: $input) {
+      success
+      message
+    }
+  }
+`;
+export type ConnectToSerialDeviceMutationFn = Apollo.MutationFunction<
+  ConnectToSerialDeviceMutation,
+  ConnectToSerialDeviceMutationVariables
+>;
+
+/**
+ * __useConnectToSerialDeviceMutation__
+ *
+ * To run a mutation, you first call `useConnectToSerialDeviceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useConnectToSerialDeviceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [connectToSerialDeviceMutation, { data, loading, error }] = useConnectToSerialDeviceMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useConnectToSerialDeviceMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ConnectToSerialDeviceMutation,
+    ConnectToSerialDeviceMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ConnectToSerialDeviceMutation,
+    ConnectToSerialDeviceMutationVariables
+  >(ConnectToSerialDeviceDocument, options);
+}
+export type ConnectToSerialDeviceMutationHookResult = ReturnType<
+  typeof useConnectToSerialDeviceMutation
+>;
+export type ConnectToSerialDeviceMutationResult = Apollo.MutationResult<ConnectToSerialDeviceMutation>;
+export type ConnectToSerialDeviceMutationOptions = Apollo.BaseMutationOptions<
+  ConnectToSerialDeviceMutation,
+  ConnectToSerialDeviceMutationVariables
+>;
 export const TargetDeviceOptionsDocument = gql`
   query targetDeviceOptions(
     $target: DeviceTarget!
@@ -752,6 +970,55 @@ export type TargetDeviceOptionsLazyQueryHookResult = ReturnType<
 export type TargetDeviceOptionsQueryResult = Apollo.QueryResult<
   TargetDeviceOptionsQuery,
   TargetDeviceOptionsQueryVariables
+>;
+export const DisconnectFromSerialDeviceDocument = gql`
+  mutation disconnectFromSerialDevice {
+    disconnectFromSerialDevice {
+      success
+      message
+    }
+  }
+`;
+export type DisconnectFromSerialDeviceMutationFn = Apollo.MutationFunction<
+  DisconnectFromSerialDeviceMutation,
+  DisconnectFromSerialDeviceMutationVariables
+>;
+
+/**
+ * __useDisconnectFromSerialDeviceMutation__
+ *
+ * To run a mutation, you first call `useDisconnectFromSerialDeviceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDisconnectFromSerialDeviceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [disconnectFromSerialDeviceMutation, { data, loading, error }] = useDisconnectFromSerialDeviceMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDisconnectFromSerialDeviceMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DisconnectFromSerialDeviceMutation,
+    DisconnectFromSerialDeviceMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    DisconnectFromSerialDeviceMutation,
+    DisconnectFromSerialDeviceMutationVariables
+  >(DisconnectFromSerialDeviceDocument, options);
+}
+export type DisconnectFromSerialDeviceMutationHookResult = ReturnType<
+  typeof useDisconnectFromSerialDeviceMutation
+>;
+export type DisconnectFromSerialDeviceMutationResult = Apollo.MutationResult<DisconnectFromSerialDeviceMutation>;
+export type DisconnectFromSerialDeviceMutationOptions = Apollo.BaseMutationOptions<
+  DisconnectFromSerialDeviceMutation,
+  DisconnectFromSerialDeviceMutationVariables
 >;
 export const GetBranchesDocument = gql`
   query getBranches {
@@ -851,3 +1118,81 @@ export type GetTagsQueryResult = Apollo.QueryResult<
   GetTagsQuery,
   GetTagsQueryVariables
 >;
+export const SerialMonitorEventsDocument = gql`
+  subscription serialMonitorEvents {
+    serialMonitorEvents {
+      type
+    }
+  }
+`;
+
+/**
+ * __useSerialMonitorEventsSubscription__
+ *
+ * To run a query within a React component, call `useSerialMonitorEventsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useSerialMonitorEventsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSerialMonitorEventsSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSerialMonitorEventsSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    SerialMonitorEventsSubscription,
+    SerialMonitorEventsSubscriptionVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSubscription<
+    SerialMonitorEventsSubscription,
+    SerialMonitorEventsSubscriptionVariables
+  >(SerialMonitorEventsDocument, options);
+}
+export type SerialMonitorEventsSubscriptionHookResult = ReturnType<
+  typeof useSerialMonitorEventsSubscription
+>;
+export type SerialMonitorEventsSubscriptionResult = Apollo.SubscriptionResult<SerialMonitorEventsSubscription>;
+export const SerialMonitorLogsDocument = gql`
+  subscription serialMonitorLogs {
+    serialMonitorLogs {
+      data
+    }
+  }
+`;
+
+/**
+ * __useSerialMonitorLogsSubscription__
+ *
+ * To run a query within a React component, call `useSerialMonitorLogsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useSerialMonitorLogsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSerialMonitorLogsSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSerialMonitorLogsSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    SerialMonitorLogsSubscription,
+    SerialMonitorLogsSubscriptionVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSubscription<
+    SerialMonitorLogsSubscription,
+    SerialMonitorLogsSubscriptionVariables
+  >(SerialMonitorLogsDocument, options);
+}
+export type SerialMonitorLogsSubscriptionHookResult = ReturnType<
+  typeof useSerialMonitorLogsSubscription
+>;
+export type SerialMonitorLogsSubscriptionResult = Apollo.SubscriptionResult<SerialMonitorLogsSubscription>;

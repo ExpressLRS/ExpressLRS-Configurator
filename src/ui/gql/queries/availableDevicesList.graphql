@@ -1,0 +1,6 @@
+query availableDevicesList{
+  availableDevicesList {
+    path
+    manufacturer
+  }
+}

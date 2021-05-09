@@ -4,7 +4,10 @@
     "emitDecoratorMetadata": true,
     "target": "ES2018",
     "module": "CommonJS",
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "declaration": true,
     "declarationMap": true,
     "noEmit": true,

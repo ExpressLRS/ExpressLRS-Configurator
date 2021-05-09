@@ -22,6 +22,8 @@ import './src/graphql/enum/UserDefineKey';
 import UserDefinesBuilder from './src/services/UserDefinesBuilder';
 import UpdatesService from './src/services/Updates';
 import UpdatesResolver from './src/graphql/resolvers/Updates.resolver';
+import SerialMonitorResolver from './src/graphql/resolvers/SerialMonitor.resolver';
+import SerialMonitorService from './src/services/SerialMonitor';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -67,6 +69,10 @@ export default class ApiServer {
         config.configuratorGit.repositoryName
       )
     );
+    Container.set(
+      SerialMonitorService,
+      new SerialMonitorService(pubSub, logger)
+    );
 
     const rawRepoUrl = `https://raw.githubusercontent.com/${config.git.owner}/${config.git.repositoryName}`;
     Container.set(
@@ -75,7 +81,12 @@ export default class ApiServer {
     );
 
     const schema = await buildSchema({
-      resolvers: [FirmwareResolver, SourcesResolver, UpdatesResolver],
+      resolvers: [
+        FirmwareResolver,
+        SourcesResolver,
+        UpdatesResolver,
+        SerialMonitorResolver,
+      ],
       container: Container,
       pubSub,
     });
