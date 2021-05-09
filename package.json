@@ -39,6 +39,7 @@
   "build": {
     "productName": "ExpressLRS Configurator",
     "appId": "org.expresslrs.configurator",
+    "buildDependenciesFromSource": true,
     "files": [
       "dist/",
       "node_modules/",
