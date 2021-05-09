@@ -118,6 +118,7 @@ const userDefinesToCategories = (
       UserDefineKey.USE_R9MM_R9MINI_SBUS,
     ],
     [UserDefineCategory.OtherOptions]: [
+      UserDefineKey.BLE_HID_JOYSTICK,
       UserDefineKey.AUTO_WIFI_ON_BOOT,
       UserDefineKey.AUTO_WIFI_ON_INTERVAL,
       UserDefineKey.USE_ESP8266_BACKPACK,

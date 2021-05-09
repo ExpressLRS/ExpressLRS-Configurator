@@ -30,6 +30,8 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+      // other
+      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
     ];
 
     const NamimnoRC_FLASH_2400_RX: UserDefine[] = [
@@ -98,6 +100,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK, true),
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
+      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
     ];
     const NamimnoRC_VOYAGER_900_RX: UserDefine[] = [
       // regulatory options
@@ -325,6 +328,7 @@ export default class TargetUserDefinesFactory {
       // other options
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
+      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
     ];
 
     const HappyModel_RX_ES915RX: UserDefine[] = [
@@ -437,6 +441,8 @@ export default class TargetUserDefinesFactory {
       // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+      // other
+      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
     ];
 
     const DIY_900_TX_ESP32_SX127x_RFM95: UserDefine[] = [
@@ -461,6 +467,8 @@ export default class TargetUserDefinesFactory {
       // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+      // other
+      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
     ];
 
     const DIY_900_RX_ESP8285_SX127x: UserDefine[] = [
@@ -530,6 +538,8 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+      // other
+      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
     ];
 
     const DIY_2400_TX_ESP32_SX1280_LORA1280F27: UserDefine[] = [
@@ -548,6 +558,8 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+      // other
+      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
     ];
 
     const GHOST_2400_TX: UserDefine[] = [

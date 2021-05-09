@@ -177,6 +177,24 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.BLE_HID_JOYSTICK:
+          return (
+            <div>
+              <p>
+                Use your transmitter module as a Bluetooth joystick and play
+                drone simulators wirelessly.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
         case UserDefineKey.USE_DIVERSITY:
           return (
             <div>
@@ -222,16 +240,15 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 </a>{' '}
                 starting from the N473 build or above. It also will be supported
                 in OpenTX 2.4 and above. In order to install it, you will have
-                to use OpenTX companion application. As an alternative, the
-                ExpressLRS team has released their{' '}
+                to use OpenTX companion application.{' '}
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://github.com/ExpressLRS/ExpressLRS/tree/master/OpenTX"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/OpenTX-and-Betaflight-Setup#opentx"
                 >
-                  OpenTx build
-                </a>{' '}
-                with the required changes.
+                  OpenTx setup instructions
+                </a>
+                .
               </p>
               <p>
                 <a
@@ -259,16 +276,15 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 </a>{' '}
                 starting from the N473 build or above. It also will be supported
                 in OpenTX 2.4 and above. In order to install it, you will have
-                to use OpenTX companion application. As an alternative, the
-                ExpressLRS team has released their{' '}
+                to use OpenTX companion application.{' '}
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://github.com/ExpressLRS/ExpressLRS/tree/master/OpenTX"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/OpenTX-and-Betaflight-Setup#opentx"
                 >
-                  OpenTx build
-                </a>{' '}
-                with the required changes.
+                  OpenTx setup instructions
+                </a>
+                .
               </p>
               <p>
                 <a
@@ -609,17 +625,16 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 </a>{' '}
                 starting from the N473 build or above. It also will be supported
                 in OpenTX 2.4 and above. In order to install it, you will have
-                to use OpenTX companion application. As an alternative, the
-                ExpressLRS team has released their{' '}
+                to use OpenTX companion application.{' '}
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://github.com/ExpressLRS/ExpressLRS/tree/master/OpenTX"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/OpenTX-and-Betaflight-Setup#opentx"
                 >
-                  OpenTx build
-                </a>{' '}
-                with the required changes.
-              </p>{' '}
+                  OpenTx setup instructions
+                </a>
+                .
+              </p>
               <p>
                 <a
                   target="_blank"
