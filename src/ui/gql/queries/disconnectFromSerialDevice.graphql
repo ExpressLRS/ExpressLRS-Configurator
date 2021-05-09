@@ -1,0 +1,6 @@
+mutation disconnectFromSerialDevice {
+  disconnectFromSerialDevice {
+    success
+    message
+  }
+}

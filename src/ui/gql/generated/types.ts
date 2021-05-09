@@ -1,10 +1,15 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -24,7 +29,6 @@ export type Query = {
   readonly availableDevicesList: ReadonlyArray<SerialPortInformation>;
 };
 
-
 export type QueryTargetDeviceOptionsArgs = {
   target?: Maybe<DeviceTarget>;
   source?: Maybe<FirmwareSource>;
@@ -33,7 +37,6 @@ export type QueryTargetDeviceOptionsArgs = {
   gitCommit?: Maybe<Scalars['String']>;
   localPath?: Maybe<Scalars['String']>;
 };
-
 
 export type QueryCheckForUpdatesArgs = {
   currentVersion: Scalars['String'];
@@ -105,7 +108,7 @@ export enum DeviceTarget {
   FM30_RX_MINI_via_BetaflightPassthrough = 'FM30_RX_MINI_via_BetaflightPassthrough',
   NeutronRC_900_RX_via_UART = 'NeutronRC_900_RX_via_UART',
   NeutronRC_900_RX_via_BetaflightPassthrough = 'NeutronRC_900_RX_via_BetaflightPassthrough',
-  NeutronRC_900_RX_via_WIFI = 'NeutronRC_900_RX_via_WIFI'
+  NeutronRC_900_RX_via_WIFI = 'NeutronRC_900_RX_via_WIFI',
 }
 
 export type UserDefine = {
@@ -120,7 +123,7 @@ export type UserDefine = {
 export enum UserDefineKind {
   Boolean = 'Boolean',
   Text = 'Text',
-  Enum = 'Enum'
+  Enum = 'Enum',
 }
 
 export enum UserDefineKey {
@@ -152,14 +155,14 @@ export enum UserDefineKey {
   USE_ESP8266_BACKPACK = 'USE_ESP8266_BACKPACK',
   JUST_BEEP_ONCE = 'JUST_BEEP_ONCE',
   MY_STARTUP_MELODY = 'MY_STARTUP_MELODY',
-  USE_500HZ = 'USE_500HZ'
+  USE_500HZ = 'USE_500HZ',
 }
 
 export enum FirmwareSource {
   GitTag = 'GitTag',
   GitBranch = 'GitBranch',
   GitCommit = 'GitCommit',
-  Local = 'Local'
+  Local = 'Local',
 }
 
 export type UpdatesAvailability = {
@@ -183,11 +186,9 @@ export type Mutation = {
   readonly disconnectFromSerialDevice: SerialPortDisconnectResult;
 };
 
-
 export type MutationBuildFlashFirmwareArgs = {
   input: BuildFlashFirmwareInput;
 };
-
 
 export type MutationConnectToSerialDeviceArgs = {
   input: SerialConnectionConfigInput;
@@ -207,7 +208,7 @@ export enum BuildFirmwareErrorType {
   GitDependencyError = 'GitDependencyError',
   BuildError = 'BuildError',
   FlashError = 'FlashError',
-  GenericError = 'GenericError'
+  GenericError = 'GenericError',
 }
 
 export type BuildFlashFirmwareInput = {
@@ -221,7 +222,7 @@ export type BuildFlashFirmwareInput = {
 
 export enum BuildJobType {
   Build = 'Build',
-  BuildAndFlash = 'BuildAndFlash'
+  BuildAndFlash = 'BuildAndFlash',
 }
 
 export type FirmwareVersionDataInput = {
@@ -234,7 +235,7 @@ export type FirmwareVersionDataInput = {
 
 export enum UserDefinesMode {
   UserInterface = 'UserInterface',
-  Manual = 'Manual'
+  Manual = 'Manual',
 }
 
 export type UserDefineInput = {
@@ -286,7 +287,7 @@ export type BuildProgressNotification = {
 export enum BuildProgressNotificationType {
   Success = 'Success',
   Info = 'Info',
-  Error = 'Error'
+  Error = 'Error',
 }
 
 export enum BuildFirmwareStep {
@@ -294,7 +295,7 @@ export enum BuildFirmwareStep {
   DOWNLOADING_FIRMWARE = 'DOWNLOADING_FIRMWARE',
   BUILDING_USER_DEFINES = 'BUILDING_USER_DEFINES',
   BUILDING_FIRMWARE = 'BUILDING_FIRMWARE',
-  FLASHING_FIRMWARE = 'FLASHING_FIRMWARE'
+  FLASHING_FIRMWARE = 'FLASHING_FIRMWARE',
 }
 
 export type BuildLogUpdate = {
@@ -316,75 +317,106 @@ export enum SerialMonitorEventType {
   Connecting = 'Connecting',
   Connected = 'Connected',
   Disconnected = 'Disconnected',
-  Error = 'Error'
+  Error = 'Error',
 }
 
-export type AvailableFirmwareTargetsQueryVariables = Exact<{ [key: string]: never; }>;
+export type AvailableDevicesListQueryVariables = Exact<{
+  [key: string]: never;
+}>;
 
+export type AvailableDevicesListQuery = { readonly __typename?: 'Query' } & {
+  readonly availableDevicesList: ReadonlyArray<
+    { readonly __typename?: 'SerialPortInformation' } & Pick<
+      SerialPortInformation,
+      'path' | 'manufacturer'
+    >
+  >;
+};
 
-export type AvailableFirmwareTargetsQuery = (
-  { readonly __typename?: 'Query' }
-  & Pick<Query, 'availableFirmwareTargets'>
-);
+export type AvailableFirmwareTargetsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type AvailableFirmwareTargetsQuery = {
+  readonly __typename?: 'Query';
+} & Pick<Query, 'availableFirmwareTargets'>;
 
 export type BuildFlashFirmwareMutationVariables = Exact<{
   input: BuildFlashFirmwareInput;
 }>;
 
+export type BuildFlashFirmwareMutation = {
+  readonly __typename?: 'Mutation';
+} & {
+  readonly buildFlashFirmware: {
+    readonly __typename?: 'BuildFlashFirmwareResult';
+  } & Pick<
+    BuildFlashFirmwareResult,
+    'success' | 'errorType' | 'message' | 'firmwareBinPath'
+  >;
+};
 
-export type BuildFlashFirmwareMutation = (
-  { readonly __typename?: 'Mutation' }
-  & { readonly buildFlashFirmware: (
-    { readonly __typename?: 'BuildFlashFirmwareResult' }
-    & Pick<BuildFlashFirmwareResult, 'success' | 'errorType' | 'message' | 'firmwareBinPath'>
-  ) }
-);
+export type BuildLogUpdatesSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
 
-export type BuildLogUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type BuildLogUpdatesSubscription = {
+  readonly __typename?: 'Subscription';
+} & {
+  readonly buildLogUpdates: { readonly __typename?: 'BuildLogUpdate' } & Pick<
+    BuildLogUpdate,
+    'data'
+  >;
+};
 
+export type BuildProgressNotificationsSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
 
-export type BuildLogUpdatesSubscription = (
-  { readonly __typename?: 'Subscription' }
-  & { readonly buildLogUpdates: (
-    { readonly __typename?: 'BuildLogUpdate' }
-    & Pick<BuildLogUpdate, 'data'>
-  ) }
-);
-
-export type BuildProgressNotificationsSubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type BuildProgressNotificationsSubscription = (
-  { readonly __typename?: 'Subscription' }
-  & { readonly buildProgressNotifications: (
-    { readonly __typename?: 'BuildProgressNotification' }
-    & Pick<BuildProgressNotification, 'type' | 'step' | 'message'>
-  ) }
-);
+export type BuildProgressNotificationsSubscription = {
+  readonly __typename?: 'Subscription';
+} & {
+  readonly buildProgressNotifications: {
+    readonly __typename?: 'BuildProgressNotification';
+  } & Pick<BuildProgressNotification, 'type' | 'step' | 'message'>;
+};
 
 export type CheckForUpdatesQueryVariables = Exact<{
   currentVersion: Scalars['String'];
 }>;
 
+export type CheckForUpdatesQuery = { readonly __typename?: 'Query' } & {
+  readonly checkForUpdates: {
+    readonly __typename?: 'UpdatesAvailability';
+  } & Pick<
+    UpdatesAvailability,
+    'updateAvailable' | 'newestVersion' | 'releaseUrl'
+  >;
+};
 
-export type CheckForUpdatesQuery = (
-  { readonly __typename?: 'Query' }
-  & { readonly checkForUpdates: (
-    { readonly __typename?: 'UpdatesAvailability' }
-    & Pick<UpdatesAvailability, 'updateAvailable' | 'newestVersion' | 'releaseUrl'>
-  ) }
-);
+export type ClearPlatformioCoreDirMutationVariables = Exact<{
+  [key: string]: never;
+}>;
 
-export type ClearPlatformioCoreDirMutationVariables = Exact<{ [key: string]: never; }>;
+export type ClearPlatformioCoreDirMutation = {
+  readonly __typename?: 'Mutation';
+} & {
+  readonly clearPlatformioCoreDir: {
+    readonly __typename?: 'ClearPlatformioCoreDirResult';
+  } & Pick<ClearPlatformioCoreDirResult, 'success' | 'message'>;
+};
 
+export type ConnectToSerialDeviceMutationVariables = Exact<{
+  input: SerialConnectionConfigInput;
+}>;
 
-export type ClearPlatformioCoreDirMutation = (
-  { readonly __typename?: 'Mutation' }
-  & { readonly clearPlatformioCoreDir: (
-    { readonly __typename?: 'ClearPlatformioCoreDirResult' }
-    & Pick<ClearPlatformioCoreDirResult, 'success' | 'message'>
-  ) }
-);
+export type ConnectToSerialDeviceMutation = {
+  readonly __typename?: 'Mutation';
+} & {
+  readonly connectToSerialDevice: {
+    readonly __typename?: 'SerialPortConnectResult';
+  } & Pick<SerialPortConnectResult, 'success' | 'message'>;
+};
 
 export type TargetDeviceOptionsQueryVariables = Exact<{
   target: DeviceTarget;
@@ -395,37 +427,128 @@ export type TargetDeviceOptionsQueryVariables = Exact<{
   localPath: Scalars['String'];
 }>;
 
+export type TargetDeviceOptionsQuery = { readonly __typename?: 'Query' } & {
+  readonly targetDeviceOptions: ReadonlyArray<
+    { readonly __typename?: 'UserDefine' } & Pick<
+      UserDefine,
+      'type' | 'key' | 'enabled' | 'enumValues' | 'value'
+    >
+  >;
+};
 
-export type TargetDeviceOptionsQuery = (
-  { readonly __typename?: 'Query' }
-  & { readonly targetDeviceOptions: ReadonlyArray<(
-    { readonly __typename?: 'UserDefine' }
-    & Pick<UserDefine, 'type' | 'key' | 'enabled' | 'enumValues' | 'value'>
-  )> }
-);
+export type DisconnectFromSerialDeviceMutationVariables = Exact<{
+  [key: string]: never;
+}>;
 
-export type GetBranchesQueryVariables = Exact<{ [key: string]: never; }>;
+export type DisconnectFromSerialDeviceMutation = {
+  readonly __typename?: 'Mutation';
+} & {
+  readonly disconnectFromSerialDevice: {
+    readonly __typename?: 'SerialPortDisconnectResult';
+  } & Pick<SerialPortDisconnectResult, 'success' | 'message'>;
+};
 
+export type GetBranchesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetBranchesQuery = (
-  { readonly __typename?: 'Query' }
-  & Pick<Query, 'gitBranches'>
-);
+export type GetBranchesQuery = { readonly __typename?: 'Query' } & Pick<
+  Query,
+  'gitBranches'
+>;
 
-export type GetTagsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetTagsQueryVariables = Exact<{ [key: string]: never }>;
 
+export type GetTagsQuery = { readonly __typename?: 'Query' } & Pick<
+  Query,
+  'gitTags'
+>;
 
-export type GetTagsQuery = (
-  { readonly __typename?: 'Query' }
-  & Pick<Query, 'gitTags'>
-);
+export type SerialMonitorEventsSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
 
+export type SerialMonitorEventsSubscription = {
+  readonly __typename?: 'Subscription';
+} & {
+  readonly serialMonitorEvents: {
+    readonly __typename?: 'SerialMonitorEvent';
+  } & Pick<SerialMonitorEvent, 'type'>;
+};
 
-export const AvailableFirmwareTargetsDocument = gql`
-    query availableFirmwareTargets {
-  availableFirmwareTargets
+export type SerialMonitorLogsSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type SerialMonitorLogsSubscription = {
+  readonly __typename?: 'Subscription';
+} & {
+  readonly serialMonitorLogs: {
+    readonly __typename?: 'SerialMonitorLogUpdate';
+  } & Pick<SerialMonitorLogUpdate, 'data'>;
+};
+
+export const AvailableDevicesListDocument = gql`
+  query availableDevicesList {
+    availableDevicesList {
+      path
+      manufacturer
+    }
+  }
+`;
+
+/**
+ * __useAvailableDevicesListQuery__
+ *
+ * To run a query within a React component, call `useAvailableDevicesListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAvailableDevicesListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAvailableDevicesListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAvailableDevicesListQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    AvailableDevicesListQuery,
+    AvailableDevicesListQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    AvailableDevicesListQuery,
+    AvailableDevicesListQueryVariables
+  >(AvailableDevicesListDocument, options);
 }
-    `;
+export function useAvailableDevicesListLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    AvailableDevicesListQuery,
+    AvailableDevicesListQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    AvailableDevicesListQuery,
+    AvailableDevicesListQueryVariables
+  >(AvailableDevicesListDocument, options);
+}
+export type AvailableDevicesListQueryHookResult = ReturnType<
+  typeof useAvailableDevicesListQuery
+>;
+export type AvailableDevicesListLazyQueryHookResult = ReturnType<
+  typeof useAvailableDevicesListLazyQuery
+>;
+export type AvailableDevicesListQueryResult = Apollo.QueryResult<
+  AvailableDevicesListQuery,
+  AvailableDevicesListQueryVariables
+>;
+export const AvailableFirmwareTargetsDocument = gql`
+  query availableFirmwareTargets {
+    availableFirmwareTargets
+  }
+`;
 
 /**
  * __useAvailableFirmwareTargetsQuery__
@@ -442,28 +565,54 @@ export const AvailableFirmwareTargetsDocument = gql`
  *   },
  * });
  */
-export function useAvailableFirmwareTargetsQuery(baseOptions?: Apollo.QueryHookOptions<AvailableFirmwareTargetsQuery, AvailableFirmwareTargetsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AvailableFirmwareTargetsQuery, AvailableFirmwareTargetsQueryVariables>(AvailableFirmwareTargetsDocument, options);
-      }
-export function useAvailableFirmwareTargetsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AvailableFirmwareTargetsQuery, AvailableFirmwareTargetsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AvailableFirmwareTargetsQuery, AvailableFirmwareTargetsQueryVariables>(AvailableFirmwareTargetsDocument, options);
-        }
-export type AvailableFirmwareTargetsQueryHookResult = ReturnType<typeof useAvailableFirmwareTargetsQuery>;
-export type AvailableFirmwareTargetsLazyQueryHookResult = ReturnType<typeof useAvailableFirmwareTargetsLazyQuery>;
-export type AvailableFirmwareTargetsQueryResult = Apollo.QueryResult<AvailableFirmwareTargetsQuery, AvailableFirmwareTargetsQueryVariables>;
-export const BuildFlashFirmwareDocument = gql`
-    mutation buildFlashFirmware($input: BuildFlashFirmwareInput!) {
-  buildFlashFirmware(input: $input) {
-    success
-    errorType
-    message
-    firmwareBinPath
-  }
+export function useAvailableFirmwareTargetsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    AvailableFirmwareTargetsQuery,
+    AvailableFirmwareTargetsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    AvailableFirmwareTargetsQuery,
+    AvailableFirmwareTargetsQueryVariables
+  >(AvailableFirmwareTargetsDocument, options);
 }
-    `;
-export type BuildFlashFirmwareMutationFn = Apollo.MutationFunction<BuildFlashFirmwareMutation, BuildFlashFirmwareMutationVariables>;
+export function useAvailableFirmwareTargetsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    AvailableFirmwareTargetsQuery,
+    AvailableFirmwareTargetsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    AvailableFirmwareTargetsQuery,
+    AvailableFirmwareTargetsQueryVariables
+  >(AvailableFirmwareTargetsDocument, options);
+}
+export type AvailableFirmwareTargetsQueryHookResult = ReturnType<
+  typeof useAvailableFirmwareTargetsQuery
+>;
+export type AvailableFirmwareTargetsLazyQueryHookResult = ReturnType<
+  typeof useAvailableFirmwareTargetsLazyQuery
+>;
+export type AvailableFirmwareTargetsQueryResult = Apollo.QueryResult<
+  AvailableFirmwareTargetsQuery,
+  AvailableFirmwareTargetsQueryVariables
+>;
+export const BuildFlashFirmwareDocument = gql`
+  mutation buildFlashFirmware($input: BuildFlashFirmwareInput!) {
+    buildFlashFirmware(input: $input) {
+      success
+      errorType
+      message
+      firmwareBinPath
+    }
+  }
+`;
+export type BuildFlashFirmwareMutationFn = Apollo.MutationFunction<
+  BuildFlashFirmwareMutation,
+  BuildFlashFirmwareMutationVariables
+>;
 
 /**
  * __useBuildFlashFirmwareMutation__
@@ -482,20 +631,33 @@ export type BuildFlashFirmwareMutationFn = Apollo.MutationFunction<BuildFlashFir
  *   },
  * });
  */
-export function useBuildFlashFirmwareMutation(baseOptions?: Apollo.MutationHookOptions<BuildFlashFirmwareMutation, BuildFlashFirmwareMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<BuildFlashFirmwareMutation, BuildFlashFirmwareMutationVariables>(BuildFlashFirmwareDocument, options);
-      }
-export type BuildFlashFirmwareMutationHookResult = ReturnType<typeof useBuildFlashFirmwareMutation>;
-export type BuildFlashFirmwareMutationResult = Apollo.MutationResult<BuildFlashFirmwareMutation>;
-export type BuildFlashFirmwareMutationOptions = Apollo.BaseMutationOptions<BuildFlashFirmwareMutation, BuildFlashFirmwareMutationVariables>;
-export const BuildLogUpdatesDocument = gql`
-    subscription buildLogUpdates {
-  buildLogUpdates {
-    data
-  }
+export function useBuildFlashFirmwareMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    BuildFlashFirmwareMutation,
+    BuildFlashFirmwareMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    BuildFlashFirmwareMutation,
+    BuildFlashFirmwareMutationVariables
+  >(BuildFlashFirmwareDocument, options);
 }
-    `;
+export type BuildFlashFirmwareMutationHookResult = ReturnType<
+  typeof useBuildFlashFirmwareMutation
+>;
+export type BuildFlashFirmwareMutationResult = Apollo.MutationResult<BuildFlashFirmwareMutation>;
+export type BuildFlashFirmwareMutationOptions = Apollo.BaseMutationOptions<
+  BuildFlashFirmwareMutation,
+  BuildFlashFirmwareMutationVariables
+>;
+export const BuildLogUpdatesDocument = gql`
+  subscription buildLogUpdates {
+    buildLogUpdates {
+      data
+    }
+  }
+`;
 
 /**
  * __useBuildLogUpdatesSubscription__
@@ -512,21 +674,31 @@ export const BuildLogUpdatesDocument = gql`
  *   },
  * });
  */
-export function useBuildLogUpdatesSubscription(baseOptions?: Apollo.SubscriptionHookOptions<BuildLogUpdatesSubscription, BuildLogUpdatesSubscriptionVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useSubscription<BuildLogUpdatesSubscription, BuildLogUpdatesSubscriptionVariables>(BuildLogUpdatesDocument, options);
-      }
-export type BuildLogUpdatesSubscriptionHookResult = ReturnType<typeof useBuildLogUpdatesSubscription>;
+export function useBuildLogUpdatesSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    BuildLogUpdatesSubscription,
+    BuildLogUpdatesSubscriptionVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSubscription<
+    BuildLogUpdatesSubscription,
+    BuildLogUpdatesSubscriptionVariables
+  >(BuildLogUpdatesDocument, options);
+}
+export type BuildLogUpdatesSubscriptionHookResult = ReturnType<
+  typeof useBuildLogUpdatesSubscription
+>;
 export type BuildLogUpdatesSubscriptionResult = Apollo.SubscriptionResult<BuildLogUpdatesSubscription>;
 export const BuildProgressNotificationsDocument = gql`
-    subscription buildProgressNotifications {
-  buildProgressNotifications {
-    type
-    step
-    message
+  subscription buildProgressNotifications {
+    buildProgressNotifications {
+      type
+      step
+      message
+    }
   }
-}
-    `;
+`;
 
 /**
  * __useBuildProgressNotificationsSubscription__
@@ -543,21 +715,31 @@ export const BuildProgressNotificationsDocument = gql`
  *   },
  * });
  */
-export function useBuildProgressNotificationsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<BuildProgressNotificationsSubscription, BuildProgressNotificationsSubscriptionVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useSubscription<BuildProgressNotificationsSubscription, BuildProgressNotificationsSubscriptionVariables>(BuildProgressNotificationsDocument, options);
-      }
-export type BuildProgressNotificationsSubscriptionHookResult = ReturnType<typeof useBuildProgressNotificationsSubscription>;
+export function useBuildProgressNotificationsSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    BuildProgressNotificationsSubscription,
+    BuildProgressNotificationsSubscriptionVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSubscription<
+    BuildProgressNotificationsSubscription,
+    BuildProgressNotificationsSubscriptionVariables
+  >(BuildProgressNotificationsDocument, options);
+}
+export type BuildProgressNotificationsSubscriptionHookResult = ReturnType<
+  typeof useBuildProgressNotificationsSubscription
+>;
 export type BuildProgressNotificationsSubscriptionResult = Apollo.SubscriptionResult<BuildProgressNotificationsSubscription>;
 export const CheckForUpdatesDocument = gql`
-    query checkForUpdates($currentVersion: String!) {
-  checkForUpdates(currentVersion: $currentVersion) {
-    updateAvailable
-    newestVersion
-    releaseUrl
+  query checkForUpdates($currentVersion: String!) {
+    checkForUpdates(currentVersion: $currentVersion) {
+      updateAvailable
+      newestVersion
+      releaseUrl
+    }
   }
-}
-    `;
+`;
 
 /**
  * __useCheckForUpdatesQuery__
@@ -575,26 +757,52 @@ export const CheckForUpdatesDocument = gql`
  *   },
  * });
  */
-export function useCheckForUpdatesQuery(baseOptions: Apollo.QueryHookOptions<CheckForUpdatesQuery, CheckForUpdatesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CheckForUpdatesQuery, CheckForUpdatesQueryVariables>(CheckForUpdatesDocument, options);
-      }
-export function useCheckForUpdatesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckForUpdatesQuery, CheckForUpdatesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CheckForUpdatesQuery, CheckForUpdatesQueryVariables>(CheckForUpdatesDocument, options);
-        }
-export type CheckForUpdatesQueryHookResult = ReturnType<typeof useCheckForUpdatesQuery>;
-export type CheckForUpdatesLazyQueryHookResult = ReturnType<typeof useCheckForUpdatesLazyQuery>;
-export type CheckForUpdatesQueryResult = Apollo.QueryResult<CheckForUpdatesQuery, CheckForUpdatesQueryVariables>;
-export const ClearPlatformioCoreDirDocument = gql`
-    mutation clearPlatformioCoreDir {
-  clearPlatformioCoreDir {
-    success
-    message
-  }
+export function useCheckForUpdatesQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    CheckForUpdatesQuery,
+    CheckForUpdatesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<CheckForUpdatesQuery, CheckForUpdatesQueryVariables>(
+    CheckForUpdatesDocument,
+    options
+  );
 }
-    `;
-export type ClearPlatformioCoreDirMutationFn = Apollo.MutationFunction<ClearPlatformioCoreDirMutation, ClearPlatformioCoreDirMutationVariables>;
+export function useCheckForUpdatesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CheckForUpdatesQuery,
+    CheckForUpdatesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    CheckForUpdatesQuery,
+    CheckForUpdatesQueryVariables
+  >(CheckForUpdatesDocument, options);
+}
+export type CheckForUpdatesQueryHookResult = ReturnType<
+  typeof useCheckForUpdatesQuery
+>;
+export type CheckForUpdatesLazyQueryHookResult = ReturnType<
+  typeof useCheckForUpdatesLazyQuery
+>;
+export type CheckForUpdatesQueryResult = Apollo.QueryResult<
+  CheckForUpdatesQuery,
+  CheckForUpdatesQueryVariables
+>;
+export const ClearPlatformioCoreDirDocument = gql`
+  mutation clearPlatformioCoreDir {
+    clearPlatformioCoreDir {
+      success
+      message
+    }
+  }
+`;
+export type ClearPlatformioCoreDirMutationFn = Apollo.MutationFunction<
+  ClearPlatformioCoreDirMutation,
+  ClearPlatformioCoreDirMutationVariables
+>;
 
 /**
  * __useClearPlatformioCoreDirMutation__
@@ -612,31 +820,101 @@ export type ClearPlatformioCoreDirMutationFn = Apollo.MutationFunction<ClearPlat
  *   },
  * });
  */
-export function useClearPlatformioCoreDirMutation(baseOptions?: Apollo.MutationHookOptions<ClearPlatformioCoreDirMutation, ClearPlatformioCoreDirMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ClearPlatformioCoreDirMutation, ClearPlatformioCoreDirMutationVariables>(ClearPlatformioCoreDirDocument, options);
-      }
-export type ClearPlatformioCoreDirMutationHookResult = ReturnType<typeof useClearPlatformioCoreDirMutation>;
-export type ClearPlatformioCoreDirMutationResult = Apollo.MutationResult<ClearPlatformioCoreDirMutation>;
-export type ClearPlatformioCoreDirMutationOptions = Apollo.BaseMutationOptions<ClearPlatformioCoreDirMutation, ClearPlatformioCoreDirMutationVariables>;
-export const TargetDeviceOptionsDocument = gql`
-    query targetDeviceOptions($target: DeviceTarget!, $source: FirmwareSource!, $gitTag: String!, $gitBranch: String!, $gitCommit: String!, $localPath: String!) {
-  targetDeviceOptions(
-    target: $target
-    source: $source
-    gitTag: $gitTag
-    gitBranch: $gitBranch
-    gitCommit: $gitCommit
-    localPath: $localPath
-  ) {
-    type
-    key
-    enabled
-    enumValues
-    value
-  }
+export function useClearPlatformioCoreDirMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ClearPlatformioCoreDirMutation,
+    ClearPlatformioCoreDirMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ClearPlatformioCoreDirMutation,
+    ClearPlatformioCoreDirMutationVariables
+  >(ClearPlatformioCoreDirDocument, options);
 }
-    `;
+export type ClearPlatformioCoreDirMutationHookResult = ReturnType<
+  typeof useClearPlatformioCoreDirMutation
+>;
+export type ClearPlatformioCoreDirMutationResult = Apollo.MutationResult<ClearPlatformioCoreDirMutation>;
+export type ClearPlatformioCoreDirMutationOptions = Apollo.BaseMutationOptions<
+  ClearPlatformioCoreDirMutation,
+  ClearPlatformioCoreDirMutationVariables
+>;
+export const ConnectToSerialDeviceDocument = gql`
+  mutation connectToSerialDevice($input: SerialConnectionConfigInput!) {
+    connectToSerialDevice(input: $input) {
+      success
+      message
+    }
+  }
+`;
+export type ConnectToSerialDeviceMutationFn = Apollo.MutationFunction<
+  ConnectToSerialDeviceMutation,
+  ConnectToSerialDeviceMutationVariables
+>;
+
+/**
+ * __useConnectToSerialDeviceMutation__
+ *
+ * To run a mutation, you first call `useConnectToSerialDeviceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useConnectToSerialDeviceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [connectToSerialDeviceMutation, { data, loading, error }] = useConnectToSerialDeviceMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useConnectToSerialDeviceMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ConnectToSerialDeviceMutation,
+    ConnectToSerialDeviceMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ConnectToSerialDeviceMutation,
+    ConnectToSerialDeviceMutationVariables
+  >(ConnectToSerialDeviceDocument, options);
+}
+export type ConnectToSerialDeviceMutationHookResult = ReturnType<
+  typeof useConnectToSerialDeviceMutation
+>;
+export type ConnectToSerialDeviceMutationResult = Apollo.MutationResult<ConnectToSerialDeviceMutation>;
+export type ConnectToSerialDeviceMutationOptions = Apollo.BaseMutationOptions<
+  ConnectToSerialDeviceMutation,
+  ConnectToSerialDeviceMutationVariables
+>;
+export const TargetDeviceOptionsDocument = gql`
+  query targetDeviceOptions(
+    $target: DeviceTarget!
+    $source: FirmwareSource!
+    $gitTag: String!
+    $gitBranch: String!
+    $gitCommit: String!
+    $localPath: String!
+  ) {
+    targetDeviceOptions(
+      target: $target
+      source: $source
+      gitTag: $gitTag
+      gitBranch: $gitBranch
+      gitCommit: $gitCommit
+      localPath: $localPath
+    ) {
+      type
+      key
+      enabled
+      enumValues
+      value
+    }
+  }
+`;
 
 /**
  * __useTargetDeviceOptionsQuery__
@@ -659,22 +937,94 @@ export const TargetDeviceOptionsDocument = gql`
  *   },
  * });
  */
-export function useTargetDeviceOptionsQuery(baseOptions: Apollo.QueryHookOptions<TargetDeviceOptionsQuery, TargetDeviceOptionsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<TargetDeviceOptionsQuery, TargetDeviceOptionsQueryVariables>(TargetDeviceOptionsDocument, options);
-      }
-export function useTargetDeviceOptionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TargetDeviceOptionsQuery, TargetDeviceOptionsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<TargetDeviceOptionsQuery, TargetDeviceOptionsQueryVariables>(TargetDeviceOptionsDocument, options);
-        }
-export type TargetDeviceOptionsQueryHookResult = ReturnType<typeof useTargetDeviceOptionsQuery>;
-export type TargetDeviceOptionsLazyQueryHookResult = ReturnType<typeof useTargetDeviceOptionsLazyQuery>;
-export type TargetDeviceOptionsQueryResult = Apollo.QueryResult<TargetDeviceOptionsQuery, TargetDeviceOptionsQueryVariables>;
-export const GetBranchesDocument = gql`
-    query getBranches {
-  gitBranches
+export function useTargetDeviceOptionsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    TargetDeviceOptionsQuery,
+    TargetDeviceOptionsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    TargetDeviceOptionsQuery,
+    TargetDeviceOptionsQueryVariables
+  >(TargetDeviceOptionsDocument, options);
 }
-    `;
+export function useTargetDeviceOptionsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    TargetDeviceOptionsQuery,
+    TargetDeviceOptionsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    TargetDeviceOptionsQuery,
+    TargetDeviceOptionsQueryVariables
+  >(TargetDeviceOptionsDocument, options);
+}
+export type TargetDeviceOptionsQueryHookResult = ReturnType<
+  typeof useTargetDeviceOptionsQuery
+>;
+export type TargetDeviceOptionsLazyQueryHookResult = ReturnType<
+  typeof useTargetDeviceOptionsLazyQuery
+>;
+export type TargetDeviceOptionsQueryResult = Apollo.QueryResult<
+  TargetDeviceOptionsQuery,
+  TargetDeviceOptionsQueryVariables
+>;
+export const DisconnectFromSerialDeviceDocument = gql`
+  mutation disconnectFromSerialDevice {
+    disconnectFromSerialDevice {
+      success
+      message
+    }
+  }
+`;
+export type DisconnectFromSerialDeviceMutationFn = Apollo.MutationFunction<
+  DisconnectFromSerialDeviceMutation,
+  DisconnectFromSerialDeviceMutationVariables
+>;
+
+/**
+ * __useDisconnectFromSerialDeviceMutation__
+ *
+ * To run a mutation, you first call `useDisconnectFromSerialDeviceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDisconnectFromSerialDeviceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [disconnectFromSerialDeviceMutation, { data, loading, error }] = useDisconnectFromSerialDeviceMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDisconnectFromSerialDeviceMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DisconnectFromSerialDeviceMutation,
+    DisconnectFromSerialDeviceMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    DisconnectFromSerialDeviceMutation,
+    DisconnectFromSerialDeviceMutationVariables
+  >(DisconnectFromSerialDeviceDocument, options);
+}
+export type DisconnectFromSerialDeviceMutationHookResult = ReturnType<
+  typeof useDisconnectFromSerialDeviceMutation
+>;
+export type DisconnectFromSerialDeviceMutationResult = Apollo.MutationResult<DisconnectFromSerialDeviceMutation>;
+export type DisconnectFromSerialDeviceMutationOptions = Apollo.BaseMutationOptions<
+  DisconnectFromSerialDeviceMutation,
+  DisconnectFromSerialDeviceMutationVariables
+>;
+export const GetBranchesDocument = gql`
+  query getBranches {
+    gitBranches
+  }
+`;
 
 /**
  * __useGetBranchesQuery__
@@ -691,22 +1041,43 @@ export const GetBranchesDocument = gql`
  *   },
  * });
  */
-export function useGetBranchesQuery(baseOptions?: Apollo.QueryHookOptions<GetBranchesQuery, GetBranchesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetBranchesQuery, GetBranchesQueryVariables>(GetBranchesDocument, options);
-      }
-export function useGetBranchesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBranchesQuery, GetBranchesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetBranchesQuery, GetBranchesQueryVariables>(GetBranchesDocument, options);
-        }
-export type GetBranchesQueryHookResult = ReturnType<typeof useGetBranchesQuery>;
-export type GetBranchesLazyQueryHookResult = ReturnType<typeof useGetBranchesLazyQuery>;
-export type GetBranchesQueryResult = Apollo.QueryResult<GetBranchesQuery, GetBranchesQueryVariables>;
-export const GetTagsDocument = gql`
-    query getTags {
-  gitTags
+export function useGetBranchesQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetBranchesQuery,
+    GetBranchesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetBranchesQuery, GetBranchesQueryVariables>(
+    GetBranchesDocument,
+    options
+  );
 }
-    `;
+export function useGetBranchesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetBranchesQuery,
+    GetBranchesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetBranchesQuery, GetBranchesQueryVariables>(
+    GetBranchesDocument,
+    options
+  );
+}
+export type GetBranchesQueryHookResult = ReturnType<typeof useGetBranchesQuery>;
+export type GetBranchesLazyQueryHookResult = ReturnType<
+  typeof useGetBranchesLazyQuery
+>;
+export type GetBranchesQueryResult = Apollo.QueryResult<
+  GetBranchesQuery,
+  GetBranchesQueryVariables
+>;
+export const GetTagsDocument = gql`
+  query getTags {
+    gitTags
+  }
+`;
 
 /**
  * __useGetTagsQuery__
@@ -723,14 +1094,105 @@ export const GetTagsDocument = gql`
  *   },
  * });
  */
-export function useGetTagsQuery(baseOptions?: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, options);
-      }
-export function useGetTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, options);
-        }
+export function useGetTagsQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetTagsQuery, GetTagsQueryVariables>(
+    GetTagsDocument,
+    options
+  );
+}
+export function useGetTagsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetTagsQuery, GetTagsQueryVariables>(
+    GetTagsDocument,
+    options
+  );
+}
 export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>;
 export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>;
-export type GetTagsQueryResult = Apollo.QueryResult<GetTagsQuery, GetTagsQueryVariables>;
+export type GetTagsQueryResult = Apollo.QueryResult<
+  GetTagsQuery,
+  GetTagsQueryVariables
+>;
+export const SerialMonitorEventsDocument = gql`
+  subscription serialMonitorEvents {
+    serialMonitorEvents {
+      type
+    }
+  }
+`;
+
+/**
+ * __useSerialMonitorEventsSubscription__
+ *
+ * To run a query within a React component, call `useSerialMonitorEventsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useSerialMonitorEventsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSerialMonitorEventsSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSerialMonitorEventsSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    SerialMonitorEventsSubscription,
+    SerialMonitorEventsSubscriptionVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSubscription<
+    SerialMonitorEventsSubscription,
+    SerialMonitorEventsSubscriptionVariables
+  >(SerialMonitorEventsDocument, options);
+}
+export type SerialMonitorEventsSubscriptionHookResult = ReturnType<
+  typeof useSerialMonitorEventsSubscription
+>;
+export type SerialMonitorEventsSubscriptionResult = Apollo.SubscriptionResult<SerialMonitorEventsSubscription>;
+export const SerialMonitorLogsDocument = gql`
+  subscription serialMonitorLogs {
+    serialMonitorLogs {
+      data
+    }
+  }
+`;
+
+/**
+ * __useSerialMonitorLogsSubscription__
+ *
+ * To run a query within a React component, call `useSerialMonitorLogsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useSerialMonitorLogsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSerialMonitorLogsSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSerialMonitorLogsSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    SerialMonitorLogsSubscription,
+    SerialMonitorLogsSubscriptionVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSubscription<
+    SerialMonitorLogsSubscription,
+    SerialMonitorLogsSubscriptionVariables
+  >(SerialMonitorLogsDocument, options);
+}
+export type SerialMonitorLogsSubscriptionHookResult = ReturnType<
+  typeof useSerialMonitorLogsSubscription
+>;
+export type SerialMonitorLogsSubscriptionResult = Apollo.SubscriptionResult<SerialMonitorLogsSubscription>;

@@ -63,10 +63,11 @@ export default class SerialMonitorService {
     this.port.on('error', (err) => {
       this.sendLogs(`Serial port error: ${err.message}`);
       this.sendEvent(SerialMonitorEventType.Error);
+      this.port = null;
     });
 
     this.port.on('data', (data) => {
-      this.sendLogs(data);
+      this.sendLogs(data.toString());
     });
 
     this.port.on('close', () => {
@@ -89,15 +90,12 @@ export default class SerialMonitorService {
 
   async disconnect(): Promise<void> {
     if (this.port === null) {
-      throw new Error('not connected');
+      return Promise.resolve();
     }
-    return new Promise((resolve, reject) => {
-      this.port?.close((err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
+    return new Promise((resolve) => {
+      this.port?.close(() => {
+        this.port = null;
+        resolve();
       });
     });
   }

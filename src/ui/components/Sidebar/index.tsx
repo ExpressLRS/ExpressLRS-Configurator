@@ -12,11 +12,12 @@ import {
 } from '@material-ui/core';
 import BuildIcon from '@material-ui/icons/Build';
 import HelpIcon from '@material-ui/icons/Help';
+import DvrIcon from '@material-ui/icons/Dvr';
 // import SettingsIcon from '@material-ui/icons/Settings';
 import ListIcon from '@material-ui/icons/List';
 import { matchPath, useLocation, Link } from 'react-router-dom';
 
-const drawerWidth = 205;
+const drawerWidth = 215;
 const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
@@ -45,6 +46,8 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
     matchPath(location.pathname, '/configurator') !== null;
   // const settingsActive = matchPath(location.pathname, '/settings') !== null;
   const logsActive = matchPath(location.pathname, '/logs') !== null;
+  const serialMonitorActive =
+    matchPath(location.pathname, '/serial-monitor') !== null;
   const supportActive = matchPath(location.pathname, '/support') !== null;
 
   return (
@@ -98,6 +101,20 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
               <ListIcon />
             </ListItemIcon>
             <ListItemText primary="Logs" />
+          </ListItem>
+
+          <ListItem
+            component={Link}
+            to="/serial-monitor"
+            selected={serialMonitorActive}
+            className={styles.menuItem}
+            button
+            disabled={!navigationEnabled}
+          >
+            <ListItemIcon>
+              <DvrIcon />
+            </ListItemIcon>
+            <ListItemText primary="Serial Monitor" />
           </ListItem>
 
           <ListItem

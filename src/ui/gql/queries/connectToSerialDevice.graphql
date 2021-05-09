@@ -1,0 +1,6 @@
+mutation connectToSerialDevice($input: SerialConnectionConfigInput!) {
+  connectToSerialDevice(input: $input) {
+    success
+    message
+  }
+}
