@@ -669,6 +669,9 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
           return (
             <div>
               <p>
+                <strong>THIS DOES NOT ENABLE SBUS PROTOCOL.</strong>
+              </p>
+              <p>
                 This is useful for F4 FCs which do not have an uninverted UART
                 option. This is only one way, so you lose the telemetry downlink
                 to your radio as well as passthrough flashing. This will output
