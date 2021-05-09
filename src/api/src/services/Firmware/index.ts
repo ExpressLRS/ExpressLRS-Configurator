@@ -41,6 +41,7 @@ interface FirmwareVersionData {
 
 interface BuildFlashFirmwareParams {
   type: BuildJobType;
+  serialDevice?: string | undefined;
   firmware: FirmwareVersionData;
   target: DeviceTarget;
   userDefinesMode: UserDefinesMode;
@@ -366,6 +367,7 @@ export default class FirmwareService {
           params.target,
           userDefines,
           firmwarePath,
+          params.serialDevice,
           (output) => {
             this.updateLogs(output);
           }

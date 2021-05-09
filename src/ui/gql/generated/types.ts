@@ -214,6 +214,7 @@ export enum BuildFirmwareErrorType {
 
 export type BuildFlashFirmwareInput = {
   readonly type?: Maybe<BuildJobType>;
+  readonly serialDevice?: Maybe<Scalars['String']>;
   readonly firmware?: Maybe<FirmwareVersionDataInput>;
   readonly target?: Maybe<DeviceTarget>;
   readonly userDefinesMode?: Maybe<UserDefinesMode>;
