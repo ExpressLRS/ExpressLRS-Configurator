@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [ macos-latest ]
 
     steps:
       - name: Setup brew dependencies
@@ -52,4 +52,4 @@ jobs:
           # This is used for uploading release assets to github
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          yarn postinstall && yarn build && yarn electron-builder --publish always --win --mac --linux
+          yarn postinstall && yarn build && yarn electron-builder --publish always --x64 --win --mac --linux
