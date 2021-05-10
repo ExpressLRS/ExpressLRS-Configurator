@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Setup brew dependencies
         run: |
-          brew install snapcraft libarchive rpm
+          brew install snapcraft libarchive rpm freetype
 
       - name: Checkout git repo
         uses: actions/checkout@v1
