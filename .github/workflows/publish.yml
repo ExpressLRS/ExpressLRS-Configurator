@@ -7,13 +7,10 @@ on:
 
 jobs:
   publish:
-    runs-on: ${{ matrix.config.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        config:
-          - { os: macos-latest, arch: x64 }
-          - { os: ubuntu-latest, arch: x64 }
-          - { os: windows-latest, arch: x64 }
+        os: [ 'ubuntu-latest', 'windows-latest', 'macos-latest' ]
     steps:
       #      - name: Setup brew dependencies
       #        if: matrix.os == 'macos-latest'
@@ -21,7 +18,7 @@ jobs:
       #          brew install libarchive freetype
 
       - name: Setup apt dependencies
-        if: matrix.config.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get --no-install-recommends -y libopenjp2-tools rpm bsdtar
 
@@ -50,7 +47,7 @@ jobs:
           yarn install --prefer-offline
 
       - name: Publish Windows releases
-        if: matrix.config.os == 'windows-latest'
+        if: matrix.os == 'windows-latest'
         shell: powershell
         env:
           # These values are used for auto updates signing
@@ -65,7 +62,7 @@ jobs:
           yarn electron-builder --publish always --x64 --win
 
       - name: Publish macOS releases
-        if: matrix.config.os == 'macos-latest'
+        if: matrix.os == 'macos-latest'
         env:
           # These values are used for auto updates signing
           # APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -79,7 +76,7 @@ jobs:
           yarn electron-builder --publish always --x64 --mac
 
       - name: Publish Linux releases
-        if: matrix.config.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest'
         env:
           # These values are used for auto updates signing
           # APPLE_ID: ${{ secrets.APPLE_ID }}
