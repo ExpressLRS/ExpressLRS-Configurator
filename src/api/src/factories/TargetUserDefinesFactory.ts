@@ -99,7 +99,7 @@ export default class TargetUserDefinesFactory {
       // other options
       UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK, true),
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Boolean(UserDefineKey.DISABLE_BUZZER),
+      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
     ];
@@ -191,7 +191,7 @@ export default class TargetUserDefinesFactory {
       // other options
       UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK, true),
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Boolean(UserDefineKey.DISABLE_BUZZER),
+      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
     const Frsky_TX_R9M_LITE: UserDefine[] = [
@@ -216,7 +216,7 @@ export default class TargetUserDefinesFactory {
       // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Boolean(UserDefineKey.DISABLE_BUZZER),
+      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
 
@@ -242,7 +242,7 @@ export default class TargetUserDefinesFactory {
       // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Boolean(UserDefineKey.DISABLE_BUZZER),
+      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
 
@@ -331,7 +331,7 @@ export default class TargetUserDefinesFactory {
       // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Boolean(UserDefineKey.DISABLE_BUZZER),
+      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
     ];

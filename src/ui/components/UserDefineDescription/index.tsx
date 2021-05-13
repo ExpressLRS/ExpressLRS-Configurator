@@ -473,10 +473,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
-        case UserDefineKey.DISABLE_BUZZER:
+        case UserDefineKey.DISABLE_STARTUP_BEEP:
           return (
             <div>
-              <p>This sets if the TX shall never beep.</p>{' '}
+              <p>This sets if the TX shall stay quiet on startup.</p>{' '}
               <p>
                 <a
                   target="_blank"

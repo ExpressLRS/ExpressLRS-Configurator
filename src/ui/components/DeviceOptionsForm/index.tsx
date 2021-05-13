@@ -123,7 +123,7 @@ const userDefinesToCategories = (
       UserDefineKey.AUTO_WIFI_ON_INTERVAL,
       UserDefineKey.USE_ESP8266_BACKPACK,
       UserDefineKey.JUST_BEEP_ONCE,
-      UserDefineKey.DISABLE_BUZZER,
+      UserDefineKey.DISABLE_STARTUP_BEEP,
       UserDefineKey.MY_STARTUP_MELODY,
     ],
   };
