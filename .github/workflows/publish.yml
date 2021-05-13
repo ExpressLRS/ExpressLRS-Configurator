@@ -20,7 +20,7 @@ jobs:
       - name: Setup apt dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
-          sudo apt-get --no-install-recommends -y libopenjp2-tools rpm bsdtar
+          sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm bsdtar
 
       - name: Checkout git repo
         uses: actions/checkout@v1
