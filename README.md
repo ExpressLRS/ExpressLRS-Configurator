@@ -33,7 +33,7 @@ opened. You should move it to the Trash.') when trying to install the applicatio
 following command in a terminal after installing:
 
 ```
-sudo xattr -rd com.apple.quarantine /Applications/ExpressLRS\ Configurator.app.
+sudo xattr -rd com.apple.quarantine /Applications/ExpressLRS\ Configurator.app
 ```
 
 #### Linux
