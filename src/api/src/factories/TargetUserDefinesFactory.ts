@@ -289,6 +289,26 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, true),
     ];
 
+    const Frsky_RX_R9SLIM: UserDefine[] = [
+      // regulatory options
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      // binding
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
+      // hybrid switches
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      // performance options
+      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
+      UserDefine.Enum(
+        UserDefineKey.ARM_CHANNEL,
+        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
+        'AUX1'
+      ),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
+    ];
+
     const Frsky_RX_R9MX: UserDefine[] = [
       // regulatory options
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
@@ -720,6 +740,10 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.Frsky_RX_R9SLIMPLUS_via_BetaflightPassthrough]: Frsky_RX_R9SLIMPLUS,
       [DeviceTarget.Frsky_RX_R9SLIMPLUS_OTA_via_STLINK]: Frsky_RX_R9SLIMPLUS,
       [DeviceTarget.Frsky_RX_R9SLIMPLUS_OTA_via_BetaflightPassthrough]: Frsky_RX_R9SLIMPLUS,
+
+      // R9 Slim RX
+      [DeviceTarget.Frsky_RX_R9SLIM_via_STLINK]: Frsky_RX_R9SLIM,
+      [DeviceTarget.Frsky_RX_R9SLIM_via_BetaflightPassthrough]: Frsky_RX_R9SLIM,
 
       // Happymodel 915mhz
       [DeviceTarget.HappyModel_TX_ES915TX_via_stock_BL]: HappyModel_TX_ES915TX,

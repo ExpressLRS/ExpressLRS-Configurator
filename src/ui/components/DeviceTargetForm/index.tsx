@@ -41,6 +41,9 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     // R9MM RX / R9Mini RX
     [DeviceTarget.Frsky_RX_R9MM_R9MINI_via_STLINK]: 'Frsky R9',
     [DeviceTarget.Frsky_RX_R9MM_R9MINI_via_BetaflightPassthrough]: 'Frsky R9',
+    // R9 Slim RX
+    [DeviceTarget.Frsky_RX_R9SLIM_via_STLINK]: 'Frsky R9',
+    [DeviceTarget.Frsky_RX_R9SLIM_via_BetaflightPassthrough]: 'Frsky R9',
 
     // R9SlimPlus RX
     [DeviceTarget.Frsky_RX_R9SLIMPLUS_via_STLINK]: 'Frsky R9',

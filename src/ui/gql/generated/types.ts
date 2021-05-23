@@ -53,6 +53,8 @@ export enum DeviceTarget {
   Frsky_RX_R9MM_R9MINI_via_BetaflightPassthrough = 'Frsky_RX_R9MM_R9MINI_via_BetaflightPassthrough',
   Frsky_RX_R9SLIMPLUS_via_STLINK = 'Frsky_RX_R9SLIMPLUS_via_STLINK',
   Frsky_RX_R9SLIMPLUS_via_BetaflightPassthrough = 'Frsky_RX_R9SLIMPLUS_via_BetaflightPassthrough',
+  Frsky_RX_R9SLIM_via_STLINK = 'Frsky_RX_R9SLIM_via_STLINK',
+  Frsky_RX_R9SLIM_via_BetaflightPassthrough = 'Frsky_RX_R9SLIM_via_BetaflightPassthrough',
   Frsky_RX_R9SLIMPLUS_OTA_via_STLINK = 'Frsky_RX_R9SLIMPLUS_OTA_via_STLINK',
   Frsky_RX_R9SLIMPLUS_OTA_via_BetaflightPassthrough = 'Frsky_RX_R9SLIMPLUS_OTA_via_BetaflightPassthrough',
   Frsky_RX_R9MX_via_STLINK = 'Frsky_RX_R9MX_via_STLINK',
