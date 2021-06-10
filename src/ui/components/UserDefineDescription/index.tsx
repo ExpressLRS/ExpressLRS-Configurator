@@ -93,7 +93,9 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 ExpressLRS will not work. Set something memorable, and limit to
                 alphanumeric phrases conforming to the Latin alphabet. This
                 phrase gets MD5 hashed and gets built into the binary you will
-                be flashing.
+                be flashing. Receivers flashed with firmware builds that do not
+                have binding phrase enabled will support and require the
+                traditional binding method.
               </p>
               <p>
                 <a
