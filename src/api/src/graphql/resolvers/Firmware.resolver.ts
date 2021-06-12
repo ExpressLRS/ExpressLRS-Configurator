@@ -23,6 +23,7 @@ import { ConfigToken, IConfig } from '../../config';
 import ClearPlatformioCoreDirResult from '../../models/ClearPlatformioCoreDirResult';
 import TargetDeviceOptionsArgs from '../args/FirmwareVersionDataInput';
 import UserDefinesBuilder from '../../services/UserDefinesBuilder';
+import ClearFirmwareFilesResult from '../../models/ClearFirmwareFiles';
 
 @Service()
 @Resolver()
@@ -61,6 +62,19 @@ export default class FirmwareResolver {
       return new ClearPlatformioCoreDirResult(
         false,
         `Failed to clear platformio state: ${e}`
+      );
+    }
+  }
+
+  @Mutation(() => ClearFirmwareFilesResult)
+  async clearFirmwareFiles(): Promise<ClearFirmwareFilesResult> {
+    try {
+      await this.firmwareService.clearFirmwareFiles();
+      return new ClearFirmwareFilesResult(true);
+    } catch (e) {
+      return new ClearFirmwareFilesResult(
+        false,
+        `Failed to clear firmware files cache: ${e}`
       );
     }
   }

@@ -12,6 +12,7 @@ import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import CardTitle from '../../components/CardTitle';
 import ClearPlatformioDependencies from './Troubleshooting/ClearPlatformioDependencies';
+import ClearFirmwareFiles from './Troubleshooting/ClearFirmwareFiles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +88,7 @@ const SupportView: FunctionComponent = () => {
             <Divider />
             <CardContent>
               <ClearPlatformioDependencies />
+              <ClearFirmwareFiles />
             </CardContent>
             <Divider />
             <CardTitle icon={<SettingsIcon />} title="Legal disclaimer" />

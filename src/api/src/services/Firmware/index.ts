@@ -2,6 +2,7 @@ import { Service } from 'typedi';
 import { PubSubEngine } from 'graphql-subscriptions';
 import * as os from 'os';
 import * as fs from 'fs';
+import * as path from 'path';
 import rimraf from 'rimraf';
 import BuildJobType from '../../models/enum/BuildJobType';
 import DeviceTarget from '../../library/FirmwareBuilder/Enum/DeviceTarget';
@@ -398,6 +399,40 @@ export default class FirmwareService {
     } finally {
       this.mutex.unlock();
     }
+  }
+
+  async clearFirmwareFiles(): Promise<void> {
+    const rmrf = async (file: string): Promise<void> => {
+      return new Promise((resolve, reject) => {
+        rimraf(file, (err) => {
+          if (err) {
+            reject();
+          } else {
+            resolve();
+          }
+        });
+      });
+    };
+    const listFiles = async (directory: string): Promise<string[]> => {
+      return new Promise((resolve, reject) => {
+        fs.readdir(directory, (err, files) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(files.map((file) => path.join(directory, file)));
+          }
+        });
+      });
+    };
+    const files = await listFiles(this.firmwaresPath);
+    this.logger?.log('removing firmware files', {
+      firmwaresPath: this.firmwaresPath,
+      files,
+    });
+    if (files.length > 3) {
+      throw new Error(`unexpected number of files to remove: ${files}`);
+    }
+    await Promise.all(files.map((item) => rmrf(item)));
   }
 
   async clearPlatformioCoreDir(): Promise<void> {

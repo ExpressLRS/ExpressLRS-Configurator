@@ -1,0 +1,6 @@
+mutation clearFirmwareFiles {
+  clearFirmwareFiles {
+    success
+    message
+  }
+}

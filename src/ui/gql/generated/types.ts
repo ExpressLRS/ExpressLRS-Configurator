@@ -186,6 +186,7 @@ export type Mutation = {
   readonly __typename?: 'Mutation';
   readonly buildFlashFirmware: BuildFlashFirmwareResult;
   readonly clearPlatformioCoreDir: ClearPlatformioCoreDirResult;
+  readonly clearFirmwareFiles: ClearFirmwareFilesResult;
   readonly connectToSerialDevice: SerialPortConnectResult;
   readonly disconnectFromSerialDevice: SerialPortDisconnectResult;
 };
@@ -253,6 +254,12 @@ export type UserDefineInput = {
 
 export type ClearPlatformioCoreDirResult = {
   readonly __typename?: 'ClearPlatformioCoreDirResult';
+  readonly success: Scalars['Boolean'];
+  readonly message?: Maybe<Scalars['String']>;
+};
+
+export type ClearFirmwareFilesResult = {
+  readonly __typename?: 'ClearFirmwareFilesResult';
   readonly success: Scalars['Boolean'];
   readonly message?: Maybe<Scalars['String']>;
 };
@@ -397,6 +404,18 @@ export type CheckForUpdatesQuery = { readonly __typename?: 'Query' } & {
     UpdatesAvailability,
     'updateAvailable' | 'newestVersion' | 'releaseUrl'
   >;
+};
+
+export type ClearFirmwareFilesMutationVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type ClearFirmwareFilesMutation = {
+  readonly __typename?: 'Mutation';
+} & {
+  readonly clearFirmwareFiles: {
+    readonly __typename?: 'ClearFirmwareFilesResult';
+  } & Pick<ClearFirmwareFilesResult, 'success' | 'message'>;
 };
 
 export type ClearPlatformioCoreDirMutationVariables = Exact<{
@@ -795,6 +814,55 @@ export type CheckForUpdatesLazyQueryHookResult = ReturnType<
 export type CheckForUpdatesQueryResult = Apollo.QueryResult<
   CheckForUpdatesQuery,
   CheckForUpdatesQueryVariables
+>;
+export const ClearFirmwareFilesDocument = gql`
+  mutation clearFirmwareFiles {
+    clearFirmwareFiles {
+      success
+      message
+    }
+  }
+`;
+export type ClearFirmwareFilesMutationFn = Apollo.MutationFunction<
+  ClearFirmwareFilesMutation,
+  ClearFirmwareFilesMutationVariables
+>;
+
+/**
+ * __useClearFirmwareFilesMutation__
+ *
+ * To run a mutation, you first call `useClearFirmwareFilesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useClearFirmwareFilesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [clearFirmwareFilesMutation, { data, loading, error }] = useClearFirmwareFilesMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useClearFirmwareFilesMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ClearFirmwareFilesMutation,
+    ClearFirmwareFilesMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ClearFirmwareFilesMutation,
+    ClearFirmwareFilesMutationVariables
+  >(ClearFirmwareFilesDocument, options);
+}
+export type ClearFirmwareFilesMutationHookResult = ReturnType<
+  typeof useClearFirmwareFilesMutation
+>;
+export type ClearFirmwareFilesMutationResult = Apollo.MutationResult<ClearFirmwareFilesMutation>;
+export type ClearFirmwareFilesMutationOptions = Apollo.BaseMutationOptions<
+  ClearFirmwareFilesMutation,
+  ClearFirmwareFilesMutationVariables
 >;
 export const ClearPlatformioCoreDirDocument = gql`
   mutation clearPlatformioCoreDir {
