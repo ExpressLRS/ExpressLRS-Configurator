@@ -15,6 +15,7 @@ jobs:
       - name: Setup apt dependencies
         if: matrix.os == 'ubuntu-18.04'
         run: |
+          sudo apt update
           sudo apt-get install --no-install-recommends -y libarchive-tools rpm
 
       - name: Checkout git repo
