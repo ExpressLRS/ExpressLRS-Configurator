@@ -21,7 +21,15 @@ export default class OctopusGitHubClient implements IGitHubClient {
       repo: repository,
       per_page: 50,
     });
-    return response.data.map((item) => item.name);
+    return response.data
+      .map((item) => item.name)
+      .filter((name) => {
+        /*
+          These releases are not save to use. We do not want anyone using RC1-RC3 tags by accident.
+         */
+        const blacklist = ['1.0.0-RC1', '1.0.0-RC2', '1.0.0-RC3'];
+        return !blacklist.includes(name);
+      });
   }
 
   async loadBranches(owner: string, repository: string): Promise<string[]> {
