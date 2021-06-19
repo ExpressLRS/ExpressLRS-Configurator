@@ -46,9 +46,6 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
-      // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
     ];
     const NamimnoRC_FLASH_2400_ESP_RX: UserDefine[] = [
       // regulatory options
@@ -71,6 +68,9 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+      // other options
+      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
     ];
 
     const NamimnoRC_VOYAGER_900_TX: UserDefine[] = [
