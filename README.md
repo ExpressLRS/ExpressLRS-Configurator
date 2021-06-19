@@ -77,6 +77,25 @@ sudo usermod -a -G uucp $USER
 sudo usermod -a -G lock $USER
 ```
 
+##### Ubuntu 18.XX / Older Debian installs troubleshooting
+
+On Ubuntu 18.XX you are not able to get recent git version by default, and some other system dependencies are missing.
+
+Read more about this in [issue #26](https://github.com/ExpressLRS/ExpressLRS-Configurator/issues/26).
+
+To work around that you can manually install required packages:
+
+```
+# install missing sys packages
+sudo apt update
+sudo apt-get install gconf2 gconf-service python3-distutils
+
+# install git version >= 2.25
+sudo add-apt-repository ppa:git-core/ppa
+sudo apt update
+sudo apt install git
+```
+
 ## Architecture
 
 ```
