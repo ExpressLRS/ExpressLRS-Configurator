@@ -217,7 +217,6 @@ export default class TargetUserDefinesFactory {
       // other options
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
 
     const Frsky_TX_R9M_LITE_PRO: UserDefine[] = [
@@ -243,7 +242,6 @@ export default class TargetUserDefinesFactory {
       // other options
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
 
     const Frsky_RX_R9MM_R9MINI: UserDefine[] = [
