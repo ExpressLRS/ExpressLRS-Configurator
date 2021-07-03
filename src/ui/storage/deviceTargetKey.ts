@@ -95,6 +95,12 @@ const deviceTargetKey = (target: DeviceTarget): DeviceTarget => {
     case DeviceTarget.HappyModel_PP_2400_RX_via_STLINK:
     case DeviceTarget.HappyModel_PP_2400_RX_via_BetaflightPassthrough:
       return DeviceTarget.HappyModel_EP_2400_RX_via_UART;
+    case DeviceTarget.HappyModel_TX_ES900TX_via_UART:
+    case DeviceTarget.HappyModel_TX_ES900TX_via_WIFI:
+      return DeviceTarget.HappyModel_TX_ES900TX_via_UART;
+    case DeviceTarget.HappyModel_RX_ES900RX_via_BetaflightPassthrough:
+    case DeviceTarget.HappyModel_RX_ES900RX_via_WIFI:
+      return DeviceTarget.HappyModel_RX_ES900RX_via_BetaflightPassthrough;
     default:
       return target;
   }
