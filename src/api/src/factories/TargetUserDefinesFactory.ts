@@ -352,6 +352,33 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
+    ];
+
+    const HappyModel_TX_ES900TX: UserDefine[] = [
+      // regulatory options
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      // binding
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
+      // hybrid switches
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
+      // performance options
+      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
+      UserDefine.Enum(
+        UserDefineKey.ARM_CHANNEL,
+        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6', 'AUX7', 'AUX8'],
+        'AUX1'
+      ),
+      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
+      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // other options
+      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
+      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
+      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
+      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
@@ -752,8 +779,8 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.HappyModel_RX_ES915RX_via_BetaflightPassthrough]: HappyModel_RX_ES915RX,
 
       // Happymodel ES900 TX & RX
-      [DeviceTarget.HappyModel_TX_ES900TX_via_UART]: HappyModel_TX_ES915TX,
-      [DeviceTarget.HappyModel_TX_ES900TX_via_WIFI]: HappyModel_TX_ES915TX,
+      [DeviceTarget.HappyModel_TX_ES900TX_via_UART]: HappyModel_TX_ES900TX,
+      [DeviceTarget.HappyModel_TX_ES900TX_via_WIFI]: HappyModel_TX_ES900TX,
       [DeviceTarget.HappyModel_RX_ES900RX_via_BetaflightPassthrough]: HappyModel_RX_ES915RX,
       [DeviceTarget.HappyModel_RX_ES900RX_via_WIFI]: HappyModel_RX_ES915RX,
 
