@@ -352,6 +352,8 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
+      // compat
+      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
 
     const HappyModel_RX_ES915RX: UserDefine[] = [
