@@ -375,9 +375,6 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
