@@ -163,6 +163,8 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
+      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
     ];
 
     const Frsky_TX_R9M: UserDefine[] = [
@@ -398,6 +400,28 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
+    ];
+
+    const HappyModel_RX_ES900RX: UserDefine[] = [
+      // regulatory options
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      // binding
+      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
+      // hybrid switches
+      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
+      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
+      // performance options
+      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
+      UserDefine.Enum(
+        UserDefineKey.ARM_CHANNEL,
+        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
+        'AUX1'
+      ),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
+      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
     ];
 
     const Jumper_RX_R900MINI: UserDefine[] = [
@@ -778,8 +802,8 @@ export default class TargetUserDefinesFactory {
       // Happymodel ES900 TX & RX
       [DeviceTarget.HappyModel_TX_ES900TX_via_UART]: HappyModel_TX_ES900TX,
       [DeviceTarget.HappyModel_TX_ES900TX_via_WIFI]: HappyModel_TX_ES900TX,
-      [DeviceTarget.HappyModel_RX_ES900RX_via_BetaflightPassthrough]: HappyModel_RX_ES915RX,
-      [DeviceTarget.HappyModel_RX_ES900RX_via_WIFI]: HappyModel_RX_ES915RX,
+      [DeviceTarget.HappyModel_RX_ES900RX_via_BetaflightPassthrough]: HappyModel_RX_ES900RX,
+      [DeviceTarget.HappyModel_RX_ES900RX_via_WIFI]: HappyModel_RX_ES900RX,
 
       // Happymodel 2.4 Ghz
       [DeviceTarget.HappyModel_ES24TX_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280_E28,
