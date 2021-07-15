@@ -528,6 +528,17 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 are useful resources.
               </p>
               <p>
+                This option also supports melodies in RTTTL format now.{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="http://esctunes.com/tunes"
+                >
+                  EscTunes.com
+                </a>{' '}
+                is great resource for discovering new melodies.
+              </p>
+              <p>
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
