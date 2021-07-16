@@ -40,7 +40,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          yarn install --prefer-offline
+          yarn install --prefer-offline --network-timeout 180000
 
       - name: Publish Windows releases
         if: matrix.os == 'windows-latest'
