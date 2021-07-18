@@ -42,6 +42,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
         case UserDefineKey.REGULATORY_DOMAIN_AU_915:
         case UserDefineKey.REGULATORY_DOMAIN_FCC_915:
         case UserDefineKey.REGULATORY_DOMAIN_EU_868:
+        case UserDefineKey.REGULATORY_DOMAIN_IN_866:
           return (
             <div>
               <p>

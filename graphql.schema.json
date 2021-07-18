@@ -857,6 +857,12 @@
             "deprecationReason": null
           },
           {
+            "name": "REGULATORY_DOMAIN_IN_866",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "REGULATORY_DOMAIN_AU_433",
             "description": null,
             "isDeprecated": false,

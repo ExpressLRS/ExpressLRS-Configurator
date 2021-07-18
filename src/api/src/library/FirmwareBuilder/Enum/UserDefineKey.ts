@@ -4,6 +4,7 @@ enum UserDefineKey {
   // Regulatory domains
   REGULATORY_DOMAIN_AU_915 = 'DRegulatory_Domain_AU_915',
   REGULATORY_DOMAIN_EU_868 = 'DRegulatory_Domain_EU_868',
+  REGULATORY_DOMAIN_IN_866 = 'DRegulatory_Domain_IN_866',
   REGULATORY_DOMAIN_AU_433 = 'DRegulatory_Domain_AU_433',
   REGULATORY_DOMAIN_EU_433 = 'DRegulatory_Domain_EU_433',
   REGULATORY_DOMAIN_FCC_915 = 'DRegulatory_Domain_FCC_915',

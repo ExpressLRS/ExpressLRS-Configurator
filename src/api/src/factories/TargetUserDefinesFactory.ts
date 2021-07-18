@@ -108,6 +108,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -127,6 +128,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -150,6 +152,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -172,6 +175,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -201,6 +205,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -226,6 +231,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -251,6 +257,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -273,6 +280,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -294,6 +302,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -314,6 +323,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -334,6 +344,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -361,6 +372,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -387,6 +399,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -407,6 +420,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -429,6 +443,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -449,6 +464,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -473,6 +489,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -497,6 +514,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -523,6 +541,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
@@ -549,6 +568,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       // binding
       UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
       // hybrid switches
