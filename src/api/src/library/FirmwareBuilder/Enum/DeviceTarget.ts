@@ -2,6 +2,12 @@
   Device targets from https://github.com/AlessandroAU/ExpressLRS/blob/master/src/platformio.ini
 */
 enum DeviceTarget {
+  BETAFPV_900_TX_via_UART = 'BETAFPV_900_TX_via_UART',
+  BETAFPV_900_RX_via_UART = 'BETAFPV_900_RX_via_UART',
+  BETAFPV_900_RX_via_BetaflightPassthrough = 'BETAFPV_900_RX_via_BetaflightPassthrough',
+  BETAFPV_2400_TX_via_UART = 'BETAFPV_2400_TX_via_UART',
+  BETAFPV_2400_RX_via_UART = 'BETAFPV_2400_RX_via_UART',
+  BETAFPV_2400_RX_via_BetaflightPassthrough = 'BETAFPV_2400_RX_via_BetaflightPassthrough',
   Frsky_TX_R9M_via_STLINK = 'Frsky_TX_R9M_via_STLINK',
   Frsky_TX_R9M_via_stock_BL = 'Frsky_TX_R9M_via_stock_BL',
   Frsky_TX_R9M_via_WIFI = 'Frsky_TX_R9M_via_WIFI',

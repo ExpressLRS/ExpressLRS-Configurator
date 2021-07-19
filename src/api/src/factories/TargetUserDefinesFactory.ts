@@ -509,34 +509,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
 
-    const DIY_900_TX_ESP32_SX127x_E19: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      // other
-      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
-    ];
-
-    const DIY_900_TX_ESP32_SX127x_RFM95: UserDefine[] = [
+    const DIY_900_TX_ESP32_SX127x: UserDefine[] = [
       // regulatory options
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
@@ -587,7 +560,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
     ];
 
-    const DIY_2400_TX_ESP32_SX1280_Mini: UserDefine[] = [
+    const DIY_2400_TX_ESP32_SX1280: UserDefine[] = [
       // regulatory options
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
       // binding
@@ -608,51 +581,6 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-    ];
-
-    const DIY_2400_TX_ESP32_SX1280_E28: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      // other
-      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
-    ];
-
-    const DIY_2400_TX_ESP32_SX1280_LORA1280F27: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      // other
-      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
     ];
 
     const GHOST_2400_TX: UserDefine[] = [
@@ -826,8 +754,8 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.HappyModel_RX_ES900RX_via_WIFI]: HappyModel_RX_ES900RX,
 
       // Happymodel 2.4 Ghz
-      [DeviceTarget.HappyModel_ES24TX_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280_E28,
-      [DeviceTarget.HappyModel_ES24TX_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280_E28,
+      [DeviceTarget.HappyModel_ES24TX_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280,
+      [DeviceTarget.HappyModel_ES24TX_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280,
       [DeviceTarget.HappyModel_EP_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280,
       [DeviceTarget.HappyModel_EP_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280,
       [DeviceTarget.HappyModel_EP_2400_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280,
@@ -848,16 +776,16 @@ export default class TargetUserDefinesFactory {
       // 900 TTGO V2 TX
       [DeviceTarget.DIY_900_TX_TTGO_V2_SX127x_via_UART]: DIY_900_TX_TTGO_V2_SX127x,
 
-      // DIY 900 Mhz TXs
-      [DeviceTarget.DIY_900_TX_ESP32_SX127x_E19_via_UART]: DIY_900_TX_ESP32_SX127x_E19,
-      [DeviceTarget.DIY_900_TX_ESP32_SX127x_RFM95_via_UART]: DIY_900_TX_ESP32_SX127x_RFM95,
+      // DIY 900 Mhz TX
+      [DeviceTarget.DIY_900_TX_ESP32_SX127x_E19_via_UART]: DIY_900_TX_ESP32_SX127x,
+      [DeviceTarget.DIY_900_TX_ESP32_SX127x_RFM95_via_UART]: DIY_900_TX_ESP32_SX127x,
       [DeviceTarget.DIY_900_RX_ESP8285_SX127x_via_UART]: DIY_900_RX_ESP8285_SX127x,
       [DeviceTarget.DIY_900_RX_ESP8285_SX127x_via_BetaflightPassthrough]: DIY_900_RX_ESP8285_SX127x,
 
-      // DIY 2400 Mhz TXs
-      [DeviceTarget.DIY_2400_TX_ESP32_SX1280_Mini_via_UART]: DIY_2400_TX_ESP32_SX1280_Mini,
-      [DeviceTarget.DIY_2400_TX_ESP32_SX1280_E28_via_UART]: DIY_2400_TX_ESP32_SX1280_E28,
-      [DeviceTarget.DIY_2400_TX_ESP32_SX1280_LORA1280F27_via_UART]: DIY_2400_TX_ESP32_SX1280_LORA1280F27,
+      // DIY 2400 Mhz TX
+      [DeviceTarget.DIY_2400_TX_ESP32_SX1280_Mini_via_UART]: DIY_2400_TX_ESP32_SX1280,
+      [DeviceTarget.DIY_2400_TX_ESP32_SX1280_E28_via_UART]: DIY_2400_TX_ESP32_SX1280,
+      [DeviceTarget.DIY_2400_TX_ESP32_SX1280_LORA1280F27_via_UART]: DIY_2400_TX_ESP32_SX1280,
 
       // Ghost TX
       [DeviceTarget.GHOST_2400_TX_via_STLINK]: GHOST_2400_TX,
@@ -875,6 +803,16 @@ export default class TargetUserDefinesFactory {
       // DIY_2400_RX_STM32_CCG_Nano_v0_5
       [DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK]: DIY_2400_RX_STM32_CCG_Nano_v0_5,
       [DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough]: DIY_2400_RX_STM32_CCG_Nano_v0_5,
+
+      // BETAFPV 900
+      [DeviceTarget.BETAFPV_900_TX_via_UART]: DIY_900_TX_ESP32_SX127x,
+      [DeviceTarget.BETAFPV_900_RX_via_UART]: DIY_900_RX_ESP8285_SX127x,
+      [DeviceTarget.BETAFPV_900_RX_via_BetaflightPassthrough]: DIY_900_RX_ESP8285_SX127x,
+
+      // BETAFPV 2.4 Ghz
+      [DeviceTarget.BETAFPV_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280,
+      [DeviceTarget.BETAFPV_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280,
+      [DeviceTarget.BETAFPV_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280,
     };
 
     if (data[target] === undefined) {
