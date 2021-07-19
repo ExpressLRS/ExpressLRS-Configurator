@@ -118,6 +118,24 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     setCurrentGitTag(name);
   };
 
+  /*
+    We need to make sure that a valid value is selected
+   */
+  useEffect(() => {
+    if (firmwareSource === FirmwareSource.GitTag) {
+      if (
+        !showPreReleases &&
+        gitTagsResponse?.releases?.length &&
+        gitTagsResponse?.releases?.length > 0 &&
+        gitTagsResponse?.releases
+          ?.filter(({ preRelease }) => !preRelease)
+          .find((item) => item.tagName === currentGitTag) === undefined
+      ) {
+        setCurrentGitTag(gitTagsResponse.releases[0].tagName);
+      }
+    }
+  }, [showPreReleases, currentGitTag, gitTagsResponse, firmwareSource]);
+
   const [currentGitBranch, setCurrentGitBranch] = useState<string>(
     data?.gitBranch || ''
   );
