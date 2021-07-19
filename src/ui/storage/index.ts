@@ -28,11 +28,16 @@ export interface IApplicationStorage {
   getFirmwareSource(): Promise<FirmwareVersionDataInput | null>;
 
   setFirmwareSource(input: FirmwareVersionDataInput): Promise<void>;
+
+  getShowPreReleases(defaultValue: boolean): Promise<boolean>;
+
+  setShowPreReleases(value: boolean): Promise<void>;
 }
 
 const DEVICE_OPTIONS_BY_TARGET_KEYSPACE = 'device_options';
 const BINDING_PHRASE_KEY = 'binding_phrase';
 const FIRMWARE_SOURCE_KEY = 'firmware_source';
+const UI_SHOW_FIRMWARE_PRE_RELEASES = 'ui_show_pre_releases';
 
 export default class ApplicationStorage implements IApplicationStorage {
   async saveDeviceOptions(
@@ -91,5 +96,24 @@ export default class ApplicationStorage implements IApplicationStorage {
       return '';
     }
     return value;
+  }
+
+  async getShowPreReleases(defaultValue: boolean): Promise<boolean> {
+    try {
+      const result = localStorage.getItem(UI_SHOW_FIRMWARE_PRE_RELEASES);
+      if (result === null || result === undefined) {
+        return defaultValue;
+      }
+      return JSON.parse(result);
+    } catch (e) {
+      console.error(
+        'failed to load user ui preference for ui-show-prereleases'
+      );
+      return defaultValue;
+    }
+  }
+
+  async setShowPreReleases(value: boolean): Promise<void> {
+    localStorage.setItem(UI_SHOW_FIRMWARE_PRE_RELEASES, JSON.stringify(value));
   }
 }

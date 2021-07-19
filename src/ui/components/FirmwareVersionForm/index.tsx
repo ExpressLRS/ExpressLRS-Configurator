@@ -2,6 +2,8 @@ import {
   Alert,
   AlertTitle,
   Button,
+  Checkbox,
+  FormControlLabel,
   makeStyles,
   Tab,
   Tabs,
@@ -16,7 +18,7 @@ import {
   FirmwareSource,
   FirmwareVersionDataInput,
   useGetBranchesLazyQuery,
-  useGetTagsLazyQuery,
+  useGetReleasesLazyQuery,
 } from '../../gql/generated/types';
 import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
 import ApplicationStorage from '../../storage';
@@ -34,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
   },
   loader: {
     marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(2),
+  },
+  preReleaseCheckbox: {
+    marginLeft: theme.spacing(0),
     marginBottom: theme.spacing(2),
   },
   chooseFolderButton: {
@@ -62,10 +68,31 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     setFirmwareSource(value);
   };
 
+  const [showPreReleases, setShowPreReleases] = useState<boolean>(false);
+  useEffect(() => {
+    new ApplicationStorage()
+      .getShowPreReleases(false)
+      .then((value) => {
+        setShowPreReleases(value);
+      })
+      .catch((err: Error) => {
+        console.error('failed to get show pre-releases from storage', err);
+      });
+  }, []);
+  const onShowPreReleases = (
+    _event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => {
+    setShowPreReleases(checked);
+    new ApplicationStorage().setShowPreReleases(checked).catch((err: Error) => {
+      console.error('failed to set show pre-releases in storage', err);
+    });
+  };
+
   const [
     queryGitTags,
     { loading: gitTagsLoading, data: gitTagsResponse, error: tagsError },
-  ] = useGetTagsLazyQuery();
+  ] = useGetReleasesLazyQuery();
 
   const [
     queryGitBranches,
@@ -77,7 +104,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   ] = useGetBranchesLazyQuery();
 
   const loading = gitTagsLoading || gitBranchesLoading;
-  const gitTags = gitTagsResponse?.gitTags ?? [];
+  const gitTags = gitTagsResponse?.releases ?? [];
   const gitBranches = gitBranchesResponse?.gitBranches ?? [];
 
   const [currentGitTag, setCurrentGitTag] = useState<string>(
@@ -195,16 +222,38 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         <>
           <div className={styles.tabContents}>
             {!loading && (
-              <Omnibox
-                title="Releases"
-                options={gitTags.map((tag) => ({ label: tag, value: tag }))}
-                currentValue={
-                  currentGitTag === ''
-                    ? null
-                    : { label: currentGitTag, value: currentGitTag }
-                }
-                onChange={onGitTag}
-              />
+              <>
+                <FormControlLabel
+                  className={styles.preReleaseCheckbox}
+                  control={
+                    <Checkbox
+                      checked={showPreReleases}
+                      onChange={onShowPreReleases}
+                    />
+                  }
+                  label="Show pre-releases"
+                />
+                <Omnibox
+                  title="Releases"
+                  options={gitTags
+                    .filter((item) => {
+                      if (!showPreReleases) {
+                        return item.preRelease === false;
+                      }
+                      return true;
+                    })
+                    .map((item) => ({
+                      label: item.tagName,
+                      value: item.tagName,
+                    }))}
+                  currentValue={
+                    currentGitTag === ''
+                      ? null
+                      : { label: currentGitTag, value: currentGitTag }
+                  }
+                  onChange={onGitTag}
+                />
+              </>
             )}
           </div>
         </>
@@ -292,5 +341,4 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     </>
   );
 };
-
 export default FirmwareVersionForm;

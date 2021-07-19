@@ -2,6 +2,7 @@ import { Query, Resolver } from 'type-graphql';
 import { Inject, Service } from 'typedi';
 import OctopusGitHubClient from '../../services/GitHubClient';
 import { ConfigToken, IConfig } from '../../config';
+import Release from '../../models/Release';
 
 @Service()
 @Resolver()
@@ -22,6 +23,14 @@ export default class SourcesResolver {
   @Query(() => [String])
   async gitTags() {
     return this.gitClient.loadTags(
+      this.config.git.owner,
+      this.config.git.repositoryName
+    );
+  }
+
+  @Query(() => [Release])
+  async releases() {
+    return this.gitClient.loadReleases(
       this.config.git.owner,
       this.config.git.repositoryName
     );

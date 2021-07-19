@@ -25,6 +25,7 @@ export type Query = {
   readonly targetDeviceOptions: ReadonlyArray<UserDefine>;
   readonly gitBranches: ReadonlyArray<Scalars['String']>;
   readonly gitTags: ReadonlyArray<Scalars['String']>;
+  readonly releases: ReadonlyArray<Release>;
   readonly checkForUpdates: UpdatesAvailability;
   readonly availableDevicesList: ReadonlyArray<SerialPortInformation>;
 };
@@ -173,6 +174,12 @@ export enum FirmwareSource {
   GitCommit = 'GitCommit',
   Local = 'Local',
 }
+
+export type Release = {
+  readonly __typename?: 'Release';
+  readonly tagName: Scalars['String'];
+  readonly preRelease: Scalars['Boolean'];
+};
 
 export type UpdatesAvailability = {
   readonly __typename?: 'UpdatesAvailability';
@@ -483,6 +490,17 @@ export type GetBranchesQuery = { readonly __typename?: 'Query' } & Pick<
   Query,
   'gitBranches'
 >;
+
+export type GetReleasesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetReleasesQuery = { readonly __typename?: 'Query' } & {
+  readonly releases: ReadonlyArray<
+    { readonly __typename?: 'Release' } & Pick<
+      Release,
+      'tagName' | 'preRelease'
+    >
+  >;
+};
 
 export type GetTagsQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -1150,6 +1168,62 @@ export type GetBranchesLazyQueryHookResult = ReturnType<
 export type GetBranchesQueryResult = Apollo.QueryResult<
   GetBranchesQuery,
   GetBranchesQueryVariables
+>;
+export const GetReleasesDocument = gql`
+  query getReleases {
+    releases {
+      tagName
+      preRelease
+    }
+  }
+`;
+
+/**
+ * __useGetReleasesQuery__
+ *
+ * To run a query within a React component, call `useGetReleasesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetReleasesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetReleasesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetReleasesQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetReleasesQuery,
+    GetReleasesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetReleasesQuery, GetReleasesQueryVariables>(
+    GetReleasesDocument,
+    options
+  );
+}
+export function useGetReleasesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetReleasesQuery,
+    GetReleasesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetReleasesQuery, GetReleasesQueryVariables>(
+    GetReleasesDocument,
+    options
+  );
+}
+export type GetReleasesQueryHookResult = ReturnType<typeof useGetReleasesQuery>;
+export type GetReleasesLazyQueryHookResult = ReturnType<
+  typeof useGetReleasesLazyQuery
+>;
+export type GetReleasesQueryResult = Apollo.QueryResult<
+  GetReleasesQuery,
+  GetReleasesQueryVariables
 >;
 export const GetTagsDocument = gql`
   query getTags {
