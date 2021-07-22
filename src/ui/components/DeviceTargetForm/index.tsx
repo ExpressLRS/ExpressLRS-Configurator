@@ -175,16 +175,42 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
   props
 ) => {
   const { onChange, currentTarget } = props;
+  const currentTargetCategory: string = deviceTargetToCategory(currentTarget as DeviceTarget);
   const styles = useStyles();
 
   const { loading, data } = useAvailableFirmwareTargetsQuery();
-  const options: Option[] =
-    data?.availableFirmwareTargets?.map((target) => ({
+
+  const targetOptionsByCategory: { [key: string]: Option[] } = {};
+
+  data?.availableFirmwareTargets?.forEach((target) => {
+    const category = deviceTargetToCategory(target);
+    if (!targetOptionsByCategory[category]) {
+      targetOptionsByCategory[category] = [];
+    }
+    targetOptionsByCategory[category].push({
       label: target,
       value: target,
-    })) ?? [];
+    });
+  });
 
-  const [currentValue, setCurrentValue] = useState<Option | null>(
+  const categoryOptions: Option[] =
+    Object.keys(targetOptionsByCategory)
+      .sort()
+      .map((target) => ({
+        label: target,
+        value: target,
+      })) ?? [];
+
+  const [currentCategoryValue, setCurrentCategoryValue] = useState<Option | null>(
+    currentTarget
+      ? {
+          label: currentTargetCategory,
+          value: currentTargetCategory,
+        }
+      : null
+  );
+
+  const [currentTargetValue, setCurrentTargetValue] = useState<Option | null>(
     currentTarget
       ? {
           label: currentTarget,
@@ -192,11 +218,26 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
         }
       : null
   );
-  const onDeviceChange = (value: string | null) => {
+
+  const onCategoryChange = (value: string | null) => {
     if (value === null) {
-      setCurrentValue(null);
+      setCurrentCategoryValue(null);
     } else {
-      setCurrentValue({
+      setCurrentCategoryValue({
+        label: value,
+        value,
+      });
+    }
+    // When category changes, set the current target to null
+    setCurrentTargetValue(null);
+    onChange((null as unknown) as DeviceTarget);
+  };
+
+  const onTargetChange = (value: string | null) => {
+    if (value === null) {
+      setCurrentTargetValue(null);
+    } else {
+      setCurrentTargetValue({
         label: value,
         value,
       });
@@ -205,15 +246,31 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
   };
 
   return (
-    <div className={styles.root}>
-      <Omnibox
-        title="Device target"
-        currentValue={currentValue}
-        onChange={onDeviceChange}
-        options={options}
-        loading={loading}
-        groupBy={(opt) => deviceTargetToCategory(opt.value as DeviceTarget)}
-      />
+    <div>
+      <div className={styles.root}>
+        <Omnibox
+          title="Device category"
+          currentValue={currentCategoryValue}
+          onChange={onCategoryChange}
+          options={categoryOptions}
+          loading={loading}
+        />
+      </div>
+      <div className={styles.root}>
+        <Omnibox
+          title="Device target"
+          currentValue={currentTargetValue}
+          onChange={onTargetChange}
+          options={
+            currentCategoryValue === null
+              ? []
+              : targetOptionsByCategory[currentCategoryValue.value as DeviceTarget]
+          }
+          loading={loading}
+          // if no category has been selected, disable the target select box
+          disabled={currentCategoryValue === null}
+        />
+      </div>
       <Loader className={styles.loader} loading={loading} />
     </div>
   );
