@@ -160,12 +160,16 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
 
     // BETAFPV 900 Mhz
     [DeviceTarget.BETAFPV_900_TX_via_UART]: 'BETAFPV 900 Mhz',
+    [DeviceTarget.BETAFPV_900_TX_via_WIFI]: 'BETAFPV 900 Mhz',
     [DeviceTarget.BETAFPV_900_RX_via_UART]: 'BETAFPV 900 Mhz',
+    [DeviceTarget.BETAFPV_900_RX_via_WIFI]: 'BETAFPV 900 Mhz',
     [DeviceTarget.BETAFPV_900_RX_via_BetaflightPassthrough]: 'BETAFPV 900 Mhz',
 
     // BETAFPV 2.4 Ghz
     [DeviceTarget.BETAFPV_2400_TX_via_UART]: 'BETAFPV 2.4 Ghz',
+    [DeviceTarget.BETAFPV_2400_TX_via_WIFI]: 'BETAFPV 2.4 Ghz',
     [DeviceTarget.BETAFPV_2400_RX_via_UART]: 'BETAFPV 2.4 Ghz',
+    [DeviceTarget.BETAFPV_2400_RX_via_WIFI]: 'BETAFPV 2.4 Ghz',
     [DeviceTarget.BETAFPV_2400_RX_via_BetaflightPassthrough]: 'BETAFPV 2.4 Ghz',
   };
   return data[deviceTarget];

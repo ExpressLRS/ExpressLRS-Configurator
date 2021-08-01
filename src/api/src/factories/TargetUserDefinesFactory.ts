@@ -819,12 +819,16 @@ export default class TargetUserDefinesFactory {
 
       // BETAFPV 900
       [DeviceTarget.BETAFPV_900_TX_via_UART]: DIY_900_TX_ESP32_SX127x,
+      [DeviceTarget.BETAFPV_900_TX_via_WIFI]: DIY_900_TX_ESP32_SX127x,
       [DeviceTarget.BETAFPV_900_RX_via_UART]: DIY_900_RX_ESP8285_SX127x,
+      [DeviceTarget.BETAFPV_900_RX_via_WIFI]: DIY_900_RX_ESP8285_SX127x,
       [DeviceTarget.BETAFPV_900_RX_via_BetaflightPassthrough]: DIY_900_RX_ESP8285_SX127x,
 
       // BETAFPV 2.4 Ghz
       [DeviceTarget.BETAFPV_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280,
+      [DeviceTarget.BETAFPV_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280,
       [DeviceTarget.BETAFPV_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280,
+      [DeviceTarget.BETAFPV_2400_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280,
       [DeviceTarget.BETAFPV_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280,
     };
 
