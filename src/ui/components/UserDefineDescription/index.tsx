@@ -640,6 +640,31 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.USE_DYNAMIC_POWER:
+          return (
+            <div>
+              <p>
+                Dynamic power feature uses LQ-based power boost up to detect
+                quick drops in link quality and RSSI-based power adjustments
+                which are working slowly, suitable for a general long-range
+                flights.
+              </p>
+              <p>
+                <strong>
+                  This feature requires ENABLE_TELEMETRY to be enabled.
+                </strong>
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/ExpressLRS/ExpressLRS/wiki/User-Defines#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
         case UserDefineKey.USE_500HZ:
           return (
             <div>

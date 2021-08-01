@@ -32,6 +32,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
       // other
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
     ];
 
     const NamimnoRC_FLASH_2400_RX: UserDefine[] = [
@@ -98,6 +99,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
     ];
     const NamimnoRC_VOYAGER_900_RX: UserDefine[] = [
       // regulatory options
@@ -186,15 +188,14 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      // compat
-      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
-      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
       // other options
       UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK, true),
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
+      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
+      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
     ];
     const Frsky_TX_R9M_LITE: UserDefine[] = [
       // regulatory options
@@ -216,10 +217,10 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
     ];
 
     const Frsky_TX_R9M_LITE_PRO: UserDefine[] = [
@@ -247,6 +248,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
     ];
 
     const Frsky_RX_R9MM_R9MINI: UserDefine[] = [
@@ -363,6 +365,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
     ];
 
     const HappyModel_TX_ES900TX: UserDefine[] = [
@@ -389,6 +392,7 @@ export default class TargetUserDefinesFactory {
       // other options
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
@@ -495,9 +499,10 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+      // other
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
     ];
 
     const DIY_900_TX_TTGO_V2_SX127x: UserDefine[] = [
@@ -520,7 +525,8 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
+      // other
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
@@ -550,6 +556,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
       // other
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
     ];
 
@@ -598,6 +605,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER, true),
     ];
 
@@ -618,8 +626,9 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
+      // other
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
     ];
 
     const FM30_TX: UserDefine[] = [
@@ -639,10 +648,11 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+      // other
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
     ];
 
     const FM30_RX: UserDefine[] = [

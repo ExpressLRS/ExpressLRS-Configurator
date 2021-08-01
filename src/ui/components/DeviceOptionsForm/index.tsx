@@ -126,6 +126,7 @@ const userDefinesToCategories = (
       UserDefineKey.JUST_BEEP_ONCE,
       UserDefineKey.DISABLE_STARTUP_BEEP,
       UserDefineKey.MY_STARTUP_MELODY,
+      UserDefineKey.USE_DYNAMIC_POWER,
     ],
   };
 
