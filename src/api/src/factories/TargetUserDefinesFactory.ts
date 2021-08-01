@@ -244,6 +244,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
+      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
     ];
@@ -357,6 +358,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
       // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
+      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
       UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
       UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
@@ -386,6 +388,7 @@ export default class TargetUserDefinesFactory {
       // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
       // other options
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
+      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
     ];
@@ -547,6 +550,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
       // other
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
+      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
     ];
 
     const DIY_900_RX_ESP8285_SX127x: UserDefine[] = [
@@ -594,6 +598,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER, true),
     ];
 
     const GHOST_2400_TX: UserDefine[] = [
