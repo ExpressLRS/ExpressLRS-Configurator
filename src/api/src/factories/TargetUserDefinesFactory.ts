@@ -418,23 +418,6 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
     ];
 
-    const HappyModel_EP_2400_RX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-      // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
-    ];
-
     const HappyModel_RX_ES900RX: UserDefine[] = [
       // regulatory options
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
@@ -702,6 +685,10 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, false),
     ];
 
+    const DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY: UserDefine[] = DIY_2400_RX_ESP8285_SX1280.filter(
+      (item) => item.key !== UserDefineKey.USE_DIVERSITY
+    );
+
     const DIY_2400_RX_STM32_CCG_Nano_v0_5: UserDefine[] = [
       // regulatory options
       UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
@@ -785,9 +772,9 @@ export default class TargetUserDefinesFactory {
       // Happymodel 2.4 Ghz
       [DeviceTarget.HappyModel_ES24TX_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280,
       [DeviceTarget.HappyModel_ES24TX_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.HappyModel_EP_2400_RX_via_UART]: HappyModel_EP_2400_RX,
-      [DeviceTarget.HappyModel_EP_2400_RX_via_BetaflightPassthrough]: HappyModel_EP_2400_RX,
-      [DeviceTarget.HappyModel_EP_2400_RX_via_WIFI]: HappyModel_EP_2400_RX,
+      [DeviceTarget.HappyModel_EP_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
+      [DeviceTarget.HappyModel_EP_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
+      [DeviceTarget.HappyModel_EP_2400_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
       [DeviceTarget.HappyModel_PP_2400_RX_via_STLINK]: DIY_2400_RX_STM32_CCG_Nano_v0_5,
       [DeviceTarget.HappyModel_PP_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_STM32_CCG_Nano_v0_5,
 
@@ -846,6 +833,18 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.BETAFPV_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280,
       [DeviceTarget.BETAFPV_2400_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280,
       [DeviceTarget.BETAFPV_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280,
+
+      // HGLRC Hermes 900
+      [DeviceTarget.HGLRC_Hermes_900_RX_via_UART]: DIY_900_RX_ESP8285_SX127x,
+      [DeviceTarget.HGLRC_Hermes_900_RX_via_BetaflightPassthrough]: DIY_900_RX_ESP8285_SX127x,
+      [DeviceTarget.HGLRC_Hermes_900_RX_via_WIFI]: DIY_900_RX_ESP8285_SX127x,
+
+      // HGLRC Hermes 2.4 Ghz
+      [DeviceTarget.HGLRC_Hermes_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280,
+      [DeviceTarget.HGLRC_Hermes_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280,
+      [DeviceTarget.HGLRC_Hermes_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
+      [DeviceTarget.HGLRC_Hermes_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
+      [DeviceTarget.HGLRC_Hermes_2400_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
     };
 
     if (data[target] === undefined) {

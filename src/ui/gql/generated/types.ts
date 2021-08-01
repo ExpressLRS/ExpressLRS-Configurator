@@ -127,6 +127,14 @@ export enum DeviceTarget {
   NeutronRC_900_RX_via_UART = 'NeutronRC_900_RX_via_UART',
   NeutronRC_900_RX_via_BetaflightPassthrough = 'NeutronRC_900_RX_via_BetaflightPassthrough',
   NeutronRC_900_RX_via_WIFI = 'NeutronRC_900_RX_via_WIFI',
+  HGLRC_Hermes_2400_TX_via_UART = 'HGLRC_Hermes_2400_TX_via_UART',
+  HGLRC_Hermes_2400_TX_via_WIFI = 'HGLRC_Hermes_2400_TX_via_WIFI',
+  HGLRC_Hermes_2400_RX_via_UART = 'HGLRC_Hermes_2400_RX_via_UART',
+  HGLRC_Hermes_2400_RX_via_BetaflightPassthrough = 'HGLRC_Hermes_2400_RX_via_BetaflightPassthrough',
+  HGLRC_Hermes_2400_RX_via_WIFI = 'HGLRC_Hermes_2400_RX_via_WIFI',
+  HGLRC_Hermes_900_RX_via_UART = 'HGLRC_Hermes_900_RX_via_UART',
+  HGLRC_Hermes_900_RX_via_BetaflightPassthrough = 'HGLRC_Hermes_900_RX_via_BetaflightPassthrough',
+  HGLRC_Hermes_900_RX_via_WIFI = 'HGLRC_Hermes_900_RX_via_WIFI',
 }
 
 export type UserDefine = {

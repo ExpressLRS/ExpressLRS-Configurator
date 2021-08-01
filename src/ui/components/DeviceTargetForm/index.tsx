@@ -172,6 +172,20 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     [DeviceTarget.BETAFPV_2400_RX_via_UART]: 'BETAFPV 2.4 Ghz',
     [DeviceTarget.BETAFPV_2400_RX_via_WIFI]: 'BETAFPV 2.4 Ghz',
     [DeviceTarget.BETAFPV_2400_RX_via_BetaflightPassthrough]: 'BETAFPV 2.4 Ghz',
+
+    // HGLRC Hermes 900 Mhz
+    [DeviceTarget.HGLRC_Hermes_900_RX_via_UART]: 'HGLRC 900 Mhz',
+    [DeviceTarget.HGLRC_Hermes_900_RX_via_BetaflightPassthrough]:
+      'HGLRC 900 Mhz',
+    [DeviceTarget.HGLRC_Hermes_900_RX_via_WIFI]: 'HGLRC 900 Mhz',
+
+    // HGLRC Hermes 2.4 Ghz
+    [DeviceTarget.HGLRC_Hermes_2400_TX_via_UART]: 'HGLRC 2.4 Ghz',
+    [DeviceTarget.HGLRC_Hermes_2400_TX_via_WIFI]: 'HGLRC 2.4 Ghz',
+    [DeviceTarget.HGLRC_Hermes_2400_RX_via_UART]: 'HGLRC 2.4 Ghz',
+    [DeviceTarget.HGLRC_Hermes_2400_RX_via_BetaflightPassthrough]:
+      'HGLRC 2.4 Ghz',
+    [DeviceTarget.HGLRC_Hermes_2400_RX_via_WIFI]: 'HGLRC 2.4 Ghz',
   };
   return data[deviceTarget];
 };
