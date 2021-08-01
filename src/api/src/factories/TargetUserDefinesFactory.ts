@@ -762,6 +762,7 @@ export default class TargetUserDefinesFactory {
       // Happymodel 915mhz
       [DeviceTarget.HappyModel_TX_ES915TX_via_stock_BL]: HappyModel_TX_ES915TX,
       [DeviceTarget.HappyModel_TX_ES915TX_via_STLINK]: HappyModel_TX_ES915TX,
+      [DeviceTarget.HappyModel_TX_ES915TX_via_WIFI]: HappyModel_TX_ES915TX,
       [DeviceTarget.HappyModel_RX_ES915RX_via_STLINK]: HappyModel_RX_ES915RX,
       [DeviceTarget.HappyModel_RX_ES915RX_via_BetaflightPassthrough]: HappyModel_RX_ES915RX,
 

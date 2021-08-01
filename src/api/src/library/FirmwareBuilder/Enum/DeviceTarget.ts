@@ -42,6 +42,7 @@ enum DeviceTarget {
   HappyModel_PP_2400_RX_via_STLINK = 'HappyModel_PP_2400_RX_via_STLINK',
   HappyModel_PP_2400_RX_via_BetaflightPassthrough = 'HappyModel_PP_2400_RX_via_BetaflightPassthrough',
   HappyModel_TX_ES915TX_via_STLINK = 'HappyModel_TX_ES915TX_via_STLINK',
+  HappyModel_TX_ES915TX_via_WIFI = 'HappyModel_TX_ES915TX_via_WIFI',
   HappyModel_TX_ES915TX_via_stock_BL = 'HappyModel_TX_ES915TX_via_stock_BL',
   HappyModel_RX_ES915RX_via_STLINK = 'HappyModel_RX_ES915RX_via_STLINK',
   HappyModel_RX_ES915RX_via_BetaflightPassthrough = 'HappyModel_RX_ES915RX_via_BetaflightPassthrough',

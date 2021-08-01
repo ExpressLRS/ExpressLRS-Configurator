@@ -54,6 +54,7 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
 
     // Happymodel 915 Mhz
     [DeviceTarget.HappyModel_TX_ES915TX_via_STLINK]: 'Happymodel 915 Mhz',
+    [DeviceTarget.HappyModel_TX_ES915TX_via_WIFI]: 'Happymodel 915 Mhz',
     [DeviceTarget.HappyModel_TX_ES915TX_via_stock_BL]: 'Happymodel 915 Mhz',
     [DeviceTarget.HappyModel_RX_ES915RX_via_STLINK]: 'Happymodel 915 Mhz',
     [DeviceTarget.HappyModel_RX_ES915RX_via_BetaflightPassthrough]:
