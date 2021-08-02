@@ -49,15 +49,6 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
         'NO_SYNC_ON_ARM is an advanced performance option. Make sure to read the documentation on how it works.'
       );
     }
-
-    if (
-      isUserDefine(UserDefineKey.USE_DYNAMIC_POWER, true) &&
-      isUserDefine(UserDefineKey.ENABLE_TELEMETRY, false)
-    ) {
-      messages.push(
-        'USE_DYNAMIC_POWER requires ENABLE_TELEMETRY to be enabled.'
-      );
-    }
   }
   return (
     <div>

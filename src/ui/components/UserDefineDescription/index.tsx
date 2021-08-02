@@ -650,11 +650,6 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 flights.
               </p>
               <p>
-                <strong>
-                  This feature requires ENABLE_TELEMETRY to be enabled.
-                </strong>
-              </p>
-              <p>
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
