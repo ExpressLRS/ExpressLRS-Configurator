@@ -33,6 +33,9 @@ export default class TargetUserDefinesFactory {
       // other
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
+      // network
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const NamimnoRC_FLASH_2400_RX: UserDefine[] = [
@@ -69,9 +72,11 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      // other options
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
+      // network
       UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
+      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const NamimnoRC_VOYAGER_900_TX: UserDefine[] = [
@@ -100,6 +105,9 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
+      // network
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
     const NamimnoRC_VOYAGER_900_RX: UserDefine[] = [
       // regulatory options
@@ -140,9 +148,11 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      // other options
+      // network
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
       UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const NeutronRC_900_RX: UserDefine[] = [
@@ -164,8 +174,11 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
+      // network
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
       UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const Frsky_TX_R9M: UserDefine[] = [
@@ -366,6 +379,9 @@ export default class TargetUserDefinesFactory {
       UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
+      // network
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const HappyModel_TX_ES900TX: UserDefine[] = [
@@ -395,6 +411,9 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+      // network
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const HappyModel_RX_ES915RX: UserDefine[] = [
@@ -437,8 +456,11 @@ export default class TargetUserDefinesFactory {
         'AUX1'
       ),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
+      // network
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
       UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const Jumper_RX_R900MINI: UserDefine[] = [
@@ -541,6 +563,9 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
+      // network
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const DIY_900_RX_ESP8285_SX127x: UserDefine[] = [
@@ -563,8 +588,11 @@ export default class TargetUserDefinesFactory {
       ),
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       // other options
+      // network
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
       UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const DIY_2400_TX_ESP32_SX1280: UserDefine[] = [
@@ -590,6 +618,9 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER, true),
+      // network
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const GHOST_2400_TX: UserDefine[] = [
@@ -680,9 +711,12 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // other options
+      UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, false),
+      // network
       UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
       UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
-      UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, false),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY: UserDefine[] = DIY_2400_RX_ESP8285_SX1280.filter(

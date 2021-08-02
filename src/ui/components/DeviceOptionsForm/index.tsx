@@ -64,6 +64,7 @@ enum UserDefineCategory {
   PerformanceOptions = 'PERFORMANCE_OPTIONS',
   CompatibilityOptions = 'COMPATIBILITY_OPTIONS',
   OtherOptions = 'OTHER_OPTIONS',
+  NetworkOptions = 'NETWORK_OPTIONS',
 }
 
 export type UserDefinesByCategory = {
@@ -83,6 +84,7 @@ const userDefinesToCategories = (
     [UserDefineCategory.ExtraData]: [],
     [UserDefineCategory.PerformanceOptions]: [],
     [UserDefineCategory.CompatibilityOptions]: [],
+    [UserDefineCategory.NetworkOptions]: [],
     [UserDefineCategory.OtherOptions]: [],
   };
 
@@ -118,10 +120,14 @@ const userDefinesToCategories = (
       UserDefineKey.UNLOCK_HIGHER_POWER,
       UserDefineKey.USE_R9MM_R9MINI_SBUS,
     ],
-    [UserDefineCategory.OtherOptions]: [
-      UserDefineKey.BLE_HID_JOYSTICK,
+    [UserDefineCategory.NetworkOptions]: [
       UserDefineKey.AUTO_WIFI_ON_BOOT,
       UserDefineKey.AUTO_WIFI_ON_INTERVAL,
+      UserDefineKey.HOME_WIFI_SSID,
+      UserDefineKey.HOME_WIFI_PASSWORD,
+    ],
+    [UserDefineCategory.OtherOptions]: [
+      UserDefineKey.BLE_HID_JOYSTICK,
       UserDefineKey.USE_ESP8266_BACKPACK,
       UserDefineKey.JUST_BEEP_ONCE,
       UserDefineKey.DISABLE_STARTUP_BEEP,
@@ -293,6 +299,15 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                     <Typography variant="h6">Extra data</Typography>
                     <UserDefinesList
                       options={categories[UserDefineCategory.ExtraData]}
+                      onChange={onOptionUpdate}
+                    />
+                  </>
+                )}
+                {categories[UserDefineCategory.NetworkOptions]?.length > 0 && (
+                  <>
+                    <Typography variant="h6">Network</Typography>
+                    <UserDefinesList
+                      options={categories[UserDefineCategory.NetworkOptions]}
                       onChange={onOptionUpdate}
                     />
                   </>

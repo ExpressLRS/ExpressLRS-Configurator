@@ -763,6 +763,42 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.HOME_WIFI_SSID:
+          return (
+            <div>
+              <p>
+                Set home Wi-Fi network name (SSID). It will allow Wi-Fi enabled
+                hardware to connect to the home network automatically.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
+        case UserDefineKey.HOME_WIFI_PASSWORD:
+          return (
+            <div>
+              <p>
+                Set home Wi-Fi network password. It will allow Wi-Fi enabled
+                hardware to connect to the home network automatically.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
         default:
           return '';
       }

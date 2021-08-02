@@ -1127,18 +1127,6 @@
             "deprecationReason": null
           },
           {
-            "name": "AUTO_WIFI_ON_BOOT",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "AUTO_WIFI_ON_INTERVAL",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "USE_ESP8266_BACKPACK",
             "description": null,
             "isDeprecated": false,
@@ -1170,6 +1158,30 @@
           },
           {
             "name": "USE_DYNAMIC_POWER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "HOME_WIFI_SSID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "HOME_WIFI_PASSWORD",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "AUTO_WIFI_ON_BOOT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "AUTO_WIFI_ON_INTERVAL",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
