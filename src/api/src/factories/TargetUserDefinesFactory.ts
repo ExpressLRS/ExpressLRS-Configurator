@@ -643,6 +643,9 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // other
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
+      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
+      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
+      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
     ];
 
     const FM30_TX: UserDefine[] = [
