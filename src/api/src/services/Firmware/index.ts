@@ -347,10 +347,29 @@ export default class FirmwareService {
           );
         }
 
-        const firmwareBinPath = this.builder.getFirmwareBinPath(
+        let firmwareBinPath = this.builder.getFirmwareBinPath(
           params.target,
           firmwarePath
         );
+
+        if (fs.existsSync(firmwareBinPath)) {
+          const newFirmwareBaseName = this.generateFirmwareName(params);
+          const firmwareExtension = path.extname(firmwareBinPath);
+          const newfirmwareBinPath = path.join(
+            path.dirname(firmwareBinPath),
+            `${newFirmwareBaseName}${firmwareExtension}`
+          );
+
+          try {
+            await fs.promises.copyFile(firmwareBinPath, newfirmwareBinPath);
+            firmwareBinPath = newfirmwareBinPath;
+          } catch (err) {
+            this.logger?.error(
+              `error copying file from ${firmwareBinPath} to ${newfirmwareBinPath}: ${err}`
+            );
+          }
+        }
+
         return new BuildFlashFirmwareResult(
           true,
           undefined,
@@ -398,6 +417,27 @@ export default class FirmwareService {
       );
     } finally {
       this.mutex.unlock();
+    }
+  }
+
+  generateFirmwareName(params: BuildFlashFirmwareParams): string {
+    const { source, gitBranch, gitCommit, gitTag } = params.firmware;
+    let target = params.target.toString();
+
+    const viaIndex = params.target?.lastIndexOf('_via');
+    if (viaIndex > 0) {
+      target = target.substring(0, viaIndex);
+    }
+
+    switch (source) {
+      case FirmwareSource.GitTag:
+        return `${target}-${gitTag}`;
+      case FirmwareSource.GitBranch:
+        return `${target}-${gitBranch}`;
+      case FirmwareSource.GitCommit:
+        return `${target}-${gitCommit}`;
+      default:
+        return `${target}`;
     }
   }
 
