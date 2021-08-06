@@ -562,11 +562,18 @@ export default class TargetUserDefinesFactory {
       // other
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
       // network
       UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
       UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
+
+    const DIY_900_TX_ESP32_SX127x_E19 = DIY_900_TX_ESP32_SX127x.concat([
+      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
+    ]);
+
+    const BETAFPV_900_TX = DIY_900_TX_ESP32_SX127x.concat([
+      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
+    ]);
 
     const DIY_900_RX_ESP8285_SX127x: UserDefine[] = [
       // regulatory options
@@ -617,11 +624,14 @@ export default class TargetUserDefinesFactory {
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER, true),
       // network
       UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
       UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
+
+    const BETAFPV_2400_TX = DIY_2400_TX_ESP32_SX1280.concat([
+      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER, true),
+    ]);
 
     const GHOST_2400_TX: UserDefine[] = [
       // regulatory options
@@ -830,7 +840,7 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.DIY_900_TX_TTGO_V2_SX127x_via_UART]: DIY_900_TX_TTGO_V2_SX127x,
 
       // DIY 900 Mhz TX
-      [DeviceTarget.DIY_900_TX_ESP32_SX127x_E19_via_UART]: DIY_900_TX_ESP32_SX127x,
+      [DeviceTarget.DIY_900_TX_ESP32_SX127x_E19_via_UART]: DIY_900_TX_ESP32_SX127x_E19,
       [DeviceTarget.DIY_900_TX_ESP32_SX127x_RFM95_via_UART]: DIY_900_TX_ESP32_SX127x,
       [DeviceTarget.DIY_900_RX_ESP8285_SX127x_via_UART]: DIY_900_RX_ESP8285_SX127x,
       [DeviceTarget.DIY_900_RX_ESP8285_SX127x_via_BetaflightPassthrough]: DIY_900_RX_ESP8285_SX127x,
@@ -858,15 +868,15 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough]: DIY_2400_RX_STM32_CCG_Nano_v0_5,
 
       // BETAFPV 900
-      [DeviceTarget.BETAFPV_900_TX_via_UART]: DIY_900_TX_ESP32_SX127x,
-      [DeviceTarget.BETAFPV_900_TX_via_WIFI]: DIY_900_TX_ESP32_SX127x,
+      [DeviceTarget.BETAFPV_900_TX_via_UART]: BETAFPV_900_TX,
+      [DeviceTarget.BETAFPV_900_TX_via_WIFI]: BETAFPV_900_TX,
       [DeviceTarget.BETAFPV_900_RX_via_UART]: DIY_900_RX_ESP8285_SX127x,
       [DeviceTarget.BETAFPV_900_RX_via_WIFI]: DIY_900_RX_ESP8285_SX127x,
       [DeviceTarget.BETAFPV_900_RX_via_BetaflightPassthrough]: DIY_900_RX_ESP8285_SX127x,
 
       // BETAFPV 2.4 Ghz
-      [DeviceTarget.BETAFPV_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.BETAFPV_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280,
+      [DeviceTarget.BETAFPV_2400_TX_via_UART]: BETAFPV_2400_TX,
+      [DeviceTarget.BETAFPV_2400_TX_via_WIFI]: BETAFPV_2400_TX,
       [DeviceTarget.BETAFPV_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280,
       [DeviceTarget.BETAFPV_2400_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280,
       [DeviceTarget.BETAFPV_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280,
