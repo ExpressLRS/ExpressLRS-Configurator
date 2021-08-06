@@ -91,16 +91,20 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     [DeviceTarget.NamimnoRC_VOYAGER_900_ESP_RX_via_WIFI]:
       'NamimnoRC VOYAGER 900',
 
-    // NamimnoRC 2.4 Ghz
-    [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_STLINK]: 'NamimnoRC 2.4 Ghz',
-    [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_WIFI]: 'NamimnoRC 2.4 Ghz',
-    [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_STLINK]: 'NamimnoRC 2.4 Ghz',
+    // NamimnoRC FLASH 2.4 Ghz
+    [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_STLINK]:
+      'NamimnoRC FLASH 2.4 Ghz',
+    [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_WIFI]: 'NamimnoRC FLASH 2.4 Ghz',
+    [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_STLINK]:
+      'NamimnoRC FLASH 2.4 Ghz',
     [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough]:
-      'NamimnoRC 2.4 Ghz',
-    [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_UART]: 'NamimnoRC 2.4 Ghz',
+      'NamimnoRC FLASH 2.4 Ghz',
+    [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_UART]:
+      'NamimnoRC FLASH 2.4 Ghz',
     [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_BetaflightPassthrough]:
-      'NamimnoRC 2.4 Ghz',
-    [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_WIFI]: 'NamimnoRC 2.4 Ghz',
+      'NamimnoRC FLASH 2.4 Ghz',
+    [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_WIFI]:
+      'NamimnoRC FLASH 2.4 Ghz',
 
     // FM30 TX
     [DeviceTarget.FM30_TX_via_STLINK]: 'SIYI 2.4 Ghz',
@@ -194,7 +198,9 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
   props
 ) => {
   const { onChange, currentTarget } = props;
-  const currentTargetCategory: string = deviceTargetToCategory(currentTarget as DeviceTarget);
+  const currentTargetCategory: string = deviceTargetToCategory(
+    currentTarget as DeviceTarget
+  );
   const styles = useStyles();
 
   const { loading, data } = useAvailableFirmwareTargetsQuery();
@@ -220,7 +226,10 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
         value: target,
       })) ?? [];
 
-  const [currentCategoryValue, setCurrentCategoryValue] = useState<Option | null>(
+  const [
+    currentCategoryValue,
+    setCurrentCategoryValue,
+  ] = useState<Option | null>(
     currentTarget
       ? {
           label: currentTargetCategory,
