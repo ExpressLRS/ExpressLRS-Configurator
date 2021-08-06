@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface FirmwareVersionCardProps {
   currentTarget: DeviceTarget | null;
-  onChange: (data: DeviceTarget) => void;
+  onChange: (data: DeviceTarget | null) => void;
 }
 
 export type DeviceCategoryByDeviceTarget = {
@@ -249,7 +249,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
     }
     // When category changes, set the current target to null
     setCurrentTargetValue(null);
-    onChange((null as unknown) as DeviceTarget);
+    onChange(null);
   };
 
   const onTargetChange = (value: string | null) => {
@@ -283,7 +283,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
           options={
             currentCategoryValue === null
               ? []
-              : targetOptionsByCategory[currentCategoryValue.value as DeviceTarget]
+              : targetOptionsByCategory[currentCategoryValue.value]
           }
           loading={loading}
           // if no category has been selected, disable the target select box

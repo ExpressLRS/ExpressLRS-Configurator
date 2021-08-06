@@ -187,7 +187,7 @@ const ConfiguratorView: FunctionComponent = () => {
 
   const [deviceTarget, setDeviceTarget] = useState<DeviceTarget | null>(null);
   const [deviceTargetErrors, setDeviceTargetErrors] = useState<Error[]>([]);
-  const onDeviceTarget = (data: DeviceTarget) => {
+  const onDeviceTarget = (data: DeviceTarget | null) => {
     setDeviceTargetErrors([]);
     setDeviceTarget(data);
   };
@@ -475,10 +475,8 @@ const ConfiguratorView: FunctionComponent = () => {
         enumValues: item.enumValues,
         type: item.type,
       })),
+      serialDevice: serialDevice !== null ? serialDevice : undefined,
     };
-    if (serialDevice !== null) {
-      input.serialDevice = serialDevice;
-    }
     buildFlashFirmwareMutation({
       variables: {
         input,
