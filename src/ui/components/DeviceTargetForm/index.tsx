@@ -6,6 +6,17 @@ import {
   useAvailableFirmwareTargetsQuery,
 } from '../../gql/generated/types';
 import Loader from '../Loader';
+// eslint-disable-next-line import/no-cycle
+import FlashingMethodOptions from '../FlashingMethodOptions';
+
+export enum FlashingMethod {
+  BetaflightPassthrough = 'Betaflight Passthrough',
+  DFU = 'DFU',
+  STLink = 'STLink',
+  Stock_BL = 'Bootloader',
+  UART = 'UART',
+  WIFI = 'WIFI',
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +36,13 @@ interface FirmwareVersionCardProps {
 
 export type DeviceCategoryByDeviceTarget = {
   [key in DeviceTarget]: string;
+};
+
+export type TargetInformation = {
+  target: DeviceTarget;
+  device: string;
+  category: string;
+  flashingMethod: FlashingMethod | null;
 };
 
 const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
@@ -194,6 +212,44 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
   return data[deviceTarget];
 };
 
+const deviceTargetToDeviceName = (deviceTarget: DeviceTarget): string => {
+  let device: string = deviceTarget;
+  const viaIndex = device?.lastIndexOf('_via');
+  if (viaIndex > 0) {
+    device = deviceTarget.substring(0, viaIndex);
+  }
+
+  return device?.replaceAll('_', ' ');
+};
+
+const deviceTargetToFlashMethod = (
+  deviceTarget: DeviceTarget
+): FlashingMethod | null => {
+  const device: string = deviceTarget;
+  const viaIndex = device.lastIndexOf('_via');
+  if (viaIndex > 0) {
+    const flashMethod = device.substring(viaIndex + 5, device.length);
+    switch (flashMethod.toLowerCase()) {
+      case 'betaflightpassthrough':
+        return FlashingMethod.BetaflightPassthrough;
+      case 'dfu':
+        return FlashingMethod.DFU;
+      case 'stlink':
+        return FlashingMethod.STLink;
+      case 'stock_bl':
+        return FlashingMethod.Stock_BL;
+      case 'uart':
+        return FlashingMethod.UART;
+      case 'wifi':
+        return FlashingMethod.WIFI;
+      default:
+        return null;
+    }
+  }
+
+  return null;
+};
+
 const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
   props
 ) => {
@@ -201,30 +257,46 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
   const currentTargetCategory: string = deviceTargetToCategory(
     currentTarget as DeviceTarget
   );
+
+  const currentDevice: string = deviceTargetToDeviceName(
+    currentTarget as DeviceTarget
+  );
   const styles = useStyles();
 
   const { loading, data } = useAvailableFirmwareTargetsQuery();
 
-  const targetOptionsByCategory: { [key: string]: Option[] } = {};
-
-  data?.availableFirmwareTargets?.forEach((target) => {
-    const category = deviceTargetToCategory(target);
-    if (!targetOptionsByCategory[category]) {
-      targetOptionsByCategory[category] = [];
-    }
-    targetOptionsByCategory[category].push({
-      label: target,
-      value: target,
-    });
+  const targetInformation: TargetInformation[] = (
+    data?.availableFirmwareTargets ?? []
+  ).map((target) => {
+    return {
+      target,
+      device: deviceTargetToDeviceName(target),
+      category: deviceTargetToCategory(target),
+      flashingMethod: deviceTargetToFlashMethod(target),
+    };
   });
 
-  const categoryOptions: Option[] =
-    Object.keys(targetOptionsByCategory)
-      .sort()
-      .map((target) => ({
-        label: target,
-        value: target,
-      })) ?? [];
+  interface Dictionary<T> {
+    [Key: string]: T;
+  }
+
+  const targetsByCategoryAndDevice = targetInformation?.reduce<
+    Dictionary<Dictionary<typeof targetInformation>>
+  >((accumulator, currentValue) => {
+    if (!accumulator[currentValue.category]) {
+      accumulator[currentValue.category] = {};
+    }
+    const category = accumulator[currentValue.category];
+    if (!category[currentValue.device]) {
+      category[currentValue.device] = [];
+    }
+    const device = category[currentValue.device];
+    if (currentValue.flashingMethod !== null) {
+      device.push(currentValue);
+    }
+
+    return accumulator;
+  }, {});
 
   const [
     currentCategoryValue,
@@ -238,11 +310,11 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
       : null
   );
 
-  const [currentTargetValue, setCurrentTargetValue] = useState<Option | null>(
+  const [currentDeviceValue, setCurrentDeviceValue] = useState<Option | null>(
     currentTarget
       ? {
-          label: currentTarget,
-          value: currentTarget,
+          label: currentDevice,
+          value: currentDevice,
         }
       : null
   );
@@ -257,19 +329,23 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
       });
     }
     // When category changes, set the current target to null
-    setCurrentTargetValue(null);
+    setCurrentDeviceValue(null);
     onChange(null);
   };
 
-  const onTargetChange = (value: string | null) => {
+  const onDeviceChange = (value: string | null) => {
     if (value === null) {
-      setCurrentTargetValue(null);
+      setCurrentDeviceValue(null);
     } else {
-      setCurrentTargetValue({
+      setCurrentDeviceValue({
         label: value,
         value,
       });
     }
+    onChange(null);
+  };
+
+  const onFlashingMethodChange = (value: DeviceTarget | null) => {
     onChange(value as DeviceTarget);
   };
 
@@ -280,25 +356,49 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
           title="Device category"
           currentValue={currentCategoryValue}
           onChange={onCategoryChange}
-          options={categoryOptions}
+          options={Object.keys(targetsByCategoryAndDevice ?? {})
+            .sort()
+            .map((category) => ({
+              label: category,
+              value: category,
+            }))}
           loading={loading}
         />
       </div>
       <div className={styles.root}>
         <Omnibox
-          title="Device target"
-          currentValue={currentTargetValue}
-          onChange={onTargetChange}
+          title="Device"
+          currentValue={currentDeviceValue}
+          onChange={onDeviceChange}
           options={
             currentCategoryValue === null
               ? []
-              : targetOptionsByCategory[currentCategoryValue.value]
+              : Object.keys(
+                  targetsByCategoryAndDevice[currentCategoryValue.value]
+                )
+                  .sort()
+                  .map((device) => ({
+                    label: device,
+                    value: device,
+                  }))
           }
           loading={loading}
           // if no category has been selected, disable the target select box
           disabled={currentCategoryValue === null}
         />
       </div>
+      {currentCategoryValue && currentDeviceValue && (
+        <FlashingMethodOptions
+          onChange={onFlashingMethodChange}
+          targetMappings={
+            targetsByCategoryAndDevice[currentCategoryValue.value][
+              currentDeviceValue.value
+            ]
+          }
+          currentTarget={currentTarget}
+        />
+      )}
+
       <Loader className={styles.loader} loading={loading} />
     </div>
   );
