@@ -362,10 +362,27 @@ export default class FirmwareService {
 
           try {
             await fs.promises.copyFile(firmwareBinPath, newfirmwareBinPath);
-            firmwareBinPath = newfirmwareBinPath;
           } catch (err) {
             this.logger?.error(
               `error copying file from ${firmwareBinPath} to ${newfirmwareBinPath}: ${err}`
+            );
+          }
+
+          // copy actual firmware.bin into tmp system directory
+          const tmpPath = await fs.promises.mkdtemp(
+            path.join(os.tmpdir(), `${params.target}_`)
+          );
+          const tmpFirmwareBinPath = path.join(
+            tmpPath,
+            path.basename(firmwareBinPath)
+          );
+
+          try {
+            await fs.promises.copyFile(firmwareBinPath, tmpFirmwareBinPath);
+            firmwareBinPath = tmpFirmwareBinPath;
+          } catch (err) {
+            this.logger?.error(
+              `error copying file from ${firmwareBinPath} to ${tmpFirmwareBinPath}: ${err}`
             );
           }
         }
