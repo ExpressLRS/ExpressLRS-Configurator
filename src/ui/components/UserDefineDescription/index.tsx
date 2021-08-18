@@ -239,28 +239,36 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                   rel="noreferrer noreferrer"
                   href="https://www.open-tx.org/downloads"
                 >
-                  OpenTX 2.3 Nightly builds
+                  OpenTX 2.3.12 or Newer
                 </a>{' '}
-                starting from the N473 build or above. It also will be supported
-                in OpenTX 2.4 and above. In order to install it, you will have
-                to use OpenTX companion application.{' '}
+                or{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/EdgeTX/edgetx"
+                >
+                  EdgeTX
+                </a>
+                .
+              </p>
+              <p>
+                Check our{' '}
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
                   href="https://www.expresslrs.org/quick-start/tx-prep/"
                 >
-                  OpenTx setup instructions
-                </a>
-                .
-              </p>
-              <p>
+                  radio setup page
+                </a>{' '}
+                and{' '}
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
                   href="https://www.expresslrs.org/software/user-defines/#performance-options"
                 >
-                  Check our Wiki page for latest definition.
+                  Wiki page for latest definition
                 </a>
+                .
               </p>
             </div>
           );
@@ -275,28 +283,36 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                   rel="noreferrer noreferrer"
                   href="https://www.open-tx.org/downloads"
                 >
-                  OpenTX 2.3 Nightly builds
+                  OpenTX 2.3.12 or Newer
                 </a>{' '}
-                starting from the N473 build or above. It also will be supported
-                in OpenTX 2.4 and above. In order to install it, you will have
-                to use OpenTX companion application.{' '}
+                or{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/EdgeTX/edgetx"
+                >
+                  EdgeTX
+                </a>
+                .
+              </p>
+              <p>
+                Check our{' '}
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
                   href="https://www.expresslrs.org/quick-start/tx-prep/"
                 >
-                  OpenTx setup instructions
-                </a>
-                .
-              </p>
-              <p>
+                  radio setup page
+                </a>{' '}
+                and{' '}
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
                   href="https://www.expresslrs.org/software/user-defines/#performance-options"
                 >
-                  Check our Wiki page for latest definition.
+                  Wiki page for latest definition
                 </a>
+                .
               </p>
             </div>
           );
@@ -670,28 +686,36 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                   rel="noreferrer noreferrer"
                   href="https://www.open-tx.org/downloads"
                 >
-                  OpenTX 2.3 Nightly builds
+                  OpenTX 2.3.12 or Newer
                 </a>{' '}
-                starting from the N473 build or above. It also will be supported
-                in OpenTX 2.4 and above. In order to install it, you will have
-                to use OpenTX companion application.{' '}
+                or{' '}
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://github.com/EdgeTX/edgetx"
+                >
+                  EdgeTX
+                </a>
+                .
+              </p>
+              <p>
+                Check our{' '}
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
                   href="https://www.expresslrs.org/quick-start/tx-prep/"
                 >
-                  OpenTx setup instructions
-                </a>
-                .
-              </p>
-              <p>
+                  radio setup page
+                </a>{' '}
+                and{' '}
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                  href="https://www.expresslrs.org/software/user-defines/#performance-options"
                 >
-                  Check our Wiki page for latest definition.
+                  Wiki page for latest definition
                 </a>
+                .
               </p>
             </div>
           );
