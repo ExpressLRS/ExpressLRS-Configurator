@@ -355,26 +355,14 @@ export default class FirmwareService {
         if (fs.existsSync(firmwareBinPath)) {
           const newFirmwareBaseName = this.generateFirmwareName(params);
           const firmwareExtension = path.extname(firmwareBinPath);
-          const newfirmwareBinPath = path.join(
-            path.dirname(firmwareBinPath),
-            `${newFirmwareBaseName}${firmwareExtension}`
-          );
 
-          try {
-            await fs.promises.copyFile(firmwareBinPath, newfirmwareBinPath);
-          } catch (err) {
-            this.logger?.error(
-              `error copying file from ${firmwareBinPath} to ${newfirmwareBinPath}: ${err}`
-            );
-          }
-
-          // copy actual firmware.bin into tmp system directory
           const tmpPath = await fs.promises.mkdtemp(
             path.join(os.tmpdir(), `${params.target}_`)
           );
+
           const tmpFirmwareBinPath = path.join(
             tmpPath,
-            path.basename(firmwareBinPath)
+            `${newFirmwareBaseName}${firmwareExtension}`
           );
 
           try {
