@@ -6,17 +6,9 @@ import {
   useAvailableFirmwareTargetsQuery,
 } from '../../gql/generated/types';
 import Loader from '../Loader';
-// eslint-disable-next-line import/no-cycle
+import { FlashingMethod } from './FlashingMethod';
+import { TargetInformation } from './TargetInformation';
 import FlashingMethodOptions from '../FlashingMethodOptions';
-
-export enum FlashingMethod {
-  BetaflightPassthrough = 'Betaflight Passthrough',
-  DFU = 'DFU',
-  STLink = 'STLink',
-  Stock_BL = 'Bootloader',
-  UART = 'UART',
-  WIFI = 'WIFI',
-}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,13 +28,6 @@ interface FirmwareVersionCardProps {
 
 export type DeviceCategoryByDeviceTarget = {
   [key in DeviceTarget]: string;
-};
-
-export type TargetInformation = {
-  target: DeviceTarget;
-  device: string;
-  category: string;
-  flashingMethod: FlashingMethod | null;
 };
 
 const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {

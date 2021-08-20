@@ -4,14 +4,12 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  Tooltip,
   Typography,
 } from '@material-ui/core';
 import React, { FunctionComponent, useState } from 'react';
-import QuestionIcon from '@material-ui/icons/Help';
 import { DeviceTarget } from '../../gql/generated/types';
-// eslint-disable-next-line import/no-cycle
-import { FlashingMethod, TargetInformation } from '../DeviceTargetForm';
+import FlashingMethodDescription from '../FlashingMethodDescription';
+import { TargetInformation } from '../DeviceTargetForm/TargetInformation';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,139 +57,7 @@ export type DeviceCategoryByDeviceTarget = {
   [key in DeviceTarget]: string;
 };
 
-const FlashingMethodTooltip = (flashingMethod: FlashingMethod | null) => {
-  switch (flashingMethod) {
-    case FlashingMethod.BetaflightPassthrough:
-      return (
-        <div>
-          <p>
-            This method allows you to flash your receiver while it is connected
-            to your flight controller by using the passthrough feature of the
-            flight controller.
-          </p>
-          <ol>
-            <li>
-              Plug in your FC to your computer, but do NOT connect to betaflight
-              configurator.
-            </li>
-            <li>
-              Select your desired Device Options and your flight controllers
-              serial device below.
-            </li>
-            <li>Run Build & Flash</li>
-          </ol>
-          <p>
-            <a
-              target="_blank"
-              rel="noreferrer noreferrer"
-              href="https://www.expresslrs.org/software/updating/betaflight-passthrough/"
-            >
-              Check our Wiki page for information.
-            </a>
-          </p>
-        </div>
-      );
-    case FlashingMethod.DFU:
-      return (
-        <div>
-          <p>
-            This method allows you to flash your receiver or transmitter via the
-            Devices Firmware Upgrade mode.
-          </p>
-          <p>
-            <a
-              target="_blank"
-              rel="noreferrer noreferrer"
-              href="https://www.expresslrs.org/quick-start/getting-started/"
-            >
-              Check the Wiki page for your particular device for more
-              information.
-            </a>
-          </p>
-        </div>
-      );
-    case FlashingMethod.STLink:
-      return (
-        <div>
-          <p>
-            This method allows you to flash your receiver or transmitter using
-            an STLink programmer connected to the device.
-          </p>
-          <p>
-            <a
-              target="_blank"
-              rel="noreferrer noreferrer"
-              href="https://www.expresslrs.org/quick-start/getting-started/"
-            >
-              Check the Wiki page for your particular device for more
-              information.
-            </a>
-          </p>
-        </div>
-      );
-    case FlashingMethod.Stock_BL:
-      return (
-        <div>
-          <p>
-            This method allows you to flash your receiver or transmitter using
-            the bootloader on the device.
-          </p>
-          <p>
-            <a
-              target="_blank"
-              rel="noreferrer noreferrer"
-              href="https://www.expresslrs.org/quick-start/getting-started/"
-            >
-              Check the Wiki page for your particular device for more
-              information.
-            </a>
-          </p>
-        </div>
-      );
-    case FlashingMethod.UART:
-      return (
-        <div>
-          <p>
-            This method allows you to flash your receiver or transmitter via its
-            USB port or wiring up an FTDI device.
-          </p>
-          <p>
-            <a
-              target="_blank"
-              rel="noreferrer noreferrer"
-              href="https://www.expresslrs.org/quick-start/getting-started/"
-            >
-              Check the Wiki page for your particular device for more
-              information.
-            </a>
-          </p>
-        </div>
-      );
-    case FlashingMethod.WIFI:
-      return (
-        <div>
-          <p>
-            This method creates a firmware file you can upload to your receiver
-            or transmitter by connecting to its built in wifi.
-          </p>
-          <p>
-            <a
-              target="_blank"
-              rel="noreferrer noreferrer"
-              href="https://www.expresslrs.org/quick-start/getting-started/"
-            >
-              Check the Wiki page for your particular device for more
-              information.
-            </a>
-          </p>
-        </div>
-      );
-    default:
-      return '';
-  }
-};
-
-const FlashingMethodsList: FunctionComponent<FlashingMethodsListProps> = (
+const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   props
 ) => {
   const { onChange, targetMappings, currentTarget } = props;
@@ -212,23 +78,15 @@ const FlashingMethodsList: FunctionComponent<FlashingMethodsListProps> = (
   };
 
   const flashingMethodRadioOption = (targetMapping: TargetInformation) => {
-    const tooltip = FlashingMethodTooltip(targetMapping.flashingMethod);
     const label = (
       <>
         {!targetMapping.flashingMethod
           ? targetMapping.target
           : targetMapping.flashingMethod}
-        {tooltip && (
-          <Tooltip
-            placement="top"
-            arrow
-            classes={{
-              tooltip: styles.tooltipRoot,
-            }}
-            title={<div className={styles.tooltip}>{tooltip}</div>}
-          >
-            <QuestionIcon className={styles.icon} />
-          </Tooltip>
+        {targetMapping.flashingMethod !== null && (
+          <FlashingMethodDescription
+            flashingMethod={targetMapping.flashingMethod}
+          />
         )}
       </>
     );
@@ -276,4 +134,4 @@ const FlashingMethodsList: FunctionComponent<FlashingMethodsListProps> = (
   );
 };
 
-export default FlashingMethodsList;
+export default FlashingMethodOptions;
