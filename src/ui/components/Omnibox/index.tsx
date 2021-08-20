@@ -46,15 +46,26 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
     values: Option[],
     { inputValue }: FilterOptionsState<Option>
   ): OptionWithMatches[] => {
-    const searchResults = new QuickScore(values, ['label']).search(inputValue);
-    return searchResults.map(
-      (result: { item: Option; matches: { label: number[][] } }) => {
-        return {
-          ...result.item,
-          matches: result.matches.label,
-        };
-      }
-    );
+    if (inputValue) {
+      const searchResults = new QuickScore(values, ['label']).search(
+        inputValue
+      );
+      return searchResults.map(
+        (result: { item: Option; matches: { label: number[][] } }) => {
+          return {
+            ...result.item,
+            matches: result.matches.label,
+          };
+        }
+      );
+    }
+    // if no inputValue, then maintain original item order
+    return values.map((item) => {
+      return {
+        ...item,
+        matches: [[0, 0]],
+      };
+    });
   };
   return (
     <Autocomplete
