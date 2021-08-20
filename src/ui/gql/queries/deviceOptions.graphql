@@ -4,7 +4,8 @@ query targetDeviceOptions(
   $gitTag: String!,
   $gitBranch: String!,
   $gitCommit: String!,
-  $localPath: String!
+  $localPath: String!,
+  $gitPullRequest: PullRequestInput
 ) {
   targetDeviceOptions(
     target: $target,
@@ -12,7 +13,8 @@ query targetDeviceOptions(
     gitTag: $gitTag,
     gitBranch: $gitBranch,
     gitCommit: $gitCommit,
-    localPath: $localPath
+    localPath: $localPath,
+    gitPullRequest: $gitPullRequest
   ) {
     type
     key

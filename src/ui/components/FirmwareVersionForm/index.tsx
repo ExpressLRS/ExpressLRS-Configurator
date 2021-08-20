@@ -19,6 +19,8 @@ import {
   FirmwareVersionDataInput,
   useGetBranchesLazyQuery,
   useGetReleasesLazyQuery,
+  useGetPullRequestsLazyQuery,
+  PullRequestInput,
 } from '../../gql/generated/types';
 import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
 import ApplicationStorage from '../../storage';
@@ -103,9 +105,20 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     },
   ] = useGetBranchesLazyQuery();
 
-  const loading = gitTagsLoading || gitBranchesLoading;
+  const [
+    queryGitPullRequests,
+    {
+      loading: gitPullRequestsLoading,
+      data: gitpullRequestsResponse,
+      error: pullRequestsError,
+    },
+  ] = useGetPullRequestsLazyQuery();
+
+  const loading =
+    gitTagsLoading || gitBranchesLoading || gitPullRequestsLoading;
   const gitTags = gitTagsResponse?.releases ?? [];
   const gitBranches = gitBranchesResponse?.gitBranches ?? [];
+  const gitPullRequests = gitpullRequestsResponse?.pullRequests ?? [];
 
   const [currentGitTag, setCurrentGitTag] = useState<string>(
     data?.gitTag || ''
@@ -156,6 +169,35 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     setLocalPath(event.target.value);
   };
 
+  const [
+    currentGitPullRequest,
+    setCurrentGitPullRequest,
+  ] = useState<PullRequestInput | null>(
+    gitPullRequests.find(
+      (item) => item.number === data?.gitPullRequest?.number
+    ) || null
+  );
+
+  const onGitPullRequest = (value: string | null) => {
+    if (value === null) {
+      setCurrentGitPullRequest(null);
+      return;
+    }
+    const pullRequest =
+      gitPullRequests.find((item) => item.number === parseInt(value, 10)) ||
+      null;
+    if (pullRequest) {
+      setCurrentGitPullRequest({
+        id: pullRequest.id,
+        number: pullRequest.number,
+        title: pullRequest.title,
+        headCommitHash: pullRequest.headCommitHash,
+      });
+    } else {
+      setCurrentGitPullRequest(null);
+    }
+  };
+
   useEffect(() => {
     const storage = new ApplicationStorage();
     storage
@@ -167,6 +209,8 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
           if (result.gitCommit) setGitCommit(result.gitCommit);
           if (result.gitBranch) setCurrentGitBranch(result.gitBranch);
           if (result.localPath) setLocalPath(result.localPath);
+          if (result.gitPullRequest)
+            setCurrentGitPullRequest(result.gitPullRequest);
         }
       })
       .catch((err) => {
@@ -202,6 +246,9 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         break;
       case FirmwareSource.Local:
         break;
+      case FirmwareSource.GitPullRequest:
+        queryGitPullRequests();
+        break;
       default:
         throw new Error(`unknown firmware source: ${firmwareSource}`);
     }
@@ -214,13 +261,21 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       gitTag: currentGitTag,
       gitCommit,
       localPath,
+      gitPullRequest: currentGitPullRequest,
     };
     onChange(updatedData);
     const storage = new ApplicationStorage();
     storage.setFirmwareSource(updatedData).catch((err) => {
       console.error('failed to set firmware source', err);
     });
-  }, [firmwareSource, currentGitBranch, currentGitTag, gitCommit, localPath]);
+  }, [
+    firmwareSource,
+    currentGitBranch,
+    currentGitTag,
+    gitCommit,
+    localPath,
+    currentGitPullRequest,
+  ]);
 
   return (
     <>
@@ -234,6 +289,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         <Tab label="Git branch" value={FirmwareSource.GitBranch} />
         <Tab label="Git commit" value={FirmwareSource.GitCommit} />
         <Tab label="Local" value={FirmwareSource.Local} />
+        <Tab label="Git Pull Request" value={FirmwareSource.GitPullRequest} />
       </Tabs>
 
       {firmwareSource === FirmwareSource.GitTag && gitTags !== undefined && (
@@ -353,9 +409,41 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         </>
       )}
 
+      {firmwareSource === FirmwareSource.GitPullRequest &&
+        gitPullRequests !== undefined && (
+          <>
+            <Alert severity="warning" className={styles.dangerZone}>
+              <AlertTitle>DANGER ZONE</AlertTitle>
+              Use these sources only if you know what you are doing or was
+              instructed by project developers
+            </Alert>
+            <div className={styles.tabContents}>
+              {!loading && (
+                <Omnibox
+                  title="Git pull Requests"
+                  options={gitPullRequests.map((pullRequest) => ({
+                    label: `${pullRequest.title} #${pullRequest.number}`,
+                    value: `${pullRequest.number}`,
+                  }))}
+                  currentValue={
+                    !currentGitPullRequest
+                      ? null
+                      : {
+                          label: `${currentGitPullRequest.title} #${currentGitPullRequest.number}`,
+                          value: `${currentGitPullRequest.number}`,
+                        }
+                  }
+                  onChange={onGitPullRequest}
+                />
+              )}
+            </div>
+          </>
+        )}
+
       <Loader loading={loading} />
       <ShowAlerts severity="error" messages={branchesError} />
       <ShowAlerts severity="error" messages={tagsError} />
+      <ShowAlerts severity="error" messages={pullRequestsError} />
     </>
   );
 };

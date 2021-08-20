@@ -8,6 +8,7 @@ import FirmwareSource from '../../models/enum/FirmwareSource';
 import UserDefine from '../../models/UserDefine';
 import TargetUserDefinesFactory from '../../factories/TargetUserDefinesFactory';
 import { LoggerService } from '../../logger';
+import PullRequest from '../../models/PullRequest';
 
 interface UserDefineFilters {
   target: DeviceTarget;
@@ -16,6 +17,7 @@ interface UserDefineFilters {
   gitBranch: string;
   gitCommit: string;
   localPath: string;
+  gitPullRequest: PullRequest | null;
 }
 
 @Service()
@@ -87,6 +89,12 @@ export default class UserDefinesBuilder {
         );
         const data = await fs.promises.readFile(userDefinesPath, 'utf8');
         return this.extractCompatibleKeys(data);
+      case FirmwareSource.GitPullRequest:
+        return fetch(
+          `${this.rawRepoUrl}/${userDefineFilters.gitPullRequest?.headCommitHash}/src/user_defines.txt`
+        )
+          .then(handleResponse)
+          .then(this.extractCompatibleKeys);
       default:
         throw new Error(
           `unsupported firmware source: ${userDefineFilters.source}`

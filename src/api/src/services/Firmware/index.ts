@@ -24,6 +24,7 @@ import Platformio from '../../library/Platformio';
 import FirmwareBuilder from '../../library/FirmwareBuilder';
 import { LoggerService } from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
+import PullRequest from '../../models/PullRequest';
 
 export interface GitRepo {
   url: string;
@@ -38,6 +39,7 @@ interface FirmwareVersionData {
   gitBranch: string;
   gitCommit: string;
   localPath: string;
+  gitPullRequest: PullRequest | null;
 }
 
 interface BuildFlashFirmwareParams {
@@ -265,6 +267,15 @@ export default class FirmwareService {
         case FirmwareSource.Local:
           firmwarePath = params.firmware.localPath;
           break;
+        case FirmwareSource.GitPullRequest:
+          if (params.firmware.gitPullRequest) {
+            const pullRequestResult = await firmwareDownload.checkoutCommit(
+              gitRepo.url,
+              params.firmware.gitPullRequest.headCommitHash
+            );
+            firmwarePath = pullRequestResult.path;
+          }
+          break;
         default:
           throw new Error(
             `unsupported firmware source: ${params.firmware.source}`
@@ -426,7 +437,13 @@ export default class FirmwareService {
   }
 
   generateFirmwareName(params: BuildFlashFirmwareParams): string {
-    const { source, gitBranch, gitCommit, gitTag } = params.firmware;
+    const {
+      source,
+      gitBranch,
+      gitCommit,
+      gitTag,
+      gitPullRequest,
+    } = params.firmware;
     let target = params.target.toString();
 
     const viaIndex = params.target?.lastIndexOf('_via');
@@ -441,6 +458,8 @@ export default class FirmwareService {
         return `${target}-${gitBranch}`;
       case FirmwareSource.GitCommit:
         return `${target}-${gitCommit}`;
+      case FirmwareSource.GitPullRequest:
+        return `${target}-PR_${gitPullRequest?.number}`;
       default:
         return `${target}`;
     }

@@ -3,6 +3,7 @@ import { Inject, Service } from 'typedi';
 import OctopusGitHubClient from '../../services/GitHubClient';
 import { ConfigToken, IConfig } from '../../config';
 import Release from '../../models/Release';
+import PullRequest from '../../models/PullRequest';
 
 @Service()
 @Resolver()
@@ -31,6 +32,14 @@ export default class SourcesResolver {
   @Query(() => [Release])
   async releases() {
     return this.gitClient.loadReleases(
+      this.config.git.owner,
+      this.config.git.repositoryName
+    );
+  }
+
+  @Query(() => [PullRequest])
+  async pullRequests() {
+    return this.gitClient.loadPullRequests(
       this.config.git.owner,
       this.config.git.repositoryName
     );
