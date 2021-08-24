@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
   chooseFolderButton: {
     marginTop: `${theme.spacing(1)} !important`,
   },
+  firmwareVersionAlert: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 interface FirmwareVersionCardProps {
@@ -271,6 +274,20 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
                   }
                   onChange={onGitTag}
                 />
+                {currentGitTag &&
+                  gitTags.filter((item) => {
+                    if (!showPreReleases) {
+                      return item.preRelease === false;
+                    }
+                    return true;
+                  })[0]?.tagName !== currentGitTag && (
+                    <Alert
+                      className={styles.firmwareVersionAlert}
+                      severity="info"
+                    >
+                      There is a newer version of the firmware available
+                    </Alert>
+                  )}
               </>
             )}
           </div>
