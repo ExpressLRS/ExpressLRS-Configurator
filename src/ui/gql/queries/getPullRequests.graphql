@@ -1,0 +1,8 @@
+query getPullRequests {
+  pullRequests {
+    id
+    number
+    title
+    headCommitHash
+  }
+}

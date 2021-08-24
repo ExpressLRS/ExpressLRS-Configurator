@@ -77,6 +77,13 @@ export const validateFirmwareVersionData = (
         errors.push(new Error('Firmware release is not selected'));
       }
       break;
+    case FirmwareSource.GitPullRequest:
+      if (
+        !(data.gitPullRequest && data.gitPullRequest.headCommitHash.length > 0)
+      ) {
+        errors.push(new Error('Firmware Pull Request is not selected'));
+      }
+      break;
     default:
       throw new Error(`unknown firmware data source: ${data.source}`);
   }
@@ -229,6 +236,7 @@ const ConfiguratorView: FunctionComponent = () => {
           gitTag: firmwareVersionData.gitTag!,
           gitCommit: firmwareVersionData.gitCommit!,
           localPath: firmwareVersionData.localPath!,
+          gitPullRequest: firmwareVersionData.gitPullRequest,
         },
       });
     }
@@ -367,6 +375,11 @@ const ConfiguratorView: FunctionComponent = () => {
       case FirmwareSource.GitTag:
         setLuaScriptLocation(
           `https://raw.githubusercontent.com/ExpressLRS/ExpressLRS/${firmwareVersionData.gitTag}/src/lua/ELRS.lua`
+        );
+        break;
+      case FirmwareSource.GitPullRequest:
+        setLuaScriptLocation(
+          `https://raw.githubusercontent.com/ExpressLRS/ExpressLRS/${firmwareVersionData.gitPullRequest?.headCommitHash}/src/lua/ELRS.lua`
         );
         break;
       default:

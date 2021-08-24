@@ -5,6 +5,7 @@ enum FirmwareSource {
   GitBranch = 'GitBranch',
   GitCommit = 'GitCommit',
   Local = 'Local',
+  GitPullRequest = 'GitPullRequest',
 }
 
 registerEnumType(FirmwareSource, {

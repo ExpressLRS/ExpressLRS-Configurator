@@ -26,6 +26,7 @@ export type Query = {
   readonly gitBranches: ReadonlyArray<Scalars['String']>;
   readonly gitTags: ReadonlyArray<Scalars['String']>;
   readonly releases: ReadonlyArray<Release>;
+  readonly pullRequests: ReadonlyArray<PullRequestType>;
   readonly checkForUpdates: UpdatesAvailability;
   readonly availableDevicesList: ReadonlyArray<SerialPortInformation>;
 };
@@ -37,6 +38,7 @@ export type QueryTargetDeviceOptionsArgs = {
   gitBranch?: Maybe<Scalars['String']>;
   gitCommit?: Maybe<Scalars['String']>;
   localPath?: Maybe<Scalars['String']>;
+  gitPullRequest?: Maybe<PullRequestInput>;
 };
 
 export type QueryCheckForUpdatesArgs = {
@@ -195,12 +197,28 @@ export enum FirmwareSource {
   GitBranch = 'GitBranch',
   GitCommit = 'GitCommit',
   Local = 'Local',
+  GitPullRequest = 'GitPullRequest',
 }
+
+export type PullRequestInput = {
+  readonly title: Scalars['String'];
+  readonly id: Scalars['Float'];
+  readonly number: Scalars['Float'];
+  readonly headCommitHash: Scalars['String'];
+};
 
 export type Release = {
   readonly __typename?: 'Release';
   readonly tagName: Scalars['String'];
   readonly preRelease: Scalars['Boolean'];
+};
+
+export type PullRequestType = {
+  readonly __typename?: 'PullRequestType';
+  readonly title: Scalars['String'];
+  readonly id: Scalars['Float'];
+  readonly number: Scalars['Float'];
+  readonly headCommitHash: Scalars['String'];
 };
 
 export type UpdatesAvailability = {
@@ -271,6 +289,7 @@ export type FirmwareVersionDataInput = {
   readonly gitBranch?: Maybe<Scalars['String']>;
   readonly gitCommit?: Maybe<Scalars['String']>;
   readonly localPath?: Maybe<Scalars['String']>;
+  readonly gitPullRequest?: Maybe<PullRequestInput>;
 };
 
 export enum UserDefinesMode {
@@ -483,6 +502,7 @@ export type TargetDeviceOptionsQueryVariables = Exact<{
   gitBranch: Scalars['String'];
   gitCommit: Scalars['String'];
   localPath: Scalars['String'];
+  gitPullRequest?: Maybe<PullRequestInput>;
 }>;
 
 export type TargetDeviceOptionsQuery = { readonly __typename?: 'Query' } & {
@@ -512,6 +532,17 @@ export type GetBranchesQuery = { readonly __typename?: 'Query' } & Pick<
   Query,
   'gitBranches'
 >;
+
+export type GetPullRequestsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPullRequestsQuery = { readonly __typename?: 'Query' } & {
+  readonly pullRequests: ReadonlyArray<
+    { readonly __typename?: 'PullRequestType' } & Pick<
+      PullRequestType,
+      'id' | 'number' | 'title' | 'headCommitHash'
+    >
+  >;
+};
 
 export type GetReleasesQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -1016,6 +1047,7 @@ export const TargetDeviceOptionsDocument = gql`
     $gitBranch: String!
     $gitCommit: String!
     $localPath: String!
+    $gitPullRequest: PullRequestInput
   ) {
     targetDeviceOptions(
       target: $target
@@ -1024,6 +1056,7 @@ export const TargetDeviceOptionsDocument = gql`
       gitBranch: $gitBranch
       gitCommit: $gitCommit
       localPath: $localPath
+      gitPullRequest: $gitPullRequest
     ) {
       type
       key
@@ -1052,6 +1085,7 @@ export const TargetDeviceOptionsDocument = gql`
  *      gitBranch: // value for 'gitBranch'
  *      gitCommit: // value for 'gitCommit'
  *      localPath: // value for 'localPath'
+ *      gitPullRequest: // value for 'gitPullRequest'
  *   },
  * });
  */
@@ -1190,6 +1224,66 @@ export type GetBranchesLazyQueryHookResult = ReturnType<
 export type GetBranchesQueryResult = Apollo.QueryResult<
   GetBranchesQuery,
   GetBranchesQueryVariables
+>;
+export const GetPullRequestsDocument = gql`
+  query getPullRequests {
+    pullRequests {
+      id
+      number
+      title
+      headCommitHash
+    }
+  }
+`;
+
+/**
+ * __useGetPullRequestsQuery__
+ *
+ * To run a query within a React component, call `useGetPullRequestsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPullRequestsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPullRequestsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPullRequestsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetPullRequestsQuery,
+    GetPullRequestsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetPullRequestsQuery, GetPullRequestsQueryVariables>(
+    GetPullRequestsDocument,
+    options
+  );
+}
+export function useGetPullRequestsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetPullRequestsQuery,
+    GetPullRequestsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetPullRequestsQuery,
+    GetPullRequestsQueryVariables
+  >(GetPullRequestsDocument, options);
+}
+export type GetPullRequestsQueryHookResult = ReturnType<
+  typeof useGetPullRequestsQuery
+>;
+export type GetPullRequestsLazyQueryHookResult = ReturnType<
+  typeof useGetPullRequestsLazyQuery
+>;
+export type GetPullRequestsQueryResult = Apollo.QueryResult<
+  GetPullRequestsQuery,
+  GetPullRequestsQueryVariables
 >;
 export const GetReleasesDocument = gql`
   query getReleases {

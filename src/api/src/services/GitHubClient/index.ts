@@ -1,5 +1,6 @@
 import { Octokit } from '@octokit/rest';
 import { Service } from 'typedi';
+import PullRequest from '../../models/PullRequest';
 
 export interface Release {
   tagName: string;
@@ -12,6 +13,8 @@ export interface IGitHubClient {
   loadReleases(owner: string, repository: string): Promise<Release[]>;
 
   loadBranches(owner: string, repository: string): Promise<string[]>;
+
+  loadPullRequests(owner: string, repository: string): Promise<PullRequest[]>;
 }
 
 /*
@@ -63,5 +66,25 @@ export default class OctopusGitHubClient implements IGitHubClient {
       per_page: 100,
     });
     return response.data.map((item) => item.name);
+  }
+
+  async loadPullRequests(
+    owner: string,
+    repository: string
+  ): Promise<PullRequest[]> {
+    const response = await this.client.rest.pulls.list({
+      owner,
+      repo: repository,
+      per_page: 100,
+      state: 'open',
+    });
+    return response.data.map((item) => {
+      return {
+        id: item.id,
+        number: item.number,
+        title: item.title,
+        headCommitHash: item.head.sha,
+      };
+    });
   }
 }
