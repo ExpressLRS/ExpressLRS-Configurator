@@ -390,7 +390,7 @@ ipcMain.on(IpcRequest.OpenLogsFolder, () => {
   logger.log('received a request to logs path', {
     logsLocation,
   });
-  shell.showItemInFolder(logsPath);
+  shell.showItemInFolder(logsLocation);
 });
 
 let buildInProgress = false;
