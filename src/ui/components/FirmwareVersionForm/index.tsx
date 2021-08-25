@@ -112,7 +112,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     queryGitPullRequests,
     {
       loading: gitPullRequestsLoading,
-      data: gitpullRequestsResponse,
+      data: gitPullRequestsResponse,
       error: pullRequestsError,
     },
   ] = useGetPullRequestsLazyQuery();
@@ -121,7 +121,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     gitTagsLoading || gitBranchesLoading || gitPullRequestsLoading;
   const gitTags = gitTagsResponse?.releases ?? [];
   const gitBranches = gitBranchesResponse?.gitBranches ?? [];
-  const gitPullRequests = gitpullRequestsResponse?.pullRequests ?? [];
+  const gitPullRequests = gitPullRequestsResponse?.pullRequests;
 
   const [currentGitTag, setCurrentGitTag] = useState<string>(
     data?.gitTag || ''
@@ -175,20 +175,32 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   const [
     currentGitPullRequest,
     setCurrentGitPullRequest,
-  ] = useState<PullRequestInput | null>(
-    gitPullRequests.find(
-      (item) => item.number === data?.gitPullRequest?.number
-    ) || null
-  );
+  ] = useState<PullRequestInput | null>(data?.gitPullRequest || null);
+
+  /*
+    Make sure that a valid pull request is selected
+   */
+  useEffect(() => {
+    if (gitPullRequestsResponse?.pullRequests && currentGitPullRequest) {
+      const pullRequest =
+        gitPullRequestsResponse.pullRequests.find(
+          (item) => item.number === currentGitPullRequest.number
+        ) || null;
+      // if we have a list of pull requests and the current pull request is not
+      // part of that list, then set current pull request to null
+      if (!pullRequest) {
+        setCurrentGitPullRequest(null);
+      }
+    }
+  }, [gitPullRequestsResponse, currentGitPullRequest]);
 
   const onGitPullRequest = (value: string | null) => {
     if (value === null) {
       setCurrentGitPullRequest(null);
       return;
     }
-    const pullRequest =
-      gitPullRequests.find((item) => item.number === parseInt(value, 10)) ||
-      null;
+    const iValue = parseInt(value, 10);
+    const pullRequest = gitPullRequests?.find((item) => item.number === iValue);
     if (pullRequest) {
       setCurrentGitPullRequest({
         id: pullRequest.id,
@@ -196,8 +208,6 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         title: pullRequest.title,
         headCommitHash: pullRequest.headCommitHash,
       });
-    } else {
-      setCurrentGitPullRequest(null);
     }
   };
 
