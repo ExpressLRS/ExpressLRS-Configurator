@@ -24,6 +24,7 @@ import UpdatesService from './src/services/Updates';
 import UpdatesResolver from './src/graphql/resolvers/Updates.resolver';
 import SerialMonitorResolver from './src/graphql/resolvers/SerialMonitor.resolver';
 import SerialMonitorService from './src/services/SerialMonitor';
+import TargetsService from './src/services/Targets';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -79,6 +80,8 @@ export default class ApiServer {
       UserDefinesBuilder,
       new UserDefinesBuilder(rawRepoUrl, logger)
     );
+
+    Container.set(TargetsService, new TargetsService(logger));
 
     const schema = await buildSchema({
       resolvers: [
