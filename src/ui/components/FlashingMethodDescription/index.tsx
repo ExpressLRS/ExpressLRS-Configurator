@@ -60,7 +60,7 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/updating/betaflight-passthrough/"
+                  href="https://www.expresslrs.org/release/software/updating/betaflight-passthrough/"
                 >
                   Check our Wiki page for information.
                 </a>
@@ -78,7 +78,7 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/quick-start/getting-started/"
+                  href="https://www.expresslrs.org/release/quick-start/getting-started/"
                 >
                   Check the Wiki page for your particular device for more
                   information.
@@ -97,7 +97,7 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/quick-start/getting-started/"
+                  href="https://www.expresslrs.org/release/quick-start/getting-started/"
                 >
                   Check the Wiki page for your particular device for more
                   information.
@@ -116,7 +116,7 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/quick-start/getting-started/"
+                  href="https://www.expresslrs.org/release/quick-start/getting-started/"
                 >
                   Check the Wiki page for your particular device for more
                   information.
@@ -135,7 +135,7 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/quick-start/getting-started/"
+                  href="https://www.expresslrs.org/release/quick-start/getting-started/"
                 >
                   Check the Wiki page for your particular device for more
                   information.
@@ -154,7 +154,7 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/quick-start/getting-started/"
+                  href="https://www.expresslrs.org/release/quick-start/getting-started/"
                 >
                   Check the Wiki page for your particular device for more
                   information.

@@ -60,7 +60,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#regulatory-domain"
+                  href="https://www.expresslrs.org/release/software/user-defines/#regulatory-domain"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -79,7 +79,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#regulatory-domain"
+                  href="https://www.expresslrs.org/release/software/user-defines/#regulatory-domain"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -102,7 +102,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#binding-phrase"
+                  href="https://www.expresslrs.org/release/software/user-defines/#binding-phrase"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -129,7 +129,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#performance-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -149,7 +149,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -173,7 +173,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -191,7 +191,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -206,7 +206,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#performance-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -221,7 +221,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#performance-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -256,7 +256,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/quick-start/tx-prep/"
+                  href="https://www.expresslrs.org/release/quick-start/tx-prep/"
                 >
                   radio setup page
                 </a>{' '}
@@ -264,7 +264,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#performance-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
                 >
                   Wiki page for latest definition
                 </a>
@@ -300,7 +300,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/quick-start/tx-prep/"
+                  href="https://www.expresslrs.org/release/quick-start/tx-prep/"
                 >
                   radio setup page
                 </a>{' '}
@@ -308,7 +308,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#performance-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
                 >
                   Wiki page for latest definition
                 </a>
@@ -359,7 +359,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#switches"
+                  href="https://www.expresslrs.org/release/software/user-defines/#switches"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -395,7 +395,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#telemetry"
+                  href="https://www.expresslrs.org/release/software/user-defines/#telemetry"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -426,7 +426,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#telemetry"
+                  href="https://www.expresslrs.org/release/software/user-defines/#telemetry"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -448,7 +448,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#performance-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -467,7 +467,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#performance-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -485,7 +485,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -500,7 +500,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -559,7 +559,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -593,7 +593,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#performance-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -618,7 +618,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/hardware/fan-mod/"
+                  href="https://www.expresslrs.org/release/hardware/fan-mod/"
                 >
                   R9M Fan Mod Cover
                 </a>
@@ -629,7 +629,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#output-power-limit"
+                  href="https://www.expresslrs.org/release/software/user-defines/#output-power-limit"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -649,7 +649,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#compatability-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -669,7 +669,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -703,7 +703,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/quick-start/tx-prep/"
+                  href="https://www.expresslrs.org/release/quick-start/tx-prep/"
                 >
                   radio setup page
                 </a>{' '}
@@ -711,7 +711,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#performance-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
                 >
                   Wiki page for latest definition
                 </a>
@@ -731,7 +731,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -756,7 +756,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#compatability-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -780,7 +780,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#compatability-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -798,7 +798,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -816,7 +816,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#other-options"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </a>
