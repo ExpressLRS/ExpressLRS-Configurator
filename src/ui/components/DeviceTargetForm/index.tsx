@@ -55,13 +55,13 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     [DeviceTarget.Frsky_RX_R9SLIMPLUS_OTA_via_BetaflightPassthrough]:
       'Frsky R9',
 
-    // Happymodel 915 Mhz
-    [DeviceTarget.HappyModel_TX_ES915TX_via_STLINK]: 'Happymodel 915 Mhz',
-    [DeviceTarget.HappyModel_TX_ES915TX_via_WIFI]: 'Happymodel 915 Mhz',
-    [DeviceTarget.HappyModel_TX_ES915TX_via_stock_BL]: 'Happymodel 915 Mhz',
-    [DeviceTarget.HappyModel_RX_ES915RX_via_STLINK]: 'Happymodel 915 Mhz',
+    // Happymodel 915 MHz
+    [DeviceTarget.HappyModel_TX_ES915TX_via_STLINK]: 'Happymodel 915 MHz',
+    [DeviceTarget.HappyModel_TX_ES915TX_via_WIFI]: 'Happymodel 915 MHz',
+    [DeviceTarget.HappyModel_TX_ES915TX_via_stock_BL]: 'Happymodel 915 MHz',
+    [DeviceTarget.HappyModel_RX_ES915RX_via_STLINK]: 'Happymodel 915 MHz',
     [DeviceTarget.HappyModel_RX_ES915RX_via_BetaflightPassthrough]:
-      'Happymodel 915 Mhz',
+      'Happymodel 915 MHz',
 
     // Happymodel ES900
     [DeviceTarget.HappyModel_TX_ES900TX_via_UART]: 'HappyModel ES900',
@@ -70,16 +70,16 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
       'HappyModel ES900',
     [DeviceTarget.HappyModel_RX_ES900RX_via_WIFI]: 'HappyModel ES900',
 
-    // Happymodel 2.4 Ghz
-    [DeviceTarget.HappyModel_ES24TX_2400_TX_via_UART]: 'Happymodel 2.4 Ghz',
-    [DeviceTarget.HappyModel_ES24TX_2400_TX_via_WIFI]: 'Happymodel 2.4 Ghz',
-    [DeviceTarget.HappyModel_EP_2400_RX_via_UART]: 'Happymodel 2.4 Ghz',
+    // Happymodel 2.4 GHz
+    [DeviceTarget.HappyModel_ES24TX_2400_TX_via_UART]: 'Happymodel 2.4 GHz',
+    [DeviceTarget.HappyModel_ES24TX_2400_TX_via_WIFI]: 'Happymodel 2.4 GHz',
+    [DeviceTarget.HappyModel_EP_2400_RX_via_UART]: 'Happymodel 2.4 GHz',
     [DeviceTarget.HappyModel_EP_2400_RX_via_BetaflightPassthrough]:
-      'Happymodel 2.4 Ghz',
-    [DeviceTarget.HappyModel_EP_2400_RX_via_WIFI]: 'Happymodel 2.4 Ghz',
-    [DeviceTarget.HappyModel_PP_2400_RX_via_STLINK]: 'Happymodel 2.4 Ghz',
+      'Happymodel 2.4 GHz',
+    [DeviceTarget.HappyModel_EP_2400_RX_via_WIFI]: 'Happymodel 2.4 GHz',
+    [DeviceTarget.HappyModel_PP_2400_RX_via_STLINK]: 'Happymodel 2.4 GHz',
     [DeviceTarget.HappyModel_PP_2400_RX_via_BetaflightPassthrough]:
-      'Happymodel 2.4 Ghz',
+      'Happymodel 2.4 GHz',
 
     // NamimnoRC VOYAGER 900
     [DeviceTarget.NamimnoRC_VOYAGER_900_TX_via_STLINK]: 'NamimnoRC VOYAGER 900',
@@ -94,32 +94,32 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     [DeviceTarget.NamimnoRC_VOYAGER_900_ESP_RX_via_WIFI]:
       'NamimnoRC VOYAGER 900',
 
-    // NamimnoRC FLASH 2.4 Ghz
+    // NamimnoRC FLASH 2.4 GHz
     [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_STLINK]:
-      'NamimnoRC FLASH 2.4 Ghz',
-    [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_WIFI]: 'NamimnoRC FLASH 2.4 Ghz',
+      'NamimnoRC FLASH 2.4 GHz',
+    [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_WIFI]: 'NamimnoRC FLASH 2.4 GHz',
     [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_STLINK]:
-      'NamimnoRC FLASH 2.4 Ghz',
+      'NamimnoRC FLASH 2.4 GHz',
     [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough]:
-      'NamimnoRC FLASH 2.4 Ghz',
+      'NamimnoRC FLASH 2.4 GHz',
     [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_UART]:
-      'NamimnoRC FLASH 2.4 Ghz',
+      'NamimnoRC FLASH 2.4 GHz',
     [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_BetaflightPassthrough]:
-      'NamimnoRC FLASH 2.4 Ghz',
+      'NamimnoRC FLASH 2.4 GHz',
     [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_WIFI]:
-      'NamimnoRC FLASH 2.4 Ghz',
+      'NamimnoRC FLASH 2.4 GHz',
 
     // FM30 TX
-    [DeviceTarget.FM30_TX_via_STLINK]: 'SIYI 2.4 Ghz',
-    [DeviceTarget.FM30_TX_via_DFU]: 'SIYI 2.4 Ghz',
-    [DeviceTarget.FM30_RX_MINI_via_STLINK]: 'SIYI 2.4 Ghz',
-    [DeviceTarget.FM30_RX_MINI_via_BetaflightPassthrough]: 'SIYI 2.4 Ghz',
+    [DeviceTarget.FM30_TX_via_STLINK]: 'SIYI 2.4 GHz',
+    [DeviceTarget.FM30_TX_via_DFU]: 'SIYI 2.4 GHz',
+    [DeviceTarget.FM30_RX_MINI_via_STLINK]: 'SIYI 2.4 GHz',
+    [DeviceTarget.FM30_RX_MINI_via_BetaflightPassthrough]: 'SIYI 2.4 GHz',
 
-    // NeutronRC 900 Mhz
-    [DeviceTarget.NeutronRC_900_RX_via_UART]: 'NeutronRC 900 Mhz',
+    // NeutronRC 900 MHz
+    [DeviceTarget.NeutronRC_900_RX_via_UART]: 'NeutronRC 900 MHz',
     [DeviceTarget.NeutronRC_900_RX_via_BetaflightPassthrough]:
-      'NeutronRC 900 Mhz',
-    [DeviceTarget.NeutronRC_900_RX_via_WIFI]: 'NeutronRC 900 Mhz',
+      'NeutronRC 900 MHz',
+    [DeviceTarget.NeutronRC_900_RX_via_WIFI]: 'NeutronRC 900 MHz',
 
     // R9MX RX
     [DeviceTarget.Frsky_RX_R9MX_via_STLINK]: 'Frsky R9',
@@ -129,23 +129,23 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     [DeviceTarget.Jumper_RX_R900MINI_via_STLINK]: 'Jumper R900',
     [DeviceTarget.Jumper_RX_R900MINI_via_BetaflightPassthrough]: 'Jumper R900',
 
-    // 900Mhz TTGO V1 TX
-    [DeviceTarget.DIY_900_TX_TTGO_V1_SX127x_via_UART]: 'DIY 900 Mhz',
+    // 900 MHz TTGO V1 TX
+    [DeviceTarget.DIY_900_TX_TTGO_V1_SX127x_via_UART]: 'DIY 900 MHz',
 
     // 900 TTGO V2 TX
-    [DeviceTarget.DIY_900_TX_TTGO_V2_SX127x_via_UART]: 'DIY 900 Mhz',
+    [DeviceTarget.DIY_900_TX_TTGO_V2_SX127x_via_UART]: 'DIY 900 MHz',
 
-    // DIY 900Mhz Mhz TXs
-    [DeviceTarget.DIY_900_TX_ESP32_SX127x_E19_via_UART]: 'DIY 900 Mhz',
-    [DeviceTarget.DIY_900_TX_ESP32_SX127x_RFM95_via_UART]: 'DIY 900 Mhz',
-    [DeviceTarget.DIY_900_RX_ESP8285_SX127x_via_UART]: 'DIY 900 Mhz',
+    // DIY 900 MHz TXs
+    [DeviceTarget.DIY_900_TX_ESP32_SX127x_E19_via_UART]: 'DIY 900 MHz',
+    [DeviceTarget.DIY_900_TX_ESP32_SX127x_RFM95_via_UART]: 'DIY 900 MHz',
+    [DeviceTarget.DIY_900_RX_ESP8285_SX127x_via_UART]: 'DIY 900 MHz',
     [DeviceTarget.DIY_900_RX_ESP8285_SX127x_via_BetaflightPassthrough]:
-      'DIY 900 Mhz',
+      'DIY 900 MHz',
 
-    // DIY 2400 Mhz TXs
-    [DeviceTarget.DIY_2400_TX_ESP32_SX1280_Mini_via_UART]: 'DIY 2.4 Ghz',
-    [DeviceTarget.DIY_2400_TX_ESP32_SX1280_E28_via_UART]: 'DIY 2.4 Ghz',
-    [DeviceTarget.DIY_2400_TX_ESP32_SX1280_LORA1280F27_via_UART]: 'DIY 2.4 Ghz',
+    // DIY 2400 MHz TXs
+    [DeviceTarget.DIY_2400_TX_ESP32_SX1280_Mini_via_UART]: 'DIY 2.4 GHz',
+    [DeviceTarget.DIY_2400_TX_ESP32_SX1280_E28_via_UART]: 'DIY 2.4 GHz',
+    [DeviceTarget.DIY_2400_TX_ESP32_SX1280_LORA1280F27_via_UART]: 'DIY 2.4 GHz',
 
     [DeviceTarget.GHOST_2400_TX_via_STLINK]: 'ImmersionRC Ghost',
     [DeviceTarget.GHOST_2400_TX_LITE_via_STLINK]: 'ImmersionRC Ghost',
@@ -156,43 +156,43 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
       'ImmersionRC Ghost',
 
     // DIY_2400_RX_ESP8285_SX1280
-    [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_UART]: 'DIY 2.4 Ghz',
-    [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_WIFI]: 'DIY 2.4 Ghz',
+    [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_UART]: 'DIY 2.4 GHz',
+    [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_WIFI]: 'DIY 2.4 GHz',
     [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough]:
-      'DIY 2.4 Ghz',
+      'DIY 2.4 GHz',
 
     // DIY_2400_RX_STM32_CCG_Nano_v0_5
-    [DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK]: 'DIY 2.4 Ghz',
+    [DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK]: 'DIY 2.4 GHz',
     [DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough]:
-      'DIY 2.4 Ghz',
+      'DIY 2.4 GHz',
 
-    // BETAFPV 900 Mhz
-    [DeviceTarget.BETAFPV_900_TX_via_UART]: 'BETAFPV 900 Mhz',
-    [DeviceTarget.BETAFPV_900_TX_via_WIFI]: 'BETAFPV 900 Mhz',
-    [DeviceTarget.BETAFPV_900_RX_via_UART]: 'BETAFPV 900 Mhz',
-    [DeviceTarget.BETAFPV_900_RX_via_WIFI]: 'BETAFPV 900 Mhz',
-    [DeviceTarget.BETAFPV_900_RX_via_BetaflightPassthrough]: 'BETAFPV 900 Mhz',
+    // BETAFPV 900 MHz
+    [DeviceTarget.BETAFPV_900_TX_via_UART]: 'BETAFPV 900 MHz',
+    [DeviceTarget.BETAFPV_900_TX_via_WIFI]: 'BETAFPV 900 MHz',
+    [DeviceTarget.BETAFPV_900_RX_via_UART]: 'BETAFPV 900 MHz',
+    [DeviceTarget.BETAFPV_900_RX_via_WIFI]: 'BETAFPV 900 MHz',
+    [DeviceTarget.BETAFPV_900_RX_via_BetaflightPassthrough]: 'BETAFPV 900 MHz',
 
-    // BETAFPV 2.4 Ghz
-    [DeviceTarget.BETAFPV_2400_TX_via_UART]: 'BETAFPV 2.4 Ghz',
-    [DeviceTarget.BETAFPV_2400_TX_via_WIFI]: 'BETAFPV 2.4 Ghz',
-    [DeviceTarget.BETAFPV_2400_RX_via_UART]: 'BETAFPV 2.4 Ghz',
-    [DeviceTarget.BETAFPV_2400_RX_via_WIFI]: 'BETAFPV 2.4 Ghz',
-    [DeviceTarget.BETAFPV_2400_RX_via_BetaflightPassthrough]: 'BETAFPV 2.4 Ghz',
+    // BETAFPV 2.4 GHz
+    [DeviceTarget.BETAFPV_2400_TX_via_UART]: 'BETAFPV 2.4 GHz',
+    [DeviceTarget.BETAFPV_2400_TX_via_WIFI]: 'BETAFPV 2.4 GHz',
+    [DeviceTarget.BETAFPV_2400_RX_via_UART]: 'BETAFPV 2.4 GHz',
+    [DeviceTarget.BETAFPV_2400_RX_via_WIFI]: 'BETAFPV 2.4 GHz',
+    [DeviceTarget.BETAFPV_2400_RX_via_BetaflightPassthrough]: 'BETAFPV 2.4 GHz',
 
-    // HGLRC Hermes 900 Mhz
-    [DeviceTarget.HGLRC_Hermes_900_RX_via_UART]: 'HGLRC 900 Mhz',
+    // HGLRC Hermes 900 MHz
+    [DeviceTarget.HGLRC_Hermes_900_RX_via_UART]: 'HGLRC 900 MHz',
     [DeviceTarget.HGLRC_Hermes_900_RX_via_BetaflightPassthrough]:
-      'HGLRC 900 Mhz',
-    [DeviceTarget.HGLRC_Hermes_900_RX_via_WIFI]: 'HGLRC 900 Mhz',
+      'HGLRC 900 MHz',
+    [DeviceTarget.HGLRC_Hermes_900_RX_via_WIFI]: 'HGLRC 900 MHz',
 
-    // HGLRC Hermes 2.4 Ghz
-    [DeviceTarget.HGLRC_Hermes_2400_TX_via_UART]: 'HGLRC 2.4 Ghz',
-    [DeviceTarget.HGLRC_Hermes_2400_TX_via_WIFI]: 'HGLRC 2.4 Ghz',
-    [DeviceTarget.HGLRC_Hermes_2400_RX_via_UART]: 'HGLRC 2.4 Ghz',
+    // HGLRC Hermes 2.4 GHz
+    [DeviceTarget.HGLRC_Hermes_2400_TX_via_UART]: 'HGLRC 2.4 GHz',
+    [DeviceTarget.HGLRC_Hermes_2400_TX_via_WIFI]: 'HGLRC 2.4 GHz',
+    [DeviceTarget.HGLRC_Hermes_2400_RX_via_UART]: 'HGLRC 2.4 GHz',
     [DeviceTarget.HGLRC_Hermes_2400_RX_via_BetaflightPassthrough]:
-      'HGLRC 2.4 Ghz',
-    [DeviceTarget.HGLRC_Hermes_2400_RX_via_WIFI]: 'HGLRC 2.4 Ghz',
+      'HGLRC 2.4 GHz',
+    [DeviceTarget.HGLRC_Hermes_2400_RX_via_WIFI]: 'HGLRC 2.4 GHz',
   };
   return data[deviceTarget];
 };
