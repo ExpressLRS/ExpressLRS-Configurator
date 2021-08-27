@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import Omnibox, { Option } from '../Omnibox';
 import {
   DeviceTarget,
@@ -250,38 +250,46 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
 
   const { loading, data } = useAvailableFirmwareTargetsQuery();
 
-  const targetInformation: TargetInformation[] = (
-    data?.availableFirmwareTargets ?? []
-  ).map((target) => {
-    return {
-      target,
-      device: deviceTargetToDeviceName(target),
-      category: deviceTargetToCategory(target),
-      flashingMethod: deviceTargetToFlashMethod(target),
-    };
-  });
+  const [targetsByCategoryAndDevice, setTargetsByCategoryAndDevice] = useState<
+    Dictionary<Dictionary<TargetInformation[]>>
+  >();
 
   interface Dictionary<T> {
     [Key: string]: T;
   }
 
-  const targetsByCategoryAndDevice = targetInformation?.reduce<
-    Dictionary<Dictionary<typeof targetInformation>>
-  >((accumulator, currentValue) => {
-    if (!accumulator[currentValue.category]) {
-      accumulator[currentValue.category] = {};
-    }
-    const category = accumulator[currentValue.category];
-    if (!category[currentValue.device]) {
-      category[currentValue.device] = [];
-    }
-    const device = category[currentValue.device];
-    if (currentValue.flashingMethod !== null) {
-      device.push(currentValue);
-    }
+  useEffect(() => {
+    const targetInformation: TargetInformation[] = (
+      data?.availableFirmwareTargets ?? []
+    ).map((target) => {
+      return {
+        target,
+        device: deviceTargetToDeviceName(target),
+        category: deviceTargetToCategory(target),
+        flashingMethod: deviceTargetToFlashMethod(target),
+      };
+    });
 
-    return accumulator;
-  }, {});
+    const targetsByCategoryAndDeviceLocal = targetInformation?.reduce<
+      Dictionary<Dictionary<TargetInformation[]>>
+    >((accumulator, currentValue) => {
+      if (!accumulator[currentValue.category]) {
+        accumulator[currentValue.category] = {};
+      }
+      const category = accumulator[currentValue.category];
+      if (!category[currentValue.device]) {
+        category[currentValue.device] = [];
+      }
+      const device = category[currentValue.device];
+      if (currentValue.flashingMethod !== null) {
+        device?.push(currentValue);
+      }
+
+      return accumulator;
+    }, {});
+
+    setTargetsByCategoryAndDevice(targetsByCategoryAndDeviceLocal);
+  }, [data]);
 
   const [
     currentCategoryValue,
@@ -356,7 +364,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
           currentValue={currentDeviceValue}
           onChange={onDeviceChange}
           options={
-            currentCategoryValue === null
+            currentCategoryValue === null || !targetsByCategoryAndDevice
               ? []
               : Object.keys(
                   targetsByCategoryAndDevice[currentCategoryValue.value]
@@ -372,17 +380,19 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
           disabled={currentCategoryValue === null}
         />
       </div>
-      {currentCategoryValue && currentDeviceValue && (
-        <FlashingMethodOptions
-          onChange={onFlashingMethodChange}
-          targetMappings={
-            targetsByCategoryAndDevice[currentCategoryValue.value][
-              currentDeviceValue.value
-            ]
-          }
-          currentTarget={currentTarget}
-        />
-      )}
+      {currentCategoryValue &&
+        currentDeviceValue &&
+        targetsByCategoryAndDevice && (
+          <FlashingMethodOptions
+            onChange={onFlashingMethodChange}
+            targetMappings={
+              targetsByCategoryAndDevice[currentCategoryValue.value][
+                currentDeviceValue.value
+              ]
+            }
+            currentTarget={currentTarget}
+          />
+        )}
 
       <Loader className={styles.loader} loading={loading} />
     </div>
