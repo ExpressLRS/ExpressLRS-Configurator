@@ -405,6 +405,20 @@ const ConfiguratorView: FunctionComponent = () => {
     setSerialDevice(newSerialDevice);
   };
 
+  const [serialPortRequired, setSerialPortRequired] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (
+      deviceTarget !== null &&
+      (deviceTarget.indexOf('_via_UART') > -1 ||
+        deviceTarget.indexOf('_BetaflightPassthrough') > -1)
+    ) {
+      setSerialPortRequired(true);
+    } else {
+      setSerialPortRequired(false);
+    }
+  }, [deviceTarget]);
+
   const [
     deviceOptionsValidationErrors,
     setDeviceOptionsValidationErrors,
@@ -488,7 +502,8 @@ const ConfiguratorView: FunctionComponent = () => {
         enumValues: item.enumValues,
         type: item.type,
       })),
-      serialDevice: serialDevice !== null ? serialDevice : undefined,
+      serialDevice:
+        serialDevice !== null && serialPortRequired ? serialDevice : undefined,
     };
     buildFlashFirmwareMutation({
       variables: {
@@ -607,14 +622,12 @@ const ConfiguratorView: FunctionComponent = () => {
                 />
 
                 <div>
-                  {deviceTarget !== null &&
-                    (deviceTarget.indexOf('_via_UART') > -1 ||
-                      deviceTarget.indexOf('_BetaflightPassthrough') > -1) && (
-                      <SerialDeviceSelect
-                        serialDevice={serialDevice}
-                        onChange={onSerialDevice}
-                      />
-                    )}
+                  {serialPortRequired && (
+                    <SerialDeviceSelect
+                      serialDevice={serialDevice}
+                      onChange={onSerialDevice}
+                    />
+                  )}
                   <Button
                     className={styles.button}
                     size="large"
