@@ -371,6 +371,22 @@ export default class FirmwareService {
             path.join(os.tmpdir(), `${params.target}_`)
           );
 
+          // copy with original filename to tmpPath
+          const tmpFirmwareBinPathOriginalName = path.join(
+            tmpPath,
+            path.basename(firmwareBinPath)
+          );
+          try {
+            await fs.promises.copyFile(
+              firmwareBinPath,
+              tmpFirmwareBinPathOriginalName
+            );
+          } catch (err) {
+            this.logger?.error(
+              `error copying file from ${firmwareBinPath} to ${tmpFirmwareBinPathOriginalName}: ${err}`
+            );
+          }
+
           const tmpFirmwareBinPath = path.join(
             tmpPath,
             `${newFirmwareBaseName}${firmwareExtension}`
