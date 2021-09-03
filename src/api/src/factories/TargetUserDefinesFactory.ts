@@ -34,6 +34,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       // network
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
       UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
       UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
@@ -106,6 +107,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       // network
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
       UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
       UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
@@ -380,6 +382,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       // network
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
       UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
       UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
@@ -412,6 +415,7 @@ export default class TargetUserDefinesFactory {
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
       // network
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
       UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
       UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
@@ -508,6 +512,10 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
       // other
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
+      // network
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const DIY_900_TX_TTGO_V2_SX127x: UserDefine[] = [
@@ -534,6 +542,10 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
+      // network
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
+      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
 
     const DIY_900_TX_ESP32_SX127x: UserDefine[] = [
@@ -563,6 +575,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       // network
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
       UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
       UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
@@ -625,6 +638,7 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       // network
+      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
       UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
       UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
     ];
