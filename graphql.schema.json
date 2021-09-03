@@ -506,6 +506,18 @@
             "deprecationReason": null
           },
           {
+            "name": "HappyModel_ES24TX_Slim_Pro_2400_TX_via_UART",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "HappyModel_ES24TX_Slim_Pro_2400_TX_via_WIFI",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "HappyModel_TX_ES900TX_via_UART",
             "description": null,
             "isDeprecated": false,

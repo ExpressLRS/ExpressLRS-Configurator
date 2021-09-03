@@ -32,6 +32,8 @@ enum DeviceTarget {
   Jumper_RX_R900MINI_via_BetaflightPassthrough = 'Jumper_RX_R900MINI_via_BetaflightPassthrough',
   HappyModel_ES24TX_2400_TX_via_UART = 'HappyModel_ES24TX_2400_TX_via_UART',
   HappyModel_ES24TX_2400_TX_via_WIFI = 'HappyModel_ES24TX_2400_TX_via_WIFI',
+  HappyModel_ES24TX_Slim_Pro_2400_TX_via_UART = 'HappyModel_ES24TX_Slim_Pro_2400_TX_via_UART',
+  HappyModel_ES24TX_Slim_Pro_2400_TX_via_WIFI = 'HappyModel_ES24TX_Slim_Pro_2400_TX_via_WIFI',
   HappyModel_TX_ES900TX_via_UART = 'HappyModel_TX_ES900TX_via_UART',
   HappyModel_TX_ES900TX_via_WIFI = 'HappyModel_TX_ES900TX_via_WIFI',
   HappyModel_RX_ES900RX_via_BetaflightPassthrough = 'HappyModel_RX_ES900RX_via_BetaflightPassthrough',

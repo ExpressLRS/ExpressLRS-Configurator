@@ -833,6 +833,8 @@ export default class TargetUserDefinesFactory {
       // Happymodel 2.4 Ghz
       [DeviceTarget.HappyModel_ES24TX_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280,
       [DeviceTarget.HappyModel_ES24TX_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280,
+      [DeviceTarget.HappyModel_ES24TX_Slim_Pro_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280,
+      [DeviceTarget.HappyModel_ES24TX_Slim_Pro_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280,
       [DeviceTarget.HappyModel_EP_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
       [DeviceTarget.HappyModel_EP_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
       [DeviceTarget.HappyModel_EP_2400_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
