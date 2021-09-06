@@ -574,6 +574,7 @@ export default class TargetUserDefinesFactory {
       // other
       UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
       UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
+      UserDefine.Boolean(UserDefineKey.WS2812_IS_GRB, false),
       // network
       UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
       UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
@@ -636,11 +637,14 @@ export default class TargetUserDefinesFactory {
       UserDefine.Boolean(UserDefineKey.USE_500HZ),
       // compat
       UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
       // network
       UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
       UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
       UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
+      // other
+      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
+      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
+      UserDefine.Boolean(UserDefineKey.WS2812_IS_GRB, false),
     ];
 
     const BETAFPV_2400_TX = DIY_2400_TX_ESP32_SX1280.concat([

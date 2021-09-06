@@ -156,6 +156,24 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.WS2812_IS_GRB:
+          return (
+            <div>
+              <p>
+                Enable this if your LED is GRB. If this is disabled your led
+                will be used in RGB configuration.
+              </p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
         case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
           return (
             <div>

@@ -133,6 +133,7 @@ const userDefinesToCategories = (
       UserDefineKey.DISABLE_STARTUP_BEEP,
       UserDefineKey.MY_STARTUP_MELODY,
       UserDefineKey.USE_DYNAMIC_POWER,
+      UserDefineKey.WS2812_IS_GRB,
     ],
   };
 
