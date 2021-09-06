@@ -913,6 +913,13 @@ export default class TargetUserDefinesFactory {
       [DeviceTarget.HGLRC_Hermes_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
       [DeviceTarget.HGLRC_Hermes_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
       [DeviceTarget.HGLRC_Hermes_2400_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
+
+      // QuadKopters
+      [DeviceTarget.QuadKopters_JR_2400_TX_via_UART]: DIY_2400_RX_ESP8285_SX1280,
+      [DeviceTarget.QuadKopters_JR_2400_TX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280,
+      [DeviceTarget.QuadKopters_NANO_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
+      [DeviceTarget.QuadKopters_NANO_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
+      [DeviceTarget.QuadKopters_NANO_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
     };
 
     if (data[target] === undefined) {

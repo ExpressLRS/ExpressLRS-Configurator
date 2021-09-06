@@ -198,6 +198,14 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     [DeviceTarget.HGLRC_Hermes_2400_RX_via_BetaflightPassthrough]:
       'HGLRC 2.4 GHz',
     [DeviceTarget.HGLRC_Hermes_2400_RX_via_WIFI]: 'HGLRC 2.4 GHz',
+
+    // QuadKopters 2.4 Ghz
+    [DeviceTarget.QuadKopters_JR_2400_TX_via_UART]: 'QuadKopters 2.4 Ghz',
+    [DeviceTarget.QuadKopters_JR_2400_TX_via_WIFI]: 'QuadKopters 2.4 Ghz',
+    [DeviceTarget.QuadKopters_NANO_RX_via_UART]: 'QuadKopters 2.4 Ghz',
+    [DeviceTarget.QuadKopters_NANO_RX_via_BetaflightPassthrough]:
+      'QuadKopters 2.4 Ghz',
+    [DeviceTarget.QuadKopters_NANO_RX_via_WIFI]: 'QuadKopters 2.4 Ghz',
   };
   return data[deviceTarget];
 };

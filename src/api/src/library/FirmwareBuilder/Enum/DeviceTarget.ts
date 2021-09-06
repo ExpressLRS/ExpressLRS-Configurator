@@ -96,6 +96,11 @@ enum DeviceTarget {
   HGLRC_Hermes_900_RX_via_UART = 'HGLRC_Hermes_900_RX_via_UART',
   HGLRC_Hermes_900_RX_via_BetaflightPassthrough = 'HGLRC_Hermes_900_RX_via_BetaflightPassthrough',
   HGLRC_Hermes_900_RX_via_WIFI = 'HGLRC_Hermes_900_RX_via_WIFI',
+  QuadKopters_JR_2400_TX_via_UART = 'QuadKopters_JR_2400_TX_via_UART',
+  QuadKopters_JR_2400_TX_via_WIFI = 'QuadKopters_JR_2400_TX_via_WIFI',
+  QuadKopters_NANO_RX_via_UART = 'QuadKopters_NANO_RX_via_UART',
+  QuadKopters_NANO_RX_via_BetaflightPassthrough = 'QuadKopters_NANO_RX_via_BetaflightPassthrough',
+  QuadKopters_NANO_RX_via_WIFI = 'QuadKopters_NANO_RX_via_WIFI',
 }
 
 export default DeviceTarget;
