@@ -149,6 +149,7 @@ const deviceTargetToCategory = (deviceTarget: DeviceTarget): string => {
     // DIY 2400 MHz TXs
     [DeviceTarget.DIY_2400_TX_ESP32_SX1280_Mini_via_UART]: 'DIY 2.4 GHz',
     [DeviceTarget.DIY_2400_TX_ESP32_SX1280_E28_via_UART]: 'DIY 2.4 GHz',
+    [DeviceTarget.DIY_2400_TX_ESP32_SX1280_E28_via_WIFI]: 'DIY 2.4 GHz',
     [DeviceTarget.DIY_2400_TX_ESP32_SX1280_LORA1280F27_via_UART]: 'DIY 2.4 GHz',
 
     [DeviceTarget.GHOST_2400_TX_via_STLINK]: 'ImmersionRC Ghost',
