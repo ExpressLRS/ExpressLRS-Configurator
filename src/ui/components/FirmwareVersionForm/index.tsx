@@ -9,8 +9,9 @@ import {
   Tabs,
   TextField,
 } from '@material-ui/core';
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { ipcRenderer } from 'electron';
+import debounce from 'lodash.debounce';
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 import Omnibox from '../Omnibox';
@@ -163,10 +164,35 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     setCurrentGitBranch(name);
   };
 
-  const [gitCommit, setGitCommit] = useState<string>(data?.gitCommit || '');
+  const [currentGitCommit, setCurrentGitCommit] = useState<string>(
+    data?.gitCommit || ''
+  );
+  const [debouncedGitCommit, setDebouncedGitCommit] = useState<string>(
+    data?.gitCommit || ''
+  );
+
+  const debouncedGitCommitHandler = useMemo(
+    () => debounce(setDebouncedGitCommit, 1000),
+    [setDebouncedGitCommit]
+  );
+
+  // Stop the invocation of the debounced function
+  // after unmounting
+  useEffect(() => {
+    return () => {
+      debouncedGitCommitHandler.cancel();
+    };
+  }, [debouncedGitCommitHandler]);
+
+  const setGitCommit = (value: string) => {
+    setCurrentGitCommit(value);
+    debouncedGitCommitHandler(value);
+  };
+
   const onGitCommit = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGitCommit(event.target.value);
   };
+
   const [localPath, setLocalPath] = useState<string>(data?.localPath || '');
   const onLocalPath = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocalPath(event.target.value);
@@ -272,7 +298,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       source: firmwareSource,
       gitBranch: currentGitBranch,
       gitTag: currentGitTag,
-      gitCommit,
+      gitCommit: debouncedGitCommit,
       localPath,
       gitPullRequest: currentGitPullRequest,
     };
@@ -285,7 +311,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     firmwareSource,
     currentGitBranch,
     currentGitTag,
-    gitCommit,
+    debouncedGitCommit,
     localPath,
     currentGitPullRequest,
   ]);
@@ -400,7 +426,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
               id="git-commit-hash"
               label="Git commit hash"
               fullWidth
-              value={gitCommit}
+              value={currentGitCommit}
               onChange={onGitCommit}
             />
           </div>
