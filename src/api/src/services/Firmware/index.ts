@@ -5,7 +5,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import rimraf from 'rimraf';
 import BuildJobType from '../../models/enum/BuildJobType';
-import DeviceTarget from '../../library/FirmwareBuilder/Enum/DeviceTarget';
 import UserDefinesMode from '../../models/enum/UserDefinesMode';
 import UserDefine from '../../models/UserDefine';
 import FirmwareSource from '../../models/enum/FirmwareSource';
@@ -46,7 +45,7 @@ interface BuildFlashFirmwareParams {
   type: BuildJobType;
   serialDevice?: string | undefined;
   firmware: FirmwareVersionData;
-  target: DeviceTarget;
+  target: string;
   userDefinesMode: UserDefinesMode;
   userDefines: UserDefine[];
   userDefinesTxt: string;

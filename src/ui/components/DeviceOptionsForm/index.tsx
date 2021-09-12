@@ -13,7 +13,6 @@ import {
 import React, { FunctionComponent } from 'react';
 import UserDefinesList from '../UserDefinesList';
 import {
-  DeviceTarget,
   UserDefine,
   UserDefineKey,
   UserDefinesMode,
@@ -52,7 +51,7 @@ export interface DeviceOptionsFormData {
 }
 
 interface DeviceOptionsFormProps {
-  target: DeviceTarget | null;
+  target: string | null;
   deviceOptions: DeviceOptionsFormData;
   onChange: (data: DeviceOptionsFormData) => void;
 }

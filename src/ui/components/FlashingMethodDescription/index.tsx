@@ -1,7 +1,7 @@
 import React, { FunctionComponent, memo } from 'react';
 import { makeStyles, Tooltip } from '@material-ui/core';
 import QuestionIcon from '@material-ui/icons/Help';
-import { FlashingMethod } from '../DeviceTargetForm/FlashingMethod';
+import { FlashingMethod } from '../../gql/generated/types';
 
 const useStyles = makeStyles(() => ({
   root: {

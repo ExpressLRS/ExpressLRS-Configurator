@@ -13,5 +13,13 @@ query availableFirmwareTargets(
     gitCommit: $gitCommit,
     localPath: $localPath,
     gitPullRequest: $gitPullRequest
-  )
+  ) {
+    id
+    name
+    category
+    targets {
+      name
+      flashingMethod
+    }
+  }
 }

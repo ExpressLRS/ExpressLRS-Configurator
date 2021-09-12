@@ -16,8 +16,6 @@ import SourcesResolver from './src/graphql/resolvers/Sources.resolver';
 
 // importing for side effects
 // eslint-disable-next-line import/extensions
-import './src/graphql/enum/DeviceTarget';
-// eslint-disable-next-line import/extensions
 import './src/graphql/enum/UserDefineKey';
 import UserDefinesBuilder from './src/services/UserDefinesBuilder';
 import UpdatesService from './src/services/Updates';
@@ -25,6 +23,7 @@ import UpdatesResolver from './src/graphql/resolvers/Updates.resolver';
 import SerialMonitorResolver from './src/graphql/resolvers/SerialMonitor.resolver';
 import SerialMonitorService from './src/services/SerialMonitor';
 import TargetsService from './src/services/Targets';
+import DeviceService from './src/services/Device';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -75,13 +74,17 @@ export default class ApiServer {
       new SerialMonitorService(pubSub, logger)
     );
 
+    const deviceService = new DeviceService(logger);
+
+    Container.set(DeviceService, deviceService);
+
     const rawRepoUrl = `https://raw.githubusercontent.com/${config.git.owner}/${config.git.repositoryName}`;
     Container.set(
       UserDefinesBuilder,
-      new UserDefinesBuilder(rawRepoUrl, logger)
+      new UserDefinesBuilder(rawRepoUrl, logger, deviceService)
     );
 
-    Container.set(TargetsService, new TargetsService(logger));
+    Container.set(TargetsService, new TargetsService(logger, deviceService));
 
     const schema = await buildSchema({
       resolvers: [

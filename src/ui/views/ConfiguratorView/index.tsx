@@ -29,7 +29,6 @@ import {
   BuildFlashFirmwareInput,
   BuildJobType,
   BuildProgressNotification,
-  DeviceTarget,
   FirmwareSource,
   FirmwareVersionDataInput,
   useBuildFlashFirmwareMutation,
@@ -38,6 +37,7 @@ import {
   UserDefinesMode,
   useTargetDeviceOptionsLazyQuery,
   useAvailableFirmwareTargetsLazyQuery,
+  Device,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -193,16 +193,14 @@ const ConfiguratorView: FunctionComponent = () => {
     setFirmwareVersionData(data);
   };
 
-  const [deviceTarget, setDeviceTarget] = useState<DeviceTarget | null>(null);
+  const [deviceTarget, setDeviceTarget] = useState<string | null>(null);
   const [deviceTargetErrors, setDeviceTargetErrors] = useState<Error[]>([]);
-  const onDeviceTarget = (data: DeviceTarget | null) => {
+  const onDeviceTarget = (data: string | null) => {
     setDeviceTargetErrors([]);
     setDeviceTarget(data);
   };
 
-  const [deviceTargets, setDeviceTargets] = useState<DeviceTarget[] | null>(
-    null
-  );
+  const [deviceTargets, setDeviceTargets] = useState<Device[] | null>(null);
 
   const [
     fetchDeviceTargets,
@@ -289,9 +287,15 @@ const ConfiguratorView: FunctionComponent = () => {
     ) {
       const handleUpdate = async () => {
         const storage = new ApplicationStorage();
+        const deviceName =
+          deviceTargets?.find((device) => {
+            return device.targets.find(
+              (target) => target.name === deviceTarget
+            );
+          })?.name || null;
         const userDefineOptions = await mergeWithDeviceOptionsFromStorage(
           storage,
-          deviceTarget,
+          deviceName,
           {
             ...deviceOptionsFormData,
             userDefineOptions: [...deviceOptionsResponse.targetDeviceOptions],
@@ -312,18 +316,24 @@ const ConfiguratorView: FunctionComponent = () => {
         alert(`deviceOptionsResponse is undefined`);
         return;
       }
+      const deviceName =
+        deviceTargets?.find((device) => {
+          return device.targets.find((target) => target.name === deviceTarget);
+        })?.name || null;
+      if (deviceName) {
+        const storage = new ApplicationStorage();
+        await storage.removeDeviceOptions(deviceName);
 
-      const storage = new ApplicationStorage();
-      await storage.removeDeviceOptions(deviceTarget);
-      const userDefineOptions = await mergeWithDeviceOptionsFromStorage(
-        storage,
-        deviceTarget,
-        {
-          ...deviceOptionsFormData,
-          userDefineOptions: [...deviceOptionsResponse.targetDeviceOptions],
-        }
-      );
-      setDeviceOptionsFormData(userDefineOptions);
+        const userDefineOptions = await mergeWithDeviceOptionsFromStorage(
+          storage,
+          deviceName,
+          {
+            ...deviceOptionsFormData,
+            userDefineOptions: [...deviceOptionsResponse.targetDeviceOptions],
+          }
+        );
+        setDeviceOptionsFormData(userDefineOptions);
+      }
     };
     handleReset().catch((err) => {
       console.error(`failed to reset device options form data: ${err}`);
@@ -334,9 +344,14 @@ const ConfiguratorView: FunctionComponent = () => {
     setDeviceOptionsFormData(data);
     if (deviceTarget !== null) {
       const storage = new ApplicationStorage();
-      persistDeviceOptions(storage, deviceTarget, data).catch((err) => {
-        console.error(`failed to persist user defines: ${err}`);
-      });
+      const deviceName = deviceTargets?.find((device) => {
+        return device.targets.find((target) => target.name === deviceTarget);
+      })?.name;
+      if (deviceName) {
+        persistDeviceOptions(storage, deviceName, data).catch((err) => {
+          console.error(`failed to persist user defines: ${err}`);
+        });
+      }
     }
   };
 
@@ -386,7 +401,7 @@ const ConfiguratorView: FunctionComponent = () => {
 
   const [luaScriptLocation, setLuaScriptLocation] = useState<string>('');
   useEffect(() => {
-    const isTX = (item: DeviceTarget) => {
+    const isTX = (item: string) => {
       return item.indexOf('_TX_') > -1;
     };
     if (
