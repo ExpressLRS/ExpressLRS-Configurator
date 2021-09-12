@@ -21,9 +21,11 @@ import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildLogUpdate from '../../models/BuildLogUpdate';
 import { ConfigToken, IConfig } from '../../config';
 import ClearPlatformioCoreDirResult from '../../models/ClearPlatformioCoreDirResult';
-import TargetDeviceOptionsArgs from '../args/FirmwareVersionDataInput';
+import TargetDeviceOptionsArgs from '../args/TargetDeviceOptions';
 import UserDefinesBuilder from '../../services/UserDefinesBuilder';
 import ClearFirmwareFilesResult from '../../models/ClearFirmwareFiles';
+import TargetsService from '../../services/Targets';
+import TargetArgs from '../args/Target';
 
 @Service()
 @Resolver()
@@ -31,12 +33,19 @@ export default class FirmwareResolver {
   constructor(
     private firmwareService: FirmwareService,
     private userDefinesBuilder: UserDefinesBuilder,
+    private targetsService: TargetsService,
     @Inject(ConfigToken) private config: IConfig
   ) {}
 
   @Query(() => [DeviceTarget])
-  async availableFirmwareTargets(): Promise<DeviceTarget[]> {
-    return Object.values(DeviceTarget);
+  async availableFirmwareTargets(
+    @Args() args: TargetArgs
+  ): Promise<DeviceTarget[]> {
+    return this.targetsService.loadTargetsList(
+      this.config.git.owner,
+      this.config.git.repositoryName,
+      args
+    );
   }
 
   @Query(() => [UserDefine])

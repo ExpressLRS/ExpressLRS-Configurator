@@ -31,6 +31,15 @@ export type Query = {
   readonly availableDevicesList: ReadonlyArray<SerialPortInformation>;
 };
 
+export type QueryAvailableFirmwareTargetsArgs = {
+  source?: Maybe<FirmwareSource>;
+  gitTag?: Maybe<Scalars['String']>;
+  gitBranch?: Maybe<Scalars['String']>;
+  gitCommit?: Maybe<Scalars['String']>;
+  localPath?: Maybe<Scalars['String']>;
+  gitPullRequest?: Maybe<PullRequestInput>;
+};
+
 export type QueryTargetDeviceOptionsArgs = {
   target?: Maybe<DeviceTarget>;
   source?: Maybe<FirmwareSource>;
@@ -147,6 +156,21 @@ export enum DeviceTarget {
   QuadKopters_NANO_RX_via_WIFI = 'QuadKopters_NANO_RX_via_WIFI',
 }
 
+export enum FirmwareSource {
+  GitTag = 'GitTag',
+  GitBranch = 'GitBranch',
+  GitCommit = 'GitCommit',
+  Local = 'Local',
+  GitPullRequest = 'GitPullRequest',
+}
+
+export type PullRequestInput = {
+  readonly title: Scalars['String'];
+  readonly id: Scalars['Float'];
+  readonly number: Scalars['Float'];
+  readonly headCommitHash: Scalars['String'];
+};
+
 export type UserDefine = {
   readonly __typename?: 'UserDefine';
   readonly type: UserDefineKind;
@@ -200,21 +224,6 @@ export enum UserDefineKey {
   AUTO_WIFI_ON_BOOT = 'AUTO_WIFI_ON_BOOT',
   AUTO_WIFI_ON_INTERVAL = 'AUTO_WIFI_ON_INTERVAL',
 }
-
-export enum FirmwareSource {
-  GitTag = 'GitTag',
-  GitBranch = 'GitBranch',
-  GitCommit = 'GitCommit',
-  Local = 'Local',
-  GitPullRequest = 'GitPullRequest',
-}
-
-export type PullRequestInput = {
-  readonly title: Scalars['String'];
-  readonly id: Scalars['Float'];
-  readonly number: Scalars['Float'];
-  readonly headCommitHash: Scalars['String'];
-};
 
 export type Release = {
   readonly __typename?: 'Release';
@@ -408,7 +417,12 @@ export type AvailableDevicesListQuery = { readonly __typename?: 'Query' } & {
 };
 
 export type AvailableFirmwareTargetsQueryVariables = Exact<{
-  [key: string]: never;
+  source: FirmwareSource;
+  gitTag: Scalars['String'];
+  gitBranch: Scalars['String'];
+  gitCommit: Scalars['String'];
+  localPath: Scalars['String'];
+  gitPullRequest?: Maybe<PullRequestInput>;
 }>;
 
 export type AvailableFirmwareTargetsQuery = {
@@ -654,8 +668,22 @@ export type AvailableDevicesListQueryResult = Apollo.QueryResult<
   AvailableDevicesListQueryVariables
 >;
 export const AvailableFirmwareTargetsDocument = gql`
-  query availableFirmwareTargets {
-    availableFirmwareTargets
+  query availableFirmwareTargets(
+    $source: FirmwareSource!
+    $gitTag: String!
+    $gitBranch: String!
+    $gitCommit: String!
+    $localPath: String!
+    $gitPullRequest: PullRequestInput
+  ) {
+    availableFirmwareTargets(
+      source: $source
+      gitTag: $gitTag
+      gitBranch: $gitBranch
+      gitCommit: $gitCommit
+      localPath: $localPath
+      gitPullRequest: $gitPullRequest
+    )
   }
 `;
 
@@ -671,11 +699,17 @@ export const AvailableFirmwareTargetsDocument = gql`
  * @example
  * const { data, loading, error } = useAvailableFirmwareTargetsQuery({
  *   variables: {
+ *      source: // value for 'source'
+ *      gitTag: // value for 'gitTag'
+ *      gitBranch: // value for 'gitBranch'
+ *      gitCommit: // value for 'gitCommit'
+ *      localPath: // value for 'localPath'
+ *      gitPullRequest: // value for 'gitPullRequest'
  *   },
  * });
  */
 export function useAvailableFirmwareTargetsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
+  baseOptions: Apollo.QueryHookOptions<
     AvailableFirmwareTargetsQuery,
     AvailableFirmwareTargetsQueryVariables
   >

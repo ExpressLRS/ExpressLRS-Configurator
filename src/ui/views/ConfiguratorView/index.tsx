@@ -37,6 +37,7 @@ import {
   useBuildProgressNotificationsSubscription,
   UserDefinesMode,
   useTargetDeviceOptionsLazyQuery,
+  useAvailableFirmwareTargetsLazyQuery,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -199,6 +200,44 @@ const ConfiguratorView: FunctionComponent = () => {
     setDeviceTarget(data);
   };
 
+  const [deviceTargets, setDeviceTargets] = useState<DeviceTarget[] | null>(
+    null
+  );
+
+  const [
+    fetchDeviceTargets,
+    {
+      loading: loadingTargets,
+      data: targetsResponse,
+      error: targetsResponseError,
+    },
+  ] = useAvailableFirmwareTargetsLazyQuery();
+
+  useEffect(() => {
+    if (firmwareVersionData === null) {
+      setDeviceTargets(null);
+    } else {
+      fetchDeviceTargets({
+        variables: {
+          source: firmwareVersionData.source as FirmwareSource,
+          gitBranch: firmwareVersionData.gitBranch!,
+          gitTag: firmwareVersionData.gitTag!,
+          gitCommit: firmwareVersionData.gitCommit!,
+          localPath: firmwareVersionData.localPath!,
+          gitPullRequest: firmwareVersionData.gitPullRequest,
+        },
+      });
+    }
+  }, [firmwareVersionData]);
+
+  useEffect(() => {
+    if (targetsResponse?.availableFirmwareTargets) {
+      setDeviceTargets([...targetsResponse.availableFirmwareTargets]);
+    } else {
+      setDeviceTargets(null);
+    }
+  }, [targetsResponse]);
+
   const [
     deviceOptionsFormData,
     setDeviceOptionsFormData,
@@ -207,6 +246,7 @@ const ConfiguratorView: FunctionComponent = () => {
     userDefinesMode: UserDefinesMode.UserInterface,
     userDefineOptions: [],
   });
+
   const [
     fetchOptions,
     {
@@ -547,10 +587,14 @@ const ConfiguratorView: FunctionComponent = () => {
               <CardTitle icon={<SettingsIcon />} title="Target" />
               <Divider />
               <CardContent>
-                <DeviceTargetForm
-                  currentTarget={deviceTarget}
-                  onChange={onDeviceTarget}
-                />
+                {!loadingTargets && (
+                  <DeviceTargetForm
+                    currentTarget={deviceTarget}
+                    onChange={onDeviceTarget}
+                    targetOptions={deviceTargets}
+                  />
+                )}
+                <Loader loading={loadingTargets} />
                 {luaScriptLocation.length > 0 && (
                   <Button
                     href={luaScriptLocation}

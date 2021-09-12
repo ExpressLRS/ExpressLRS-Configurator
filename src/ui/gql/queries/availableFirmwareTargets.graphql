@@ -1,3 +1,17 @@
-query availableFirmwareTargets {
-  availableFirmwareTargets
+query availableFirmwareTargets(
+  $source: FirmwareSource!,
+  $gitTag: String!,
+  $gitBranch: String!,
+  $gitCommit: String!,
+  $localPath: String!,
+  $gitPullRequest: PullRequestInput
+) {
+  availableFirmwareTargets(
+    source: $source,
+    gitTag: $gitTag,
+    gitBranch: $gitBranch,
+    gitCommit: $gitCommit,
+    localPath: $localPath,
+    gitPullRequest: $gitPullRequest
+  )
 }
