@@ -173,15 +173,10 @@ export default class TargetsService implements ITargets {
 
     return devices
       .map((value) => {
-        const device: Device = {
-          id: value.name,
-          name: value.name,
-          category: value.category,
-          targets: value.targets.filter((item) =>
-            availableTargets.find((target) => target === item.name)
-          ),
-          userDefines: value.userDefines,
-        };
+        const device = { ...value };
+        device.targets = value.targets.filter((item) =>
+          availableTargets.find((target) => target === item.name)
+        );
         return device;
       })
       .filter((item) => item.targets.length > 0);

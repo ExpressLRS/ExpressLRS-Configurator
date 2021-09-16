@@ -189,6 +189,7 @@ export default class DeviceService implements IDevices {
           category: value.category,
           targets,
           userDefines,
+          wikiUrl: value.wikiUrl,
         };
 
         return device;

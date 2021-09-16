@@ -60,6 +60,8 @@ export type Device = {
   readonly name: Scalars['String'];
   readonly category: Scalars['String'];
   readonly targets: ReadonlyArray<Target>;
+  readonly userDefines: ReadonlyArray<Target>;
+  readonly wikiUrl?: Maybe<Scalars['String']>;
 };
 
 export type Target = {
@@ -352,7 +354,7 @@ export type AvailableFirmwareTargetsQuery = {
   readonly availableFirmwareTargets: ReadonlyArray<
     { readonly __typename?: 'Device' } & Pick<
       Device,
-      'id' | 'name' | 'category'
+      'id' | 'name' | 'category' | 'wikiUrl'
     > & {
         readonly targets: ReadonlyArray<
           { readonly __typename?: 'Target' } & Pick<
@@ -626,6 +628,7 @@ export const AvailableFirmwareTargetsDocument = gql`
         name
         flashingMethod
       }
+      wikiUrl
     }
   }
 `;

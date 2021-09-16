@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Target } from '../../gql/generated/types';
+import { Device, Target } from '../../gql/generated/types';
 import FlashingMethodDescription from '../FlashingMethodDescription';
 
 const useStyles = makeStyles((theme) => ({
@@ -47,15 +47,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface FlashingMethodsListProps {
-  targetMappings: Target[];
   currentTarget: string | null;
+  currentDevice: Device | null;
   onChange: (data: string | null) => void;
 }
 
 const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   props
 ) => {
-  const { onChange, targetMappings, currentTarget } = props;
+  const { onChange, currentTarget, currentDevice } = props;
 
   const styles = useStyles();
 
@@ -68,8 +68,8 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   >();
 
   useEffect(() => {
-    const value = targetMappings
-      .filter((item) => {
+    const value = currentDevice?.targets
+      ?.filter((item) => {
         return item.flashingMethod !== null;
       })
       .sort((a, b) => {
@@ -79,7 +79,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
         return 0;
       });
     setTargetMappingsSorted(value);
-  }, [targetMappings]);
+  }, [currentDevice]);
 
   const ChangeSelectedDeviceTarget = (value: string | null) => {
     setCurrentTargetValue(value);
@@ -114,6 +114,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
         {targetMapping.flashingMethod !== null && (
           <FlashingMethodDescription
             flashingMethod={targetMapping.flashingMethod}
+            deviceWikiUrl={currentDevice?.wikiUrl ?? null}
           />
         )}
       </>

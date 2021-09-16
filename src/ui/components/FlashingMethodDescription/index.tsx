@@ -30,11 +30,13 @@ const useStyles = makeStyles(() => ({
 
 interface FlashingMethodDescriptionProps {
   flashingMethod: FlashingMethod;
+  deviceWikiUrl: string | null;
 }
 
 const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProps> = memo(
-  ({ flashingMethod }) => {
+  ({ flashingMethod, deviceWikiUrl }) => {
     const styles = useStyles();
+    const wikiUrl = (deviceWikiUrl ?? '').length > 0 ? deviceWikiUrl : null;
     const toText = (key: FlashingMethod) => {
       switch (key) {
         case FlashingMethod.BetaflightPassthrough:
@@ -60,7 +62,10 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/updating/betaflight-passthrough/"
+                  href={
+                    wikiUrl ??
+                    'https://www.expresslrs.org/release/software/updating/betaflight-passthrough/'
+                  }
                 >
                   Check our Wiki page for information.
                 </a>
@@ -78,7 +83,10 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/quick-start/getting-started/"
+                  href={
+                    wikiUrl ??
+                    'https://www.expresslrs.org/release/quick-start/getting-started/'
+                  }
                 >
                   Check the Wiki page for your particular device for more
                   information.
@@ -97,7 +105,10 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/quick-start/getting-started/"
+                  href={
+                    wikiUrl ??
+                    'https://www.expresslrs.org/release/quick-start/getting-started/'
+                  }
                 >
                   Check the Wiki page for your particular device for more
                   information.
@@ -116,7 +127,10 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/quick-start/getting-started/"
+                  href={
+                    wikiUrl ??
+                    'https://www.expresslrs.org/release/quick-start/getting-started/'
+                  }
                 >
                   Check the Wiki page for your particular device for more
                   information.
@@ -135,7 +149,10 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/quick-start/getting-started/"
+                  href={
+                    wikiUrl ??
+                    'https://www.expresslrs.org/release/quick-start/getting-started/'
+                  }
                 >
                   Check the Wiki page for your particular device for more
                   information.
@@ -154,7 +171,10 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/quick-start/getting-started/"
+                  href={
+                    wikiUrl ??
+                    'https://www.expresslrs.org/release/quick-start/getting-started/'
+                  }
                 >
                   Check the Wiki page for your particular device for more
                   information.

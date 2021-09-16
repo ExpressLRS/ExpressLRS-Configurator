@@ -19,17 +19,22 @@ export default class Device {
   @Field(() => [Target])
   userDefines: UserDefineKey[];
 
+  @Field({ nullable: true })
+  wikiUrl?: string;
+
   constructor(
     id: string,
     name: string,
     category: string,
     targets: Target[],
-    userDefines: UserDefineKey[]
+    userDefines: UserDefineKey[],
+    wikiUrl?: string
   ) {
     this.id = id;
     this.name = name;
     this.category = category;
     this.targets = targets;
     this.userDefines = userDefines;
+    this.wikiUrl = wikiUrl;
   }
 }

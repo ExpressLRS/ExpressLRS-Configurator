@@ -21,5 +21,6 @@ query availableFirmwareTargets(
       name
       flashingMethod
     }
+    wikiUrl
   }
 }

@@ -171,12 +171,12 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
         targetsByCategoryAndDevice[currentCategoryValue.value] && (
           <FlashingMethodOptions
             onChange={onFlashingMethodChange}
-            targetMappings={
+            currentTarget={currentTarget}
+            currentDevice={
               targetsByCategoryAndDevice[currentCategoryValue.value][
                 currentDeviceValue.value
-              ].targets.slice() ?? []
+              ] ?? null
             }
-            currentTarget={currentTarget}
           />
         )}
     </div>

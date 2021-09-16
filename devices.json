@@ -33,7 +33,8 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "UNLOCK_HIGHER_POWER"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv900/"
   },
   {
     "category": "BETAFPV 900 MHz",
@@ -67,7 +68,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv900/"
   },
   {
     "category": "BETAFPV 2.4 GHz",
@@ -100,7 +102,8 @@
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB",
       "UNLOCK_HIGHER_POWER"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv2400/"
   },
   {
     "category": "BETAFPV 2.4 GHz",
@@ -132,7 +135,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv2400/"
   },
   {
     "category": "Frsky R9",
@@ -170,7 +174,8 @@
       "USE_DYNAMIC_POWER",
       "R9M_UNLOCK_HIGHER_POWER",
       "UNLOCK_HIGHER_POWER"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/"
   },
   {
     "category": "Frsky R9",
@@ -200,7 +205,8 @@
       "JUST_BEEP_ONCE",
       "DISABLE_STARTUP_BEEP",
       "USE_DYNAMIC_POWER"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/"
   },
   {
     "category": "Frsky R9",
@@ -227,7 +233,8 @@
       "JUST_BEEP_ONCE",
       "DISABLE_STARTUP_BEEP",
       "USE_DYNAMIC_POWER"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/"
   },
   {
     "category": "Frsky R9",
@@ -254,7 +261,8 @@
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_R9MM_R9MINI_SBUS"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
   },
   {
     "category": "Frsky R9",
@@ -281,7 +289,8 @@
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_DIVERSITY"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
   },
   {
     "category": "Frsky R9",
@@ -307,7 +316,8 @@
       "NO_SYNC_ON_ARM",
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
   },
   {
     "category": "Frsky R9",
@@ -334,7 +344,8 @@
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_DIVERSITY"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
   },
   {
     "category": "Frsky R9",
@@ -360,7 +371,8 @@
       "NO_SYNC_ON_ARM",
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
   },
   {
     "category": "Jumper R900",
@@ -386,7 +398,8 @@
       "NO_SYNC_ON_ARM",
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-jumper900/"
   },
   {
     "category": "Happymodel 2.4 GHz",
@@ -418,7 +431,8 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/"
   },
   {
     "category": "Happymodel 2.4 GHz",
@@ -450,7 +464,8 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/"
   },
   {
     "category": "HappyModel ES900",
@@ -484,7 +499,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es900tx/"
   },
   {
     "category": "HappyModel ES900",
@@ -514,7 +530,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/"
   },
   {
     "category": "Happymodel 2.4 GHz",
@@ -545,7 +562,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmep2400/"
   },
   {
     "category": "Happymodel 2.4 GHz",
@@ -568,7 +586,8 @@
       "NO_SYNC_ON_ARM",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_500HZ"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmpp2400/"
   },
   {
     "category": "Happymodel 915 MHz",
@@ -608,7 +627,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es900tx/"
   },
   {
     "category": "Happymodel 915 MHz",
@@ -634,7 +654,8 @@
       "NO_SYNC_ON_ARM",
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/"
   },
   {
     "category": "DIY 900 MHz",
@@ -662,7 +683,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/"
   },
   {
     "category": "DIY 900 MHz",
@@ -690,7 +712,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/"
   },
   {
     "category": "DIY 900 MHz",
@@ -721,7 +744,8 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "UNLOCK_HIGHER_POWER"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/"
   },
   {
     "category": "DIY 900 MHz",
@@ -751,7 +775,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/"
   },
   {
     "category": "DIY 900 MHz",
@@ -781,7 +806,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers900/"
   },
   {
     "category": "DIY 2.4 GHz",
@@ -809,7 +835,8 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/"
   },
   {
     "category": "DIY 2.4 GHz",
@@ -841,7 +868,8 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/"
   },
   {
     "category": "DIY 2.4 GHz",
@@ -869,7 +897,8 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/"
   },
   {
     "category": "ImmersionRC Ghost",
@@ -894,7 +923,8 @@
       "JUST_BEEP_ONCE",
       "DISABLE_STARTUP_BEEP",
       "MY_STARTUP_MELODY"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/"
   },
   {
     "category": "ImmersionRC Ghost",
@@ -919,7 +949,8 @@
       "JUST_BEEP_ONCE",
       "DISABLE_STARTUP_BEEP",
       "MY_STARTUP_MELODY"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/"
   },
   {
     "category": "ImmersionRC Ghost",
@@ -942,7 +973,8 @@
       "NO_SYNC_ON_ARM",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_500HZ"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-ghost2400/"
   },
   {
     "category": "DIY 2.4 GHz",
@@ -974,7 +1006,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/"
   },
   {
     "category": "DIY 2.4 GHz",
@@ -997,7 +1030,8 @@
       "NO_SYNC_ON_ARM",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_500HZ"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/"
   },
   {
     "category": "NamimnoRC VOYAGER 900",
@@ -1032,7 +1066,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-voyager900/"
   },
   {
     "category": "NamimnoRC VOYAGER 900",
@@ -1058,7 +1093,8 @@
       "NO_SYNC_ON_ARM",
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/"
   },
   {
     "category": "NamimnoRC VOYAGER 900",
@@ -1092,7 +1128,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/"
   },
   {
     "category": "NamimnoRC FLASH 2.4 GHz",
@@ -1123,7 +1160,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-flash2400/"
   },
   {
     "category": "NamimnoRC FLASH 2.4 GHz",
@@ -1146,7 +1184,8 @@
       "NO_SYNC_ON_ARM",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_500HZ"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/"
   },
   {
     "category": "NamimnoRC FLASH 2.4 GHz",
@@ -1180,7 +1219,8 @@
       "AUTO_WIFI_ON_BOOT",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/"
   },
   {
     "category": "SIYI 2.4 GHz",
@@ -1207,7 +1247,8 @@
       "USE_500HZ",
       "UART_INVERTED",
       "USE_DYNAMIC_POWER"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-siyifm30/"
   },
   {
     "category": "SIYI 2.4 GHz",
@@ -1231,7 +1272,8 @@
       "LOCK_ON_FIRST_CONNECTION",
       "USE_500HZ",
       "USE_DIVERSITY"
-    ]
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-siyiFRmini/"
   },
   {
     "category": "NeutronRC 900 MHz",
@@ -1265,7 +1307,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": ""
   },
   {
     "category": "HGLRC 2.4 GHz",
@@ -1297,7 +1340,8 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
-    ]
+    ],
+    "wikiUrl": ""
   },
   {
     "category": "HGLRC 2.4 GHz",
@@ -1328,7 +1372,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": ""
   },
   {
     "category": "HGLRC 900 MHz",
@@ -1362,7 +1407,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": ""
   },
   {
     "category": "QuadKopters 2.4 Ghz",
@@ -1394,7 +1440,8 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
-    ]
+    ],
+    "wikiUrl": ""
   },
   {
     "category": "QuadKopters 2.4 Ghz",
@@ -1425,7 +1472,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
-    ]
+    ],
+    "wikiUrl": ""
   }
 ]
 }
