@@ -24,6 +24,7 @@ import SerialMonitorResolver from './src/graphql/resolvers/SerialMonitor.resolve
 import SerialMonitorService from './src/services/SerialMonitor';
 import TargetsService from './src/services/Targets';
 import DeviceService from './src/services/Device';
+import TargetUserDefinesFactory from './src/factories/TargetUserDefinesFactory';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -78,10 +79,14 @@ export default class ApiServer {
 
     Container.set(DeviceService, deviceService);
 
+    const targetUserDefinesFactory = new TargetUserDefinesFactory(
+      deviceService
+    );
+
     const rawRepoUrl = `https://raw.githubusercontent.com/${config.git.owner}/${config.git.repositoryName}`;
     Container.set(
       UserDefinesBuilder,
-      new UserDefinesBuilder(rawRepoUrl, logger, deviceService)
+      new UserDefinesBuilder(rawRepoUrl, logger, targetUserDefinesFactory)
     );
 
     Container.set(TargetsService, new TargetsService(logger, deviceService));

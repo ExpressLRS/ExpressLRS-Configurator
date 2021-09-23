@@ -8,7 +8,6 @@ import UserDefine from '../../models/UserDefine';
 import TargetUserDefinesFactory from '../../factories/TargetUserDefinesFactory';
 import { LoggerService } from '../../logger';
 import PullRequest from '../../models/PullRequest';
-import DeviceService from '../Device';
 
 interface UserDefineFilters {
   target: string;
@@ -25,7 +24,7 @@ export default class UserDefinesBuilder {
   constructor(
     private rawRepoUrl: string,
     private logger: LoggerService,
-    private deviceService: DeviceService
+    private targetUserDefinesFactory: TargetUserDefinesFactory
   ) {}
 
   extractCompatibleKeys(userDefinesTxt: string): UserDefineKey[] {
@@ -107,10 +106,7 @@ export default class UserDefinesBuilder {
   }
 
   async build(input: UserDefineFilters): Promise<UserDefine[]> {
-    const availableKeys = new TargetUserDefinesFactory().build(
-      input.target,
-      this.deviceService
-    );
+    const availableKeys = this.targetUserDefinesFactory.build(input.target);
     if (input.source === FirmwareSource.Local) {
       return availableKeys;
     }

@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { Service } from 'typedi';
 import UserDefineKey from '../library/FirmwareBuilder/Enum/UserDefineKey';
 import UserDefine from '../models/UserDefine';
 import DeviceService from '../services/Device';
 
+@Service()
 export default class TargetUserDefinesFactory {
-  build(target: string, deviceService: DeviceService): UserDefine[] {
-    const device = deviceService.getDevices().find((item) => {
+  constructor(private deviceService: DeviceService) {}
+
+  build(target: string): UserDefine[] {
+    const device = this.deviceService.getDevices().find((item) => {
       return item.targets.find((t) => t.name === target);
     });
 
