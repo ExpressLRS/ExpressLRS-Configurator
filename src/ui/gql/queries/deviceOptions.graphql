@@ -1,5 +1,5 @@
 query targetDeviceOptions(
-  $target: DeviceTarget!,
+  $target: String!,
   $source: FirmwareSource!,
   $gitTag: String!,
   $gitBranch: String!,

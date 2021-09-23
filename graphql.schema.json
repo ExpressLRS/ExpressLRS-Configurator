@@ -102,8 +102,8 @@
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "ENUM",
-                    "name": "DeviceTarget",
+                    "kind": "OBJECT",
+                    "name": "Device",
                     "ofType": null
                   }
                 }
@@ -120,11 +120,11 @@
                 "name": "target",
                 "description": null,
                 "type": {
-                  "kind": "ENUM",
-                  "name": "DeviceTarget",
+                  "kind": "SCALAR",
+                  "name": "String",
                   "ofType": null
                 },
-                "defaultValue": "DIY_2400_TX_ESP32_SX1280_E28_via_UART",
+                "defaultValue": "\"DIY_2400_TX_ESP32_SX1280_E28_via_UART\"",
                 "isDeprecated": false,
                 "deprecationReason": null
               },
@@ -391,603 +391,207 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "Device",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "category",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "targets",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Target",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "userDefines",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Target",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "wikiUrl",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Target",
+        "description": null,
+        "fields": [
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "flashingMethod",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "FlashingMethod",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "ENUM",
-        "name": "DeviceTarget",
+        "name": "FlashingMethod",
         "description": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
-            "name": "BETAFPV_900_TX_via_UART",
+            "name": "BetaflightPassthrough",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "BETAFPV_900_TX_via_WIFI",
+            "name": "DFU",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "BETAFPV_900_RX_via_UART",
+            "name": "STLink",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "BETAFPV_900_RX_via_WIFI",
+            "name": "Stock_BL",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "BETAFPV_900_RX_via_BetaflightPassthrough",
+            "name": "UART",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "BETAFPV_2400_TX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "BETAFPV_2400_TX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "BETAFPV_2400_RX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "BETAFPV_2400_RX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "BETAFPV_2400_RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_TX_R9M_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_TX_R9M_via_stock_BL",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_TX_R9M_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_TX_R9M_LITE_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_TX_R9M_LITE_via_stock_BL",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_TX_R9M_LITE_PRO_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_RX_R9MM_R9MINI_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_RX_R9MM_R9MINI_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_RX_R9SLIMPLUS_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_RX_R9SLIMPLUS_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_RX_R9SLIM_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_RX_R9SLIM_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_RX_R9SLIMPLUS_OTA_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_RX_R9SLIMPLUS_OTA_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_RX_R9MX_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Frsky_RX_R9MX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Jumper_RX_R900MINI_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Jumper_RX_R900MINI_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_ES24TX_2400_TX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_ES24TX_2400_TX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_ES24TX_Slim_Pro_2400_TX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_ES24TX_Slim_Pro_2400_TX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_TX_ES900TX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_TX_ES900TX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_RX_ES900RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_RX_ES900RX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_EP_2400_RX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_EP_2400_RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_EP_2400_RX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_PP_2400_RX_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_PP_2400_RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_TX_ES915TX_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_TX_ES915TX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_TX_ES915TX_via_stock_BL",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_RX_ES915RX_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HappyModel_RX_ES915RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_900_TX_TTGO_V1_SX127x_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_900_TX_TTGO_V2_SX127x_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_900_TX_ESP32_SX127x_E19_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_900_TX_ESP32_SX127x_RFM95_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_900_RX_ESP8285_SX127x_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_900_RX_ESP8285_SX127x_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_2400_TX_ESP32_SX1280_Mini_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_2400_TX_ESP32_SX1280_E28_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_2400_TX_ESP32_SX1280_E28_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_2400_TX_ESP32_SX1280_LORA1280F27_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GHOST_2400_TX_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GHOST_2400_TX_LITE_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GHOST_ATTO_2400_RX_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GHOST_ATTO_2400_RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_2400_RX_ESP8285_SX1280_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_2400_RX_ESP8285_SX1280_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_VOYAGER_900_TX_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_VOYAGER_900_TX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_VOYAGER_900_RX_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_VOYAGER_900_RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_VOYAGER_900_ESP_RX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_VOYAGER_900_ESP_RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_VOYAGER_900_ESP_RX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_FLASH_2400_TX_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_FLASH_2400_TX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_FLASH_2400_RX_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_FLASH_2400_ESP_RX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_FLASH_2400_ESP_RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NamimnoRC_FLASH_2400_ESP_RX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "FM30_TX_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "FM30_TX_via_DFU",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "FM30_RX_MINI_via_STLINK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "FM30_RX_MINI_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NeutronRC_900_RX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NeutronRC_900_RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NeutronRC_900_RX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HGLRC_Hermes_2400_TX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HGLRC_Hermes_2400_TX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HGLRC_Hermes_2400_RX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HGLRC_Hermes_2400_RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HGLRC_Hermes_2400_RX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HGLRC_Hermes_900_RX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HGLRC_Hermes_900_RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "HGLRC_Hermes_900_RX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "QuadKopters_JR_2400_TX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "QuadKopters_JR_2400_TX_via_WIFI",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "QuadKopters_NANO_RX_via_UART",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "QuadKopters_NANO_RX_via_BetaflightPassthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "QuadKopters_NANO_RX_via_WIFI",
+            "name": "WIFI",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -1979,8 +1583,8 @@
             "name": "target",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "DeviceTarget",
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "defaultValue": null,

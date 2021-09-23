@@ -3,7 +3,6 @@ import { Service } from 'typedi';
 import path from 'path';
 import fs from 'fs';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
-import DeviceTarget from '../../library/FirmwareBuilder/Enum/DeviceTarget';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import UserDefine from '../../models/UserDefine';
 import TargetUserDefinesFactory from '../../factories/TargetUserDefinesFactory';
@@ -11,7 +10,7 @@ import { LoggerService } from '../../logger';
 import PullRequest from '../../models/PullRequest';
 
 interface UserDefineFilters {
-  target: DeviceTarget;
+  target: string;
   source: FirmwareSource;
   gitTag: string;
   gitBranch: string;
@@ -22,7 +21,11 @@ interface UserDefineFilters {
 
 @Service()
 export default class UserDefinesBuilder {
-  constructor(private rawRepoUrl: string, private logger: LoggerService) {}
+  constructor(
+    private rawRepoUrl: string,
+    private logger: LoggerService,
+    private targetUserDefinesFactory: TargetUserDefinesFactory
+  ) {}
 
   extractCompatibleKeys(userDefinesTxt: string): UserDefineKey[] {
     const userDefinesRegexp = /^#*?-(D[A-z0-9-_]*?)(?==|\s|$)/gm;
@@ -103,7 +106,7 @@ export default class UserDefinesBuilder {
   }
 
   async build(input: UserDefineFilters): Promise<UserDefine[]> {
-    const availableKeys = new TargetUserDefinesFactory().build(input.target);
+    const availableKeys = this.targetUserDefinesFactory.build(input.target);
     if (input.source === FirmwareSource.Local) {
       return availableKeys;
     }

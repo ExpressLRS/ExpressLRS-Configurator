@@ -1,23 +1,16 @@
-import {
-  DeviceTarget,
-  UserDefine,
-  UserDefineKey,
-} from '../../gql/generated/types';
+import { UserDefine, UserDefineKey } from '../../gql/generated/types';
 import { DeviceOptions, IApplicationStorage } from '../index';
-import deviceTargetKey from '../deviceTargetKey';
 
 const mergeWithDeviceOptionsFromStorage = async (
   storage: IApplicationStorage,
-  deviceTarget: DeviceTarget | null,
+  device: string | null,
   deviceOptions: DeviceOptions
 ): Promise<DeviceOptions> => {
-  if (deviceTarget === null) {
+  if (device === null) {
     return deviceOptions;
   }
   const savedBindingPhrase = await storage.getBindingPhrase();
-  const savedTargetOptions = await storage.getDeviceOptions(
-    deviceTargetKey(deviceTarget)
-  );
+  const savedTargetOptions = await storage.getDeviceOptions(device);
   const addOverrides = (deviceOption: UserDefine): UserDefine => {
     if (
       deviceOption.key === UserDefineKey.BINDING_PHRASE &&

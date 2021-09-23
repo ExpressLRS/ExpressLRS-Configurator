@@ -1,931 +1,129 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import DeviceTarget from '../library/FirmwareBuilder/Enum/DeviceTarget';
+import { Service } from 'typedi';
 import UserDefineKey from '../library/FirmwareBuilder/Enum/UserDefineKey';
 import UserDefine from '../models/UserDefine';
+import DeviceService from '../services/Device';
 
-export type DeviceOptionsByTarget = {
-  [key in DeviceTarget]: UserDefine[];
-};
-
+@Service()
 export default class TargetUserDefinesFactory {
-  build(target: DeviceTarget): UserDefine[] {
-    const NamimnoRC_FLASH_2400_TX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      // other
-      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-      // network
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
+  constructor(private deviceService: DeviceService) {}
 
-    const NamimnoRC_FLASH_2400_RX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-    ];
-    const NamimnoRC_FLASH_2400_ESP_RX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      // network
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
+  build(target: string): UserDefine[] {
+    const device = this.deviceService.getDevices().find((item) => {
+      return item.targets.find((t) => t.name === target);
+    });
 
-    const NamimnoRC_VOYAGER_900_TX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6', 'AUX7', 'AUX8'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // other options
-      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK, true),
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
-      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-      // network
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
-    const NamimnoRC_VOYAGER_900_RX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-    ];
-    const NamimnoRC_VOYAGER_900_ESP_RX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      // network
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
-
-    const NeutronRC_900_RX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      // network
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
-
-    const Frsky_TX_R9M: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6', 'AUX7', 'AUX8'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // other options
-      UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK, true),
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-      UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER),
-      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
-    ];
-    const Frsky_TX_R9M_LITE: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // other options
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-    ];
-
-    const Frsky_TX_R9M_LITE_PRO: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      // other options
-      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-    ];
-
-    const Frsky_RX_R9MM_R9MINI: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      // compat
-      UserDefine.Boolean(UserDefineKey.USE_R9MM_R9MINI_SBUS),
-    ];
-
-    const Frsky_RX_R9SLIMPLUS: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, true),
-    ];
-
-    const Frsky_RX_R9SLIM: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-    ];
-
-    const Frsky_RX_R9MX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-    ];
-
-    const HappyModel_TX_ES915TX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6', 'AUX7', 'AUX8'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      // other options
-      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
-      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-      // network
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
-
-    const HappyModel_TX_ES900TX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6', 'AUX7', 'AUX8'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      // other options
-      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
-      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      // network
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
-
-    const HappyModel_RX_ES915RX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-    ];
-
-    const HappyModel_RX_ES900RX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      // network
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
-
-    const Jumper_RX_R900MINI: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-    ];
-
-    const DIY_900_TX_TTGO_V1_SX127x: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      // other
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-      // network
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
-
-    const DIY_900_TX_TTGO_V2_SX127x: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // other
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      // network
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
-
-    const DIY_900_TX_ESP32_SX127x: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      // other
-      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-      UserDefine.Boolean(UserDefineKey.WS2812_IS_GRB, false),
-      // network
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
-
-    const DIY_900_TX_ESP32_SX127x_E19 = DIY_900_TX_ESP32_SX127x.concat([
-      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
-    ]);
-
-    const BETAFPV_900_TX = DIY_900_TX_ESP32_SX127x.concat([
-      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER),
-    ]);
-
-    const DIY_900_RX_ESP8285_SX127x: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      // other options
-      // network
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
-
-    const DIY_2400_TX_ESP32_SX1280: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      // UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      // network
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '45', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-      // other
-      UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK),
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-      UserDefine.Boolean(UserDefineKey.WS2812_IS_GRB, false),
-    ];
-
-    const BETAFPV_2400_TX = DIY_2400_TX_ESP32_SX1280.concat([
-      UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER, true),
-    ]);
-
-    const GHOST_2400_TX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-      // other
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-      UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE),
-      UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP),
-      UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY),
-    ];
-
-    const FM30_TX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU'),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Enum(
-        UserDefineKey.ARM_CHANNEL,
-        ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
-        'AUX1'
-      ),
-      UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-      // compat
-      UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
-      // other
-      UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER),
-    ];
-
-    const FM30_RX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-      UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, true),
-    ];
-
-    const GHOST_ATTO_2400_RX: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-    ];
-
-    const DIY_2400_RX_ESP8285_SX1280: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-      // other options
-      UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, false),
-      // network
-      UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT),
-      UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '20', true),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_SSID),
-      UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD),
-    ];
-
-    const DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY: UserDefine[] = DIY_2400_RX_ESP8285_SX1280.filter(
-      (item) => item.key !== UserDefineKey.USE_DIVERSITY
+    const userDefines = device?.userDefines.map(
+      (userDefine): UserDefine => {
+        switch (userDefine) {
+          // BINDING PHRASE
+          case UserDefineKey.BINDING_PHRASE:
+            return UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true);
+          // Regulatory domains
+          case UserDefineKey.REGULATORY_DOMAIN_AU_915:
+            return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915);
+          case UserDefineKey.REGULATORY_DOMAIN_EU_868:
+            return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868);
+          case UserDefineKey.REGULATORY_DOMAIN_IN_866:
+            return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866);
+          case UserDefineKey.REGULATORY_DOMAIN_AU_433:
+            return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_433);
+          case UserDefineKey.REGULATORY_DOMAIN_EU_433:
+            return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_433);
+          case UserDefineKey.REGULATORY_DOMAIN_FCC_915:
+            return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915);
+          case UserDefineKey.REGULATORY_DOMAIN_ISM_2400:
+            return UserDefine.Boolean(
+              UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
+              true
+            );
+          // Hybrid switches
+          case UserDefineKey.HYBRID_SWITCHES_8:
+            return UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true);
+          case UserDefineKey.ENABLE_TELEMETRY:
+            return UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY);
+          case UserDefineKey.TLM_REPORT_INTERVAL_MS:
+            return UserDefine.Text(
+              UserDefineKey.TLM_REPORT_INTERVAL_MS,
+              '320LU'
+            );
+          // Performance options
+          case UserDefineKey.FAST_SYNC:
+            return UserDefine.Boolean(UserDefineKey.FAST_SYNC);
+          case UserDefineKey.R9M_UNLOCK_HIGHER_POWER:
+            return UserDefine.Boolean(UserDefineKey.R9M_UNLOCK_HIGHER_POWER);
+          case UserDefineKey.UNLOCK_HIGHER_POWER:
+            return UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER, true);
+          case UserDefineKey.USE_DIVERSITY:
+            return UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, false);
+          case UserDefineKey.NO_SYNC_ON_ARM:
+            return UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM);
+          case UserDefineKey.ARM_CHANNEL:
+            return UserDefine.Enum(
+              UserDefineKey.ARM_CHANNEL,
+              ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
+              'AUX1'
+            );
+          case UserDefineKey.FEATURE_OPENTX_SYNC:
+            return UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true);
+          case UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE:
+            return UserDefine.Boolean(
+              UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE
+            );
+          case UserDefineKey.LOCK_ON_FIRST_CONNECTION:
+            return UserDefine.Boolean(
+              UserDefineKey.LOCK_ON_FIRST_CONNECTION,
+              true
+            );
+          case UserDefineKey.LOCK_ON_50HZ:
+            return UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ);
+          // Compatibility options
+          case UserDefineKey.USE_UART2:
+            return UserDefine.Boolean(UserDefineKey.USE_UART2);
+          case UserDefineKey.UART_INVERTED:
+            return UserDefine.Boolean(UserDefineKey.UART_INVERTED, true);
+          case UserDefineKey.USE_R9MM_R9MINI_SBUS:
+            return UserDefine.Boolean(UserDefineKey.USE_R9MM_R9MINI_SBUS);
+          // Other options
+          case UserDefineKey.BLE_HID_JOYSTICK:
+            return UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK);
+          case UserDefineKey.USE_ESP8266_BACKPACK:
+            return UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK, true);
+          case UserDefineKey.JUST_BEEP_ONCE:
+            return UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE);
+          case UserDefineKey.DISABLE_STARTUP_BEEP:
+            return UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP);
+          case UserDefineKey.MY_STARTUP_MELODY:
+            return UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY);
+          case UserDefineKey.USE_500HZ:
+            return UserDefine.Boolean(UserDefineKey.USE_500HZ);
+          case UserDefineKey.USE_DYNAMIC_POWER:
+            return UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER);
+          case UserDefineKey.WS2812_IS_GRB:
+            return UserDefine.Boolean(UserDefineKey.WS2812_IS_GRB, false);
+          // Network
+          case UserDefineKey.HOME_WIFI_SSID:
+            return UserDefine.Text(UserDefineKey.HOME_WIFI_SSID);
+          case UserDefineKey.HOME_WIFI_PASSWORD:
+            return UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD);
+          case UserDefineKey.AUTO_WIFI_ON_BOOT:
+            return UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT);
+          case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
+            return UserDefine.Text(
+              UserDefineKey.AUTO_WIFI_ON_INTERVAL,
+              '20',
+              true
+            );
+          default:
+            throw new Error(`User Define ${userDefine} is not known`);
+        }
+      }
     );
 
-    const DIY_2400_RX_STM32_CCG_Nano_v0_5: UserDefine[] = [
-      // regulatory options
-      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_ISM_2400, true),
-      // binding
-      UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true),
-      // hybrid switches
-      UserDefine.Boolean(UserDefineKey.HYBRID_SWITCHES_8, true),
-      UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY),
-      // performance options
-      UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true),
-      UserDefine.Boolean(UserDefineKey.USE_500HZ),
-    ];
-
-    const data: DeviceOptionsByTarget = {
-      // NamimnoRC VOYAGER 900
-      [DeviceTarget.NamimnoRC_VOYAGER_900_TX_via_STLINK]: NamimnoRC_VOYAGER_900_TX,
-      [DeviceTarget.NamimnoRC_VOYAGER_900_TX_via_WIFI]: NamimnoRC_VOYAGER_900_TX,
-      [DeviceTarget.NamimnoRC_VOYAGER_900_RX_via_STLINK]: NamimnoRC_VOYAGER_900_RX,
-      [DeviceTarget.NamimnoRC_VOYAGER_900_RX_via_BetaflightPassthrough]: NamimnoRC_VOYAGER_900_RX,
-      [DeviceTarget.NamimnoRC_VOYAGER_900_ESP_RX_via_UART]: NamimnoRC_VOYAGER_900_ESP_RX,
-      [DeviceTarget.NamimnoRC_VOYAGER_900_ESP_RX_via_BetaflightPassthrough]: NamimnoRC_VOYAGER_900_ESP_RX,
-      [DeviceTarget.NamimnoRC_VOYAGER_900_ESP_RX_via_WIFI]: NamimnoRC_VOYAGER_900_ESP_RX,
-
-      // NamimnoRC 2.4 Ghz
-      [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_STLINK]: NamimnoRC_FLASH_2400_TX,
-      [DeviceTarget.NamimnoRC_FLASH_2400_TX_via_WIFI]: NamimnoRC_FLASH_2400_TX,
-      [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_STLINK]: NamimnoRC_FLASH_2400_RX,
-      [DeviceTarget.NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough]: NamimnoRC_FLASH_2400_RX,
-      [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_UART]: NamimnoRC_FLASH_2400_ESP_RX,
-      [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_BetaflightPassthrough]: NamimnoRC_FLASH_2400_ESP_RX,
-      [DeviceTarget.NamimnoRC_FLASH_2400_ESP_RX_via_WIFI]: NamimnoRC_FLASH_2400_ESP_RX,
-
-      // SIYI FM30
-      [DeviceTarget.FM30_TX_via_STLINK]: FM30_TX,
-      [DeviceTarget.FM30_TX_via_DFU]: FM30_TX,
-      [DeviceTarget.FM30_RX_MINI_via_STLINK]: FM30_RX,
-      [DeviceTarget.FM30_RX_MINI_via_BetaflightPassthrough]: FM30_RX,
-
-      // NeutronRC 900 Mhz
-      [DeviceTarget.NeutronRC_900_RX_via_UART]: NeutronRC_900_RX,
-      [DeviceTarget.NeutronRC_900_RX_via_BetaflightPassthrough]: NeutronRC_900_RX,
-      [DeviceTarget.NeutronRC_900_RX_via_WIFI]: NeutronRC_900_RX,
-
-      // R9M TX
-      [DeviceTarget.Frsky_TX_R9M_via_STLINK]: Frsky_TX_R9M,
-      [DeviceTarget.Frsky_TX_R9M_via_stock_BL]: Frsky_TX_R9M,
-      [DeviceTarget.Frsky_TX_R9M_via_WIFI]: Frsky_TX_R9M,
-      // R9M Lite TX
-      [DeviceTarget.Frsky_TX_R9M_LITE_via_STLINK]: Frsky_TX_R9M_LITE,
-      [DeviceTarget.Frsky_TX_R9M_LITE_via_stock_BL]: Frsky_TX_R9M_LITE,
-      // R9M Lite Pro
-      [DeviceTarget.Frsky_TX_R9M_LITE_PRO_via_STLINK]: Frsky_TX_R9M_LITE_PRO,
-      // R9MM RX / R9Mini RX
-      [DeviceTarget.Frsky_RX_R9MM_R9MINI_via_STLINK]: Frsky_RX_R9MM_R9MINI,
-      [DeviceTarget.Frsky_RX_R9MM_R9MINI_via_BetaflightPassthrough]: Frsky_RX_R9MM_R9MINI,
-
-      // R9SlimPlus RX
-      [DeviceTarget.Frsky_RX_R9SLIMPLUS_via_STLINK]: Frsky_RX_R9SLIMPLUS,
-      [DeviceTarget.Frsky_RX_R9SLIMPLUS_via_BetaflightPassthrough]: Frsky_RX_R9SLIMPLUS,
-      [DeviceTarget.Frsky_RX_R9SLIMPLUS_OTA_via_STLINK]: Frsky_RX_R9SLIMPLUS,
-      [DeviceTarget.Frsky_RX_R9SLIMPLUS_OTA_via_BetaflightPassthrough]: Frsky_RX_R9SLIMPLUS,
-
-      // R9 Slim RX
-      [DeviceTarget.Frsky_RX_R9SLIM_via_STLINK]: Frsky_RX_R9SLIM,
-      [DeviceTarget.Frsky_RX_R9SLIM_via_BetaflightPassthrough]: Frsky_RX_R9SLIM,
-
-      // Happymodel 915mhz
-      [DeviceTarget.HappyModel_TX_ES915TX_via_stock_BL]: HappyModel_TX_ES915TX,
-      [DeviceTarget.HappyModel_TX_ES915TX_via_STLINK]: HappyModel_TX_ES915TX,
-      [DeviceTarget.HappyModel_TX_ES915TX_via_WIFI]: HappyModel_TX_ES915TX,
-      [DeviceTarget.HappyModel_RX_ES915RX_via_STLINK]: HappyModel_RX_ES915RX,
-      [DeviceTarget.HappyModel_RX_ES915RX_via_BetaflightPassthrough]: HappyModel_RX_ES915RX,
-
-      // Happymodel ES900 TX & RX
-      [DeviceTarget.HappyModel_TX_ES900TX_via_UART]: HappyModel_TX_ES900TX,
-      [DeviceTarget.HappyModel_TX_ES900TX_via_WIFI]: HappyModel_TX_ES900TX,
-      [DeviceTarget.HappyModel_RX_ES900RX_via_BetaflightPassthrough]: HappyModel_RX_ES900RX,
-      [DeviceTarget.HappyModel_RX_ES900RX_via_WIFI]: HappyModel_RX_ES900RX,
-
-      // Happymodel 2.4 Ghz
-      [DeviceTarget.HappyModel_ES24TX_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.HappyModel_ES24TX_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.HappyModel_ES24TX_Slim_Pro_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.HappyModel_ES24TX_Slim_Pro_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.HappyModel_EP_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
-      [DeviceTarget.HappyModel_EP_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
-      [DeviceTarget.HappyModel_EP_2400_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
-      [DeviceTarget.HappyModel_PP_2400_RX_via_STLINK]: DIY_2400_RX_STM32_CCG_Nano_v0_5,
-      [DeviceTarget.HappyModel_PP_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_STM32_CCG_Nano_v0_5,
-
-      // R9MX RX
-      [DeviceTarget.Frsky_RX_R9MX_via_STLINK]: Frsky_RX_R9MX,
-      [DeviceTarget.Frsky_RX_R9MX_via_BetaflightPassthrough]: Frsky_RX_R9MX,
-
-      // Jumper R900 Mini RX
-      [DeviceTarget.Jumper_RX_R900MINI_via_STLINK]: Jumper_RX_R900MINI,
-      [DeviceTarget.Jumper_RX_R900MINI_via_BetaflightPassthrough]: Jumper_RX_R900MINI,
-
-      // 900Mhz TTGO V1 TX
-      [DeviceTarget.DIY_900_TX_TTGO_V1_SX127x_via_UART]: DIY_900_TX_TTGO_V1_SX127x,
-
-      // 900 TTGO V2 TX
-      [DeviceTarget.DIY_900_TX_TTGO_V2_SX127x_via_UART]: DIY_900_TX_TTGO_V2_SX127x,
-
-      // DIY 900 Mhz TX
-      [DeviceTarget.DIY_900_TX_ESP32_SX127x_E19_via_UART]: DIY_900_TX_ESP32_SX127x_E19,
-      [DeviceTarget.DIY_900_TX_ESP32_SX127x_RFM95_via_UART]: DIY_900_TX_ESP32_SX127x,
-      [DeviceTarget.DIY_900_RX_ESP8285_SX127x_via_UART]: DIY_900_RX_ESP8285_SX127x,
-      [DeviceTarget.DIY_900_RX_ESP8285_SX127x_via_BetaflightPassthrough]: DIY_900_RX_ESP8285_SX127x,
-
-      // DIY 2400 Mhz TX
-      [DeviceTarget.DIY_2400_TX_ESP32_SX1280_Mini_via_UART]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.DIY_2400_TX_ESP32_SX1280_E28_via_UART]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.DIY_2400_TX_ESP32_SX1280_E28_via_WIFI]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.DIY_2400_TX_ESP32_SX1280_LORA1280F27_via_UART]: DIY_2400_TX_ESP32_SX1280,
-
-      // Ghost TX
-      [DeviceTarget.GHOST_2400_TX_via_STLINK]: GHOST_2400_TX,
-      [DeviceTarget.GHOST_2400_TX_LITE_via_STLINK]: GHOST_2400_TX,
-
-      // GHOST_ATTO_2400_RX
-      [DeviceTarget.GHOST_ATTO_2400_RX_via_STLINK]: GHOST_ATTO_2400_RX,
-      [DeviceTarget.GHOST_ATTO_2400_RX_via_BetaflightPassthrough]: GHOST_ATTO_2400_RX,
-
-      // DIY_2400_RX_ESP8285_SX1280
-      [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_UART]: DIY_2400_RX_ESP8285_SX1280,
-      [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_WIFI]: DIY_2400_RX_ESP8285_SX1280,
-      [DeviceTarget.DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280,
-
-      // DIY_2400_RX_STM32_CCG_Nano_v0_5
-      [DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK]: DIY_2400_RX_STM32_CCG_Nano_v0_5,
-      [DeviceTarget.DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough]: DIY_2400_RX_STM32_CCG_Nano_v0_5,
-
-      // BETAFPV 900
-      [DeviceTarget.BETAFPV_900_TX_via_UART]: BETAFPV_900_TX,
-      [DeviceTarget.BETAFPV_900_TX_via_WIFI]: BETAFPV_900_TX,
-      [DeviceTarget.BETAFPV_900_RX_via_UART]: DIY_900_RX_ESP8285_SX127x,
-      [DeviceTarget.BETAFPV_900_RX_via_WIFI]: DIY_900_RX_ESP8285_SX127x,
-      [DeviceTarget.BETAFPV_900_RX_via_BetaflightPassthrough]: DIY_900_RX_ESP8285_SX127x,
-
-      // BETAFPV 2.4 Ghz
-      [DeviceTarget.BETAFPV_2400_TX_via_UART]: BETAFPV_2400_TX,
-      [DeviceTarget.BETAFPV_2400_TX_via_WIFI]: BETAFPV_2400_TX,
-      [DeviceTarget.BETAFPV_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280,
-      [DeviceTarget.BETAFPV_2400_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280,
-      [DeviceTarget.BETAFPV_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280,
-
-      // HGLRC Hermes 900
-      [DeviceTarget.HGLRC_Hermes_900_RX_via_UART]: DIY_900_RX_ESP8285_SX127x,
-      [DeviceTarget.HGLRC_Hermes_900_RX_via_BetaflightPassthrough]: DIY_900_RX_ESP8285_SX127x,
-      [DeviceTarget.HGLRC_Hermes_900_RX_via_WIFI]: DIY_900_RX_ESP8285_SX127x,
-
-      // HGLRC Hermes 2.4 Ghz
-      [DeviceTarget.HGLRC_Hermes_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.HGLRC_Hermes_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.HGLRC_Hermes_2400_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
-      [DeviceTarget.HGLRC_Hermes_2400_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
-      [DeviceTarget.HGLRC_Hermes_2400_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
-
-      // QuadKopters
-      [DeviceTarget.QuadKopters_JR_2400_TX_via_UART]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.QuadKopters_JR_2400_TX_via_WIFI]: DIY_2400_TX_ESP32_SX1280,
-      [DeviceTarget.QuadKopters_NANO_RX_via_UART]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
-      [DeviceTarget.QuadKopters_NANO_RX_via_BetaflightPassthrough]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
-      [DeviceTarget.QuadKopters_NANO_RX_via_WIFI]: DIY_2400_RX_ESP8285_SX1280_NO_DIVERSITY,
-    };
-
-    if (data[target] === undefined) {
-      throw new Error(`target ${target} configuration does not exist`);
+    if (device === undefined) {
+      throw new Error(`device not found for target ${target}`);
     }
 
-    return data[target];
+    return userDefines || [];
   }
 }

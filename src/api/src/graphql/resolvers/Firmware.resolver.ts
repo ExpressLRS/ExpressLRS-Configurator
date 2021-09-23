@@ -8,7 +8,6 @@ import {
   Subscription,
 } from 'type-graphql';
 import { Inject, Service } from 'typedi';
-import DeviceTarget from '../../library/FirmwareBuilder/Enum/DeviceTarget';
 import UserDefine from '../../models/UserDefine';
 import BuildFlashFirmwareInput from '../inputs/BuildFlashFirmwareInput';
 import BuildFlashFirmwareResult from '../../models/BuildFlashFirmwareResult';
@@ -26,6 +25,7 @@ import UserDefinesBuilder from '../../services/UserDefinesBuilder';
 import ClearFirmwareFilesResult from '../../models/ClearFirmwareFiles';
 import TargetsService from '../../services/Targets';
 import TargetArgs from '../args/Target';
+import Device from '../../models/Device';
 
 @Service()
 @Resolver()
@@ -37,10 +37,8 @@ export default class FirmwareResolver {
     @Inject(ConfigToken) private config: IConfig
   ) {}
 
-  @Query(() => [DeviceTarget])
-  async availableFirmwareTargets(
-    @Args() args: TargetArgs
-  ): Promise<DeviceTarget[]> {
+  @Query(() => [Device])
+  async availableFirmwareTargets(@Args() args: TargetArgs): Promise<Device[]> {
     return this.targetsService.loadTargetsList(
       this.config.git.owner,
       this.config.git.repositoryName,

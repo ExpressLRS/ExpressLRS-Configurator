@@ -1,0 +1,1479 @@
+{
+  "devices": [
+  {
+    "category": "BETAFPV 900 MHz",
+    "name": "BETAFPV 900 TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "BETAFPV_900_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "BETAFPV_900_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "UART_INVERTED",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "UNLOCK_HIGHER_POWER"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv900/"
+  },
+  {
+    "category": "BETAFPV 900 MHz",
+    "name": "BETAFPV 900 RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "BETAFPV_900_RX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "BETAFPV_900_RX_via_WIFI"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "BETAFPV_900_RX_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv900/"
+  },
+  {
+    "category": "BETAFPV 2.4 GHz",
+    "name": "BETAFPV 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "BETAFPV_2400_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "BETAFPV_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB",
+      "UNLOCK_HIGHER_POWER"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv2400/"
+  },
+  {
+    "category": "BETAFPV 2.4 GHz",
+    "name": "BETAFPV 2400 RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "BETAFPV_2400_RX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "BETAFPV_2400_RX_via_WIFI"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "BETAFPV_2400_RX_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "USE_DIVERSITY",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv2400/"
+  },
+  {
+    "category": "Frsky R9",
+    "name": "Frsky TX R9M",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "Frsky_TX_R9M_via_STLINK"
+      },
+      {
+        "flashingMethod": "stock_BL",
+        "name": "Frsky_TX_R9M_via_stock_BL"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "Frsky_TX_R9M_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_ESP8266_BACKPACK",
+      "JUST_BEEP_ONCE",
+      "DISABLE_STARTUP_BEEP",
+      "MY_STARTUP_MELODY",
+      "USE_DYNAMIC_POWER",
+      "R9M_UNLOCK_HIGHER_POWER",
+      "UNLOCK_HIGHER_POWER"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/"
+  },
+  {
+    "category": "Frsky R9",
+    "name": "Frsky TX R9M LITE",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "Frsky_TX_R9M_LITE_via_STLINK"
+      },
+      {
+        "flashingMethod": "stock_BL",
+        "name": "Frsky_TX_R9M_LITE_via_stock_BL"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "JUST_BEEP_ONCE",
+      "DISABLE_STARTUP_BEEP",
+      "USE_DYNAMIC_POWER"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/"
+  },
+  {
+    "category": "Frsky R9",
+    "name": "Frsky TX R9M LITE PRO",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "Frsky_TX_R9M_LITE_PRO_via_STLINK"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "UNLOCK_HIGHER_POWER",
+      "JUST_BEEP_ONCE",
+      "DISABLE_STARTUP_BEEP",
+      "USE_DYNAMIC_POWER"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/"
+  },
+  {
+    "category": "Frsky R9",
+    "name": "Frsky RX R9MM R9MINI",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "Frsky_RX_R9MM_R9MINI_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "Frsky_RX_R9MM_R9MINI_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_R9MM_R9MINI_SBUS"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
+  },
+  {
+    "category": "Frsky R9",
+    "name": "Frsky RX R9SLIMPLUS",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "Frsky_RX_R9SLIMPLUS_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "Frsky_RX_R9SLIMPLUS_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_DIVERSITY"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
+  },
+  {
+    "category": "Frsky R9",
+    "name": "Frsky RX R9SLIM",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "Frsky_RX_R9SLIM_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "Frsky_RX_R9SLIM_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
+  },
+  {
+    "category": "Frsky R9",
+    "name": "Frsky RX R9SLIMPLUS OTA",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "Frsky_RX_R9SLIMPLUS_OTA_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "Frsky_RX_R9SLIMPLUS_OTA_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_DIVERSITY"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
+  },
+  {
+    "category": "Frsky R9",
+    "name": "Frsky RX R9MX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "Frsky_RX_R9MX_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "Frsky_RX_R9MX_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
+  },
+  {
+    "category": "Jumper R900",
+    "name": "Jumper RX R900MINI",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "Jumper_RX_R900MINI_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "Jumper_RX_R900MINI_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-jumper900/"
+  },
+  {
+    "category": "Happymodel 2.4 GHz",
+    "name": "HappyModel ES24TX 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HappyModel_ES24TX_2400_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HappyModel_ES24TX_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/"
+  },
+  {
+    "category": "Happymodel 2.4 GHz",
+    "name": "HappyModel ES24TX Slim Pro 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HappyModel_ES24TX_Slim_Pro_2400_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HappyModel_ES24TX_Slim_Pro_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/"
+  },
+  {
+    "category": "HappyModel ES900",
+    "name": "HappyModel TX ES900TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HappyModel_TX_ES900TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HappyModel_TX_ES900TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "BLE_HID_JOYSTICK",
+      "UNLOCK_HIGHER_POWER",
+      "USE_DYNAMIC_POWER",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es900tx/"
+  },
+  {
+    "category": "HappyModel ES900",
+    "name": "HappyModel RX ES900RX",
+    "targets": [
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "HappyModel_RX_ES900RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HappyModel_RX_ES900RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/"
+  },
+  {
+    "category": "Happymodel 2.4 GHz",
+    "name": "HappyModel EP 2400 RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HappyModel_EP_2400_RX_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "HappyModel_EP_2400_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HappyModel_EP_2400_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmep2400/"
+  },
+  {
+    "category": "Happymodel 2.4 GHz",
+    "name": "HappyModel PP 2400 RX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "HappyModel_PP_2400_RX_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "HappyModel_PP_2400_RX_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmpp2400/"
+  },
+  {
+    "category": "Happymodel 915 MHz",
+    "name": "HappyModel TX ES915TX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "HappyModel_TX_ES915TX_via_STLINK"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HappyModel_TX_ES915TX_via_WIFI"
+      },
+      {
+        "flashingMethod": "stock_BL",
+        "name": "HappyModel_TX_ES915TX_via_stock_BL"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "UNLOCK_HIGHER_POWER",
+      "JUST_BEEP_ONCE",
+      "DISABLE_STARTUP_BEEP",
+      "MY_STARTUP_MELODY",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es900tx/"
+  },
+  {
+    "category": "Happymodel 915 MHz",
+    "name": "HappyModel RX ES915RX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "HappyModel_RX_ES915RX_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "HappyModel_RX_ES915RX_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/"
+  },
+  {
+    "category": "DIY 900 MHz",
+    "name": "DIY 900 TX TTGO V1 SX127x",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_900_TX_TTGO_V1_SX127x_via_UART"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "UART_INVERTED",
+      "USE_DYNAMIC_POWER",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/"
+  },
+  {
+    "category": "DIY 900 MHz",
+    "name": "DIY 900 TX TTGO V2 SX127x",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_900_TX_TTGO_V2_SX127x_via_UART"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_DYNAMIC_POWER",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/"
+  },
+  {
+    "category": "DIY 900 MHz",
+    "name": "DIY 900 TX ESP32 SX127x E19",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_900_TX_ESP32_SX127x_E19_via_UART"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "UART_INVERTED",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "UNLOCK_HIGHER_POWER"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/"
+  },
+  {
+    "category": "DIY 900 MHz",
+    "name": "DIY 900 TX ESP32 SX127x RFM95",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_900_TX_ESP32_SX127x_RFM95_via_UART"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "UART_INVERTED",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/"
+  },
+  {
+    "category": "DIY 900 MHz",
+    "name": "DIY 900 RX ESP8285 SX127x",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_900_RX_ESP8285_SX127x_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "DIY_900_RX_ESP8285_SX127x_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers900/"
+  },
+  {
+    "category": "DIY 2.4 GHz",
+    "name": "DIY 2400 TX ESP32 SX1280 Mini",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_2400_TX_ESP32_SX1280_Mini_via_UART"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/"
+  },
+  {
+    "category": "DIY 2.4 GHz",
+    "name": "DIY 2400 TX ESP32 SX1280 E28",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_2400_TX_ESP32_SX1280_E28_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "DIY_2400_TX_ESP32_SX1280_E28_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/"
+  },
+  {
+    "category": "DIY 2.4 GHz",
+    "name": "DIY 2400 TX ESP32 SX1280 LORA1280F27",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_2400_TX_ESP32_SX1280_LORA1280F27_via_UART"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/"
+  },
+  {
+    "category": "ImmersionRC Ghost",
+    "name": "GHOST 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "GHOST_2400_TX_via_STLINK"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "USE_DYNAMIC_POWER",
+      "JUST_BEEP_ONCE",
+      "DISABLE_STARTUP_BEEP",
+      "MY_STARTUP_MELODY"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/"
+  },
+  {
+    "category": "ImmersionRC Ghost",
+    "name": "GHOST 2400 TX LITE",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "GHOST_2400_TX_LITE_via_STLINK"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "USE_DYNAMIC_POWER",
+      "JUST_BEEP_ONCE",
+      "DISABLE_STARTUP_BEEP",
+      "MY_STARTUP_MELODY"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/"
+  },
+  {
+    "category": "ImmersionRC Ghost",
+    "name": "GHOST ATTO 2400 RX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "GHOST_ATTO_2400_RX_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "GHOST_ATTO_2400_RX_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-ghost2400/"
+  },
+  {
+    "category": "DIY 2.4 GHz",
+    "name": "DIY 2400 RX ESP8285 SX1280",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_2400_RX_ESP8285_SX1280_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "DIY_2400_RX_ESP8285_SX1280_via_WIFI"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "USE_DIVERSITY",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/"
+  },
+  {
+    "category": "DIY 2.4 GHz",
+    "name": "DIY 2400 RX STM32 CCG Nano v0 5",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/"
+  },
+  {
+    "category": "NamimnoRC VOYAGER 900",
+    "name": "NamimnoRC VOYAGER 900 TX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "NamimnoRC_VOYAGER_900_TX_via_STLINK"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "NamimnoRC_VOYAGER_900_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_ESP8266_BACKPACK",
+      "JUST_BEEP_ONCE",
+      "DISABLE_STARTUP_BEEP",
+      "MY_STARTUP_MELODY",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-voyager900/"
+  },
+  {
+    "category": "NamimnoRC VOYAGER 900",
+    "name": "NamimnoRC VOYAGER 900 RX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "NamimnoRC_VOYAGER_900_RX_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "NamimnoRC_VOYAGER_900_RX_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/"
+  },
+  {
+    "category": "NamimnoRC VOYAGER 900",
+    "name": "NamimnoRC VOYAGER 900 ESP RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "NamimnoRC_VOYAGER_900_ESP_RX_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "NamimnoRC_VOYAGER_900_ESP_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "NamimnoRC_VOYAGER_900_ESP_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/"
+  },
+  {
+    "category": "NamimnoRC FLASH 2.4 GHz",
+    "name": "NamimnoRC FLASH 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "NamimnoRC_FLASH_2400_TX_via_STLINK"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "NamimnoRC_FLASH_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-flash2400/"
+  },
+  {
+    "category": "NamimnoRC FLASH 2.4 GHz",
+    "name": "NamimnoRC FLASH 2400 RX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "NamimnoRC_FLASH_2400_RX_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/"
+  },
+  {
+    "category": "NamimnoRC FLASH 2.4 GHz",
+    "name": "NamimnoRC FLASH 2400 ESP RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "NamimnoRC_FLASH_2400_ESP_RX_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "NamimnoRC_FLASH_2400_ESP_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "NamimnoRC_FLASH_2400_ESP_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "AUTO_WIFI_ON_BOOT",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/"
+  },
+  {
+    "category": "SIYI 2.4 GHz",
+    "name": "FM30 TX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "FM30_TX_via_STLINK"
+      },
+      {
+        "flashingMethod": "DFU",
+        "name": "FM30_TX_via_DFU"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "USE_DYNAMIC_POWER"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-siyifm30/"
+  },
+  {
+    "category": "SIYI 2.4 GHz",
+    "name": "FM30 RX MINI",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "FM30_RX_MINI_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "FM30_RX_MINI_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "USE_DIVERSITY"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-siyiFRmini/"
+  },
+  {
+    "category": "NeutronRC 900 MHz",
+    "name": "NeutronRC 900 RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "NeutronRC_900_RX_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "NeutronRC_900_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "NeutronRC_900_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": ""
+  },
+  {
+    "category": "HGLRC 2.4 GHz",
+    "name": "HGLRC Hermes 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HGLRC_Hermes_2400_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HGLRC_Hermes_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": ""
+  },
+  {
+    "category": "HGLRC 2.4 GHz",
+    "name": "HGLRC Hermes 2400 RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HGLRC_Hermes_2400_RX_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "HGLRC_Hermes_2400_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HGLRC_Hermes_2400_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": ""
+  },
+  {
+    "category": "HGLRC 900 MHz",
+    "name": "HGLRC Hermes 900 RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HGLRC_Hermes_900_RX_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "HGLRC_Hermes_900_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HGLRC_Hermes_900_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": ""
+  },
+  {
+    "category": "QuadKopters 2.4 Ghz",
+    "name": "QuadKopters JR 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "QuadKopters_JR_2400_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "QuadKopters_JR_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": ""
+  },
+  {
+    "category": "QuadKopters 2.4 Ghz",
+    "name": "QuadKopters NANO RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "QuadKopters_NANO_RX_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "QuadKopters_NANO_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "QuadKopters_NANO_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "NO_SYNC_ON_ARM",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": ""
+  }
+]
+}

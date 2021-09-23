@@ -1,5 +1,4 @@
 import {
-  DeviceTarget,
   FirmwareVersionDataInput,
   UserDefine,
   UserDefinesMode,
@@ -13,13 +12,13 @@ export interface DeviceOptions {
 
 export interface IApplicationStorage {
   saveDeviceOptions(
-    deviceTarget: DeviceTarget,
+    device: string,
     deviceOptions: DeviceOptions
   ): Promise<void>;
 
-  removeDeviceOptions(deviceTarget: DeviceTarget): Promise<void>;
+  removeDeviceOptions(deviceTarget: string): Promise<void>;
 
-  getDeviceOptions(deviceTarget: DeviceTarget): Promise<DeviceOptions | null>;
+  getDeviceOptions(deviceTarget: string): Promise<DeviceOptions | null>;
 
   setBindingPhrase(bindingPhrase: string): Promise<void>;
 
@@ -41,17 +40,15 @@ const UI_SHOW_FIRMWARE_PRE_RELEASES = 'ui_show_pre_releases';
 
 export default class ApplicationStorage implements IApplicationStorage {
   async saveDeviceOptions(
-    deviceTarget: DeviceTarget,
+    device: string,
     deviceOptions: DeviceOptions
   ): Promise<void> {
-    const key = `${DEVICE_OPTIONS_BY_TARGET_KEYSPACE}.${deviceTarget}`;
+    const key = `${DEVICE_OPTIONS_BY_TARGET_KEYSPACE}.${device}`;
     localStorage.setItem(key, JSON.stringify(deviceOptions));
   }
 
-  async getDeviceOptions(
-    deviceTarget: DeviceTarget
-  ): Promise<DeviceOptions | null> {
-    const key = `${DEVICE_OPTIONS_BY_TARGET_KEYSPACE}.${deviceTarget}`;
+  async getDeviceOptions(device: string): Promise<DeviceOptions | null> {
+    const key = `${DEVICE_OPTIONS_BY_TARGET_KEYSPACE}.${device}`;
     const value = localStorage.getItem(key);
     if (value === null) {
       return null;
@@ -64,8 +61,8 @@ export default class ApplicationStorage implements IApplicationStorage {
     }
   }
 
-  async removeDeviceOptions(deviceTarget: DeviceTarget): Promise<void> {
-    const key = `${DEVICE_OPTIONS_BY_TARGET_KEYSPACE}.${deviceTarget}`;
+  async removeDeviceOptions(device: string): Promise<void> {
+    const key = `${DEVICE_OPTIONS_BY_TARGET_KEYSPACE}.${device}`;
     localStorage.removeItem(key);
   }
 

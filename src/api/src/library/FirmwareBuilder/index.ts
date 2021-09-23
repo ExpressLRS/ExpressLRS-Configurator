@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import DeviceTarget from './Enum/DeviceTarget';
 import Platformio from '../Platformio';
 import { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 import UserDefineKey from './Enum/UserDefineKey';
@@ -42,7 +41,7 @@ export default class FirmwareBuilder {
     };
   }
 
-  getFirmwareBinPath(target: DeviceTarget, firmwarePath: string): string {
+  getFirmwareBinPath(target: string, firmwarePath: string): string {
     const firmwareElrs = path.join(
       firmwarePath,
       '.pio',
@@ -62,7 +61,7 @@ export default class FirmwareBuilder {
   }
 
   async build(
-    target: DeviceTarget,
+    target: string,
     userDefines: string,
     firmwarePath: string,
     onOutput: OnOutputFunc = NoOpFunc
@@ -72,7 +71,7 @@ export default class FirmwareBuilder {
   }
 
   async flash(
-    target: DeviceTarget,
+    target: string,
     userDefines: string,
     firmwarePath: string,
     serialPort: string | undefined,

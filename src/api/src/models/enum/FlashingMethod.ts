@@ -1,4 +1,6 @@
-export enum FlashingMethod {
+import { registerEnumType } from 'type-graphql';
+
+enum FlashingMethod {
   BetaflightPassthrough = 'Betaflight Passthrough',
   DFU = 'DFU',
   STLink = 'STLink',
@@ -6,5 +8,9 @@ export enum FlashingMethod {
   UART = 'UART',
   WIFI = 'WIFI',
 }
+
+registerEnumType(FlashingMethod, {
+  name: 'FlashingMethod',
+});
 
 export default FlashingMethod;

@@ -1,12 +1,11 @@
 import { ArgsType, Field } from 'type-graphql';
 import FirmwareSource from '../../models/enum/FirmwareSource';
-import DeviceTarget from '../../library/FirmwareBuilder/Enum/DeviceTarget';
 import PullRequest from '../../models/PullRequest';
 
 @ArgsType()
 export default class TargetDeviceOptionsArgs {
-  @Field(() => DeviceTarget)
-  target: DeviceTarget;
+  @Field()
+  target: string;
 
   @Field(() => FirmwareSource)
   source: FirmwareSource;
@@ -28,7 +27,7 @@ export default class TargetDeviceOptionsArgs {
 
   constructor() {
     this.source = FirmwareSource.GitBranch;
-    this.target = DeviceTarget.DIY_2400_TX_ESP32_SX1280_E28_via_UART;
+    this.target = 'DIY_2400_TX_ESP32_SX1280_E28_via_UART';
     this.gitTag = '';
     this.gitBranch = '';
     this.gitCommit = '';

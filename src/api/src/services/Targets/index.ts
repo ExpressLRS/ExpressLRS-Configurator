@@ -3,24 +3,30 @@ import { Service } from 'typedi';
 import fetch from 'node-fetch';
 import * as path from 'path';
 import fs from 'fs';
-import DeviceTarget from '../../library/FirmwareBuilder/Enum/DeviceTarget';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import TargetArgs from '../../graphql/args/Target';
 import { LoggerService } from '../../logger';
+import Device from '../../models/Device';
+import Target from '../../models/Target';
+import FlashingMethod from '../../models/enum/FlashingMethod';
+import DeviceService from '../Device';
 
 export interface ITargets {
   loadTargetsList(
     owner: string,
     repository: string,
     args: TargetArgs
-  ): Promise<string[]>;
+  ): Promise<Device[]>;
 }
 
 @Service()
 export default class TargetsService implements ITargets {
   client: Octokit;
 
-  constructor(private logger: LoggerService) {
+  constructor(
+    private logger: LoggerService,
+    private deviceService: DeviceService
+  ) {
     this.client = new Octokit();
   }
 
@@ -122,7 +128,7 @@ export default class TargetsService implements ITargets {
     owner: string,
     repository: string,
     args: TargetArgs
-  ): Promise<DeviceTarget[]> {
+  ): Promise<Device[]> {
     let availableTargets: string[] = [];
     switch (args.source) {
       case FirmwareSource.GitBranch:
@@ -163,9 +169,16 @@ export default class TargetsService implements ITargets {
           `unsupported firmware source for the targets service: ${args.source}`
         );
     }
+    const devices = await this.deviceService.getDevices();
 
-    return Object.values(DeviceTarget).filter((item) =>
-      availableTargets.find((target) => target === `${item}`)
-    );
+    return devices
+      .map((value) => {
+        const device = { ...value };
+        device.targets = value.targets.filter((item) =>
+          availableTargets.find((target) => target === item.name)
+        );
+        return device;
+      })
+      .filter((item) => item.targets.length > 0);
   }
 }
