@@ -29,6 +29,7 @@ export type Query = {
   readonly pullRequests: ReadonlyArray<PullRequestType>;
   readonly checkForUpdates: UpdatesAvailability;
   readonly availableDevicesList: ReadonlyArray<SerialPortInformation>;
+  readonly availableMulticastDnsDevicesList: ReadonlyArray<MulticastDnsInformation>;
 };
 
 export type QueryAvailableFirmwareTargetsArgs = {
@@ -177,6 +178,19 @@ export type SerialPortInformation = {
   readonly manufacturer: Scalars['String'];
 };
 
+export type MulticastDnsInformation = {
+  readonly __typename?: 'MulticastDnsInformation';
+  readonly name: Scalars['String'];
+  readonly options: Scalars['String'];
+  readonly version: Scalars['String'];
+  readonly target: Scalars['String'];
+  readonly type: Scalars['String'];
+  readonly vendor: Scalars['String'];
+  readonly ip: Scalars['String'];
+  readonly dns: Scalars['String'];
+  readonly port: Scalars['Float'];
+};
+
 export type Mutation = {
   readonly __typename?: 'Mutation';
   readonly buildFlashFirmware: BuildFlashFirmwareResult;
@@ -283,6 +297,7 @@ export type Subscription = {
   readonly buildLogUpdates: BuildLogUpdate;
   readonly serialMonitorLogs: SerialMonitorLogUpdate;
   readonly serialMonitorEvents: SerialMonitorEvent;
+  readonly multicastDnsMonitorUpdates: MulticastDnsMonitorUpdate;
 };
 
 export type BuildProgressNotification = {
@@ -328,6 +343,18 @@ export enum SerialMonitorEventType {
   Error = 'Error',
 }
 
+export type MulticastDnsMonitorUpdate = {
+  readonly __typename?: 'MulticastDnsMonitorUpdate';
+  readonly type: MulticastDnsEventType;
+  readonly data: MulticastDnsInformation;
+};
+
+export enum MulticastDnsEventType {
+  DeviceAdded = 'DeviceAdded',
+  DeviceRemoved = 'DeviceRemoved',
+  DeviceUpdated = 'DeviceUpdated',
+}
+
 export type AvailableDevicesListQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -365,6 +392,29 @@ export type AvailableFirmwareTargetsQuery = {
           >
         >;
       }
+  >;
+};
+
+export type AvailableMulticastDnsDevicesListQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type AvailableMulticastDnsDevicesListQuery = {
+  readonly __typename?: 'Query';
+} & {
+  readonly availableMulticastDnsDevicesList: ReadonlyArray<
+    { readonly __typename?: 'MulticastDnsInformation' } & Pick<
+      MulticastDnsInformation,
+      | 'name'
+      | 'options'
+      | 'version'
+      | 'target'
+      | 'type'
+      | 'vendor'
+      | 'ip'
+      | 'dns'
+      | 'port'
+    >
   >;
 };
 
@@ -515,6 +565,31 @@ export type GetReleasesQuery = { readonly __typename?: 'Query' } & {
       'tagName' | 'preRelease'
     >
   >;
+};
+
+export type MulticastDnsMonitorUpdatesSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type MulticastDnsMonitorUpdatesSubscription = {
+  readonly __typename?: 'Subscription';
+} & {
+  readonly multicastDnsMonitorUpdates: {
+    readonly __typename?: 'MulticastDnsMonitorUpdate';
+  } & Pick<MulticastDnsMonitorUpdate, 'type'> & {
+      readonly data: { readonly __typename?: 'MulticastDnsInformation' } & Pick<
+        MulticastDnsInformation,
+        | 'name'
+        | 'options'
+        | 'version'
+        | 'target'
+        | 'type'
+        | 'vendor'
+        | 'ip'
+        | 'dns'
+        | 'port'
+      >;
+    };
 };
 
 export type GetTagsQueryVariables = Exact<{ [key: string]: never }>;
@@ -689,6 +764,71 @@ export type AvailableFirmwareTargetsLazyQueryHookResult = ReturnType<
 export type AvailableFirmwareTargetsQueryResult = Apollo.QueryResult<
   AvailableFirmwareTargetsQuery,
   AvailableFirmwareTargetsQueryVariables
+>;
+export const AvailableMulticastDnsDevicesListDocument = gql`
+  query availableMulticastDnsDevicesList {
+    availableMulticastDnsDevicesList {
+      name
+      options
+      version
+      target
+      type
+      vendor
+      ip
+      dns
+      port
+    }
+  }
+`;
+
+/**
+ * __useAvailableMulticastDnsDevicesListQuery__
+ *
+ * To run a query within a React component, call `useAvailableMulticastDnsDevicesListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAvailableMulticastDnsDevicesListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAvailableMulticastDnsDevicesListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAvailableMulticastDnsDevicesListQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    AvailableMulticastDnsDevicesListQuery,
+    AvailableMulticastDnsDevicesListQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    AvailableMulticastDnsDevicesListQuery,
+    AvailableMulticastDnsDevicesListQueryVariables
+  >(AvailableMulticastDnsDevicesListDocument, options);
+}
+export function useAvailableMulticastDnsDevicesListLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    AvailableMulticastDnsDevicesListQuery,
+    AvailableMulticastDnsDevicesListQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    AvailableMulticastDnsDevicesListQuery,
+    AvailableMulticastDnsDevicesListQueryVariables
+  >(AvailableMulticastDnsDevicesListDocument, options);
+}
+export type AvailableMulticastDnsDevicesListQueryHookResult = ReturnType<
+  typeof useAvailableMulticastDnsDevicesListQuery
+>;
+export type AvailableMulticastDnsDevicesListLazyQueryHookResult = ReturnType<
+  typeof useAvailableMulticastDnsDevicesListLazyQuery
+>;
+export type AvailableMulticastDnsDevicesListQueryResult = Apollo.QueryResult<
+  AvailableMulticastDnsDevicesListQuery,
+  AvailableMulticastDnsDevicesListQueryVariables
 >;
 export const BuildFlashFirmwareDocument = gql`
   mutation buildFlashFirmware($input: BuildFlashFirmwareInput!) {
@@ -1332,6 +1472,56 @@ export type GetReleasesQueryResult = Apollo.QueryResult<
   GetReleasesQuery,
   GetReleasesQueryVariables
 >;
+export const MulticastDnsMonitorUpdatesDocument = gql`
+  subscription multicastDnsMonitorUpdates {
+    multicastDnsMonitorUpdates {
+      type
+      data {
+        name
+        options
+        version
+        target
+        type
+        vendor
+        ip
+        dns
+        port
+      }
+    }
+  }
+`;
+
+/**
+ * __useMulticastDnsMonitorUpdatesSubscription__
+ *
+ * To run a query within a React component, call `useMulticastDnsMonitorUpdatesSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useMulticastDnsMonitorUpdatesSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMulticastDnsMonitorUpdatesSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMulticastDnsMonitorUpdatesSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    MulticastDnsMonitorUpdatesSubscription,
+    MulticastDnsMonitorUpdatesSubscriptionVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSubscription<
+    MulticastDnsMonitorUpdatesSubscription,
+    MulticastDnsMonitorUpdatesSubscriptionVariables
+  >(MulticastDnsMonitorUpdatesDocument, options);
+}
+export type MulticastDnsMonitorUpdatesSubscriptionHookResult = ReturnType<
+  typeof useMulticastDnsMonitorUpdatesSubscription
+>;
+export type MulticastDnsMonitorUpdatesSubscriptionResult = Apollo.SubscriptionResult<MulticastDnsMonitorUpdatesSubscription>;
 export const GetTagsDocument = gql`
   query getTags {
     gitTags

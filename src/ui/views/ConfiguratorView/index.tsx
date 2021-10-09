@@ -1,4 +1,10 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   Alert,
   AlertTitle,
@@ -8,6 +14,7 @@ import {
   Container,
   Divider,
   makeStyles,
+  Snackbar,
   Tooltip,
 } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -38,6 +45,12 @@ import {
   useTargetDeviceOptionsLazyQuery,
   useAvailableFirmwareTargetsLazyQuery,
   Device,
+  useMulticastDnsMonitorUpdatesSubscription,
+  MulticastDnsInformation,
+  MulticastDnsEventType,
+  Target,
+  FlashingMethod,
+  useAvailableMulticastDnsDevicesListQuery,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -52,6 +65,8 @@ import persistDeviceOptions from '../../storage/commands/persistDeviceOptions';
 import mergeWithDeviceOptionsFromStorage from '../../storage/commands/mergeWithDeviceOptionsFromStorage';
 import UserDefinesAdvisor from '../../components/UserDefinesAdvisor';
 import SerialDeviceSelect from '../../components/SerialDeviceSelect';
+import WifiDeviceSelect from '../../components/WifiDeviceSelect';
+import WifiDeviceList from '../../components/WifiDeviceList';
 
 export const validateFirmwareVersionData = (
   data: FirmwareVersionDataInput
@@ -119,6 +134,9 @@ const useStyles = makeStyles((theme) => ({
       color: '#90caf9',
     },
   },
+  section: {
+    paddingTop: theme.spacing(4),
+  },
 }));
 
 enum ViewState {
@@ -181,6 +199,61 @@ const ConfiguratorView: FunctionComponent = () => {
     },
   });
 
+  const [multicastDnsDevices, setMulticastDnsDevices] = useState<{
+    [name: string]: MulticastDnsInformation;
+  }>({});
+
+  const {
+    loading: multicastDnsDevicesListLoading,
+    data: multicastDnsDevicesListData,
+    error: multicastDnsDevicesListError,
+  } = useAvailableMulticastDnsDevicesListQuery({
+    fetchPolicy: 'network-only',
+  });
+
+  useEffect(() => {
+    if (multicastDnsDevicesListData) {
+      multicastDnsDevicesListData.availableMulticastDnsDevicesList.forEach(
+        (item) => {
+          multicastDnsDevices[item.name] = item;
+        }
+      );
+    }
+  }, [multicastDnsDevicesListData]);
+
+  const [multicastDnsNewDevices, setMulticastDnsNewDevices] = useState<
+    MulticastDnsInformation[]
+  >([]);
+
+  useMulticastDnsMonitorUpdatesSubscription({
+    fetchPolicy: 'network-only',
+    onSubscriptionData: (options) => {
+      console.log(
+        `useMulticastDnsMonitorUpdatesSubscription: ${JSON.stringify(
+          options.subscriptionData.data?.multicastDnsMonitorUpdates.data
+        )}`
+      );
+      const data = options.subscriptionData.data?.multicastDnsMonitorUpdates;
+      if (data) {
+        const multicastDnsDevicesCopy = { ...multicastDnsDevices };
+
+        if (data?.type === MulticastDnsEventType.DeviceAdded) {
+          multicastDnsDevicesCopy[data.data.name] = data.data;
+
+          const newDevices = multicastDnsNewDevices.map((item) => item);
+          newDevices.push(data.data);
+          setMulticastDnsNewDevices(newDevices);
+        } else if (data?.type === MulticastDnsEventType.DeviceUpdated) {
+          multicastDnsDevicesCopy[data.data.name] = data.data;
+        } else if (data?.type === MulticastDnsEventType.DeviceRemoved) {
+          delete multicastDnsDevicesCopy[data.data.name];
+        }
+
+        setMulticastDnsDevices(multicastDnsDevicesCopy);
+      }
+    },
+  });
+
   const [
     firmwareVersionData,
     setFirmwareVersionData,
@@ -188,17 +261,21 @@ const ConfiguratorView: FunctionComponent = () => {
   const [firmwareVersionErrors, setFirmwareVersionErrors] = useState<Error[]>(
     []
   );
-  const onFirmwareVersionData = (data: FirmwareVersionDataInput) => {
-    setFirmwareVersionErrors([]);
-    setFirmwareVersionData(data);
-  };
+  const onFirmwareVersionData = useCallback(
+    (data: FirmwareVersionDataInput) => {
+      setFirmwareVersionErrors([]);
+      setFirmwareVersionData(data);
+    },
+    []
+  );
 
   const [deviceTarget, setDeviceTarget] = useState<string | null>(null);
   const [deviceTargetErrors, setDeviceTargetErrors] = useState<Error[]>([]);
-  const onDeviceTarget = (data: string | null) => {
+
+  const onDeviceTarget = useCallback((data: string | null) => {
     setDeviceTargetErrors([]);
     setDeviceTarget(data);
-  };
+  }, []);
 
   const [deviceTargets, setDeviceTargets] = useState<Device[] | null>(null);
 
@@ -307,7 +384,7 @@ const ConfiguratorView: FunctionComponent = () => {
         console.error(`failed to update device options form data: ${err}`);
       });
     }
-  }, [deviceOptionsResponse]);
+  }, [deviceOptionsResponse, deviceTargets]);
 
   const onResetToDefaults = () => {
     const handleReset = async () => {
@@ -340,20 +417,23 @@ const ConfiguratorView: FunctionComponent = () => {
     });
   };
 
-  const onUserDefines = (data: DeviceOptionsFormData) => {
-    setDeviceOptionsFormData(data);
-    if (deviceTarget !== null) {
-      const storage = new ApplicationStorage();
-      const deviceName = deviceTargets?.find((device) => {
-        return device.targets.find((target) => target.name === deviceTarget);
-      })?.name;
-      if (deviceName) {
-        persistDeviceOptions(storage, deviceName, data).catch((err) => {
-          console.error(`failed to persist user defines: ${err}`);
-        });
+  const onUserDefines = useCallback(
+    (data: DeviceOptionsFormData) => {
+      setDeviceOptionsFormData(data);
+      if (deviceTarget !== null) {
+        const storage = new ApplicationStorage();
+        const deviceName = deviceTargets?.find((device) => {
+          return device.targets.find((target) => target.name === deviceTarget);
+        })?.name;
+        if (deviceName) {
+          persistDeviceOptions(storage, deviceName, data).catch((err) => {
+            console.error(`failed to persist user defines: ${err}`);
+          });
+        }
       }
-    }
-  };
+    },
+    [deviceTarget, deviceTargets]
+  );
 
   const [
     buildFlashFirmwareMutation,
@@ -460,6 +540,11 @@ const ConfiguratorView: FunctionComponent = () => {
     setSerialDevice(newSerialDevice);
   };
 
+  const [wifiDevice, setWifiDevice] = useState<string | null>(null);
+  const onWifiDevice = useCallback((newWifiDevice: string | null) => {
+    setWifiDevice(newWifiDevice);
+  }, []);
+
   const [serialPortRequired, setSerialPortRequired] = useState<boolean>(false);
 
   useEffect(() => {
@@ -473,6 +558,23 @@ const ConfiguratorView: FunctionComponent = () => {
       setSerialPortRequired(false);
     }
   }, [deviceTarget]);
+
+  const [wifiDeviceRequired, setWifiDeviceRequired] = useState<boolean>(false);
+
+  useEffect(() => {
+    let target: Target | undefined;
+
+    deviceTargets?.forEach((device) => {
+      target =
+        device.targets.find((item) => item.name === deviceTarget) || target;
+    });
+
+    if (target && target.flashingMethod === FlashingMethod.WIFI) {
+      setWifiDeviceRequired(true);
+    } else {
+      setWifiDeviceRequired(false);
+    }
+  }, [deviceTarget, deviceTargets]);
 
   const [
     deviceOptionsValidationErrors,
@@ -544,6 +646,14 @@ const ConfiguratorView: FunctionComponent = () => {
         break;
     }
 
+    let uploadPort: string | undefined;
+
+    if (serialPortRequired && serialDevice != null) {
+      uploadPort = serialDevice;
+    } else if (wifiDeviceRequired && wifiDevice !== null) {
+      uploadPort = wifiDevice;
+    }
+
     const input: BuildFlashFirmwareInput = {
       type,
       firmware: firmwareVersionData,
@@ -557,8 +667,7 @@ const ConfiguratorView: FunctionComponent = () => {
         enumValues: item.enumValues,
         type: item.type,
       })),
-      serialDevice:
-        serialDevice !== null && serialPortRequired ? serialDevice : undefined,
+      serialDevice: uploadPort,
     };
     buildFlashFirmwareMutation({
       variables: {
@@ -579,6 +688,36 @@ const ConfiguratorView: FunctionComponent = () => {
 
   const onBuild = () => sendJob(BuildJobType.Build);
   const onBuildAndFlash = () => sendJob(BuildJobType.BuildAndFlash);
+
+  const deviceOptionsRef = useRef<HTMLDivElement | null>(null);
+
+  const onWifiDeviceChange = useCallback(
+    (deviceName: string) => {
+      const dnsDevice = multicastDnsDevices[deviceName];
+
+      const targetName = dnsDevice.target.toUpperCase();
+
+      const device = deviceTargets?.find((item) => {
+        return item.targets.find((target) => {
+          return target.name.toUpperCase().startsWith(targetName);
+        });
+      });
+
+      const dTarget =
+        device?.targets.find((target) => {
+          return target.flashingMethod === FlashingMethod.WIFI;
+        })?.name ||
+        device?.targets[0].name ||
+        null;
+
+      setDeviceTarget(dTarget);
+
+      setWifiDevice(dnsDevice.ip);
+
+      deviceOptionsRef?.current?.scrollIntoView({ behavior: 'smooth' });
+    },
+    [deviceTargets, multicastDnsDevices]
+  );
 
   return (
     <main className={styles.root}>
@@ -627,7 +766,7 @@ const ConfiguratorView: FunctionComponent = () => {
               <CardTitle
                 icon={<SettingsIcon />}
                 title={
-                  <>
+                  <div ref={deviceOptionsRef}>
                     Device options{' '}
                     {deviceOptionsFormData.userDefinesMode ===
                       UserDefinesMode.UserInterface &&
@@ -649,7 +788,7 @@ const ConfiguratorView: FunctionComponent = () => {
                           </Button>
                         </Tooltip>
                       )}
-                  </>
+                  </div>
                 }
               />
               <Divider />
@@ -687,6 +826,19 @@ const ConfiguratorView: FunctionComponent = () => {
                       onChange={onSerialDevice}
                     />
                   )}
+                  {wifiDeviceRequired && (
+                    <WifiDeviceSelect
+                      wifiDevice={wifiDevice}
+                      wifiDevices={Object.values(multicastDnsDevices).filter(
+                        (item) => {
+                          return deviceTarget
+                            ?.toUpperCase()
+                            .startsWith(item.target.toUpperCase());
+                        }
+                      )}
+                      onChange={onWifiDevice}
+                    />
+                  )}
                   <Button
                     className={styles.button}
                     size="large"
@@ -705,7 +857,22 @@ const ConfiguratorView: FunctionComponent = () => {
                   </Button>
                 </div>
               </CardContent>
-              <Divider />
+
+              {Object.values(multicastDnsDevices).length > 0 && (
+                <div className={styles.section}>
+                  <Divider />
+                  <CardTitle icon={<SettingsIcon />} title="Network Devices" />
+                  <Divider />
+                  <CardContent>
+                    <div>
+                      <WifiDeviceList
+                        wifiDevices={Object.values(multicastDnsDevices)}
+                        onChange={onWifiDeviceChange}
+                      />
+                    </div>
+                  </CardContent>
+                </div>
+              )}
             </Card>
           )}
 
@@ -794,6 +961,34 @@ const ConfiguratorView: FunctionComponent = () => {
               )}
             </Card>
           )}
+          {multicastDnsNewDevices.map((dnsDevice) => {
+            const handleClose = () => {
+              setMulticastDnsNewDevices(
+                multicastDnsNewDevices.filter((d) => d !== dnsDevice)
+              );
+            };
+
+            return (
+              <Snackbar
+                key={dnsDevice.name}
+                open
+                autoHideDuration={6000}
+                onClose={handleClose}
+              >
+                <Alert onClose={handleClose} severity="info">
+                  New Device {dnsDevice.name} ({dnsDevice.ip})
+                  <Button
+                    size="small"
+                    onClick={() => {
+                      onWifiDeviceChange(dnsDevice.name);
+                    }}
+                  >
+                    Select
+                  </Button>
+                </Alert>
+              </Snackbar>
+            );
+          })}
         </Container>
       </div>
     </main>

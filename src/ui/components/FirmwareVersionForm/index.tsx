@@ -271,9 +271,6 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   };
 
   useEffect(() => {
-    setGitCommit('');
-    setLocalPath('');
-
     switch (firmwareSource) {
       case FirmwareSource.GitTag:
         queryGitTags();
