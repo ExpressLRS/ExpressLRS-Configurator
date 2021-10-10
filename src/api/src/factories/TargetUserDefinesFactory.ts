@@ -55,7 +55,7 @@ export default class TargetUserDefinesFactory {
           case UserDefineKey.UNLOCK_HIGHER_POWER:
             return UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER, true);
           case UserDefineKey.USE_DIVERSITY:
-            return UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, false);
+            return UserDefine.Boolean(UserDefineKey.USE_DIVERSITY);
           case UserDefineKey.NO_SYNC_ON_ARM:
             return UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM);
           case UserDefineKey.ARM_CHANNEL:
@@ -84,6 +84,10 @@ export default class TargetUserDefinesFactory {
             return UserDefine.Boolean(UserDefineKey.UART_INVERTED, true);
           case UserDefineKey.USE_R9MM_R9MINI_SBUS:
             return UserDefine.Boolean(UserDefineKey.USE_R9MM_R9MINI_SBUS);
+          case UserDefineKey.UART_RX_SPEED_400K:
+            return UserDefine.Boolean(UserDefineKey.UART_RX_SPEED_400K);
+          case UserDefineKey.RCVR_INVERT_TX:
+            return UserDefine.Boolean(UserDefineKey.RCVR_INVERT_TX);
           // Other options
           case UserDefineKey.BLE_HID_JOYSTICK:
             return UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK);
@@ -100,7 +104,7 @@ export default class TargetUserDefinesFactory {
           case UserDefineKey.USE_DYNAMIC_POWER:
             return UserDefine.Boolean(UserDefineKey.USE_DYNAMIC_POWER);
           case UserDefineKey.WS2812_IS_GRB:
-            return UserDefine.Boolean(UserDefineKey.WS2812_IS_GRB, false);
+            return UserDefine.Boolean(UserDefineKey.WS2812_IS_GRB);
           // Network
           case UserDefineKey.HOME_WIFI_SSID:
             return UserDefine.Text(UserDefineKey.HOME_WIFI_SSID);
@@ -114,8 +118,6 @@ export default class TargetUserDefinesFactory {
               '20',
               true
             );
-          case UserDefineKey.UART_RX_SPEED_400K:
-            return UserDefine.Boolean(UserDefineKey.UART_RX_SPEED_400K, false);
           default:
             throw new Error(`User Define ${userDefine} is not known`);
         }

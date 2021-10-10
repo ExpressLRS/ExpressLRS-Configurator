@@ -693,6 +693,28 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.RCVR_INVERT_TX:
+          return (
+            <div>
+              <p>
+                If using an a flight controller that only has an RXI / SBUS (RX
+                inverted) pad, turn on this option to invert the CRSF output
+                from the receiver to be able to use that pad. This does not
+                convert the output to SBUS, it is inverted CRSF, so CRSF should
+                still be the receiver protocol selected in the flight controller
+                software. ESP-based receivers only.
+              </p>{' '}
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
         case UserDefineKey.USE_DYNAMIC_POWER:
           return (
             <div>

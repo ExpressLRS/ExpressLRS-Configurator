@@ -68,7 +68,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv900/"
     },
@@ -136,7 +137,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv2400/"
     },
@@ -170,7 +172,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-matek2400/"
     },
@@ -572,7 +575,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/"
     },
@@ -605,7 +609,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmep2400/"
     },
@@ -852,7 +857,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers900/"
     },
@@ -1054,7 +1060,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/"
     },
@@ -1179,7 +1186,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/"
     },
@@ -1272,7 +1280,8 @@
         "AUTO_WIFI_ON_BOOT",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/"
     },
@@ -1362,7 +1371,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": ""
     },
@@ -1428,7 +1438,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": ""
     },
@@ -1464,7 +1475,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": ""
     },
@@ -1530,7 +1542,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
-        "UART_RX_SPEED_400K"
+        "UART_RX_SPEED_400K",
+        "RCVR_INVERT_TX"
       ],
       "wikiUrl": ""
     }
