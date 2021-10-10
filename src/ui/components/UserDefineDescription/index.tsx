@@ -674,6 +674,25 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.UART_RX_SPEED_400K:
+          return (
+            <div>
+              <p>
+                ExpressLRS does not work on a KISS V1 with the default UART baud
+                rate. This option lowers it to 400K and fixes compatibility
+                issues.
+              </p>{' '}
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
         case UserDefineKey.USE_DYNAMIC_POWER:
           return (
             <div>

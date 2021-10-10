@@ -114,6 +114,8 @@ export default class TargetUserDefinesFactory {
               '20',
               true
             );
+          case UserDefineKey.UART_RX_SPEED_400K:
+            return UserDefine.Boolean(UserDefineKey.UART_RX_SPEED_400K, false);
           default:
             throw new Error(`User Define ${userDefine} is not known`);
         }
