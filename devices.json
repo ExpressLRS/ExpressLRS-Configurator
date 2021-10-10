@@ -67,7 +67,8 @@
         "AUTO_WIFI_ON_BOOT",
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv900/"
     },
@@ -134,7 +135,8 @@
         "AUTO_WIFI_ON_BOOT",
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv2400/"
     },
@@ -167,7 +169,8 @@
         "AUTO_WIFI_ON_BOOT",
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-matek2400/"
     },
@@ -293,7 +296,8 @@
         "NO_SYNC_ON_ARM",
         "ARM_CHANNEL",
         "LOCK_ON_FIRST_CONNECTION",
-        "USE_R9MM_R9MINI_SBUS"
+        "USE_R9MM_R9MINI_SBUS",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
     },
@@ -321,7 +325,8 @@
         "NO_SYNC_ON_ARM",
         "ARM_CHANNEL",
         "LOCK_ON_FIRST_CONNECTION",
-        "USE_DIVERSITY"
+        "USE_DIVERSITY",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
     },
@@ -348,7 +353,8 @@
         "ENABLE_TELEMETRY",
         "NO_SYNC_ON_ARM",
         "ARM_CHANNEL",
-        "LOCK_ON_FIRST_CONNECTION"
+        "LOCK_ON_FIRST_CONNECTION",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
     },
@@ -376,7 +382,8 @@
         "NO_SYNC_ON_ARM",
         "ARM_CHANNEL",
         "LOCK_ON_FIRST_CONNECTION",
-        "USE_DIVERSITY"
+        "USE_DIVERSITY",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
     },
@@ -403,7 +410,8 @@
         "ENABLE_TELEMETRY",
         "NO_SYNC_ON_ARM",
         "ARM_CHANNEL",
-        "LOCK_ON_FIRST_CONNECTION"
+        "LOCK_ON_FIRST_CONNECTION",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
     },
@@ -430,7 +438,8 @@
         "ENABLE_TELEMETRY",
         "NO_SYNC_ON_ARM",
         "ARM_CHANNEL",
-        "LOCK_ON_FIRST_CONNECTION"
+        "LOCK_ON_FIRST_CONNECTION",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-jumper900/"
     },
@@ -562,7 +571,8 @@
         "AUTO_WIFI_ON_BOOT",
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/"
     },
@@ -594,7 +604,8 @@
         "AUTO_WIFI_ON_BOOT",
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmep2400/"
     },
@@ -618,7 +629,8 @@
         "ENABLE_TELEMETRY",
         "NO_SYNC_ON_ARM",
         "LOCK_ON_FIRST_CONNECTION",
-        "USE_500HZ"
+        "USE_500HZ",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmpp2400/"
     },
@@ -686,7 +698,8 @@
         "ENABLE_TELEMETRY",
         "NO_SYNC_ON_ARM",
         "ARM_CHANNEL",
-        "LOCK_ON_FIRST_CONNECTION"
+        "LOCK_ON_FIRST_CONNECTION",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/"
     },
@@ -838,7 +851,8 @@
         "AUTO_WIFI_ON_BOOT",
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers900/"
     },
@@ -1005,7 +1019,8 @@
         "ENABLE_TELEMETRY",
         "NO_SYNC_ON_ARM",
         "LOCK_ON_FIRST_CONNECTION",
-        "USE_500HZ"
+        "USE_500HZ",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-ghost2400/"
     },
@@ -1038,7 +1053,8 @@
         "AUTO_WIFI_ON_BOOT",
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/"
     },
@@ -1062,7 +1078,8 @@
         "ENABLE_TELEMETRY",
         "NO_SYNC_ON_ARM",
         "LOCK_ON_FIRST_CONNECTION",
-        "USE_500HZ"
+        "USE_500HZ",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/"
     },
@@ -1125,7 +1142,8 @@
         "ENABLE_TELEMETRY",
         "NO_SYNC_ON_ARM",
         "ARM_CHANNEL",
-        "LOCK_ON_FIRST_CONNECTION"
+        "LOCK_ON_FIRST_CONNECTION",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/"
     },
@@ -1160,7 +1178,8 @@
         "AUTO_WIFI_ON_BOOT",
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/"
     },
@@ -1216,7 +1235,8 @@
         "ENABLE_TELEMETRY",
         "NO_SYNC_ON_ARM",
         "LOCK_ON_FIRST_CONNECTION",
-        "USE_500HZ"
+        "USE_500HZ",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/"
     },
@@ -1251,7 +1271,8 @@
         "AUTO_WIFI_ON_INTERVAL",
         "AUTO_WIFI_ON_BOOT",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/"
     },
@@ -1304,7 +1325,8 @@
         "NO_SYNC_ON_ARM",
         "LOCK_ON_FIRST_CONNECTION",
         "USE_500HZ",
-        "USE_DIVERSITY"
+        "USE_DIVERSITY",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-siyiFRmini/"
     },
@@ -1339,7 +1361,8 @@
         "AUTO_WIFI_ON_BOOT",
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": ""
     },
@@ -1404,7 +1427,8 @@
         "AUTO_WIFI_ON_BOOT",
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": ""
     },
@@ -1439,7 +1463,8 @@
         "AUTO_WIFI_ON_BOOT",
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": ""
     },
@@ -1504,7 +1529,8 @@
         "AUTO_WIFI_ON_BOOT",
         "AUTO_WIFI_ON_INTERVAL",
         "HOME_WIFI_SSID",
-        "HOME_WIFI_PASSWORD"
+        "HOME_WIFI_PASSWORD",
+        "UART_RX_SPEED_400K"
       ],
       "wikiUrl": ""
     }
