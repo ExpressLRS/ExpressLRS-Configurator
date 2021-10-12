@@ -1340,6 +1340,34 @@
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-siyiFRmini/"
     },
     {
+      "category": "SIYI 2.4 GHz",
+      "name": "FM30 RX MINI AS TX",
+      "targets": [
+        {
+          "flashingMethod": "STLink",
+          "name": "FM30_RX_MINI_AS_TX_via_STLINK"
+        },
+        {
+          "flashingMethod": "UART",
+          "name": "FM30_RX_MINI_AS_TX_via_UART"
+        }
+      ],
+      "userDefines": [
+        "REGULATORY_DOMAIN_ISM_2400",
+        "BINDING_PHRASE",
+        "HYBRID_SWITCHES_8",
+        "ENABLE_TELEMETRY",
+        "TLM_REPORT_INTERVAL_MS",
+        "NO_SYNC_ON_ARM",
+        "ARM_CHANNEL",
+        "FEATURE_OPENTX_SYNC",
+        "USE_500HZ",
+        "UART_INVERTED",
+        "USE_DYNAMIC_POWER"
+      ],
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-siyiFRmini/"
+    },
+    {
       "category": "NeutronRC 900 MHz",
       "name": "NeutronRC 900 RX",
       "targets": [
