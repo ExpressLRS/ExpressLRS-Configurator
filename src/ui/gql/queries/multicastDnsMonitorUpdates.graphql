@@ -3,7 +3,13 @@ subscription multicastDnsMonitorUpdates {
     type
     data {
       name
-      options
+      options {
+        type
+        key
+        enabled
+        enumValues
+        value
+      }
       version
       target
       type

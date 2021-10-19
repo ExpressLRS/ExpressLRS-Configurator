@@ -181,7 +181,7 @@ export type SerialPortInformation = {
 export type MulticastDnsInformation = {
   readonly __typename?: 'MulticastDnsInformation';
   readonly name: Scalars['String'];
-  readonly options: Scalars['String'];
+  readonly options: ReadonlyArray<UserDefine>;
   readonly version: Scalars['String'];
   readonly target: Scalars['String'];
   readonly type: Scalars['String'];
@@ -405,16 +405,15 @@ export type AvailableMulticastDnsDevicesListQuery = {
   readonly availableMulticastDnsDevicesList: ReadonlyArray<
     { readonly __typename?: 'MulticastDnsInformation' } & Pick<
       MulticastDnsInformation,
-      | 'name'
-      | 'options'
-      | 'version'
-      | 'target'
-      | 'type'
-      | 'vendor'
-      | 'ip'
-      | 'dns'
-      | 'port'
-    >
+      'name' | 'version' | 'target' | 'type' | 'vendor' | 'ip' | 'dns' | 'port'
+    > & {
+        readonly options: ReadonlyArray<
+          { readonly __typename?: 'UserDefine' } & Pick<
+            UserDefine,
+            'type' | 'key' | 'enabled' | 'enumValues' | 'value'
+          >
+        >;
+      }
   >;
 };
 
@@ -580,7 +579,6 @@ export type MulticastDnsMonitorUpdatesSubscription = {
       readonly data: { readonly __typename?: 'MulticastDnsInformation' } & Pick<
         MulticastDnsInformation,
         | 'name'
-        | 'options'
         | 'version'
         | 'target'
         | 'type'
@@ -588,7 +586,14 @@ export type MulticastDnsMonitorUpdatesSubscription = {
         | 'ip'
         | 'dns'
         | 'port'
-      >;
+      > & {
+          readonly options: ReadonlyArray<
+            { readonly __typename?: 'UserDefine' } & Pick<
+              UserDefine,
+              'type' | 'key' | 'enabled' | 'enumValues' | 'value'
+            >
+          >;
+        };
     };
 };
 
@@ -769,7 +774,13 @@ export const AvailableMulticastDnsDevicesListDocument = gql`
   query availableMulticastDnsDevicesList {
     availableMulticastDnsDevicesList {
       name
-      options
+      options {
+        type
+        key
+        enabled
+        enumValues
+        value
+      }
       version
       target
       type
@@ -1478,7 +1489,13 @@ export const MulticastDnsMonitorUpdatesDocument = gql`
       type
       data {
         name
-        options
+        options {
+          type
+          key
+          enabled
+          enumValues
+          value
+        }
         version
         target
         type

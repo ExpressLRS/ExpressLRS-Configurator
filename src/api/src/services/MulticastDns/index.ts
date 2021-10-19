@@ -1,13 +1,13 @@
 import { Service } from 'typedi';
 import { PubSubEngine } from 'graphql-subscriptions';
 import * as http from 'http';
-import * as crypto from 'crypto';
-import makeMdns, { QueryPacket, ResponsePacket } from 'multicast-dns';
+import makeMdns, { ResponsePacket } from 'multicast-dns';
 import MulticastDnsInformation from '../../models/MulticastDnsInformation';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import { LoggerService } from '../../logger';
 import MulticastDnsEventType from '../../models/enum/MulticastDnsEventType';
 import UserDefine from '../../models/UserDefine';
+import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 
 export interface MulticastDnsServicePayload {
   type: MulticastDnsEventType;
@@ -17,8 +17,6 @@ export interface MulticastDnsServicePayload {
 @Service()
 export default class MulticastDnsService {
   devices: { [name: string]: MulticastDnsInformation } = {};
-
-  deviceLastUpdate: { [name: string]: Date } = {};
 
   mdnsQueryInterval = 10000;
 
@@ -41,11 +39,6 @@ export default class MulticastDnsService {
       }
     });
 
-    mdns.on('query', (query: QueryPacket) => {
-      // this.logger?.log('got a query packet:', query);
-      // console.log('got a query packet:', query);
-    });
-
     setInterval(() => {
       mdns.query({
         questions: [{ name: '_http._tcp.local', type: 'PTR', class: 'IN' }],
@@ -61,8 +54,6 @@ export default class MulticastDnsService {
           timeout: this.healthCheckTimeout,
         };
 
-        // generate a unique id so I can track this request
-        const id = crypto.randomBytes(16).toString('hex');
         // console.log(options);
         const req = http
           .request(options, (res) => {
@@ -82,14 +73,70 @@ export default class MulticastDnsService {
     }, this.healthCheckInterval);
   }
 
+  private parseOptions(optionsString: string): UserDefine[] {
+    let optionsStringWorking = optionsString;
+
+    // regex pattern for identifying userdefines with values like -DMY_BINDING_PHRASE="xyz"
+    const userDefineWithValueRegex = /-D\S+=".+?"/g;
+    const userDefineWithValueMatches =
+      optionsStringWorking.match(userDefineWithValueRegex) ?? [];
+
+    const userDefines: UserDefine[] = [];
+
+    userDefineWithValueMatches?.forEach((match) => {
+      // remove the matches from the options string
+      optionsStringWorking = optionsStringWorking.replace(match, '');
+      // split user define into key and value
+      const equalsSignIndex = match.indexOf(`=`);
+      const key = match.substring(1, equalsSignIndex).toUpperCase();
+      const value = match.substring(equalsSignIndex + 2, match.length - 1);
+
+      const userDefineKey = Object.values(UserDefineKey).find(
+        (item) => item.toUpperCase() === key
+      );
+
+      if (userDefineKey) {
+        userDefines.push(UserDefine.Text(userDefineKey, value));
+      } else {
+        this.logger.error(
+          `error while parsing user defines, user define key ${key} not found`,
+          Error().stack
+        );
+      }
+    });
+
+    // regex pattern to match user define without value like -DFEATURE_OPENTX_SYNC
+    const userDefineWithNoValueRegex = /-D\S+/g;
+    const userDefineWithNoValueMatches =
+      optionsStringWorking.match(userDefineWithNoValueRegex) ?? [];
+
+    userDefineWithNoValueMatches.forEach((match) => {
+      const key = match.substring(1).toUpperCase();
+      const userDefineKey = Object.values(UserDefineKey).find(
+        (item) => item.toUpperCase() === key
+      );
+
+      if (userDefineKey) {
+        userDefines.push(UserDefine.Boolean(userDefineKey, true));
+      } else {
+        this.logger.error(
+          `error while parsing user defines, user define key ${key} not found`,
+          Error().stack
+        );
+      }
+    });
+
+    return userDefines;
+  }
+
   private handleMulticastDnsResponse(response: ResponsePacket) {
     const items = [...response.answers, ...response.additionals];
-    const filteredAnswers = items.find(
-      (item: any) => item.name.indexOf('elrs_') === 0
-    );
-    if (filteredAnswers) {
-      // this.logger?.log('got a response packet:', response as any);
 
+    // check if any of the answers on the response have a name that starts with
+    // 'elrs_', which indicates that it is an elers device
+    const isElrs = !!items.find((item: any) => item.name.startsWith('elrs_'));
+
+    if (isElrs) {
       const txtResponse: any = items.find((answer) => answer.type === 'TXT');
 
       const aResponse: any = items.find((answer) => answer.type === 'A');
@@ -104,7 +151,7 @@ export default class MulticastDnsService {
           0,
           txtResponse.name.indexOf('.')
         );
-        let options = '';
+        let options: UserDefine[] = [];
         let version = '';
         let target = '';
         let type = '';
@@ -120,7 +167,7 @@ export default class MulticastDnsService {
 
               switch (key) {
                 case 'options':
-                  options = value;
+                  options = this.parseOptions(value);
                   break;
                 case 'version':
                   version = value;
@@ -155,17 +202,13 @@ export default class MulticastDnsService {
 
         if (!this.devices[name]) {
           this.devices[name] = mdnsInformation;
-          this.sendDevicesAdded(mdnsInformation);
+          this.sendDeviceAdded(mdnsInformation);
         } else if (
           JSON.stringify(this.devices[name]) !== JSON.stringify(mdnsInformation)
         ) {
           this.devices[name] = mdnsInformation;
-          this.sendDevicesUpdated(mdnsInformation);
+          this.sendDeviceUpdated(mdnsInformation);
         }
-
-        this.deviceLastUpdate[mdnsInformation.name] = new Date();
-
-        // this.logger?.log('mdnsInformation:', mdnsInformation as any);
       }
     }
   }
@@ -174,11 +217,11 @@ export default class MulticastDnsService {
     if (this.devices[name]) {
       const device = this.devices[name];
       delete this.devices[name];
-      this.sendDevicesRemoved(device);
+      this.sendDeviceRemoved(device);
     }
   }
 
-  private async sendDevicesAdded(data: MulticastDnsInformation): Promise<void> {
+  private async sendDeviceAdded(data: MulticastDnsInformation): Promise<void> {
     const record = {
       type: MulticastDnsEventType.DeviceAdded,
       data,
@@ -188,7 +231,7 @@ export default class MulticastDnsService {
     return this.pubSub!.publish(PubSubTopic.MulticastDnsEvents, record);
   }
 
-  private async sendDevicesRemoved(
+  private async sendDeviceRemoved(
     data: MulticastDnsInformation
   ): Promise<void> {
     const record = {
@@ -200,7 +243,7 @@ export default class MulticastDnsService {
     return this.pubSub!.publish(PubSubTopic.MulticastDnsEvents, record);
   }
 
-  private async sendDevicesUpdated(
+  private async sendDeviceUpdated(
     data: MulticastDnsInformation
   ): Promise<void> {
     const record = {

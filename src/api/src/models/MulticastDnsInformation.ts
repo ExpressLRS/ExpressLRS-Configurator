@@ -1,12 +1,13 @@
 import { Field, ObjectType } from 'type-graphql';
+import UserDefine from './UserDefine';
 
 @ObjectType('MulticastDnsInformation')
 export default class MulticastDnsInformation {
   @Field()
   name: string;
 
-  @Field()
-  options: string;
+  @Field(() => [UserDefine])
+  options: UserDefine[];
 
   @Field()
   version: string;
@@ -31,7 +32,7 @@ export default class MulticastDnsInformation {
 
   constructor(
     name: string,
-    options: string,
+    options: UserDefine[],
     version: string,
     target: string,
     type: string,
