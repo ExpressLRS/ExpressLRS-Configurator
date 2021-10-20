@@ -546,19 +546,6 @@ const ConfiguratorView: FunctionComponent = () => {
   }, []);
 
   const [serialPortRequired, setSerialPortRequired] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (
-      deviceTarget !== null &&
-      (deviceTarget.indexOf('_via_UART') > -1 ||
-        deviceTarget.indexOf('_BetaflightPassthrough') > -1)
-    ) {
-      setSerialPortRequired(true);
-    } else {
-      setSerialPortRequired(false);
-    }
-  }, [deviceTarget]);
-
   const [wifiDeviceRequired, setWifiDeviceRequired] = useState<boolean>(false);
 
   useEffect(() => {
@@ -568,6 +555,16 @@ const ConfiguratorView: FunctionComponent = () => {
       target =
         device.targets.find((item) => item.name === deviceTarget) || target;
     });
+
+    if (
+      target &&
+      (target.flashingMethod === FlashingMethod.BetaflightPassthrough ||
+        target.flashingMethod === FlashingMethod.UART)
+    ) {
+      setSerialPortRequired(true);
+    } else {
+      setSerialPortRequired(false);
+    }
 
     if (target && target.flashingMethod === FlashingMethod.WIFI) {
       setWifiDeviceRequired(true);
