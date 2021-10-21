@@ -1,3 +1,7 @@
-query getTags {
-  gitTags
+query getTags (
+  $gitRepo: GitRepoInput!,
+){
+  gitTags(
+    gitRepo: $gitRepo
+  )
 }

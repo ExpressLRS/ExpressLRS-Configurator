@@ -1,5 +1,9 @@
-query getReleases {
-  releases {
+query getReleases (
+  $gitRepo: GitRepoInput!,
+){
+  releases (
+    gitRepo: $gitRepo
+  ){
     tagName
     preRelease
   }

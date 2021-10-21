@@ -1,5 +1,9 @@
-query getPullRequests {
-  pullRequests {
+query getPullRequests (
+  $gitRepo: GitRepoInput!,
+){
+  pullRequests (
+    gitRepo: $gitRepo
+  ){
     id
     number
     title

@@ -51,6 +51,7 @@ import {
   Target,
   FlashingMethod,
   useAvailableMulticastDnsDevicesListQuery,
+  GitRepoInput,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -144,7 +145,13 @@ enum ViewState {
   Compiling = 'https://xkcd.com/303/',
 }
 
-const ConfiguratorView: FunctionComponent = () => {
+interface ConfiguratorViewProps {
+  gitRepo: GitRepoInput;
+}
+
+const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
+  const { gitRepo } = props;
+
   const styles = useStyles();
 
   const [viewState, setViewState] = useState<ViewState>(
@@ -295,6 +302,7 @@ const ConfiguratorView: FunctionComponent = () => {
           gitCommit: firmwareVersionData.gitCommit!,
           localPath: firmwareVersionData.localPath!,
           gitPullRequest: firmwareVersionData.gitPullRequest,
+          gitRepo,
         },
       });
     }
@@ -347,6 +355,7 @@ const ConfiguratorView: FunctionComponent = () => {
           gitCommit: firmwareVersionData.gitCommit!,
           localPath: firmwareVersionData.localPath!,
           gitPullRequest: firmwareVersionData.gitPullRequest,
+          gitRepo,
         },
       });
     }
@@ -725,6 +734,7 @@ const ConfiguratorView: FunctionComponent = () => {
                 <FirmwareVersionForm
                   onChange={onFirmwareVersionData}
                   data={firmwareVersionData}
+                  gitRepo={gitRepo}
                 />
                 <ShowAlerts severity="error" messages={firmwareVersionErrors} />
               </CardContent>

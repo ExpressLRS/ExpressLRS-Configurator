@@ -4,7 +4,8 @@ query availableFirmwareTargets(
   $gitBranch: String!,
   $gitCommit: String!,
   $localPath: String!,
-  $gitPullRequest: PullRequestInput
+  $gitPullRequest: PullRequestInput,
+  $gitRepo: GitRepoInput,
 ) {
   availableFirmwareTargets(
     source: $source,
@@ -12,7 +13,8 @@ query availableFirmwareTargets(
     gitBranch: $gitBranch,
     gitCommit: $gitCommit,
     localPath: $localPath,
-    gitPullRequest: $gitPullRequest
+    gitPullRequest: $gitPullRequest,
+    gitRepo: $gitRepo,
   ) {
     id
     name
@@ -22,5 +24,6 @@ query availableFirmwareTargets(
       flashingMethod
     }
     wikiUrl
+    userDefines
   }
 }

@@ -1,47 +1,35 @@
-import { Query, Resolver } from 'type-graphql';
-import { Inject, Service } from 'typedi';
+import { Arg, Query, Resolver } from 'type-graphql';
+import { Service } from 'typedi';
 import OctopusGitHubClient from '../../services/GitHubClient';
-import { ConfigToken, IConfig } from '../../config';
 import Release from '../../models/Release';
 import PullRequest from '../../models/PullRequest';
+import GitRepo from '../inputs/GitRepoInput';
 
 @Service()
 @Resolver()
 export default class SourcesResolver {
-  constructor(
-    private gitClient: OctopusGitHubClient,
-    @Inject(ConfigToken) private config: IConfig
-  ) {}
+  constructor(private gitClient: OctopusGitHubClient) {}
 
   @Query(() => [String])
-  async gitBranches() {
-    return this.gitClient.loadBranches(
-      this.config.git.owner,
-      this.config.git.repositoryName
-    );
+  async gitBranches(@Arg('gitRepo') gitRepo: GitRepo) {
+    return this.gitClient.loadBranches(gitRepo.owner, gitRepo.repositoryName);
   }
 
   @Query(() => [String])
-  async gitTags() {
-    return this.gitClient.loadTags(
-      this.config.git.owner,
-      this.config.git.repositoryName
-    );
+  async gitTags(@Arg('gitRepo') gitRepo: GitRepo) {
+    return this.gitClient.loadTags(gitRepo.owner, gitRepo.repositoryName);
   }
 
   @Query(() => [Release])
-  async releases() {
-    return this.gitClient.loadReleases(
-      this.config.git.owner,
-      this.config.git.repositoryName
-    );
+  async releases(@Arg('gitRepo') gitRepo: GitRepo) {
+    return this.gitClient.loadReleases(gitRepo.owner, gitRepo.repositoryName);
   }
 
   @Query(() => [PullRequest])
-  async pullRequests() {
+  async pullRequests(@Arg('gitRepo') gitRepo: GitRepo) {
     return this.gitClient.loadPullRequests(
-      this.config.git.owner,
-      this.config.git.repositoryName
+      gitRepo.owner,
+      gitRepo.repositoryName
     );
   }
 }

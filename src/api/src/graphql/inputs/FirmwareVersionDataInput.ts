@@ -1,6 +1,7 @@
 import { Field, InputType } from 'type-graphql';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import PullRequest from '../../models/PullRequest';
+import GitRepo from './GitRepoInput';
 
 @InputType('FirmwareVersionDataInput')
 export default class FirmwareVersionDataInput {
@@ -22,6 +23,9 @@ export default class FirmwareVersionDataInput {
   @Field(() => PullRequest)
   gitPullRequest: PullRequest | null;
 
+  @Field(() => GitRepo)
+  gitRepo: GitRepo;
+
   constructor() {
     this.source = FirmwareSource.GitBranch;
     this.gitTag = '';
@@ -29,5 +33,13 @@ export default class FirmwareVersionDataInput {
     this.gitCommit = '';
     this.localPath = '';
     this.gitPullRequest = null;
+    this.gitRepo = {
+      url: '',
+      cloneUrl: '',
+      owner: '',
+      repositoryName: '',
+      rawRepoUrl: '',
+      srcFolder: '',
+    };
   }
 }

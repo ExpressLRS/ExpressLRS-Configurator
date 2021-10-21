@@ -24,13 +24,7 @@ import FirmwareBuilder from '../../library/FirmwareBuilder';
 import { LoggerService } from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import PullRequest from '../../models/PullRequest';
-
-export interface GitRepo {
-  url: string;
-  cloneUrl: string;
-  owner: string;
-  repositoryName: string;
-}
+import GitRepo from '../../graphql/inputs/GitRepoInput';
 
 interface FirmwareVersionData {
   source: FirmwareSource;

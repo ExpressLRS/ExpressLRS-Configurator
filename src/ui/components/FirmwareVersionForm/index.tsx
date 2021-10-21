@@ -22,6 +22,7 @@ import {
   useGetReleasesLazyQuery,
   useGetPullRequestsLazyQuery,
   PullRequestInput,
+  GitRepoInput,
 } from '../../gql/generated/types';
 import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
 import ApplicationStorage from '../../storage';
@@ -56,12 +57,13 @@ const useStyles = makeStyles((theme) => ({
 interface FirmwareVersionCardProps {
   data: FirmwareVersionDataInput | null;
   onChange: (data: FirmwareVersionDataInput) => void;
+  gitRepo: GitRepoInput;
 }
 
 const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   props
 ) => {
-  const { onChange, data } = props;
+  const { onChange, data, gitRepo } = props;
   const styles = useStyles();
 
   const [firmwareSource, setFirmwareSource] = useState<FirmwareSource>(
@@ -273,17 +275,29 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   useEffect(() => {
     switch (firmwareSource) {
       case FirmwareSource.GitTag:
-        queryGitTags();
+        queryGitTags({
+          variables: {
+            gitRepo,
+          },
+        });
         break;
       case FirmwareSource.GitBranch:
-        queryGitBranches();
+        queryGitBranches({
+          variables: {
+            gitRepo,
+          },
+        });
         break;
       case FirmwareSource.GitCommit:
         break;
       case FirmwareSource.Local:
         break;
       case FirmwareSource.GitPullRequest:
-        queryGitPullRequests();
+        queryGitPullRequests({
+          variables: {
+            gitRepo,
+          },
+        });
         break;
       default:
         throw new Error(`unknown firmware source: ${firmwareSource}`);

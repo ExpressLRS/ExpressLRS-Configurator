@@ -1,3 +1,7 @@
-query getBranches {
-  gitBranches
+query getBranches (
+  $gitRepo: GitRepoInput!,
+){
+  gitBranches (
+    gitRepo: $gitRepo
+  )
 }

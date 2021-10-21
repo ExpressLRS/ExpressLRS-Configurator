@@ -1,8 +1,7 @@
 import { Token } from 'typedi';
-import { GitRepo } from '../services/Firmware';
+import GitRepo from '../graphql/inputs/GitRepoInput';
 
 export interface IConfig {
-  git: GitRepo;
   configuratorGit: GitRepo;
   firmwaresPath: string;
   PATH: string;

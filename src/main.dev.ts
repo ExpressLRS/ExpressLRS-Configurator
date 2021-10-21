@@ -234,17 +234,14 @@ const createWindow = async () => {
   });
   await localServer.start(
     {
-      git: {
-        cloneUrl: 'https://github.com/ExpressLRS/ExpressLRS',
-        url: 'https://github.com/ExpressLRS/ExpressLRS',
-        owner: 'ExpressLRS',
-        repositoryName: 'ExpressLRS',
-      },
       configuratorGit: {
         cloneUrl: 'https://github.com/ExpressLRS/ExpressLRS-Configurator',
         url: 'https://github.com/ExpressLRS/ExpressLRS-Configurator',
         owner: 'ExpressLRS',
         repositoryName: 'ExpressLRS-Configurator',
+        rawRepoUrl:
+          'https://raw.githubusercontent.com/ExpressLRS/ExpressLRS-Configurator',
+        srcFolder: '/',
       },
       firmwaresPath,
       getPlatformioPath,
