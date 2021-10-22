@@ -26,7 +26,7 @@ import TargetsService from './src/services/Targets';
 import DeviceService from './src/services/Device';
 import TargetUserDefinesFactory from './src/factories/TargetUserDefinesFactory';
 import MulticastDnsService from './src/services/MulticastDns';
-import MulticastDnsMonitorResolver from './src/graphql/resolvers/multicastDnsMonitor.resolver';
+import MulticastDnsMonitorResolver from './src/graphql/resolvers/MulticastDnsMonitor.resolver';
 
 export default class ApiServer {
   app: Express | undefined;
