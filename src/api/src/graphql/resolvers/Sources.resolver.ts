@@ -17,12 +17,24 @@ export default class SourcesResolver {
 
   @Query(() => [String])
   async gitTags(@Arg('gitRepo') gitRepo: GitRepo) {
-    return this.gitClient.loadTags(gitRepo.owner, gitRepo.repositoryName);
+    const tags = await this.gitClient.loadTags(
+      gitRepo.owner,
+      gitRepo.repositoryName
+    );
+    return tags.filter((name) => {
+      return !gitRepo.tagExcludes.includes(name);
+    });
   }
 
   @Query(() => [Release])
   async releases(@Arg('gitRepo') gitRepo: GitRepo) {
-    return this.gitClient.loadReleases(gitRepo.owner, gitRepo.repositoryName);
+    const releases = await this.gitClient.loadReleases(
+      gitRepo.owner,
+      gitRepo.repositoryName
+    );
+    return releases.filter((release) => {
+      return !gitRepo.tagExcludes.includes(release.tagName);
+    });
   }
 
   @Query(() => [PullRequest])

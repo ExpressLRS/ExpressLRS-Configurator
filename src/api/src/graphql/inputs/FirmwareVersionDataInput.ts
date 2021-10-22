@@ -40,6 +40,7 @@ export default class FirmwareVersionDataInput {
       repositoryName: '',
       rawRepoUrl: '',
       srcFolder: '',
+      tagExcludes: [],
     };
   }
 }

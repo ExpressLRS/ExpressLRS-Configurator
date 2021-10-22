@@ -19,6 +19,7 @@ export const Config: IConfig = {
     repositoryName: 'ExpressLRS',
     rawRepoUrl: 'https://raw.githubusercontent.com/ExpressLRS/ExpressLRS',
     srcFolder: '/src',
+    tagExcludes: ['1.0.0-RC1', '1.0.0-RC2', '1.0.0-RC3'],
   },
   backpackGit: {
     cloneUrl: 'https://github.com/ExpressLRS/Backpack',
@@ -27,6 +28,7 @@ export const Config: IConfig = {
     repositoryName: 'Backpack',
     rawRepoUrl: 'https://raw.githubusercontent.com/ExpressLRS/Backpack',
     srcFolder: '/',
+    tagExcludes: [],
   },
 };
 

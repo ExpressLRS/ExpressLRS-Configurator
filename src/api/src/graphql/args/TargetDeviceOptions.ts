@@ -44,6 +44,7 @@ export default class TargetDeviceOptionsArgs {
       repositoryName: '',
       rawRepoUrl: '',
       srcFolder: '',
+      tagExcludes: [],
     };
   }
 }

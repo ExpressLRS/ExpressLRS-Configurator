@@ -40,6 +40,7 @@ export default class TargetArgs {
       repositoryName: '',
       rawRepoUrl: '',
       srcFolder: '',
+      tagExcludes: [],
     };
   }
 }
