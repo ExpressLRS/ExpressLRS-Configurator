@@ -51,7 +51,6 @@ import {
   Target,
   FlashingMethod,
   useAvailableMulticastDnsDevicesListQuery,
-  GitRepoInput,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -68,6 +67,7 @@ import UserDefinesAdvisor from '../../components/UserDefinesAdvisor';
 import SerialDeviceSelect from '../../components/SerialDeviceSelect';
 import WifiDeviceSelect from '../../components/WifiDeviceSelect';
 import WifiDeviceList from '../../components/WifiDeviceList';
+import GitRepository from '../../models/GitRepository';
 
 export const validateFirmwareVersionData = (
   data: FirmwareVersionDataInput
@@ -146,7 +146,7 @@ enum ViewState {
 }
 
 interface ConfiguratorViewProps {
-  gitRepo: GitRepoInput;
+  gitRepo: GitRepository;
 }
 
 const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
@@ -302,7 +302,13 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           gitCommit: firmwareVersionData.gitCommit!,
           localPath: firmwareVersionData.localPath!,
           gitPullRequest: firmwareVersionData.gitPullRequest,
-          gitRepo,
+          gitRepo: {
+            url: gitRepo.url,
+            owner: gitRepo.owner,
+            repositoryName: gitRepo.repositoryName,
+            rawRepoUrl: gitRepo.rawRepoUrl,
+            srcFolder: gitRepo.srcFolder,
+          },
         },
       });
     }
@@ -355,7 +361,13 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           gitCommit: firmwareVersionData.gitCommit!,
           localPath: firmwareVersionData.localPath!,
           gitPullRequest: firmwareVersionData.gitPullRequest,
-          gitRepo,
+          gitRepository: {
+            url: gitRepo.url,
+            owner: gitRepo.owner,
+            repositoryName: gitRepo.repositoryName,
+            rawRepoUrl: gitRepo.rawRepoUrl,
+            srcFolder: gitRepo.srcFolder,
+          },
         },
       });
     }
@@ -669,6 +681,13 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         type: item.type,
       })),
       serialDevice: uploadPort,
+      gitRepository: {
+        url: gitRepo.url,
+        owner: gitRepo.owner,
+        repositoryName: gitRepo.repositoryName,
+        rawRepoUrl: gitRepo.rawRepoUrl,
+        srcFolder: gitRepo.srcFolder,
+      },
     };
     buildFlashFirmwareMutation({
       variables: {
@@ -734,7 +753,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <FirmwareVersionForm
                   onChange={onFirmwareVersionData}
                   data={firmwareVersionData}
-                  gitRepo={gitRepo}
+                  gitRepository={gitRepo}
                 />
                 <ShowAlerts severity="error" messages={firmwareVersionErrors} />
               </CardContent>

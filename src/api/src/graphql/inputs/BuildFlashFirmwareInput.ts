@@ -3,6 +3,7 @@ import BuildJobType from '../../models/enum/BuildJobType';
 import FirmwareVersionDataInput from './FirmwareVersionDataInput';
 import UserDefinesMode from '../../models/enum/UserDefinesMode';
 import UserDefineInput from './UserDefineInput';
+import GitRepository from './GitRepositoryInput';
 
 @InputType('BuildFlashFirmwareInput')
 export default class BuildFlashFirmwareInput {
@@ -27,6 +28,9 @@ export default class BuildFlashFirmwareInput {
   @Field()
   userDefinesTxt: string;
 
+  @Field(() => GitRepository)
+  gitRepository: GitRepository;
+
   constructor() {
     this.type = BuildJobType.Build;
     this.firmware = new FirmwareVersionDataInput();
@@ -34,5 +38,12 @@ export default class BuildFlashFirmwareInput {
     this.userDefinesMode = UserDefinesMode.UserInterface;
     this.userDefines = [];
     this.userDefinesTxt = '';
+    this.gitRepository = {
+      url: '',
+      owner: '',
+      repositoryName: '',
+      rawRepoUrl: '',
+      srcFolder: '',
+    };
   }
 }

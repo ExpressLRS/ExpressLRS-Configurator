@@ -8,7 +8,6 @@ import TargetArgs from '../../graphql/args/Target';
 import { LoggerService } from '../../logger';
 import Device from '../../models/Device';
 import DeviceService from '../Device';
-import GitRepo from '../../graphql/inputs/GitRepoInput';
 
 export interface ITargets {
   loadTargetsList(args: TargetArgs): Promise<Device[]>;
@@ -40,7 +39,9 @@ export default class TargetsService implements ITargets {
   }
 
   async loadTargetsFromGitHub(
-    gitRepo: GitRepo,
+    gitRepositoryOwner: string,
+    gitRepositoryName: string,
+    gitRepositorySrcFolder: string,
     ref: string
   ): Promise<string[]> {
     if (!ref || ref.length === 0) {
@@ -49,9 +50,9 @@ export default class TargetsService implements ITargets {
 
     try {
       const response = await this.client.repos.getContent({
-        owner: gitRepo.owner,
-        repo: gitRepo.repositoryName,
-        path: `${gitRepo.srcFolder}/targets`,
+        owner: gitRepositoryOwner,
+        repo: gitRepositoryName,
+        path: `${gitRepositorySrcFolder}/targets`,
         ref,
       });
 
@@ -123,19 +124,25 @@ export default class TargetsService implements ITargets {
     switch (args.source) {
       case FirmwareSource.GitBranch:
         availableTargets = await this.loadTargetsFromGitHub(
-          args.gitRepo,
+          args.gitRepository.owner,
+          args.gitRepository.repositoryName,
+          args.gitRepository.srcFolder,
           args.gitBranch
         );
         break;
       case FirmwareSource.GitCommit:
         availableTargets = await this.loadTargetsFromGitHub(
-          args.gitRepo,
+          args.gitRepository.owner,
+          args.gitRepository.repositoryName,
+          args.gitRepository.srcFolder,
           args.gitCommit
         );
         break;
       case FirmwareSource.GitTag:
         availableTargets = await this.loadTargetsFromGitHub(
-          args.gitRepo,
+          args.gitRepository.owner,
+          args.gitRepository.repositoryName,
+          args.gitRepository.srcFolder,
           args.gitTag
         );
         break;
@@ -145,7 +152,9 @@ export default class TargetsService implements ITargets {
       case FirmwareSource.GitPullRequest:
         if (args.gitPullRequest) {
           availableTargets = await this.loadTargetsFromGitHub(
-            args.gitRepo,
+            args.gitRepository.owner,
+            args.gitRepository.repositoryName,
+            args.gitRepository.srcFolder,
             args.gitPullRequest.headCommitHash
           );
         }

@@ -1,8 +1,10 @@
 query getPullRequests (
-  $gitRepo: GitRepoInput!,
+  $owner: String!,
+  $repository: String!,
 ){
   pullRequests (
-    gitRepo: $gitRepo
+    owner: $owner,
+    repository: $repository
   ){
     id
     number

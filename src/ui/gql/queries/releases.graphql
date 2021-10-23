@@ -1,7 +1,9 @@
 query getTags (
-  $gitRepo: GitRepoInput!,
+  $owner: String!,
+  $repository: String!,
 ){
   gitTags(
-    gitRepo: $gitRepo
+    owner: $owner,
+    repository: $repository
   )
 }

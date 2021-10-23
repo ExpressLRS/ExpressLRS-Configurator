@@ -235,13 +235,9 @@ const createWindow = async () => {
   await localServer.start(
     {
       configuratorGit: {
-        cloneUrl: 'https://github.com/ExpressLRS/ExpressLRS-Configurator',
         url: 'https://github.com/ExpressLRS/ExpressLRS-Configurator',
         owner: 'ExpressLRS',
         repositoryName: 'ExpressLRS-Configurator',
-        rawRepoUrl:
-          'https://raw.githubusercontent.com/ExpressLRS/ExpressLRS-Configurator',
-        srcFolder: '/',
       },
       firmwaresPath,
       getPlatformioPath,

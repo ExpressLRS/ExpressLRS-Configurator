@@ -1,8 +1,11 @@
 import { Token } from 'typedi';
-import GitRepo from '../graphql/inputs/GitRepoInput';
 
 export interface IConfig {
-  configuratorGit: GitRepo;
+  configuratorGit: {
+    url: string;
+    owner: string;
+    repositoryName: string;
+  };
   firmwaresPath: string;
   PATH: string;
   env: NodeJS.ProcessEnv;

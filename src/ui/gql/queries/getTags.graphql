@@ -1,8 +1,10 @@
 query getReleases (
-  $gitRepo: GitRepoInput!,
+  $owner: String!,
+  $repository: String!,
 ){
   releases (
-    gitRepo: $gitRepo
+    owner: $owner,
+    repository: $repository
   ){
     tagName
     preRelease

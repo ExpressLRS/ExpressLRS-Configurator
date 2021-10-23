@@ -1,11 +1,11 @@
-import GitRepo from '../../api/src/graphql/inputs/GitRepoInput';
+import GitRepository from '../models/GitRepository';
 
 interface IConfig {
   githubRepositoryUrl: string;
   facebookGroupUrl: string;
   discordUrl: string;
-  expressLRSGit: GitRepo;
-  backpackGit: GitRepo;
+  expressLRSGit: GitRepository;
+  backpackGit: GitRepository;
 }
 
 export const Config: IConfig = {

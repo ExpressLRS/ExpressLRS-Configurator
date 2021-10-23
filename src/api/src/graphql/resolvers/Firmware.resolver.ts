@@ -53,7 +53,7 @@ export default class FirmwareResolver {
   ): Promise<BuildFlashFirmwareResult> {
     return this.firmwareService.buildFlashFirmware(
       input,
-      input.firmware.gitRepo
+      input.gitRepository.url
     );
   }
 

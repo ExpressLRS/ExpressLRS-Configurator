@@ -22,10 +22,10 @@ import {
   useGetReleasesLazyQuery,
   useGetPullRequestsLazyQuery,
   PullRequestInput,
-  GitRepoInput,
 } from '../../gql/generated/types';
 import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
 import ApplicationStorage from '../../storage';
+import GitRepository from '../../models/GitRepository';
 
 const useStyles = makeStyles((theme) => ({
   tabs: {
@@ -57,13 +57,13 @@ const useStyles = makeStyles((theme) => ({
 interface FirmwareVersionCardProps {
   data: FirmwareVersionDataInput | null;
   onChange: (data: FirmwareVersionDataInput) => void;
-  gitRepo: GitRepoInput;
+  gitRepository: GitRepository;
 }
 
 const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   props
 ) => {
-  const { onChange, data, gitRepo } = props;
+  const { onChange, data, gitRepository } = props;
   const styles = useStyles();
 
   const [firmwareSource, setFirmwareSource] = useState<FirmwareSource>(
@@ -148,6 +148,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         gitTagsResponse?.releases?.length > 0 &&
         gitTagsResponse?.releases
           ?.filter(({ preRelease }) => !preRelease)
+          .filter(({ tagName }) => !gitRepository.tagExcludes.includes(tagName))
           .find((item) => item.tagName === currentGitTag) === undefined
       ) {
         setCurrentGitTag(gitTagsResponse.releases[0].tagName);
@@ -277,14 +278,16 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       case FirmwareSource.GitTag:
         queryGitTags({
           variables: {
-            gitRepo,
+            owner: gitRepository.owner,
+            repository: gitRepository.repositoryName,
           },
         });
         break;
       case FirmwareSource.GitBranch:
         queryGitBranches({
           variables: {
-            gitRepo,
+            owner: gitRepository.owner,
+            repository: gitRepository.repositoryName,
           },
         });
         break;
@@ -295,7 +298,8 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       case FirmwareSource.GitPullRequest:
         queryGitPullRequests({
           variables: {
-            gitRepo,
+            owner: gitRepository.owner,
+            repository: gitRepository.repositoryName,
           },
         });
         break;

@@ -92,14 +92,14 @@
                 "deprecationReason": null
               },
               {
-                "name": "gitRepo",
+                "name": "gitRepository",
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "GitRepoInput",
+                  "name": "GitRepositoryInput",
                   "ofType": null
                 },
-                "defaultValue": "{url: \"\", cloneUrl: \"\", owner: \"\", repositoryName: \"\", rawRepoUrl: \"\", srcFolder: \"\"}",
+                "defaultValue": "{url: \"\", owner: \"\", repositoryName: \"\", rawRepoUrl: \"\", srcFolder: \"\"}",
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -213,14 +213,14 @@
                 "deprecationReason": null
               },
               {
-                "name": "gitRepo",
+                "name": "gitRepository",
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "GitRepoInput",
+                  "name": "GitRepositoryInput",
                   "ofType": null
                 },
-                "defaultValue": "{url: \"\", cloneUrl: \"\", owner: \"\", repositoryName: \"\", rawRepoUrl: \"\", srcFolder: \"\"}",
+                "defaultValue": "{url: \"\", owner: \"\", repositoryName: \"\", rawRepoUrl: \"\", srcFolder: \"\"}",
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -250,14 +250,30 @@
             "description": null,
             "args": [
               {
-                "name": "gitRepo",
+                "name": "repository",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "GitRepoInput",
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "owner",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
                     "ofType": null
                   }
                 },
@@ -291,14 +307,30 @@
             "description": null,
             "args": [
               {
-                "name": "gitRepo",
+                "name": "repository",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "GitRepoInput",
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "owner",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
                     "ofType": null
                   }
                 },
@@ -332,14 +364,30 @@
             "description": null,
             "args": [
               {
-                "name": "gitRepo",
+                "name": "repository",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "GitRepoInput",
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "owner",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
                     "ofType": null
                   }
                 },
@@ -373,14 +421,30 @@
             "description": null,
             "args": [
               {
-                "name": "gitRepo",
+                "name": "repository",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "GitRepoInput",
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "owner",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
                     "ofType": null
                   }
                 },
@@ -1082,28 +1146,12 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "GitRepoInput",
+        "name": "GitRepositoryInput",
         "description": null,
         "fields": null,
         "inputFields": [
           {
             "name": "url",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "cloneUrl",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -2032,6 +2080,18 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "gitRepository",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "GitRepositoryInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
@@ -2140,11 +2200,11 @@
             "deprecationReason": null
           },
           {
-            "name": "gitRepo",
+            "name": "gitRepository",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "GitRepoInput",
+              "name": "GitRepositoryInput",
               "ofType": null
             },
             "defaultValue": null,

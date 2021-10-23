@@ -39,7 +39,7 @@ export type QueryAvailableFirmwareTargetsArgs = {
   gitCommit?: Maybe<Scalars['String']>;
   localPath?: Maybe<Scalars['String']>;
   gitPullRequest?: Maybe<PullRequestInput>;
-  gitRepo?: Maybe<GitRepoInput>;
+  gitRepository?: Maybe<GitRepositoryInput>;
 };
 
 export type QueryTargetDeviceOptionsArgs = {
@@ -50,23 +50,27 @@ export type QueryTargetDeviceOptionsArgs = {
   gitCommit?: Maybe<Scalars['String']>;
   localPath?: Maybe<Scalars['String']>;
   gitPullRequest?: Maybe<PullRequestInput>;
-  gitRepo?: Maybe<GitRepoInput>;
+  gitRepository?: Maybe<GitRepositoryInput>;
 };
 
 export type QueryGitBranchesArgs = {
-  gitRepo: GitRepoInput;
+  repository: Scalars['String'];
+  owner: Scalars['String'];
 };
 
 export type QueryGitTagsArgs = {
-  gitRepo: GitRepoInput;
+  repository: Scalars['String'];
+  owner: Scalars['String'];
 };
 
 export type QueryReleasesArgs = {
-  gitRepo: GitRepoInput;
+  repository: Scalars['String'];
+  owner: Scalars['String'];
 };
 
 export type QueryPullRequestsArgs = {
-  gitRepo: GitRepoInput;
+  repository: Scalars['String'];
+  owner: Scalars['String'];
 };
 
 export type QueryCheckForUpdatesArgs = {
@@ -154,9 +158,8 @@ export type PullRequestInput = {
   readonly headCommitHash: Scalars['String'];
 };
 
-export type GitRepoInput = {
+export type GitRepositoryInput = {
   readonly url: Scalars['String'];
-  readonly cloneUrl: Scalars['String'];
   readonly owner: Scalars['String'];
   readonly repositoryName: Scalars['String'];
   readonly rawRepoUrl: Scalars['String'];
@@ -260,6 +263,7 @@ export type BuildFlashFirmwareInput = {
   readonly userDefinesMode?: Maybe<UserDefinesMode>;
   readonly userDefines?: Maybe<ReadonlyArray<UserDefineInput>>;
   readonly userDefinesTxt?: Maybe<Scalars['String']>;
+  readonly gitRepository?: Maybe<GitRepositoryInput>;
 };
 
 export enum BuildJobType {
@@ -274,7 +278,7 @@ export type FirmwareVersionDataInput = {
   readonly gitCommit?: Maybe<Scalars['String']>;
   readonly localPath?: Maybe<Scalars['String']>;
   readonly gitPullRequest?: Maybe<PullRequestInput>;
-  readonly gitRepo?: Maybe<GitRepoInput>;
+  readonly gitRepository?: Maybe<GitRepositoryInput>;
 };
 
 export enum UserDefinesMode {
@@ -403,7 +407,7 @@ export type AvailableFirmwareTargetsQueryVariables = Exact<{
   gitCommit: Scalars['String'];
   localPath: Scalars['String'];
   gitPullRequest?: Maybe<PullRequestInput>;
-  gitRepo?: Maybe<GitRepoInput>;
+  gitRepo?: Maybe<GitRepositoryInput>;
 }>;
 
 export type AvailableFirmwareTargetsQuery = {
@@ -543,7 +547,7 @@ export type TargetDeviceOptionsQueryVariables = Exact<{
   gitCommit: Scalars['String'];
   localPath: Scalars['String'];
   gitPullRequest?: Maybe<PullRequestInput>;
-  gitRepo?: Maybe<GitRepoInput>;
+  gitRepository?: Maybe<GitRepositoryInput>;
 }>;
 
 export type TargetDeviceOptionsQuery = { readonly __typename?: 'Query' } & {
@@ -568,7 +572,8 @@ export type DisconnectFromSerialDeviceMutation = {
 };
 
 export type GetBranchesQueryVariables = Exact<{
-  gitRepo: GitRepoInput;
+  owner: Scalars['String'];
+  repository: Scalars['String'];
 }>;
 
 export type GetBranchesQuery = { readonly __typename?: 'Query' } & Pick<
@@ -577,7 +582,8 @@ export type GetBranchesQuery = { readonly __typename?: 'Query' } & Pick<
 >;
 
 export type GetPullRequestsQueryVariables = Exact<{
-  gitRepo: GitRepoInput;
+  owner: Scalars['String'];
+  repository: Scalars['String'];
 }>;
 
 export type GetPullRequestsQuery = { readonly __typename?: 'Query' } & {
@@ -590,7 +596,8 @@ export type GetPullRequestsQuery = { readonly __typename?: 'Query' } & {
 };
 
 export type GetReleasesQueryVariables = Exact<{
-  gitRepo: GitRepoInput;
+  owner: Scalars['String'];
+  repository: Scalars['String'];
 }>;
 
 export type GetReleasesQuery = { readonly __typename?: 'Query' } & {
@@ -634,7 +641,8 @@ export type MulticastDnsMonitorUpdatesSubscription = {
 };
 
 export type GetTagsQueryVariables = Exact<{
-  gitRepo: GitRepoInput;
+  owner: Scalars['String'];
+  repository: Scalars['String'];
 }>;
 
 export type GetTagsQuery = { readonly __typename?: 'Query' } & Pick<
@@ -732,7 +740,7 @@ export const AvailableFirmwareTargetsDocument = gql`
     $gitCommit: String!
     $localPath: String!
     $gitPullRequest: PullRequestInput
-    $gitRepo: GitRepoInput
+    $gitRepo: GitRepositoryInput
   ) {
     availableFirmwareTargets(
       source: $source
@@ -741,7 +749,7 @@ export const AvailableFirmwareTargetsDocument = gql`
       gitCommit: $gitCommit
       localPath: $localPath
       gitPullRequest: $gitPullRequest
-      gitRepo: $gitRepo
+      gitRepository: $gitRepo
     ) {
       id
       name
@@ -1232,7 +1240,7 @@ export const TargetDeviceOptionsDocument = gql`
     $gitCommit: String!
     $localPath: String!
     $gitPullRequest: PullRequestInput
-    $gitRepo: GitRepoInput
+    $gitRepository: GitRepositoryInput
   ) {
     targetDeviceOptions(
       target: $target
@@ -1242,7 +1250,7 @@ export const TargetDeviceOptionsDocument = gql`
       gitCommit: $gitCommit
       localPath: $localPath
       gitPullRequest: $gitPullRequest
-      gitRepo: $gitRepo
+      gitRepository: $gitRepository
     ) {
       type
       key
@@ -1272,7 +1280,7 @@ export const TargetDeviceOptionsDocument = gql`
  *      gitCommit: // value for 'gitCommit'
  *      localPath: // value for 'localPath'
  *      gitPullRequest: // value for 'gitPullRequest'
- *      gitRepo: // value for 'gitRepo'
+ *      gitRepository: // value for 'gitRepository'
  *   },
  * });
  */
@@ -1360,8 +1368,8 @@ export type DisconnectFromSerialDeviceMutationOptions = Apollo.BaseMutationOptio
   DisconnectFromSerialDeviceMutationVariables
 >;
 export const GetBranchesDocument = gql`
-  query getBranches($gitRepo: GitRepoInput!) {
-    gitBranches(gitRepo: $gitRepo)
+  query getBranches($owner: String!, $repository: String!) {
+    gitBranches(owner: $owner, repository: $repository)
   }
 `;
 
@@ -1377,7 +1385,8 @@ export const GetBranchesDocument = gql`
  * @example
  * const { data, loading, error } = useGetBranchesQuery({
  *   variables: {
- *      gitRepo: // value for 'gitRepo'
+ *      owner: // value for 'owner'
+ *      repository: // value for 'repository'
  *   },
  * });
  */
@@ -1414,8 +1423,8 @@ export type GetBranchesQueryResult = Apollo.QueryResult<
   GetBranchesQueryVariables
 >;
 export const GetPullRequestsDocument = gql`
-  query getPullRequests($gitRepo: GitRepoInput!) {
-    pullRequests(gitRepo: $gitRepo) {
+  query getPullRequests($owner: String!, $repository: String!) {
+    pullRequests(owner: $owner, repository: $repository) {
       id
       number
       title
@@ -1436,7 +1445,8 @@ export const GetPullRequestsDocument = gql`
  * @example
  * const { data, loading, error } = useGetPullRequestsQuery({
  *   variables: {
- *      gitRepo: // value for 'gitRepo'
+ *      owner: // value for 'owner'
+ *      repository: // value for 'repository'
  *   },
  * });
  */
@@ -1475,8 +1485,8 @@ export type GetPullRequestsQueryResult = Apollo.QueryResult<
   GetPullRequestsQueryVariables
 >;
 export const GetReleasesDocument = gql`
-  query getReleases($gitRepo: GitRepoInput!) {
-    releases(gitRepo: $gitRepo) {
+  query getReleases($owner: String!, $repository: String!) {
+    releases(owner: $owner, repository: $repository) {
       tagName
       preRelease
     }
@@ -1495,7 +1505,8 @@ export const GetReleasesDocument = gql`
  * @example
  * const { data, loading, error } = useGetReleasesQuery({
  *   variables: {
- *      gitRepo: // value for 'gitRepo'
+ *      owner: // value for 'owner'
+ *      repository: // value for 'repository'
  *   },
  * });
  */
@@ -1588,8 +1599,8 @@ export type MulticastDnsMonitorUpdatesSubscriptionHookResult = ReturnType<
 >;
 export type MulticastDnsMonitorUpdatesSubscriptionResult = Apollo.SubscriptionResult<MulticastDnsMonitorUpdatesSubscription>;
 export const GetTagsDocument = gql`
-  query getTags($gitRepo: GitRepoInput!) {
-    gitTags(gitRepo: $gitRepo)
+  query getTags($owner: String!, $repository: String!) {
+    gitTags(owner: $owner, repository: $repository)
   }
 `;
 
@@ -1605,7 +1616,8 @@ export const GetTagsDocument = gql`
  * @example
  * const { data, loading, error } = useGetTagsQuery({
  *   variables: {
- *      gitRepo: // value for 'gitRepo'
+ *      owner: // value for 'owner'
+ *      repository: // value for 'repository'
  *   },
  * });
  */

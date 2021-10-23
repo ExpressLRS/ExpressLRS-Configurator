@@ -7,7 +7,21 @@ import FirmwareSource from '../../models/enum/FirmwareSource';
 import UserDefine from '../../models/UserDefine';
 import TargetUserDefinesFactory from '../../factories/TargetUserDefinesFactory';
 import { LoggerService } from '../../logger';
-import TargetDeviceOptionsArgs from '../../graphql/args/TargetDeviceOptions';
+import PullRequest from '../../models/PullRequest';
+
+interface UserDefineFilters {
+  target: string;
+  source: FirmwareSource;
+  gitTag: string;
+  gitBranch: string;
+  gitCommit: string;
+  localPath: string;
+  gitPullRequest: PullRequest | null;
+  gitRepository: {
+    rawRepoUrl: string;
+    srcFolder: string;
+  };
+}
 
 @Service()
 export default class UserDefinesBuilder {
@@ -33,7 +47,7 @@ export default class UserDefinesBuilder {
   }
 
   async loadUserDefinesTxt(
-    userDefineFilters: TargetDeviceOptionsArgs
+    userDefineFilters: UserDefineFilters
   ): Promise<UserDefineKey[]> {
     this.logger?.log('loadUserDefinesTxt', {
       userDefineFilters,
@@ -58,19 +72,19 @@ export default class UserDefinesBuilder {
     switch (userDefineFilters.source) {
       case FirmwareSource.GitBranch:
         return fetch(
-          `${userDefineFilters.gitRepo.rawRepoUrl}/${userDefineFilters.gitBranch}${userDefineFilters.gitRepo.srcFolder}/user_defines.txt`
+          `${userDefineFilters.gitRepository.rawRepoUrl}/${userDefineFilters.gitBranch}${userDefineFilters.gitRepository.srcFolder}/user_defines.txt`
         )
           .then(handleResponse)
           .then(this.extractCompatibleKeys);
       case FirmwareSource.GitCommit:
         return fetch(
-          `${userDefineFilters.gitRepo.rawRepoUrl}/${userDefineFilters.gitCommit}${userDefineFilters.gitRepo.srcFolder}/user_defines.txt`
+          `${userDefineFilters.gitRepository.rawRepoUrl}/${userDefineFilters.gitCommit}${userDefineFilters.gitRepository.srcFolder}/user_defines.txt`
         )
           .then(handleResponse)
           .then(this.extractCompatibleKeys);
       case FirmwareSource.GitTag:
         return fetch(
-          `${userDefineFilters.gitRepo.rawRepoUrl}/${userDefineFilters.gitTag}${userDefineFilters.gitRepo.srcFolder}/user_defines.txt`
+          `${userDefineFilters.gitRepository.rawRepoUrl}/${userDefineFilters.gitTag}${userDefineFilters.gitRepository.srcFolder}/user_defines.txt`
         )
           .then(handleResponse)
           .then(this.extractCompatibleKeys);
@@ -83,7 +97,7 @@ export default class UserDefinesBuilder {
         return this.extractCompatibleKeys(data);
       case FirmwareSource.GitPullRequest:
         return fetch(
-          `${userDefineFilters.gitRepo.rawRepoUrl}/${userDefineFilters.gitPullRequest?.headCommitHash}${userDefineFilters.gitRepo.srcFolder}/user_defines.txt`
+          `${userDefineFilters.gitRepository.rawRepoUrl}/${userDefineFilters.gitPullRequest?.headCommitHash}${userDefineFilters.gitRepository.srcFolder}/user_defines.txt`
         )
           .then(handleResponse)
           .then(this.extractCompatibleKeys);
@@ -94,7 +108,7 @@ export default class UserDefinesBuilder {
     }
   }
 
-  async build(input: TargetDeviceOptionsArgs): Promise<UserDefine[]> {
+  async build(input: UserDefineFilters): Promise<UserDefine[]> {
     const availableKeys = this.targetUserDefinesFactory.build(input.target);
     if (input.source === FirmwareSource.Local) {
       return availableKeys;

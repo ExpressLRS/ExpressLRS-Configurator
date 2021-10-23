@@ -1,7 +1,7 @@
 import { ArgsType, Field } from 'type-graphql';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import PullRequest from '../../models/PullRequest';
-import GitRepo from '../inputs/GitRepoInput';
+import GitRepository from '../inputs/GitRepositoryInput';
 
 @ArgsType()
 export default class TargetDeviceOptionsArgs {
@@ -26,8 +26,8 @@ export default class TargetDeviceOptionsArgs {
   @Field(() => PullRequest)
   gitPullRequest: PullRequest | null;
 
-  @Field(() => GitRepo)
-  gitRepo: GitRepo;
+  @Field(() => GitRepository)
+  gitRepository: GitRepository;
 
   constructor() {
     this.source = FirmwareSource.GitBranch;
@@ -37,14 +37,12 @@ export default class TargetDeviceOptionsArgs {
     this.gitCommit = '';
     this.localPath = '';
     this.gitPullRequest = null;
-    this.gitRepo = {
+    this.gitRepository = {
       url: '',
-      cloneUrl: '',
       owner: '',
       repositoryName: '',
       rawRepoUrl: '',
       srcFolder: '',
-      tagExcludes: [],
     };
   }
 }
