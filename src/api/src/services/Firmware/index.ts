@@ -134,7 +134,8 @@ export default class FirmwareService {
 
   async buildFlashFirmware(
     params: BuildFlashFirmwareParams,
-    gitRepositoryUrl: string
+    gitRepositoryUrl: string,
+    gitRepositorySrcFolder: string
   ): Promise<BuildFlashFirmwareResult> {
     this.logger?.log('received build firmware request', {
       params,
@@ -238,6 +239,7 @@ export default class FirmwareService {
         case FirmwareSource.GitTag:
           const tagResult = await firmwareDownload.checkoutTag(
             gitRepositoryUrl,
+            gitRepositorySrcFolder,
             params.firmware.gitTag
           );
           firmwarePath = tagResult.path;
@@ -245,6 +247,7 @@ export default class FirmwareService {
         case FirmwareSource.GitBranch:
           const branchResult = await firmwareDownload.checkoutBranch(
             gitRepositoryUrl,
+            gitRepositorySrcFolder,
             params.firmware.gitBranch
           );
           firmwarePath = branchResult.path;
@@ -252,6 +255,7 @@ export default class FirmwareService {
         case FirmwareSource.GitCommit:
           const commitResult = await firmwareDownload.checkoutCommit(
             gitRepositoryUrl,
+            gitRepositorySrcFolder,
             params.firmware.gitCommit
           );
           firmwarePath = commitResult.path;
@@ -263,6 +267,7 @@ export default class FirmwareService {
           if (params.firmware.gitPullRequest) {
             const pullRequestResult = await firmwareDownload.checkoutCommit(
               gitRepositoryUrl,
+              gitRepositorySrcFolder,
               params.firmware.gitPullRequest.headCommitHash
             );
             firmwarePath = pullRequestResult.path;
@@ -275,6 +280,7 @@ export default class FirmwareService {
       }
       this.logger?.log('firmware path', {
         firmwarePath,
+        gitRepositoryUrl,
       });
 
       await this.updateProgress(

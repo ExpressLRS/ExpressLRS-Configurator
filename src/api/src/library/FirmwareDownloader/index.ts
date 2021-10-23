@@ -14,14 +14,23 @@ export interface FirmwareResult {
 }
 
 export interface IFirmwareDownloader {
-  checkoutTag(repository: string, tagName: string): Promise<FirmwareResult>;
+  checkoutTag(
+    repository: string,
+    srcFolder: string,
+    tagName: string
+  ): Promise<FirmwareResult>;
 
   checkoutBranch(
     repository: string,
+    srcFolder: string,
     branchName: string
   ): Promise<FirmwareResult>;
 
-  checkoutCommit(repository: string, commit: string): Promise<FirmwareResult>;
+  checkoutCommit(
+    repository: string,
+    srcFolder: string,
+    commit: string
+  ): Promise<FirmwareResult>;
 }
 
 export const findGitExecutable = async (envPath: string): Promise<string> => {
@@ -72,7 +81,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     this.git = simpleGit(options);
   }
 
-  async syncRepo(repository: string): Promise<void> {
+  async syncRepo(repository: string, srcFolder: string): Promise<void> {
     const isTargetDirectoryEmpty: boolean = await new Promise(
       (resolve, reject) => {
         fs.readdir(this.baseDirectory, (err, data) => {
@@ -89,8 +98,11 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
         '--no-checkout',
         '--filter=blob:none',
       ]);
-
-      await this.git.raw('sparse-checkout', 'set', 'src');
+      if (!srcFolder || srcFolder.length === 0 || srcFolder === '/') {
+        await this.git.raw('checkout');
+      } else {
+        await this.git.raw('sparse-checkout', 'set', srcFolder);
+      }
     } else {
       await this.git.reset(ResetMode.HARD);
       await this.git.fetch('origin', ['--tags']);
@@ -99,34 +111,37 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
 
   async checkoutTag(
     repository: string,
+    srcFolder: string,
     tagName: string
   ): Promise<FirmwareResult> {
-    await this.syncRepo(repository);
+    await this.syncRepo(repository, srcFolder);
     await this.git.checkout(tagName);
     return {
-      path: path.join(this.baseDirectory, 'src'),
+      path: path.join(this.baseDirectory, srcFolder),
     };
   }
 
   async checkoutBranch(
     repository: string,
+    srcFolder: string,
     branch: string
   ): Promise<FirmwareResult> {
-    await this.syncRepo(repository);
+    await this.syncRepo(repository, srcFolder);
     await this.git.checkout(`origin/${branch}`);
     return {
-      path: path.join(this.baseDirectory, 'src'),
+      path: path.join(this.baseDirectory, srcFolder),
     };
   }
 
   async checkoutCommit(
     repository: string,
+    srcFolder: string,
     commit: string
   ): Promise<FirmwareResult> {
-    await this.syncRepo(repository);
+    await this.syncRepo(repository, srcFolder);
     await this.git.checkout(commit);
     return {
-      path: path.join(this.baseDirectory, 'src'),
+      path: path.join(this.baseDirectory, srcFolder),
     };
   }
 }
