@@ -1543,6 +1543,38 @@
     },
     {
       "category": "QuadKopters 2.4 Ghz",
+      "name": "QuadKopters Slim 2400 TX",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "QuadKopters_SLIM_2400_TX_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "QuadKopters_SLIM_2400_TX_via_WIFI"
+        }
+      ],
+      "userDefines": [
+        "REGULATORY_DOMAIN_ISM_2400",
+        "BINDING_PHRASE",
+        "HYBRID_SWITCHES_8",
+        "ENABLE_TELEMETRY",
+        "TLM_REPORT_INTERVAL_MS",
+        "NO_SYNC_ON_ARM",
+        "ARM_CHANNEL",
+        "FEATURE_OPENTX_SYNC",
+        "USE_500HZ",
+        "UART_INVERTED",
+        "AUTO_WIFI_ON_INTERVAL",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD",
+        "BLE_HID_JOYSTICK",
+        "USE_DYNAMIC_POWER"
+      ],
+      "wikiUrl": ""
+    },
+    {
+      "category": "QuadKopters 2.4 Ghz",
       "name": "QuadKopters NANO RX",
       "targets": [
         {
