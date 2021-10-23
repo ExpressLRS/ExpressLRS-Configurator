@@ -68,44 +68,52 @@ export const findGitExecutable = async (envPath: string): Promise<string> => {
 export class GitFirmwareDownloader implements IFirmwareDownloader {
   baseDirectory: string;
 
-  git: SimpleGit;
+  gitBinaryLocation: string;
 
   constructor({ baseDirectory, gitBinaryLocation }: FirmwareDownloaderProps) {
     this.baseDirectory = baseDirectory;
+    this.gitBinaryLocation = gitBinaryLocation;
+  }
+
+  getRepoDirectory(repository: string): string {
+    return path.join(this.baseDirectory, path.basename(repository));
+  }
+
+  getSimpleGit(repository: string) {
     const options: SimpleGitOptions = {
-      baseDir: this.baseDirectory,
-      binary: gitBinaryLocation,
+      baseDir: this.getRepoDirectory(repository),
+      binary: this.gitBinaryLocation,
       maxConcurrentProcesses: 1,
       config: [],
     };
-    this.git = simpleGit(options);
+    return simpleGit(options);
   }
 
   async syncRepo(repository: string, srcFolder: string): Promise<void> {
-    const isTargetDirectoryEmpty: boolean = await new Promise(
-      (resolve, reject) => {
-        fs.readdir(this.baseDirectory, (err, data) => {
-          if (err) {
-            reject(err);
-          }
-          resolve(data.length === 0);
-        });
-      }
-    );
+    const directory = this.getRepoDirectory(repository);
+
+    if (!fs.existsSync(directory)) {
+      await fs.promises.mkdir(directory, { recursive: true });
+    }
+
+    const git = this.getSimpleGit(directory);
+
+    const isTargetDirectoryEmpty: boolean =
+      (await fs.promises.readdir(directory)).length === 0;
 
     if (isTargetDirectoryEmpty) {
-      await this.git.clone(repository, this.baseDirectory, [
+      await git.clone(repository, directory, [
         '--no-checkout',
         '--filter=blob:none',
       ]);
       if (!srcFolder || srcFolder.length === 0 || srcFolder === '/') {
-        await this.git.raw('checkout');
+        await git.raw('checkout');
       } else {
-        await this.git.raw('sparse-checkout', 'set', srcFolder);
+        await git.raw('sparse-checkout', 'set', srcFolder);
       }
     } else {
-      await this.git.reset(ResetMode.HARD);
-      await this.git.fetch('origin', ['--tags']);
+      await git.reset(ResetMode.HARD);
+      await git.fetch('origin', ['--tags']);
     }
   }
 
@@ -114,10 +122,12 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     srcFolder: string,
     tagName: string
   ): Promise<FirmwareResult> {
+    const directory = this.getRepoDirectory(repository);
     await this.syncRepo(repository, srcFolder);
-    await this.git.checkout(tagName);
+    const git = this.getSimpleGit(directory);
+    await git.checkout(tagName);
     return {
-      path: path.join(this.baseDirectory, srcFolder),
+      path: path.join(directory, srcFolder),
     };
   }
 
@@ -126,10 +136,12 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     srcFolder: string,
     branch: string
   ): Promise<FirmwareResult> {
+    const directory = this.getRepoDirectory(repository);
     await this.syncRepo(repository, srcFolder);
-    await this.git.checkout(`origin/${branch}`);
+    const git = this.getSimpleGit(directory);
+    await git.checkout(`origin/${branch}`);
     return {
-      path: path.join(this.baseDirectory, srcFolder),
+      path: path.join(directory, srcFolder),
     };
   }
 
@@ -138,10 +150,12 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     srcFolder: string,
     commit: string
   ): Promise<FirmwareResult> {
+    const directory = this.getRepoDirectory(repository);
     await this.syncRepo(repository, srcFolder);
-    await this.git.checkout(commit);
+    const git = this.getSimpleGit(directory);
+    await git.checkout(commit);
     return {
-      path: path.join(this.baseDirectory, srcFolder),
+      path: path.join(directory, srcFolder),
     };
   }
 }
