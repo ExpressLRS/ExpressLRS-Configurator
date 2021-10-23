@@ -14,6 +14,13 @@ export default class UserDefinesValidator {
       UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
     ];
 
+    // Support case when there are no Regulatory Domain user defines at all. All 2.4 Ghz hardware
+    const regulatoryDomainsValidationRequired =
+      data.filter(({ key }) => regulatoryDomainKeys.includes(key)).length > 0;
+    if (!regulatoryDomainsValidationRequired) {
+      return results;
+    }
+
     const regulatoryDefines = data.filter(
       ({ key, enabled }) => regulatoryDomainKeys.includes(key) && enabled
     );
