@@ -228,11 +228,6 @@ const ConfiguratorView: FunctionComponent = () => {
   useMulticastDnsMonitorUpdatesSubscription({
     fetchPolicy: 'network-only',
     onSubscriptionData: (options) => {
-      console.log(
-        `useMulticastDnsMonitorUpdatesSubscription: ${JSON.stringify(
-          options.subscriptionData.data?.multicastDnsMonitorUpdates.data
-        )}`
-      );
       const data = options.subscriptionData.data?.multicastDnsMonitorUpdates;
       if (data) {
         const multicastDnsDevicesCopy = { ...multicastDnsDevices };

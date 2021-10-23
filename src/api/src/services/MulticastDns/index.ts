@@ -74,50 +74,27 @@ export default class MulticastDnsService {
   }
 
   private parseOptions(optionsString: string): UserDefine[] {
-    let optionsStringWorking = optionsString;
-
-    // regex pattern for identifying userdefines with values like -DMY_BINDING_PHRASE="xyz"
-    const userDefineWithValueRegex = /-D\S+=".+?"/g;
-    const userDefineWithValueMatches =
-      optionsStringWorking.match(userDefineWithValueRegex) ?? [];
+    // regex pattern for identifying userdefines
+    // eslint-disable-next-line no-useless-escape
+    const userDefinesRegexp = /#*?-(D[A-z0-9-_]*?)(?==\"(.*?)\"|\s|$)/g;
+    const parsedResults = [...optionsString.matchAll(userDefinesRegexp)];
 
     const userDefines: UserDefine[] = [];
 
-    userDefineWithValueMatches?.forEach((match) => {
-      // remove the matches from the options string
-      optionsStringWorking = optionsStringWorking.replace(match, '');
-      // split user define into key and value
-      const equalsSignIndex = match.indexOf(`=`);
-      const key = match.substring(1, equalsSignIndex).toUpperCase();
-      const value = match.substring(equalsSignIndex + 2, match.length - 1);
-
+    parsedResults?.forEach((match) => {
+      const key = match[1];
       const userDefineKey = Object.values(UserDefineKey).find(
         (item) => item.toUpperCase() === key
       );
 
       if (userDefineKey) {
-        userDefines.push(UserDefine.Text(userDefineKey, value));
-      } else {
-        this.logger.error(
-          `error while parsing user defines, user define key ${key} not found`,
-          Error().stack
-        );
-      }
-    });
-
-    // regex pattern to match user define without value like -DFEATURE_OPENTX_SYNC
-    const userDefineWithNoValueRegex = /-D\S+/g;
-    const userDefineWithNoValueMatches =
-      optionsStringWorking.match(userDefineWithNoValueRegex) ?? [];
-
-    userDefineWithNoValueMatches.forEach((match) => {
-      const key = match.substring(1).toUpperCase();
-      const userDefineKey = Object.values(UserDefineKey).find(
-        (item) => item.toUpperCase() === key
-      );
-
-      if (userDefineKey) {
-        userDefines.push(UserDefine.Boolean(userDefineKey, true));
+        if (match.length === 3) {
+          if (match[2]) {
+            userDefines.push(UserDefine.Text(userDefineKey, match[2]));
+          } else {
+            userDefines.push(UserDefine.Boolean(userDefineKey, true));
+          }
+        }
       } else {
         this.logger.error(
           `error while parsing user defines, user define key ${key} not found`,
