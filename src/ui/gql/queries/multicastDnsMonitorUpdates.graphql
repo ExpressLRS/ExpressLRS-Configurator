@@ -1,0 +1,22 @@
+subscription multicastDnsMonitorUpdates {
+  multicastDnsMonitorUpdates {
+    type
+    data {
+      name
+      options {
+        type
+        key
+        enabled
+        enumValues
+        value
+      }
+      version
+      target
+      type
+      vendor
+      ip
+      dns
+      port
+    }
+  }
+}

@@ -6,11 +6,10 @@ const mergeWithDeviceOptionsFromStorage = async (
   device: string | null,
   deviceOptions: DeviceOptions
 ): Promise<DeviceOptions> => {
-  if (device === null) {
-    return deviceOptions;
-  }
   const savedBindingPhrase = await storage.getBindingPhrase();
-  const savedTargetOptions = await storage.getDeviceOptions(device);
+  const savedTargetOptions = device
+    ? await storage.getDeviceOptions(device)
+    : null;
   const addOverrides = (deviceOption: UserDefine): UserDefine => {
     if (
       deviceOption.key === UserDefineKey.BINDING_PHRASE &&

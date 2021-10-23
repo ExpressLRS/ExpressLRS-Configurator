@@ -25,6 +25,8 @@ import SerialMonitorService from './src/services/SerialMonitor';
 import TargetsService from './src/services/Targets';
 import DeviceService from './src/services/Device';
 import TargetUserDefinesFactory from './src/factories/TargetUserDefinesFactory';
+import MulticastDnsService from './src/services/MulticastDns';
+import MulticastDnsMonitorResolver from './src/graphql/resolvers/MulticastDnsMonitor.resolver';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -75,6 +77,8 @@ export default class ApiServer {
       new SerialMonitorService(pubSub, logger)
     );
 
+    Container.set(MulticastDnsService, new MulticastDnsService(pubSub, logger));
+
     const deviceService = new DeviceService(logger);
 
     Container.set(DeviceService, deviceService);
@@ -97,6 +101,7 @@ export default class ApiServer {
         SourcesResolver,
         UpdatesResolver,
         SerialMonitorResolver,
+        MulticastDnsMonitorResolver,
       ],
       container: Container,
       pubSub,

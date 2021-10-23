@@ -1,0 +1,19 @@
+query availableMulticastDnsDevicesList{
+  availableMulticastDnsDevicesList {
+    name
+      options {
+        type
+        key
+        enabled
+        enumValues
+        value
+      }
+      version
+      target
+      type
+      vendor
+      ip
+      dns
+      port
+  }
+}

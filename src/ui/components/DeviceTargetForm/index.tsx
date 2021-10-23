@@ -1,6 +1,12 @@
 import { makeStyles } from '@material-ui/core';
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import Omnibox, { Option } from '../Omnibox';
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import Omnibox from '../Omnibox';
 import { Device } from '../../gql/generated/types';
 import FlashingMethodOptions from '../FlashingMethodOptions';
 
@@ -26,155 +32,172 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
 ) => {
   const { onChange, currentTarget, targetOptions } = props;
 
-  const currentDevice: Device | undefined = targetOptions?.find((device) => {
-    if (device.targets.find((target) => target.name === currentTarget)) {
-      return device;
-    }
-    return undefined;
-  });
-
   const styles = useStyles();
-
-  const [targetsByCategoryAndDevice, setTargetsByCategoryAndDevice] = useState<
-    Dictionary<Dictionary<Device>>
-  >();
 
   interface Dictionary<T> {
     [Key: string]: T;
   }
 
-  useEffect(() => {
-    const targetsByCategoryAndDeviceLocal = targetOptions?.reduce<
-      Dictionary<Dictionary<Device>>
-    >((accumulator, currentValue) => {
-      if (!accumulator[currentValue.category]) {
-        accumulator[currentValue.category] = {};
-      }
-      const category = accumulator[currentValue.category];
-      category[currentValue.name] = currentValue;
+  // create a dictionary for Category -> Device -> Targets
+  const targetsByCategoryAndDevice = useMemo(() => {
+    return targetOptions?.reduce<Dictionary<Dictionary<Device>>>(
+      (accumulator, currentValue) => {
+        if (!accumulator[currentValue.category]) {
+          accumulator[currentValue.category] = {};
+        }
+        const category = accumulator[currentValue.category];
+        category[currentValue.name] = currentValue;
 
-      return accumulator;
-    }, {});
-
-    setTargetsByCategoryAndDevice(targetsByCategoryAndDeviceLocal);
+        return accumulator;
+      },
+      {}
+    );
   }, [targetOptions]);
 
-  const [
-    currentCategoryValue,
-    setCurrentCategoryValue,
-  ] = useState<Option | null>(
-    currentTarget && currentDevice
-      ? {
-          label: currentDevice.category,
-          value: currentDevice.category,
-        }
-      : null
+  const [currentTargetValue, setCurrentTargetValue] = useState<string | null>(
+    null
   );
 
-  const [currentDeviceValue, setCurrentDeviceValue] = useState<Option | null>(
-    currentTarget && currentDevice
-      ? {
-          label: currentDevice.name,
-          value: currentDevice.name,
-        }
-      : null
+  const [selectedCategoryValue, setSelectedCategoryValue] = useState<
+    string | null
+  >(null);
+
+  const [selectedDeviceValue, setSelectedDeviceValue] = useState<string | null>(
+    null
   );
 
-  const onCategoryChange = (value: string | null) => {
-    if (value === null) {
-      setCurrentCategoryValue(null);
-    } else {
-      setCurrentCategoryValue({
-        label: value,
-        value,
-      });
-    }
-    // When category changes, set the current target to null
-    setCurrentDeviceValue(null);
-    onChange(null);
-  };
-
-  const onDeviceChange = (value: string | null) => {
-    if (value === null) {
-      setCurrentDeviceValue(null);
-    } else {
-      setCurrentDeviceValue({
-        label: value,
-        value,
-      });
-    }
-    onChange(null);
-  };
-
-  // verify that the currently selected category and device exist
   useEffect(() => {
-    if (targetsByCategoryAndDevice && currentCategoryValue) {
-      if (!targetsByCategoryAndDevice[currentCategoryValue.value]) {
+    const device = targetOptions?.find((item) =>
+      item.targets.find((target) => target.name === currentTarget)
+    );
+
+    // verify that if there is a currentTarget that the category and device values match that target
+    if (device) {
+      if (selectedCategoryValue !== device.category) {
+        setSelectedCategoryValue(device.category);
+      }
+      if (selectedDeviceValue !== device.name) {
+        setSelectedDeviceValue(device.name);
+      }
+    }
+    setCurrentTargetValue(currentTarget);
+  }, [currentTarget, targetOptions]);
+
+  const onCategoryChange = useCallback(
+    (value: string | null) => {
+      if (value === null) {
+        setSelectedCategoryValue(null);
+      } else {
+        setSelectedCategoryValue(value);
+      }
+      // When category changes, set the current target to null
+      setSelectedDeviceValue(null);
+      onChange(null);
+    },
+    [onChange]
+  );
+
+  const onDeviceChange = useCallback(
+    (value: string | null) => {
+      if (value === null) {
+        setSelectedDeviceValue(null);
+      } else {
+        setSelectedDeviceValue(value);
+      }
+      onChange(null);
+    },
+    [onChange]
+  );
+
+  useEffect(() => {
+    // verify that the currently selected category and device exist
+    if (targetsByCategoryAndDevice && selectedCategoryValue) {
+      if (!targetsByCategoryAndDevice[selectedCategoryValue]) {
         onCategoryChange(null);
       } else if (
-        currentDeviceValue &&
-        !targetsByCategoryAndDevice[currentCategoryValue.value][
-          currentDeviceValue.value
-        ]
+        selectedDeviceValue &&
+        targetsByCategoryAndDevice &&
+        !targetsByCategoryAndDevice[selectedCategoryValue][selectedDeviceValue]
       ) {
         onDeviceChange(null);
       }
     }
-  }, [targetsByCategoryAndDevice, currentCategoryValue, currentDeviceValue]);
+  }, [
+    onCategoryChange,
+    onDeviceChange,
+    selectedCategoryValue,
+    selectedDeviceValue,
+    targetsByCategoryAndDevice,
+  ]);
 
-  const onFlashingMethodChange = (value: string | null) => {
-    onChange(value);
-  };
+  const onFlashingMethodChange = useCallback(
+    (value: string | null) => {
+      onChange(value);
+    },
+    [onChange]
+  );
+
+  const categorySelectOptions = useMemo(() => {
+    return Object.keys(targetsByCategoryAndDevice ?? {})
+      .sort()
+      .map((category) => ({
+        label: category,
+        value: category,
+      }));
+  }, [targetsByCategoryAndDevice]);
+
+  const deviceSelectOptions = useMemo(() => {
+    return !targetsByCategoryAndDevice ||
+      !selectedCategoryValue ||
+      !targetsByCategoryAndDevice[selectedCategoryValue]
+      ? []
+      : Object.keys(targetsByCategoryAndDevice[selectedCategoryValue])
+          .sort()
+          .map((device) => ({
+            label: device,
+            value: device,
+          }));
+  }, [targetsByCategoryAndDevice, selectedCategoryValue]);
 
   return (
     <div>
       <div className={styles.root}>
         <Omnibox
           title="Device category"
-          currentValue={currentCategoryValue}
+          currentValue={
+            categorySelectOptions.find(
+              (item) => item.value === selectedCategoryValue
+            ) ?? null
+          }
           onChange={onCategoryChange}
-          options={Object.keys(targetsByCategoryAndDevice ?? {})
-            .sort()
-            .map((category) => ({
-              label: category,
-              value: category,
-            }))}
+          options={categorySelectOptions}
         />
       </div>
       <div className={styles.root}>
         <Omnibox
           title="Device"
-          currentValue={currentDeviceValue}
-          onChange={onDeviceChange}
-          options={
-            currentCategoryValue === null ||
-            !targetsByCategoryAndDevice ||
-            !targetsByCategoryAndDevice[currentCategoryValue.value]
-              ? []
-              : Object.keys(
-                  targetsByCategoryAndDevice[currentCategoryValue.value]
-                )
-                  .sort()
-                  .map((device) => ({
-                    label: device,
-                    value: device,
-                  }))
+          currentValue={
+            deviceSelectOptions.find(
+              (item) => item.value === selectedDeviceValue
+            ) ?? null
           }
+          onChange={onDeviceChange}
+          options={deviceSelectOptions}
           // if no category has been selected, disable the target select box
-          disabled={currentCategoryValue === null}
+          disabled={selectedCategoryValue === null}
         />
       </div>
 
-      {currentCategoryValue &&
-        currentDeviceValue &&
+      {selectedCategoryValue &&
+        selectedDeviceValue &&
         targetsByCategoryAndDevice &&
-        targetsByCategoryAndDevice[currentCategoryValue.value] && (
+        targetsByCategoryAndDevice[selectedCategoryValue] && (
           <FlashingMethodOptions
             onChange={onFlashingMethodChange}
-            currentTarget={currentTarget}
+            currentTarget={currentTargetValue}
             currentDevice={
-              targetsByCategoryAndDevice[currentCategoryValue.value][
-                currentDeviceValue.value
+              targetsByCategoryAndDevice[selectedCategoryValue][
+                selectedDeviceValue
               ] ?? null
             }
           />

@@ -6,7 +6,12 @@ import {
   RadioGroup,
   Typography,
 } from '@material-ui/core';
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import { Device, Target } from '../../gql/generated/types';
 import FlashingMethodDescription from '../FlashingMethodDescription';
 
@@ -24,22 +29,6 @@ const useStyles = makeStyles((theme) => ({
   },
   radio: {
     marginRight: `${theme.spacing(1)} !important`,
-  },
-  tooltipRoot: {
-    maxWidth: '400px',
-  },
-  tooltip: {
-    paddingLeft: '1em',
-    paddingRight: '1em',
-    fontSize: '1.4em !important',
-    '& a': {
-      color: '#90caf9',
-    },
-  },
-  icon: {
-    verticalAlign: 'middle',
-    marginLeft: ' 5px',
-    fontSize: '1.44em',
   },
   categoryTitle: {
     marginBottom: theme.spacing(1),
@@ -59,76 +48,75 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
 
   const styles = useStyles();
 
-  const [currentTargetValue, setCurrentTargetValue] = useState<string | null>(
-    currentTarget
+  const targetMappingsSorted = useMemo(
+    () =>
+      currentDevice?.targets
+        ?.filter((item) => {
+          return item.flashingMethod !== null;
+        })
+        .sort((a, b) => {
+          if (a.flashingMethod && b.flashingMethod) {
+            return a.flashingMethod < b.flashingMethod ? -1 : 1;
+          }
+          return 0;
+        }),
+    [currentDevice?.targets]
   );
 
-  const [targetMappingsSorted, setTargetMappingsSorted] = useState<
-    Target[] | null
-  >();
+  const ChangeSelectedDeviceTarget = useCallback(
+    (value: string | null) => {
+      onChange(value);
+    },
+    [onChange]
+  );
 
   useEffect(() => {
-    const value = currentDevice?.targets
-      ?.filter((item) => {
-        return item.flashingMethod !== null;
-      })
-      .sort((a, b) => {
-        if (a.flashingMethod && b.flashingMethod) {
-          return a.flashingMethod < b.flashingMethod ? -1 : 1;
-        }
-        return 0;
-      });
-    setTargetMappingsSorted(value);
-  }, [currentDevice]);
-
-  const ChangeSelectedDeviceTarget = (value: string | null) => {
-    setCurrentTargetValue(value);
-    onChange(value);
-  };
-
-  useEffect(() => {
-    // if the currentTargetValue is not found, then select the first one by default
+    // if the currentTarget is not found, then select the first one by default
     if (
       targetMappingsSorted &&
-      !targetMappingsSorted.find((item) => item.name === currentTargetValue) &&
+      !targetMappingsSorted.find((item) => item.name === currentTarget) &&
       targetMappingsSorted.length > 0
     ) {
       const { name } = targetMappingsSorted[0];
       ChangeSelectedDeviceTarget(name);
     }
-  }, [targetMappingsSorted, currentTargetValue]);
+  }, [ChangeSelectedDeviceTarget, currentTarget, targetMappingsSorted]);
 
-  const onFlashingMethodChange = (
-    _event: React.ChangeEvent<HTMLInputElement>,
-    value: string
-  ) => {
-    ChangeSelectedDeviceTarget(value);
-  };
+  const onFlashingMethodChange = useCallback(
+    (_event: React.ChangeEvent<HTMLInputElement>, value: string) => {
+      ChangeSelectedDeviceTarget(value);
+    },
+    [ChangeSelectedDeviceTarget]
+  );
 
-  const flashingMethodRadioOption = (targetMapping: Target) => {
-    const label = (
-      <>
-        {!targetMapping.flashingMethod
-          ? targetMapping.name
-          : targetMapping.flashingMethod}
-        {targetMapping.flashingMethod !== null && (
-          <FlashingMethodDescription
-            flashingMethod={targetMapping.flashingMethod}
-            deviceWikiUrl={currentDevice?.wikiUrl ?? null}
-          />
-        )}
-      </>
-    );
-    return (
-      <FormControlLabel
-        key={targetMapping.name}
-        value={targetMapping.name}
-        className={styles.radioControl}
-        control={<Radio className={styles.radio} color="primary" />}
-        label={label}
-      />
-    );
-  };
+  const flashingMethodRadioOption = useCallback(
+    (targetMapping: Target) => {
+      const label = (
+        <>
+          {!targetMapping.flashingMethod
+            ? targetMapping.name
+            : targetMapping.flashingMethod}
+          {targetMapping.flashingMethod !== null && (
+            <FlashingMethodDescription
+              flashingMethod={targetMapping.flashingMethod}
+              deviceWikiUrl={currentDevice?.wikiUrl ?? null}
+            />
+          )}
+        </>
+      );
+
+      return (
+        <FormControlLabel
+          key={targetMapping.name}
+          value={targetMapping.name}
+          className={styles.radioControl}
+          control={<Radio className={styles.radio} color="primary" />}
+          label={label}
+        />
+      );
+    },
+    [currentDevice?.wikiUrl, styles.radio, styles.radioControl]
+  );
 
   return (
     <div className={styles.root}>
@@ -138,7 +126,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
       <FormControl component="fieldset" className={styles.flashingMethods}>
         <RadioGroup
           row
-          value={currentTargetValue}
+          value={currentTarget}
           onChange={onFlashingMethodChange}
           defaultValue="top"
         >
