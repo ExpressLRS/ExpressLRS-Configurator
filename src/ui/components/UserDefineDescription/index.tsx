@@ -674,13 +674,13 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
-        case UserDefineKey.UART_RX_SPEED_400K:
+        case UserDefineKey.RCVR_UART_BAUD:
           return (
             <div>
               <p>
-                ExpressLRS does not work on a KISS V1 with the default UART baud
-                rate. This option lowers it to 400K and fixes compatibility
-                issues.
+                Receiver UART baud rate. Defaults to 420000. Set this option to
+                400000 and your receiver will work with Kiss v1 flight
+                controllers.
               </p>{' '}
               <p>
                 <a
