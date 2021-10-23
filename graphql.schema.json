@@ -1032,7 +1032,7 @@
             "deprecationReason": null
           },
           {
-            "name": "UART_RX_SPEED_400K",
+            "name": "RCVR_UART_BAUD",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

@@ -84,8 +84,8 @@ export default class TargetUserDefinesFactory {
             return UserDefine.Boolean(UserDefineKey.UART_INVERTED, true);
           case UserDefineKey.USE_R9MM_R9MINI_SBUS:
             return UserDefine.Boolean(UserDefineKey.USE_R9MM_R9MINI_SBUS);
-          case UserDefineKey.UART_RX_SPEED_400K:
-            return UserDefine.Boolean(UserDefineKey.UART_RX_SPEED_400K);
+          case UserDefineKey.RCVR_UART_BAUD:
+            return UserDefine.Text(UserDefineKey.RCVR_UART_BAUD, '420000');
           case UserDefineKey.RCVR_INVERT_TX:
             return UserDefine.Boolean(UserDefineKey.RCVR_INVERT_TX);
           // Other options

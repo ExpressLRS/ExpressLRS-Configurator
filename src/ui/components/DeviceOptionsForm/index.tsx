@@ -118,7 +118,7 @@ const userDefinesToCategories = (
       UserDefineKey.R9M_UNLOCK_HIGHER_POWER, // deprecated
       UserDefineKey.UNLOCK_HIGHER_POWER,
       UserDefineKey.USE_R9MM_R9MINI_SBUS,
-      UserDefineKey.UART_RX_SPEED_400K,
+      UserDefineKey.RCVR_UART_BAUD,
       UserDefineKey.RCVR_INVERT_TX,
     ],
     [UserDefineCategory.NetworkOptions]: [
