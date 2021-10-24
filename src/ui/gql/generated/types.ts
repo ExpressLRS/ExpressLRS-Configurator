@@ -85,6 +85,7 @@ export type Device = {
   readonly targets: ReadonlyArray<Target>;
   readonly userDefines: ReadonlyArray<UserDefineKey>;
   readonly wikiUrl?: Maybe<Scalars['String']>;
+  readonly deviceType: DeviceType;
 };
 
 export type Target = {
@@ -141,6 +142,11 @@ export enum UserDefineKey {
   HOME_WIFI_PASSWORD = 'HOME_WIFI_PASSWORD',
   AUTO_WIFI_ON_BOOT = 'AUTO_WIFI_ON_BOOT',
   AUTO_WIFI_ON_INTERVAL = 'AUTO_WIFI_ON_INTERVAL',
+}
+
+export enum DeviceType {
+  ExpressLRS = 'ExpressLRS',
+  Backpack = 'Backpack',
 }
 
 export type GitRepositoryInput = {
@@ -415,7 +421,7 @@ export type AvailableFirmwareTargetsQuery = {
   readonly availableFirmwareTargets: ReadonlyArray<
     { readonly __typename?: 'Device' } & Pick<
       Device,
-      'id' | 'name' | 'category' | 'wikiUrl' | 'userDefines'
+      'id' | 'name' | 'category' | 'wikiUrl' | 'userDefines' | 'deviceType'
     > & {
         readonly targets: ReadonlyArray<
           { readonly __typename?: 'Target' } & Pick<
@@ -760,6 +766,7 @@ export const AvailableFirmwareTargetsDocument = gql`
       }
       wikiUrl
       userDefines
+      deviceType
     }
   }
 `;

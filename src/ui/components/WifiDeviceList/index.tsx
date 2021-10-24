@@ -21,12 +21,10 @@ const useStyles = makeStyles((theme) => ({
 
 interface WifiDeviceSelectProps {
   wifiDevices: MulticastDnsInformation[];
-  onChange: (deviceName: string) => void;
+  onChange: (dnsDevice: MulticastDnsInformation) => void;
 }
 
-const SerialDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (
-  props
-) => {
+const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   const { wifiDevices, onChange } = props;
   const styles = useStyles();
 
@@ -73,7 +71,7 @@ const SerialDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (
               <TableCell>
                 <Button
                   onClick={() => {
-                    onChange(row.name);
+                    onChange(row);
                   }}
                 >
                   Select
@@ -87,4 +85,4 @@ const SerialDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (
   );
 };
 
-export default SerialDeviceSelect;
+export default WifiDeviceSelect;

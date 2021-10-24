@@ -33,9 +33,7 @@ enum WifiSourceType {
   MANUAL,
 }
 
-const SerialDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (
-  props
-) => {
+const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   const { wifiDevice, wifiDevices, onChange } = props;
   const styles = useStyles();
 
@@ -156,4 +154,4 @@ const SerialDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (
   );
 };
 
-export default SerialDeviceSelect;
+export default WifiDeviceSelect;

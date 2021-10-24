@@ -44,6 +44,7 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
   const location = useLocation();
   const configuratorActive =
     matchPath(location.pathname, '/configurator') !== null;
+  const backpackActive = matchPath(location.pathname, '/backpack') !== null;
   // const settingsActive = matchPath(location.pathname, '/settings') !== null;
   const logsActive = matchPath(location.pathname, '/logs') !== null;
   const serialMonitorActive =
@@ -74,6 +75,32 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
               <BuildIcon />
             </ListItemIcon>
             <ListItemText primary="Configurator" />
+          </ListItem>
+          <ListItem
+            component={Link}
+            to="/backpack"
+            selected={backpackActive}
+            className={styles.menuItem}
+            button
+            disabled={!navigationEnabled}
+          >
+            <ListItemIcon>
+              <svg
+                className="MuiSvgIcon-root"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <g>
+                  <rect fill="none" height="24" width="24" y="0" />
+                  <g>
+                    <g>
+                      <path d="M20,8v12c0,1.1-0.9,2-2,2H6c-1.1,0-2-0.9-2-2V8c0-1.86,1.28-3.41,3-3.86V2h3v2h4V2h3v2.14C18.72,4.59,20,6.14,20,8z M6,12v2h10v2h2v-4H6z" />
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </ListItemIcon>
+            <ListItemText primary="Backpack" />
           </ListItem>
 
           {/* <ListItem */}

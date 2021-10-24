@@ -1,5 +1,6 @@
 import { Field, ObjectType } from 'type-graphql';
 import UserDefineKey from '../library/FirmwareBuilder/Enum/UserDefineKey';
+import DeviceType from './enum/DeviceType';
 import Target from './Target';
 
 @ObjectType('Device')
@@ -22,12 +23,16 @@ export default class Device {
   @Field({ nullable: true })
   wikiUrl?: string;
 
+  @Field()
+  deviceType: DeviceType;
+
   constructor(
     id: string,
     name: string,
     category: string,
     targets: Target[],
     userDefines: UserDefineKey[],
+    deviceType: DeviceType,
     wikiUrl?: string
   ) {
     this.id = id;
@@ -36,5 +41,6 @@ export default class Device {
     this.targets = targets;
     this.userDefines = userDefines;
     this.wikiUrl = wikiUrl;
+    this.deviceType = deviceType;
   }
 }
