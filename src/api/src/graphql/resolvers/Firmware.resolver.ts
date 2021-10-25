@@ -25,6 +25,7 @@ import ClearFirmwareFilesResult from '../../models/ClearFirmwareFiles';
 import TargetsService from '../../services/Targets';
 import TargetArgs from '../args/Target';
 import Device from '../../models/Device';
+import GitRepository from '../inputs/GitRepositoryInput';
 
 @Service()
 @Resolver()
@@ -36,25 +37,30 @@ export default class FirmwareResolver {
   ) {}
 
   @Query(() => [Device])
-  async availableFirmwareTargets(@Args() args: TargetArgs): Promise<Device[]> {
-    return this.targetsService.loadTargetsList(args);
+  async availableFirmwareTargets(
+    @Args() args: TargetArgs,
+    @Arg('gitRepository') gitRepository: GitRepository
+  ): Promise<Device[]> {
+    return this.targetsService.loadTargetsList(args, gitRepository);
   }
 
   @Query(() => [UserDefine])
   async targetDeviceOptions(
-    @Args() args: TargetDeviceOptionsArgs
+    @Args() args: TargetDeviceOptionsArgs,
+    @Arg('gitRepository') gitRepository: GitRepository
   ): Promise<UserDefine[]> {
-    return this.userDefinesBuilder.build(args);
+    return this.userDefinesBuilder.build(args, gitRepository);
   }
 
   @Mutation(() => BuildFlashFirmwareResult)
   async buildFlashFirmware(
-    @Arg('input') input: BuildFlashFirmwareInput
+    @Arg('input') input: BuildFlashFirmwareInput,
+    @Arg('gitRepository') gitRepository: GitRepository
   ): Promise<BuildFlashFirmwareResult> {
     return this.firmwareService.buildFlashFirmware(
       input,
-      input.gitRepository.url,
-      input.gitRepository.srcFolder
+      gitRepository.url,
+      gitRepository.srcFolder
     );
   }
 

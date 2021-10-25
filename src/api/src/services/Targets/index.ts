@@ -9,8 +9,17 @@ import { LoggerService } from '../../logger';
 import Device from '../../models/Device';
 import DeviceService from '../Device';
 
+interface GitRepository {
+  owner: string;
+  repositoryName: string;
+  srcFolder: string;
+}
+
 export interface ITargets {
-  loadTargetsList(args: TargetArgs): Promise<Device[]>;
+  loadTargetsList(
+    args: TargetArgs,
+    gitRepository: GitRepository
+  ): Promise<Device[]>;
 }
 
 @Service()
@@ -119,30 +128,33 @@ export default class TargetsService implements ITargets {
     }, []);
   }
 
-  async loadTargetsList(args: TargetArgs): Promise<Device[]> {
+  async loadTargetsList(
+    args: TargetArgs,
+    gitRepository: GitRepository
+  ): Promise<Device[]> {
     let availableTargets: string[] = [];
     switch (args.source) {
       case FirmwareSource.GitBranch:
         availableTargets = await this.loadTargetsFromGitHub(
-          args.gitRepository.owner,
-          args.gitRepository.repositoryName,
-          args.gitRepository.srcFolder,
+          gitRepository.owner,
+          gitRepository.repositoryName,
+          gitRepository.srcFolder,
           args.gitBranch
         );
         break;
       case FirmwareSource.GitCommit:
         availableTargets = await this.loadTargetsFromGitHub(
-          args.gitRepository.owner,
-          args.gitRepository.repositoryName,
-          args.gitRepository.srcFolder,
+          gitRepository.owner,
+          gitRepository.repositoryName,
+          gitRepository.srcFolder,
           args.gitCommit
         );
         break;
       case FirmwareSource.GitTag:
         availableTargets = await this.loadTargetsFromGitHub(
-          args.gitRepository.owner,
-          args.gitRepository.repositoryName,
-          args.gitRepository.srcFolder,
+          gitRepository.owner,
+          gitRepository.repositoryName,
+          gitRepository.srcFolder,
           args.gitTag
         );
         break;
@@ -152,9 +164,9 @@ export default class TargetsService implements ITargets {
       case FirmwareSource.GitPullRequest:
         if (args.gitPullRequest) {
           availableTargets = await this.loadTargetsFromGitHub(
-            args.gitRepository.owner,
-            args.gitRepository.repositoryName,
-            args.gitRepository.srcFolder,
+            gitRepository.owner,
+            gitRepository.repositoryName,
+            gitRepository.srcFolder,
             args.gitPullRequest.headCommitHash
           );
         }

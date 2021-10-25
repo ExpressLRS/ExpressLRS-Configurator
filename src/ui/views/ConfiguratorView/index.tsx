@@ -146,11 +146,11 @@ enum ViewState {
 }
 
 interface ConfiguratorViewProps {
-  gitRepo: GitRepository;
+  gitRepository: GitRepository;
 }
 
 const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
-  const { gitRepo } = props;
+  const { gitRepository } = props;
 
   const styles = useStyles();
 
@@ -302,12 +302,12 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           gitCommit: firmwareVersionData.gitCommit!,
           localPath: firmwareVersionData.localPath!,
           gitPullRequest: firmwareVersionData.gitPullRequest,
-          gitRepo: {
-            url: gitRepo.url,
-            owner: gitRepo.owner,
-            repositoryName: gitRepo.repositoryName,
-            rawRepoUrl: gitRepo.rawRepoUrl,
-            srcFolder: gitRepo.srcFolder,
+          gitRepository: {
+            url: gitRepository.url,
+            owner: gitRepository.owner,
+            repositoryName: gitRepository.repositoryName,
+            rawRepoUrl: gitRepository.rawRepoUrl,
+            srcFolder: gitRepository.srcFolder,
           },
         },
       });
@@ -362,11 +362,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           localPath: firmwareVersionData.localPath!,
           gitPullRequest: firmwareVersionData.gitPullRequest,
           gitRepository: {
-            url: gitRepo.url,
-            owner: gitRepo.owner,
-            repositoryName: gitRepo.repositoryName,
-            rawRepoUrl: gitRepo.rawRepoUrl,
-            srcFolder: gitRepo.srcFolder,
+            url: gitRepository.url,
+            owner: gitRepository.owner,
+            repositoryName: gitRepository.repositoryName,
+            rawRepoUrl: gitRepository.rawRepoUrl,
+            srcFolder: gitRepository.srcFolder,
           },
         },
       });
@@ -681,17 +681,17 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         type: item.type,
       })),
       serialDevice: uploadPort,
-      gitRepository: {
-        url: gitRepo.url,
-        owner: gitRepo.owner,
-        repositoryName: gitRepo.repositoryName,
-        rawRepoUrl: gitRepo.rawRepoUrl,
-        srcFolder: gitRepo.srcFolder,
-      },
     };
     buildFlashFirmwareMutation({
       variables: {
         input,
+        gitRepository: {
+          url: gitRepository.url,
+          owner: gitRepository.owner,
+          repositoryName: gitRepository.repositoryName,
+          rawRepoUrl: gitRepository.rawRepoUrl,
+          srcFolder: gitRepository.srcFolder,
+        },
       },
     });
     setViewState(ViewState.Compiling);
@@ -753,7 +753,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <FirmwareVersionForm
                   onChange={onFirmwareVersionData}
                   data={firmwareVersionData}
-                  gitRepository={gitRepo}
+                  gitRepository={gitRepository}
                 />
                 <ShowAlerts severity="error" messages={firmwareVersionErrors} />
               </CardContent>

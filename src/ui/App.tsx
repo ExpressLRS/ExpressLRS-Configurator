@@ -25,7 +25,7 @@ export default function App() {
               <Redirect to="/configurator" />
             </Route>
             <Route path="/configurator">
-              <ConfiguratorView gitRepo={Config.expressLRSGit} />
+              <ConfiguratorView gitRepository={Config.expressLRSGit} />
             </Route>
             <Route path="/settings" component={SettingsView} />
             <Route path="/logs" component={LogsView} />

@@ -5,7 +5,7 @@ query availableFirmwareTargets(
   $gitCommit: String!,
   $localPath: String!,
   $gitPullRequest: PullRequestInput,
-  $gitRepo: GitRepositoryInput,
+  $gitRepository: GitRepositoryInput!,
 ) {
   availableFirmwareTargets(
     source: $source,
@@ -14,7 +14,7 @@ query availableFirmwareTargets(
     gitCommit: $gitCommit,
     localPath: $localPath,
     gitPullRequest: $gitPullRequest,
-    gitRepository: $gitRepo,
+    gitRepository: $gitRepository,
   ) {
     id
     name

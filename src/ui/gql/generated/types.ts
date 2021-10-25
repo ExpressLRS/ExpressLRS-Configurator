@@ -33,16 +33,17 @@ export type Query = {
 };
 
 export type QueryAvailableFirmwareTargetsArgs = {
+  gitRepository: GitRepositoryInput;
   source?: Maybe<FirmwareSource>;
   gitTag?: Maybe<Scalars['String']>;
   gitBranch?: Maybe<Scalars['String']>;
   gitCommit?: Maybe<Scalars['String']>;
   localPath?: Maybe<Scalars['String']>;
   gitPullRequest?: Maybe<PullRequestInput>;
-  gitRepository?: Maybe<GitRepositoryInput>;
 };
 
 export type QueryTargetDeviceOptionsArgs = {
+  gitRepository: GitRepositoryInput;
   target?: Maybe<Scalars['String']>;
   source?: Maybe<FirmwareSource>;
   gitTag?: Maybe<Scalars['String']>;
@@ -50,7 +51,6 @@ export type QueryTargetDeviceOptionsArgs = {
   gitCommit?: Maybe<Scalars['String']>;
   localPath?: Maybe<Scalars['String']>;
   gitPullRequest?: Maybe<PullRequestInput>;
-  gitRepository?: Maybe<GitRepositoryInput>;
 };
 
 export type QueryGitBranchesArgs = {
@@ -143,6 +143,14 @@ export enum UserDefineKey {
   AUTO_WIFI_ON_INTERVAL = 'AUTO_WIFI_ON_INTERVAL',
 }
 
+export type GitRepositoryInput = {
+  readonly url: Scalars['String'];
+  readonly owner: Scalars['String'];
+  readonly repositoryName: Scalars['String'];
+  readonly rawRepoUrl: Scalars['String'];
+  readonly srcFolder: Scalars['String'];
+};
+
 export enum FirmwareSource {
   GitTag = 'GitTag',
   GitBranch = 'GitBranch',
@@ -156,14 +164,6 @@ export type PullRequestInput = {
   readonly id: Scalars['Float'];
   readonly number: Scalars['Float'];
   readonly headCommitHash: Scalars['String'];
-};
-
-export type GitRepositoryInput = {
-  readonly url: Scalars['String'];
-  readonly owner: Scalars['String'];
-  readonly repositoryName: Scalars['String'];
-  readonly rawRepoUrl: Scalars['String'];
-  readonly srcFolder: Scalars['String'];
 };
 
 export type UserDefine = {
@@ -231,6 +231,7 @@ export type Mutation = {
 };
 
 export type MutationBuildFlashFirmwareArgs = {
+  gitRepository: GitRepositoryInput;
   input: BuildFlashFirmwareInput;
 };
 
@@ -263,7 +264,6 @@ export type BuildFlashFirmwareInput = {
   readonly userDefinesMode?: Maybe<UserDefinesMode>;
   readonly userDefines?: Maybe<ReadonlyArray<UserDefineInput>>;
   readonly userDefinesTxt?: Maybe<Scalars['String']>;
-  readonly gitRepository?: Maybe<GitRepositoryInput>;
 };
 
 export enum BuildJobType {
@@ -278,7 +278,6 @@ export type FirmwareVersionDataInput = {
   readonly gitCommit?: Maybe<Scalars['String']>;
   readonly localPath?: Maybe<Scalars['String']>;
   readonly gitPullRequest?: Maybe<PullRequestInput>;
-  readonly gitRepository?: Maybe<GitRepositoryInput>;
 };
 
 export enum UserDefinesMode {
@@ -407,7 +406,7 @@ export type AvailableFirmwareTargetsQueryVariables = Exact<{
   gitCommit: Scalars['String'];
   localPath: Scalars['String'];
   gitPullRequest?: Maybe<PullRequestInput>;
-  gitRepo?: Maybe<GitRepositoryInput>;
+  gitRepository: GitRepositoryInput;
 }>;
 
 export type AvailableFirmwareTargetsQuery = {
@@ -452,6 +451,7 @@ export type AvailableMulticastDnsDevicesListQuery = {
 
 export type BuildFlashFirmwareMutationVariables = Exact<{
   input: BuildFlashFirmwareInput;
+  gitRepository: GitRepositoryInput;
 }>;
 
 export type BuildFlashFirmwareMutation = {
@@ -547,7 +547,7 @@ export type TargetDeviceOptionsQueryVariables = Exact<{
   gitCommit: Scalars['String'];
   localPath: Scalars['String'];
   gitPullRequest?: Maybe<PullRequestInput>;
-  gitRepository?: Maybe<GitRepositoryInput>;
+  gitRepository: GitRepositoryInput;
 }>;
 
 export type TargetDeviceOptionsQuery = { readonly __typename?: 'Query' } & {
@@ -740,7 +740,7 @@ export const AvailableFirmwareTargetsDocument = gql`
     $gitCommit: String!
     $localPath: String!
     $gitPullRequest: PullRequestInput
-    $gitRepo: GitRepositoryInput
+    $gitRepository: GitRepositoryInput!
   ) {
     availableFirmwareTargets(
       source: $source
@@ -749,7 +749,7 @@ export const AvailableFirmwareTargetsDocument = gql`
       gitCommit: $gitCommit
       localPath: $localPath
       gitPullRequest: $gitPullRequest
-      gitRepository: $gitRepo
+      gitRepository: $gitRepository
     ) {
       id
       name
@@ -782,7 +782,7 @@ export const AvailableFirmwareTargetsDocument = gql`
  *      gitCommit: // value for 'gitCommit'
  *      localPath: // value for 'localPath'
  *      gitPullRequest: // value for 'gitPullRequest'
- *      gitRepo: // value for 'gitRepo'
+ *      gitRepository: // value for 'gitRepository'
  *   },
  * });
  */
@@ -892,8 +892,11 @@ export type AvailableMulticastDnsDevicesListQueryResult = Apollo.QueryResult<
   AvailableMulticastDnsDevicesListQueryVariables
 >;
 export const BuildFlashFirmwareDocument = gql`
-  mutation buildFlashFirmware($input: BuildFlashFirmwareInput!) {
-    buildFlashFirmware(input: $input) {
+  mutation buildFlashFirmware(
+    $input: BuildFlashFirmwareInput!
+    $gitRepository: GitRepositoryInput!
+  ) {
+    buildFlashFirmware(input: $input, gitRepository: $gitRepository) {
       success
       errorType
       message
@@ -920,6 +923,7 @@ export type BuildFlashFirmwareMutationFn = Apollo.MutationFunction<
  * const [buildFlashFirmwareMutation, { data, loading, error }] = useBuildFlashFirmwareMutation({
  *   variables: {
  *      input: // value for 'input'
+ *      gitRepository: // value for 'gitRepository'
  *   },
  * });
  */
@@ -1240,7 +1244,7 @@ export const TargetDeviceOptionsDocument = gql`
     $gitCommit: String!
     $localPath: String!
     $gitPullRequest: PullRequestInput
-    $gitRepository: GitRepositoryInput
+    $gitRepository: GitRepositoryInput!
   ) {
     targetDeviceOptions(
       target: $target
