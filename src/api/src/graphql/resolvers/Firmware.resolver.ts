@@ -7,7 +7,7 @@ import {
   Root,
   Subscription,
 } from 'type-graphql';
-import { Inject, Service } from 'typedi';
+import { Service } from 'typedi';
 import UserDefine from '../../models/UserDefine';
 import BuildFlashFirmwareInput from '../inputs/BuildFlashFirmwareInput';
 import BuildFlashFirmwareResult from '../../models/BuildFlashFirmwareResult';
@@ -18,7 +18,6 @@ import FirmwareService, {
 import BuildProgressNotification from '../../models/BuildProgressNotification';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildLogUpdate from '../../models/BuildLogUpdate';
-import { ConfigToken, IConfig } from '../../config';
 import ClearPlatformioCoreDirResult from '../../models/ClearPlatformioCoreDirResult';
 import TargetDeviceOptionsArgs from '../args/TargetDeviceOptions';
 import UserDefinesBuilder from '../../services/UserDefinesBuilder';
@@ -26,6 +25,7 @@ import ClearFirmwareFilesResult from '../../models/ClearFirmwareFiles';
 import TargetsService from '../../services/Targets';
 import TargetArgs from '../args/Target';
 import Device from '../../models/Device';
+import GitRepository from '../inputs/GitRepositoryInput';
 
 @Service()
 @Resolver()
@@ -33,31 +33,35 @@ export default class FirmwareResolver {
   constructor(
     private firmwareService: FirmwareService,
     private userDefinesBuilder: UserDefinesBuilder,
-    private targetsService: TargetsService,
-    @Inject(ConfigToken) private config: IConfig
+    private targetsService: TargetsService
   ) {}
 
   @Query(() => [Device])
-  async availableFirmwareTargets(@Args() args: TargetArgs): Promise<Device[]> {
-    return this.targetsService.loadTargetsList(
-      this.config.git.owner,
-      this.config.git.repositoryName,
-      args
-    );
+  async availableFirmwareTargets(
+    @Args() args: TargetArgs,
+    @Arg('gitRepository') gitRepository: GitRepository
+  ): Promise<Device[]> {
+    return this.targetsService.loadTargetsList(args, gitRepository);
   }
 
   @Query(() => [UserDefine])
   async targetDeviceOptions(
-    @Args() args: TargetDeviceOptionsArgs
+    @Args() args: TargetDeviceOptionsArgs,
+    @Arg('gitRepository') gitRepository: GitRepository
   ): Promise<UserDefine[]> {
-    return this.userDefinesBuilder.build(args);
+    return this.userDefinesBuilder.build(args, gitRepository);
   }
 
   @Mutation(() => BuildFlashFirmwareResult)
   async buildFlashFirmware(
-    @Arg('input') input: BuildFlashFirmwareInput
+    @Arg('input') input: BuildFlashFirmwareInput,
+    @Arg('gitRepository') gitRepository: GitRepository
   ): Promise<BuildFlashFirmwareResult> {
-    return this.firmwareService.buildFlashFirmware(input, this.config.git);
+    return this.firmwareService.buildFlashFirmware(
+      input,
+      gitRepository.url,
+      gitRepository.srcFolder
+    );
   }
 
   @Mutation(() => ClearPlatformioCoreDirResult)

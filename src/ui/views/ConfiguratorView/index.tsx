@@ -67,6 +67,7 @@ import UserDefinesAdvisor from '../../components/UserDefinesAdvisor';
 import SerialDeviceSelect from '../../components/SerialDeviceSelect';
 import WifiDeviceSelect from '../../components/WifiDeviceSelect';
 import WifiDeviceList from '../../components/WifiDeviceList';
+import GitRepository from '../../models/GitRepository';
 
 export const validateFirmwareVersionData = (
   data: FirmwareVersionDataInput
@@ -144,7 +145,13 @@ enum ViewState {
   Compiling = 'https://xkcd.com/303/',
 }
 
-const ConfiguratorView: FunctionComponent = () => {
+interface ConfiguratorViewProps {
+  gitRepository: GitRepository;
+}
+
+const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
+  const { gitRepository } = props;
+
   const styles = useStyles();
 
   const [viewState, setViewState] = useState<ViewState>(
@@ -295,6 +302,13 @@ const ConfiguratorView: FunctionComponent = () => {
           gitCommit: firmwareVersionData.gitCommit!,
           localPath: firmwareVersionData.localPath!,
           gitPullRequest: firmwareVersionData.gitPullRequest,
+          gitRepository: {
+            url: gitRepository.url,
+            owner: gitRepository.owner,
+            repositoryName: gitRepository.repositoryName,
+            rawRepoUrl: gitRepository.rawRepoUrl,
+            srcFolder: gitRepository.srcFolder,
+          },
         },
       });
     }
@@ -347,6 +361,13 @@ const ConfiguratorView: FunctionComponent = () => {
           gitCommit: firmwareVersionData.gitCommit!,
           localPath: firmwareVersionData.localPath!,
           gitPullRequest: firmwareVersionData.gitPullRequest,
+          gitRepository: {
+            url: gitRepository.url,
+            owner: gitRepository.owner,
+            repositoryName: gitRepository.repositoryName,
+            rawRepoUrl: gitRepository.rawRepoUrl,
+            srcFolder: gitRepository.srcFolder,
+          },
         },
       });
     }
@@ -664,6 +685,13 @@ const ConfiguratorView: FunctionComponent = () => {
     buildFlashFirmwareMutation({
       variables: {
         input,
+        gitRepository: {
+          url: gitRepository.url,
+          owner: gitRepository.owner,
+          repositoryName: gitRepository.repositoryName,
+          rawRepoUrl: gitRepository.rawRepoUrl,
+          srcFolder: gitRepository.srcFolder,
+        },
       },
     });
     setViewState(ViewState.Compiling);
@@ -725,6 +753,7 @@ const ConfiguratorView: FunctionComponent = () => {
                 <FirmwareVersionForm
                   onChange={onFirmwareVersionData}
                   data={firmwareVersionData}
+                  gitRepository={gitRepository}
                 />
                 <ShowAlerts severity="error" messages={firmwareVersionErrors} />
               </CardContent>

@@ -16,7 +16,7 @@ export default class Device {
   @Field(() => [Target])
   targets: Target[];
 
-  @Field(() => [Target])
+  @Field(() => [UserDefineKey])
   userDefines: UserDefineKey[];
 
   @Field({ nullable: true })

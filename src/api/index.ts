@@ -87,10 +87,9 @@ export default class ApiServer {
       deviceService
     );
 
-    const rawRepoUrl = `https://raw.githubusercontent.com/${config.git.owner}/${config.git.repositoryName}`;
     Container.set(
       UserDefinesBuilder,
-      new UserDefinesBuilder(rawRepoUrl, logger, targetUserDefinesFactory)
+      new UserDefinesBuilder(logger, targetUserDefinesFactory)
     );
 
     Container.set(TargetsService, new TargetsService(logger, deviceService));

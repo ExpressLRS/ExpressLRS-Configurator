@@ -25,13 +25,6 @@ import { LoggerService } from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import PullRequest from '../../models/PullRequest';
 
-export interface GitRepo {
-  url: string;
-  cloneUrl: string;
-  owner: string;
-  repositoryName: string;
-}
-
 interface FirmwareVersionData {
   source: FirmwareSource;
   gitTag: string;
@@ -141,11 +134,12 @@ export default class FirmwareService {
 
   async buildFlashFirmware(
     params: BuildFlashFirmwareParams,
-    gitRepo: GitRepo
+    gitRepositoryUrl: string,
+    gitRepositorySrcFolder: string
   ): Promise<BuildFlashFirmwareResult> {
     this.logger?.log('received build firmware request', {
       params,
-      gitRepo,
+      gitRepositoryUrl,
     });
 
     if (this.mutex.isLocked()) {
@@ -244,21 +238,24 @@ export default class FirmwareService {
       switch (params.firmware.source) {
         case FirmwareSource.GitTag:
           const tagResult = await firmwareDownload.checkoutTag(
-            gitRepo.url,
+            gitRepositoryUrl,
+            gitRepositorySrcFolder,
             params.firmware.gitTag
           );
           firmwarePath = tagResult.path;
           break;
         case FirmwareSource.GitBranch:
           const branchResult = await firmwareDownload.checkoutBranch(
-            gitRepo.url,
+            gitRepositoryUrl,
+            gitRepositorySrcFolder,
             params.firmware.gitBranch
           );
           firmwarePath = branchResult.path;
           break;
         case FirmwareSource.GitCommit:
           const commitResult = await firmwareDownload.checkoutCommit(
-            gitRepo.url,
+            gitRepositoryUrl,
+            gitRepositorySrcFolder,
             params.firmware.gitCommit
           );
           firmwarePath = commitResult.path;
@@ -269,7 +266,8 @@ export default class FirmwareService {
         case FirmwareSource.GitPullRequest:
           if (params.firmware.gitPullRequest) {
             const pullRequestResult = await firmwareDownload.checkoutCommit(
-              gitRepo.url,
+              gitRepositoryUrl,
+              gitRepositorySrcFolder,
               params.firmware.gitPullRequest.headCommitHash
             );
             firmwarePath = pullRequestResult.path;
@@ -282,6 +280,7 @@ export default class FirmwareService {
       }
       this.logger?.log('firmware path', {
         firmwarePath,
+        gitRepositoryUrl,
       });
 
       await this.updateProgress(

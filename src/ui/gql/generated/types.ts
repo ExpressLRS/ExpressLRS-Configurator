@@ -33,6 +33,7 @@ export type Query = {
 };
 
 export type QueryAvailableFirmwareTargetsArgs = {
+  gitRepository: GitRepositoryInput;
   source?: Maybe<FirmwareSource>;
   gitTag?: Maybe<Scalars['String']>;
   gitBranch?: Maybe<Scalars['String']>;
@@ -42,6 +43,7 @@ export type QueryAvailableFirmwareTargetsArgs = {
 };
 
 export type QueryTargetDeviceOptionsArgs = {
+  gitRepository: GitRepositoryInput;
   target?: Maybe<Scalars['String']>;
   source?: Maybe<FirmwareSource>;
   gitTag?: Maybe<Scalars['String']>;
@@ -49,6 +51,26 @@ export type QueryTargetDeviceOptionsArgs = {
   gitCommit?: Maybe<Scalars['String']>;
   localPath?: Maybe<Scalars['String']>;
   gitPullRequest?: Maybe<PullRequestInput>;
+};
+
+export type QueryGitBranchesArgs = {
+  repository: Scalars['String'];
+  owner: Scalars['String'];
+};
+
+export type QueryGitTagsArgs = {
+  repository: Scalars['String'];
+  owner: Scalars['String'];
+};
+
+export type QueryReleasesArgs = {
+  repository: Scalars['String'];
+  owner: Scalars['String'];
+};
+
+export type QueryPullRequestsArgs = {
+  repository: Scalars['String'];
+  owner: Scalars['String'];
 };
 
 export type QueryCheckForUpdatesArgs = {
@@ -61,7 +83,7 @@ export type Device = {
   readonly name: Scalars['String'];
   readonly category: Scalars['String'];
   readonly targets: ReadonlyArray<Target>;
-  readonly userDefines: ReadonlyArray<Target>;
+  readonly userDefines: ReadonlyArray<UserDefineKey>;
   readonly wikiUrl?: Maybe<Scalars['String']>;
 };
 
@@ -78,36 +100,6 @@ export enum FlashingMethod {
   Stock_BL = 'Stock_BL',
   UART = 'UART',
   WIFI = 'WIFI',
-}
-
-export enum FirmwareSource {
-  GitTag = 'GitTag',
-  GitBranch = 'GitBranch',
-  GitCommit = 'GitCommit',
-  Local = 'Local',
-  GitPullRequest = 'GitPullRequest',
-}
-
-export type PullRequestInput = {
-  readonly title: Scalars['String'];
-  readonly id: Scalars['Float'];
-  readonly number: Scalars['Float'];
-  readonly headCommitHash: Scalars['String'];
-};
-
-export type UserDefine = {
-  readonly __typename?: 'UserDefine';
-  readonly type: UserDefineKind;
-  readonly key: UserDefineKey;
-  readonly enabled: Scalars['Boolean'];
-  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
-  readonly value?: Maybe<Scalars['String']>;
-};
-
-export enum UserDefineKind {
-  Boolean = 'Boolean',
-  Text = 'Text',
-  Enum = 'Enum',
 }
 
 export enum UserDefineKey {
@@ -149,6 +141,44 @@ export enum UserDefineKey {
   HOME_WIFI_PASSWORD = 'HOME_WIFI_PASSWORD',
   AUTO_WIFI_ON_BOOT = 'AUTO_WIFI_ON_BOOT',
   AUTO_WIFI_ON_INTERVAL = 'AUTO_WIFI_ON_INTERVAL',
+}
+
+export type GitRepositoryInput = {
+  readonly url: Scalars['String'];
+  readonly owner: Scalars['String'];
+  readonly repositoryName: Scalars['String'];
+  readonly rawRepoUrl: Scalars['String'];
+  readonly srcFolder: Scalars['String'];
+};
+
+export enum FirmwareSource {
+  GitTag = 'GitTag',
+  GitBranch = 'GitBranch',
+  GitCommit = 'GitCommit',
+  Local = 'Local',
+  GitPullRequest = 'GitPullRequest',
+}
+
+export type PullRequestInput = {
+  readonly title: Scalars['String'];
+  readonly id: Scalars['Float'];
+  readonly number: Scalars['Float'];
+  readonly headCommitHash: Scalars['String'];
+};
+
+export type UserDefine = {
+  readonly __typename?: 'UserDefine';
+  readonly type: UserDefineKind;
+  readonly key: UserDefineKey;
+  readonly enabled: Scalars['Boolean'];
+  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
+  readonly value?: Maybe<Scalars['String']>;
+};
+
+export enum UserDefineKind {
+  Boolean = 'Boolean',
+  Text = 'Text',
+  Enum = 'Enum',
 }
 
 export type Release = {
@@ -201,6 +231,7 @@ export type Mutation = {
 };
 
 export type MutationBuildFlashFirmwareArgs = {
+  gitRepository: GitRepositoryInput;
   input: BuildFlashFirmwareInput;
 };
 
@@ -375,6 +406,7 @@ export type AvailableFirmwareTargetsQueryVariables = Exact<{
   gitCommit: Scalars['String'];
   localPath: Scalars['String'];
   gitPullRequest?: Maybe<PullRequestInput>;
+  gitRepository: GitRepositoryInput;
 }>;
 
 export type AvailableFirmwareTargetsQuery = {
@@ -383,7 +415,7 @@ export type AvailableFirmwareTargetsQuery = {
   readonly availableFirmwareTargets: ReadonlyArray<
     { readonly __typename?: 'Device' } & Pick<
       Device,
-      'id' | 'name' | 'category' | 'wikiUrl'
+      'id' | 'name' | 'category' | 'wikiUrl' | 'userDefines'
     > & {
         readonly targets: ReadonlyArray<
           { readonly __typename?: 'Target' } & Pick<
@@ -419,6 +451,7 @@ export type AvailableMulticastDnsDevicesListQuery = {
 
 export type BuildFlashFirmwareMutationVariables = Exact<{
   input: BuildFlashFirmwareInput;
+  gitRepository: GitRepositoryInput;
 }>;
 
 export type BuildFlashFirmwareMutation = {
@@ -514,6 +547,7 @@ export type TargetDeviceOptionsQueryVariables = Exact<{
   gitCommit: Scalars['String'];
   localPath: Scalars['String'];
   gitPullRequest?: Maybe<PullRequestInput>;
+  gitRepository: GitRepositoryInput;
 }>;
 
 export type TargetDeviceOptionsQuery = { readonly __typename?: 'Query' } & {
@@ -537,14 +571,20 @@ export type DisconnectFromSerialDeviceMutation = {
   } & Pick<SerialPortDisconnectResult, 'success' | 'message'>;
 };
 
-export type GetBranchesQueryVariables = Exact<{ [key: string]: never }>;
+export type GetBranchesQueryVariables = Exact<{
+  owner: Scalars['String'];
+  repository: Scalars['String'];
+}>;
 
 export type GetBranchesQuery = { readonly __typename?: 'Query' } & Pick<
   Query,
   'gitBranches'
 >;
 
-export type GetPullRequestsQueryVariables = Exact<{ [key: string]: never }>;
+export type GetPullRequestsQueryVariables = Exact<{
+  owner: Scalars['String'];
+  repository: Scalars['String'];
+}>;
 
 export type GetPullRequestsQuery = { readonly __typename?: 'Query' } & {
   readonly pullRequests: ReadonlyArray<
@@ -555,7 +595,10 @@ export type GetPullRequestsQuery = { readonly __typename?: 'Query' } & {
   >;
 };
 
-export type GetReleasesQueryVariables = Exact<{ [key: string]: never }>;
+export type GetReleasesQueryVariables = Exact<{
+  owner: Scalars['String'];
+  repository: Scalars['String'];
+}>;
 
 export type GetReleasesQuery = { readonly __typename?: 'Query' } & {
   readonly releases: ReadonlyArray<
@@ -597,7 +640,10 @@ export type MulticastDnsMonitorUpdatesSubscription = {
     };
 };
 
-export type GetTagsQueryVariables = Exact<{ [key: string]: never }>;
+export type GetTagsQueryVariables = Exact<{
+  owner: Scalars['String'];
+  repository: Scalars['String'];
+}>;
 
 export type GetTagsQuery = { readonly __typename?: 'Query' } & Pick<
   Query,
@@ -694,6 +740,7 @@ export const AvailableFirmwareTargetsDocument = gql`
     $gitCommit: String!
     $localPath: String!
     $gitPullRequest: PullRequestInput
+    $gitRepository: GitRepositoryInput!
   ) {
     availableFirmwareTargets(
       source: $source
@@ -702,6 +749,7 @@ export const AvailableFirmwareTargetsDocument = gql`
       gitCommit: $gitCommit
       localPath: $localPath
       gitPullRequest: $gitPullRequest
+      gitRepository: $gitRepository
     ) {
       id
       name
@@ -711,6 +759,7 @@ export const AvailableFirmwareTargetsDocument = gql`
         flashingMethod
       }
       wikiUrl
+      userDefines
     }
   }
 `;
@@ -733,6 +782,7 @@ export const AvailableFirmwareTargetsDocument = gql`
  *      gitCommit: // value for 'gitCommit'
  *      localPath: // value for 'localPath'
  *      gitPullRequest: // value for 'gitPullRequest'
+ *      gitRepository: // value for 'gitRepository'
  *   },
  * });
  */
@@ -842,8 +892,11 @@ export type AvailableMulticastDnsDevicesListQueryResult = Apollo.QueryResult<
   AvailableMulticastDnsDevicesListQueryVariables
 >;
 export const BuildFlashFirmwareDocument = gql`
-  mutation buildFlashFirmware($input: BuildFlashFirmwareInput!) {
-    buildFlashFirmware(input: $input) {
+  mutation buildFlashFirmware(
+    $input: BuildFlashFirmwareInput!
+    $gitRepository: GitRepositoryInput!
+  ) {
+    buildFlashFirmware(input: $input, gitRepository: $gitRepository) {
       success
       errorType
       message
@@ -870,6 +923,7 @@ export type BuildFlashFirmwareMutationFn = Apollo.MutationFunction<
  * const [buildFlashFirmwareMutation, { data, loading, error }] = useBuildFlashFirmwareMutation({
  *   variables: {
  *      input: // value for 'input'
+ *      gitRepository: // value for 'gitRepository'
  *   },
  * });
  */
@@ -1190,6 +1244,7 @@ export const TargetDeviceOptionsDocument = gql`
     $gitCommit: String!
     $localPath: String!
     $gitPullRequest: PullRequestInput
+    $gitRepository: GitRepositoryInput!
   ) {
     targetDeviceOptions(
       target: $target
@@ -1199,6 +1254,7 @@ export const TargetDeviceOptionsDocument = gql`
       gitCommit: $gitCommit
       localPath: $localPath
       gitPullRequest: $gitPullRequest
+      gitRepository: $gitRepository
     ) {
       type
       key
@@ -1228,6 +1284,7 @@ export const TargetDeviceOptionsDocument = gql`
  *      gitCommit: // value for 'gitCommit'
  *      localPath: // value for 'localPath'
  *      gitPullRequest: // value for 'gitPullRequest'
+ *      gitRepository: // value for 'gitRepository'
  *   },
  * });
  */
@@ -1315,8 +1372,8 @@ export type DisconnectFromSerialDeviceMutationOptions = Apollo.BaseMutationOptio
   DisconnectFromSerialDeviceMutationVariables
 >;
 export const GetBranchesDocument = gql`
-  query getBranches {
-    gitBranches
+  query getBranches($owner: String!, $repository: String!) {
+    gitBranches(owner: $owner, repository: $repository)
   }
 `;
 
@@ -1332,11 +1389,13 @@ export const GetBranchesDocument = gql`
  * @example
  * const { data, loading, error } = useGetBranchesQuery({
  *   variables: {
+ *      owner: // value for 'owner'
+ *      repository: // value for 'repository'
  *   },
  * });
  */
 export function useGetBranchesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
+  baseOptions: Apollo.QueryHookOptions<
     GetBranchesQuery,
     GetBranchesQueryVariables
   >
@@ -1368,8 +1427,8 @@ export type GetBranchesQueryResult = Apollo.QueryResult<
   GetBranchesQueryVariables
 >;
 export const GetPullRequestsDocument = gql`
-  query getPullRequests {
-    pullRequests {
+  query getPullRequests($owner: String!, $repository: String!) {
+    pullRequests(owner: $owner, repository: $repository) {
       id
       number
       title
@@ -1390,11 +1449,13 @@ export const GetPullRequestsDocument = gql`
  * @example
  * const { data, loading, error } = useGetPullRequestsQuery({
  *   variables: {
+ *      owner: // value for 'owner'
+ *      repository: // value for 'repository'
  *   },
  * });
  */
 export function useGetPullRequestsQuery(
-  baseOptions?: Apollo.QueryHookOptions<
+  baseOptions: Apollo.QueryHookOptions<
     GetPullRequestsQuery,
     GetPullRequestsQueryVariables
   >
@@ -1428,8 +1489,8 @@ export type GetPullRequestsQueryResult = Apollo.QueryResult<
   GetPullRequestsQueryVariables
 >;
 export const GetReleasesDocument = gql`
-  query getReleases {
-    releases {
+  query getReleases($owner: String!, $repository: String!) {
+    releases(owner: $owner, repository: $repository) {
       tagName
       preRelease
     }
@@ -1448,11 +1509,13 @@ export const GetReleasesDocument = gql`
  * @example
  * const { data, loading, error } = useGetReleasesQuery({
  *   variables: {
+ *      owner: // value for 'owner'
+ *      repository: // value for 'repository'
  *   },
  * });
  */
 export function useGetReleasesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
+  baseOptions: Apollo.QueryHookOptions<
     GetReleasesQuery,
     GetReleasesQueryVariables
   >
@@ -1540,8 +1603,8 @@ export type MulticastDnsMonitorUpdatesSubscriptionHookResult = ReturnType<
 >;
 export type MulticastDnsMonitorUpdatesSubscriptionResult = Apollo.SubscriptionResult<MulticastDnsMonitorUpdatesSubscription>;
 export const GetTagsDocument = gql`
-  query getTags {
-    gitTags
+  query getTags($owner: String!, $repository: String!) {
+    gitTags(owner: $owner, repository: $repository)
   }
 `;
 
@@ -1557,11 +1620,13 @@ export const GetTagsDocument = gql`
  * @example
  * const { data, loading, error } = useGetTagsQuery({
  *   variables: {
+ *      owner: // value for 'owner'
+ *      repository: // value for 'repository'
  *   },
  * });
  */
 export function useGetTagsQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>
+  baseOptions: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<GetTagsQuery, GetTagsQueryVariables>(

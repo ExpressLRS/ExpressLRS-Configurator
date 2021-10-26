@@ -12,6 +12,7 @@ import SettingsView from './views/SettingsView';
 import LogsView from './views/LogsView';
 import SerialMonitorView from './views/SerialMonitorView';
 import SupportView from './views/SupportView';
+import { Config } from './config';
 
 export default function App() {
   return (
@@ -23,7 +24,9 @@ export default function App() {
             <Route exact path="/">
               <Redirect to="/configurator" />
             </Route>
-            <Route path="/configurator" component={ConfiguratorView} />
+            <Route path="/configurator">
+              <ConfiguratorView gitRepository={Config.expressLRSGit} />
+            </Route>
             <Route path="/settings" component={SettingsView} />
             <Route path="/logs" component={LogsView} />
             <Route path="/serial-monitor" component={SerialMonitorView} />

@@ -19,10 +19,14 @@ interface UserDefineFilters {
   gitPullRequest: PullRequest | null;
 }
 
+interface GitRepository {
+  rawRepoUrl: string;
+  srcFolder: string;
+}
+
 @Service()
 export default class UserDefinesBuilder {
   constructor(
-    private rawRepoUrl: string,
     private logger: LoggerService,
     private targetUserDefinesFactory: TargetUserDefinesFactory
   ) {}
@@ -44,7 +48,8 @@ export default class UserDefinesBuilder {
   }
 
   async loadUserDefinesTxt(
-    userDefineFilters: UserDefineFilters
+    userDefineFilters: UserDefineFilters,
+    gitRepository: GitRepository
   ): Promise<UserDefineKey[]> {
     this.logger?.log('loadUserDefinesTxt', {
       userDefineFilters,
@@ -69,19 +74,19 @@ export default class UserDefinesBuilder {
     switch (userDefineFilters.source) {
       case FirmwareSource.GitBranch:
         return fetch(
-          `${this.rawRepoUrl}/${userDefineFilters.gitBranch}/src/user_defines.txt`
+          `${gitRepository.rawRepoUrl}/${userDefineFilters.gitBranch}${gitRepository.srcFolder}/user_defines.txt`
         )
           .then(handleResponse)
           .then(this.extractCompatibleKeys);
       case FirmwareSource.GitCommit:
         return fetch(
-          `${this.rawRepoUrl}/${userDefineFilters.gitCommit}/src/user_defines.txt`
+          `${gitRepository.rawRepoUrl}/${userDefineFilters.gitCommit}${gitRepository.srcFolder}/user_defines.txt`
         )
           .then(handleResponse)
           .then(this.extractCompatibleKeys);
       case FirmwareSource.GitTag:
         return fetch(
-          `${this.rawRepoUrl}/${userDefineFilters.gitTag}/src/user_defines.txt`
+          `${gitRepository.rawRepoUrl}/${userDefineFilters.gitTag}${gitRepository.srcFolder}/user_defines.txt`
         )
           .then(handleResponse)
           .then(this.extractCompatibleKeys);
@@ -94,7 +99,7 @@ export default class UserDefinesBuilder {
         return this.extractCompatibleKeys(data);
       case FirmwareSource.GitPullRequest:
         return fetch(
-          `${this.rawRepoUrl}/${userDefineFilters.gitPullRequest?.headCommitHash}/src/user_defines.txt`
+          `${gitRepository.rawRepoUrl}/${userDefineFilters.gitPullRequest?.headCommitHash}${gitRepository.srcFolder}/user_defines.txt`
         )
           .then(handleResponse)
           .then(this.extractCompatibleKeys);
@@ -105,12 +110,15 @@ export default class UserDefinesBuilder {
     }
   }
 
-  async build(input: UserDefineFilters): Promise<UserDefine[]> {
+  async build(
+    input: UserDefineFilters,
+    gitRepository: GitRepository
+  ): Promise<UserDefine[]> {
     const availableKeys = this.targetUserDefinesFactory.build(input.target);
     if (input.source === FirmwareSource.Local) {
       return availableKeys;
     }
-    const compatibleKeys = await this.loadUserDefinesTxt(input);
+    const compatibleKeys = await this.loadUserDefinesTxt(input, gitRepository);
     if (compatibleKeys.length < 3) {
       throw new Error(
         `failed to parse compatible user define keys, list is too small: ${compatibleKeys}`

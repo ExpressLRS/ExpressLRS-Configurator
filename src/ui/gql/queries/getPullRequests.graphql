@@ -1,5 +1,11 @@
-query getPullRequests {
-  pullRequests {
+query getPullRequests (
+  $owner: String!,
+  $repository: String!,
+){
+  pullRequests (
+    owner: $owner,
+    repository: $repository
+  ){
     id
     number
     title

@@ -17,11 +17,6 @@ export interface IGitHubClient {
   loadPullRequests(owner: string, repository: string): Promise<PullRequest[]>;
 }
 
-/*
-  These releases are not save to use. We do not want anyone using RC1-RC3 tags by accident.
- */
-const tagsBlacklist = ['1.0.0-RC1', '1.0.0-RC2', '1.0.0-RC3'];
-
 @Service()
 export default class OctopusGitHubClient implements IGitHubClient {
   client: Octokit;
@@ -36,11 +31,7 @@ export default class OctopusGitHubClient implements IGitHubClient {
       repo: repository,
       per_page: 50,
     });
-    return response.data
-      .map((item) => item.name)
-      .filter((name) => {
-        return !tagsBlacklist.includes(name);
-      });
+    return response.data.map((item) => item.name);
   }
 
   async loadReleases(owner: string, repository: string): Promise<Release[]> {
@@ -49,14 +40,12 @@ export default class OctopusGitHubClient implements IGitHubClient {
       repo: repository,
       per_page: 100,
     });
-    return response.data
-      .map((item) => {
-        return {
-          tagName: item.tag_name,
-          preRelease: item.prerelease,
-        };
-      })
-      .filter((item) => !tagsBlacklist.includes(item.tagName));
+    return response.data.map((item) => {
+      return {
+        tagName: item.tag_name,
+        preRelease: item.prerelease,
+      };
+    });
   }
 
   async loadBranches(owner: string, repository: string): Promise<string[]> {

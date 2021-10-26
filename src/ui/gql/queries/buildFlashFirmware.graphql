@@ -1,5 +1,11 @@
-mutation buildFlashFirmware($input: BuildFlashFirmwareInput!) {
-  buildFlashFirmware(input: $input) {
+mutation buildFlashFirmware(
+  $input: BuildFlashFirmwareInput!,
+  $gitRepository: GitRepositoryInput!
+  ) {
+  buildFlashFirmware(
+    input: $input,
+    gitRepository: $gitRepository
+  ) {
     success
     errorType
     message

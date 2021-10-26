@@ -1,9 +1,11 @@
 import { Token } from 'typedi';
-import { GitRepo } from '../services/Firmware';
 
 export interface IConfig {
-  git: GitRepo;
-  configuratorGit: GitRepo;
+  configuratorGit: {
+    url: string;
+    owner: string;
+    repositoryName: string;
+  };
   firmwaresPath: string;
   PATH: string;
   env: NodeJS.ProcessEnv;

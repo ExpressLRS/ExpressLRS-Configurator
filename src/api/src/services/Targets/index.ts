@@ -7,15 +7,18 @@ import FirmwareSource from '../../models/enum/FirmwareSource';
 import TargetArgs from '../../graphql/args/Target';
 import { LoggerService } from '../../logger';
 import Device from '../../models/Device';
-import Target from '../../models/Target';
-import FlashingMethod from '../../models/enum/FlashingMethod';
 import DeviceService from '../Device';
+
+interface GitRepository {
+  owner: string;
+  repositoryName: string;
+  srcFolder: string;
+}
 
 export interface ITargets {
   loadTargetsList(
-    owner: string,
-    repository: string,
-    args: TargetArgs
+    args: TargetArgs,
+    gitRepository: GitRepository
   ): Promise<Device[]>;
 }
 
@@ -45,8 +48,9 @@ export default class TargetsService implements ITargets {
   }
 
   async loadTargetsFromGitHub(
-    owner: string,
-    repository: string,
+    gitRepositoryOwner: string,
+    gitRepositoryName: string,
+    gitRepositorySrcFolder: string,
     ref: string
   ): Promise<string[]> {
     if (!ref || ref.length === 0) {
@@ -55,9 +59,9 @@ export default class TargetsService implements ITargets {
 
     try {
       const response = await this.client.repos.getContent({
-        owner,
-        repo: repository,
-        path: 'src/targets',
+        owner: gitRepositoryOwner,
+        repo: gitRepositoryName,
+        path: `${gitRepositorySrcFolder}/targets`,
         ref,
       });
 
@@ -125,30 +129,32 @@ export default class TargetsService implements ITargets {
   }
 
   async loadTargetsList(
-    owner: string,
-    repository: string,
-    args: TargetArgs
+    args: TargetArgs,
+    gitRepository: GitRepository
   ): Promise<Device[]> {
     let availableTargets: string[] = [];
     switch (args.source) {
       case FirmwareSource.GitBranch:
         availableTargets = await this.loadTargetsFromGitHub(
-          owner,
-          repository,
+          gitRepository.owner,
+          gitRepository.repositoryName,
+          gitRepository.srcFolder,
           args.gitBranch
         );
         break;
       case FirmwareSource.GitCommit:
         availableTargets = await this.loadTargetsFromGitHub(
-          owner,
-          repository,
+          gitRepository.owner,
+          gitRepository.repositoryName,
+          gitRepository.srcFolder,
           args.gitCommit
         );
         break;
       case FirmwareSource.GitTag:
         availableTargets = await this.loadTargetsFromGitHub(
-          owner,
-          repository,
+          gitRepository.owner,
+          gitRepository.repositoryName,
+          gitRepository.srcFolder,
           args.gitTag
         );
         break;
@@ -158,8 +164,9 @@ export default class TargetsService implements ITargets {
       case FirmwareSource.GitPullRequest:
         if (args.gitPullRequest) {
           availableTargets = await this.loadTargetsFromGitHub(
-            owner,
-            repository,
+            gitRepository.owner,
+            gitRepository.repositoryName,
+            gitRepository.srcFolder,
             args.gitPullRequest.headCommitHash
           );
         }
