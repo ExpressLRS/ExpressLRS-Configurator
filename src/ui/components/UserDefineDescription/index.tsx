@@ -340,7 +340,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               <p>
                 The switch mode MUST match on the transmitter and all receivers
                 that you use with it. Do not mix switch modes. Older versions of
-                the firmware (prior to November 30th 2020) dit not check to make
+                the firmware (prior to November 30th 2020) did not check to make
                 sure the transmitter and receiver are using the same mode, so
                 the switch positions could be misinterpreted leading to
                 unexpected behaviour, possibly including unintentional arming.
