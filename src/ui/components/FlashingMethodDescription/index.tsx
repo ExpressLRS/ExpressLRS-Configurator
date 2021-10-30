@@ -1,27 +1,22 @@
 import React, { FunctionComponent, memo } from 'react';
-import { makeStyles, Tooltip } from '@material-ui/core';
-import QuestionIcon from '@material-ui/icons/Help';
+import { styled } from '@mui/material/styles';
+import { Tooltip } from '@mui/material';
+import QuestionIcon from '@mui/icons-material/Help';
 import { FlashingMethod } from '../../gql/generated/types';
 
-const useStyles = makeStyles(() => ({
-  root: {
+const PREFIX = 'FlashingMethodDescription';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  icon: `${PREFIX}-icon`,
+};
+
+const Root = styled('div')(() => ({
+  [`&.${classes.root}`]: {
     display: 'inline-block',
   },
-  tooltipRoot: {
-    maxWidth: '400px',
-  },
-  tooltipRootBig: {
-    maxWidth: '700px',
-  },
-  tooltip: {
-    paddingLeft: '1em',
-    paddingRight: '1em',
-    fontSize: '1.4em !important',
-    '& a': {
-      color: '#90caf9',
-    },
-  },
-  icon: {
+
+  [`& .${classes.icon}`]: {
     verticalAlign: 'middle',
     marginLeft: '5px',
     fontSize: '1.44em',
@@ -35,7 +30,6 @@ interface FlashingMethodDescriptionProps {
 
 const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProps> = memo(
   ({ flashingMethod, deviceWikiUrl }) => {
-    const styles = useStyles();
     const wikiUrl = (deviceWikiUrl ?? '').length > 0 ? deviceWikiUrl : null;
     const toText = (key: FlashingMethod) => {
       switch (key) {
@@ -188,20 +182,13 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
     };
     const desc = toText(flashingMethod);
     return (
-      <div className={styles.root}>
+      <Root className={classes.root}>
         {desc !== '' && (
-          <Tooltip
-            placement="top"
-            arrow
-            classes={{
-              tooltip: styles.tooltipRoot,
-            }}
-            title={<div className={styles.tooltip}>{desc}</div>}
-          >
-            <QuestionIcon className={styles.icon} />
+          <Tooltip placement="top" arrow title={<div>{desc}</div>}>
+            <QuestionIcon className={classes.icon} />
           </Tooltip>
         )}
-      </div>
+      </Root>
     );
   }
 );

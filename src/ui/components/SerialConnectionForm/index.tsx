@@ -1,4 +1,5 @@
-import { Button, Grid, makeStyles, TextField } from '@material-ui/core';
+import { Button, Grid, TextField } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import Omnibox, { Option } from '../Omnibox';
 import {
@@ -8,16 +9,26 @@ import {
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'SerialConnectionForm';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  loader: `${PREFIX}-loader`,
+  button: `${PREFIX}-button`,
+};
+
+const Root = styled('div')(({ theme }) => ({
+  [`&.${classes.root}`]: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
-  loader: {
+
+  [`& .${classes.loader}`]: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
-  button: {
+
+  [`& .${classes.button}`]: {
     paddingTop: '15px !important',
     paddingBottom: '15px !important',
   },
@@ -33,7 +44,6 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
   props
 ) => {
   const { onConnect, serialDevice, baudRate } = props;
-  const styles = useStyles();
 
   const { loading, data, error, previousData } = useAvailableDevicesListQuery({
     pollInterval: 1000,
@@ -124,7 +134,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
     }
   };
   return (
-    <div className={styles.root}>
+    <Root className={classes.root}>
       <Grid container spacing={2}>
         <Grid item xs={3}>
           <Omnibox
@@ -134,7 +144,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
             options={options}
             loading={loading}
           />
-          <Loader className={styles.loader} loading={loading} />
+          <Loader className={classes.loader} loading={loading} />
           <ShowAlerts severity="error" messages={error} />
         </Grid>
         <Grid item>
@@ -156,13 +166,13 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
             onClick={onSubmit}
             size="large"
             variant="contained"
-            className={styles.button}
+            className={classes.button}
           >
             Connect
           </Button>
         </Grid>
       </Grid>
-    </div>
+    </Root>
   );
 };
 

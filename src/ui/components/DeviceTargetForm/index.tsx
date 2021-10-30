@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
 import React, {
   FunctionComponent,
   useCallback,
@@ -10,12 +10,20 @@ import Omnibox from '../Omnibox';
 import { Device } from '../../gql/generated/types';
 import FlashingMethodOptions from '../FlashingMethodOptions';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'DeviceTargetForm';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  loader: `${PREFIX}-loader`,
+};
+
+const Root = styled('div')(({ theme }) => ({
+  [`& .${classes.root}`]: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
-  loader: {
+
+  [`& .${classes.loader}`]: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
@@ -31,8 +39,6 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
   props
 ) => {
   const { onChange, currentTarget, targetOptions } = props;
-
-  const styles = useStyles();
 
   interface Dictionary<T> {
     [Key: string]: T;
@@ -160,8 +166,8 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
   }, [targetsByCategoryAndDevice, selectedCategoryValue]);
 
   return (
-    <div>
-      <div className={styles.root}>
+    <Root>
+      <div className={classes.root}>
         <Omnibox
           title="Device category"
           currentValue={
@@ -173,7 +179,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
           options={categorySelectOptions}
         />
       </div>
-      <div className={styles.root}>
+      <div className={classes.root}>
         <Omnibox
           title="Device"
           currentValue={
@@ -202,7 +208,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
             }
           />
         )}
-    </div>
+    </Root>
   );
 };
 

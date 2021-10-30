@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { styled } from '@mui/material/styles';
 import {
   Alert,
   AlertTitle,
@@ -13,12 +14,11 @@ import {
   CardContent,
   Container,
   Divider,
-  makeStyles,
   Tooltip,
-} from '@material-ui/core';
-import SettingsIcon from '@material-ui/icons/Settings';
+} from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { ipcRenderer } from 'electron';
-import { NetworkWifi } from '@material-ui/icons';
+import { NetworkWifi } from '@mui/icons-material';
 import Header from '../../components/Header';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
@@ -66,6 +66,50 @@ import WifiDeviceSelect from '../../components/WifiDeviceSelect';
 import WifiDeviceList from '../../components/WifiDeviceList';
 import GitRepository from '../../models/GitRepository';
 
+const PREFIX = 'ConfiguratorView';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  main: `${PREFIX}-main`,
+  content: `${PREFIX}-content`,
+  button: `${PREFIX}-button`,
+  longBuildDurationWarning: `${PREFIX}-longBuildDurationWarning`,
+  buildResponse: `${PREFIX}-buildResponse`,
+  section: `${PREFIX}-section`,
+  cardSeparator: `${PREFIX}-cardSeparator`,
+};
+
+const Root = styled('main')(({ theme }) => ({
+  [`&.${classes.root}`]: {
+    display: 'flex',
+  },
+
+  [`& .${classes.main}`]: {
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
+  },
+
+  [`& .${classes.content}`]: {
+    flexGrow: 1,
+  },
+
+  [`& .${classes.button}`]: {
+    marginRight: `${theme.spacing(2)} !important`,
+  },
+
+  [`& .${classes.longBuildDurationWarning}`]: {
+    marginBottom: theme.spacing(1),
+  },
+
+  [`& .${classes.buildResponse}`]: {
+    marginBottom: theme.spacing(1),
+  },
+
+  [`& .${classes.cardSeparator}`]: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
 export const validateFirmwareVersionData = (
   data: FirmwareVersionDataInput
 ): Error[] => {
@@ -104,39 +148,6 @@ export const validateFirmwareVersionData = (
   return errors;
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  main: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(4),
-  },
-  content: {
-    flexGrow: 1,
-  },
-  button: {
-    marginRight: `${theme.spacing(2)} !important`,
-  },
-  longBuildDurationWarning: {
-    marginBottom: theme.spacing(1),
-  },
-  buildResponse: {
-    marginBottom: theme.spacing(1),
-  },
-  tooltip: {
-    paddingLeft: '1em',
-    paddingRight: '1em',
-    fontSize: '1.4em !important',
-    '& a': {
-      color: '#90caf9',
-    },
-  },
-  section: {
-    paddingTop: theme.spacing(4),
-  },
-}));
-
 enum ViewState {
   Configuration = 'CONFIGURATION',
   Compiling = 'https://xkcd.com/303/',
@@ -156,8 +167,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     networkDevices,
     onDeviceChange,
   } = props;
-
-  const styles = useStyles();
 
   const [viewState, setViewState] = useState<ViewState>(
     ViewState.Configuration
@@ -707,164 +716,170 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   }, [handleSelectedDeviceChange, selectedDevice]);
 
   return (
-    <main className={styles.root}>
+    <Root className={classes.root}>
       <Sidebar navigationEnabled={!buildInProgress} />
-      <div className={styles.content}>
+      <div className={classes.content}>
         <Header />
-        <Container className={styles.main}>
+        <Container className={classes.main}>
           {viewState === ViewState.Configuration && (
-            <Card>
-              <CardTitle icon={<SettingsIcon />} title="Firmware version" />
-              <Divider />
-              <CardContent>
-                <FirmwareVersionForm
-                  onChange={onFirmwareVersionData}
-                  data={firmwareVersionData}
-                  gitRepository={gitRepository}
-                />
-                <ShowAlerts severity="error" messages={firmwareVersionErrors} />
-              </CardContent>
-              <Divider />
-
-              <CardTitle icon={<SettingsIcon />} title="Target" />
-              <Divider />
-              <CardContent>
-                {!loadingTargets && (
-                  <DeviceTargetForm
-                    currentTarget={deviceTarget}
-                    onChange={onDeviceTarget}
-                    targetOptions={deviceTargets}
+            <>
+              <Card>
+                <CardTitle icon={<SettingsIcon />} title="Firmware version" />
+                <Divider />
+                <CardContent>
+                  <FirmwareVersionForm
+                    onChange={onFirmwareVersionData}
+                    data={firmwareVersionData}
+                    gitRepository={gitRepository}
                   />
-                )}
-                <Loader loading={loadingTargets} />
-                {luaScriptLocation.length > 0 && (
-                  <Button
-                    href={luaScriptLocation}
-                    target="_blank"
-                    size="small"
-                    download
-                  >
-                    Download LUA script
-                  </Button>
-                )}
-                <ShowAlerts severity="error" messages={deviceTargetErrors} />
-              </CardContent>
-              <Divider />
-
-              <CardTitle
-                icon={<SettingsIcon />}
-                title={
-                  <div ref={deviceOptionsRef}>
-                    Device options{' '}
-                    {deviceOptionsFormData.userDefinesMode ===
-                      UserDefinesMode.UserInterface &&
-                      deviceTarget !== null &&
-                      !loadingOptions && (
-                        <Tooltip
-                          placement="top"
-                          arrow
-                          title={
-                            <div className={styles.tooltip}>
-                              Reset device options to the recommended defaults
-                              on this device target. Except for your custom
-                              binding phrase.
-                            </div>
-                          }
-                        >
-                          <Button onClick={onResetToDefaults} size="small">
-                            Reset
-                          </Button>
-                        </Tooltip>
-                      )}
-                  </div>
-                }
-              />
-              <Divider />
-              <CardContent>
-                {!loadingOptions && (
-                  <DeviceOptionsForm
-                    target={deviceTarget}
-                    deviceOptions={deviceOptionsFormData}
-                    onChange={onUserDefines}
+                  <ShowAlerts
+                    severity="error"
+                    messages={firmwareVersionErrors}
                   />
-                )}
-                <ShowAlerts
-                  severity="error"
-                  messages={deviceOptionsResponseError}
-                />
-                <ShowAlerts
-                  severity="error"
-                  messages={deviceOptionsValidationErrors}
-                />
-                <Loader loading={loadingOptions} />
-              </CardContent>
-              <Divider />
+                </CardContent>
+                <Divider />
 
-              <CardTitle icon={<SettingsIcon />} title="Actions" />
-              <Divider />
-              <CardContent>
-                <UserDefinesAdvisor
-                  deviceOptionsFormData={deviceOptionsFormData}
-                />
-
-                <div>
-                  {serialPortRequired && (
-                    <SerialDeviceSelect
-                      serialDevice={serialDevice}
-                      onChange={onSerialDevice}
+                <CardTitle icon={<SettingsIcon />} title="Target" />
+                <Divider />
+                <CardContent>
+                  {!loadingTargets && (
+                    <DeviceTargetForm
+                      currentTarget={deviceTarget}
+                      onChange={onDeviceTarget}
+                      targetOptions={deviceTargets}
                     />
                   )}
-                  {wifiDeviceRequired && (
-                    <WifiDeviceSelect
-                      wifiDevice={wifiDevice}
-                      wifiDevices={Array.from(networkDevices.values()).filter(
-                        (item) => {
-                          return deviceTarget
-                            ?.toUpperCase()
-                            .startsWith(item.target.toUpperCase());
-                        }
-                      )}
-                      onChange={onWifiDevice}
-                    />
+                  <Loader loading={loadingTargets} />
+                  {luaScriptLocation.length > 0 && (
+                    <Button
+                      href={luaScriptLocation}
+                      target="_blank"
+                      size="small"
+                      download
+                    >
+                      Download LUA script
+                    </Button>
                   )}
-                  <Button
-                    className={styles.button}
-                    size="large"
-                    variant="contained"
-                    onClick={onBuild}
-                  >
-                    Build
-                  </Button>
-                  <Button
-                    className={styles.button}
-                    size="large"
-                    variant="contained"
-                    onClick={onBuildAndFlash}
-                  >
-                    Build & Flash
-                  </Button>
-                </div>
-              </CardContent>
+                  <ShowAlerts severity="error" messages={deviceTargetErrors} />
+                </CardContent>
+                <Divider />
 
-              {networkDevices.size > 0 && (
-                <div className={styles.section}>
-                  <Divider />
-                  <CardTitle icon={<NetworkWifi />} title="Network Devices" />
-                  <Divider />
-                  <CardContent>
-                    <div>
-                      <WifiDeviceList
-                        wifiDevices={Array.from(networkDevices.values())}
-                        onChange={(dnsDevice: MulticastDnsInformation) => {
-                          onDeviceChange(dnsDevice);
-                          handleSelectedDeviceChange(dnsDevice.name);
-                        }}
-                      />
+                <CardTitle
+                  icon={<SettingsIcon />}
+                  title={
+                    <div ref={deviceOptionsRef}>
+                      Device options{' '}
+                      {deviceOptionsFormData.userDefinesMode ===
+                        UserDefinesMode.UserInterface &&
+                        deviceTarget !== null &&
+                        !loadingOptions && (
+                          <Tooltip
+                            placement="top"
+                            arrow
+                            title={
+                              <div>
+                                Reset device options to the recommended defaults
+                                on this device target. Except for your custom
+                                binding phrase.
+                              </div>
+                            }
+                          >
+                            <Button onClick={onResetToDefaults} size="small">
+                              Reset
+                            </Button>
+                          </Tooltip>
+                        )}
                     </div>
-                  </CardContent>
-                </div>
-              )}
-            </Card>
+                  }
+                />
+                <Divider />
+                <CardContent>
+                  {!loadingOptions && (
+                    <DeviceOptionsForm
+                      target={deviceTarget}
+                      deviceOptions={deviceOptionsFormData}
+                      onChange={onUserDefines}
+                    />
+                  )}
+                  <ShowAlerts
+                    severity="error"
+                    messages={deviceOptionsResponseError}
+                  />
+                  <ShowAlerts
+                    severity="error"
+                    messages={deviceOptionsValidationErrors}
+                  />
+                  <Loader loading={loadingOptions} />
+                </CardContent>
+                <Divider />
+
+                <CardTitle icon={<SettingsIcon />} title="Actions" />
+                <Divider />
+                <CardContent>
+                  <UserDefinesAdvisor
+                    deviceOptionsFormData={deviceOptionsFormData}
+                  />
+
+                  <div>
+                    {serialPortRequired && (
+                      <SerialDeviceSelect
+                        serialDevice={serialDevice}
+                        onChange={onSerialDevice}
+                      />
+                    )}
+                    {wifiDeviceRequired && (
+                      <WifiDeviceSelect
+                        wifiDevice={wifiDevice}
+                        wifiDevices={Array.from(networkDevices.values()).filter(
+                          (item) => {
+                            return deviceTarget
+                              ?.toUpperCase()
+                              .startsWith(item.target.toUpperCase());
+                          }
+                        )}
+                        onChange={onWifiDevice}
+                      />
+                    )}
+                    <Button
+                      className={classes.button}
+                      size="large"
+                      variant="contained"
+                      onClick={onBuild}
+                    >
+                      Build
+                    </Button>
+                    <Button
+                      className={classes.button}
+                      size="large"
+                      variant="contained"
+                      onClick={onBuildAndFlash}
+                    >
+                      Build & Flash
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className={classes.cardSeparator}>
+                {networkDevices.size > 0 && (
+                  <div className={classes.section}>
+                    <Divider />
+                    <CardTitle icon={<NetworkWifi />} title="Network Devices" />
+                    <Divider />
+                    <CardContent>
+                      <div>
+                        <WifiDeviceList
+                          wifiDevices={Array.from(networkDevices.values())}
+                          onChange={(dnsDevice: MulticastDnsInformation) => {
+                            onDeviceChange(dnsDevice);
+                            handleSelectedDeviceChange(dnsDevice.name);
+                          }}
+                        />
+                      </div>
+                    </CardContent>
+                  </div>
+                )}
+              </Card>
+            </>
           )}
 
           {viewState === ViewState.Compiling && (
@@ -891,7 +906,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   <Divider />
                   <CardContent>
                     {longBuildDurationWarning && (
-                      <div className={styles.longBuildDurationWarning}>
+                      <div className={classes.longBuildDurationWarning}>
                         <ShowAlerts
                           severity="warning"
                           messages="Sometimes builds take at least a few minutes. It is normal, especially for the first time builds."
@@ -908,7 +923,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   <CardTitle icon={<SettingsIcon />} title="Result" />
                   <Divider />
                   <CardContent>
-                    <div className={styles.buildResponse}>
+                    <div className={classes.buildResponse}>
                       <BuildResponse response={response?.buildFlashFirmware} />
                     </div>
                     {response?.buildFlashFirmware?.success &&
@@ -930,7 +945,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   <Divider />
                   <CardContent>
                     <Button
-                      className={styles.button}
+                      className={classes.button}
                       color="primary"
                       size="large"
                       variant="contained"
@@ -940,7 +955,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     </Button>
 
                     <Button
-                      className={styles.button}
+                      className={classes.button}
                       size="large"
                       variant="contained"
                       onClick={onBuildAndFlash}
@@ -954,7 +969,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           )}
         </Container>
       </div>
-    </main>
+    </Root>
   );
 };
 

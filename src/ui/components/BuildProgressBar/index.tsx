@@ -1,13 +1,20 @@
 import React, { FunctionComponent, memo } from 'react';
-import { LinearProgress, makeStyles } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { LinearProgress } from '@mui/material';
 import {
   BuildFirmwareStep,
   BuildJobType,
   BuildProgressNotification,
 } from '../../gql/generated/types';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'BuildProgressBar';
+
+const classes = {
+  root: `${PREFIX}-root`,
+};
+
+const StyledLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  [`&.${classes.root}`]: {
     height: 12,
     marginTop: `${theme.spacing(1)} !important`,
     marginBottom: `${theme.spacing(2)} !important`,
@@ -22,7 +29,6 @@ interface BuildProgressBarProps {
 
 const BuildProgressBar: FunctionComponent<BuildProgressBarProps> = memo(
   ({ inProgress, jobType, progressNotification }) => {
-    const styles = useStyles();
     const toProgressValue = (
       notification: BuildProgressNotification | null
     ): number => {
@@ -68,8 +74,8 @@ const BuildProgressBar: FunctionComponent<BuildProgressBarProps> = memo(
       return 100;
     };
     return (
-      <LinearProgress
-        className={styles.root}
+      <StyledLinearProgress
+        className={classes.root}
         variant="determinate"
         value={toProgressValue(progressNotification)}
       />

@@ -4,11 +4,11 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  makeStyles,
   Tab,
   Tabs,
   TextField,
-} from '@material-ui/core';
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
 import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import debounce from 'lodash.debounce';
@@ -27,29 +27,48 @@ import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
 import ApplicationStorage from '../../storage';
 import GitRepository from '../../models/GitRepository';
 
-const useStyles = makeStyles((theme) => ({
-  tabs: {
+const PREFIX = 'FirmwareVersionForm';
+
+const classes = {
+  tabs: `${PREFIX}-tabs`,
+  dangerZone: `${PREFIX}-dangerZone`,
+  tabContents: `${PREFIX}-tabContents`,
+  loader: `${PREFIX}-loader`,
+  preReleaseCheckbox: `${PREFIX}-preReleaseCheckbox`,
+  chooseFolderButton: `${PREFIX}-chooseFolderButton`,
+  firmwareVersionAlert: `${PREFIX}-firmwareVersionAlert`,
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')(({ theme }) => ({
+  [`& .${classes.tabs}`]: {
     marginBottom: theme.spacing(2),
   },
-  dangerZone: {
+
+  [`& .${classes.dangerZone}`]: {
     marginBottom: theme.spacing(2),
   },
-  tabContents: {
+
+  [`& .${classes.tabContents}`]: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
   },
-  loader: {
+
+  [`& .${classes.loader}`]: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
   },
-  preReleaseCheckbox: {
+
+  [`& .${classes.preReleaseCheckbox}`]: {
     marginLeft: theme.spacing(0),
     marginBottom: theme.spacing(2),
   },
-  chooseFolderButton: {
+
+  [`& .${classes.chooseFolderButton}`]: {
     marginTop: `${theme.spacing(1)} !important`,
   },
-  firmwareVersionAlert: {
+
+  [`& .${classes.firmwareVersionAlert}`]: {
     marginTop: theme.spacing(2),
   },
 }));
@@ -64,7 +83,6 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   props
 ) => {
   const { onChange, data, gitRepository } = props;
-  const styles = useStyles();
 
   const [firmwareSource, setFirmwareSource] = useState<FirmwareSource>(
     data?.source || FirmwareSource.GitTag
@@ -378,9 +396,9 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   }, [gitPullRequests]);
 
   return (
-    <>
+    <Root>
       <Tabs
-        className={styles.tabs}
+        className={classes.tabs}
         defaultValue={FirmwareSource.GitTag}
         value={firmwareSource}
         onChange={handleFirmwareSourceChange}
@@ -391,14 +409,13 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         <Tab label="Local" value={FirmwareSource.Local} />
         <Tab label="Git Pull Request" value={FirmwareSource.GitPullRequest} />
       </Tabs>
-
       {firmwareSource === FirmwareSource.GitTag && gitTags !== undefined && (
         <>
-          <div className={styles.tabContents}>
+          <div className={classes.tabContents}>
             {!loading && (
               <>
                 <FormControlLabel
-                  className={styles.preReleaseCheckbox}
+                  className={classes.preReleaseCheckbox}
                   control={
                     <Checkbox
                       checked={showPreReleases}
@@ -421,7 +438,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
                   gitTagOptions.length > 0 &&
                   gitTagOptions[0]?.value !== currentGitTag && (
                     <Alert
-                      className={styles.firmwareVersionAlert}
+                      className={classes.firmwareVersionAlert}
                       severity="info"
                     >
                       There is a newer version of the firmware available
@@ -432,16 +449,15 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
           </div>
         </>
       )}
-
       {firmwareSource === FirmwareSource.GitBranch &&
         gitBranches !== undefined && (
           <>
-            <Alert severity="warning" className={styles.dangerZone}>
+            <Alert severity="warning" className={classes.dangerZone}>
               <AlertTitle>DANGER ZONE</AlertTitle>
               Use these sources only if you know what you are doing or was
               instructed by project developers
             </Alert>
-            <div className={styles.tabContents}>
+            <div className={classes.tabContents}>
               {!loading && (
                 <Omnibox
                   title="Git branches"
@@ -457,15 +473,14 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
             </div>
           </>
         )}
-
       {firmwareSource === FirmwareSource.GitCommit && (
         <>
-          <Alert severity="warning" className={styles.dangerZone}>
+          <Alert severity="warning" className={classes.dangerZone}>
             <AlertTitle>DANGER ZONE</AlertTitle>
             Use these sources only if you know what you are doing or was
             instructed by project developers
           </Alert>
-          <div className={styles.tabContents}>
+          <div className={classes.tabContents}>
             <TextField
               id="git-commit-hash"
               label="Git commit hash"
@@ -476,15 +491,14 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
           </div>
         </>
       )}
-
       {firmwareSource === FirmwareSource.Local && (
         <>
-          <Alert severity="warning" className={styles.dangerZone}>
+          <Alert severity="warning" className={classes.dangerZone}>
             <AlertTitle>DANGER ZONE</AlertTitle>
             Use these sources only if you know what you are doing or was
             instructed by project developers
           </Alert>
-          <div className={styles.tabContents}>
+          <div className={classes.tabContents}>
             <TextField
               id="local-path"
               label="Local path"
@@ -497,7 +511,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
               color="secondary"
               size="small"
               variant="contained"
-              className={styles.chooseFolderButton}
+              className={classes.chooseFolderButton}
               onClick={onChooseFolder}
             >
               Choose folder
@@ -505,16 +519,15 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
           </div>
         </>
       )}
-
       {firmwareSource === FirmwareSource.GitPullRequest &&
         gitPullRequests !== undefined && (
           <>
-            <Alert severity="warning" className={styles.dangerZone}>
+            <Alert severity="warning" className={classes.dangerZone}>
               <AlertTitle>DANGER ZONE</AlertTitle>
               Use these sources only if you know what you are doing or was
               instructed by project developers
             </Alert>
-            <div className={styles.tabContents}>
+            <div className={classes.tabContents}>
               {!loading && (
                 <Omnibox
                   title="Git pull Requests"
@@ -531,12 +544,11 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
             </div>
           </>
         )}
-
       <Loader loading={loading} />
       <ShowAlerts severity="error" messages={branchesError} />
       <ShowAlerts severity="error" messages={tagsError} />
       <ShowAlerts severity="error" messages={pullRequestsError} />
-    </>
+    </Root>
   );
 };
 export default FirmwareVersionForm;

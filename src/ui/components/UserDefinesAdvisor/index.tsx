@@ -1,22 +1,28 @@
 import React, { FunctionComponent } from 'react';
-import { Alert, makeStyles } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Alert } from '@mui/material';
 import { DeviceOptionsFormData } from '../DeviceOptionsForm';
 import { UserDefineKey, UserDefinesMode } from '../../gql/generated/types';
+
+const PREFIX = 'UserDefinesAdvisor';
+
+const classes = {
+  container: `${PREFIX}-container`,
+};
+
+const Root = styled('div')(({ theme }) => ({
+  [`& .${classes.container}`]: {
+    marginBottom: theme.spacing(2),
+  },
+}));
 
 interface UserDefinesAdvisorProps {
   deviceOptionsFormData: DeviceOptionsFormData;
 }
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    marginBottom: theme.spacing(2),
-  },
-}));
-
 const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
   deviceOptionsFormData,
 }) => {
-  const styles = useStyles();
   const messages: string[] = [];
   if (deviceOptionsFormData.userDefinesMode === UserDefinesMode.UserInterface) {
     const isUserDefine = (
@@ -51,9 +57,9 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
     }
   }
   return (
-    <div>
+    <Root>
       {messages.length > 0 && (
-        <div className={styles.container}>
+        <div className={classes.container}>
           {messages.map((message, idx) => (
             <Alert key={idx} severity="warning">
               {message}
@@ -61,7 +67,7 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
           ))}
         </div>
       )}
-    </div>
+    </Root>
   );
 };
 

@@ -1,24 +1,31 @@
 import React, { FunctionComponent, memo } from 'react';
-import { Alert, makeStyles } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
+import { Alert } from '@mui/material';
 import {
   BuildFirmwareStep,
   BuildProgressNotification,
   BuildProgressNotificationType,
 } from '../../gql/generated/types';
 
-interface BuildNotificationsListProps {
-  notifications: BuildProgressNotification[];
-}
+const PREFIX = 'BuildNotificationsList';
 
-const useStyles = makeStyles((theme) => ({
-  notification: {
+const classes = {
+  notification: `${PREFIX}-notification`,
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')(({ theme }) => ({
+  [`& .${classes.notification}`]: {
     marginBottom: `${theme.spacing(1)} !important`,
   },
 }));
 
+interface BuildNotificationsListProps {
+  notifications: BuildProgressNotification[];
+}
+
 const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = memo(
   ({ notifications }) => {
-    const styles = useStyles();
     const toSeverity = (
       item: BuildProgressNotificationType
     ): 'error' | 'info' | 'success' => {
@@ -51,12 +58,12 @@ const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = m
       }
     };
     return (
-      <>
+      <Root>
         {notifications.map((item, idx) => {
           return (
             <React.Fragment key={`${idx}-${item.step}`}>
               <Alert
-                className={styles.notification}
+                className={classes.notification}
                 severity={toSeverity(item.type)}
               >
                 {item?.step !== undefined &&
@@ -66,7 +73,7 @@ const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = m
             </React.Fragment>
           );
         })}
-      </>
+      </Root>
     );
   }
 );

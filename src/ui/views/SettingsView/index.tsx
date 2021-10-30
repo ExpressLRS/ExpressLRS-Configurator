@@ -3,36 +3,45 @@ import {
   CardContent,
   Container,
   Divider,
-  makeStyles,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
 import React, { FunctionComponent } from 'react';
-import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import CardTitle from '../../components/CardTitle';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'SettingsView';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  main: `${PREFIX}-main`,
+  content: `${PREFIX}-content`,
+};
+
+const Root = styled('main')(({ theme }) => ({
+  [`&.${classes.root}`]: {
     display: 'flex',
   },
-  main: {
+
+  [`& .${classes.main}`]: {
     marginTop: theme.spacing(4),
     marginBottom: theme.spacing(4),
   },
-  content: {
+
+  [`& .${classes.content}`]: {
     flexGrow: 1,
   },
 }));
 
 const SettingsView: FunctionComponent = () => {
-  const styles = useStyles();
   return (
-    <main className={styles.root}>
+    <Root className={classes.root}>
       <Sidebar navigationEnabled />
-      <div className={styles.content}>
+      <div className={classes.content}>
         <Header />
-        <Container className={styles.main}>
+        <Container className={classes.main}>
           <Card>
             <CardTitle icon={<SettingsIcon />} title="Settings" />
             <Divider />
@@ -46,7 +55,7 @@ const SettingsView: FunctionComponent = () => {
           </Card>
         </Container>
       </div>
-    </main>
+    </Root>
   );
 };
 

@@ -1,7 +1,7 @@
-import { Autocomplete, TextField } from '@material-ui/core';
+import { Autocomplete, TextField } from '@mui/material';
 import parse from 'autosuggest-highlight/parse';
 import React, { FunctionComponent } from 'react';
-import { FilterOptionsState } from '@material-ui/core/useAutocomplete/useAutocomplete';
+import { FilterOptionsState } from '@mui/material/useAutocomplete';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { QuickScore } from 'quick-score';
@@ -76,7 +76,7 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
       loading={loading}
       disabled={disabled}
       getOptionLabel={(option) => option.label}
-      getOptionSelected={(option, otherOption) =>
+      isOptionEqualToValue={(option, otherOption) =>
         option.value === otherOption.value
       }
       openOnFocus

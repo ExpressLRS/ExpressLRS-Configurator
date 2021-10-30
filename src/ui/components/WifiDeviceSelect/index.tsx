@@ -1,4 +1,5 @@
-import { makeStyles, Tab, Tabs, TextField } from '@material-ui/core';
+import { Tab, Tabs, TextField } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import React, {
   FunctionComponent,
   useCallback,
@@ -9,14 +10,24 @@ import React, {
 import Omnibox, { Option } from '../Omnibox';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'WifiDeviceSelect';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  tabs: `${PREFIX}-tabs`,
+  inner: `${PREFIX}-inner`,
+};
+
+const Root = styled('div')(({ theme }) => ({
+  [`&.${classes.root}`]: {
     marginBottom: theme.spacing(2),
   },
-  tabs: {
+
+  [`& .${classes.tabs}`]: {
     marginBottom: theme.spacing(2),
   },
-  inner: {
+
+  [`& .${classes.inner}`]: {
     display: 'flex',
     alignItems: 'center',
   },
@@ -35,7 +46,6 @@ enum WifiSourceType {
 
 const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   const { wifiDevice, wifiDevices, onChange } = props;
-  const styles = useStyles();
 
   const options = useMemo(() => {
     const result = wifiDevices.map((target) => {
@@ -115,9 +125,9 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   );
 
   return (
-    <div className={styles.root}>
+    <Root className={classes.root}>
       <Tabs
-        className={styles.tabs}
+        className={classes.tabs}
         defaultValue={WifiSourceType.LIST}
         value={wifiSource}
         onChange={handleWifiSourceChange}
@@ -126,7 +136,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
         <Tab label="Manual" value={WifiSourceType.MANUAL} />
       </Tabs>
       {wifiSource === WifiSourceType.LIST && (
-        <div className={styles.inner}>
+        <div className={classes.inner}>
           <Omnibox
             title="WiFi Device Selection"
             currentValue={
@@ -150,7 +160,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
           />
         </div>
       )}
-    </div>
+    </Root>
   );
 };
 

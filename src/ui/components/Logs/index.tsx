@@ -1,14 +1,22 @@
 import React, {FunctionComponent, memo, useEffect, useRef} from 'react';
-import {makeStyles} from '@material-ui/core';
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles(() => ({
-  root: {
+const PREFIX = 'Logs';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  logs: `${PREFIX}-logs`
+};
+
+const Root = styled('div')(() => ({
+  [`&.${classes.root}`]: {
     minHeight: '500px',
     maxHeight: '500px',
     overflowY: 'auto',
     overflowX: 'hidden',
   },
-  logs: {
+
+  [`& .${classes.logs}`]: {
     whiteSpace: 'pre-wrap',
     wordWrap: 'break-word',
   }
@@ -19,7 +27,7 @@ interface LogsProps {
 }
 
 const Logs: FunctionComponent<LogsProps> = memo(({data}) => {
-  const styles = useStyles();
+
   const container = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (container.current !== null) {
@@ -27,12 +35,12 @@ const Logs: FunctionComponent<LogsProps> = memo(({data}) => {
     }
   }, [data]);
   return (
-    <div ref={container} className={styles.root}>
-      <pre className={styles.logs}>
+    <Root ref={container} className={classes.root}>
+      <pre className={classes.logs}>
         <code>{data}</code>
       </pre>
-    </div>
-  )
+    </Root>
+  );
 });
 
 export default Logs;

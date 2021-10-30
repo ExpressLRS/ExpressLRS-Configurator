@@ -1,11 +1,11 @@
 import {
-  makeStyles,
   FormControl,
   FormControlLabel,
   Radio,
   RadioGroup,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
 import React, {
   FunctionComponent,
   useCallback,
@@ -15,22 +15,36 @@ import React, {
 import { Device, Target } from '../../gql/generated/types';
 import FlashingMethodDescription from '../FlashingMethodDescription';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'FlashingMethodOptions';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  flashingMethods: `${PREFIX}-flashingMethods`,
+  radioControl: `${PREFIX}-radioControl`,
+  radio: `${PREFIX}-radio`,
+  categoryTitle: `${PREFIX}-categoryTitle`,
+};
+
+const Root = styled('div')(({ theme }) => ({
+  [`&.${classes.root}`]: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
-  flashingMethods: {
+
+  [`& .${classes.flashingMethods}`]: {
     marginTop: theme.spacing(1),
     padding: theme.spacing(0, 0, 0, 1),
   },
-  radioControl: {
+
+  [`& .${classes.radioControl}`]: {
     marginRight: `${theme.spacing(4)} !important`,
   },
-  radio: {
+
+  [`& .${classes.radio}`]: {
     marginRight: `${theme.spacing(1)} !important`,
   },
-  categoryTitle: {
+
+  [`& .${classes.categoryTitle}`]: {
     marginBottom: theme.spacing(1),
   },
 }));
@@ -45,8 +59,6 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   props
 ) => {
   const { onChange, currentTarget, currentDevice } = props;
-
-  const styles = useStyles();
 
   const targetMappingsSorted = useMemo(
     () =>
@@ -109,21 +121,21 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
         <FormControlLabel
           key={targetMapping.name}
           value={targetMapping.name}
-          className={styles.radioControl}
-          control={<Radio className={styles.radio} color="primary" />}
+          className={classes.radioControl}
+          control={<Radio className={classes.radio} color="primary" />}
           label={label}
         />
       );
     },
-    [currentDevice?.wikiUrl, styles.radio, styles.radioControl]
+    [currentDevice?.wikiUrl, classes.radio, classes.radioControl]
   );
 
   return (
-    <div className={styles.root}>
-      <Typography variant="h6" className={styles.categoryTitle}>
+    <Root className={classes.root}>
+      <Typography variant="h6" className={classes.categoryTitle}>
         Flashing Method
       </Typography>
-      <FormControl component="fieldset" className={styles.flashingMethods}>
+      <FormControl component="fieldset" className={classes.flashingMethods}>
         <RadioGroup
           row
           value={currentTarget}
@@ -135,7 +147,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
           })}
         </RadioGroup>
       </FormControl>
-    </div>
+    </Root>
   );
 };
 

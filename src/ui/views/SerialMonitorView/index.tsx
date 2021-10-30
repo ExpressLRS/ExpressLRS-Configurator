@@ -1,13 +1,7 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  Container,
-  Divider,
-  makeStyles,
-} from '@material-ui/core';
+import { Button, Card, CardContent, Container, Divider } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
-import DvrIcon from '@material-ui/icons/Dvr';
+import DvrIcon from '@mui/icons-material/Dvr';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import CardTitle from '../../components/CardTitle';
@@ -24,18 +18,30 @@ import Loader from '../../components/Loader';
 import ShowAlerts from '../../components/ShowAlerts';
 import Logs from '../../components/Logs';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'SerialMonitorView';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  main: `${PREFIX}-main`,
+  content: `${PREFIX}-content`,
+  disconnectButton: `${PREFIX}-disconnectButton`,
+};
+
+const Root = styled('main')(({ theme }) => ({
+  [`&.${classes.root}`]: {
     display: 'flex',
   },
-  main: {
+
+  [`& .${classes.main}`]: {
     marginTop: theme.spacing(4),
     marginBottom: theme.spacing(4),
   },
-  content: {
+
+  [`& .${classes.content}`]: {
     flexGrow: 1,
   },
-  disconnectButton: {
+
+  [`& .${classes.disconnectButton}`]: {
     marginBottom: `${theme.spacing(4)} !important`,
   },
 }));
@@ -46,7 +52,6 @@ enum ViewState {
 }
 
 const SerialMonitorView: FunctionComponent = () => {
-  const styles = useStyles();
   const [viewState, setViewState] = useState<ViewState>(
     ViewState.ConnectionConfig
   );
@@ -129,11 +134,11 @@ const SerialMonitorView: FunctionComponent = () => {
       .catch(() => {});
   };
   return (
-    <main className={styles.root}>
+    <Root className={classes.root}>
       <Sidebar navigationEnabled />
-      <div className={styles.content}>
+      <div className={classes.content}>
         <Header />
-        <Container className={styles.main}>
+        <Container className={classes.main}>
           <Card>
             <CardTitle icon={<DvrIcon />} title="Serial Monitor" />
             <Divider />
@@ -163,7 +168,7 @@ const SerialMonitorView: FunctionComponent = () => {
                     color="secondary"
                     size="large"
                     variant="contained"
-                    className={styles.disconnectButton}
+                    className={classes.disconnectButton}
                   >
                     Disconnect
                   </Button>
@@ -175,7 +180,7 @@ const SerialMonitorView: FunctionComponent = () => {
           </Card>
         </Container>
       </div>
-    </main>
+    </Root>
   );
 };
 
