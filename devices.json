@@ -34,7 +34,8 @@
         "HOME_WIFI_PASSWORD",
         "UNLOCK_HIGHER_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "BETAFPV 900 MHz",
@@ -71,7 +72,8 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "BETAFPV 2.4 GHz",
@@ -105,7 +107,8 @@
         "WS2812_IS_GRB",
         "UNLOCK_HIGHER_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv2400/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv2400/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "BETAFPV 2.4 GHz",
@@ -140,7 +143,8 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv2400/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv2400/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Matek 2.4 GHz",
@@ -175,7 +179,8 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-matek2400/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-matek2400/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Frsky R9",
@@ -186,7 +191,7 @@
           "name": "Frsky_TX_R9M_via_STLINK"
         },
         {
-          "flashingMethod": "stock_BL",
+          "flashingMethod": "Stock_BL",
           "name": "Frsky_TX_R9M_via_stock_BL"
         },
         {
@@ -214,7 +219,8 @@
         "R9M_UNLOCK_HIGHER_POWER",
         "UNLOCK_HIGHER_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Frsky R9",
@@ -225,7 +231,7 @@
           "name": "Frsky_TX_R9M_LITE_via_STLINK"
         },
         {
-          "flashingMethod": "stock_BL",
+          "flashingMethod": "Stock_BL",
           "name": "Frsky_TX_R9M_LITE_via_stock_BL"
         }
       ],
@@ -245,7 +251,8 @@
         "DISABLE_STARTUP_BEEP",
         "USE_DYNAMIC_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Frsky R9",
@@ -273,7 +280,8 @@
         "DISABLE_STARTUP_BEEP",
         "USE_DYNAMIC_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Frsky R9",
@@ -302,7 +310,8 @@
         "USE_R9MM_R9MINI_SBUS",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Frsky R9",
@@ -331,7 +340,8 @@
         "USE_DIVERSITY",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Frsky R9",
@@ -359,7 +369,8 @@
         "LOCK_ON_FIRST_CONNECTION",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Frsky R9",
@@ -388,7 +399,8 @@
         "USE_DIVERSITY",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Frsky R9",
@@ -416,7 +428,8 @@
         "LOCK_ON_FIRST_CONNECTION",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Jumper R900",
@@ -444,7 +457,8 @@
         "LOCK_ON_FIRST_CONNECTION",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-jumper900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-jumper900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Happymodel 2.4 GHz",
@@ -477,7 +491,8 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Happymodel 2.4 GHz",
@@ -510,7 +525,8 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "HappyModel ES900",
@@ -545,7 +561,8 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es900tx/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es900tx/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "HappyModel ES900",
@@ -578,7 +595,8 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Happymodel 2.4 GHz",
@@ -612,7 +630,8 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmep2400/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmep2400/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Happymodel 2.4 GHz",
@@ -637,7 +656,8 @@
         "USE_500HZ",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmpp2400/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmpp2400/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Happymodel 915 MHz",
@@ -652,7 +672,7 @@
           "name": "HappyModel_TX_ES915TX_via_WIFI"
         },
         {
-          "flashingMethod": "stock_BL",
+          "flashingMethod": "Stock_BL",
           "name": "HappyModel_TX_ES915TX_via_stock_BL"
         }
       ],
@@ -678,7 +698,8 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es900tx/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es900tx/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "Happymodel 915 MHz",
@@ -706,7 +727,8 @@
         "LOCK_ON_FIRST_CONNECTION",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "DIY 900 MHz",
@@ -735,7 +757,8 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "DIY 900 MHz",
@@ -764,7 +787,8 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "DIY 900 MHz",
@@ -796,7 +820,8 @@
         "HOME_WIFI_PASSWORD",
         "UNLOCK_HIGHER_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "DIY 900 MHz",
@@ -827,7 +852,8 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "DIY 900 MHz",
@@ -860,7 +886,8 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "DIY 2.4 GHz",
@@ -889,7 +916,8 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "DIY 2.4 GHz",
@@ -922,7 +950,8 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "DIY 2.4 GHz",
@@ -951,7 +980,8 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "ImmersionRC Ghost",
@@ -977,7 +1007,8 @@
         "DISABLE_STARTUP_BEEP",
         "MY_STARTUP_MELODY"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "ImmersionRC Ghost",
@@ -1003,7 +1034,8 @@
         "DISABLE_STARTUP_BEEP",
         "MY_STARTUP_MELODY"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "ImmersionRC Ghost",
@@ -1028,7 +1060,8 @@
         "USE_500HZ",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-ghost2400/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-ghost2400/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "DIY 2.4 GHz",
@@ -1063,7 +1096,8 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "DIY 2.4 GHz",
@@ -1088,7 +1122,8 @@
         "USE_500HZ",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "NamimnoRC VOYAGER 900",
@@ -1124,7 +1159,8 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-voyager900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-voyager900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "NamimnoRC VOYAGER 900",
@@ -1152,7 +1188,8 @@
         "LOCK_ON_FIRST_CONNECTION",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "NamimnoRC VOYAGER 900",
@@ -1189,7 +1226,8 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "NamimnoRC FLASH 2.4 GHz",
@@ -1221,7 +1259,8 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-flash2400/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-flash2400/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "NamimnoRC FLASH 2.4 GHz",
@@ -1246,7 +1285,8 @@
         "USE_500HZ",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "NamimnoRC FLASH 2.4 GHz",
@@ -1281,7 +1321,8 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "SIYI 2.4 GHz",
@@ -1309,7 +1350,8 @@
         "UART_INVERTED",
         "USE_DYNAMIC_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-siyifm30/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-siyifm30/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "SIYI 2.4 GHz",
@@ -1335,7 +1377,8 @@
         "USE_DIVERSITY",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-siyiFRmini/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-siyiFRmini/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "SIYI 2.4 GHz",
@@ -1363,7 +1406,8 @@
         "UART_INVERTED",
         "USE_DYNAMIC_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-siyiFRmini/"
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-siyiFRmini/",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "NeutronRC 900 MHz",
@@ -1400,7 +1444,8 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": ""
+      "wikiUrl": "",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "HGLRC 2.4 GHz",
@@ -1433,7 +1478,8 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": ""
+      "wikiUrl": "",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "HGLRC 2.4 GHz",
@@ -1467,7 +1513,8 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": ""
+      "wikiUrl": "",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "HGLRC 900 MHz",
@@ -1504,7 +1551,8 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": ""
+      "wikiUrl": "",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "QuadKopters 2.4 Ghz",
@@ -1537,7 +1585,8 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": ""
+      "wikiUrl": "",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "QuadKopters 2.4 Ghz",
@@ -1569,7 +1618,8 @@
         "BLE_HID_JOYSTICK",
         "USE_DYNAMIC_POWER"
       ],
-      "wikiUrl": ""
+      "wikiUrl": "",
+      "deviceType": "ExpressLRS"
     },
     {
       "category": "QuadKopters 2.4 Ghz",
@@ -1603,7 +1653,98 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": ""
+      "wikiUrl": "",
+      "deviceType": "ExpressLRS"
+    },
+    {
+      "category": "DIY Backpack",
+      "name": "TX Backpack",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "Tx_Backpack"
+        }
+      ],
+      "userDefines": [
+        "BINDING_PHRASE"
+      ],
+      "wikiUrl": "",
+      "deviceType": "Backpack"
+    },
+    {
+      "category": "DIY Backpack",
+      "name": "Rapidfire ESP01F Backpack",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "Rapidfire_ESP01F_Backpack"
+        }
+      ],
+      "userDefines": [
+        "BINDING_PHRASE"
+      ],
+      "wikiUrl": "",
+      "deviceType": "Backpack"
+    },
+    {
+      "category": "DIY Backpack",
+      "name": "Namimno TX Backpack",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "Namimno_Tx_Backpack"
+        }
+      ],
+      "userDefines": [
+        "BINDING_PHRASE"
+      ],
+      "wikiUrl": "",
+      "deviceType": "Backpack"
+    },
+    {
+      "category": "DIY Backpack",
+      "name": "Rapidfire ESP RX Backpack",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "Rapidfire_ESP_RX_Backpack"
+        }
+      ],
+      "userDefines": [
+        "BINDING_PHRASE"
+      ],
+      "wikiUrl": "",
+      "deviceType": "Backpack"
+    },
+    {
+      "category": "DIY Backpack",
+      "name": "RX5808 ESP RX Backpack",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "RX5808_ESP_RX_Backpack"
+        }
+      ],
+      "userDefines": [
+        "BINDING_PHRASE"
+      ],
+      "wikiUrl": "",
+      "deviceType": "Backpack"
+    },
+    {
+      "category": "DIY Backpack",
+      "name": "SteadyView ESP RX Backpack",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "SteadyView_ESP_RX_Backpack"
+        }
+      ],
+      "userDefines": [
+        "BINDING_PHRASE"
+      ],
+      "wikiUrl": "",
+      "deviceType": "Backpack"
     }
   ]
 }

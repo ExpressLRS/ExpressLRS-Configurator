@@ -14,11 +14,11 @@ import {
   Container,
   Divider,
   makeStyles,
-  Snackbar,
   Tooltip,
 } from '@material-ui/core';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { ipcRenderer } from 'electron';
+import { NetworkWifi } from '@material-ui/icons';
 import Header from '../../components/Header';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
@@ -45,12 +45,9 @@ import {
   useTargetDeviceOptionsLazyQuery,
   useAvailableFirmwareTargetsLazyQuery,
   Device,
-  useMulticastDnsMonitorUpdatesSubscription,
   MulticastDnsInformation,
-  MulticastDnsEventType,
   Target,
   FlashingMethod,
-  useAvailableMulticastDnsDevicesListQuery,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -147,10 +144,18 @@ enum ViewState {
 
 interface ConfiguratorViewProps {
   gitRepository: GitRepository;
+  selectedDevice: string | null;
+  networkDevices: Map<string, MulticastDnsInformation>;
+  onDeviceChange: (dnsDevice: MulticastDnsInformation | null) => void;
 }
 
 const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
-  const { gitRepository } = props;
+  const {
+    gitRepository,
+    selectedDevice,
+    networkDevices,
+    onDeviceChange,
+  } = props;
 
   const styles = useStyles();
 
@@ -206,56 +211,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     },
   });
 
-  const [multicastDnsDevices, setMulticastDnsDevices] = useState<{
-    [name: string]: MulticastDnsInformation;
-  }>({});
-
-  const {
-    loading: multicastDnsDevicesListLoading,
-    data: multicastDnsDevicesListData,
-    error: multicastDnsDevicesListError,
-  } = useAvailableMulticastDnsDevicesListQuery({
-    fetchPolicy: 'network-only',
-  });
-
-  useEffect(() => {
-    if (multicastDnsDevicesListData) {
-      multicastDnsDevicesListData.availableMulticastDnsDevicesList.forEach(
-        (item) => {
-          multicastDnsDevices[item.name] = item;
-        }
-      );
-    }
-  }, [multicastDnsDevicesListData]);
-
-  const [multicastDnsNewDevices, setMulticastDnsNewDevices] = useState<
-    MulticastDnsInformation[]
-  >([]);
-
-  useMulticastDnsMonitorUpdatesSubscription({
-    fetchPolicy: 'network-only',
-    onSubscriptionData: (options) => {
-      const data = options.subscriptionData.data?.multicastDnsMonitorUpdates;
-      if (data) {
-        const multicastDnsDevicesCopy = { ...multicastDnsDevices };
-
-        if (data?.type === MulticastDnsEventType.DeviceAdded) {
-          multicastDnsDevicesCopy[data.data.name] = data.data;
-
-          const newDevices = multicastDnsNewDevices.map((item) => item);
-          newDevices.push(data.data);
-          setMulticastDnsNewDevices(newDevices);
-        } else if (data?.type === MulticastDnsEventType.DeviceUpdated) {
-          multicastDnsDevicesCopy[data.data.name] = data.data;
-        } else if (data?.type === MulticastDnsEventType.DeviceRemoved) {
-          delete multicastDnsDevicesCopy[data.data.name];
-        }
-
-        setMulticastDnsDevices(multicastDnsDevicesCopy);
-      }
-    },
-  });
-
   const [
     firmwareVersionData,
     setFirmwareVersionData,
@@ -274,10 +229,15 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const [deviceTarget, setDeviceTarget] = useState<string | null>(null);
   const [deviceTargetErrors, setDeviceTargetErrors] = useState<Error[]>([]);
 
-  const onDeviceTarget = useCallback((data: string | null) => {
-    setDeviceTargetErrors([]);
-    setDeviceTarget(data);
-  }, []);
+  const onDeviceTarget = useCallback(
+    (data: string | null) => {
+      setDeviceTargetErrors([]);
+      setDeviceTarget(data);
+      // if target was manually changed, set selected device to null
+      onDeviceChange(null);
+    },
+    [onDeviceChange]
+  );
 
   const [deviceTargets, setDeviceTargets] = useState<Device[] | null>(null);
 
@@ -312,7 +272,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         },
       });
     }
-  }, [firmwareVersionData]);
+  }, [gitRepository, firmwareVersionData, fetchDeviceTargets]);
 
   useEffect(() => {
     if (targetsResponse?.availableFirmwareTargets) {
@@ -371,7 +331,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         },
       });
     }
-  }, [deviceTarget, firmwareVersionData]);
+  }, [deviceTarget, firmwareVersionData, gitRepository, fetchOptions]);
 
   useEffect(() => {
     if (
@@ -711,33 +671,40 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   const deviceOptionsRef = useRef<HTMLDivElement | null>(null);
 
-  const onWifiDeviceChange = useCallback(
+  const handleSelectedDeviceChange = useCallback(
     (deviceName: string) => {
-      const dnsDevice = multicastDnsDevices[deviceName];
+      const dnsDevice = networkDevices.get(deviceName);
+      if (dnsDevice) {
+        const targetName = dnsDevice.target.toUpperCase();
 
-      const targetName = dnsDevice.target.toUpperCase();
-
-      const device = deviceTargets?.find((item) => {
-        return item.targets.find((target) => {
-          return target.name.toUpperCase().startsWith(targetName);
+        const device = deviceTargets?.find((item) => {
+          return item.targets.find((target) => {
+            return target.name.toUpperCase().startsWith(targetName);
+          });
         });
-      });
 
-      const dTarget =
-        device?.targets.find((target) => {
-          return target.flashingMethod === FlashingMethod.WIFI;
-        })?.name ||
-        device?.targets[0].name ||
-        null;
+        const dTarget =
+          device?.targets.find((target) => {
+            return target.flashingMethod === FlashingMethod.WIFI;
+          })?.name ||
+          device?.targets[0].name ||
+          null;
 
-      setDeviceTarget(dTarget);
+        setDeviceTarget(dTarget);
 
-      setWifiDevice(dnsDevice.ip);
+        setWifiDevice(dnsDevice.ip);
 
-      deviceOptionsRef?.current?.scrollIntoView({ behavior: 'smooth' });
+        deviceOptionsRef?.current?.scrollIntoView({ behavior: 'smooth' });
+      }
     },
-    [deviceTargets, multicastDnsDevices]
+    [deviceTargets, networkDevices]
   );
+
+  useEffect(() => {
+    if (selectedDevice) {
+      handleSelectedDeviceChange(selectedDevice);
+    }
+  }, [handleSelectedDeviceChange, selectedDevice]);
 
   return (
     <main className={styles.root}>
@@ -850,7 +817,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   {wifiDeviceRequired && (
                     <WifiDeviceSelect
                       wifiDevice={wifiDevice}
-                      wifiDevices={Object.values(multicastDnsDevices).filter(
+                      wifiDevices={Array.from(networkDevices.values()).filter(
                         (item) => {
                           return deviceTarget
                             ?.toUpperCase()
@@ -879,16 +846,19 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 </div>
               </CardContent>
 
-              {Object.values(multicastDnsDevices).length > 0 && (
+              {networkDevices.size > 0 && (
                 <div className={styles.section}>
                   <Divider />
-                  <CardTitle icon={<SettingsIcon />} title="Network Devices" />
+                  <CardTitle icon={<NetworkWifi />} title="Network Devices" />
                   <Divider />
                   <CardContent>
                     <div>
                       <WifiDeviceList
-                        wifiDevices={Object.values(multicastDnsDevices)}
-                        onChange={onWifiDeviceChange}
+                        wifiDevices={Array.from(networkDevices.values())}
+                        onChange={(dnsDevice: MulticastDnsInformation) => {
+                          onDeviceChange(dnsDevice);
+                          handleSelectedDeviceChange(dnsDevice.name);
+                        }}
                       />
                     </div>
                   </CardContent>
@@ -982,34 +952,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
               )}
             </Card>
           )}
-          {multicastDnsNewDevices.map((dnsDevice) => {
-            const handleClose = () => {
-              setMulticastDnsNewDevices(
-                multicastDnsNewDevices.filter((d) => d !== dnsDevice)
-              );
-            };
-
-            return (
-              <Snackbar
-                key={dnsDevice.name}
-                open
-                autoHideDuration={6000}
-                onClose={handleClose}
-              >
-                <Alert onClose={handleClose} severity="info">
-                  New Device {dnsDevice.name} ({dnsDevice.ip})
-                  <Button
-                    size="small"
-                    onClick={() => {
-                      onWifiDeviceChange(dnsDevice.name);
-                    }}
-                  >
-                    Select
-                  </Button>
-                </Alert>
-              </Snackbar>
-            );
-          })}
         </Container>
       </div>
     </main>

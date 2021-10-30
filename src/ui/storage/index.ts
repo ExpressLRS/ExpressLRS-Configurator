@@ -3,6 +3,7 @@ import {
   UserDefine,
   UserDefinesMode,
 } from '../gql/generated/types';
+import GitRepository from '../models/GitRepository';
 
 export interface DeviceOptions {
   userDefinesMode: UserDefinesMode;
@@ -24,9 +25,14 @@ export interface IApplicationStorage {
 
   getBindingPhrase(): Promise<string>;
 
-  getFirmwareSource(): Promise<FirmwareVersionDataInput | null>;
+  getFirmwareSource(
+    gitRepository: GitRepository
+  ): Promise<FirmwareVersionDataInput | null>;
 
-  setFirmwareSource(input: FirmwareVersionDataInput): Promise<void>;
+  setFirmwareSource(
+    input: FirmwareVersionDataInput,
+    gitRepository: GitRepository
+  ): Promise<void>;
 
   getShowPreReleases(defaultValue: boolean): Promise<boolean>;
 
@@ -66,8 +72,12 @@ export default class ApplicationStorage implements IApplicationStorage {
     localStorage.removeItem(key);
   }
 
-  async getFirmwareSource(): Promise<FirmwareVersionDataInput | null> {
-    const value = localStorage.getItem(FIRMWARE_SOURCE_KEY);
+  async getFirmwareSource(
+    gitRepository: GitRepository
+  ): Promise<FirmwareVersionDataInput | null> {
+    const value = localStorage.getItem(
+      `${gitRepository.owner}-${gitRepository.repositoryName}-${FIRMWARE_SOURCE_KEY}`
+    );
     if (value === null) {
       return null;
     }
@@ -79,8 +89,14 @@ export default class ApplicationStorage implements IApplicationStorage {
     }
   }
 
-  async setFirmwareSource(input: FirmwareVersionDataInput): Promise<void> {
-    localStorage.setItem(FIRMWARE_SOURCE_KEY, JSON.stringify(input));
+  async setFirmwareSource(
+    input: FirmwareVersionDataInput,
+    gitRepository: GitRepository
+  ): Promise<void> {
+    localStorage.setItem(
+      `${gitRepository.owner}-${gitRepository.repositoryName}-${FIRMWARE_SOURCE_KEY}`,
+      JSON.stringify(input)
+    );
   }
 
   async setBindingPhrase(bindingPhrase: string): Promise<void> {

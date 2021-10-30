@@ -47,6 +47,19 @@ export default class TargetsService implements ITargets {
       .filter((i) => i);
   }
 
+  async downloadFile(url: string): Promise<string> {
+    const file = await fetch(url);
+    const body = await file.text();
+    if (!file.ok) {
+      this.logger?.log(`failed to get ${file}`, {
+        status: file.status,
+        body,
+      });
+      throw new Error(`failed to get ${url}: ${file.status}, ${body}`);
+    }
+    return body;
+  }
+
   async loadTargetsFromGitHub(
     gitRepositoryOwner: string,
     gitRepositoryName: string,
@@ -56,42 +69,27 @@ export default class TargetsService implements ITargets {
     if (!ref || ref.length === 0) {
       return [];
     }
-
     try {
-      const response = await this.client.repos.getContent({
-        owner: gitRepositoryOwner,
-        repo: gitRepositoryName,
-        path: `${gitRepositorySrcFolder}/targets`,
-        ref,
-      });
+      const platformioFile = await this.downloadFile(
+        `https://raw.githubusercontent.com/${gitRepositoryOwner}/${gitRepositoryName}/${ref}${gitRepositorySrcFolder}/platformio.ini`
+      );
 
-      const { data } = response;
-
-      // ignore non-directory responses
-      if (!Array.isArray(data)) {
-        return [];
-      }
+      const extraConfigsRegex = /(targets\/.*?.ini)/g;
+      const parsedResults = [...platformioFile.matchAll(extraConfigsRegex)];
 
       const values = await Promise.all(
-        data.map(async (item) => {
-          if (item.download_url) {
-            const file = await fetch(item.download_url);
-            const body = await file.text();
-            if (!file.ok) {
-              this.logger?.log(`failed to get ${file}`, {
-                status: response.status,
-                body,
-              });
-              throw new Error(
-                `failed to get ${item.download_url}: ${response.status}, ${body}`
-              );
-            }
-
-            return this.extractTargets(body);
-          }
-          return [];
+        parsedResults.map(async (item) => {
+          const contents = await this.downloadFile(
+            `https://raw.githubusercontent.com/${gitRepositoryOwner}/${gitRepositoryName}/${ref}${gitRepositorySrcFolder}/${item[1]}`
+          );
+          const targets = this.extractTargets(contents);
+          return targets;
         })
       );
+
+      const platformioFileTargets = this.extractTargets(platformioFile);
+
+      values.push(platformioFileTargets);
 
       return values.reduce<string[]>((prev, curr) => {
         return prev.concat(curr);

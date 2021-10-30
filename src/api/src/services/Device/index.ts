@@ -5,6 +5,7 @@ import Target from '../../models/Target';
 import DeviceJSON from '../../../../../devices.json';
 import FlashingMethod from '../../models/enum/FlashingMethod';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
+import DeviceType from '../../models/enum/DeviceType';
 
 export interface IDevices {
   getDevices(): Device[];
@@ -19,32 +20,6 @@ export default class DeviceService implements IDevices {
   }
 
   loadDevices(): Device[] {
-    const userDefinesByKey = (Object.keys(
-      UserDefineKey
-    ) as (keyof typeof UserDefineKey)[]).reduce(
-      (previousValue, currentValue) => {
-        previousValue[currentValue.toString().toUpperCase()] =
-          UserDefineKey[currentValue];
-        return previousValue;
-      },
-      {} as {
-        [key: string]: UserDefineKey;
-      }
-    );
-
-    const flashingMethodKeys = (Object.keys(
-      FlashingMethod
-    ) as (keyof typeof FlashingMethod)[]).reduce(
-      (previousValue, currentValue) => {
-        previousValue[currentValue.toString().toUpperCase()] =
-          FlashingMethod[currentValue];
-        return previousValue;
-      },
-      {} as {
-        [key: string]: FlashingMethod;
-      }
-    );
-
     return DeviceJSON.devices.map((value) => {
       try {
         if (!value.name) {
@@ -68,7 +43,7 @@ export default class DeviceService implements IDevices {
           }
 
           const flashingMethod =
-            flashingMethodKeys[item.flashingMethod.toUpperCase()];
+            FlashingMethod[item.flashingMethod as keyof typeof FlashingMethod];
 
           if (!flashingMethod) {
             throw new Error(
@@ -83,12 +58,20 @@ export default class DeviceService implements IDevices {
         });
 
         const userDefines = value.userDefines.map((item) => {
-          const userDefineKey = userDefinesByKey[item.toUpperCase()];
+          const userDefineKey =
+            UserDefineKey[item as keyof typeof UserDefineKey];
           if (!userDefineKey) {
             throw new Error(`"${item}" is not a valid User Define`);
           }
           return userDefineKey;
         });
+
+        const deviceType =
+          DeviceType[value.deviceType as keyof typeof DeviceType];
+
+        if (!deviceType) {
+          throw new Error(`"${value.deviceType}" is not a valid device type`);
+        }
 
         const device: Device = {
           id: value.name,
@@ -97,6 +80,7 @@ export default class DeviceService implements IDevices {
           targets,
           userDefines,
           wikiUrl: value.wikiUrl,
+          deviceType,
         };
 
         return device;
