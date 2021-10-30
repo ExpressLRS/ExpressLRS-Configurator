@@ -1672,12 +1672,12 @@
       "deviceType": "Backpack"
     },
     {
-      "category": "VRX",
-      "name": "Rapidfire ESP01F Backpack",
+      "category": "TX",
+      "name": "Namimno TX Backpack",
       "targets": [
         {
           "flashingMethod": "UART",
-          "name": "Rapidfire_ESP01F_Backpack"
+          "name": "Namimno_Tx_Backpack"
         }
       ],
       "userDefines": [
@@ -1688,11 +1688,11 @@
     },
     {
       "category": "VRX",
-      "name": "Namimno TX Backpack",
+      "name": "Rapidfire ESP01F Backpack",
       "targets": [
         {
           "flashingMethod": "UART",
-          "name": "Namimno_Tx_Backpack"
+          "name": "Rapidfire_ESP01F_Backpack"
         }
       ],
       "userDefines": [
