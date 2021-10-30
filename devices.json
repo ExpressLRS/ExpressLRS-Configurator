@@ -1657,7 +1657,7 @@
       "deviceType": "ExpressLRS"
     },
     {
-      "category": "DIY Backpack",
+      "category": "TX",
       "name": "TX Backpack",
       "targets": [
         {
@@ -1672,7 +1672,7 @@
       "deviceType": "Backpack"
     },
     {
-      "category": "DIY Backpack",
+      "category": "VRX",
       "name": "Rapidfire ESP01F Backpack",
       "targets": [
         {
@@ -1687,7 +1687,7 @@
       "deviceType": "Backpack"
     },
     {
-      "category": "DIY Backpack",
+      "category": "VRX",
       "name": "Namimno TX Backpack",
       "targets": [
         {
@@ -1702,7 +1702,7 @@
       "deviceType": "Backpack"
     },
     {
-      "category": "DIY Backpack",
+      "category": "VRX",
       "name": "Rapidfire ESP RX Backpack",
       "targets": [
         {
@@ -1717,7 +1717,7 @@
       "deviceType": "Backpack"
     },
     {
-      "category": "DIY Backpack",
+      "category": "VRX",
       "name": "RX5808 ESP RX Backpack",
       "targets": [
         {
@@ -1732,7 +1732,7 @@
       "deviceType": "Backpack"
     },
     {
-      "category": "DIY Backpack",
+      "category": "VRX",
       "name": "SteadyView ESP RX Backpack",
       "targets": [
         {
