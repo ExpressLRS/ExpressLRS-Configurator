@@ -93,6 +93,8 @@ export default class TargetUserDefinesFactory {
             return UserDefine.Boolean(UserDefineKey.BLE_HID_JOYSTICK);
           case UserDefineKey.USE_ESP8266_BACKPACK:
             return UserDefine.Boolean(UserDefineKey.USE_ESP8266_BACKPACK, true);
+          case UserDefineKey.USE_TX_BACKPACK:
+            return UserDefine.Boolean(UserDefineKey.USE_TX_BACKPACK);
           case UserDefineKey.JUST_BEEP_ONCE:
             return UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE);
           case UserDefineKey.DISABLE_STARTUP_BEEP:

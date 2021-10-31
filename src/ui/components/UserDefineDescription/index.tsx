@@ -797,6 +797,26 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.USE_TX_BACKPACK:
+          return (
+            <div>
+              <p>
+                Enables code for talking to a connected backpack on the TX
+                module, and associated Lua params The device target should
+                enable this automatically for devices that come with this, but
+                can be added to any device.
+              </p>{' '}
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
         case UserDefineKey.USE_R9MM_R9MINI_SBUS:
           return (
             <div>

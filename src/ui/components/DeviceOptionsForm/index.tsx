@@ -130,6 +130,7 @@ const userDefinesToCategories = (
     [UserDefineCategory.OtherOptions]: [
       UserDefineKey.BLE_HID_JOYSTICK,
       UserDefineKey.USE_ESP8266_BACKPACK,
+      UserDefineKey.USE_TX_BACKPACK,
       UserDefineKey.JUST_BEEP_ONCE,
       UserDefineKey.DISABLE_STARTUP_BEEP,
       UserDefineKey.MY_STARTUP_MELODY,
