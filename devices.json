@@ -603,6 +603,10 @@
       "name": "HappyModel RX ES900RX",
       "targets": [
         {
+          "flashingMethod": "UART",
+          "name": "HappyModel_RX_ES900RX_via_UART"
+        },
+        {
           "flashingMethod": "BetaflightPassthrough",
           "name": "HappyModel_RX_ES900RX_via_BetaflightPassthrough"
         },
