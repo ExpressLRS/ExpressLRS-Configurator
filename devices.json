@@ -1188,11 +1188,39 @@
         "NO_SYNC_ON_ARM",
         "ARM_CHANNEL",
         "FEATURE_OPENTX_SYNC",
-        "USE_ESP8266_BACKPACK",
-        "USE_TX_BACKPACK",
-        "JUST_BEEP_ONCE",
-        "DISABLE_STARTUP_BEEP",
-        "MY_STARTUP_MELODY",
+        "BLE_HID_JOYSTICK",
+        "USE_DYNAMIC_POWER",
+        "AUTO_WIFI_ON_INTERVAL",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
+      ],
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-voyager900/",
+      "deviceType": "ExpressLRS"
+    },
+    {
+      "category": "NamimnoRC VOYAGER 900",
+      "name": "NamimnoRC VOYAGER 900 OLED TX",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "NamimnoRC_VOYAGER_900_OLED_TX_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "NamimnoRC_VOYAGER_900_OLED_TX_via_WIFI"
+        }
+      ],
+      "userDefines": [
+        "REGULATORY_DOMAIN_AU_915",
+        "REGULATORY_DOMAIN_EU_868",
+        "REGULATORY_DOMAIN_FCC_915",
+        "BINDING_PHRASE",
+        "HYBRID_SWITCHES_8",
+        "ENABLE_TELEMETRY",
+        "TLM_REPORT_INTERVAL_MS",
+        "NO_SYNC_ON_ARM",
+        "ARM_CHANNEL",
+        "FEATURE_OPENTX_SYNC",
         "BLE_HID_JOYSTICK",
         "USE_DYNAMIC_POWER",
         "AUTO_WIFI_ON_INTERVAL",
@@ -1280,6 +1308,39 @@
         {
           "flashingMethod": "WIFI",
           "name": "NamimnoRC_FLASH_2400_TX_via_WIFI"
+        }
+      ],
+      "userDefines": [
+        "REGULATORY_DOMAIN_ISM_2400",
+        "BINDING_PHRASE",
+        "HYBRID_SWITCHES_8",
+        "ENABLE_TELEMETRY",
+        "TLM_REPORT_INTERVAL_MS",
+        "NO_SYNC_ON_ARM",
+        "ARM_CHANNEL",
+        "FEATURE_OPENTX_SYNC",
+        "USE_500HZ",
+        "UART_INVERTED",
+        "BLE_HID_JOYSTICK",
+        "USE_DYNAMIC_POWER",
+        "AUTO_WIFI_ON_INTERVAL",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
+      ],
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-flash2400/",
+      "deviceType": "ExpressLRS"
+    },
+    {
+      "category": "NamimnoRC FLASH 2.4 GHz",
+      "name": "NamimnoRC FLASH 2400 OLED TX",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "NamimnoRC_FLASH_2400_OLED_TX_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "NamimnoRC_FLASH_2400_OLED_TX_via_WIFI"
         }
       ],
       "userDefines": [
