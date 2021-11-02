@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { FunctionComponent } from 'react';
-import { styled } from '@mui/material/styles';
 import {
   Checkbox,
   List,
@@ -18,27 +17,17 @@ import {
 import Omnibox from '../Omnibox';
 import UserDefineDescription from '../UserDefineDescription';
 
-const PREFIX = 'UserDefinesList';
-
-const classes = {
-  option: `${PREFIX}-option`,
-  icon: `${PREFIX}-icon`,
-  complimentaryItem: `${PREFIX}-complimentaryItem`,
-};
-
-const StyledList = styled(List)(({ theme }) => ({
-  [`& .${classes.icon}`]: {
+const styles = {
+  icon: {
     minWidth: 40,
   },
-
-  [`& .${classes.complimentaryItem}`]: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+  complimentaryItem: {
+    marginY: 1,
     '&:hover': {
       backgroundColor: 'transparent !important',
     },
   },
-}));
+};
 
 interface UserDefinesListProps {
   options: UserDefine[];
@@ -101,18 +90,17 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
   };
 
   return (
-    <StyledList>
+    <List>
       {options.map((item) => {
         return (
           <React.Fragment key={item.key}>
             <ListItem
               dense
-              className={classes.option}
               selected={item.enabled}
               button
               onClick={onChecked.bind(this, item.key)}
             >
-              <ListItemIcon className={classes.icon}>
+              <ListItemIcon sx={styles.icon}>
                 <Checkbox
                   edge="start"
                   checked={item.enabled}
@@ -127,7 +115,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
             </ListItem>
             {item.type === UserDefineKind.Text && item.enabled && (
               <>
-                <ListItem className={classes.complimentaryItem}>
+                <ListItem sx={styles.complimentaryItem}>
                   <TextField
                     size="small"
                     onBlur={onUserDefineValueChange(item.key)}
@@ -139,7 +127,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
               </>
             )}
             {item.type === UserDefineKind.Enum && item.enabled && (
-              <ListItem className={classes.complimentaryItem}>
+              <ListItem sx={styles.complimentaryItem}>
                 <Omnibox
                   title={inputLabel(item.key)}
                   currentValue={{
@@ -159,7 +147,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
           </React.Fragment>
         );
       })}
-    </StyledList>
+    </List>
   );
 };
 

@@ -9,7 +9,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import React, { FunctionComponent } from 'react';
 import UserDefinesList from '../UserDefinesList';
 import {
@@ -18,49 +17,27 @@ import {
   UserDefinesMode,
 } from '../../gql/generated/types';
 
-const PREFIX = 'DeviceOptionsForm';
-
-const classes = {
-  categoryTitle: `${PREFIX}-categoryTitle`,
-  option: `${PREFIX}-option`,
-  icon: `${PREFIX}-icon`,
-  userDefinesMode: `${PREFIX}-userDefinesMode`,
-  radioControl: `${PREFIX}-radioControl`,
-  radio: `${PREFIX}-radio`,
-  textarea: `${PREFIX}-textarea`,
+const styles = {
+  categoryTitle: {
+    marginBottom: 1,
+  },
+  userDefinesMode: {
+    marginTop: 1,
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingBottom: 2,
+    paddingLeft: 1,
+  },
+  radioControl: {
+    marginRight: 4,
+  },
+  radio: {
+    marginRight: 1,
+  },
+  textarea: {
+    marginY: 1,
+  },
 };
-
-const Root = styled('div')(({ theme }) => ({
-  [`& .${classes.categoryTitle}`]: {
-    marginBottom: theme.spacing(1),
-  },
-
-  [`& .${classes.option}`]: {
-    padding: `${theme.spacing(1, 2)} !important`,
-  },
-
-  [`& .${classes.icon}`]: {
-    minWidth: 40,
-  },
-
-  [`& .${classes.userDefinesMode}`]: {
-    marginTop: theme.spacing(1),
-    padding: theme.spacing(0, 0, 2, 1),
-  },
-
-  [`& .${classes.radioControl}`]: {
-    marginRight: `${theme.spacing(4)} !important`,
-  },
-
-  [`& .${classes.radio}`]: {
-    marginRight: `${theme.spacing(1)} !important`,
-  },
-
-  [`& .${classes.textarea}`]: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-}));
 
 export interface DeviceOptionsFormData {
   userDefinesMode: UserDefinesMode;
@@ -218,8 +195,8 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
   };
 
   return (
-    <Root>
-      <FormControl component="fieldset" className={classes.userDefinesMode}>
+    <>
+      <FormControl component="fieldset" sx={styles.userDefinesMode}>
         <RadioGroup
           row
           value={deviceOptions.userDefinesMode}
@@ -228,14 +205,14 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
         >
           <FormControlLabel
             value={UserDefinesMode.UserInterface}
-            className={classes.radioControl}
-            control={<Radio className={classes.radio} color="primary" />}
+            sx={styles.radioControl}
+            control={<Radio sx={styles.radio} color="primary" />}
             label="Standard mode"
           />
           <FormControlLabel
             value={UserDefinesMode.Manual}
-            className={classes.radioControl}
-            control={<Radio className={classes.radio} color="primary" />}
+            sx={styles.radioControl}
+            control={<Radio sx={styles.radio} color="primary" />}
             label="Manual mode"
           />
         </RadioGroup>
@@ -250,7 +227,7 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
       {deviceOptions.userDefinesMode === UserDefinesMode.Manual && (
         <>
           <TextField
-            className={classes.textarea}
+            sx={styles.textarea}
             multiline
             label="user_defines.txt"
             onBlur={onUserDefinesTxt}
@@ -269,7 +246,7 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                 {categories[UserDefineCategory.RegulatoryDomains]?.length >
                   0 && (
                   <>
-                    <Typography variant="h6" className={classes.categoryTitle}>
+                    <Typography variant="h6" sx={styles.categoryTitle}>
                       Regulatory domains
                     </Typography>
                     <UserDefinesList
@@ -345,7 +322,7 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
             </Grid>
           </>
         )}
-    </Root>
+    </>
   );
 };
 export default DeviceOptionsForm;

@@ -1,5 +1,11 @@
-import { Button, Card, CardContent, Container, Divider } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Divider,
+} from '@mui/material';
 import React, { FunctionComponent } from 'react';
 import ListIcon from '@mui/icons-material/List';
 import { ipcRenderer } from 'electron';
@@ -8,39 +14,28 @@ import Header from '../../components/Header';
 import CardTitle from '../../components/CardTitle';
 import { IpcRequest } from '../../../ipc';
 
-const PREFIX = 'LogsView';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  main: `${PREFIX}-main`,
-  content: `${PREFIX}-content`,
-};
-
-const Root = styled('main')(({ theme }) => ({
-  [`&.${classes.root}`]: {
+const styles = {
+  root: {
     display: 'flex',
   },
-
-  [`& .${classes.main}`]: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(4),
+  main: {
+    marginY: 4,
   },
-
-  [`& .${classes.content}`]: {
+  content: {
     flexGrow: 1,
   },
-}));
+};
 
 const LogsView: FunctionComponent = () => {
   const onLogs = () => {
     ipcRenderer.send(IpcRequest.OpenLogsFolder);
   };
   return (
-    <Root className={classes.root}>
+    <Box component="main" sx={styles.root}>
       <Sidebar navigationEnabled />
-      <div className={classes.content}>
+      <Box sx={styles.content}>
         <Header />
-        <Container className={classes.main}>
+        <Container sx={styles.main}>
           <Card>
             <CardTitle icon={<ListIcon />} title="Logs" />
             <Divider />
@@ -56,8 +51,8 @@ const LogsView: FunctionComponent = () => {
             </CardContent>
           </Card>
         </Container>
-      </div>
-    </Root>
+      </Box>
+    </Box>
   );
 };
 

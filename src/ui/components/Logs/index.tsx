@@ -1,26 +1,19 @@
 import React, {FunctionComponent, memo, useEffect, useRef} from 'react';
-import { styled } from '@mui/material/styles';
+import { Box } from '@mui/material'
+import { SxProps, Theme } from '@mui/system';
 
-const PREFIX = 'Logs';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  logs: `${PREFIX}-logs`
-};
-
-const Root = styled('div')(() => ({
-  [`&.${classes.root}`]: {
+const styles: SxProps<Theme> = {
+  root: {
     minHeight: '500px',
     maxHeight: '500px',
     overflowY: 'auto',
     overflowX: 'hidden',
   },
-
-  [`& .${classes.logs}`]: {
+  logs: {
     whiteSpace: 'pre-wrap',
     wordWrap: 'break-word',
-  }
-}));
+  },
+};
 
 interface LogsProps {
   data: string;
@@ -35,11 +28,11 @@ const Logs: FunctionComponent<LogsProps> = memo(({data}) => {
     }
   }, [data]);
   return (
-    <Root ref={container} className={classes.root}>
-      <pre className={classes.logs}>
+    <Box ref={container} sx={styles.root}>
+      <Box component='pre' sx={styles.logs}>
         <code>{data}</code>
-      </pre>
-    </Root>
+      </Box>
+    </Box>
   );
 });
 

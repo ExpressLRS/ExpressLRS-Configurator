@@ -1,27 +1,18 @@
 import React, { FunctionComponent, memo } from 'react';
-import { styled } from '@mui/material/styles';
-import { Tooltip } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
 import QuestionIcon from '@mui/icons-material/Help';
 import { UserDefineKey } from '../../gql/generated/types';
 
-const PREFIX = 'UserDefineDescription';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  icon: `${PREFIX}-icon`,
-};
-
-const Root = styled('div')(() => ({
-  [`&.${classes.root}`]: {
+const styles = {
+  root: {
     display: 'inline-block',
   },
-
-  [`& .${classes.icon}`]: {
+  icon: {
     verticalAlign: 'middle',
     marginLeft: '5px',
     fontSize: '1.44em',
   },
-}));
+};
 
 interface UserDefineDescriptionProps {
   userDefine: UserDefineKey;
@@ -902,13 +893,13 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
     };
     const desc = toText(userDefine);
     return (
-      <Root className={classes.root}>
+      <Box sx={styles.root}>
         {desc !== '' && (
           <Tooltip placement="top" arrow title={<div>{desc}</div>}>
-            <QuestionIcon className={classes.icon} />
+            <QuestionIcon sx={styles.icon} />
           </Tooltip>
         )}
-      </Root>
+      </Box>
     );
   }
 );

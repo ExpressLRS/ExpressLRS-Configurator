@@ -1,8 +1,6 @@
 import React, { FunctionComponent } from 'react';
-
-import { styled } from '@mui/material/styles';
-
 import {
+  Box,
   Divider,
   Drawer,
   List,
@@ -19,35 +17,24 @@ import ListIcon from '@mui/icons-material/List';
 import { matchPath, useLocation, Link } from 'react-router-dom';
 import BackpackIcon from '@mui/icons-material/Backpack';
 
-const PREFIX = 'Sidebar';
-
-const classes = {
-  drawer: `${PREFIX}-drawer`,
-  drawerPaper: `${PREFIX}-drawerPaper`,
-  drawerContainer: `${PREFIX}-drawerContainer`,
-  menuItem: `${PREFIX}-menuItem`,
-};
-
 const drawerWidth = 215;
 
-const StyledDrawer = styled(Drawer)(({ theme }) => ({
-  [`&.${classes.drawer}`]: {
+const styles = {
+  drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    '& .MuiDrawer-paper': {
+      width: drawerWidth,
+    },
   },
-
-  [`& .${classes.drawerPaper}`]: {
-    width: drawerWidth,
-  },
-
-  [`& .${classes.drawerContainer}`]: {
+  drawerContainer: {
     overflow: 'auto',
   },
-
-  [`& .${classes.menuItem}`]: {
-    padding: `${theme.spacing(1, 3)} !important`,
+  menuItem: {
+    paddingY: 1,
+    paddingX: 3,
   },
-}));
+};
 
 interface SidebarProps {
   navigationEnabled: boolean;
@@ -65,22 +52,16 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
   const supportActive = matchPath(location.pathname, '/support') !== null;
 
   return (
-    <StyledDrawer
-      className={classes.drawer}
-      variant="permanent"
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
+    <Drawer sx={styles.drawer} variant="permanent">
       <Toolbar />
       <Divider />
-      <div className={classes.drawerContainer}>
+      <Box sx={styles.drawerContainer}>
         <List>
           <ListItem
             component={Link}
             to="/configurator"
             selected={configuratorActive}
-            className={classes.menuItem}
+            sx={styles.menuItem}
             button
             disabled={!navigationEnabled}
           >
@@ -93,7 +74,7 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
             component={Link}
             to="/backpack"
             selected={backpackActive}
-            className={classes.menuItem}
+            sx={styles.menuItem}
             button
             disabled={!navigationEnabled}
           >
@@ -107,7 +88,7 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
           {/*  component={Link} */}
           {/*  to="/settings" */}
           {/*  selected={settingsActive} */}
-          {/*  className={classes.menuItem} */}
+          {/*  sx={styles.menuItem} */}
           {/*  button */}
           {/* > */}
           {/*  <ListItemIcon> */}
@@ -120,7 +101,7 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
             component={Link}
             to="/logs"
             selected={logsActive}
-            className={classes.menuItem}
+            sx={styles.menuItem}
             button
             disabled={!navigationEnabled}
           >
@@ -134,7 +115,7 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
             component={Link}
             to="/serial-monitor"
             selected={serialMonitorActive}
-            className={classes.menuItem}
+            sx={styles.menuItem}
             button
             disabled={!navigationEnabled}
           >
@@ -148,7 +129,7 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
             component={Link}
             to="/support"
             selected={supportActive}
-            className={classes.menuItem}
+            sx={styles.menuItem}
             button
             disabled={!navigationEnabled}
           >
@@ -158,8 +139,8 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
             <ListItemText primary="Support" />
           </ListItem>
         </List>
-      </div>
-    </StyledDrawer>
+      </Box>
+    </Drawer>
   );
 };
 

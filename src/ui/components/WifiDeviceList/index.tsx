@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Table,
   TableBody,
@@ -6,24 +7,17 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import React, { FunctionComponent, useMemo } from 'react';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 
-const PREFIX = 'WifiDeviceSelect';
-
-const classes = {
-  root: `${PREFIX}-root`,
-};
-
-const Root = styled('div')(({ theme }) => ({
-  [`&.${classes.root}`]: {
-    marginBottom: theme.spacing(2),
+const styles = {
+  root: {
+    marginBottom: 2,
     '& a': {
       color: '#90caf9',
     },
   },
-}));
+};
 
 interface WifiDeviceSelectProps {
   wifiDevices: MulticastDnsInformation[];
@@ -43,7 +37,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   }, [wifiDevices]);
 
   return (
-    <Root className={classes.root}>
+    <Box sx={styles.root}>
       <Table>
         <TableHead>
           <TableRow>
@@ -86,7 +80,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
           ))}
         </TableBody>
       </Table>
-    </Root>
+    </Box>
   );
 };
 

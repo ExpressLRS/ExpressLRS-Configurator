@@ -1,5 +1,4 @@
 import React, { FunctionComponent, memo } from 'react';
-import { styled } from '@mui/material/styles';
 import { Alert } from '@mui/material';
 import {
   BuildFirmwareStep,
@@ -7,18 +6,11 @@ import {
   BuildProgressNotificationType,
 } from '../../gql/generated/types';
 
-const PREFIX = 'BuildNotificationsList';
-
-const classes = {
-  notification: `${PREFIX}-notification`,
-};
-
-// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
-const Root = styled('div')(({ theme }) => ({
-  [`& .${classes.notification}`]: {
-    marginBottom: `${theme.spacing(1)} !important`,
+const styles = {
+  notification: {
+    marginBottom: 1,
   },
-}));
+};
 
 interface BuildNotificationsListProps {
   notifications: BuildProgressNotification[];
@@ -58,14 +50,11 @@ const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = m
       }
     };
     return (
-      <Root>
+      <>
         {notifications.map((item, idx) => {
           return (
             <React.Fragment key={`${idx}-${item.step}`}>
-              <Alert
-                className={classes.notification}
-                severity={toSeverity(item.type)}
-              >
+              <Alert sx={styles.notification} severity={toSeverity(item.type)}>
                 {item?.step !== undefined &&
                   item.step !== null &&
                   toText(item.step)}
@@ -73,7 +62,7 @@ const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = m
             </React.Fragment>
           );
         })}
-      </Root>
+      </>
     );
   }
 );

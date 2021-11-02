@@ -1,39 +1,29 @@
-import { CircularProgress } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, CircularProgress } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import React, { FunctionComponent } from 'react';
 
-const PREFIX = 'Loader';
-
-const classes = {
-  root: `${PREFIX}-root`,
-};
-
-// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
-const Root = styled('div')(({ theme }) => ({
-  [`& .${classes.root}`]: {
-    marginBottom: theme.spacing(3),
+const styles = {
+  root: {
+    marginBottom: 3,
     display: 'flex',
     justifyContent: 'space-evenly',
   },
-}));
+};
 
 interface LoaderProps {
   loading: boolean;
-  className?: string;
+  sx?: SxProps<Theme>;
 }
 
-const Loader: FunctionComponent<LoaderProps> = ({
-  loading,
-  className = '',
-}) => {
+const Loader: FunctionComponent<LoaderProps> = ({ loading, sx = {} }) => {
   return (
-    <Root>
+    <>
       {loading && (
-        <div className={`${classes.root} ${className}`}>
+        <Box sx={{ ...styles.root, ...sx }}>
           <CircularProgress />
-        </div>
+        </Box>
       )}
-    </Root>
+    </>
   );
 };
 

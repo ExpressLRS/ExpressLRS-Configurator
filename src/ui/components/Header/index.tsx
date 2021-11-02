@@ -1,6 +1,5 @@
 import React, { FunctionComponent, memo } from 'react';
-import { styled } from '@mui/material/styles';
-import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { Config } from '../../config';
@@ -8,70 +7,46 @@ import LogotypeIcon from '../../../../assets/logotype.svg';
 import DiscordIcon from '../../../../assets/DiscordIcon.svg';
 import { useCheckForUpdatesQuery } from '../../gql/generated/types';
 
-const PREFIX = 'Header';
-
-const classes = {
-  title: `${PREFIX}-title`,
-  logotype: `${PREFIX}-logotype`,
-  logotypeIcon: `${PREFIX}-logotypeIcon`,
-  version: `${PREFIX}-version`,
-  updateAvailable: `${PREFIX}-updateAvailable`,
-  toolbar: `${PREFIX}-toolbar`,
-  social: `${PREFIX}-social`,
-  link: `${PREFIX}-link`,
-  facebookIcon: `${PREFIX}-facebookIcon`,
-  discordIcon: `${PREFIX}-discordIcon`,
-};
-
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  [`& .${classes.title}`]: {
-    fontSize: theme.typography.h4.fontSize,
-    lineHeight: theme.typography.h4.fontSize,
+const styles = {
+  title: {
+    fontSize: 'theme.typography.h4.fontSize',
+    lineHeight: 'theme.typography.h4.fontSize',
   },
-
-  [`& .${classes.logotype}`]: {
+  logotype: {
     display: 'flex',
     justifyContent: 'flex-start',
+    ' & img': {
+      marginRight: 1,
+    },
   },
-
-  [`& .${classes.logotypeIcon}`]: {
-    marginRight: 12,
-  },
-
-  [`& .${classes.version}`]: {
+  version: {
     fontSize: '0.4em',
   },
-
-  [`& .${classes.updateAvailable}`]: {
+  updateAvailable: {
     fontSize: '0.4em',
     marginLeft: '0.4em',
     color: 'rgb(52 216 52) !important',
   },
-
-  [`& .${classes.toolbar}`]: {
+  toolbar: {
     display: 'flex',
     justifyContent: 'space-between',
   },
-
-  [`& .${classes.social}`]: {
+  social: {
     display: 'flex',
     justifyContent: 'flex-end',
   },
-
-  [`& .${classes.link}`]: {
-    margin: '0 0 0 10px',
+  link: {
+    margin: '0 0 0 0',
   },
-
-  [`& .${classes.facebookIcon}`]: {
-    fontSize: '1.2em !important',
+  facebookIcon: {
+    fontSize: '1em !important',
     marginTop: '-2px',
   },
-
-  [`& .${classes.discordIcon}`]: {
+  discordIcon: {
     width: '24px',
     height: 'auto',
   },
-}));
+};
 
 interface HeaderProps {
   className?: string;
@@ -84,34 +59,31 @@ const Header: FunctionComponent<HeaderProps> = memo(({ className }) => {
     },
   });
   return (
-    <StyledAppBar position="static" color="default" className={className}>
-      <Toolbar className={classes.toolbar}>
-        <div className={classes.logotype}>
-          <img
-            src={LogotypeIcon}
-            className={classes.logotypeIcon}
-            alt="ExpressLrs Configurator"
-          />
-          <Typography variant="h4" className={classes.title}>
+    <AppBar position="static" color="default">
+      <Toolbar sx={styles.toolbar}>
+        <Box sx={styles.logotype}>
+          <img src={LogotypeIcon} alt="ExpressLrs Configurator" />
+          <Typography variant="h4" sx={styles.title}>
             ExpressLRS Configurator{' '}
-            <span className={classes.version}>
+            <Box component="span" sx={styles.version}>
               v{process.env.EXPRESSLRS_CONFIGURATOR_VERSION}
-            </span>
+            </Box>
             {updateResponse?.checkForUpdates?.updateAvailable && (
-              <a
+              <Box
+                component="a"
                 href={updateResponse?.checkForUpdates?.releaseUrl}
                 target="_blank"
                 title="Click to download a newest release"
                 rel="noreferrer noreferrer"
-                className={classes.updateAvailable}
+                sx={styles.updateAvailable}
               >
                 Update is available!
-              </a>
+              </Box>
             )}
           </Typography>
-        </div>
-        <div className={classes.social}>
-          <div className={classes.link}>
+        </Box>
+        <Box sx={styles.social}>
+          <Box sx={styles.link}>
             <IconButton
               href={Config.discordUrl}
               target="_blank"
@@ -119,10 +91,15 @@ const Header: FunctionComponent<HeaderProps> = memo(({ className }) => {
               rel="noreferrer noreferrer"
               size="large"
             >
-              <img src={DiscordIcon} className={classes.discordIcon} alt="" />
+              <Box
+                component="img"
+                src={DiscordIcon}
+                sx={styles.discordIcon}
+                alt=""
+              />
             </IconButton>
-          </div>
-          <div className={classes.link}>
+          </Box>
+          <Box sx={styles.link}>
             <IconButton
               href={Config.facebookGroupUrl}
               target="_blank"
@@ -130,10 +107,10 @@ const Header: FunctionComponent<HeaderProps> = memo(({ className }) => {
               rel="noreferrer noreferrer"
               size="large"
             >
-              <FacebookIcon className={classes.facebookIcon} />
+              <FacebookIcon sx={styles.facebookIcon} />
             </IconButton>
-          </div>
-          <div className={classes.link}>
+          </Box>
+          <Box sx={styles.link}>
             <IconButton
               href={Config.githubRepositoryUrl}
               target="_blank"
@@ -143,10 +120,10 @@ const Header: FunctionComponent<HeaderProps> = memo(({ className }) => {
             >
               <GitHubIcon />
             </IconButton>
-          </div>
-        </div>
+          </Box>
+        </Box>
       </Toolbar>
-    </StyledAppBar>
+    </AppBar>
   );
 });
 

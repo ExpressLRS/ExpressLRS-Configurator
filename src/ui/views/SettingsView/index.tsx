@@ -1,47 +1,36 @@
 import {
+  Box,
   Card,
   CardContent,
   Container,
   Divider,
   Typography,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import React, { FunctionComponent } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import CardTitle from '../../components/CardTitle';
 
-const PREFIX = 'SettingsView';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  main: `${PREFIX}-main`,
-  content: `${PREFIX}-content`,
-};
-
-const Root = styled('main')(({ theme }) => ({
-  [`&.${classes.root}`]: {
+const styles = {
+  root: {
     display: 'flex',
   },
-
-  [`& .${classes.main}`]: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(4),
+  main: {
+    marginY: 4,
   },
-
-  [`& .${classes.content}`]: {
+  content: {
     flexGrow: 1,
   },
-}));
+};
 
 const SettingsView: FunctionComponent = () => {
   return (
-    <Root className={classes.root}>
+    <Box component="main" sx={styles.root}>
       <Sidebar navigationEnabled />
-      <div className={classes.content}>
+      <Box sx={styles.content}>
         <Header />
-        <Container className={classes.main}>
+        <Container sx={styles.main}>
           <Card>
             <CardTitle icon={<SettingsIcon />} title="Settings" />
             <Divider />
@@ -54,8 +43,8 @@ const SettingsView: FunctionComponent = () => {
             </CardContent>
           </Card>
         </Container>
-      </div>
-    </Root>
+      </Box>
+    </Box>
   );
 };
 

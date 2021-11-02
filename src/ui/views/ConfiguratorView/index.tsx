@@ -5,10 +5,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { styled } from '@mui/material/styles';
 import {
   Alert,
   AlertTitle,
+  Box,
   Button,
   Card,
   CardContent,
@@ -66,49 +66,29 @@ import WifiDeviceSelect from '../../components/WifiDeviceSelect';
 import WifiDeviceList from '../../components/WifiDeviceList';
 import GitRepository from '../../models/GitRepository';
 
-const PREFIX = 'ConfiguratorView';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  main: `${PREFIX}-main`,
-  content: `${PREFIX}-content`,
-  button: `${PREFIX}-button`,
-  longBuildDurationWarning: `${PREFIX}-longBuildDurationWarning`,
-  buildResponse: `${PREFIX}-buildResponse`,
-  section: `${PREFIX}-section`,
-  cardSeparator: `${PREFIX}-cardSeparator`,
-};
-
-const Root = styled('main')(({ theme }) => ({
-  [`&.${classes.root}`]: {
+const styles = {
+  root: {
     display: 'flex',
   },
-
-  [`& .${classes.main}`]: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(4),
+  main: {
+    marginY: 4,
   },
-
-  [`& .${classes.content}`]: {
+  content: {
     flexGrow: 1,
+    '& .MuiCard-root': {
+      marginBottom: 4,
+    },
   },
-
-  [`& .${classes.button}`]: {
-    marginRight: `${theme.spacing(2)} !important`,
+  button: {
+    marginRight: 2,
   },
-
-  [`& .${classes.longBuildDurationWarning}`]: {
-    marginBottom: theme.spacing(1),
+  longBuildDurationWarning: {
+    marginBottom: 1,
   },
-
-  [`& .${classes.buildResponse}`]: {
-    marginBottom: theme.spacing(1),
+  buildResponse: {
+    marginBottom: 1,
   },
-
-  [`& .${classes.cardSeparator}`]: {
-    marginTop: theme.spacing(2),
-  },
-}));
+};
 
 export const validateFirmwareVersionData = (
   data: FirmwareVersionDataInput
@@ -716,11 +696,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   }, [handleSelectedDeviceChange, selectedDevice]);
 
   return (
-    <Root className={classes.root}>
+    <Box component="main" sx={styles.root}>
       <Sidebar navigationEnabled={!buildInProgress} />
-      <div className={classes.content}>
+      <Box sx={styles.content}>
         <Header />
-        <Container className={classes.main}>
+        <Container sx={styles.main}>
           {viewState === ViewState.Configuration && (
             <>
               <Card>
@@ -841,7 +821,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       />
                     )}
                     <Button
-                      className={classes.button}
+                      sx={styles.button}
                       size="large"
                       variant="contained"
                       onClick={onBuild}
@@ -849,7 +829,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       Build
                     </Button>
                     <Button
-                      className={classes.button}
+                      sx={styles.button}
                       size="large"
                       variant="contained"
                       onClick={onBuildAndFlash}
@@ -859,9 +839,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   </div>
                 </CardContent>
               </Card>
-              <Card className={classes.cardSeparator}>
+              <Card>
                 {networkDevices.size > 0 && (
-                  <div className={classes.section}>
+                  <Box>
                     <Divider />
                     <CardTitle icon={<NetworkWifi />} title="Network Devices" />
                     <Divider />
@@ -876,7 +856,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                         />
                       </div>
                     </CardContent>
-                  </div>
+                  </Box>
                 )}
               </Card>
             </>
@@ -906,12 +886,12 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   <Divider />
                   <CardContent>
                     {longBuildDurationWarning && (
-                      <div className={classes.longBuildDurationWarning}>
+                      <Box sx={styles.longBuildDurationWarning}>
                         <ShowAlerts
                           severity="warning"
                           messages="Sometimes builds take at least a few minutes. It is normal, especially for the first time builds."
                         />
-                      </div>
+                      </Box>
                     )}
                     <Logs data={logs} />
                   </CardContent>
@@ -923,9 +903,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   <CardTitle icon={<SettingsIcon />} title="Result" />
                   <Divider />
                   <CardContent>
-                    <div className={classes.buildResponse}>
+                    <Box sx={styles.buildResponse}>
                       <BuildResponse response={response?.buildFlashFirmware} />
-                    </div>
+                    </Box>
                     {response?.buildFlashFirmware?.success &&
                       currentJobType === BuildJobType.Build && (
                         <>
@@ -945,7 +925,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   <Divider />
                   <CardContent>
                     <Button
-                      className={classes.button}
+                      sx={styles.button}
                       color="primary"
                       size="large"
                       variant="contained"
@@ -955,7 +935,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     </Button>
 
                     <Button
-                      className={classes.button}
+                      sx={styles.button}
                       size="large"
                       variant="contained"
                       onClick={onBuildAndFlash}
@@ -968,8 +948,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             </Card>
           )}
         </Container>
-      </div>
-    </Root>
+      </Box>
+    </Box>
   );
 };
 

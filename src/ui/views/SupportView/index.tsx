@@ -1,5 +1,11 @@
-import { Button, Card, CardContent, Container, Divider } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Divider,
+} from '@mui/material';
 import React, { FunctionComponent } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from '../../components/Sidebar';
@@ -8,54 +14,41 @@ import CardTitle from '../../components/CardTitle';
 import ClearPlatformioDependencies from './Troubleshooting/ClearPlatformioDependencies';
 import ClearFirmwareFiles from './Troubleshooting/ClearFirmwareFiles';
 
-const PREFIX = 'SupportView';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  main: `${PREFIX}-main`,
-  content: `${PREFIX}-content`,
-  linksList: `${PREFIX}-linksList`,
-};
-
-const Root = styled('main')(({ theme }) => ({
-  [`&.${classes.root}`]: {
+const styles = {
+  root: {
     display: 'flex',
   },
-
-  [`& .${classes.main}`]: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(4),
-  },
-
-  [`& .${classes.content}`]: {
-    flexGrow: 1,
-  },
-
-  [`& .${classes.linksList}`]: {
-    paddingLeft: 0,
-    marginBottom: 0,
-    '& > li': {
-      display: 'inline-block',
-      listStyleType: 'none',
-      marginBottom: theme.spacing(3),
-      marginRight: theme.spacing(2),
+  main: {
+    marginY: 4,
+    '& .linksList': {
+      paddingLeft: 0,
+      marginBottom: 0,
+      '& > li': {
+        display: 'inline-block',
+        listStyleType: 'none',
+        marginBottom: 3,
+        marginRight: 2,
+      },
     },
   },
-}));
+  content: {
+    flexGrow: 1,
+  },
+};
 
 const SupportView: FunctionComponent = () => {
   return (
-    <Root className={classes.root}>
+    <Box component="main" sx={styles.root}>
       <Sidebar navigationEnabled />
-      <div className={classes.content}>
+      <Box sx={styles.content}>
         <Header />
-        <Container className={classes.main}>
+        <Container sx={styles.main}>
           <Card>
             <CardTitle icon={<SettingsIcon />} title="Support" />
             <Divider />
             <CardContent>
               <p>Need help? Confused? Join the Community!</p>
-              <ul className={classes.linksList}>
+              <ul className="linksList">
                 <li>
                   <Button
                     target="_blank"
@@ -109,8 +102,8 @@ const SupportView: FunctionComponent = () => {
             </CardContent>
           </Card>
         </Container>
-      </div>
-    </Root>
+      </Box>
+    </Box>
   );
 };
 

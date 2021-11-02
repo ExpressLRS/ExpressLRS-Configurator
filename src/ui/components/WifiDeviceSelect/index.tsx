@@ -1,5 +1,4 @@
-import { Tab, Tabs, TextField } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, Tab, Tabs, TextField } from '@mui/material';
 import React, {
   FunctionComponent,
   useCallback,
@@ -10,28 +9,18 @@ import React, {
 import Omnibox, { Option } from '../Omnibox';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 
-const PREFIX = 'WifiDeviceSelect';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  tabs: `${PREFIX}-tabs`,
-  inner: `${PREFIX}-inner`,
-};
-
-const Root = styled('div')(({ theme }) => ({
-  [`&.${classes.root}`]: {
-    marginBottom: theme.spacing(2),
+const styles = {
+  root: {
+    marginBottom: 2,
   },
-
-  [`& .${classes.tabs}`]: {
-    marginBottom: theme.spacing(2),
+  tabs: {
+    marginBottom: 2,
   },
-
-  [`& .${classes.inner}`]: {
+  inner: {
     display: 'flex',
     alignItems: 'center',
   },
-}));
+};
 
 interface WifiDeviceSelectProps {
   wifiDevice: string | null;
@@ -125,9 +114,9 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   );
 
   return (
-    <Root className={classes.root}>
+    <Box sx={styles.root}>
       <Tabs
-        className={classes.tabs}
+        sx={styles.tabs}
         defaultValue={WifiSourceType.LIST}
         value={wifiSource}
         onChange={handleWifiSourceChange}
@@ -136,7 +125,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
         <Tab label="Manual" value={WifiSourceType.MANUAL} />
       </Tabs>
       {wifiSource === WifiSourceType.LIST && (
-        <div className={classes.inner}>
+        <Box sx={styles.inner}>
           <Omnibox
             title="WiFi Device Selection"
             currentValue={
@@ -147,7 +136,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
             onChange={onDeviceSelectChange}
             options={options}
           />
-        </div>
+        </Box>
       )}
 
       {wifiSource === WifiSourceType.MANUAL && (
@@ -160,7 +149,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
           />
         </div>
       )}
-    </Root>
+    </Box>
   );
 };
 

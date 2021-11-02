@@ -1,5 +1,4 @@
 import React, { FunctionComponent, memo } from 'react';
-import { styled } from '@mui/material/styles';
 import { LinearProgress } from '@mui/material';
 import {
   BuildFirmwareStep,
@@ -7,19 +6,13 @@ import {
   BuildProgressNotification,
 } from '../../gql/generated/types';
 
-const PREFIX = 'BuildProgressBar';
-
-const classes = {
-  root: `${PREFIX}-root`,
-};
-
-const StyledLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  [`&.${classes.root}`]: {
+const styles = {
+  root: {
     height: 12,
-    marginTop: `${theme.spacing(1)} !important`,
-    marginBottom: `${theme.spacing(2)} !important`,
+    marginTop: 1,
+    marginBottom: 2,
   },
-}));
+};
 
 interface BuildProgressBarProps {
   inProgress: boolean;
@@ -74,8 +67,8 @@ const BuildProgressBar: FunctionComponent<BuildProgressBarProps> = memo(
       return 100;
     };
     return (
-      <StyledLinearProgress
-        className={classes.root}
+      <LinearProgress
+        sx={styles.root}
         variant="determinate"
         value={toProgressValue(progressNotification)}
       />

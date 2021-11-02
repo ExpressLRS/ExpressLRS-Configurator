@@ -1,5 +1,4 @@
-import { Tooltip } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, Tooltip } from '@mui/material';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import QuestionIcon from '@mui/icons-material/Help';
 import Omnibox, { Option } from '../Omnibox';
@@ -10,37 +9,27 @@ import {
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 
-const PREFIX = 'SerialDeviceSelect';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  inner: `${PREFIX}-inner`,
-  icon: `${PREFIX}-icon`,
-  loader: `${PREFIX}-loader`,
-};
-
-const Root = styled('div')(({ theme }) => ({
-  [`&.${classes.root}`]: {
-    marginBottom: theme.spacing(2),
+const styles = {
+  root: {
+    marginBottom: 2,
   },
-
-  [`& .${classes.inner}`]: {
+  inner: {
     display: 'flex',
     alignItems: 'center',
   },
 
-  [`& .${classes.icon}`]: {
+  icon: {
     verticalAlign: 'middle',
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(2),
+    marginLeft: 3,
+    marginRight: 2,
     fontSize: '1.44em',
   },
 
-  [`& .${classes.loader}`]: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+  loader: {
+    marginTop: 2,
+    marginBottom: 2,
   },
-}));
+};
 
 interface SerialDeviceSelectProps {
   serialDevice: string | null;
@@ -104,8 +93,8 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
     }
   }, [data, previousData]);
   return (
-    <Root className={classes.root}>
-      <div className={classes.inner}>
+    <Box sx={styles.root}>
+      <Box sx={styles.inner}>
         <Omnibox
           title="Manual serial device selection"
           currentValue={currentValue}
@@ -126,13 +115,13 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
             </div>
           }
         >
-          <QuestionIcon className={classes.icon} />
+          <QuestionIcon sx={styles.icon} />
         </Tooltip>
-      </div>
+      </Box>
 
-      <Loader className={classes.loader} loading={loading} />
+      <Loader sx={styles.loader} loading={loading} />
       <ShowAlerts severity="error" messages={error} />
-    </Root>
+    </Box>
   );
 };
 

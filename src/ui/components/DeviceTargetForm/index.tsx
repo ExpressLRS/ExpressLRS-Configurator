@@ -1,4 +1,3 @@
-import { styled } from '@mui/material/styles';
 import React, {
   FunctionComponent,
   useCallback,
@@ -6,28 +5,16 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { Box } from '@mui/material';
 import Omnibox from '../Omnibox';
 import { Device } from '../../gql/generated/types';
 import FlashingMethodOptions from '../FlashingMethodOptions';
 
-const PREFIX = 'DeviceTargetForm';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  loader: `${PREFIX}-loader`,
+const styles = {
+  root: {
+    marginY: 2,
+  },
 };
-
-const Root = styled('div')(({ theme }) => ({
-  [`& .${classes.root}`]: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-
-  [`& .${classes.loader}`]: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-}));
 
 interface FirmwareVersionCardProps {
   currentTarget: string | null;
@@ -166,8 +153,8 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
   }, [targetsByCategoryAndDevice, selectedCategoryValue]);
 
   return (
-    <Root>
-      <div className={classes.root}>
+    <>
+      <Box sx={styles.root}>
         <Omnibox
           title="Device category"
           currentValue={
@@ -178,8 +165,8 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
           onChange={onCategoryChange}
           options={categorySelectOptions}
         />
-      </div>
-      <div className={classes.root}>
+      </Box>
+      <Box sx={styles.root}>
         <Omnibox
           title="Device"
           currentValue={
@@ -192,7 +179,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
           // if no category has been selected, disable the target select box
           disabled={selectedCategoryValue === null}
         />
-      </div>
+      </Box>
 
       {selectedCategoryValue &&
         selectedDeviceValue &&
@@ -208,7 +195,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
             }
           />
         )}
-    </Root>
+    </>
   );
 };
 
