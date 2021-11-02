@@ -529,6 +529,40 @@
       "deviceType": "ExpressLRS"
     },
     {
+      "category": "Happymodel 2.4 GHz",
+      "name": "HM ES24TX Pro Series 2400 TX",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "HappyModel_ES24TX_Pro_Series_2400_TX_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "HappyModel_ES24TX_Pro_Series_2400_TX_via_WIFI"
+        }
+      ],
+      "userDefines": [
+        "REGULATORY_DOMAIN_ISM_2400",
+        "BINDING_PHRASE",
+        "HYBRID_SWITCHES_8",
+        "ENABLE_TELEMETRY",
+        "TLM_REPORT_INTERVAL_MS",
+        "NO_SYNC_ON_ARM",
+        "ARM_CHANNEL",
+        "FEATURE_OPENTX_SYNC",
+        "USE_500HZ",
+        "UART_INVERTED",
+        "AUTO_WIFI_ON_INTERVAL",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD",
+        "BLE_HID_JOYSTICK",
+        "USE_DYNAMIC_POWER",
+        "WS2812_IS_GRB"
+      ],
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/",
+      "deviceType": "ExpressLRS"
+    },
+    {
       "category": "HappyModel ES900",
       "name": "HappyModel TX ES900TX",
       "targets": [
