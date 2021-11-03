@@ -1929,6 +1929,21 @@
       "deviceType": "Backpack"
     },
     {
+      "category": "TX",
+      "name": "AXIS THOR TX Backpack",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "AXIS_THOR_Tx_Backpack"
+        }
+      ],
+      "userDefines": [
+        "BINDING_PHRASE"
+      ],
+      "wikiUrl": "",
+      "deviceType": "Backpack"
+    },
+    {
       "category": "VRX",
       "name": "Rapidfire ESP01F Backpack",
       "targets": [
