@@ -54,9 +54,9 @@ const SupportView: FunctionComponent = () => {
                     target="_blank"
                     variant="contained"
                     rel="noreferrer noreferrer"
-                    href="https://github.com/ExpressLRS/ExpressLRS/wiki"
+                    href="https://www.expresslrs.org/"
                   >
-                    ExpressLRS Wiki
+                    ExpressLRS Documentation
                   </Button>
                 </li>
                 <li>
