@@ -42,15 +42,15 @@ export default class FirmwareBuilder {
   }
 
   getFirmwareBinPath(target: string, firmwarePath: string): string {
-    const firmwareElrs = path.join(
-      firmwarePath,
-      '.pio',
-      'build',
-      target,
-      'firmware.elrs'
-    );
-    if (fs.existsSync(firmwareElrs)) {
-      return firmwareElrs;
+    const paths = [
+      path.join(firmwarePath, '.pio', 'build', target, 'firmware.elrs'),
+      path.join(firmwarePath, '.pio', 'build', target, 'backpack.bin'),
+    ];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const location of paths) {
+      if (fs.existsSync(location)) {
+        return location;
+      }
     }
     return path.join(firmwarePath, '.pio', 'build', target, 'firmware.bin');
   }
