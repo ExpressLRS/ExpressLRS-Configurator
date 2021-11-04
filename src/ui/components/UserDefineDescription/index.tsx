@@ -1,32 +1,18 @@
 import React, { FunctionComponent, memo } from 'react';
-import { makeStyles, Tooltip } from '@material-ui/core';
-import QuestionIcon from '@material-ui/icons/Help';
+import { Box, Tooltip } from '@mui/material';
+import QuestionIcon from '@mui/icons-material/Help';
 import { UserDefineKey } from '../../gql/generated/types';
 
-const useStyles = makeStyles(() => ({
+const styles = {
   root: {
     display: 'inline-block',
-  },
-  tooltipRoot: {
-    maxWidth: '400px',
-  },
-  tooltipRootBig: {
-    maxWidth: '700px',
-  },
-  tooltip: {
-    paddingLeft: '1em',
-    paddingRight: '1em',
-    fontSize: '1.4em !important',
-    '& a': {
-      color: '#90caf9',
-    },
   },
   icon: {
     verticalAlign: 'middle',
     marginLeft: '5px',
     fontSize: '1.44em',
   },
-}));
+};
 
 interface UserDefineDescriptionProps {
   userDefine: UserDefineKey;
@@ -34,7 +20,6 @@ interface UserDefineDescriptionProps {
 
 const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = memo(
   ({ userDefine }) => {
-    const styles = useStyles();
     const toText = (key: UserDefineKey) => {
       switch (key) {
         case UserDefineKey.REGULATORY_DOMAIN_AU_433:
@@ -908,23 +893,13 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
     };
     const desc = toText(userDefine);
     return (
-      <div className={styles.root}>
+      <Box sx={styles.root}>
         {desc !== '' && (
-          <Tooltip
-            placement="top"
-            arrow
-            classes={{
-              tooltip:
-                userDefine === UserDefineKey.HYBRID_SWITCHES_8
-                  ? styles.tooltipRootBig
-                  : styles.tooltipRoot,
-            }}
-            title={<div className={styles.tooltip}>{desc}</div>}
-          >
-            <QuestionIcon className={styles.icon} />
+          <Tooltip placement="top" arrow title={<div>{desc}</div>}>
+            <QuestionIcon sx={styles.icon} />
           </Tooltip>
         )}
-      </div>
+      </Box>
     );
   }
 );

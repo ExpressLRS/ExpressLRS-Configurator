@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core';
 import React, {
   FunctionComponent,
   useCallback,
@@ -6,20 +5,16 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { Box } from '@mui/material';
 import Omnibox from '../Omnibox';
 import { Device } from '../../gql/generated/types';
 import FlashingMethodOptions from '../FlashingMethodOptions';
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginY: 2,
   },
-  loader: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-}));
+};
 
 interface FirmwareVersionCardProps {
   currentTarget: string | null;
@@ -31,8 +26,6 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
   props
 ) => {
   const { onChange, currentTarget, targetOptions } = props;
-
-  const styles = useStyles();
 
   interface Dictionary<T> {
     [Key: string]: T;
@@ -160,8 +153,8 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
   }, [targetsByCategoryAndDevice, selectedCategoryValue]);
 
   return (
-    <div>
-      <div className={styles.root}>
+    <>
+      <Box sx={styles.root}>
         <Omnibox
           title="Device category"
           currentValue={
@@ -172,8 +165,8 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
           onChange={onCategoryChange}
           options={categorySelectOptions}
         />
-      </div>
-      <div className={styles.root}>
+      </Box>
+      <Box sx={styles.root}>
         <Omnibox
           title="Device"
           currentValue={
@@ -186,7 +179,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
           // if no category has been selected, disable the target select box
           disabled={selectedCategoryValue === null}
         />
-      </div>
+      </Box>
 
       {selectedCategoryValue &&
         selectedDeviceValue &&
@@ -202,7 +195,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
             }
           />
         )}
-    </div>
+    </>
   );
 };
 

@@ -1,18 +1,18 @@
 import React, { FunctionComponent, memo } from 'react';
-import { LinearProgress, makeStyles } from '@material-ui/core';
+import { LinearProgress } from '@mui/material';
 import {
   BuildFirmwareStep,
   BuildJobType,
   BuildProgressNotification,
 } from '../../gql/generated/types';
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
     height: 12,
-    marginTop: `${theme.spacing(1)} !important`,
-    marginBottom: `${theme.spacing(2)} !important`,
+    marginTop: 1,
+    marginBottom: 2,
   },
-}));
+};
 
 interface BuildProgressBarProps {
   inProgress: boolean;
@@ -22,7 +22,6 @@ interface BuildProgressBarProps {
 
 const BuildProgressBar: FunctionComponent<BuildProgressBarProps> = memo(
   ({ inProgress, jobType, progressNotification }) => {
-    const styles = useStyles();
     const toProgressValue = (
       notification: BuildProgressNotification | null
     ): number => {
@@ -69,7 +68,7 @@ const BuildProgressBar: FunctionComponent<BuildProgressBarProps> = memo(
     };
     return (
       <LinearProgress
-        className={styles.root}
+        sx={styles.root}
         variant="determinate"
         value={toProgressValue(progressNotification)}
       />

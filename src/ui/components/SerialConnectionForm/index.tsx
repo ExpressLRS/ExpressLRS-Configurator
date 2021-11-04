@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles, TextField } from '@material-ui/core';
+import { Box, Button, Grid, TextField } from '@mui/material';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import Omnibox, { Option } from '../Omnibox';
 import {
@@ -8,20 +8,17 @@ import {
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginY: 2,
   },
   loader: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginY: 2,
   },
   button: {
-    paddingTop: '15px !important',
-    paddingBottom: '15px !important',
+    paddingY: '15px !important',
   },
-}));
+};
 
 interface SerialConnectionFormProps {
   serialDevice: string | null;
@@ -33,7 +30,6 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
   props
 ) => {
   const { onConnect, serialDevice, baudRate } = props;
-  const styles = useStyles();
 
   const { loading, data, error, previousData } = useAvailableDevicesListQuery({
     pollInterval: 1000,
@@ -124,7 +120,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
     }
   };
   return (
-    <div className={styles.root}>
+    <Box sx={styles.root}>
       <Grid container spacing={2}>
         <Grid item xs={3}>
           <Omnibox
@@ -134,7 +130,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
             options={options}
             loading={loading}
           />
-          <Loader className={styles.loader} loading={loading} />
+          <Loader sx={styles.loader} loading={loading} />
           <ShowAlerts severity="error" messages={error} />
         </Grid>
         <Grid item>
@@ -156,13 +152,13 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
             onClick={onSubmit}
             size="large"
             variant="contained"
-            className={styles.button}
+            sx={styles.button}
           >
             Connect
           </Button>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

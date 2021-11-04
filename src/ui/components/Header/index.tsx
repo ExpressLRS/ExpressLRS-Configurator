@@ -1,29 +1,23 @@
 import React, { FunctionComponent, memo } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  makeStyles,
-  IconButton,
-} from '@material-ui/core';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import FacebookIcon from '@material-ui/icons/Facebook';
+import { AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import FacebookIcon from '@mui/icons-material/Facebook';
 import { Config } from '../../config';
 import LogotypeIcon from '../../../../assets/logotype.svg';
 import DiscordIcon from '../../../../assets/DiscordIcon.svg';
 import { useCheckForUpdatesQuery } from '../../gql/generated/types';
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   title: {
-    fontSize: theme.typography.h4.fontSize,
-    lineHeight: theme.typography.h4.fontSize,
+    fontSize: 'theme.typography.h4.fontSize',
+    lineHeight: 'theme.typography.h4.fontSize',
   },
   logotype: {
     display: 'flex',
     justifyContent: 'flex-start',
-  },
-  logotypeIcon: {
-    marginRight: 12,
+    ' & img': {
+      marginRight: 1,
+    },
   },
   version: {
     fontSize: '0.4em',
@@ -42,88 +36,92 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   link: {
-    margin: '0 0 0 10px',
+    margin: '0 0 0 0',
   },
   facebookIcon: {
-    fontSize: '1.2em !important',
+    fontSize: '1em !important',
     marginTop: '-2px',
   },
   discordIcon: {
     width: '24px',
     height: 'auto',
   },
-}));
+};
 
 interface HeaderProps {
   className?: string;
 }
 
 const Header: FunctionComponent<HeaderProps> = memo(({ className }) => {
-  const styles = useStyles();
   const { data: updateResponse } = useCheckForUpdatesQuery({
     variables: {
       currentVersion: process.env.EXPRESSLRS_CONFIGURATOR_VERSION || '0.0.1',
     },
   });
   return (
-    <AppBar position="static" color="default" className={className}>
-      <Toolbar className={styles.toolbar}>
-        <div className={styles.logotype}>
-          <img
-            src={LogotypeIcon}
-            className={styles.logotypeIcon}
-            alt="ExpressLrs Configurator"
-          />
-          <Typography variant="h4" className={styles.title}>
+    <AppBar position="static" color="default">
+      <Toolbar sx={styles.toolbar}>
+        <Box sx={styles.logotype}>
+          <img src={LogotypeIcon} alt="ExpressLrs Configurator" />
+          <Typography variant="h4" sx={styles.title}>
             ExpressLRS Configurator{' '}
-            <span className={styles.version}>
+            <Box component="span" sx={styles.version}>
               v{process.env.EXPRESSLRS_CONFIGURATOR_VERSION}
-            </span>
+            </Box>
             {updateResponse?.checkForUpdates?.updateAvailable && (
-              <a
+              <Box
+                component="a"
                 href={updateResponse?.checkForUpdates?.releaseUrl}
                 target="_blank"
                 title="Click to download a newest release"
                 rel="noreferrer noreferrer"
-                className={styles.updateAvailable}
+                sx={styles.updateAvailable}
               >
                 Update is available!
-              </a>
+              </Box>
             )}
           </Typography>
-        </div>
-        <div className={styles.social}>
-          <div className={styles.link}>
+        </Box>
+        <Box sx={styles.social}>
+          <Box sx={styles.link}>
             <IconButton
               href={Config.discordUrl}
               target="_blank"
               title="Discord"
               rel="noreferrer noreferrer"
+              size="large"
             >
-              <img src={DiscordIcon} className={styles.discordIcon} alt="" />
+              <Box
+                component="img"
+                src={DiscordIcon}
+                sx={styles.discordIcon}
+                alt=""
+              />
             </IconButton>
-          </div>
-          <div className={styles.link}>
+          </Box>
+          <Box sx={styles.link}>
             <IconButton
               href={Config.facebookGroupUrl}
               target="_blank"
               title="Facebook group"
               rel="noreferrer noreferrer"
+              size="large"
             >
-              <FacebookIcon className={styles.facebookIcon} />
+              <FacebookIcon sx={styles.facebookIcon} />
             </IconButton>
-          </div>
-          <div className={styles.link}>
+          </Box>
+          <Box sx={styles.link}>
             <IconButton
               href={Config.githubRepositoryUrl}
               target="_blank"
               title="Github"
               rel="noreferrer noreferrer"
+              size="large"
             >
               <GitHubIcon />
             </IconButton>
-          </div>
-        </div>
+          </Box>
+        </Box>
       </Toolbar>
     </AppBar>
   );

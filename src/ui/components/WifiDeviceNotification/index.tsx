@@ -1,4 +1,4 @@
-import { Alert, Button, Snackbar } from '@material-ui/core';
+import { Alert, Button, Snackbar } from '@mui/material';
 import React, { FunctionComponent } from 'react';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 

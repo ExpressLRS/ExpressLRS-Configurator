@@ -1,19 +1,16 @@
-import { createMuiTheme, ThemeOptions, Theme } from '@material-ui/core';
+import { createTheme, Theme, ThemeOptions } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
-export const defaultTheme: Theme = createMuiTheme();
+export const defaultTheme: Theme = createTheme();
 
 export const themeConfig: ThemeOptions = {
-  // shadows: Array(25).fill('none') as Shadows,
   shape: {
     borderRadius: 0,
   },
   palette: {
     mode: 'dark',
-    primary: {
-      main: '#90caf9',
-    },
-    secondary: {
-      main: '#f48fb1',
+    background: {
+      paper: grey[800],
     },
   },
   components: {
@@ -21,44 +18,39 @@ export const themeConfig: ThemeOptions = {
       styleOverrides: {
         standardError: {
           backgroundColor: 'rgb(156 40 34) !important',
+          color: 'rgb(255 255 255) !important',
         },
         standardWarning: {
           backgroundColor: 'rgb(173 110 17) !important',
+          color: 'rgb(255 255 255) !important',
         },
         standardInfo: {
           backgroundColor: 'rgb(44 104 158) !important',
+          color: 'rgb(255 255 255) !important',
         },
         standardSuccess: {
           backgroundColor: 'rgb(27 84 27) !important',
+          color: 'rgb(255 255 255) !important',
         },
       },
     },
-    MuiListItem: {
+    MuiTooltip: {
       styleOverrides: {
-        root: {
-          '&:hover': {
-            backgroundColor: 'rgba(144, 202, 249, 0.50) !important',
+        tooltip: {
+          paddingLeft: '1em',
+          paddingRight: '1em',
+          fontSize: '1em !important',
+          '& a': {
+            color: '#90caf9',
           },
-          // '&$focusVisible': {
-          //   backgroundColor: 'rgba(144, 202, 249, 0.40) !important',
-          // },
-          '&$selected': {
-            backgroundColor: 'rgba(144, 202, 249, 0.40)',
-          },
+          maxWidth: '700px',
         },
-      },
-    },
-    MuiAutocomplete: {
-      styleOverrides: {
-        option: {
-          // I think this is a temporary material-ui bug
-          '&[data-focus="true"]': {
-            backgroundColor: 'rgba(144, 202, 249, 0.50) !important',
-          },
+        popper: {
+          maxWidth: '700px',
         },
       },
     },
   },
 };
 
-export default createMuiTheme(themeConfig);
+export default createTheme(themeConfig);

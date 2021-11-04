@@ -1,22 +1,21 @@
 import React, { FunctionComponent } from 'react';
-import { Alert, makeStyles } from '@material-ui/core';
+import { Alert, Box } from '@mui/material';
 import { DeviceOptionsFormData } from '../DeviceOptionsForm';
 import { UserDefineKey, UserDefinesMode } from '../../gql/generated/types';
+
+const styles = {
+  container: {
+    marginBottom: 2,
+  },
+};
 
 interface UserDefinesAdvisorProps {
   deviceOptionsFormData: DeviceOptionsFormData;
 }
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    marginBottom: theme.spacing(2),
-  },
-}));
-
 const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
   deviceOptionsFormData,
 }) => {
-  const styles = useStyles();
   const messages: string[] = [];
   if (deviceOptionsFormData.userDefinesMode === UserDefinesMode.UserInterface) {
     const isUserDefine = (
@@ -51,17 +50,17 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
     }
   }
   return (
-    <div>
+    <>
       {messages.length > 0 && (
-        <div className={styles.container}>
+        <Box sx={styles.container}>
           {messages.map((message, idx) => (
             <Alert key={idx} severity="warning">
               {message}
             </Alert>
           ))}
-        </div>
+        </Box>
       )}
-    </div>
+    </>
   );
 };
 

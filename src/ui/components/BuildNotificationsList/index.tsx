@@ -1,24 +1,23 @@
 import React, { FunctionComponent, memo } from 'react';
-import { Alert, makeStyles } from '@material-ui/core';
+import { Alert } from '@mui/material';
 import {
   BuildFirmwareStep,
   BuildProgressNotification,
   BuildProgressNotificationType,
 } from '../../gql/generated/types';
 
+const styles = {
+  notification: {
+    marginBottom: 1,
+  },
+};
+
 interface BuildNotificationsListProps {
   notifications: BuildProgressNotification[];
 }
 
-const useStyles = makeStyles((theme) => ({
-  notification: {
-    marginBottom: `${theme.spacing(1)} !important`,
-  },
-}));
-
 const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = memo(
   ({ notifications }) => {
-    const styles = useStyles();
     const toSeverity = (
       item: BuildProgressNotificationType
     ): 'error' | 'info' | 'success' => {
@@ -55,10 +54,7 @@ const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = m
         {notifications.map((item, idx) => {
           return (
             <React.Fragment key={`${idx}-${item.step}`}>
-              <Alert
-                className={styles.notification}
-                severity={toSeverity(item.type)}
-              >
+              <Alert sx={styles.notification} severity={toSeverity(item.type)}>
                 {item?.step !== undefined &&
                   item.step !== null &&
                   toText(item.step)}

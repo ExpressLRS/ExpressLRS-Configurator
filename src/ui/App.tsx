@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { Switch, Route, Redirect, HashRouter } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import CssBaseline from '@mui/material/CssBaseline';
 import '@fontsource/roboto';
-import { ThemeProvider } from '@material-ui/core';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material';
 import { ApolloProvider } from '@apollo/client';
 import theme from './theme';
 import client from './gql';
@@ -42,44 +42,46 @@ export default function App() {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <ApolloProvider client={client}>
-        <HashRouter>
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/configurator" />
-            </Route>
-            <Route path="/configurator">
-              <ConfiguratorView
-                key="configurator"
-                gitRepository={Config.expressLRSGit}
-                selectedDevice={device}
-                networkDevices={networkDevices}
-                onDeviceChange={onDeviceChange}
-              />
-            </Route>
-            <Route path="/backpack">
-              <ConfiguratorView
-                key="backpack"
-                gitRepository={Config.backpackGit}
-                selectedDevice={device}
-                networkDevices={networkDevices}
-                onDeviceChange={onDeviceChange}
-              />
-            </Route>
-            <Route path="/settings" component={SettingsView} />
-            <Route path="/logs" component={LogsView} />
-            <Route path="/serial-monitor" component={SerialMonitorView} />
-            <Route path="/support" component={SupportView} />
-          </Switch>
-        </HashRouter>
-        <WifiDeviceNotification
-          newNetworkDevices={newNetworkDevices}
-          removeDeviceFromNewList={removeDeviceFromNewList}
-          onDeviceChange={onDeviceChange}
-        />
-      </ApolloProvider>
-    </ThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <ApolloProvider client={client}>
+          <HashRouter>
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/configurator" />
+              </Route>
+              <Route path="/configurator">
+                <ConfiguratorView
+                  key="configurator"
+                  gitRepository={Config.expressLRSGit}
+                  selectedDevice={device}
+                  networkDevices={networkDevices}
+                  onDeviceChange={onDeviceChange}
+                />
+              </Route>
+              <Route path="/backpack">
+                <ConfiguratorView
+                  key="backpack"
+                  gitRepository={Config.backpackGit}
+                  selectedDevice={device}
+                  networkDevices={networkDevices}
+                  onDeviceChange={onDeviceChange}
+                />
+              </Route>
+              <Route path="/settings" component={SettingsView} />
+              <Route path="/logs" component={LogsView} />
+              <Route path="/serial-monitor" component={SerialMonitorView} />
+              <Route path="/support" component={SupportView} />
+            </Switch>
+          </HashRouter>
+          <WifiDeviceNotification
+            newNetworkDevices={newNetworkDevices}
+            removeDeviceFromNewList={removeDeviceFromNewList}
+            onDeviceChange={onDeviceChange}
+          />
+        </ApolloProvider>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 }

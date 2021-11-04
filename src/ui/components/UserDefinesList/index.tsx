@@ -7,9 +7,8 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
-  makeStyles,
   TextField,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   UserDefine,
   UserDefineKey,
@@ -18,21 +17,17 @@ import {
 import Omnibox from '../Omnibox';
 import UserDefineDescription from '../UserDefineDescription';
 
-const useStyles = makeStyles((theme) => ({
-  option: {
-    padding: `${theme.spacing(1, 2)} !important`,
-  },
+const styles = {
   icon: {
     minWidth: 40,
   },
   complimentaryItem: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    marginY: 1,
     '&:hover': {
       backgroundColor: 'transparent !important',
     },
   },
-}));
+};
 
 interface UserDefinesListProps {
   options: UserDefine[];
@@ -40,7 +35,6 @@ interface UserDefinesListProps {
 }
 
 const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
-  const styles = useStyles();
   const { options, onChange } = props;
   const onChecked = (data: UserDefineKey) => {
     const opt = options.find(({ key }) => key === data);
@@ -102,12 +96,11 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
           <React.Fragment key={item.key}>
             <ListItem
               dense
-              className={styles.option}
               selected={item.enabled}
               button
               onClick={onChecked.bind(this, item.key)}
             >
-              <ListItemIcon className={styles.icon}>
+              <ListItemIcon sx={styles.icon}>
                 <Checkbox
                   edge="start"
                   checked={item.enabled}
@@ -122,7 +115,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
             </ListItem>
             {item.type === UserDefineKind.Text && item.enabled && (
               <>
-                <ListItem className={styles.complimentaryItem}>
+                <ListItem sx={styles.complimentaryItem}>
                   <TextField
                     size="small"
                     onBlur={onUserDefineValueChange(item.key)}
@@ -134,7 +127,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
               </>
             )}
             {item.type === UserDefineKind.Enum && item.enabled && (
-              <ListItem className={styles.complimentaryItem}>
+              <ListItem sx={styles.complimentaryItem}>
                 <Omnibox
                   title={inputLabel(item.key)}
                   currentValue={{

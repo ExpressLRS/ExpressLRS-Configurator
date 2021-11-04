@@ -1,23 +1,23 @@
 import {
+  Box,
   Button,
-  makeStyles,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-} from '@material-ui/core';
+} from '@mui/material';
 import React, { FunctionComponent, useMemo } from 'react';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
-    marginBottom: theme.spacing(2),
+    marginBottom: 2,
     '& a': {
       color: '#90caf9',
     },
   },
-}));
+};
 
 interface WifiDeviceSelectProps {
   wifiDevices: MulticastDnsInformation[];
@@ -26,7 +26,6 @@ interface WifiDeviceSelectProps {
 
 const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   const { wifiDevices, onChange } = props;
-  const styles = useStyles();
 
   const wifiDevicesSorted = useMemo(() => {
     return wifiDevices.sort((a, b) => {
@@ -38,7 +37,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   }, [wifiDevices]);
 
   return (
-    <div className={styles.root}>
+    <Box sx={styles.root}>
       <Table>
         <TableHead>
           <TableRow>
@@ -81,7 +80,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
           ))}
         </TableBody>
       </Table>
-    </div>
+    </Box>
   );
 };
 

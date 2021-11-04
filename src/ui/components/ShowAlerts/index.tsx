@@ -1,4 +1,4 @@
-import { Alert } from '@material-ui/core';
+import { Alert } from '@mui/material';
 import React, { FunctionComponent, memo } from 'react';
 
 interface ShowAlertsProps {

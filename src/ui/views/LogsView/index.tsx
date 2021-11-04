@@ -1,43 +1,41 @@
 import {
+  Box,
   Button,
   Card,
   CardContent,
   Container,
   Divider,
-  makeStyles,
-} from '@material-ui/core';
+} from '@mui/material';
 import React, { FunctionComponent } from 'react';
-import ListIcon from '@material-ui/icons/List';
+import ListIcon from '@mui/icons-material/List';
 import { ipcRenderer } from 'electron';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import CardTitle from '../../components/CardTitle';
 import { IpcRequest } from '../../../ipc';
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
     display: 'flex',
   },
   main: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(4),
+    marginY: 4,
   },
   content: {
     flexGrow: 1,
   },
-}));
+};
 
 const LogsView: FunctionComponent = () => {
-  const styles = useStyles();
   const onLogs = () => {
     ipcRenderer.send(IpcRequest.OpenLogsFolder);
   };
   return (
-    <main className={styles.root}>
+    <Box component="main" sx={styles.root}>
       <Sidebar navigationEnabled />
-      <div className={styles.content}>
+      <Box sx={styles.content}>
         <Header />
-        <Container className={styles.main}>
+        <Container sx={styles.main}>
           <Card>
             <CardTitle icon={<ListIcon />} title="Logs" />
             <Divider />
@@ -53,8 +51,8 @@ const LogsView: FunctionComponent = () => {
             </CardContent>
           </Card>
         </Container>
-      </div>
-    </main>
+      </Box>
+    </Box>
   );
 };
 

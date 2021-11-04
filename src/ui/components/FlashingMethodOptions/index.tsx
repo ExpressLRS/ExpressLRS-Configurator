@@ -1,11 +1,11 @@
 import {
-  makeStyles,
+  Box,
   FormControl,
   FormControlLabel,
   Radio,
   RadioGroup,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import React, {
   FunctionComponent,
   useCallback,
@@ -15,25 +15,28 @@ import React, {
 import { Device, Target } from '../../gql/generated/types';
 import FlashingMethodDescription from '../FlashingMethodDescription';
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginTop: 2,
+    marginBottom: 2,
   },
   flashingMethods: {
-    marginTop: theme.spacing(1),
-    padding: theme.spacing(0, 0, 0, 1),
+    marginTop: 1,
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingBottom: 0,
+    paddingLeft: 1,
   },
   radioControl: {
-    marginRight: `${theme.spacing(4)} !important`,
+    marginRight: 4,
   },
   radio: {
-    marginRight: `${theme.spacing(1)} !important`,
+    marginRight: 1,
   },
   categoryTitle: {
-    marginBottom: theme.spacing(1),
+    marginBottom: 1,
   },
-}));
+};
 
 interface FlashingMethodsListProps {
   currentTarget: string | null;
@@ -45,8 +48,6 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   props
 ) => {
   const { onChange, currentTarget, currentDevice } = props;
-
-  const styles = useStyles();
 
   const targetMappingsSorted = useMemo(
     () =>
@@ -109,21 +110,21 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
         <FormControlLabel
           key={targetMapping.name}
           value={targetMapping.name}
-          className={styles.radioControl}
-          control={<Radio className={styles.radio} color="primary" />}
+          sx={styles.radioControl}
+          control={<Radio sx={styles.radio} color="primary" />}
           label={label}
         />
       );
     },
-    [currentDevice?.wikiUrl, styles.radio, styles.radioControl]
+    [currentDevice?.wikiUrl]
   );
 
   return (
-    <div className={styles.root}>
-      <Typography variant="h6" className={styles.categoryTitle}>
+    <Box sx={styles.root}>
+      <Typography variant="h6" sx={styles.categoryTitle}>
         Flashing Method
       </Typography>
-      <FormControl component="fieldset" className={styles.flashingMethods}>
+      <FormControl component="fieldset" sx={styles.flashingMethods}>
         <RadioGroup
           row
           value={currentTarget}
@@ -135,7 +136,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
           })}
         </RadioGroup>
       </FormControl>
-    </div>
+    </Box>
   );
 };
 

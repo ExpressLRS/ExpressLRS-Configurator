@@ -1,30 +1,27 @@
-import { CircularProgress, makeStyles } from '@material-ui/core';
+import { Box, CircularProgress } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import React, { FunctionComponent } from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
-    marginBottom: theme.spacing(3),
+    marginBottom: 3,
     display: 'flex',
     justifyContent: 'space-evenly',
   },
-}));
+};
 
 interface LoaderProps {
   loading: boolean;
-  className?: string;
+  sx?: SxProps<Theme>;
 }
 
-const Loader: FunctionComponent<LoaderProps> = ({
-  loading,
-  className = '',
-}) => {
-  const styles = useStyles();
+const Loader: FunctionComponent<LoaderProps> = ({ loading, sx = {} }) => {
   return (
     <>
       {loading && (
-        <div className={`${styles.root} ${className}`}>
+        <Box sx={{ ...styles.root, ...sx }}>
           <CircularProgress />
-        </div>
+        </Box>
       )}
     </>
   );

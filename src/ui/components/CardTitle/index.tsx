@@ -1,4 +1,4 @@
-import { CardContent, Grid, Typography } from '@material-ui/core';
+import { CardContent, Grid, Typography } from '@mui/material';
 import React, { FunctionComponent, memo } from 'react';
 
 interface CardTitleProps {

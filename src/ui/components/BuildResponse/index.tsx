@@ -1,5 +1,5 @@
 import React, { FunctionComponent, memo } from 'react';
-import { Alert, AlertTitle } from '@material-ui/core';
+import { Alert, AlertTitle } from '@mui/material';
 import {
   BuildFirmwareErrorType,
   BuildFlashFirmwareResult,

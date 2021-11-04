@@ -1,4 +1,4 @@
-import { makeStyles, Tab, Tabs, TextField } from '@material-ui/core';
+import { Box, Tab, Tabs, TextField } from '@mui/material';
 import React, {
   FunctionComponent,
   useCallback,
@@ -9,18 +9,18 @@ import React, {
 import Omnibox, { Option } from '../Omnibox';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
-    marginBottom: theme.spacing(2),
+    marginBottom: 2,
   },
   tabs: {
-    marginBottom: theme.spacing(2),
+    marginBottom: 2,
   },
   inner: {
     display: 'flex',
     alignItems: 'center',
   },
-}));
+};
 
 interface WifiDeviceSelectProps {
   wifiDevice: string | null;
@@ -35,7 +35,6 @@ enum WifiSourceType {
 
 const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   const { wifiDevice, wifiDevices, onChange } = props;
-  const styles = useStyles();
 
   const options = useMemo(() => {
     const result = wifiDevices.map((target) => {
@@ -115,9 +114,9 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   );
 
   return (
-    <div className={styles.root}>
+    <Box sx={styles.root}>
       <Tabs
-        className={styles.tabs}
+        sx={styles.tabs}
         defaultValue={WifiSourceType.LIST}
         value={wifiSource}
         onChange={handleWifiSourceChange}
@@ -126,7 +125,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
         <Tab label="Manual" value={WifiSourceType.MANUAL} />
       </Tabs>
       {wifiSource === WifiSourceType.LIST && (
-        <div className={styles.inner}>
+        <Box sx={styles.inner}>
           <Omnibox
             title="WiFi Device Selection"
             currentValue={
@@ -137,7 +136,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
             onChange={onDeviceSelectChange}
             options={options}
           />
-        </div>
+        </Box>
       )}
 
       {wifiSource === WifiSourceType.MANUAL && (
@@ -150,7 +149,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
           />
         </div>
       )}
-    </div>
+    </Box>
   );
 };
 

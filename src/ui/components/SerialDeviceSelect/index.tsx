@@ -1,6 +1,6 @@
-import { makeStyles, Tooltip } from '@material-ui/core';
+import { Box, Tooltip } from '@mui/material';
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import QuestionIcon from '@material-ui/icons/Help';
+import QuestionIcon from '@mui/icons-material/Help';
 import Omnibox, { Option } from '../Omnibox';
 import {
   SerialPortInformation,
@@ -9,36 +9,27 @@ import {
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
-    marginBottom: theme.spacing(2),
+    marginBottom: 2,
   },
   inner: {
     display: 'flex',
     alignItems: 'center',
   },
-  tooltipRoot: {
-    maxWidth: '400px',
-  },
-  tooltip: {
-    paddingLeft: '1em',
-    paddingRight: '1em',
-    fontSize: '1.4em !important',
-    '& a': {
-      color: '#90caf9',
-    },
-  },
+
   icon: {
     verticalAlign: 'middle',
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(2),
+    marginLeft: 3,
+    marginRight: 2,
     fontSize: '1.44em',
   },
+
   loader: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginTop: 2,
+    marginBottom: 2,
   },
-}));
+};
 
 interface SerialDeviceSelectProps {
   serialDevice: string | null;
@@ -49,7 +40,6 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
   props
 ) => {
   const { serialDevice, onChange } = props;
-  const styles = useStyles();
 
   const { loading, data, error, previousData } = useAvailableDevicesListQuery({
     pollInterval: 1000,
@@ -103,8 +93,8 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
     }
   }, [data, previousData]);
   return (
-    <div className={styles.root}>
-      <div className={styles.inner}>
+    <Box sx={styles.root}>
+      <Box sx={styles.inner}>
         <Omnibox
           title="Manual serial device selection"
           currentValue={currentValue}
@@ -115,11 +105,8 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
         <Tooltip
           placement="top"
           arrow
-          classes={{
-            tooltip: styles.tooltipRoot,
-          }}
           title={
-            <div className={styles.tooltip}>
+            <div>
               <p>
                 Use manual serial port selection if automatic selection fails to
                 select a correct port. In the vast majority of cases there is no
@@ -128,13 +115,13 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
             </div>
           }
         >
-          <QuestionIcon className={styles.icon} />
+          <QuestionIcon sx={styles.icon} />
         </Tooltip>
-      </div>
+      </Box>
 
-      <Loader className={styles.loader} loading={loading} />
+      <Loader sx={styles.loader} loading={loading} />
       <ShowAlerts severity="error" messages={error} />
-    </div>
+    </Box>
   );
 };
 

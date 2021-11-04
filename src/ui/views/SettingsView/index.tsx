@@ -1,38 +1,36 @@
 import {
+  Box,
   Card,
   CardContent,
   Container,
   Divider,
-  makeStyles,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import React, { FunctionComponent } from 'react';
-import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsIcon from '@mui/icons-material/Settings';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import CardTitle from '../../components/CardTitle';
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
     display: 'flex',
   },
   main: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(4),
+    marginY: 4,
   },
   content: {
     flexGrow: 1,
   },
-}));
+};
 
 const SettingsView: FunctionComponent = () => {
-  const styles = useStyles();
   return (
-    <main className={styles.root}>
+    <Box component="main" sx={styles.root}>
       <Sidebar navigationEnabled />
-      <div className={styles.content}>
+      <Box sx={styles.content}>
         <Header />
-        <Container className={styles.main}>
+        <Container sx={styles.main}>
           <Card>
             <CardTitle icon={<SettingsIcon />} title="Settings" />
             <Divider />
@@ -45,8 +43,8 @@ const SettingsView: FunctionComponent = () => {
             </CardContent>
           </Card>
         </Container>
-      </div>
-    </main>
+      </Box>
+    </Box>
   );
 };
 

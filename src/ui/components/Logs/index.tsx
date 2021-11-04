@@ -1,7 +1,8 @@
 import React, {FunctionComponent, memo, useEffect, useRef} from 'react';
-import {makeStyles} from '@material-ui/core';
+import { Box } from '@mui/material'
+import { SxProps, Theme } from '@mui/system';
 
-const useStyles = makeStyles(() => ({
+const styles: SxProps<Theme> = {
   root: {
     minHeight: '500px',
     maxHeight: '500px',
@@ -11,15 +12,15 @@ const useStyles = makeStyles(() => ({
   logs: {
     whiteSpace: 'pre-wrap',
     wordWrap: 'break-word',
-  }
-}));
+  },
+};
 
 interface LogsProps {
   data: string;
 }
 
 const Logs: FunctionComponent<LogsProps> = memo(({data}) => {
-  const styles = useStyles();
+
   const container = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (container.current !== null) {
@@ -27,12 +28,12 @@ const Logs: FunctionComponent<LogsProps> = memo(({data}) => {
     }
   }, [data]);
   return (
-    <div ref={container} className={styles.root}>
-      <pre className={styles.logs}>
+    <Box ref={container} sx={styles.root}>
+      <Box component='pre' sx={styles.logs}>
         <code>{data}</code>
-      </pre>
-    </div>
-  )
+      </Box>
+    </Box>
+  );
 });
 
 export default Logs;
