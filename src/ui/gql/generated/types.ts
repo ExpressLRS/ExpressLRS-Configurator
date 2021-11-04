@@ -191,12 +191,17 @@ export type UserDefine = {
   readonly enabled: Scalars['Boolean'];
   readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
   readonly value?: Maybe<Scalars['String']>;
+  readonly optionGroup?: Maybe<UserDefineOptionGroup>;
 };
 
 export enum UserDefineKind {
   Boolean = 'Boolean',
   Text = 'Text',
   Enum = 'Enum',
+}
+
+export enum UserDefineOptionGroup {
+  RegulatoryDomain900 = 'RegulatoryDomain900',
 }
 
 export type Release = {
@@ -577,7 +582,7 @@ export type TargetDeviceOptionsQuery = { readonly __typename?: 'Query' } & {
   readonly targetDeviceOptions: ReadonlyArray<
     { readonly __typename?: 'UserDefine' } & Pick<
       UserDefine,
-      'type' | 'key' | 'enabled' | 'enumValues' | 'value'
+      'type' | 'key' | 'enabled' | 'enumValues' | 'value' | 'optionGroup'
     >
   >;
 };
@@ -1302,6 +1307,7 @@ export const TargetDeviceOptionsDocument = gql`
       enabled
       enumValues
       value
+      optionGroup
     }
   }
 `;

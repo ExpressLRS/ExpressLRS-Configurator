@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Service } from 'typedi';
 import UserDefineKey from '../library/FirmwareBuilder/Enum/UserDefineKey';
+import UserDefineOptionGroup from '../models/enum/UserDefineOptionGroup';
 import UserDefine from '../models/UserDefine';
 import DeviceService from '../services/Device';
 
@@ -21,17 +22,33 @@ export default class TargetUserDefinesFactory {
             return UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true);
           // Regulatory domains
           case UserDefineKey.REGULATORY_DOMAIN_AU_915:
-            return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_915);
+            return UserDefine.Boolean(
+              UserDefineKey.REGULATORY_DOMAIN_AU_915,
+              false,
+              UserDefineOptionGroup.RegulatoryDomain900
+            );
           case UserDefineKey.REGULATORY_DOMAIN_EU_868:
-            return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_868);
+            return UserDefine.Boolean(
+              UserDefineKey.REGULATORY_DOMAIN_EU_868,
+              false,
+              UserDefineOptionGroup.RegulatoryDomain900
+            );
           case UserDefineKey.REGULATORY_DOMAIN_IN_866:
-            return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_IN_866);
+            return UserDefine.Boolean(
+              UserDefineKey.REGULATORY_DOMAIN_IN_866,
+              false,
+              UserDefineOptionGroup.RegulatoryDomain900
+            );
           case UserDefineKey.REGULATORY_DOMAIN_AU_433:
             return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_433);
           case UserDefineKey.REGULATORY_DOMAIN_EU_433:
             return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_EU_433);
           case UserDefineKey.REGULATORY_DOMAIN_FCC_915:
-            return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915);
+            return UserDefine.Boolean(
+              UserDefineKey.REGULATORY_DOMAIN_FCC_915,
+              false,
+              UserDefineOptionGroup.RegulatoryDomain900
+            );
           case UserDefineKey.REGULATORY_DOMAIN_ISM_2400:
             return UserDefine.Boolean(
               UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
