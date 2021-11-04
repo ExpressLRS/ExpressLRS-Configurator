@@ -230,6 +230,18 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       if (!pullRequest) {
         setCurrentGitPullRequest(null);
       }
+      // prevent stale head commit hash cache
+      if (
+        pullRequest &&
+        pullRequest.headCommitHash !== currentGitPullRequest.headCommitHash
+      ) {
+        setCurrentGitPullRequest({
+          id: pullRequest.id,
+          number: pullRequest.number,
+          title: pullRequest.title,
+          headCommitHash: pullRequest.headCommitHash,
+        });
+      }
     }
   }, [gitPullRequestsResponse, currentGitPullRequest]);
 
