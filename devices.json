@@ -1915,11 +1915,53 @@
     },
     {
       "category": "TX",
+      "name": "FrSky TX Backpack",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "FrSky_TX_Backpack_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "FrSky_TX_Backpack_via_WIFI"
+        }
+      ],
+      "userDefines": [
+        "BINDING_PHRASE"
+      ],
+      "wikiUrl": "",
+      "deviceType": "Backpack"
+    },
+    {
+      "category": "TX",
+      "name": "HappyModel TX Backpack",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "HappyModel_TX_Backpack_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "HappyModel_TX_Backpack_via_WIFI"
+        }
+      ],
+      "userDefines": [
+        "BINDING_PHRASE"
+      ],
+      "wikiUrl": "",
+      "deviceType": "Backpack"
+    },
+    {
+      "category": "TX",
       "name": "Namimno TX Backpack",
       "targets": [
         {
           "flashingMethod": "UART",
-          "name": "Namimno_Tx_Backpack"
+          "name": "NamimnoRC_TX_Backpack_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "NamimnoRC_TX_Backpack_via_WIFI"
         }
       ],
       "userDefines": [
@@ -1934,7 +1976,11 @@
       "targets": [
         {
           "flashingMethod": "UART",
-          "name": "AXIS_THOR_Tx_Backpack"
+          "name": "AXIS_THOR_Tx_Backpack_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "AXIS_THOR_Tx_Backpack_WIFI"
         }
       ],
       "userDefines": [
@@ -1949,7 +1995,11 @@
       "targets": [
         {
           "flashingMethod": "UART",
-          "name": "Rapidfire_ESP01F_Backpack"
+          "name": "Rapidfire_ESP01F_Backpack_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "Rapidfire_ESP01F_Backpack_via_WIFI"
         }
       ],
       "userDefines": [
@@ -1964,7 +2014,11 @@
       "targets": [
         {
           "flashingMethod": "UART",
-          "name": "Rapidfire_ESP_RX_Backpack"
+          "name": "Rapidfire_ESP_RX_Backpack_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "Rapidfire_ESP_RX_Backpack_via_WIFI"
         }
       ],
       "userDefines": [
@@ -1979,7 +2033,11 @@
       "targets": [
         {
           "flashingMethod": "UART",
-          "name": "RX5808_ESP_RX_Backpack"
+          "name": "RX5808_ESP_RX_Backpack_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "RX5808_ESP_RX_Backpack_via_WIFI"
         }
       ],
       "userDefines": [
@@ -1994,7 +2052,11 @@
       "targets": [
         {
           "flashingMethod": "UART",
-          "name": "SteadyView_ESP_RX_Backpack"
+          "name": "SteadyView_ESP_RX_Backpack_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "SteadyView_ESP_RX_Backpack_via_WIFI"
         }
       ],
       "userDefines": [
