@@ -677,11 +677,31 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       if (dnsDevice) {
         const targetName = dnsDevice.target.toUpperCase();
 
-        const device = deviceTargets?.find((item) => {
+        // if targetName is an empty string, then return
+        if (targetName.trim().length === 0) {
+          return;
+        }
+
+        const deviceMatches = deviceTargets?.filter((item) => {
           return item.targets.find((target) => {
             return target.name.toUpperCase().startsWith(targetName);
           });
         });
+
+        if (!deviceMatches || deviceMatches.length === 0) {
+          return;
+        }
+
+        // if multiple device matches are found, then don't select any of them
+        // we do not know which one is correct and do not want to pick the wrong device.
+        if (deviceMatches.length > 1) {
+          console.error(
+            `multiple device matches found for target ${targetName}!`
+          );
+          return;
+        }
+
+        const device = deviceMatches[0];
 
         const dTarget =
           device?.targets.find((target) => {
@@ -690,14 +710,15 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           device?.targets[0].name ||
           null;
 
-        setDeviceTarget(dTarget);
+        if (dTarget !== deviceTarget) {
+          setDeviceTarget(dTarget);
+          deviceOptionsRef?.current?.scrollIntoView({ behavior: 'smooth' });
+        }
 
         setWifiDevice(dnsDevice.ip);
-
-        deviceOptionsRef?.current?.scrollIntoView({ behavior: 'smooth' });
       }
     },
-    [deviceTargets, networkDevices]
+    [deviceTarget, deviceTargets, networkDevices]
   );
 
   useEffect(() => {
