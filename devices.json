@@ -1069,6 +1069,38 @@
       "deviceType": "ExpressLRS"
     },
     {
+      "category": "DIY 900 MHz",
+      "name": "DIY 900 RX PWMP",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "DIY_900_RX_PWMP_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "DIY_900_RX_PWMP_via_WIFI"
+        }
+      ],
+      "userDefines": [
+        "REGULATORY_DOMAIN_AU_915",
+        "REGULATORY_DOMAIN_EU_868",
+        "REGULATORY_DOMAIN_FCC_915",
+        "REGULATORY_DOMAIN_IN_866",
+        "BINDING_PHRASE",
+        "HYBRID_SWITCHES_8",
+        "ENABLE_TELEMETRY",
+        "NO_SYNC_ON_ARM",
+        "ARM_CHANNEL",
+        "LOCK_ON_FIRST_CONNECTION",
+        "AUTO_WIFI_ON_BOOT",
+        "AUTO_WIFI_ON_INTERVAL",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
+      ],
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers900/",
+      "deviceType": "ExpressLRS"
+    },
+    {
       "category": "DIY 2.4 GHz",
       "name": "DIY 2400 TX ESP32 SX1280 Mini",
       "targets": [
@@ -1275,6 +1307,35 @@
         "HOME_WIFI_PASSWORD",
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
+      ],
+      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/",
+      "deviceType": "ExpressLRS"
+    },
+    {
+      "category": "DIY 2.4 GHz",
+      "name": "DIY 2400 RX PWMP",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "DIY_2400_RX_PWMP_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "DIY_2400_RX_PWMP_via_WIFI"
+        }
+      ],
+      "userDefines": [
+        "REGULATORY_DOMAIN_ISM_2400",
+        "BINDING_PHRASE",
+        "HYBRID_SWITCHES_8",
+        "ENABLE_TELEMETRY",
+        "NO_SYNC_ON_ARM",
+        "LOCK_ON_FIRST_CONNECTION",
+        "USE_500HZ",
+        "AUTO_WIFI_ON_BOOT",
+        "AUTO_WIFI_ON_INTERVAL",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/",
       "deviceType": "ExpressLRS"
