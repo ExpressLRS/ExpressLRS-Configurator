@@ -1,5 +1,6 @@
 import { createTheme, Theme, ThemeOptions } from '@mui/material';
 import { grey } from '@mui/material/colors';
+import darkScrollbar from '@mui/material/darkScrollbar';
 
 export const defaultTheme: Theme = createTheme();
 
@@ -14,6 +15,25 @@ export const themeConfig: ThemeOptions = {
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: darkScrollbar(),
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundImage: 'none !important',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: 'none !important',
+        },
+      },
+    },
     MuiAlert: {
       styleOverrides: {
         standardError: {
