@@ -507,7 +507,7 @@ export default class FirmwareService {
       firmwaresPath: this.firmwaresPath,
       files,
     });
-    if (files.length > 3) {
+    if (files.length > 4) {
       throw new Error(`unexpected number of files to remove: ${files}`);
     }
     await Promise.all(files.map((item) => rmrf(item)));
