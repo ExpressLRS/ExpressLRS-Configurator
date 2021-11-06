@@ -1045,6 +1045,10 @@
         {
           "flashingMethod": "BetaflightPassthrough",
           "name": "DIY_900_RX_ESP8285_SX127x_via_BetaflightPassthrough"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "DIY_900_RX_ESP8285_SX127x_via_WIFI"
         }
       ],
       "userDefines": [
