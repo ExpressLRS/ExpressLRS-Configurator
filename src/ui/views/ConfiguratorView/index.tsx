@@ -990,14 +990,20 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       Back
                     </Button>
 
-                    <Button
-                      sx={styles.button}
-                      size="large"
-                      variant="contained"
-                      onClick={onBuildAndFlash}
-                    >
-                      Retry
-                    </Button>
+                    {!response?.buildFlashFirmware.success && (
+                      <Button
+                        sx={styles.button}
+                        size="large"
+                        variant="contained"
+                        onClick={
+                          currentJobType === BuildJobType.Build
+                            ? onBuild
+                            : onBuildAndFlash
+                        }
+                      >
+                        Retry
+                      </Button>
+                    )}
 
                     {response?.buildFlashFirmware.success &&
                       luaDownloadButton()}
