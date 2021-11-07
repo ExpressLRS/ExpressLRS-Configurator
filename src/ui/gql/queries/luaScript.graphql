@@ -1,0 +1,21 @@
+query luaScript(
+  $source: FirmwareSource!,
+  $gitTag: String!,
+  $gitBranch: String!,
+  $gitCommit: String!,
+  $localPath: String!,
+  $gitPullRequest: PullRequestInput,
+  $gitRepository: GitRepositoryInput!,
+) {
+  luaScript(
+    source: $source,
+    gitTag: $gitTag,
+    gitBranch: $gitBranch,
+    gitCommit: $gitCommit,
+    localPath: $localPath,
+    gitPullRequest: $gitPullRequest,
+    gitRepository: $gitRepository,
+  ) {
+    fileLocation
+  }
+}

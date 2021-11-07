@@ -27,6 +27,8 @@ import DeviceService from './src/services/Device';
 import TargetUserDefinesFactory from './src/factories/TargetUserDefinesFactory';
 import MulticastDnsService from './src/services/MulticastDns';
 import MulticastDnsMonitorResolver from './src/graphql/resolvers/MulticastDnsMonitor.resolver';
+import LuaService from './src/services/Lua';
+import LuaResolver from './src/graphql/resolvers/Lua.resolver';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -94,6 +96,8 @@ export default class ApiServer {
 
     Container.set(TargetsService, new TargetsService(logger, deviceService));
 
+    Container.set(LuaService, new LuaService(logger));
+
     const schema = await buildSchema({
       resolvers: [
         FirmwareResolver,
@@ -101,6 +105,7 @@ export default class ApiServer {
         UpdatesResolver,
         SerialMonitorResolver,
         MulticastDnsMonitorResolver,
+        LuaResolver,
       ],
       container: Container,
       pubSub,

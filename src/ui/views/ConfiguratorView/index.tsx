@@ -2,6 +2,7 @@ import React, {
   FunctionComponent,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -48,6 +49,8 @@ import {
   MulticastDnsInformation,
   Target,
   FlashingMethod,
+  useLuaScriptLazyQuery,
+  DeviceType,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -85,7 +88,7 @@ const styles = {
   longBuildDurationWarning: {
     marginBottom: 1,
   },
-  buildResponse: {
+  buildNotification: {
     marginBottom: 1,
   },
 };
@@ -138,6 +141,7 @@ interface ConfiguratorViewProps {
   selectedDevice: string | null;
   networkDevices: Map<string, MulticastDnsInformation>;
   onDeviceChange: (dnsDevice: MulticastDnsInformation | null) => void;
+  deviceType: DeviceType;
 }
 
 const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
@@ -146,6 +150,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     selectedDevice,
     networkDevices,
     onDeviceChange,
+    deviceType,
   } = props;
 
   const [viewState, setViewState] = useState<ViewState>(
@@ -238,6 +243,15 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       error: targetsResponseError,
     },
   ] = useAvailableFirmwareTargetsLazyQuery();
+
+  const [
+    fetchLuaScript,
+    {
+      loading: loadingLuaScript,
+      data: luaScriptResponse,
+      error: luaScriptResponseError,
+    },
+  ] = useLuaScriptLazyQuery();
 
   useEffect(() => {
     if (firmwareVersionData === null) {
@@ -444,50 +458,42 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     };
   }, [buildInProgress]);
 
-  const [luaScriptLocation, setLuaScriptLocation] = useState<string>('');
-  useEffect(() => {
-    const isTX = (item: string) => {
-      return item.indexOf('_TX_') > -1;
-    };
-    if (
-      deviceTarget === null ||
-      firmwareVersionData === null ||
-      !isTX(deviceTarget)
-    ) {
-      setLuaScriptLocation('');
-      return;
+  const isTX = useMemo(() => {
+    if (deviceTarget) {
+      return deviceTarget?.indexOf('_TX_') > -1;
+    }
+    return false;
+  }, [deviceTarget]);
+
+  const hasLuaScript = useMemo(() => {
+    if (deviceType === DeviceType.ExpressLRS && isTX) {
+      return true;
     }
 
-    switch (firmwareVersionData.source) {
-      case FirmwareSource.Local:
-        setLuaScriptLocation('');
-        break;
-      case FirmwareSource.GitCommit:
-        setLuaScriptLocation(
-          `https://raw.githubusercontent.com/ExpressLRS/ExpressLRS/${firmwareVersionData.gitCommit}/src/lua/ELRS.lua`
-        );
-        break;
-      case FirmwareSource.GitBranch:
-        setLuaScriptLocation(
-          `https://raw.githubusercontent.com/ExpressLRS/ExpressLRS/${firmwareVersionData.gitBranch}/src/lua/ELRS.lua`
-        );
-        break;
-      case FirmwareSource.GitTag:
-        setLuaScriptLocation(
-          `https://raw.githubusercontent.com/ExpressLRS/ExpressLRS/${firmwareVersionData.gitTag}/src/lua/ELRS.lua`
-        );
-        break;
-      case FirmwareSource.GitPullRequest:
-        setLuaScriptLocation(
-          `https://raw.githubusercontent.com/ExpressLRS/ExpressLRS/${firmwareVersionData.gitPullRequest?.headCommitHash}/src/lua/ELRS.lua`
-        );
-        break;
-      default:
-        throw new Error(
-          `unknown firmware data source: ${firmwareVersionData.source}`
-        );
+    return false;
+  }, [deviceType, isTX]);
+
+  useEffect(() => {
+    if (firmwareVersionData && isTX && hasLuaScript) {
+      fetchLuaScript({
+        variables: {
+          source: firmwareVersionData.source as FirmwareSource,
+          gitBranch: firmwareVersionData.gitBranch!,
+          gitTag: firmwareVersionData.gitTag!,
+          gitCommit: firmwareVersionData.gitCommit!,
+          localPath: firmwareVersionData.localPath!,
+          gitPullRequest: firmwareVersionData.gitPullRequest,
+          gitRepository: {
+            url: gitRepository.url,
+            owner: gitRepository.owner,
+            repositoryName: gitRepository.repositoryName,
+            rawRepoUrl: gitRepository.rawRepoUrl,
+            srcFolder: gitRepository.srcFolder,
+          },
+        },
+      });
     }
-  }, [deviceTarget, firmwareVersionData]);
+  }, [gitRepository, firmwareVersionData, fetchLuaScript, isTX, hasLuaScript]);
 
   /*
     Display Electron.js confirmation dialog if user wants to shutdown the app
@@ -716,6 +722,29 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     }
   }, [handleSelectedDeviceChange, selectedDevice]);
 
+  const luaDownloadButton = () => {
+    if (
+      hasLuaScript &&
+      luaScriptResponse &&
+      luaScriptResponse.luaScript.fileLocation &&
+      luaScriptResponse.luaScript.fileLocation.length > 0
+    ) {
+      return (
+        <Button
+          sx={styles.button}
+          color="primary"
+          size="large"
+          variant="contained"
+          href={luaScriptResponse?.luaScript.fileLocation ?? ''}
+          download
+        >
+          Download LUA script
+        </Button>
+      );
+    }
+    return null;
+  };
+
   return (
     <Box component="main" sx={styles.root}>
       <Sidebar navigationEnabled={!buildInProgress} />
@@ -751,16 +780,14 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     />
                   )}
                   <Loader loading={loadingTargets} />
-                  {luaScriptLocation.length > 0 && (
-                    <Button
-                      href={luaScriptLocation}
-                      target="_blank"
-                      size="small"
-                      download
-                    >
-                      Download LUA script
-                    </Button>
+                  {luaDownloadButton()}
+                  {hasLuaScript && (
+                    <ShowAlerts
+                      severity="error"
+                      messages={luaScriptResponseError}
+                    />
                   )}
+
                   <ShowAlerts severity="error" messages={deviceTargetErrors} />
                 </CardContent>
                 <Divider />
@@ -924,18 +951,26 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   <CardTitle icon={<SettingsIcon />} title="Result" />
                   <Divider />
                   <CardContent>
-                    <Box sx={styles.buildResponse}>
+                    <Box sx={styles.buildNotification}>
                       <BuildResponse response={response?.buildFlashFirmware} />
                     </Box>
                     {response?.buildFlashFirmware?.success &&
                       currentJobType === BuildJobType.Build && (
                         <>
-                          <Alert severity="info">
+                          <Alert sx={styles.buildNotification} severity="info">
                             <AlertTitle>Build notice</AlertTitle>
                             Firmware binary file was opened in the file explorer
                           </Alert>
                         </>
                       )}
+                    {response?.buildFlashFirmware?.success && hasLuaScript && (
+                      <>
+                        <Alert sx={styles.buildNotification} severity="info">
+                          <AlertTitle>Update Lua Script</AlertTitle>
+                          Make sure to update the Lua script on your transmitter
+                        </Alert>
+                      </>
+                    )}
                   </CardContent>
                   <Divider />
                 </>
@@ -963,6 +998,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     >
                       Retry
                     </Button>
+
+                    {response?.buildFlashFirmware.success &&
+                      luaDownloadButton()}
                   </CardContent>
                 </>
               )}

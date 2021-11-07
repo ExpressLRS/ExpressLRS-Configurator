@@ -12,7 +12,7 @@ import LogsView from './views/LogsView';
 import SerialMonitorView from './views/SerialMonitorView';
 import SupportView from './views/SupportView';
 import { Config } from './config';
-import { MulticastDnsInformation } from './gql/generated/types';
+import { DeviceType, MulticastDnsInformation } from './gql/generated/types';
 import useNetworkDevices from './hooks/useNetworkDevices';
 import WifiDeviceNotification from './components/WifiDeviceNotification';
 
@@ -58,6 +58,7 @@ export default function App() {
                   selectedDevice={device}
                   networkDevices={networkDevices}
                   onDeviceChange={onDeviceChange}
+                  deviceType={DeviceType.ExpressLRS}
                 />
               </Route>
               <Route path="/backpack">
@@ -67,6 +68,7 @@ export default function App() {
                   selectedDevice={device}
                   networkDevices={networkDevices}
                   onDeviceChange={onDeviceChange}
+                  deviceType={DeviceType.Backpack}
                 />
               </Route>
               <Route path="/settings" component={SettingsView} />

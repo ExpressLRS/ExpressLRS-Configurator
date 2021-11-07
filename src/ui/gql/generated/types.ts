@@ -30,6 +30,7 @@ export type Query = {
   readonly checkForUpdates: UpdatesAvailability;
   readonly availableDevicesList: ReadonlyArray<SerialPortInformation>;
   readonly availableMulticastDnsDevicesList: ReadonlyArray<MulticastDnsInformation>;
+  readonly luaScript: LuaScript;
 };
 
 export type QueryAvailableFirmwareTargetsArgs = {
@@ -75,6 +76,16 @@ export type QueryPullRequestsArgs = {
 
 export type QueryCheckForUpdatesArgs = {
   currentVersion: Scalars['String'];
+};
+
+export type QueryLuaScriptArgs = {
+  gitRepository: GitRepositoryInput;
+  source?: Maybe<FirmwareSource>;
+  gitTag?: Maybe<Scalars['String']>;
+  gitBranch?: Maybe<Scalars['String']>;
+  gitCommit?: Maybe<Scalars['String']>;
+  localPath?: Maybe<Scalars['String']>;
+  gitPullRequest?: Maybe<PullRequestInput>;
 };
 
 export type Device = {
@@ -226,6 +237,11 @@ export type MulticastDnsInformation = {
   readonly ip: Scalars['String'];
   readonly dns: Scalars['String'];
   readonly port: Scalars['Float'];
+};
+
+export type LuaScript = {
+  readonly __typename?: 'LuaScript';
+  readonly fileLocation?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -613,6 +629,23 @@ export type GetReleasesQuery = { readonly __typename?: 'Query' } & {
       Release,
       'tagName' | 'preRelease'
     >
+  >;
+};
+
+export type LuaScriptQueryVariables = Exact<{
+  source: FirmwareSource;
+  gitTag: Scalars['String'];
+  gitBranch: Scalars['String'];
+  gitCommit: Scalars['String'];
+  localPath: Scalars['String'];
+  gitPullRequest?: Maybe<PullRequestInput>;
+  gitRepository: GitRepositoryInput;
+}>;
+
+export type LuaScriptQuery = { readonly __typename?: 'Query' } & {
+  readonly luaScript: { readonly __typename?: 'LuaScript' } & Pick<
+    LuaScript,
+    'fileLocation'
   >;
 };
 
@@ -1553,6 +1586,81 @@ export type GetReleasesLazyQueryHookResult = ReturnType<
 export type GetReleasesQueryResult = Apollo.QueryResult<
   GetReleasesQuery,
   GetReleasesQueryVariables
+>;
+export const LuaScriptDocument = gql`
+  query luaScript(
+    $source: FirmwareSource!
+    $gitTag: String!
+    $gitBranch: String!
+    $gitCommit: String!
+    $localPath: String!
+    $gitPullRequest: PullRequestInput
+    $gitRepository: GitRepositoryInput!
+  ) {
+    luaScript(
+      source: $source
+      gitTag: $gitTag
+      gitBranch: $gitBranch
+      gitCommit: $gitCommit
+      localPath: $localPath
+      gitPullRequest: $gitPullRequest
+      gitRepository: $gitRepository
+    ) {
+      fileLocation
+    }
+  }
+`;
+
+/**
+ * __useLuaScriptQuery__
+ *
+ * To run a query within a React component, call `useLuaScriptQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLuaScriptQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLuaScriptQuery({
+ *   variables: {
+ *      source: // value for 'source'
+ *      gitTag: // value for 'gitTag'
+ *      gitBranch: // value for 'gitBranch'
+ *      gitCommit: // value for 'gitCommit'
+ *      localPath: // value for 'localPath'
+ *      gitPullRequest: // value for 'gitPullRequest'
+ *      gitRepository: // value for 'gitRepository'
+ *   },
+ * });
+ */
+export function useLuaScriptQuery(
+  baseOptions: Apollo.QueryHookOptions<LuaScriptQuery, LuaScriptQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<LuaScriptQuery, LuaScriptQueryVariables>(
+    LuaScriptDocument,
+    options
+  );
+}
+export function useLuaScriptLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    LuaScriptQuery,
+    LuaScriptQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<LuaScriptQuery, LuaScriptQueryVariables>(
+    LuaScriptDocument,
+    options
+  );
+}
+export type LuaScriptQueryHookResult = ReturnType<typeof useLuaScriptQuery>;
+export type LuaScriptLazyQueryHookResult = ReturnType<
+  typeof useLuaScriptLazyQuery
+>;
+export type LuaScriptQueryResult = Apollo.QueryResult<
+  LuaScriptQuery,
+  LuaScriptQueryVariables
 >;
 export const MulticastDnsMonitorUpdatesDocument = gql`
   subscription multicastDnsMonitorUpdates {
