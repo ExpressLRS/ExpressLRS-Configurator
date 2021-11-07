@@ -561,6 +561,111 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "luaScript",
+            "description": null,
+            "args": [
+              {
+                "name": "gitRepository",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "GitRepositoryInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "source",
+                "description": null,
+                "type": {
+                  "kind": "ENUM",
+                  "name": "FirmwareSource",
+                  "ofType": null
+                },
+                "defaultValue": "GitBranch",
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "gitTag",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": "\"\"",
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "gitBranch",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": "\"\"",
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "gitCommit",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": "\"\"",
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "localPath",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": "\"\"",
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "gitPullRequest",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "PullRequestInput",
+                  "ofType": null
+                },
+                "defaultValue": "null",
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "LuaScript",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -1791,6 +1896,29 @@
                 "name": "Float",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "LuaScript",
+        "description": null,
+        "fields": [
+          {
+            "name": "fileLocation",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
