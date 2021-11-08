@@ -128,17 +128,17 @@ if (
     showDevTools: false,
   });
 }
-
 const installExtensions = async () => {
-  const installer = require('electron-devtools-installer');
+  const installer = await import('electron-devtools-installer');
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS', 'APOLLO_DEVELOPER_TOOLS'];
-
+  const extensions = [installer.REACT_DEVELOPER_TOOLS];
   return installer
-    .default(
-      extensions.map((name) => installer[name]),
-      forceDownload
-    )
+    .default(extensions, {
+      forceDownload,
+      loadExtensionOptions: {
+        allowFileAccess: true,
+      },
+    })
     .catch((err: Error) => {
       logger.error(err);
     });
