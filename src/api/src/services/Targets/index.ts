@@ -60,6 +60,17 @@ export default class TargetsService implements ITargets {
     return body;
   }
 
+  extractTargetFiles(platformioFileContents: string): string[] {
+    const extraConfigsRegex = /(targets\/.*?.ini)/g;
+    const extraTargetFiles = [
+      ...platformioFileContents.matchAll(extraConfigsRegex),
+    ];
+
+    return extraTargetFiles.map((item) => {
+      return item[1];
+    });
+  }
+
   async loadTargetsFromGitHub(
     gitRepositoryOwner: string,
     gitRepositoryName: string,
@@ -70,24 +81,22 @@ export default class TargetsService implements ITargets {
       return [];
     }
     try {
-      const platformioFile = await this.downloadFile(
-        `https://raw.githubusercontent.com/${gitRepositoryOwner}/${gitRepositoryName}/${ref}${gitRepositorySrcFolder}/platformio.ini`
-      );
+      const platformioFile = `https://raw.githubusercontent.com/${gitRepositoryOwner}/${gitRepositoryName}/${ref}${gitRepositorySrcFolder}/platformio.ini`;
+      const platformioFileContents = await this.downloadFile(platformioFile);
 
-      const extraConfigsRegex = /(targets\/.*?.ini)/g;
-      const parsedResults = [...platformioFile.matchAll(extraConfigsRegex)];
+      const targetFiles = this.extractTargetFiles(platformioFileContents);
 
       const values = await Promise.all(
-        parsedResults.map(async (item) => {
+        targetFiles.map(async (item) => {
           const contents = await this.downloadFile(
-            `https://raw.githubusercontent.com/${gitRepositoryOwner}/${gitRepositoryName}/${ref}${gitRepositorySrcFolder}/${item[1]}`
+            `https://raw.githubusercontent.com/${gitRepositoryOwner}/${gitRepositoryName}/${ref}${gitRepositorySrcFolder}/${item}`
           );
           const targets = this.extractTargets(contents);
           return targets;
         })
       );
 
-      const platformioFileTargets = this.extractTargets(platformioFile);
+      const platformioFileTargets = this.extractTargets(platformioFileContents);
 
       values.push(platformioFileTargets);
 
@@ -95,23 +104,34 @@ export default class TargetsService implements ITargets {
         return prev.concat(curr);
       }, []);
     } catch (err) {
-      this.logger?.log(`failed to get targets from ref: ${ref}`, err);
+      this.logger?.log(`failed to get targets from ref: ${ref}`, { err });
       throw new Error(`failed to get targets from ref: ${ref}.  Error: ${err}`);
     }
   }
 
   async loadTargetsFromLocal(localPath: string): Promise<string[]> {
-    const targetsDirectory = path.join(localPath, 'targets');
-
-    if (!fs.existsSync(targetsDirectory)) {
-      return [];
+    if (!fs.existsSync(localPath)) {
+      const errorMessage = `directory ${localPath} does not exist`;
+      this.logger?.log(errorMessage);
+      throw new Error(errorMessage);
     }
 
-    const contents = await fs.promises.readdir(targetsDirectory);
+    const platformioFile = path.join(localPath, 'platformio.ini');
 
-    const files = await Promise.all(
-      contents.map(async (file) => {
-        const filePath = path.join(targetsDirectory, file);
+    if (!fs.existsSync(platformioFile)) {
+      const errorMessage = `Please select the directory that contains the platformio.ini file`;
+      this.logger?.log(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    const platformioFileContents = (
+      await fs.promises.readFile(platformioFile)
+    ).toString();
+    const targetFiles = this.extractTargetFiles(platformioFileContents);
+
+    const values = await Promise.all(
+      targetFiles.map(async (file) => {
+        const filePath = path.join(localPath, file);
         const stat = await fs.promises.stat(filePath);
         if (stat.isFile()) {
           const data = await fs.promises.readFile(filePath, 'utf8');
@@ -121,7 +141,11 @@ export default class TargetsService implements ITargets {
       })
     );
 
-    return files.reduce<string[]>((prev, curr) => {
+    const platformioFileTargets = this.extractTargets(platformioFileContents);
+
+    values.push(platformioFileTargets);
+
+    return values.reduce<string[]>((prev, curr) => {
       return prev.concat(curr);
     }, []);
   }

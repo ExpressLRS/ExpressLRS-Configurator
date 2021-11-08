@@ -772,7 +772,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <CardTitle icon={<SettingsIcon />} title="Target" />
                 <Divider />
                 <CardContent>
-                  {!loadingTargets && (
+                  {!loadingTargets && !targetsResponseError && (
                     <DeviceTargetForm
                       currentTarget={deviceTarget}
                       onChange={onDeviceTarget}
@@ -787,7 +787,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       messages={luaScriptResponseError}
                     />
                   )}
-
+                  <ShowAlerts
+                    severity="error"
+                    messages={targetsResponseError}
+                  />
                   <ShowAlerts severity="error" messages={deviceTargetErrors} />
                 </CardContent>
                 <Divider />
