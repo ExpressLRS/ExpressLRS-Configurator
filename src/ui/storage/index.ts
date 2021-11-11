@@ -1,6 +1,7 @@
 import {
   FirmwareVersionDataInput,
   UserDefine,
+  UserDefineKey,
   UserDefinesMode,
 } from '../gql/generated/types';
 import GitRepository from '../models/GitRepository';
@@ -37,12 +38,24 @@ export interface IApplicationStorage {
   getShowPreReleases(defaultValue: boolean): Promise<boolean>;
 
   setShowPreReleases(value: boolean): Promise<void>;
+
+  setWifiSSID(value: string): Promise<void>;
+  getWifiSSID(): Promise<string>;
+
+  setWifiPassword(value: string): Promise<void>;
+  getWifiPassword(): Promise<string>;
+
+  setRegulatoryDomain900(value: UserDefineKey): Promise<void>;
+  getRegulatoryDomain900(): Promise<UserDefineKey | null>;
 }
 
 const DEVICE_OPTIONS_BY_TARGET_KEYSPACE = 'device_options';
 const BINDING_PHRASE_KEY = 'binding_phrase';
 const FIRMWARE_SOURCE_KEY = 'firmware_source';
 const UI_SHOW_FIRMWARE_PRE_RELEASES = 'ui_show_pre_releases';
+const WIFI_SSID_KEY = 'wifi_ssid';
+const WIFI_PASSWORD_KEY = 'wifi_password';
+const REGULATORY_DOMAIN_900_KEY = 'regulatory_domain_900';
 
 export default class ApplicationStorage implements IApplicationStorage {
   async saveDeviceOptions(
@@ -128,5 +141,40 @@ export default class ApplicationStorage implements IApplicationStorage {
 
   async setShowPreReleases(value: boolean): Promise<void> {
     localStorage.setItem(UI_SHOW_FIRMWARE_PRE_RELEASES, JSON.stringify(value));
+  }
+
+  async setWifiSSID(bindingPhrase: string): Promise<void> {
+    localStorage.setItem(WIFI_SSID_KEY, bindingPhrase);
+  }
+
+  async getWifiSSID(): Promise<string> {
+    const value = localStorage.getItem(WIFI_SSID_KEY);
+    if (value === null) {
+      return '';
+    }
+    return value;
+  }
+
+  async setWifiPassword(bindingPhrase: string): Promise<void> {
+    localStorage.setItem(WIFI_PASSWORD_KEY, bindingPhrase);
+  }
+
+  async getWifiPassword(): Promise<string> {
+    const value = localStorage.getItem(WIFI_PASSWORD_KEY);
+    if (value === null) {
+      return '';
+    }
+    return value;
+  }
+
+  async setRegulatoryDomain900(bindingPhrase: UserDefineKey): Promise<void> {
+    localStorage.setItem(REGULATORY_DOMAIN_900_KEY, bindingPhrase);
+  }
+
+  async getRegulatoryDomain900(): Promise<UserDefineKey | null> {
+    const value = localStorage.getItem(
+      REGULATORY_DOMAIN_900_KEY
+    ) as UserDefineKey;
+    return value;
   }
 }

@@ -23,5 +23,6 @@ query targetDeviceOptions(
     enabled
     enumValues
     value
+    optionGroup
   }
 }

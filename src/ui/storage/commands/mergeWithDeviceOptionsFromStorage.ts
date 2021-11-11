@@ -1,4 +1,8 @@
-import { UserDefine, UserDefineKey } from '../../gql/generated/types';
+import {
+  UserDefineOptionGroup,
+  UserDefine,
+  UserDefineKey,
+} from '../../gql/generated/types';
 import { DeviceOptions, IApplicationStorage } from '../index';
 
 const mergeWithDeviceOptionsFromStorage = async (
@@ -10,6 +14,10 @@ const mergeWithDeviceOptionsFromStorage = async (
   const savedTargetOptions = device
     ? await storage.getDeviceOptions(device)
     : null;
+  const wifiSSID = await storage.getWifiSSID();
+  const wifiPassword = await storage.getWifiPassword();
+  const regulatoryDomain900 = await storage.getRegulatoryDomain900();
+
   const addOverrides = (deviceOption: UserDefine): UserDefine => {
     if (
       deviceOption.key === UserDefineKey.BINDING_PHRASE &&
@@ -18,6 +26,32 @@ const mergeWithDeviceOptionsFromStorage = async (
       return {
         ...deviceOption,
         value: savedBindingPhrase,
+      };
+    }
+    if (
+      deviceOption.key === UserDefineKey.HOME_WIFI_SSID &&
+      wifiSSID.length > 0
+    ) {
+      return {
+        ...deviceOption,
+        value: wifiSSID,
+      };
+    }
+    if (
+      deviceOption.key === UserDefineKey.HOME_WIFI_PASSWORD &&
+      wifiPassword.length > 0
+    ) {
+      return {
+        ...deviceOption,
+        value: wifiPassword,
+      };
+    }
+    if (
+      deviceOption.optionGroup === UserDefineOptionGroup.RegulatoryDomain900
+    ) {
+      return {
+        ...deviceOption,
+        enabled: deviceOption.key === regulatoryDomain900,
       };
     }
     return deviceOption;

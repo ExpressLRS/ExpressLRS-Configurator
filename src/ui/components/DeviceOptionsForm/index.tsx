@@ -167,6 +167,18 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
           ...data,
         };
       }
+      // if part of the same optionGroup as the item being updated, disable it.
+      if (
+        data.enabled &&
+        data.optionGroup &&
+        data.optionGroup === opt.optionGroup
+      ) {
+        return {
+          ...opt,
+          enabled: false,
+        };
+      }
+
       return opt;
     });
     onChange({

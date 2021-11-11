@@ -1,6 +1,7 @@
 import { Field, ObjectType } from 'type-graphql';
 import UserDefineKind from './enum/UserDefineKind';
 import UserDefineKey from '../library/FirmwareBuilder/Enum/UserDefineKey';
+import UserDefineOptionGroup from './enum/UserDefineOptionGroup';
 
 @ObjectType('UserDefine')
 export default class UserDefine {
@@ -19,12 +20,16 @@ export default class UserDefine {
   @Field({ nullable: true })
   value?: string;
 
+  @Field(() => UserDefineOptionGroup, { nullable: true })
+  optionGroup?: UserDefineOptionGroup;
+
   constructor(
     type: UserDefineKind,
     key: UserDefineKey,
     enabled = false,
     value = '',
-    enumValues?: string[]
+    enumValues?: string[],
+    optionGroup?: UserDefineOptionGroup
   ) {
     this.type = type;
 
@@ -46,10 +51,22 @@ export default class UserDefine {
     this.enumValues = enumValues;
     this.value = value;
     this.enabled = enabled;
+    this.optionGroup = optionGroup;
   }
 
-  static Boolean(key: UserDefineKey, enabled = false): UserDefine {
-    return new UserDefine(UserDefineKind.Boolean, key, enabled);
+  static Boolean(
+    key: UserDefineKey,
+    enabled = false,
+    userDefineOptionGroup?: UserDefineOptionGroup
+  ): UserDefine {
+    return new UserDefine(
+      UserDefineKind.Boolean,
+      key,
+      enabled,
+      undefined,
+      undefined,
+      userDefineOptionGroup
+    );
   }
 
   static Text(key: UserDefineKey, value = '', enabled = false): UserDefine {
