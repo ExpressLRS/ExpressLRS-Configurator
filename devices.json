@@ -733,7 +733,7 @@
       "deviceType": "ExpressLRS"
     },
     {
-      "category": "HappyModel ES900",
+      "category": "Happymodel 900 MHz",
       "name": "HappyModel TX ES900TX",
       "targets": [
         {
@@ -769,7 +769,7 @@
       "deviceType": "ExpressLRS"
     },
     {
-      "category": "HappyModel ES900",
+      "category": "Happymodel 900 MHz",
       "name": "HappyModel RX ES900RX",
       "targets": [
         {
@@ -868,7 +868,7 @@
       "deviceType": "ExpressLRS"
     },
     {
-      "category": "Happymodel 915 MHz",
+      "category": "Happymodel 900 MHz",
       "name": "HappyModel TX ES915TX",
       "targets": [
         {
@@ -910,7 +910,7 @@
       "deviceType": "ExpressLRS"
     },
     {
-      "category": "Happymodel 915 MHz",
+      "category": "Happymodel 900 MHz",
       "name": "HappyModel RX ES915RX",
       "targets": [
         {
@@ -1400,7 +1400,7 @@
       "deviceType": "ExpressLRS"
     },
     {
-      "category": "NamimnoRC VOYAGER 900",
+      "category": "NamimnoRC VOYAGER 900 MHz",
       "name": "NamimnoRC VOYAGER 900 TX",
       "targets": [
         {
@@ -1433,7 +1433,7 @@
       "deviceType": "ExpressLRS"
     },
     {
-      "category": "NamimnoRC VOYAGER 900",
+      "category": "NamimnoRC VOYAGER 900 MHz",
       "name": "NamimnoRC VOYAGER 900 OLED TX",
       "targets": [
         {
@@ -1466,7 +1466,7 @@
       "deviceType": "ExpressLRS"
     },
     {
-      "category": "NamimnoRC VOYAGER 900",
+      "category": "NamimnoRC VOYAGER 900 MHz",
       "name": "NamimnoRC VOYAGER 900 RX",
       "targets": [
         {
@@ -1495,7 +1495,7 @@
       "deviceType": "ExpressLRS"
     },
     {
-      "category": "NamimnoRC VOYAGER 900",
+      "category": "NamimnoRC VOYAGER 900 MHz",
       "name": "NamimnoRC VOYAGER 900 ESP RX",
       "targets": [
         {
