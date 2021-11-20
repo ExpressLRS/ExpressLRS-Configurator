@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Switch, Route, Redirect, HashRouter } from 'react-router-dom';
+import { Routes, Route, HashRouter, Navigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import '@fontsource/roboto';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material';
@@ -47,35 +47,42 @@ export default function App() {
         <CssBaseline />
         <ApolloProvider client={client}>
           <HashRouter>
-            <Switch>
-              <Route exact path="/">
-                <Redirect to="/configurator" />
-              </Route>
-              <Route path="/configurator">
-                <ConfiguratorView
-                  key="configurator"
-                  gitRepository={Config.expressLRSGit}
-                  selectedDevice={device}
-                  networkDevices={networkDevices}
-                  onDeviceChange={onDeviceChange}
-                  deviceType={DeviceType.ExpressLRS}
-                />
-              </Route>
-              <Route path="/backpack">
-                <ConfiguratorView
-                  key="backpack"
-                  gitRepository={Config.backpackGit}
-                  selectedDevice={device}
-                  networkDevices={networkDevices}
-                  onDeviceChange={onDeviceChange}
-                  deviceType={DeviceType.Backpack}
-                />
-              </Route>
-              <Route path="/settings" component={SettingsView} />
-              <Route path="/logs" component={LogsView} />
-              <Route path="/serial-monitor" component={SerialMonitorView} />
-              <Route path="/support" component={SupportView} />
-            </Switch>
+            <Routes>
+              <Route
+                path="/"
+                element={<Navigate replace to="/configurator" />}
+              />
+              <Route
+                path="/configurator"
+                element={
+                  <ConfiguratorView
+                    key="configurator"
+                    gitRepository={Config.expressLRSGit}
+                    selectedDevice={device}
+                    networkDevices={networkDevices}
+                    onDeviceChange={onDeviceChange}
+                    deviceType={DeviceType.ExpressLRS}
+                  />
+                }
+              />
+              <Route
+                path="/backpack"
+                element={
+                  <ConfiguratorView
+                    key="backpack"
+                    gitRepository={Config.backpackGit}
+                    selectedDevice={device}
+                    networkDevices={networkDevices}
+                    onDeviceChange={onDeviceChange}
+                    deviceType={DeviceType.Backpack}
+                  />
+                }
+              />
+              <Route path="/settings" element={<SettingsView />} />
+              <Route path="/logs" element={<LogsView />} />
+              <Route path="/serial-monitor" element={<SerialMonitorView />} />
+              <Route path="/support" element={<SupportView />} />
+            </Routes>
           </HashRouter>
           <WifiDeviceNotification
             newNetworkDevices={newNetworkDevices}
