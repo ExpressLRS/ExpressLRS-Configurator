@@ -128,6 +128,7 @@ const userDefinesToCategories = (
       UserDefineKey.USE_TX_BACKPACK,
       UserDefineKey.JUST_BEEP_ONCE,
       UserDefineKey.DISABLE_STARTUP_BEEP,
+      UserDefineKey.DISABLE_ALL_BEEPS,
       UserDefineKey.MY_STARTUP_MELODY,
       UserDefineKey.USE_DYNAMIC_POWER,
       UserDefineKey.WS2812_IS_GRB,

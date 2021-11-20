@@ -384,6 +384,7 @@
         "USE_ESP8266_BACKPACK",
         "JUST_BEEP_ONCE",
         "DISABLE_STARTUP_BEEP",
+        "DISABLE_ALL_BEEPS",
         "MY_STARTUP_MELODY",
         "USE_DYNAMIC_POWER",
         "R9M_UNLOCK_HIGHER_POWER",
@@ -419,6 +420,7 @@
         "FEATURE_OPENTX_SYNC",
         "JUST_BEEP_ONCE",
         "DISABLE_STARTUP_BEEP",
+        "DISABLE_ALL_BEEPS",
         "USE_DYNAMIC_POWER"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/",
@@ -448,6 +450,7 @@
         "UNLOCK_HIGHER_POWER",
         "JUST_BEEP_ONCE",
         "DISABLE_STARTUP_BEEP",
+        "DISABLE_ALL_BEEPS",
         "USE_DYNAMIC_POWER"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/",
@@ -899,6 +902,7 @@
         "UNLOCK_HIGHER_POWER",
         "JUST_BEEP_ONCE",
         "DISABLE_STARTUP_BEEP",
+        "DISABLE_ALL_BEEPS",
         "MY_STARTUP_MELODY",
         "BLE_HID_JOYSTICK",
         "USE_DYNAMIC_POWER",
@@ -1308,6 +1312,7 @@
         "USE_DYNAMIC_POWER",
         "JUST_BEEP_ONCE",
         "DISABLE_STARTUP_BEEP",
+        "DISABLE_ALL_BEEPS",
         "MY_STARTUP_MELODY"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/",
@@ -1335,6 +1340,7 @@
         "USE_DYNAMIC_POWER",
         "JUST_BEEP_ONCE",
         "DISABLE_STARTUP_BEEP",
+        "DISABLE_ALL_BEEPS",
         "MY_STARTUP_MELODY"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/",
