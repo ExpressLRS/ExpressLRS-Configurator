@@ -510,6 +510,21 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.DISABLE_ALL_BEEPS:
+          return (
+            <div>
+              <p>Disable all beeps.</p>{' '}
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
         case UserDefineKey.MY_STARTUP_MELODY:
           return (
             <div>

@@ -114,6 +114,8 @@ export default class TargetUserDefinesFactory {
             return UserDefine.Boolean(UserDefineKey.USE_TX_BACKPACK);
           case UserDefineKey.JUST_BEEP_ONCE:
             return UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE);
+          case UserDefineKey.DISABLE_ALL_BEEPS:
+            return UserDefine.Boolean(UserDefineKey.DISABLE_ALL_BEEPS);
           case UserDefineKey.DISABLE_STARTUP_BEEP:
             return UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP);
           case UserDefineKey.MY_STARTUP_MELODY:
