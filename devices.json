@@ -388,7 +388,8 @@
         "MY_STARTUP_MELODY",
         "USE_DYNAMIC_POWER",
         "R9M_UNLOCK_HIGHER_POWER",
-        "UNLOCK_HIGHER_POWER"
+        "UNLOCK_HIGHER_POWER",
+        "USE_TX_BACKPACK"
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/",
       "deviceType": "ExpressLRS"
