@@ -1032,6 +1032,21 @@
       "deviceType": "ExpressLRS"
     },
     {
+      "category": "DIY Bluetooth Joystick",
+      "name": "DIY Bluetooth Joystick",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "DIY_BLE_JOYSTICK_via_UART"
+        }
+      ],
+      "userDefines": [
+        "UART_INVERTED"
+      ],
+      "wikiUrl": "",
+      "deviceType": "ExpressLRS"
+    },
+    {
       "category": "DIY 900 MHz",
       "name": "DIY 900 TX TTGO V2 SX127x",
       "targets": [
