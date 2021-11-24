@@ -7,6 +7,7 @@ enum FlashingMethod {
   Stock_BL = 'Bootloader',
   UART = 'UART',
   WIFI = 'WIFI',
+  Radio = 'Radio',
 }
 
 registerEnumType(FlashingMethod, {

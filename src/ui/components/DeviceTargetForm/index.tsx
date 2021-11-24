@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { Box } from '@mui/material';
 import Omnibox from '../Omnibox';
-import { Device } from '../../gql/generated/types';
+import { Device, Target } from '../../gql/generated/types';
 import FlashingMethodOptions from '../FlashingMethodOptions';
 
 const styles = {
@@ -17,8 +17,8 @@ const styles = {
 };
 
 interface FirmwareVersionCardProps {
-  currentTarget: string | null;
-  onChange: (data: string | null) => void;
+  currentTarget: Target | null;
+  onChange: (data: Target | null) => void;
   targetOptions: Device[] | null;
 }
 
@@ -47,7 +47,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
     );
   }, [targetOptions]);
 
-  const [currentTargetValue, setCurrentTargetValue] = useState<string | null>(
+  const [currentTargetValue, setCurrentTargetValue] = useState<Target | null>(
     null
   );
 
@@ -61,7 +61,11 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
 
   useEffect(() => {
     const device = targetOptions?.find((item) =>
-      item.targets.find((target) => target.name === currentTarget)
+      item.targets.find(
+        (target) =>
+          target.name === currentTarget?.name &&
+          target.flashingMethod === currentTarget?.flashingMethod
+      )
     );
 
     // verify that if there is a currentTarget that the category and device values match that target
@@ -124,7 +128,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
   ]);
 
   const onFlashingMethodChange = useCallback(
-    (value: string | null) => {
+    (value: Target | null) => {
       onChange(value);
     },
     [onChange]
