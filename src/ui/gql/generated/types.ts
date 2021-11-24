@@ -112,6 +112,7 @@ export enum FlashingMethod {
   Stock_BL = 'Stock_BL',
   UART = 'UART',
   WIFI = 'WIFI',
+  Radio = 'Radio',
 }
 
 export enum UserDefineKey {

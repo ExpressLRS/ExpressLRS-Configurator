@@ -220,11 +220,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     []
   );
 
-  const [deviceTarget, setDeviceTarget] = useState<string | null>(null);
+  const [deviceTarget, setDeviceTarget] = useState<Target | null>(null);
   const [deviceTargetErrors, setDeviceTargetErrors] = useState<Error[]>([]);
 
   const onDeviceTarget = useCallback(
-    (data: string | null) => {
+    (data: Target | null) => {
       setDeviceTargetErrors([]);
       setDeviceTarget(data);
       // if target was manually changed, set selected device to null
@@ -317,7 +317,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     } else {
       fetchOptions({
         variables: {
-          target: deviceTarget,
+          target: deviceTarget.name,
           source: firmwareVersionData.source as FirmwareSource,
           gitBranch: firmwareVersionData.gitBranch!,
           gitTag: firmwareVersionData.gitTag!,
@@ -346,7 +346,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         const deviceName =
           deviceTargets?.find((device) => {
             return device.targets.find(
-              (target) => target.name === deviceTarget
+              (target) => target.name === deviceTarget?.name
             );
           })?.name || null;
         const userDefineOptions = await mergeWithDeviceOptionsFromStorage(
@@ -374,7 +374,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       }
       const deviceName =
         deviceTargets?.find((device) => {
-          return device.targets.find((target) => target.name === deviceTarget);
+          return device.targets.find(
+            (target) => target.name === deviceTarget.name
+          );
         })?.name || null;
       if (deviceName) {
         const storage = new ApplicationStorage();
@@ -402,7 +404,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       if (deviceTarget !== null) {
         const storage = new ApplicationStorage();
         const deviceName = deviceTargets?.find((device) => {
-          return device.targets.find((target) => target.name === deviceTarget);
+          return device.targets.find(
+            (target) => target.name === deviceTarget.name
+          );
         })?.name;
         if (deviceName) {
           persistDeviceOptions(storage, deviceName, data).catch((err) => {
@@ -460,7 +464,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   const isTX = useMemo(() => {
     if (deviceTarget) {
-      return deviceTarget?.indexOf('_TX_') > -1;
+      return deviceTarget.name?.indexOf('_TX_') > -1;
     }
     return false;
   }, [deviceTarget]);
@@ -520,29 +524,22 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const [wifiDeviceRequired, setWifiDeviceRequired] = useState<boolean>(false);
 
   useEffect(() => {
-    let target: Target | undefined;
-
-    deviceTargets?.forEach((device) => {
-      target =
-        device.targets.find((item) => item.name === deviceTarget) || target;
-    });
-
     if (
-      target &&
-      (target.flashingMethod === FlashingMethod.BetaflightPassthrough ||
-        target.flashingMethod === FlashingMethod.UART)
+      deviceTarget &&
+      (deviceTarget.flashingMethod === FlashingMethod.BetaflightPassthrough ||
+        deviceTarget.flashingMethod === FlashingMethod.UART)
     ) {
       setSerialPortRequired(true);
     } else {
       setSerialPortRequired(false);
     }
 
-    if (target && target.flashingMethod === FlashingMethod.WIFI) {
+    if (deviceTarget && deviceTarget.flashingMethod === FlashingMethod.WIFI) {
       setWifiDeviceRequired(true);
     } else {
       setWifiDeviceRequired(false);
     }
-  }, [deviceTarget, deviceTargets]);
+  }, [deviceTarget, deviceTarget, deviceTargets]);
 
   const [
     deviceOptionsValidationErrors,
@@ -625,7 +622,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     const input: BuildFlashFirmwareInput = {
       type,
       firmware: firmwareVersionData,
-      target: deviceTarget,
+      target: deviceTarget.name,
       userDefinesTxt: deviceOptionsFormData.userDefinesTxt,
       userDefinesMode: deviceOptionsFormData.userDefinesMode,
       userDefines: deviceOptionsFormData.userDefineOptions.map((item) => ({
@@ -701,8 +698,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         const dTarget =
           device?.targets.find((target) => {
             return target.flashingMethod === FlashingMethod.WIFI;
-          })?.name ||
-          device?.targets[0].name ||
+          }) ||
+          device?.targets[0] ||
           null;
 
         if (dTarget !== deviceTarget) {
@@ -827,7 +824,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <CardContent>
                   {!loadingOptions && (
                     <DeviceOptionsForm
-                      target={deviceTarget}
+                      target={deviceTarget?.name ?? null}
                       deviceOptions={deviceOptionsFormData}
                       onChange={onUserDefines}
                     />
@@ -863,7 +860,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                         wifiDevice={wifiDevice}
                         wifiDevices={Array.from(networkDevices.values()).filter(
                           (item) => {
-                            return deviceTarget
+                            return deviceTarget?.name
                               ?.toUpperCase()
                               .startsWith(item.target.toUpperCase());
                           }
@@ -879,14 +876,16 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     >
                       Build
                     </Button>
-                    <Button
-                      sx={styles.button}
-                      size="large"
-                      variant="contained"
-                      onClick={onBuildAndFlash}
-                    >
-                      Build & Flash
-                    </Button>
+                    {deviceTarget?.flashingMethod !== FlashingMethod.Radio && (
+                      <Button
+                        sx={styles.button}
+                        size="large"
+                        variant="contained"
+                        onClick={onBuildAndFlash}
+                      >
+                        Build & Flash
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -962,7 +961,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                         <>
                           <Alert sx={styles.buildNotification} severity="info">
                             <AlertTitle>Build notice</AlertTitle>
-                            Firmware binary file was opened in the file explorer
+                            {deviceTarget?.flashingMethod !==
+                            FlashingMethod.Radio
+                              ? 'Firmware binary file was opened in the file explorer'
+                              : "Firmware binary file was opened in the file explorer, copy the firmware file to your radios's SD card and flash it to the transmitter using EdgeTX/OpenTX"}
                           </Alert>
                         </>
                       )}
@@ -970,7 +972,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       <>
                         <Alert sx={styles.buildNotification} severity="info">
                           <AlertTitle>Update Lua Script</AlertTitle>
-                          Make sure to update the Lua script on your transmitter
+                          Make sure to update the Lua script on your radio
                         </Alert>
                       </>
                     )}

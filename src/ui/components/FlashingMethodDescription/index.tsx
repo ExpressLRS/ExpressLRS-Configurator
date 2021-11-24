@@ -57,6 +57,28 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
               </p>
             </div>
           );
+        case FlashingMethod.Radio:
+          return (
+            <div>
+              <p>
+                This method allows you to build the firmware which can then be
+                copied to your radio and flashed to the transmitter using
+                EdgeTX/OpenTX
+              </p>
+              <ol>
+                <li>Run Build</li>
+                <li>
+                  Put the firmware on your radio&apos;s SD Card (recommended
+                  location is inside the /FIRMWARE folder)
+                </li>
+                <li>
+                  On your radio, navigate to where the firmware file was placed
+                  (/FIRMWARE), select the firmware file, click-hold the Enter
+                  button and select &quot;Flash External ELRS&quot;
+                </li>
+              </ol>
+            </div>
+          );
         case FlashingMethod.DFU:
           return (
             <div>

@@ -39,9 +39,9 @@ const styles = {
 };
 
 interface FlashingMethodsListProps {
-  currentTarget: string | null;
+  currentTarget: Target | null;
   currentDevice: Device | null;
-  onChange: (data: string | null) => void;
+  onChange: (data: Target | null) => void;
 }
 
 const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
@@ -65,7 +65,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   );
 
   const ChangeSelectedDeviceTarget = useCallback(
-    (value: string | null) => {
+    (value: Target | null) => {
       onChange(value);
     },
     [onChange]
@@ -75,19 +75,34 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
     // if the currentTarget is not found, then select the first one by default
     if (
       targetMappingsSorted &&
-      !targetMappingsSorted.find((item) => item.name === currentTarget) &&
+      !targetMappingsSorted.find(
+        (item) =>
+          item.name === currentTarget?.name &&
+          item.flashingMethod === currentTarget?.flashingMethod
+      ) &&
       targetMappingsSorted.length > 0
     ) {
-      const { name } = targetMappingsSorted[0];
-      ChangeSelectedDeviceTarget(name);
+      const target = targetMappingsSorted[0];
+      ChangeSelectedDeviceTarget(target);
     }
   }, [ChangeSelectedDeviceTarget, currentTarget, targetMappingsSorted]);
 
+  const targetToString = (target: Target | null): string | null => {
+    if (target) {
+      return `${target.flashingMethod}|${target.name}`;
+    }
+
+    return null;
+  };
+
   const onFlashingMethodChange = useCallback(
     (_event: React.ChangeEvent<HTMLInputElement>, value: string) => {
-      ChangeSelectedDeviceTarget(value);
+      const target = targetMappingsSorted?.find((item) => {
+        return targetToString(item) === value;
+      });
+      ChangeSelectedDeviceTarget(target ?? null);
     },
-    [ChangeSelectedDeviceTarget]
+    [ChangeSelectedDeviceTarget, targetMappingsSorted]
   );
 
   const flashingMethodRadioOption = useCallback(
@@ -108,8 +123,8 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
 
       return (
         <FormControlLabel
-          key={targetMapping.name}
-          value={targetMapping.name}
+          key={targetToString(targetMapping)}
+          value={targetToString(targetMapping)}
           sx={styles.radioControl}
           control={<Radio sx={styles.radio} color="primary" />}
           label={label}
@@ -127,7 +142,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
       <FormControl component="fieldset" sx={styles.flashingMethods}>
         <RadioGroup
           row
-          value={currentTarget}
+          value={targetToString(currentTarget)}
           onChange={onFlashingMethodChange}
           defaultValue="top"
         >
