@@ -1360,6 +1360,10 @@
         {
           "flashingMethod": "STLink",
           "name": "GHOST_2400_TX_via_STLINK"
+        },
+        {
+          "flashingMethod": "Radio",
+          "name": "GHOST_2400_TX_via_STLINK"
         }
       ],
       "userDefines": [
@@ -1387,6 +1391,10 @@
       "targets": [
         {
           "flashingMethod": "STLink",
+          "name": "GHOST_2400_TX_LITE_via_STLINK"
+        },
+        {
+          "flashingMethod": "Radio",
           "name": "GHOST_2400_TX_LITE_via_STLINK"
         }
       ],
