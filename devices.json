@@ -2116,7 +2116,9 @@
         }
       ],
       "userDefines": [
-        "BINDING_PHRASE"
+        "BINDING_PHRASE",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
       ],
       "wikiUrl": "",
       "deviceType": "Backpack"
@@ -2135,7 +2137,9 @@
         }
       ],
       "userDefines": [
-        "BINDING_PHRASE"
+        "BINDING_PHRASE",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
       ],
       "wikiUrl": "",
       "deviceType": "Backpack"
@@ -2154,7 +2158,9 @@
         }
       ],
       "userDefines": [
-        "BINDING_PHRASE"
+        "BINDING_PHRASE",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
       ],
       "wikiUrl": "",
       "deviceType": "Backpack"
@@ -2173,7 +2179,9 @@
         }
       ],
       "userDefines": [
-        "BINDING_PHRASE"
+        "BINDING_PHRASE",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
       ],
       "wikiUrl": "",
       "deviceType": "Backpack"
@@ -2192,7 +2200,9 @@
         }
       ],
       "userDefines": [
-        "BINDING_PHRASE"
+        "BINDING_PHRASE",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
       ],
       "wikiUrl": "",
       "deviceType": "Backpack"
@@ -2211,7 +2221,9 @@
         }
       ],
       "userDefines": [
-        "BINDING_PHRASE"
+        "BINDING_PHRASE",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
       ],
       "wikiUrl": "",
       "deviceType": "Backpack"
@@ -2230,7 +2242,9 @@
         }
       ],
       "userDefines": [
-        "BINDING_PHRASE"
+        "BINDING_PHRASE",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
       ],
       "wikiUrl": "",
       "deviceType": "Backpack"
@@ -2249,7 +2263,9 @@
         }
       ],
       "userDefines": [
-        "BINDING_PHRASE"
+        "BINDING_PHRASE",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
       ],
       "wikiUrl": "",
       "deviceType": "Backpack"
@@ -2268,7 +2284,9 @@
         }
       ],
       "userDefines": [
-        "BINDING_PHRASE"
+        "BINDING_PHRASE",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
       ],
       "wikiUrl": "",
       "deviceType": "Backpack"
