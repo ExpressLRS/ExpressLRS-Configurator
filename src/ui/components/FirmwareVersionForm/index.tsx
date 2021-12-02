@@ -12,6 +12,7 @@ import {
 import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import debounce from 'lodash.debounce';
+import semver from 'semver';
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 import Omnibox from '../Omnibox';
@@ -123,7 +124,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       gitTagsResponse?.releases.filter(
         ({ tagName }) => !gitRepository.tagExcludes.includes(tagName)
       ) ?? []
-    );
+    ).sort((a, b) => semver.rcompare(a.tagName, b.tagName));
   }, [gitRepository.tagExcludes, gitTagsResponse?.releases]);
 
   const gitBranches = useMemo(() => {
