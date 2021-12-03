@@ -2109,7 +2109,8 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD",
         "RCVR_UART_BAUD",
-        "RCVR_INVERT_TX"
+        "RCVR_INVERT_TX",
+        "USE_DIVERSITY"
       ],
       "wikiUrl": "",
       "deviceType": "ExpressLRS"
