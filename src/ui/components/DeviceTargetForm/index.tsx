@@ -61,11 +61,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
 
   useEffect(() => {
     const device = targetOptions?.find((item) =>
-      item.targets.find(
-        (target) =>
-          target.name === currentTarget?.name &&
-          target.flashingMethod === currentTarget?.flashingMethod
-      )
+      item.targets.find((target) => target.id === currentTarget?.id)
     );
 
     // verify that if there is a currentTarget that the category and device values match that target

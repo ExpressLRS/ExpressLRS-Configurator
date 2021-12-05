@@ -20,6 +20,7 @@ query availableFirmwareTargets(
     name
     category
     targets {
+      id
       name
       flashingMethod
     }

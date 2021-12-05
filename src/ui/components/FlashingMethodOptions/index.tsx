@@ -75,30 +75,18 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
     // if the currentTarget is not found, then select the first one by default
     if (
       targetMappingsSorted &&
-      !targetMappingsSorted.find(
-        (item) =>
-          item.name === currentTarget?.name &&
-          item.flashingMethod === currentTarget?.flashingMethod
-      ) &&
-      targetMappingsSorted.length > 0
+      targetMappingsSorted.length > 0 &&
+      !targetMappingsSorted.find((item) => item.id === currentTarget?.id)
     ) {
       const target = targetMappingsSorted[0];
       ChangeSelectedDeviceTarget(target);
     }
   }, [ChangeSelectedDeviceTarget, currentTarget, targetMappingsSorted]);
 
-  const targetToString = (target: Target | null): string | null => {
-    if (target) {
-      return `${target.flashingMethod}|${target.name}`;
-    }
-
-    return null;
-  };
-
   const onFlashingMethodChange = useCallback(
     (_event: React.ChangeEvent<HTMLInputElement>, value: string) => {
       const target = targetMappingsSorted?.find((item) => {
-        return targetToString(item) === value;
+        return item.id === value;
       });
       ChangeSelectedDeviceTarget(target ?? null);
     },
@@ -123,8 +111,8 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
 
       return (
         <FormControlLabel
-          key={targetToString(targetMapping)}
-          value={targetToString(targetMapping)}
+          key={targetMapping.id}
+          value={targetMapping.id}
           sx={styles.radioControl}
           control={<Radio sx={styles.radio} color="primary" />}
           label={label}
@@ -142,7 +130,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
       <FormControl component="fieldset" sx={styles.flashingMethods}>
         <RadioGroup
           row
-          value={targetToString(currentTarget)}
+          value={currentTarget?.id ?? null}
           onChange={onFlashingMethodChange}
           defaultValue="top"
         >

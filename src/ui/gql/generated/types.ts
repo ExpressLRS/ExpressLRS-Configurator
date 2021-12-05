@@ -101,6 +101,7 @@ export type Device = {
 
 export type Target = {
   readonly __typename?: 'Target';
+  readonly id: Scalars['String'];
   readonly name: Scalars['String'];
   readonly flashingMethod: FlashingMethod;
 };
@@ -450,7 +451,7 @@ export type AvailableFirmwareTargetsQuery = {
         readonly targets: ReadonlyArray<
           { readonly __typename?: 'Target' } & Pick<
             Target,
-            'name' | 'flashingMethod'
+            'id' | 'name' | 'flashingMethod'
           >
         >;
       }
@@ -802,6 +803,7 @@ export const AvailableFirmwareTargetsDocument = gql`
       name
       category
       targets {
+        id
         name
         flashingMethod
       }
