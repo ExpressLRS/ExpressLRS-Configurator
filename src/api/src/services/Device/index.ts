@@ -52,6 +52,7 @@ export default class DeviceService implements IDevices {
           }
 
           return {
+            id: `${value.category}|${value.name}|${item.name}`,
             name: item.name,
             flashingMethod,
           };

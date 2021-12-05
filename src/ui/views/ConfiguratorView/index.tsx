@@ -253,6 +253,12 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     },
   ] = useLuaScriptLazyQuery();
 
+  const device = useMemo(() => {
+    return deviceTargets?.find((d) => {
+      return d.targets.find((target) => target.id === deviceTarget?.id);
+    });
+  }, [deviceTarget, deviceTargets]);
+
   useEffect(() => {
     if (firmwareVersionData === null) {
       setDeviceTargets(null);
@@ -343,12 +349,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     ) {
       const handleUpdate = async () => {
         const storage = new ApplicationStorage();
-        const deviceName =
-          deviceTargets?.find((device) => {
-            return device.targets.find(
-              (target) => target.name === deviceTarget?.name
-            );
-          })?.name || null;
+        const deviceName = device?.name || null;
         const userDefineOptions = await mergeWithDeviceOptionsFromStorage(
           storage,
           deviceName,
@@ -372,12 +373,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         alert(`deviceOptionsResponse is undefined`);
         return;
       }
-      const deviceName =
-        deviceTargets?.find((device) => {
-          return device.targets.find(
-            (target) => target.name === deviceTarget.name
-          );
-        })?.name || null;
+      const deviceName = device?.name || null;
       if (deviceName) {
         const storage = new ApplicationStorage();
         await storage.removeDeviceOptions(deviceName);
@@ -403,11 +399,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       setDeviceOptionsFormData(data);
       if (deviceTarget !== null) {
         const storage = new ApplicationStorage();
-        const deviceName = deviceTargets?.find((device) => {
-          return device.targets.find(
-            (target) => target.name === deviceTarget.name
-          );
-        })?.name;
+        const deviceName = device?.name;
         if (deviceName) {
           persistDeviceOptions(storage, deviceName, data).catch((err) => {
             console.error(`failed to persist user defines: ${err}`);
@@ -693,13 +685,13 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           return;
         }
 
-        const device = deviceMatches[0];
+        const deviceMatch = deviceMatches[0];
 
         const dTarget =
-          device?.targets.find((target) => {
+          deviceMatch?.targets.find((target) => {
             return target.flashingMethod === FlashingMethod.WIFI;
           }) ||
-          device?.targets[0] ||
+          deviceMatch?.targets[0] ||
           null;
 
         if (dTarget !== deviceTarget) {
