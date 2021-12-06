@@ -157,6 +157,7 @@ export enum UserDefineKey {
   HOME_WIFI_PASSWORD = 'HOME_WIFI_PASSWORD',
   AUTO_WIFI_ON_BOOT = 'AUTO_WIFI_ON_BOOT',
   AUTO_WIFI_ON_INTERVAL = 'AUTO_WIFI_ON_INTERVAL',
+  DEVICE_NAME = 'DEVICE_NAME',
 }
 
 export enum DeviceType {
@@ -245,6 +246,7 @@ export type MulticastDnsInformation = {
   readonly ip: Scalars['String'];
   readonly dns: Scalars['String'];
   readonly port: Scalars['Float'];
+  readonly deviceName: Scalars['String'];
 };
 
 export type LuaScript = {
@@ -468,7 +470,15 @@ export type AvailableMulticastDnsDevicesListQuery = {
   readonly availableMulticastDnsDevicesList: ReadonlyArray<
     { readonly __typename?: 'MulticastDnsInformation' } & Pick<
       MulticastDnsInformation,
-      'name' | 'version' | 'target' | 'type' | 'vendor' | 'ip' | 'dns' | 'port'
+      | 'name'
+      | 'version'
+      | 'target'
+      | 'type'
+      | 'vendor'
+      | 'ip'
+      | 'dns'
+      | 'port'
+      | 'deviceName'
     > & {
         readonly options: ReadonlyArray<
           { readonly __typename?: 'UserDefine' } & Pick<
@@ -677,6 +687,7 @@ export type MulticastDnsMonitorUpdatesSubscription = {
         | 'ip'
         | 'dns'
         | 'port'
+        | 'deviceName'
       > & {
           readonly options: ReadonlyArray<
             { readonly __typename?: 'UserDefine' } & Pick<
@@ -888,6 +899,7 @@ export const AvailableMulticastDnsDevicesListDocument = gql`
       ip
       dns
       port
+      deviceName
     }
   }
 `;
@@ -1692,6 +1704,7 @@ export const MulticastDnsMonitorUpdatesDocument = gql`
         ip
         dns
         port
+        deviceName
       }
     }
   }

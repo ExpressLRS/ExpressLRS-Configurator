@@ -54,7 +54,9 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
           {wifiDevicesSorted.map((row) => (
             <TableRow key={row.name}>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.target}</TableCell>
+              <TableCell>
+                {row.deviceName ? row.deviceName : row.target}
+              </TableCell>
               <TableCell>{row.version}</TableCell>
               <TableCell>{row.type?.toUpperCase()}</TableCell>
               <TableCell>

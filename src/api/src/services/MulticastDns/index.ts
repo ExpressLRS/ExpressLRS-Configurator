@@ -133,6 +133,7 @@ export default class MulticastDnsService {
         let target = '';
         let type = '';
         let vendor = '';
+        let deviceName = '';
 
         if (Array.isArray(txtResponse.data)) {
           txtResponse.data.forEach((item: any) => {
@@ -158,6 +159,9 @@ export default class MulticastDnsService {
                 case 'vendor':
                   vendor = value;
                   break;
+                case 'device':
+                  deviceName = value;
+                  break;
                 default:
                   break;
               }
@@ -175,6 +179,7 @@ export default class MulticastDnsService {
           type,
           vendor,
           port,
+          deviceName,
         };
 
         if (!this.devices[name]) {

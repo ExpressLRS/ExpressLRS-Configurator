@@ -17,6 +17,7 @@ subscription multicastDnsMonitorUpdates {
       ip
       dns
       port
+      deviceName
     }
   }
 }

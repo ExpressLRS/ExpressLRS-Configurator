@@ -14,6 +14,11 @@ import {
   Card,
   CardContent,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   Tooltip,
 } from '@mui/material';
@@ -51,6 +56,8 @@ import {
   FlashingMethod,
   useLuaScriptLazyQuery,
   DeviceType,
+  UserDefineKey,
+  UserDefineKind,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -611,19 +618,30 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       uploadPort = wifiDevice;
     }
 
+    const userDefines = deviceOptionsFormData.userDefineOptions.map((item) => ({
+      key: item.key,
+      value: item.value,
+      enabled: item.enabled,
+      enumValues: item.enumValues,
+      type: item.type,
+    }));
+
+    // add the user define for the device name
+    userDefines.push({
+      key: UserDefineKey.DEVICE_NAME,
+      value: device?.name,
+      enabled: true,
+      enumValues: null,
+      type: UserDefineKind.Text,
+    });
+
     const input: BuildFlashFirmwareInput = {
       type,
       firmware: firmwareVersionData,
       target: deviceTarget.name,
       userDefinesTxt: deviceOptionsFormData.userDefinesTxt,
       userDefinesMode: deviceOptionsFormData.userDefinesMode,
-      userDefines: deviceOptionsFormData.userDefineOptions.map((item) => ({
-        key: item.key,
-        value: item.value,
-        enabled: item.enabled,
-        enumValues: item.enumValues,
-        type: item.type,
-      })),
+      userDefines,
       serialDevice: uploadPort,
     };
     buildFlashFirmwareMutation({
@@ -655,22 +673,33 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   const deviceOptionsRef = useRef<HTMLDivElement | null>(null);
 
+  const [
+    deviceSelectErrorDialogOpen,
+    setDeviceSelectErrorDialogOpen,
+  ] = useState<boolean>(false);
+
   const handleSelectedDeviceChange = useCallback(
     (deviceName: string) => {
       const dnsDevice = networkDevices.get(deviceName);
       if (dnsDevice) {
+        const dnsDeviceName = dnsDevice.deviceName?.toUpperCase();
         const targetName = dnsDevice.target.toUpperCase();
 
-        // if targetName is an empty string, then return
-        if (targetName.trim().length === 0) {
-          return;
-        }
+        let deviceMatches: Device[] | undefined = [];
 
-        const deviceMatches = deviceTargets?.filter((item) => {
-          return item.targets.find((target) => {
-            return target.name.toUpperCase().startsWith(targetName);
-          });
+        // try to find the device by the deviceName
+        deviceMatches = deviceTargets?.filter((item) => {
+          return item.name.toUpperCase() === dnsDeviceName;
         });
+
+        // if no matches found by deviceName, then use the target
+        if (deviceMatches?.length === 0 && targetName.trim().length !== 0) {
+          deviceMatches = deviceTargets?.filter((item) => {
+            return item.targets.find((target) => {
+              return target.name.toUpperCase().startsWith(targetName);
+            });
+          });
+        }
 
         if (!deviceMatches || deviceMatches.length === 0) {
           return;
@@ -682,6 +711,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           console.error(
             `multiple device matches found for target ${targetName}!`
           );
+          setDeviceSelectErrorDialogOpen(true);
           return;
         }
 
@@ -733,6 +763,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     }
     return null;
   };
+
+  const handleDeviceSelectErrorDialogClose = useCallback(() => {
+    setDeviceSelectErrorDialogOpen(false);
+  }, []);
 
   return (
     <Box component="main" sx={styles.root}>
@@ -901,6 +935,27 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   </Box>
                 )}
               </Card>
+              <Dialog
+                open={deviceSelectErrorDialogOpen}
+                onClose={handleDeviceSelectErrorDialogClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  Device Select Error
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    The target device could not be automatically selected, it
+                    must be done manually.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleDeviceSelectErrorDialogClose}>
+                    Close
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </>
           )}
 

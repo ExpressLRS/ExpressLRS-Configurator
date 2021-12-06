@@ -30,6 +30,9 @@ export default class MulticastDnsInformation {
   @Field()
   port: number;
 
+  @Field()
+  deviceName: string;
+
   constructor(
     name: string,
     options: UserDefine[],
@@ -39,7 +42,8 @@ export default class MulticastDnsInformation {
     vendor: string,
     ip: string,
     dns: string,
-    port: number
+    port: number,
+    deviceName: string
   ) {
     this.name = name;
     this.options = options;
@@ -50,5 +54,6 @@ export default class MulticastDnsInformation {
     this.ip = ip;
     this.dns = dns;
     this.port = port;
+    this.deviceName = deviceName;
   }
 }

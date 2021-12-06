@@ -1,3 +1,4 @@
+import UserDefineKey from '../library/FirmwareBuilder/Enum/UserDefineKey';
 import UserDefineKind from '../models/enum/UserDefineKind';
 import UserDefine from '../models/UserDefine';
 
@@ -23,6 +24,10 @@ export default class UserDefinesTxtFactory {
   makeEntry(key: string, value?: string | undefined): string {
     if (value === undefined) {
       return `-${key}`;
+    }
+    // special format for device name
+    if (key === UserDefineKey.DEVICE_NAME) {
+      return `-${key}='"${value}"'`;
     }
     return `-${key}="${value}"`;
   }
