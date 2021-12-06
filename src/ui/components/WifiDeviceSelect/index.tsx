@@ -39,7 +39,9 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   const options = useMemo(() => {
     const result = wifiDevices.map((target) => {
       return {
-        label: `${target.name} - ${target.target} (${target.ip})`,
+        label: `${target.name} - ${
+          target.deviceName ? target.deviceName : target.target
+        } (${target.ip})`,
         value: target.ip,
       };
     });

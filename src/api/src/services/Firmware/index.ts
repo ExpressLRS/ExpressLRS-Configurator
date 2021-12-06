@@ -294,7 +294,11 @@ export default class FirmwareService {
         const compatCheck = await this.builder.checkDefaultUserDefinesCompatibilityAtPath(
           firmwarePath,
           params.userDefines
-            .filter((userDefine) => userDefine.enabled)
+            .filter(
+              (userDefine) =>
+                userDefine.enabled &&
+                userDefine.key !== UserDefineKey.DEVICE_NAME
+            )
             .map(({ key }) => key)
         );
         if (!compatCheck.compatible) {
@@ -458,6 +462,9 @@ export default class FirmwareService {
       gitTag,
       gitPullRequest,
     } = params.firmware;
+    const deviceName = params.userDefines.find(
+      (userDefine) => userDefine.key === UserDefineKey.DEVICE_NAME
+    )?.value;
     let target = params.target.toString();
 
     const viaIndex = params.target?.lastIndexOf('_via');
@@ -465,17 +472,19 @@ export default class FirmwareService {
       target = target.substring(0, viaIndex);
     }
 
+    const firmwareName = deviceName?.replaceAll(' ', '_') || target;
+
     switch (source) {
       case FirmwareSource.GitTag:
-        return `${target}-${gitTag}`;
+        return `${firmwareName}-${gitTag}`;
       case FirmwareSource.GitBranch:
-        return `${target}-${gitBranch}`;
+        return `${firmwareName}-${gitBranch}`;
       case FirmwareSource.GitCommit:
-        return `${target}-${gitCommit}`;
+        return `${firmwareName}-${gitCommit}`;
       case FirmwareSource.GitPullRequest:
-        return `${target}-PR_${gitPullRequest?.number}`;
+        return `${firmwareName}-PR_${gitPullRequest?.number}`;
       default:
-        return `${target}`;
+        return `${firmwareName}`;
     }
   }
 
