@@ -20,7 +20,9 @@ export default class DeviceService implements IDevices {
   }
 
   loadDevices(): Device[] {
-    return DeviceJSON.devices.map((value) => {
+    const devices: Device[] = [];
+
+    DeviceJSON.devices.forEach((value) => {
       try {
         if (!value.name) {
           throw new Error(`all devices must have a name property!`);
@@ -84,13 +86,35 @@ export default class DeviceService implements IDevices {
           deviceType,
         };
 
-        return device;
+        devices.push(device);
+
+        if (value.aliases) {
+          value.aliases.forEach((alias) => {
+            devices.push({
+              id: alias.name,
+              name: alias.name,
+              category: alias.category,
+              targets: device.targets.map((target) => {
+                return {
+                  id: `${alias.category}|${alias.name}|${target.name}`,
+                  name: target.name,
+                  flashingMethod: target.flashingMethod,
+                };
+              }),
+              userDefines: device.userDefines,
+              wikiUrl: alias.wikiUrl,
+              deviceType: device.deviceType,
+            });
+          });
+        }
       } catch (error: any) {
         const errormessage = `Issue encountered while parsing device "${value.name}" in the device configuration file devices.json: ${error.message}`;
         this.logger.error(errormessage);
         throw new Error(errormessage);
       }
     });
+
+    return devices;
   }
 
   getDevices() {
