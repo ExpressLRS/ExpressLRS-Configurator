@@ -106,7 +106,13 @@
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv900/",
       "deviceType": "ExpressLRS",
-      "aliases": []
+      "aliases": [
+        {
+          "category": "HiYOUNGER 900 MHz",
+          "name": "HiYOUNGER 900 TX",
+          "wikiUrl": ""
+        }
+      ]
     },
     {
       "category": "BETAFPV 900 MHz",
@@ -182,7 +188,13 @@
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv900/",
       "deviceType": "ExpressLRS",
-      "aliases": []
+      "aliases": [
+        {
+          "category": "HiYOUNGER 900 MHz",
+          "name": "HiYOUNGER 900 RX",
+          "wikiUrl": ""
+        }
+      ]
     },
     {
       "category": "BETAFPV 2.4 GHz",
@@ -218,7 +230,13 @@
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv2400/",
       "deviceType": "ExpressLRS",
-      "aliases": []
+      "aliases": [
+        {
+          "category": "HiYOUNGER 2.4 GHz",
+          "name": "HiYOUNGER TX2G4 2400 TX",
+          "wikiUrl": ""
+        }
+      ]
     },
     {
       "category": "BETAFPV 2.4 GHz",
@@ -1520,7 +1538,48 @@
       ],
       "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/",
       "deviceType": "ExpressLRS",
-      "aliases": []
+      "aliases": [
+        {
+          "category": "Flywoo 2.4 GHz",
+          "name": "Flywoo EL24E 2400 RX",
+          "wikiUrl": ""
+        },
+        {
+          "category": "Flywoo 2.4 GHz",
+          "name": "Flywoo EL24P 2400 RX",
+          "wikiUrl": ""
+        },
+        {
+          "category": "HiYOUNGER 2.4 GHz",
+          "name": "HiYOUNGER SP24S 2400 RX",
+          "wikiUrl": ""
+        },
+        {
+          "category": "HiYOUNGER 2.4 GHz",
+          "name": "HiYOUNGER EP24S 2400 RX",
+          "wikiUrl": ""
+        },
+        {
+          "category": "HiYOUNGER 2.4 GHz",
+          "name": "HiYOUNGER RX24T 2400 RX",
+          "wikiUrl": ""
+        },
+        {
+          "category": "JHEMCU 2.4 GHz",
+          "name": "JHEMCU SP24S 2400 RX",
+          "wikiUrl": ""
+        },
+        {
+          "category": "JHEMCU 2.4 GHz",
+          "name": "JHEMCU EP24S 2400 RX",
+          "wikiUrl": ""
+        },
+        {
+          "category": "JHEMCU 2.4 GHz",
+          "name": "JHEMCU RX24T 2400 RX",
+          "wikiUrl": ""
+        }
+      ]
     },
     {
       "category": "DIY 2.4 GHz",
