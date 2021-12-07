@@ -27,5 +27,6 @@ query availableFirmwareTargets(
     wikiUrl
     userDefines
     deviceType
+    parent
   }
 }

@@ -97,6 +97,7 @@ export type Device = {
   readonly userDefines: ReadonlyArray<UserDefineKey>;
   readonly wikiUrl?: Maybe<Scalars['String']>;
   readonly deviceType: DeviceType;
+  readonly parent?: Maybe<Scalars['String']>;
 };
 
 export type Target = {
@@ -448,7 +449,13 @@ export type AvailableFirmwareTargetsQuery = {
   readonly availableFirmwareTargets: ReadonlyArray<
     { readonly __typename?: 'Device' } & Pick<
       Device,
-      'id' | 'name' | 'category' | 'wikiUrl' | 'userDefines' | 'deviceType'
+      | 'id'
+      | 'name'
+      | 'category'
+      | 'wikiUrl'
+      | 'userDefines'
+      | 'deviceType'
+      | 'parent'
     > & {
         readonly targets: ReadonlyArray<
           { readonly __typename?: 'Target' } & Pick<
@@ -821,6 +828,7 @@ export const AvailableFirmwareTargetsDocument = gql`
       wikiUrl
       userDefines
       deviceType
+      parent
     }
   }
 `;

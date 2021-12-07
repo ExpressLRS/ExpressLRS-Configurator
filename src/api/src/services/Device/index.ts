@@ -84,6 +84,7 @@ export default class DeviceService implements IDevices {
           userDefines,
           wikiUrl: value.wikiUrl,
           deviceType,
+          parent: null,
         };
 
         devices.push(device);
@@ -104,6 +105,7 @@ export default class DeviceService implements IDevices {
               userDefines: device.userDefines,
               wikiUrl: alias.wikiUrl,
               deviceType: device.deviceType,
+              parent: device.id,
             });
           });
         }
