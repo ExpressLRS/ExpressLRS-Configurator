@@ -695,9 +695,14 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         // if no matches found by deviceName, then use the target
         if (deviceMatches?.length === 0 && targetName.trim().length !== 0) {
           deviceMatches = deviceTargets?.filter((item) => {
-            return item.targets.find((target) => {
-              return target.name.toUpperCase().startsWith(targetName);
-            });
+            // only match on a device that doesn't have a parent, which means it
+            // is not an alias of another device
+            return (
+              !item.parent &&
+              item.targets.find((target) => {
+                return target.name.toUpperCase().startsWith(targetName);
+              })
+            );
           });
         }
 
