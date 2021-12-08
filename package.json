@@ -97,7 +97,8 @@
         "zip",
         "deb",
         "pacman",
-        "rpm"
+        "rpm",
+        "AppImage"
       ],
       "category": "Development",
       "extraFiles": [
