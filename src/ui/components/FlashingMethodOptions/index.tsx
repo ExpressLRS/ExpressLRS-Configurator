@@ -63,13 +63,6 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
     [currentDevice?.targets]
   );
 
-  const ChangeSelectedDeviceTarget = useCallback(
-    (value: Target | null) => {
-      onChange(value);
-    },
-    [onChange]
-  );
-
   useEffect(() => {
     // if the currentTarget is not found, then select the first one by default
     if (
@@ -78,18 +71,18 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
       !targetMappingsSorted.find((item) => item.id === currentTarget?.id)
     ) {
       const target = targetMappingsSorted[0];
-      ChangeSelectedDeviceTarget(target);
+      onChange(target);
     }
-  }, [ChangeSelectedDeviceTarget, currentTarget, targetMappingsSorted]);
+  }, [onChange, currentTarget, targetMappingsSorted]);
 
   const onFlashingMethodChange = useCallback(
     (_event: React.ChangeEvent<HTMLInputElement>, value: string) => {
       const target = targetMappingsSorted?.find((item) => {
         return item.id === value;
       });
-      ChangeSelectedDeviceTarget(target ?? null);
+      onChange(target ?? null);
     },
-    [ChangeSelectedDeviceTarget, targetMappingsSorted]
+    [onChange, targetMappingsSorted]
   );
 
   const flashingMethodRadioOption = useCallback(
