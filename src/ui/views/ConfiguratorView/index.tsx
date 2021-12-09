@@ -361,6 +361,26 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             userDefineOptions: [...deviceOptionsResponse.targetDeviceOptions],
           }
         );
+
+        // if a network device is selected, merge in its options
+        if (selectedDevice && networkDevices.has(selectedDevice)) {
+          const networkDevice = networkDevices.get(selectedDevice);
+          userDefineOptions.userDefineOptions = userDefineOptions.userDefineOptions.map(
+            (userDefineOption) => {
+              const networkDeviceOption = networkDevice?.options.find(
+                (item) => item.key === userDefineOption.key
+              );
+
+              const newUserDefineOption = { ...userDefineOption };
+              if (networkDeviceOption) {
+                newUserDefineOption.enabled = networkDeviceOption.enabled;
+                newUserDefineOption.value = networkDeviceOption.value;
+              }
+              return newUserDefineOption;
+            }
+          );
+        }
+
         setDeviceOptionsFormData(userDefineOptions);
       };
       handleUpdate().catch((err) => {
