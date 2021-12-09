@@ -253,11 +253,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   const [
     fetchLuaScript,
-    {
-      loading: loadingLuaScript,
-      data: luaScriptResponse,
-      error: luaScriptResponseError,
-    },
+    { data: luaScriptResponse, error: luaScriptResponseError },
   ] = useLuaScriptLazyQuery();
 
   const device = useMemo(() => {

@@ -48,7 +48,6 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   props
 ) => {
   const { onChange, currentTarget, currentDevice } = props;
-
   const targetMappingsSorted = useMemo(
     () =>
       currentDevice?.targets
