@@ -118,8 +118,8 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                 <ListItem sx={styles.complimentaryItem}>
                   <TextField
                     size="small"
-                    onBlur={onUserDefineValueChange(item.key)}
-                    defaultValue={item.value}
+                    onChange={onUserDefineValueChange(item.key)}
+                    value={item.value}
                     fullWidth
                     label={inputLabel(item.key)}
                   />

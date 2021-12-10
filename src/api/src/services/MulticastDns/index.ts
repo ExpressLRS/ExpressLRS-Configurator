@@ -90,7 +90,7 @@ export default class MulticastDnsService {
       if (userDefineKey) {
         if (match.length === 3) {
           if (match[2]) {
-            userDefines.push(UserDefine.Text(userDefineKey, match[2]));
+            userDefines.push(UserDefine.Text(userDefineKey, match[2], true));
           } else {
             userDefines.push(UserDefine.Boolean(userDefineKey, true));
           }
