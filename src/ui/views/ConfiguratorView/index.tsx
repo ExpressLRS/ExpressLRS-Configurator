@@ -622,14 +622,16 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       type: item.type,
     }));
 
-    // add the user define for the device name
-    userDefines.push({
-      key: UserDefineKey.DEVICE_NAME,
-      value: device?.name,
-      enabled: true,
-      enumValues: null,
-      type: UserDefineKind.Text,
-    });
+    if (device?.parent && device?.name) {
+      // add the user define for the device name
+      userDefines.push({
+        key: UserDefineKey.DEVICE_NAME,
+        value: device?.name.slice(0, 20),
+        enabled: true,
+        enumValues: null,
+        type: UserDefineKind.Text,
+      });
+    }
 
     const input: BuildFlashFirmwareInput = {
       type,
