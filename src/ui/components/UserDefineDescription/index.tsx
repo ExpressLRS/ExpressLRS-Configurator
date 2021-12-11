@@ -1,7 +1,12 @@
 import React, { FunctionComponent, memo } from 'react';
 import { Box, Tooltip } from '@mui/material';
 import QuestionIcon from '@mui/icons-material/Help';
-import { UserDefineKey } from '../../gql/generated/types';
+import semver from 'semver';
+import {
+  FirmwareSource,
+  FirmwareVersionDataInput,
+  UserDefineKey,
+} from '../../gql/generated/types';
 
 const styles = {
   root: {
@@ -16,10 +21,27 @@ const styles = {
 
 interface UserDefineDescriptionProps {
   userDefine: UserDefineKey;
+  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
+const urlVersioning = (
+  firmwareVersionData: FirmwareVersionDataInput | null,
+  url: string
+): string => {
+  if (
+    firmwareVersionData &&
+    firmwareVersionData.source === FirmwareSource.GitTag &&
+    firmwareVersionData.gitTag &&
+    semver.major(firmwareVersionData.gitTag) > 0
+  ) {
+    const majorVersion = semver.major(firmwareVersionData.gitTag);
+    return url.replace('{version}', `${majorVersion}.0`);
+  }
+  return url.replace('{version}', 'release');
+};
+
 const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = memo(
-  ({ userDefine }) => {
+  ({ userDefine, firmwareVersionData }) => {
     const toText = (key: UserDefineKey) => {
       switch (key) {
         case UserDefineKey.REGULATORY_DOMAIN_AU_433:
@@ -45,7 +67,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#regulatory-domain"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#regulatory-domain'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -64,7 +89,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#regulatory-domain"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#regulatory-domain'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -87,7 +115,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#binding-phrase"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#binding-phrase'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -114,7 +145,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#performance-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -134,7 +168,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -152,7 +189,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -176,7 +216,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -194,7 +237,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -209,7 +255,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#performance-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -224,7 +273,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#performance-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -259,7 +311,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/quick-start/tx-prep/"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/quick-start/tx-prep/'
+                  )}
                 >
                   radio setup page
                 </a>{' '}
@@ -267,7 +322,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#performance-options'
+                  )}
                 >
                   Wiki page for latest definition
                 </a>
@@ -303,7 +361,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/quick-start/tx-prep/"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/quick-start/tx-prep/'
+                  )}
                 >
                   radio setup page
                 </a>{' '}
@@ -311,7 +372,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#performance-options'
+                  )}
                 >
                   Wiki page for latest definition
                 </a>
@@ -362,7 +426,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#switches"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#switches'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -398,7 +465,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#telemetry"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#telemetry'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -429,7 +499,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#telemetry"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#telemetry'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -451,7 +524,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#performance-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -470,7 +546,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#performance-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -488,7 +567,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -503,7 +585,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -518,7 +603,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -577,7 +665,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -611,7 +702,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#performance-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -636,7 +730,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/hardware/fan-mod/"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/hardware/fan-mod/'
+                  )}
                 >
                   R9M Fan Mod Cover
                 </a>
@@ -647,7 +744,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#output-power-limit"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#output-power-limit'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -667,7 +767,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#compatability-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -686,7 +789,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#compatability-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -708,7 +814,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#compatability-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -728,7 +837,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -762,7 +874,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/quick-start/tx-prep/"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/quick-start/tx-prep/'
+                  )}
                 >
                   radio setup page
                 </a>{' '}
@@ -770,7 +885,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#performance-options'
+                  )}
                 >
                   Wiki page for latest definition
                 </a>
@@ -790,7 +908,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -810,7 +931,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -835,7 +959,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#compatability-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -859,7 +986,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#compatability-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -877,7 +1007,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -895,7 +1028,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                  href={urlVersioning(
+                    firmwareVersionData,
+                    'https://www.expresslrs.org/{version}/software/user-defines/#other-options'
+                  )}
                 >
                   Check our Wiki page for latest definition.
                 </a>

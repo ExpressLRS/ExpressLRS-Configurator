@@ -104,7 +104,7 @@
         "HOME_WIFI_PASSWORD",
         "UNLOCK_HIGHER_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-betafpv900/",
       "deviceType": "ExpressLRS",
       "aliases": [
         {
@@ -148,7 +148,7 @@
         "HOME_WIFI_PASSWORD",
         "UNLOCK_HIGHER_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-betafpv900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -186,7 +186,7 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-betafpv900/",
       "deviceType": "ExpressLRS",
       "aliases": [
         {
@@ -228,7 +228,7 @@
         "WS2812_IS_GRB",
         "UNLOCK_HIGHER_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-betafpv2400/",
       "deviceType": "ExpressLRS",
       "aliases": [
         {
@@ -270,7 +270,7 @@
         "WS2812_IS_GRB",
         "UNLOCK_HIGHER_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-betafpv2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-betafpv2400/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -306,7 +306,7 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-betafpv2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-betafpv2400/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -342,7 +342,7 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-matek2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-matek2400/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -414,7 +414,7 @@
         "UNLOCK_HIGHER_POWER",
         "USE_TX_BACKPACK"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-r9m/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -448,7 +448,7 @@
         "DISABLE_ALL_BEEPS",
         "USE_DYNAMIC_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-r9m/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -479,7 +479,7 @@
         "DISABLE_ALL_BEEPS",
         "USE_DYNAMIC_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-r9m/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-r9m/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -509,7 +509,7 @@
         "USE_R9MM_R9MINI_SBUS",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-r9receivers/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -539,7 +539,7 @@
         "USE_DIVERSITY",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-r9receivers/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -568,7 +568,7 @@
         "LOCK_ON_FIRST_CONNECTION",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-r9receivers/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -598,7 +598,7 @@
         "USE_DIVERSITY",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-r9receivers/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -627,7 +627,7 @@
         "LOCK_ON_FIRST_CONNECTION",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-r9receivers/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-r9receivers/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -656,7 +656,7 @@
         "LOCK_ON_FIRST_CONNECTION",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-jumper900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-jumper900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -691,7 +691,7 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-es24tx/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -726,7 +726,7 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-es24tx/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -761,7 +761,7 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-es24tx/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -798,7 +798,7 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es900tx/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-es900tx/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -836,7 +836,7 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-hmes900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -871,7 +871,7 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmep2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-hmep2400/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -897,7 +897,7 @@
         "USE_500HZ",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmpp2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-hmpp2400/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -941,7 +941,7 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es900tx/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-es900tx/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -970,7 +970,7 @@
         "LOCK_ON_FIRST_CONNECTION",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmes900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-hmes900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1127,7 +1127,7 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1173,7 +1173,7 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1207,7 +1207,7 @@
         "HOME_WIFI_PASSWORD",
         "UNLOCK_HIGHER_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1240,7 +1240,7 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1278,7 +1278,7 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1310,7 +1310,7 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1341,7 +1341,7 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1377,7 +1377,7 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1408,7 +1408,7 @@
         "USE_DYNAMIC_POWER",
         "WS2812_IS_GRB"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-diy/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1441,7 +1441,7 @@
         "DISABLE_ALL_BEEPS",
         "MY_STARTUP_MELODY"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-ghost2400/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1474,7 +1474,7 @@
         "DISABLE_ALL_BEEPS",
         "MY_STARTUP_MELODY"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-ghost2400/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1500,7 +1500,7 @@
         "USE_500HZ",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-ghost2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-ghost2400/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1536,7 +1536,7 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers/",
       "deviceType": "ExpressLRS",
       "aliases": [
         {
@@ -1606,7 +1606,7 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1632,7 +1632,7 @@
         "USE_500HZ",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-diyreceivers/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1666,7 +1666,7 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-voyager900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-voyager900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1700,7 +1700,7 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-voyager900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-voyager900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1729,7 +1729,7 @@
         "LOCK_ON_FIRST_CONNECTION",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-voyager900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1767,7 +1767,7 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-voyager900/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-voyager900/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1801,7 +1801,7 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-flash2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-flash2400/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1835,7 +1835,7 @@
         "HOME_WIFI_SSID",
         "HOME_WIFI_PASSWORD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-flash2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-flash2400/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1861,7 +1861,7 @@
         "USE_500HZ",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-flash2400/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1897,7 +1897,7 @@
         "RCVR_UART_BAUD",
         "RCVR_INVERT_TX"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-flash2400/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-flash2400/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1927,7 +1927,7 @@
         "UART_INVERTED",
         "USE_DYNAMIC_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-siyifm30/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-siyifm30/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1954,7 +1954,7 @@
         "USE_DIVERSITY",
         "RCVR_UART_BAUD"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-siyiFRmini/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-siyiFRmini/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
@@ -1984,7 +1984,7 @@
         "UART_INVERTED",
         "USE_DYNAMIC_POWER"
       ],
-      "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-siyiFRmini/",
+      "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-siyiFRmini/",
       "deviceType": "ExpressLRS",
       "aliases": []
     },
