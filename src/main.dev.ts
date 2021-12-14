@@ -53,8 +53,8 @@ const winstonLogger = winston.createLogger({
 });
 
 const logger = new WinstonLoggerService(winstonLogger);
-logger.log('environment information', {
-  env: process.env,
+logger.log('path', {
+  PATH: process.env.PATH,
 });
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -229,8 +229,8 @@ const createWindow = async () => {
   }
   localApiServerEnv.PATH = PATH;
 
-  logger.log('local api server environment information', {
-    env: localApiServerEnv,
+  logger.log('local api server PATH', {
+    PATH,
   });
   await localServer.start(
     {
