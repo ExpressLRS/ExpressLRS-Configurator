@@ -48,11 +48,7 @@ const styles = {
   },
 };
 
-interface HeaderProps {
-  className?: string;
-}
-
-const Header: FunctionComponent<HeaderProps> = memo(({ className }) => {
+const Header: FunctionComponent = memo(() => {
   const { data: updateResponse } = useCheckForUpdatesQuery({
     variables: {
       currentVersion: process.env.EXPRESSLRS_CONFIGURATOR_VERSION || '0.0.1',

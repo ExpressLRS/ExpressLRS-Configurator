@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { ipcRenderer } from 'electron';
-import debounce from 'lodash.debounce';
+import debounce from 'lodash/debounce';
 import semver from 'semver';
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
