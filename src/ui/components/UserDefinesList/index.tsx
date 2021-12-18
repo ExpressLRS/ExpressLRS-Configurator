@@ -16,6 +16,7 @@ import {
 } from '../../gql/generated/types';
 import Omnibox from '../Omnibox';
 import UserDefineDescription from '../UserDefineDescription';
+import SensitiveTextField from '../SensitiveTextField';
 
 const styles = {
   icon: {
@@ -116,13 +117,24 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
             {item.type === UserDefineKind.Text && item.enabled && (
               <>
                 <ListItem sx={styles.complimentaryItem}>
-                  <TextField
-                    size="small"
-                    onChange={onUserDefineValueChange(item.key)}
-                    value={item.value}
-                    fullWidth
-                    label={inputLabel(item.key)}
-                  />
+                  {!item.sensitive && (
+                    <TextField
+                      size="small"
+                      onChange={onUserDefineValueChange(item.key)}
+                      value={item.value}
+                      fullWidth
+                      label={inputLabel(item.key)}
+                    />
+                  )}
+                  {item.sensitive && (
+                    <SensitiveTextField
+                      size="small"
+                      onChange={onUserDefineValueChange(item.key)}
+                      value={item.value}
+                      fullWidth
+                      label={inputLabel(item.key)}
+                    />
+                  )}
                 </ListItem>
               </>
             )}
