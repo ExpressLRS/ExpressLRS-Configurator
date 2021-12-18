@@ -204,7 +204,11 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
         case UserDefineKey.USE_DIVERSITY:
           return (
             <div>
-              <p>Experimental option that enables antenna switching.</p>
+              <p>
+                Enable antenna-switching diversity for RX that support it. Safe
+                to leave on for hardware that does not have diversity except DIY
+                builds, which did not populate the RF switch.
+              </p>
               <p>
                 <a
                   target="_blank"
