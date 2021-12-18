@@ -12,7 +12,11 @@ import React, {
   useEffect,
   useMemo,
 } from 'react';
-import { Device, Target } from '../../gql/generated/types';
+import {
+  Device,
+  FirmwareVersionDataInput,
+  Target,
+} from '../../gql/generated/types';
 import FlashingMethodDescription from '../FlashingMethodDescription';
 
 const styles = {
@@ -42,12 +46,13 @@ interface FlashingMethodsListProps {
   currentTarget: Target | null;
   currentDevice: Device | null;
   onChange: (data: Target | null) => void;
+  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   props
 ) => {
-  const { onChange, currentTarget, currentDevice } = props;
+  const { onChange, currentTarget, currentDevice, firmwareVersionData } = props;
   const targetMappingsSorted = useMemo(
     () =>
       currentDevice?.targets
@@ -96,6 +101,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
             <FlashingMethodDescription
               flashingMethod={targetMapping.flashingMethod}
               deviceWikiUrl={currentDevice?.wikiUrl ?? null}
+              firmwareVersionData={firmwareVersionData}
             />
           )}
         </>

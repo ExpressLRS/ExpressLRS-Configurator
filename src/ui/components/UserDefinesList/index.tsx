@@ -10,6 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import {
+  FirmwareVersionDataInput,
   UserDefine,
   UserDefineKey,
   UserDefineKind,
@@ -33,10 +34,11 @@ const styles = {
 interface UserDefinesListProps {
   options: UserDefine[];
   onChange: (data: UserDefine) => void;
+  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
-  const { options, onChange } = props;
+  const { options, onChange, firmwareVersionData } = props;
   const onChecked = (data: UserDefineKey) => {
     const opt = options.find(({ key }) => key === data);
     if (opt !== undefined) {
@@ -111,7 +113,10 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
               </ListItemIcon>
               <ListItemText>{item.key}</ListItemText>
               <ListItemSecondaryAction>
-                <UserDefineDescription userDefine={item.key} />
+                <UserDefineDescription
+                  userDefine={item.key}
+                  firmwareVersionData={firmwareVersionData}
+                />
               </ListItemSecondaryAction>
             </ListItem>
             {item.type === UserDefineKind.Text && item.enabled && (

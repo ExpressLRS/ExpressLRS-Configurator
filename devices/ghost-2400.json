@@ -28,7 +28,7 @@
       "DISABLE_ALL_BEEPS",
       "MY_STARTUP_MELODY"
     ],
-    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-ghost2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -61,7 +61,7 @@
       "DISABLE_ALL_BEEPS",
       "MY_STARTUP_MELODY"
     ],
-    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-ghost2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-ghost2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -87,7 +87,7 @@
       "USE_500HZ",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-ghost2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-ghost2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

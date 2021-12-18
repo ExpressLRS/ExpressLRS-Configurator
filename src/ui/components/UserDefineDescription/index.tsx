@@ -1,7 +1,11 @@
 import React, { FunctionComponent, memo } from 'react';
 import { Box, Tooltip } from '@mui/material';
 import QuestionIcon from '@mui/icons-material/Help';
-import { UserDefineKey } from '../../gql/generated/types';
+import {
+  FirmwareVersionDataInput,
+  UserDefineKey,
+} from '../../gql/generated/types';
+import DocumentationLink from '../DocumentationLink';
 
 const styles = {
   root: {
@@ -16,10 +20,11 @@ const styles = {
 
 interface UserDefineDescriptionProps {
   userDefine: UserDefineKey;
+  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = memo(
-  ({ userDefine }) => {
+  ({ userDefine, firmwareVersionData }) => {
     const toText = (key: UserDefineKey) => {
       switch (key) {
         case UserDefineKey.REGULATORY_DOMAIN_AU_433:
@@ -42,13 +47,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 for a regulatory domain to use in your location.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#regulatory-domain"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#regulatory-domain"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -61,13 +65,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 any country.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#regulatory-domain"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#regulatory-domain"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -84,13 +87,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 traditional binding method.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#binding-phrase"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#binding-phrase"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -111,13 +113,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 AUX8 - Channel 12
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -131,13 +132,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 connecting to its wifi network and visiting 10.0.0.1
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -149,13 +149,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 will be used in RGB configuration.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -173,13 +172,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 20 seconds.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -191,13 +189,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 drone simulators wirelessly.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -210,13 +207,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 builds, which did not populate the RF switch.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -225,13 +221,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
             <div>
               <p>Experimental option that adds faster initial syncing.</p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -260,21 +255,19 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
               <p>
                 Check our{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/quick-start/tx-prep/"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/quick-start/tx-prep/"
                 >
-                  radio setup page
-                </a>{' '}
+                  Check our Wiki page for latest definition.
+                </DocumentationLink>{' '}
                 and{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
                 >
-                  Wiki page for latest definition
-                </a>
+                  Wiki page for latest definition.
+                </DocumentationLink>
                 .
               </p>
             </div>
@@ -304,21 +297,19 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
               <p>
                 Check our{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/quick-start/tx-prep/"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/quick-start/tx-prep/"
                 >
-                  radio setup page
-                </a>{' '}
+                  Check our Wiki page for latest definition.
+                </DocumentationLink>{' '}
                 and{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
                 >
-                  Wiki page for latest definition
-                </a>
+                  Wiki page for latest definition.
+                </DocumentationLink>
                 .
               </p>
             </div>
@@ -363,13 +354,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 </li>
               </ol>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#switches"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#switches"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -399,13 +389,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 <strong>HYBRID_SWITCHES_8</strong>.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#telemetry"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#telemetry"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -430,13 +419,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 ones.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#telemetry"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#telemetry"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -452,13 +440,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 (until it receives a power reset).
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -471,13 +458,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 LOCK_ON_FIRST_CONNECTION.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -487,45 +473,42 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               <p>
                 This sets if the TX only beeps one-time versus playing a startup
                 song.
-              </p>{' '}
+              </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
         case UserDefineKey.DISABLE_STARTUP_BEEP:
           return (
             <div>
-              <p>This sets if the TX shall stay quiet on startup.</p>{' '}
+              <p>This sets if the TX shall stay quiet on startup.</p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
         case UserDefineKey.DISABLE_ALL_BEEPS:
           return (
             <div>
-              <p>Disable all beeps.</p>{' '}
+              <p>Disable all beeps.</p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -578,13 +561,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 is great resource for discovering new melodies.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -612,13 +594,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 setting up ExpressLRS as it can be a source of confusion.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -637,24 +618,22 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
               <p>
                 We published{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/hardware/fan-mod/"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/hardware/fan-mod/"
                 >
                   R9M Fan Mod Cover
-                </a>
+                </DocumentationLink>
                 , a custom 3d printed backplate with room for a fan and extra
                 cooling to allow for maximum power (1-2W depending on the mod).
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#output-power-limit"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#output-power-limit"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -666,15 +645,14 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 such as the FrSky QX7, TBS Tango 2, RadioMaster TX16S. You want
                 to keep this enabled in most of the cases. If your radio is T8SG
                 V2 or you use Deviation firmware turn this setting off.
-              </p>{' '}
+              </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -685,15 +663,14 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 Receiver UART baud rate. Defaults to 420000. Set this option to
                 400000 and your receiver will work with Kiss v1 flight
                 controllers.
-              </p>{' '}
+              </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -707,15 +684,14 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 convert the output to SBUS, it is inverted CRSF, so CRSF should
                 still be the receiver protocol selected in the flight controller
                 software. ESP-based receivers only.
-              </p>{' '}
+              </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -729,13 +705,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 flights.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -763,21 +738,19 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
               <p>
                 Check our{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/quick-start/tx-prep/"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/quick-start/tx-prep/"
                 >
                   radio setup page
-                </a>{' '}
+                </DocumentationLink>{' '}
                 and{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#performance-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
                 >
-                  Wiki page for latest definition
-                </a>
+                  Wiki page for latest definition.
+                </DocumentationLink>
                 .
               </p>
             </div>
@@ -789,15 +762,14 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 This enables communication with the ESP Backpack for
                 over-the-air updates (DeviceTarget: FrSky_TX_R9M_via_WiFi) 🖥️
                 and debugging via WebSocket 🔍
-              </p>{' '}
+              </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -809,15 +781,14 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 module, and associated Lua params The device target should
                 enable this automatically for devices that come with this, but
                 can be added to any device.
-              </p>{' '}
+              </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -834,15 +805,14 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 out of the default S.BUS pin on your R9MM/R9Mini. set
                 serialrx_inverted = ON may also be needed within Betaflight for
                 compatibility
-              </p>{' '}
+              </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -858,15 +828,14 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 >
                   FENIX rx5805 pro-diversity module
                 </a>
-              </p>{' '}
+              </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#compatability-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -878,13 +847,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 hardware to connect to the home network automatically.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -896,13 +864,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
                 hardware to connect to the home network automatically.
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#other-options"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );

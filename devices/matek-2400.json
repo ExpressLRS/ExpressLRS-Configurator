@@ -31,7 +31,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-matek2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-matek2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },

@@ -7,7 +7,11 @@ import React, {
 } from 'react';
 import { Box } from '@mui/material';
 import Omnibox from '../Omnibox';
-import { Device, Target } from '../../gql/generated/types';
+import {
+  Device,
+  FirmwareVersionDataInput,
+  Target,
+} from '../../gql/generated/types';
 import FlashingMethodOptions from '../FlashingMethodOptions';
 
 const styles = {
@@ -20,12 +24,13 @@ interface FirmwareVersionCardProps {
   currentTarget: Target | null;
   onChange: (data: Target | null) => void;
   targetOptions: Device[] | null;
+  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
   props
 ) => {
-  const { onChange, currentTarget, targetOptions } = props;
+  const { onChange, currentTarget, targetOptions, firmwareVersionData } = props;
 
   interface Dictionary<T> {
     [Key: string]: T;
@@ -193,6 +198,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
                 selectedDeviceValue
               ] ?? null
             }
+            firmwareVersionData={firmwareVersionData}
           />
         )}
     </>
