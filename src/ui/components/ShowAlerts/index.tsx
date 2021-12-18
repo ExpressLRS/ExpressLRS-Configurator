@@ -1,7 +1,7 @@
 import { Alert } from '@mui/material';
 import React, { FunctionComponent, memo } from 'react';
 
-interface ShowAlertsProps {
+export interface ShowAlertsProps {
   severity: 'success' | 'info' | 'warning' | 'error';
   messages: string | undefined | null | (Error | string)[] | Error;
 }
