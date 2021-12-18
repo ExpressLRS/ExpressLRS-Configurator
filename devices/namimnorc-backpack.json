@@ -1,0 +1,24 @@
+[
+  {
+    "category": "TX",
+    "name": "Namimno TX Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "NamimnoRC_TX_Backpack_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "NamimnoRC_TX_Backpack_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "",
+    "deviceType": "Backpack",
+    "aliases": []
+  }
+]

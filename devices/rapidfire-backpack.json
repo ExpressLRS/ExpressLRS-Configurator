@@ -1,0 +1,46 @@
+[
+  {
+    "category": "VRX",
+    "name": "Rapidfire ESP01F Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "Rapidfire_ESP01F_Backpack_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "Rapidfire_ESP01F_Backpack_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "",
+    "deviceType": "Backpack",
+    "aliases": []
+  },
+  {
+    "category": "VRX",
+    "name": "Rapidfire ESP RX Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "Rapidfire_ESP_RX_Backpack_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "Rapidfire_ESP_RX_Backpack_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "",
+    "deviceType": "Backpack",
+    "aliases": []
+  }
+]

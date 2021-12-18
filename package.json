@@ -47,7 +47,8 @@
       "index.html",
       "main.prod.js",
       "main.prod.js.map",
-      "package.json"
+      "package.json",
+      "devices/"
     ],
     "afterSign": ".erb/scripts/Notarize.js",
     "mac": {

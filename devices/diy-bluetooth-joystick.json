@@ -1,0 +1,17 @@
+[
+  {
+    "category": "DIY Bluetooth Joystick",
+    "name": "DIY Bluetooth Joystick",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_BLE_JOYSTICK_via_UART"
+      }
+    ],
+    "userDefines": [
+      "UART_INVERTED"
+    ],
+    "wikiUrl": "",
+    "deviceType": "ExpressLRS"
+  }
+]

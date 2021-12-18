@@ -1,11 +1,12 @@
+import fs from 'fs/promises';
+import path from 'path';
 import { Service } from 'typedi';
-import { LoggerService } from '../../logger';
 import Device from '../../models/Device';
 import Target from '../../models/Target';
-import DeviceJSON from '../../../../../devices.json';
 import FlashingMethod from '../../models/enum/FlashingMethod';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import DeviceType from '../../models/enum/DeviceType';
+import { LoggerService } from '../../logger';
 
 export interface IDevices {
   getDevices(): Device[];
@@ -16,13 +17,35 @@ export default class DeviceService implements IDevices {
   devices: Device[];
 
   constructor(private logger: LoggerService) {
-    this.devices = this.loadDevices();
+    this.devices = [];
   }
 
-  loadDevices(): Device[] {
+  async loadFromFileSystemAt(location: string) {
+    const files = await fs
+      .readdir(location)
+      .then((fileNames) => {
+        return fileNames
+          .filter((file) => file.endsWith('.json'))
+          .map((file) => path.join(location, file));
+      })
+      .then((configs) => {
+        return configs.map((file) => {
+          // eslint-disable-next-line promise/no-nesting
+          return fs.readFile(file, 'utf8').then((data) => JSON.parse(data));
+        });
+      });
+    const configsRaw = await Promise.all(files);
+    const configs = configsRaw.reduce(
+      (accumulator, current) => accumulator.concat(current),
+      []
+    );
+    this.devices = this.processDeviceConfigs(configs);
+  }
+
+  processDeviceConfigs(input: any[]): Device[] {
     const devices: Device[] = [];
 
-    DeviceJSON.devices.forEach((value) => {
+    input.forEach((value) => {
       try {
         if (!value.name) {
           throw new Error(`all devices must have a name property!`);
@@ -39,28 +62,32 @@ export default class DeviceService implements IDevices {
           );
         }
 
-        const targets: Target[] = value.targets.map((item) => {
-          if (!item.name) {
-            throw new Error(`target must have a name property`);
+        const targets: Target[] = value.targets.map(
+          (item: { name: string; flashingMethod: string }) => {
+            if (!item.name) {
+              throw new Error(`target must have a name property`);
+            }
+
+            const flashingMethod =
+              FlashingMethod[
+                item.flashingMethod as keyof typeof FlashingMethod
+              ];
+
+            if (!flashingMethod) {
+              throw new Error(
+                `error parsing target "${item.name}": "${item.flashingMethod}" is not a valid flashing method`
+              );
+            }
+
+            return {
+              id: `${value.category}|${value.name}|${item.name}|${item.flashingMethod}`,
+              name: item.name,
+              flashingMethod,
+            };
           }
+        );
 
-          const flashingMethod =
-            FlashingMethod[item.flashingMethod as keyof typeof FlashingMethod];
-
-          if (!flashingMethod) {
-            throw new Error(
-              `error parsing target "${item.name}": "${item.flashingMethod}" is not a valid flashing method`
-            );
-          }
-
-          return {
-            id: `${value.category}|${value.name}|${item.name}|${item.flashingMethod}`,
-            name: item.name,
-            flashingMethod,
-          };
-        });
-
-        const userDefines = value.userDefines.map((item) => {
+        const userDefines = value.userDefines.map((item: string) => {
           const userDefineKey =
             UserDefineKey[item as keyof typeof UserDefineKey];
           if (!userDefineKey) {
@@ -90,26 +117,28 @@ export default class DeviceService implements IDevices {
         devices.push(device);
 
         if (value.aliases) {
-          value.aliases.forEach((alias) => {
-            devices.push({
-              id: alias.name,
-              name: alias.name,
-              category: alias.category,
-              targets: device.targets.map((target) => {
-                return {
-                  id: `${alias.category}|${alias.name}|${target.name}`,
-                  name: target.name,
-                  flashingMethod: target.flashingMethod,
-                };
-              }),
-              userDefines: device.userDefines,
-              wikiUrl: alias.wikiUrl,
-              deviceType: device.deviceType,
-              parent: device.id,
-            });
-          });
+          value.aliases.forEach(
+            (alias: { name: any; category: any; wikiUrl: any }) => {
+              devices.push({
+                id: alias.name,
+                name: alias.name,
+                category: alias.category,
+                targets: device.targets.map((target) => {
+                  return {
+                    id: `${alias.category}|${alias.name}|${target.name}`,
+                    name: target.name,
+                    flashingMethod: target.flashingMethod,
+                  };
+                }),
+                userDefines: device.userDefines,
+                wikiUrl: alias.wikiUrl,
+                deviceType: device.deviceType,
+                parent: device.id,
+              });
+            }
+          );
         }
-      } catch (error: any) {
+      } catch (error) {
         const errormessage = `Issue encountered while parsing device "${value.name}" in the device configuration file devices.json: ${error.message}`;
         this.logger.error(errormessage);
         throw new Error(errormessage);

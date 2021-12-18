@@ -6,6 +6,7 @@ export interface IConfig {
     owner: string;
     repositoryName: string;
   };
+  devicesPath: string;
   firmwaresPath: string;
   PATH: string;
   env: NodeJS.ProcessEnv;
