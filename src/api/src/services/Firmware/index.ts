@@ -250,7 +250,7 @@ export default class FirmwareService {
       try {
         gitPath = await findGitExecutable(this.PATH);
       } catch (e) {
-        this.logger?.error('failed to find git', e.stack, {
+        this.logger?.error('failed to find git', undefined, {
           PATH: this.PATH,
           err: e,
         });
@@ -264,10 +264,13 @@ export default class FirmwareService {
         gitPath,
       });
 
-      const firmwareDownload = new GitFirmwareDownloader({
-        baseDirectory: this.firmwaresPath,
-        gitBinaryLocation: gitPath,
-      });
+      const firmwareDownload = new GitFirmwareDownloader(
+        {
+          baseDirectory: this.firmwaresPath,
+          gitBinaryLocation: gitPath,
+        },
+        this.logger
+      );
 
       await this.updateProgress(
         BuildProgressNotificationType.Info,
@@ -477,7 +480,7 @@ export default class FirmwareService {
 
       return new BuildFlashFirmwareResult(true);
     } catch (e) {
-      this.logger?.error('generic error', e.trace, {
+      this.logger?.error('generic error', undefined, {
         err: e,
       });
       return new BuildFlashFirmwareResult(

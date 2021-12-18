@@ -1,8 +1,10 @@
 /* eslint-disable no-await-in-loop */
-import simpleGit, { ResetMode, SimpleGit, SimpleGitOptions } from 'simple-git';
-import * as fs from 'fs';
+import simpleGit, { ResetMode, SimpleGitOptions } from 'simple-git';
+import { existsSync } from 'fs';
+import * as fs from 'fs/promises';
 import path from 'path';
 import Commander, { CommandResult } from '../Commander';
+import { LoggerService } from '../../logger';
 
 interface FirmwareDownloaderProps {
   baseDirectory: string;
@@ -47,7 +49,7 @@ export const findGitExecutable = async (envPath: string): Promise<string> => {
       try {
         let res: CommandResult | null = null;
         if (
-          fs.existsSync(executable) &&
+          existsSync(executable) &&
           // eslint-disable-next-line no-cond-assign
           (res = await new Commander().runCommand(executable, ['--version']))
         ) {
@@ -70,7 +72,10 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
 
   gitBinaryLocation: string;
 
-  constructor({ baseDirectory, gitBinaryLocation }: FirmwareDownloaderProps) {
+  constructor(
+    { baseDirectory, gitBinaryLocation }: FirmwareDownloaderProps,
+    private logger: LoggerService
+  ) {
     this.baseDirectory = baseDirectory;
     this.gitBinaryLocation = gitBinaryLocation;
   }
@@ -89,17 +94,33 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     return simpleGit(options);
   }
 
+  async clearLocks(directory: string): Promise<void> {
+    const indexLockPath = path.join(directory, '.git', 'index.lock');
+    if (existsSync(indexLockPath)) {
+      try {
+        await fs.unlink(indexLockPath);
+      } catch (e) {
+        this.logger.error('failed to clear .git/index.lock', undefined, {
+          directory,
+          err: e,
+        });
+      }
+    }
+  }
+
   async syncRepo(repository: string, srcFolder: string): Promise<void> {
     const directory = this.getRepoDirectory(repository);
 
-    if (!fs.existsSync(directory)) {
-      await fs.promises.mkdir(directory, { recursive: true });
+    if (!existsSync(directory)) {
+      await fs.mkdir(directory, { recursive: true });
     }
+
+    await this.clearLocks(directory);
 
     const git = this.getSimpleGit(directory);
 
     const isTargetDirectoryEmpty: boolean =
-      (await fs.promises.readdir(directory)).length === 0;
+      (await fs.readdir(directory)).length === 0;
 
     if (isTargetDirectoryEmpty) {
       await git.clone(repository, directory, [
