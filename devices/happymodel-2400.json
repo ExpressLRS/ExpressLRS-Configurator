@@ -1,0 +1,168 @@
+[
+  {
+    "category": "Happymodel 2.4 GHz",
+    "name": "HappyModel ES24TX 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HappyModel_ES24TX_2400_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HappyModel_ES24TX_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "Happymodel 2.4 GHz",
+    "name": "HappyModel ES24TX Slim Pro 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HappyModel_ES24TX_Slim_Pro_2400_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HappyModel_ES24TX_Slim_Pro_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "Happymodel 2.4 GHz",
+    "name": "HM ES24TX Pro Series 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HappyModel_ES24TX_Pro_Series_2400_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HappyModel_ES24TX_Pro_Series_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/tx-es24tx/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "Happymodel 2.4 GHz",
+    "name": "HappyModel EP 2400 RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HappyModel_EP_2400_RX_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "HappyModel_EP_2400_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HappyModel_EP_2400_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "RCVR_UART_BAUD",
+      "RCVR_INVERT_TX"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmep2400/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "Happymodel 2.4 GHz",
+    "name": "HappyModel PP 2400 RX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "HappyModel_PP_2400_RX_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "HappyModel_PP_2400_RX_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "RCVR_UART_BAUD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-hmpp2400/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  }
+]

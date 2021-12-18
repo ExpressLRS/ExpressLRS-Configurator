@@ -1,0 +1,107 @@
+[
+  {
+    "category": "QuadKopters 2.4 Ghz",
+    "name": "QuadKopters JR 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "QuadKopters_JR_2400_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "QuadKopters_JR_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": "",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "QuadKopters 2.4 Ghz",
+    "name": "QuadKopters Slim 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "QuadKopters_SLIM_2400_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "QuadKopters_SLIM_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER"
+    ],
+    "wikiUrl": "",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "QuadKopters 2.4 Ghz",
+    "name": "QuadKopters NANO RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "QuadKopters_NANO_RX_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "QuadKopters_NANO_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "QuadKopters_NANO_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "RCVR_UART_BAUD",
+      "RCVR_INVERT_TX",
+      "USE_DIVERSITY"
+    ],
+    "wikiUrl": "",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  }
+]

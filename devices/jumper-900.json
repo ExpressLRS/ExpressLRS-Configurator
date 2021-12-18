@@ -1,0 +1,31 @@
+[
+  {
+    "category": "Jumper R900",
+    "name": "Jumper RX R900MINI",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "Jumper_RX_R900MINI_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "Jumper_RX_R900MINI_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "RCVR_UART_BAUD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/release/quick-start/rx-jumper900/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  }
+]

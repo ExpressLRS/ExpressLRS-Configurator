@@ -1,0 +1,20 @@
+[
+  {
+    "category": "TX",
+    "name": "TX Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "Tx_Backpack"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "",
+    "deviceType": "Backpack",
+    "aliases": []
+  }
+]
