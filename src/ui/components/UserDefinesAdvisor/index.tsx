@@ -48,6 +48,13 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
         'NO_SYNC_ON_ARM is an advanced performance option. Make sure to read the documentation on how it works.'
       );
     }
+
+    if (isUserDefine(UserDefineKey.USE_DIVERSITY, true)) {
+      messages.push(
+        `USE_DIVERSITY requires hardware support. Make sure to attach both antennas to your device. Safe to leave on
+        for hardware that does not have diversity except DIY builds, which did not populate the RF switch.`
+      );
+    }
   }
   return (
     <>
