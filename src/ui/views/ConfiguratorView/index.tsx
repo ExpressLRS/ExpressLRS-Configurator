@@ -75,6 +75,7 @@ import SerialDeviceSelect from '../../components/SerialDeviceSelect';
 import WifiDeviceSelect from '../../components/WifiDeviceSelect';
 import WifiDeviceList from '../../components/WifiDeviceList';
 import GitRepository from '../../models/GitRepository';
+import ShowTimeoutAlerts from '../../components/ShowTimeoutAlerts';
 
 const styles = {
   root: {
@@ -452,31 +453,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     }
   }, [response]);
 
-  const [
-    longBuildDurationWarning,
-    setLongBuildDurationWarning,
-  ] = useState<boolean>(false);
-  const buildInProgressRef = useRef(buildInProgress);
-  buildInProgressRef.current = buildInProgress;
-  const slowBuildTimeoutRef = useRef<number | null>(null);
-  useEffect(() => {
-    if (buildInProgressRef.current) {
-      slowBuildTimeoutRef.current = window.setTimeout(() => {
-        setLongBuildDurationWarning(true);
-      }, 15 * 1000);
-    } else {
-      setLongBuildDurationWarning(false);
-      if (slowBuildTimeoutRef.current !== null) {
-        clearTimeout(slowBuildTimeoutRef.current);
-      }
-    }
-    return () => {
-      if (slowBuildTimeoutRef.current !== null) {
-        clearTimeout(slowBuildTimeoutRef.current);
-      }
-    };
-  }, [buildInProgress]);
-
   const isTX = useMemo(() => {
     if (deviceTarget) {
       return deviceTarget.name?.indexOf('_TX_') > -1;
@@ -520,7 +496,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
    */
   useEffect(() => {
     const body: UpdateBuildStatusRequestBody = {
-      buildInProgress: buildInProgressRef.current,
+      buildInProgress,
     };
     ipcRenderer.send(IpcRequest.UpdateBuildStatus, body);
   }, [buildInProgress]);
@@ -1005,14 +981,14 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   <CardTitle icon={<SettingsIcon />} title="Logs" />
                   <Divider />
                   <CardContent>
-                    {longBuildDurationWarning && (
-                      <Box sx={styles.longBuildDurationWarning}>
-                        <ShowAlerts
-                          severity="warning"
-                          messages="Sometimes builds take at least a few minutes. It is normal, especially for the first time builds."
-                        />
-                      </Box>
-                    )}
+                    <Box sx={styles.longBuildDurationWarning}>
+                      <ShowTimeoutAlerts
+                        severity="warning"
+                        messages="Sometimes builds take at least a few minutes. It is normal, especially for the first time builds."
+                        active={buildInProgress}
+                        timeout={14 * 1000}
+                      />
+                    </Box>
                     <Logs data={logs} />
                   </CardContent>
                   <Divider />
