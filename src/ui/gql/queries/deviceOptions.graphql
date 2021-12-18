@@ -24,5 +24,6 @@ query targetDeviceOptions(
     enumValues
     value
     optionGroup
+    sensitive
   }
 }

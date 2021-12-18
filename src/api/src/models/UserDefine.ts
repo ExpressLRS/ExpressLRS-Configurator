@@ -14,6 +14,9 @@ export default class UserDefine {
   @Field()
   enabled: boolean;
 
+  @Field()
+  sensitive: boolean;
+
   @Field(() => [String], { nullable: true })
   enumValues?: string[];
 
@@ -29,7 +32,8 @@ export default class UserDefine {
     enabled = false,
     value = '',
     enumValues?: string[],
-    optionGroup?: UserDefineOptionGroup
+    optionGroup?: UserDefineOptionGroup,
+    sensitive?: boolean
   ) {
     this.type = type;
 
@@ -52,6 +56,7 @@ export default class UserDefine {
     this.value = value;
     this.enabled = enabled;
     this.optionGroup = optionGroup;
+    this.sensitive = sensitive ?? false;
   }
 
   static Boolean(
@@ -69,8 +74,21 @@ export default class UserDefine {
     );
   }
 
-  static Text(key: UserDefineKey, value = '', enabled = false): UserDefine {
-    return new UserDefine(UserDefineKind.Text, key, enabled, value);
+  static Text(
+    key: UserDefineKey,
+    value = '',
+    enabled = false,
+    sensitive = false
+  ): UserDefine {
+    return new UserDefine(
+      UserDefineKind.Text,
+      key,
+      enabled,
+      value,
+      undefined,
+      undefined,
+      sensitive
+    );
   }
 
   static Enum(

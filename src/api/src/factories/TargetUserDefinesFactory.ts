@@ -19,7 +19,12 @@ export default class TargetUserDefinesFactory {
         switch (userDefine) {
           // BINDING PHRASE
           case UserDefineKey.BINDING_PHRASE:
-            return UserDefine.Text(UserDefineKey.BINDING_PHRASE, '', true);
+            return UserDefine.Text(
+              UserDefineKey.BINDING_PHRASE,
+              '',
+              true,
+              true
+            );
           // Regulatory domains
           case UserDefineKey.REGULATORY_DOMAIN_AU_915:
             return UserDefine.Boolean(
@@ -128,9 +133,19 @@ export default class TargetUserDefinesFactory {
             return UserDefine.Boolean(UserDefineKey.WS2812_IS_GRB);
           // Network
           case UserDefineKey.HOME_WIFI_SSID:
-            return UserDefine.Text(UserDefineKey.HOME_WIFI_SSID);
+            return UserDefine.Text(
+              UserDefineKey.HOME_WIFI_SSID,
+              '',
+              false,
+              true
+            );
           case UserDefineKey.HOME_WIFI_PASSWORD:
-            return UserDefine.Text(UserDefineKey.HOME_WIFI_PASSWORD);
+            return UserDefine.Text(
+              UserDefineKey.HOME_WIFI_PASSWORD,
+              '',
+              false,
+              true
+            );
           case UserDefineKey.AUTO_WIFI_ON_BOOT:
             return UserDefine.Boolean(UserDefineKey.AUTO_WIFI_ON_BOOT);
           case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
