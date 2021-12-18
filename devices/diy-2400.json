@@ -1,0 +1,232 @@
+[
+  {
+    "category": "DIY 2.4 GHz",
+    "name": "DIY 2400 TX ESP32 SX1280 Mini",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_2400_TX_ESP32_SX1280_Mini_via_UART"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "DIY 2.4 GHz",
+    "name": "DIY 2400 TX ESP32 SX1280 E28",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_2400_TX_ESP32_SX1280_E28_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "DIY_2400_TX_ESP32_SX1280_E28_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "USE_TX_BACKPACK",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "DIY 2.4 GHz",
+    "name": "DIY 2400 TX ESP32 SX1280 LORA1280F27",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_2400_TX_ESP32_SX1280_LORA1280F27_via_UART"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "WS2812_IS_GRB"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "DIY 2.4 GHz",
+    "name": "DIY 2400 RX ESP8285 SX1280",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_2400_RX_ESP8285_SX1280_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "DIY_2400_RX_ESP8285_SX1280_via_WIFI"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "DIY_2400_RX_ESP8285_SX1280_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "USE_DIVERSITY",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "RCVR_UART_BAUD",
+      "RCVR_INVERT_TX"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers/",
+    "deviceType": "ExpressLRS",
+    "aliases": [
+      {
+        "category": "Flywoo 2.4 GHz",
+        "name": "Flywoo EL24E 2400 RX",
+        "wikiUrl": ""
+      },
+      {
+        "category": "Flywoo 2.4 GHz",
+        "name": "Flywoo EL24P 2400 RX",
+        "wikiUrl": ""
+      },
+      {
+        "category": "HiYOUNGER 2.4 GHz",
+        "name": "HiYOUNGER SP24S 2400 RX",
+        "wikiUrl": ""
+      },
+      {
+        "category": "HiYOUNGER 2.4 GHz",
+        "name": "HiYOUNGER EP24S 2400 RX",
+        "wikiUrl": ""
+      },
+      {
+        "category": "HiYOUNGER 2.4 GHz",
+        "name": "HiYOUNGER RX24T 2400 RX",
+        "wikiUrl": ""
+      },
+      {
+        "category": "JHEMCU 2.4 GHz",
+        "name": "JHEMCU SP24S 2400 RX",
+        "wikiUrl": ""
+      },
+      {
+        "category": "JHEMCU 2.4 GHz",
+        "name": "JHEMCU EP24S 2400 RX",
+        "wikiUrl": ""
+      },
+      {
+        "category": "JHEMCU 2.4 GHz",
+        "name": "JHEMCU RX24T 2400 RX",
+        "wikiUrl": ""
+      }
+    ]
+  },
+  {
+    "category": "DIY 2.4 GHz",
+    "name": "DIY 2400 RX PWMP",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_2400_RX_PWMP_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "DIY_2400_RX_PWMP_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "DIY 2.4 GHz",
+    "name": "DIY 2400 RX STM32 CCG Nano v0 5",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "DIY_2400_RX_STM32_CCG_Nano_v0_5_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "DIY_2400_RX_STM32_CCG_Nano_v0_5_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "RCVR_UART_BAUD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  }
+]

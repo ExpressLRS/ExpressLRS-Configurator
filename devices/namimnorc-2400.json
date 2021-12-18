@@ -1,0 +1,132 @@
+[
+  {
+    "category": "NamimnoRC FLASH 2.4 GHz",
+    "name": "NamimnoRC FLASH 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "NamimnoRC_FLASH_2400_TX_via_STLINK"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "NamimnoRC_FLASH_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-flash2400/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "NamimnoRC FLASH 2.4 GHz",
+    "name": "NamimnoRC FLASH 2400 OLED TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "NamimnoRC_FLASH_2400_OLED_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "NamimnoRC_FLASH_2400_OLED_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "USE_500HZ",
+      "UART_INVERTED",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-flash2400/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "NamimnoRC FLASH 2.4 GHz",
+    "name": "NamimnoRC FLASH 2400 RX",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "NamimnoRC_FLASH_2400_RX_via_STLINK"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "NamimnoRC_FLASH_2400_RX_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "RCVR_UART_BAUD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-flash2400/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "NamimnoRC FLASH 2.4 GHz",
+    "name": "NamimnoRC FLASH 2400 ESP RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "NamimnoRC_FLASH_2400_ESP_RX_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "NamimnoRC_FLASH_2400_ESP_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "NamimnoRC_FLASH_2400_ESP_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "USE_DIVERSITY",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "RCVR_UART_BAUD",
+      "RCVR_INVERT_TX"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-flash2400/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  }
+]

@@ -4,6 +4,7 @@ import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
 import rimraf from 'rimraf';
+import cloneDeep from 'lodash/cloneDeep';
 import BuildJobType from '../../models/enum/BuildJobType';
 import UserDefinesMode from '../../models/enum/UserDefinesMode';
 import UserDefine from '../../models/UserDefine';
@@ -43,6 +44,30 @@ interface BuildFlashFirmwareParams {
   userDefines: UserDefine[];
   userDefinesTxt: string;
 }
+
+const maskBuildFlashFirmwareParams = (
+  params: BuildFlashFirmwareParams
+): BuildFlashFirmwareParams => {
+  const result = cloneDeep(params);
+  if (result.userDefinesTxt?.length > 0) {
+    result.userDefinesTxt = '******';
+  }
+  result.userDefines = result.userDefines.map((userDefine) => {
+    const sensitiveDataKeys = [
+      UserDefineKey.BINDING_PHRASE,
+      UserDefineKey.HOME_WIFI_SSID,
+      UserDefineKey.HOME_WIFI_PASSWORD,
+    ];
+    if (sensitiveDataKeys.includes(userDefine.key)) {
+      return {
+        ...userDefine,
+        value: '***',
+      };
+    }
+    return userDefine;
+  });
+  return result;
+};
 
 export interface BuildProgressNotificationPayload {
   type: BuildProgressNotificationType;
@@ -84,8 +109,22 @@ export default class FirmwareService {
   }
 
   private async updateLogs(data: string): Promise<void> {
+    const maskSensitiveData = (haystack: string): string => {
+      const needles = [
+        'HOME_WIFI_SSID',
+        'HOME_WIFI_PASSWORD',
+        'MY_BINDING_PHRASE',
+        'MY_UID',
+      ];
+      for (let i = 0; i < needles.length; i++) {
+        if (haystack.includes(needles[i])) {
+          return '***';
+        }
+      }
+      return haystack;
+    };
     this.logger?.log('logs stream output', {
-      data,
+      data: maskSensitiveData(data),
     });
     return this.pubSub!.publish(PubSubTopic.BuildLogsUpdate, {
       data,
@@ -138,7 +177,7 @@ export default class FirmwareService {
     gitRepositorySrcFolder: string
   ): Promise<BuildFlashFirmwareResult> {
     this.logger?.log('received build firmware request', {
-      params,
+      params: maskBuildFlashFirmwareParams(params),
       gitRepositoryUrl,
     });
 
@@ -211,7 +250,7 @@ export default class FirmwareService {
       try {
         gitPath = await findGitExecutable(this.PATH);
       } catch (e) {
-        this.logger?.error('failed to find git', e.stack, {
+        this.logger?.error('failed to find git', undefined, {
           PATH: this.PATH,
           err: e,
         });
@@ -225,10 +264,13 @@ export default class FirmwareService {
         gitPath,
       });
 
-      const firmwareDownload = new GitFirmwareDownloader({
-        baseDirectory: this.firmwaresPath,
-        gitBinaryLocation: gitPath,
-      });
+      const firmwareDownload = new GitFirmwareDownloader(
+        {
+          baseDirectory: this.firmwaresPath,
+          gitBinaryLocation: gitPath,
+        },
+        this.logger
+      );
 
       await this.updateProgress(
         BuildProgressNotificationType.Info,
@@ -326,9 +368,6 @@ export default class FirmwareService {
             `unsupported user defines mode: ${params.userDefinesMode}`
           );
       }
-      this.logger?.log('user_defines.txt', {
-        userDefines,
-      });
 
       const platformioStateJson = await this.platformio.getPlatformioState();
       this.logger?.log('platformio state json', {
@@ -441,7 +480,7 @@ export default class FirmwareService {
 
       return new BuildFlashFirmwareResult(true);
     } catch (e) {
-      this.logger?.error('generic error', e.trace, {
+      this.logger?.error('generic error', undefined, {
         err: e,
       });
       return new BuildFlashFirmwareResult(

@@ -54,8 +54,7 @@ export default class MulticastDnsService {
           timeout: this.healthCheckTimeout,
         };
 
-        // console.log(options);
-        const req = http
+        http
           .request(options, (res) => {
             // console.log(`id: ${id} STATUS: ${res.statusCode}`);
             res.destroy();
@@ -64,7 +63,7 @@ export default class MulticastDnsService {
             // console.log(`id: ${id} TIMEOUT`);
             this.removeDevice(item.name);
           })
-          .on('error', (e: any) => {
+          .on('error', () => {
             // console.error(`id: ${id} ERROR ${e}`, e.trace, e);
             this.removeDevice(item.name);
           })
@@ -90,7 +89,15 @@ export default class MulticastDnsService {
       if (userDefineKey) {
         if (match.length === 3) {
           if (match[2]) {
-            userDefines.push(UserDefine.Text(userDefineKey, match[2]));
+            const sensitiveKeys = [
+              UserDefineKey.BINDING_PHRASE,
+              UserDefineKey.HOME_WIFI_SSID,
+              UserDefineKey.HOME_WIFI_PASSWORD,
+            ];
+            const sensitive = sensitiveKeys.includes(userDefineKey);
+            userDefines.push(
+              UserDefine.Text(userDefineKey, match[2], true, sensitive)
+            );
           } else {
             userDefines.push(UserDefine.Boolean(userDefineKey, true));
           }

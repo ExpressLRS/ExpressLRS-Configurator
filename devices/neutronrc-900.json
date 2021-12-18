@@ -1,0 +1,40 @@
+[
+  {
+    "category": "NeutronRC 900 MHz",
+    "name": "NeutronRC 900 RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "NeutronRC_900_RX_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "NeutronRC_900_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "NeutronRC_900_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "RCVR_UART_BAUD",
+      "RCVR_INVERT_TX"
+    ],
+    "wikiUrl": "",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  }
+]

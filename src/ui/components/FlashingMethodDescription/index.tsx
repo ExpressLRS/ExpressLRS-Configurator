@@ -1,12 +1,11 @@
-import React, { FunctionComponent, memo } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Box, Tooltip } from '@mui/material';
 import QuestionIcon from '@mui/icons-material/Help';
-import semver from 'semver';
 import {
-  FirmwareSource,
   FirmwareVersionDataInput,
   FlashingMethod,
 } from '../../gql/generated/types';
+import DocumentationLink from '../DocumentationLink';
 
 const styles = {
   root: {
@@ -17,22 +16,6 @@ const styles = {
     marginLeft: '5px',
     fontSize: '1.44em',
   },
-};
-
-const urlVersioning = (
-  firmwareVersionData: FirmwareVersionDataInput | null,
-  url: string
-): string => {
-  if (
-    firmwareVersionData &&
-    firmwareVersionData.source === FirmwareSource.GitTag &&
-    firmwareVersionData.gitTag &&
-    semver.major(firmwareVersionData.gitTag) > 0
-  ) {
-    const majorVersion = semver.major(firmwareVersionData.gitTag);
-    return url.replace('{version}', `${majorVersion}.0`);
-  }
-  return url.replace('{version}', 'release');
 };
 
 interface FlashingMethodDescriptionProps {
@@ -69,17 +52,15 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
               <li>Run Build & Flash</li>
             </ol>
             <p>
-              <a
-                target="_blank"
-                rel="noreferrer noreferrer"
-                href={urlVersioning(
-                  firmwareVersionData,
+              <DocumentationLink
+                firmwareVersion={firmwareVersionData}
+                url={
                   wikiUrl ??
-                    'https://www.expresslrs.org/{version}/software/updating/betaflight-passthrough/'
-                )}
+                  'https://www.expresslrs.org/{version}/software/updating/betaflight-passthrough/'
+                }
               >
-                Check our Wiki page for information.
-              </a>
+                Check our Wiki page for latest definition.
+              </DocumentationLink>
             </p>
           </div>
         );
@@ -113,18 +94,16 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
               the Devices Firmware Upgrade mode.
             </p>
             <p>
-              <a
-                target="_blank"
-                rel="noreferrer noreferrer"
-                href={urlVersioning(
-                  firmwareVersionData,
+              <DocumentationLink
+                firmwareVersion={firmwareVersionData}
+                url={
                   wikiUrl ??
-                    'https://www.expresslrs.org/{version}/quick-start/getting-started/'
-                )}
+                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                }
               >
                 Check the Wiki page for your particular device for more
                 information.
-              </a>
+              </DocumentationLink>
             </p>
           </div>
         );
@@ -136,18 +115,16 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
               an STLink programmer connected to the device.
             </p>
             <p>
-              <a
-                target="_blank"
-                rel="noreferrer noreferrer"
-                href={urlVersioning(
-                  firmwareVersionData,
+              <DocumentationLink
+                firmwareVersion={firmwareVersionData}
+                url={
                   wikiUrl ??
-                    'https://www.expresslrs.org/{version}/quick-start/getting-started/'
-                )}
+                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                }
               >
                 Check the Wiki page for your particular device for more
                 information.
-              </a>
+              </DocumentationLink>
             </p>
           </div>
         );
@@ -159,18 +136,16 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
               the bootloader on the device.
             </p>
             <p>
-              <a
-                target="_blank"
-                rel="noreferrer noreferrer"
-                href={urlVersioning(
-                  firmwareVersionData,
+              <DocumentationLink
+                firmwareVersion={firmwareVersionData}
+                url={
                   wikiUrl ??
-                    'https://www.expresslrs.org/{version}/quick-start/getting-started/'
-                )}
+                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                }
               >
                 Check the Wiki page for your particular device for more
                 information.
-              </a>
+              </DocumentationLink>
             </p>
           </div>
         );
@@ -182,18 +157,16 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
               its USB port or wiring up an FTDI device.
             </p>
             <p>
-              <a
-                target="_blank"
-                rel="noreferrer noreferrer"
-                href={urlVersioning(
-                  firmwareVersionData,
+              <DocumentationLink
+                firmwareVersion={firmwareVersionData}
+                url={
                   wikiUrl ??
-                    'https://www.expresslrs.org/{version}/quick-start/getting-started/'
-                )}
+                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                }
               >
                 Check the Wiki page for your particular device for more
                 information.
-              </a>
+              </DocumentationLink>
             </p>
           </div>
         );
@@ -205,18 +178,16 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
               receiver or transmitter by connecting to its built in wifi.
             </p>
             <p>
-              <a
-                target="_blank"
-                rel="noreferrer noreferrer"
-                href={urlVersioning(
-                  firmwareVersionData,
+              <DocumentationLink
+                firmwareVersion={firmwareVersionData}
+                url={
                   wikiUrl ??
-                    'https://www.expresslrs.org/{version}/quick-start/getting-started/'
-                )}
+                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                }
               >
                 Check the Wiki page for your particular device for more
                 information.
-              </a>
+              </DocumentationLink>
             </p>
           </div>
         );

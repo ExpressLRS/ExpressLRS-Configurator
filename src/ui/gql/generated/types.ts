@@ -194,6 +194,7 @@ export type UserDefine = {
   readonly type: UserDefineKind;
   readonly key: UserDefineKey;
   readonly enabled: Scalars['Boolean'];
+  readonly sensitive: Scalars['Boolean'];
   readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
   readonly value?: Maybe<Scalars['String']>;
   readonly optionGroup?: Maybe<UserDefineOptionGroup>;
@@ -490,7 +491,7 @@ export type AvailableMulticastDnsDevicesListQuery = {
         readonly options: ReadonlyArray<
           { readonly __typename?: 'UserDefine' } & Pick<
             UserDefine,
-            'type' | 'key' | 'enabled' | 'enumValues' | 'value'
+            'type' | 'key' | 'enabled' | 'enumValues' | 'value' | 'sensitive'
           >
         >;
       }
@@ -602,7 +603,13 @@ export type TargetDeviceOptionsQuery = { readonly __typename?: 'Query' } & {
   readonly targetDeviceOptions: ReadonlyArray<
     { readonly __typename?: 'UserDefine' } & Pick<
       UserDefine,
-      'type' | 'key' | 'enabled' | 'enumValues' | 'value' | 'optionGroup'
+      | 'type'
+      | 'key'
+      | 'enabled'
+      | 'enumValues'
+      | 'value'
+      | 'optionGroup'
+      | 'sensitive'
     >
   >;
 };
@@ -699,7 +706,7 @@ export type MulticastDnsMonitorUpdatesSubscription = {
           readonly options: ReadonlyArray<
             { readonly __typename?: 'UserDefine' } & Pick<
               UserDefine,
-              'type' | 'key' | 'enabled' | 'enumValues' | 'value'
+              'type' | 'key' | 'enabled' | 'enumValues' | 'value' | 'sensitive'
             >
           >;
         };
@@ -899,6 +906,7 @@ export const AvailableMulticastDnsDevicesListDocument = gql`
         enabled
         enumValues
         value
+        sensitive
       }
       version
       target
@@ -1332,6 +1340,7 @@ export const TargetDeviceOptionsDocument = gql`
       enumValues
       value
       optionGroup
+      sensitive
     }
   }
 `;
@@ -1704,6 +1713,7 @@ export const MulticastDnsMonitorUpdatesDocument = gql`
           enabled
           enumValues
           value
+          sensitive
         }
         version
         target

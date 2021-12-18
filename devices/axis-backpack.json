@@ -1,0 +1,24 @@
+[
+  {
+    "category": "TX",
+    "name": "AXIS THOR TX Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "AXIS_THOR_Tx_Backpack_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "AXIS_THOR_Tx_Backpack_WIFI"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "",
+    "deviceType": "Backpack",
+    "aliases": []
+  }
+]

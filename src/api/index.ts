@@ -82,6 +82,7 @@ export default class ApiServer {
     Container.set(MulticastDnsService, new MulticastDnsService(pubSub, logger));
 
     const deviceService = new DeviceService(logger);
+    await deviceService.loadFromFileSystemAt(config.devicesPath);
 
     Container.set(DeviceService, deviceService);
 
