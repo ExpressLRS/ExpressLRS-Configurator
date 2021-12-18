@@ -13,9 +13,7 @@ export default function useNetworkDevices() {
   >(new Map<string, MulticastDnsInformation>());
 
   const {
-    loading: multicastDnsDevicesListLoading,
     data: multicastDnsDevicesListData,
-    error: multicastDnsDevicesListError,
   } = useAvailableMulticastDnsDevicesListQuery({
     fetchPolicy: 'network-only',
     client,
