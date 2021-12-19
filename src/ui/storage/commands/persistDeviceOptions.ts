@@ -14,37 +14,36 @@ const persistDeviceOptions = async (
 
     await Promise.all(
       deviceOptions.userDefineOptions.map(async (userDefine) => {
-        if (userDefine.key === UserDefineKey.BINDING_PHRASE) {
-          if (
-            userDefine.enabled &&
-            userDefine.value &&
-            userDefine.value?.length > 0
-          ) {
-            await storage.setBindingPhrase(userDefine.value);
-          }
-        } else if (userDefine.key === UserDefineKey.HOME_WIFI_SSID) {
-          if (
-            userDefine.enabled &&
-            userDefine.value &&
-            userDefine.value?.length > 0
-          ) {
-            await storage.setWifiSSID(userDefine.value);
-          }
-        } else if (userDefine.key === UserDefineKey.HOME_WIFI_PASSWORD) {
-          if (
-            userDefine.enabled &&
-            userDefine.value &&
-            userDefine.value?.length > 0
-          ) {
-            await storage.setWifiPassword(userDefine.value);
-          }
-        } else if (
-          userDefine.optionGroup &&
-          userDefine.optionGroup ===
-            UserDefineOptionGroup.RegulatoryDomain900 &&
-          userDefine.enabled
+        if (
+          userDefine.enabled &&
+          userDefine.value &&
+          userDefine.value?.length > 0
         ) {
-          await storage.setRegulatoryDomain900(userDefine.key);
+          switch (userDefine.key) {
+            case UserDefineKey.BINDING_PHRASE:
+              await storage.setBindingPhrase(userDefine.value);
+              break;
+            case UserDefineKey.HOME_WIFI_SSID:
+              await storage.setWifiSSID(userDefine.value);
+              break;
+            case UserDefineKey.HOME_WIFI_PASSWORD:
+              await storage.setWifiPassword(userDefine.value);
+              break;
+            default:
+              break;
+          }
+        }
+        if (userDefine.optionGroup && userDefine.enabled) {
+          switch (userDefine.optionGroup) {
+            case UserDefineOptionGroup.RegulatoryDomain900:
+              await storage.setRegulatoryDomain900(userDefine.key);
+              break;
+            case UserDefineOptionGroup.RegulatoryDomain2400:
+              await storage.setRegulatoryDomain2400(userDefine.key);
+              break;
+            default:
+              break;
+          }
         }
       })
     );
