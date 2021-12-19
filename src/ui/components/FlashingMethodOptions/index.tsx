@@ -117,7 +117,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
         />
       );
     },
-    [currentDevice?.wikiUrl]
+    [currentDevice?.wikiUrl, firmwareVersionData]
   );
 
   return (
