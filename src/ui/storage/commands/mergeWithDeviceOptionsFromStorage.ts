@@ -17,6 +17,7 @@ const mergeWithDeviceOptionsFromStorage = async (
   const wifiSSID = await storage.getWifiSSID();
   const wifiPassword = await storage.getWifiPassword();
   const regulatoryDomain900 = await storage.getRegulatoryDomain900();
+  const regulatoryDomain2400 = await storage.getRegulatoryDomain2400();
 
   const addOverrides = (deviceOption: UserDefine): UserDefine => {
     if (
@@ -52,6 +53,14 @@ const mergeWithDeviceOptionsFromStorage = async (
       return {
         ...deviceOption,
         enabled: deviceOption.key === regulatoryDomain900,
+      };
+    }
+    if (
+      deviceOption.optionGroup === UserDefineOptionGroup.RegulatoryDomain2400
+    ) {
+      return {
+        ...deviceOption,
+        enabled: deviceOption.key === regulatoryDomain2400,
       };
     }
     return deviceOption;

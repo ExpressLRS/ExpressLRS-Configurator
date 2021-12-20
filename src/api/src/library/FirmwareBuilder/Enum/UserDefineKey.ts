@@ -9,6 +9,7 @@ enum UserDefineKey {
   REGULATORY_DOMAIN_EU_433 = 'DRegulatory_Domain_EU_433',
   REGULATORY_DOMAIN_FCC_915 = 'DRegulatory_Domain_FCC_915',
   REGULATORY_DOMAIN_ISM_2400 = 'DRegulatory_Domain_ISM_2400',
+  REGULATORY_DOMAIN_EU_CE_2400 = 'DRegulatory_Domain_EU_CE_2400',
   // Hybrid switches
   HYBRID_SWITCHES_8 = 'DHYBRID_SWITCHES_8',
   ENABLE_TELEMETRY = 'DENABLE_TELEMETRY',

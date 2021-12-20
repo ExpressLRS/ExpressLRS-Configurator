@@ -74,6 +74,21 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400:
+          return (
+            <div>
+              <p>ISM 2.4 GHz regulatory domain limited to 10mW output.</p>
+              <p>
+                <a
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href="https://www.expresslrs.org/release/software/user-defines/#regulatory-domain"
+                >
+                  Check our Wiki page for latest definition.
+                </a>
+              </p>
+            </div>
+          );
         case UserDefineKey.BINDING_PHRASE:
           return (
             <div>

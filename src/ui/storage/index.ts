@@ -40,13 +40,20 @@ export interface IApplicationStorage {
   setShowPreReleases(value: boolean): Promise<void>;
 
   setWifiSSID(value: string): Promise<void>;
+
   getWifiSSID(): Promise<string>;
 
   setWifiPassword(value: string): Promise<void>;
+
   getWifiPassword(): Promise<string>;
 
   setRegulatoryDomain900(value: UserDefineKey): Promise<void>;
+
   getRegulatoryDomain900(): Promise<UserDefineKey | null>;
+
+  setRegulatoryDomain2400(value: UserDefineKey): Promise<void>;
+
+  getRegulatoryDomain2400(): Promise<UserDefineKey | null>;
 }
 
 const DEVICE_OPTIONS_BY_TARGET_KEYSPACE = 'device_options';
@@ -56,6 +63,7 @@ const UI_SHOW_FIRMWARE_PRE_RELEASES = 'ui_show_pre_releases';
 const WIFI_SSID_KEY = 'wifi_ssid';
 const WIFI_PASSWORD_KEY = 'wifi_password';
 const REGULATORY_DOMAIN_900_KEY = 'regulatory_domain_900';
+const REGULATORY_DOMAIN_2400_KEY = 'regulatory_domain_2400';
 
 export default class ApplicationStorage implements IApplicationStorage {
   async saveDeviceOptions(
@@ -172,9 +180,14 @@ export default class ApplicationStorage implements IApplicationStorage {
   }
 
   async getRegulatoryDomain900(): Promise<UserDefineKey | null> {
-    const value = localStorage.getItem(
-      REGULATORY_DOMAIN_900_KEY
-    ) as UserDefineKey;
-    return value;
+    return localStorage.getItem(REGULATORY_DOMAIN_900_KEY) as UserDefineKey;
+  }
+
+  async setRegulatoryDomain2400(bindingPhrase: UserDefineKey): Promise<void> {
+    localStorage.setItem(REGULATORY_DOMAIN_2400_KEY, bindingPhrase);
+  }
+
+  async getRegulatoryDomain2400(): Promise<UserDefineKey | null> {
+    return localStorage.getItem(REGULATORY_DOMAIN_2400_KEY) as UserDefineKey;
   }
 }

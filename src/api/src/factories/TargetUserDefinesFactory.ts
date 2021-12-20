@@ -57,7 +57,14 @@ export default class TargetUserDefinesFactory {
           case UserDefineKey.REGULATORY_DOMAIN_ISM_2400:
             return UserDefine.Boolean(
               UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
-              true
+              true,
+              UserDefineOptionGroup.RegulatoryDomain2400
+            );
+          case UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400:
+            return UserDefine.Boolean(
+              UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
+              true,
+              UserDefineOptionGroup.RegulatoryDomain2400
             );
           // Hybrid switches
           case UserDefineKey.HYBRID_SWITCHES_8:

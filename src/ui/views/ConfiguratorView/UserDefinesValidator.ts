@@ -12,6 +12,7 @@ export default class UserDefinesValidator {
       UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       UserDefineKey.REGULATORY_DOMAIN_IN_866,
       UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
+      UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
     ];
 
     // Support case when there are no Regulatory Domain user defines at all. All 2.4 Ghz hardware
