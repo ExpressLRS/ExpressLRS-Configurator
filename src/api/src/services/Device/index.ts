@@ -112,13 +112,19 @@ export default class DeviceService implements IDevices {
           wikiUrl: value.wikiUrl,
           deviceType,
           parent: null,
+          abbreviatedName: value.abbreviatedName,
         };
 
         devices.push(device);
 
         if (value.aliases) {
           value.aliases.forEach(
-            (alias: { name: any; category: any; wikiUrl: any }) => {
+            (alias: {
+              name: any;
+              category: any;
+              wikiUrl: any;
+              abbreviatedName?: any;
+            }) => {
               devices.push({
                 id: alias.name,
                 name: alias.name,
@@ -134,11 +140,12 @@ export default class DeviceService implements IDevices {
                 wikiUrl: alias.wikiUrl,
                 deviceType: device.deviceType,
                 parent: device.id,
+                abbreviatedName: alias.abbreviatedName,
               });
             }
           );
         }
-      } catch (error) {
+      } catch (error: any) {
         const errormessage = `Issue encountered while parsing device "${value.name}" in the device configuration file devices.json: ${error.message}`;
         this.logger.error(errormessage);
         throw new Error(errormessage);

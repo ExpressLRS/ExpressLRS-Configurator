@@ -554,6 +554,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     setViewState(ViewState.Configuration);
   };
 
+  const getAbbreviatedDeviceName = (item: Device) => {
+    return item.abbreviatedName?.slice(0, 16) ?? item.name?.slice(0, 16);
+  };
+
   const [currentJobType, setCurrentJobType] = useState<BuildJobType>(
     BuildJobType.Build
   );
@@ -619,10 +623,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     }));
 
     if (device?.parent && device?.name) {
+      const deviceName = getAbbreviatedDeviceName(device);
       // add the user define for the device name
       userDefines.push({
         key: UserDefineKey.DEVICE_NAME,
-        value: device?.name.slice(0, 20),
+        value: deviceName,
         enabled: true,
         enumValues: null,
         type: UserDefineKind.Text,
@@ -683,7 +688,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
         // try to find the device by the deviceName
         deviceMatches = deviceTargets?.filter((item) => {
-          return item.name.toUpperCase() === dnsDeviceName;
+          return getAbbreviatedDeviceName(item).toUpperCase() === dnsDeviceName;
         });
 
         // if no matches found by deviceName, then use the target

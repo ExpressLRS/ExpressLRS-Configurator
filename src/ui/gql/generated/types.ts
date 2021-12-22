@@ -98,6 +98,7 @@ export type Device = {
   readonly wikiUrl?: Maybe<Scalars['String']>;
   readonly deviceType: DeviceType;
   readonly parent?: Maybe<Scalars['String']>;
+  readonly abbreviatedName?: Maybe<Scalars['String']>;
 };
 
 export type Target = {
@@ -459,6 +460,7 @@ export type AvailableFirmwareTargetsQuery = {
       | 'userDefines'
       | 'deviceType'
       | 'parent'
+      | 'abbreviatedName'
     > & {
         readonly targets: ReadonlyArray<
           { readonly __typename?: 'Target' } & Pick<
@@ -838,6 +840,7 @@ export const AvailableFirmwareTargetsDocument = gql`
       userDefines
       deviceType
       parent
+      abbreviatedName
     }
   }
 `;
