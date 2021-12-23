@@ -6,6 +6,10 @@
       {
         "flashingMethod": "UART",
         "name": "DIY_900_TX_TTGO_V1_SX127x_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "DIY_900_TX_TTGO_V1_SX127x_via_WIFI"
       }
     ],
     "userDefines": [
@@ -37,6 +41,10 @@
       {
         "flashingMethod": "UART",
         "name": "DIY_900_TX_TTGO_V2_SX127x_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "DIY_900_TX_TTGO_V2_SX127x_via_WIFI"
       }
     ],
     "userDefines": [
@@ -68,6 +76,10 @@
       {
         "flashingMethod": "UART",
         "name": "DIY_900_TX_ESP32_SX127x_E19_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "DIY_900_TX_ESP32_SX127x_E19_via_WIFI"
       }
     ],
     "userDefines": [
@@ -102,6 +114,10 @@
       {
         "flashingMethod": "UART",
         "name": "DIY_900_TX_ESP32_SX127x_RFM95_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "DIY_900_TX_ESP32_SX127x_RFM95_via_WIFI"
       }
     ],
     "userDefines": [
