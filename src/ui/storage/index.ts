@@ -199,13 +199,21 @@ export default class ApplicationStorage implements IApplicationStorage {
     field: string,
     value: boolean
   ): Promise<void> {
-    localStorage.setItem(`ShowSensitiveFieldData-${field}`, value ? '1' : '0');
+    localStorage.setItem(
+      `ShowSensitiveFieldData-${field}`,
+      JSON.stringify(value)
+    );
   }
 
   async getShowSensitiveFieldData(field: string): Promise<boolean | null> {
     const value = localStorage.getItem(`ShowSensitiveFieldData-${field}`);
     if (value) {
-      return value === '1';
+      try {
+        return JSON.parse(value);
+      } catch (e) {
+        console.error('failed to parse state for', field, e);
+        return null;
+      }
     }
     return null;
   }
