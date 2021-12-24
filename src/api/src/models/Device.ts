@@ -29,6 +29,9 @@ export default class Device {
   @Field({ nullable: true })
   parent?: string | null;
 
+  @Field({ nullable: true })
+  abbreviatedName?: string | null;
+
   constructor(
     id: string,
     name: string,
@@ -37,7 +40,8 @@ export default class Device {
     userDefines: UserDefineKey[],
     deviceType: DeviceType,
     wikiUrl?: string,
-    parent?: string | null
+    parent?: string | null,
+    abbreviatedName?: string | null
   ) {
     this.id = id;
     this.name = name;
@@ -47,5 +51,6 @@ export default class Device {
     this.wikiUrl = wikiUrl;
     this.deviceType = deviceType;
     this.parent = parent;
+    this.abbreviatedName = abbreviatedName;
   }
 }

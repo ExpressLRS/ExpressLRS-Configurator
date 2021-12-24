@@ -28,5 +28,6 @@ query availableFirmwareTargets(
     userDefines
     deviceType
     parent
+    abbreviatedName
   }
 }

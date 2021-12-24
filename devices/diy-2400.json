@@ -147,42 +147,50 @@
       {
         "category": "Flywoo 2.4 GHz",
         "name": "Flywoo EL24E 2400 RX",
-        "wikiUrl": ""
+        "wikiUrl": "",
+        "abbreviatedName": "Flywoo EL24E"
       },
       {
         "category": "Flywoo 2.4 GHz",
         "name": "Flywoo EL24P 2400 RX",
-        "wikiUrl": ""
+        "wikiUrl": "",
+        "abbreviatedName": "Flywoo EL24P"
       },
       {
         "category": "HiYOUNGER 2.4 GHz",
         "name": "HiYOUNGER SP24S 2400 RX",
-        "wikiUrl": ""
+        "wikiUrl": "",
+        "abbreviatedName": "HiYOUNGER SP24S"
       },
       {
         "category": "HiYOUNGER 2.4 GHz",
         "name": "HiYOUNGER EP24S 2400 RX",
-        "wikiUrl": ""
+        "wikiUrl": "",
+        "abbreviatedName": "HiYOUNGER EP24S"
       },
       {
         "category": "HiYOUNGER 2.4 GHz",
         "name": "HiYOUNGER RX24T 2400 RX",
-        "wikiUrl": ""
+        "wikiUrl": "",
+        "abbreviatedName": "HiYOUNGER RX24T"
       },
       {
         "category": "JHEMCU 2.4 GHz",
         "name": "JHEMCU SP24S 2400 RX",
-        "wikiUrl": ""
+        "wikiUrl": "",
+        "abbreviatedName": "JHEMCU SP24S"
       },
       {
         "category": "JHEMCU 2.4 GHz",
         "name": "JHEMCU EP24S 2400 RX",
-        "wikiUrl": ""
+        "wikiUrl": "",
+        "abbreviatedName": "JHEMCU EP24S"
       },
       {
         "category": "JHEMCU 2.4 GHz",
         "name": "JHEMCU RX24T 2400 RX",
-        "wikiUrl": ""
+        "wikiUrl": "",
+        "abbreviatedName": "JHEMCU RX24T"
       }
     ]
   },
