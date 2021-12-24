@@ -10,7 +10,7 @@
       {
         "flashingMethod": "WIFI",
         "name": "DIY_2400_TX_ESP32_SX1280_Mini_via_WIFI"
-      },
+      }
     ],
     "userDefines": [
       "REGULATORY_DOMAIN_ISM_2400",
