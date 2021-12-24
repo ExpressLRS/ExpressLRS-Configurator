@@ -133,6 +133,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                   )}
                   {item.sensitive && (
                     <SensitiveTextField
+                      name={item.key}
                       size="small"
                       onChange={onUserDefineValueChange(item.key)}
                       value={item.value}

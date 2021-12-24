@@ -54,6 +54,10 @@ export interface IApplicationStorage {
   setRegulatoryDomain2400(value: UserDefineKey): Promise<void>;
 
   getRegulatoryDomain2400(): Promise<UserDefineKey | null>;
+
+  setShowSensitiveFieldData(field: string, value: boolean): Promise<void>;
+
+  getShowSensitiveFieldData(field: string): Promise<boolean | null>;
 }
 
 const DEVICE_OPTIONS_BY_TARGET_KEYSPACE = 'device_options';
@@ -189,5 +193,20 @@ export default class ApplicationStorage implements IApplicationStorage {
 
   async getRegulatoryDomain2400(): Promise<UserDefineKey | null> {
     return localStorage.getItem(REGULATORY_DOMAIN_2400_KEY) as UserDefineKey;
+  }
+
+  async setShowSensitiveFieldData(
+    field: string,
+    value: boolean
+  ): Promise<void> {
+    localStorage.setItem(`ShowSensitiveFieldData-${field}`, value ? '1' : '0');
+  }
+
+  async getShowSensitiveFieldData(field: string): Promise<boolean | null> {
+    const value = localStorage.getItem(`ShowSensitiveFieldData-${field}`);
+    if (value) {
+      return value === '1';
+    }
+    return null;
   }
 }
