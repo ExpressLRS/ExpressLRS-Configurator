@@ -84,20 +84,25 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
     }
   }, [currentTarget, targetOptions]);
 
-  const onCategoryChange = useCallback((value: string | null) => {
-    if (value === null) {
-      setCurrentCategory(null);
-    } else {
-      setCurrentCategory(value);
-    }
-    // When category changes, set the current target to null
-    setCurrentDevice(null);
-  }, []);
+  const onCategoryChange = useCallback(
+    (value: string | null) => {
+      if (value === null) {
+        setCurrentCategory(null);
+      } else {
+        setCurrentCategory(value);
+      }
+      // When category changes, set the current target to null
+      setCurrentDevice(null);
+      onChange(null);
+    },
+    [onChange]
+  );
 
   const onDeviceChange = useCallback(
     (value: string | null) => {
       if (value === null) {
         setCurrentDevice(null);
+        onChange(null);
       } else {
         const device =
           targetOptions?.find((item) => item.name === value) ?? null;
