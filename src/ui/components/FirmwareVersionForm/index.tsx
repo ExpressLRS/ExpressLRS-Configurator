@@ -9,13 +9,7 @@ import {
   Tabs,
   TextField,
 } from '@mui/material';
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import debounce from 'lodash/debounce';
 import semver from 'semver';
@@ -199,13 +193,10 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     };
   }, [debouncedGitCommitHandler]);
 
-  const setGitCommit = useCallback(
-    (value: string) => {
-      setCurrentGitCommit(value);
-      debouncedGitCommitHandler(value);
-    },
-    [debouncedGitCommitHandler]
-  );
+  const setGitCommit = (value: string) => {
+    setCurrentGitCommit(value);
+    debouncedGitCommitHandler(value);
+  };
 
   const onGitCommit = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGitCommit(event.target.value);
@@ -285,7 +276,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       .catch((err) => {
         console.error('failed to get firmware source', err);
       });
-  }, [gitRepository, setGitCommit]);
+  }, []);
 
   const onChooseFolder = () => {
     ipcRenderer

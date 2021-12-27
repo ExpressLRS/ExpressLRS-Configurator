@@ -21,7 +21,7 @@ const SensitiveTextField: FunctionComponent<TextFieldProps> = ({
         : false;
       setShowData(showFieldData ?? false);
     })();
-  }, [props.name]);
+  }, []);
 
   const onVisibilityChange = () => {
     setShowData((value) => {

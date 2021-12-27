@@ -112,7 +112,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
         onSerialDeviceChange(data?.availableDevicesList[0].path);
       }
     }
-  }, [currentValue, data, previousData]);
+  }, [data, previousData]);
   const onSubmit = () => {
     if (currentValue !== null) {
       console.log('currentValue', currentValue);
