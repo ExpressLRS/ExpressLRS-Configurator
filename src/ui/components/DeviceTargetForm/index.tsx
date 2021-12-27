@@ -27,43 +27,47 @@ interface FirmwareVersionCardProps {
   firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
-const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
-  props
-) => {
-  const { onChange, currentTarget, targetOptions, firmwareVersionData } = props;
+const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
+  onChange,
+  currentTarget,
+  targetOptions,
+  firmwareVersionData,
+}) => {
+  const [currentDevice, setCurrentDevice] = useState<Device | null>(null);
 
-  interface Dictionary<T> {
-    [Key: string]: T;
-  }
+  const [currentCategory, setCurrentCategory] = useState<string | null>(null);
 
-  // create a dictionary for Category -> Device -> Targets
-  const targetsByCategoryAndDevice = useMemo(() => {
-    return targetOptions?.reduce<Dictionary<Dictionary<Device>>>(
-      (accumulator, currentValue) => {
-        if (!accumulator[currentValue.category]) {
-          accumulator[currentValue.category] = {};
-        }
-        const category = accumulator[currentValue.category];
-        category[currentValue.name] = currentValue;
-
-        return accumulator;
-      },
-      {}
-    );
+  const categorySelectOptions = useMemo(() => {
+    if (targetOptions === null) {
+      return [];
+    }
+    return targetOptions
+      .map((item) => item.category)
+      .filter((value, index, array) => array.indexOf(value) === index) // unique values
+      .map((category) => {
+        return {
+          label: category,
+          value: category,
+        };
+      });
   }, [targetOptions]);
 
-  const [currentTargetValue, setCurrentTargetValue] = useState<Target | null>(
-    null
-  );
+  const deviceSelectOptions = useMemo(() => {
+    if (targetOptions === null || currentCategory === null) {
+      return [];
+    }
 
-  const [selectedCategoryValue, setSelectedCategoryValue] = useState<
-    string | null
-  >(null);
+    return targetOptions
+      .filter((item) => item.category === currentCategory)
+      .map((item) => {
+        return {
+          label: item.name,
+          value: item.name,
+        };
+      });
+  }, [targetOptions, currentCategory]);
 
-  const [selectedDeviceValue, setSelectedDeviceValue] = useState<string | null>(
-    null
-  );
-
+  // Used when currentTarget is changed from Network devices popup
   useEffect(() => {
     const device = targetOptions?.find((item) =>
       item.targets.find((target) => target.id === currentTarget?.id)
@@ -71,91 +75,59 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
 
     // verify that if there is a currentTarget that the category and device values match that target
     if (device) {
-      if (selectedCategoryValue !== device.category) {
-        setSelectedCategoryValue(device.category);
+      if (currentCategory !== device.category) {
+        setCurrentCategory(device.category);
       }
-      if (selectedDeviceValue !== device.name) {
-        setSelectedDeviceValue(device.name);
+      if (currentDevice?.name !== device.name) {
+        setCurrentDevice(device);
       }
     }
-    setCurrentTargetValue(currentTarget);
   }, [currentTarget, targetOptions]);
 
-  const onCategoryChange = useCallback(
-    (value: string | null) => {
-      if (value === null) {
-        setSelectedCategoryValue(null);
-      } else {
-        setSelectedCategoryValue(value);
-      }
-      // When category changes, set the current target to null
-      setSelectedDeviceValue(null);
-      onChange(null);
-    },
-    [onChange]
-  );
+  const onCategoryChange = useCallback((value: string | null) => {
+    if (value === null) {
+      setCurrentCategory(null);
+    } else {
+      setCurrentCategory(value);
+    }
+    // When category changes, set the current target to null
+    setCurrentDevice(null);
+  }, []);
 
   const onDeviceChange = useCallback(
     (value: string | null) => {
       if (value === null) {
-        setSelectedDeviceValue(null);
+        setCurrentDevice(null);
       } else {
-        setSelectedDeviceValue(value);
+        const device =
+          targetOptions?.find((item) => item.name === value) ?? null;
+        setCurrentDevice(device);
+        onChange(device?.targets[0] ?? null);
       }
-      onChange(null);
     },
-    [onChange]
+    [onChange, currentCategory, targetOptions]
   );
 
   useEffect(() => {
-    // verify that the currently selected category and device exist
-    if (targetsByCategoryAndDevice && selectedCategoryValue) {
-      if (!targetsByCategoryAndDevice[selectedCategoryValue]) {
-        onCategoryChange(null);
-      } else if (
-        selectedDeviceValue &&
-        targetsByCategoryAndDevice &&
-        !targetsByCategoryAndDevice[selectedCategoryValue][selectedDeviceValue]
-      ) {
-        onDeviceChange(null);
-      }
+    const category = targetOptions?.find(
+      (item) => item.category === currentCategory
+    );
+    const device = targetOptions?.find(
+      (item) => item.name === currentDevice?.name
+    );
+    if (!category && !device) {
+      onCategoryChange(null);
+      onDeviceChange(null);
+      onChange(null);
+    } else if (category && !device) {
+      onDeviceChange(null);
+      onChange(null);
     }
-  }, [
-    onCategoryChange,
-    onDeviceChange,
-    selectedCategoryValue,
-    selectedDeviceValue,
-    targetsByCategoryAndDevice,
-  ]);
+  }, [onCategoryChange, onDeviceChange, currentCategory, currentDevice]);
 
-  const onFlashingMethodChange = useCallback(
-    (value: Target | null) => {
-      onChange(value);
-    },
-    [onChange]
-  );
-
-  const categorySelectOptions = useMemo(() => {
-    return Object.keys(targetsByCategoryAndDevice ?? {})
-      .sort()
-      .map((category) => ({
-        label: category,
-        value: category,
-      }));
-  }, [targetsByCategoryAndDevice]);
-
-  const deviceSelectOptions = useMemo(() => {
-    return !targetsByCategoryAndDevice ||
-      !selectedCategoryValue ||
-      !targetsByCategoryAndDevice[selectedCategoryValue]
-      ? []
-      : Object.keys(targetsByCategoryAndDevice[selectedCategoryValue])
-          .sort()
-          .map((device) => ({
-            label: device,
-            value: device,
-          }));
-  }, [targetsByCategoryAndDevice, selectedCategoryValue]);
+  const onFlashingMethodChange = (value: Target | null) => {
+    onChange(value);
+  };
 
   return (
     <>
@@ -164,7 +136,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
           title="Device category"
           currentValue={
             categorySelectOptions.find(
-              (item) => item.value === selectedCategoryValue
+              (item) => item.value === currentCategory
             ) ?? null
           }
           onChange={onCategoryChange}
@@ -176,31 +148,24 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = (
           title="Device"
           currentValue={
             deviceSelectOptions.find(
-              (item) => item.value === selectedDeviceValue
+              (item) => item.value === currentDevice?.name
             ) ?? null
           }
           onChange={onDeviceChange}
           options={deviceSelectOptions}
           // if no category has been selected, disable the target select box
-          disabled={selectedCategoryValue === null}
+          disabled={currentCategory === null}
         />
       </Box>
 
-      {selectedCategoryValue &&
-        selectedDeviceValue &&
-        targetsByCategoryAndDevice &&
-        targetsByCategoryAndDevice[selectedCategoryValue] && (
-          <FlashingMethodOptions
-            onChange={onFlashingMethodChange}
-            currentTarget={currentTargetValue}
-            currentDevice={
-              targetsByCategoryAndDevice[selectedCategoryValue][
-                selectedDeviceValue
-              ] ?? null
-            }
-            firmwareVersionData={firmwareVersionData}
-          />
-        )}
+      {currentCategory && currentDevice && targetOptions && (
+        <FlashingMethodOptions
+          onChange={onFlashingMethodChange}
+          currentTarget={currentTarget}
+          currentDevice={currentDevice}
+          firmwareVersionData={firmwareVersionData}
+        />
+      )}
     </>
   );
 };

@@ -73,6 +73,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
     if (
       targetMappingsSorted &&
       targetMappingsSorted.length > 0 &&
+      currentTarget !== null &&
       !targetMappingsSorted.find((item) => item.id === currentTarget?.id)
     ) {
       const target = targetMappingsSorted[0];
@@ -80,15 +81,15 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
     }
   }, [onChange, currentTarget, targetMappingsSorted]);
 
-  const onFlashingMethodChange = useCallback(
-    (_event: React.ChangeEvent<HTMLInputElement>, value: string) => {
-      const target = targetMappingsSorted?.find((item) => {
-        return item.id === value;
-      });
-      onChange(target ?? null);
-    },
-    [onChange, targetMappingsSorted]
-  );
+  const onFlashingMethodChange = (
+    _event: React.ChangeEvent<HTMLInputElement>,
+    value: string
+  ) => {
+    const target = targetMappingsSorted?.find((item) => {
+      return item.id === value;
+    });
+    onChange(target ?? null);
+  };
 
   const flashingMethodRadioOption = useCallback(
     (targetMapping: Target) => {
