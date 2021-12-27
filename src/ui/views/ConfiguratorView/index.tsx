@@ -468,11 +468,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   }, [deviceTarget]);
 
   const hasLuaScript = useMemo(() => {
-    if (deviceType === DeviceType.ExpressLRS && isTX) {
-      return true;
-    }
-
-    return false;
+    return deviceType === DeviceType.ExpressLRS && isTX;
   }, [deviceType, isTX]);
 
   useEffect(() => {
