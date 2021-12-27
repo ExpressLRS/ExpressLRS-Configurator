@@ -82,7 +82,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
         setCurrentDevice(device);
       }
     }
-  }, [currentTarget, targetOptions]);
+  }, [currentCategory, currentDevice?.name, currentTarget, targetOptions]);
 
   const onCategoryChange = useCallback(
     (value: string | null) => {
@@ -110,7 +110,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
         onChange(device?.targets[0] ?? null);
       }
     },
-    [onChange, currentCategory, targetOptions]
+    [onChange, targetOptions]
   );
 
   useEffect(() => {
@@ -128,7 +128,14 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
       onDeviceChange(null);
       onChange(null);
     }
-  }, [onCategoryChange, onDeviceChange, currentCategory, currentDevice]);
+  }, [
+    onCategoryChange,
+    onDeviceChange,
+    currentCategory,
+    currentDevice,
+    targetOptions,
+    onChange,
+  ]);
 
   const onFlashingMethodChange = (value: Target | null) => {
     onChange(value);

@@ -1,5 +1,10 @@
 import { Box, Tooltip } from '@mui/material';
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import QuestionIcon from '@mui/icons-material/Help';
 import Omnibox, { Option } from '../Omnibox';
 import {
@@ -57,17 +62,20 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
         }
       : null
   );
-  const onSerialDeviceChange = (value: string | null) => {
-    if (value === null) {
-      setCurrentValue(null);
-    } else {
-      setCurrentValue({
-        label: value,
-        value,
-      });
-      onChange(value);
-    }
-  };
+  const onSerialDeviceChange = useCallback(
+    (value: string | null) => {
+      if (value === null) {
+        setCurrentValue(null);
+      } else {
+        setCurrentValue({
+          label: value,
+          value,
+        });
+        onChange(value);
+      }
+    },
+    [onChange]
+  );
   useEffect(() => {
     const difference = (
       a: readonly Pick<SerialPortInformation, 'path' | 'manufacturer'>[],
@@ -91,7 +99,7 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
         onSerialDeviceChange(data?.availableDevicesList[0].path);
       }
     }
-  }, [data, previousData]);
+  }, [currentValue, data, onSerialDeviceChange, previousData]);
   return (
     <Box sx={styles.root}>
       <Box sx={styles.inner}>

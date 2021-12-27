@@ -388,7 +388,14 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         console.error(`failed to update device options form data: ${err}`);
       });
     }
-  }, [deviceOptionsResponse, deviceTargets]);
+  }, [
+    device?.name,
+    deviceOptionsFormData,
+    deviceOptionsResponse,
+    deviceTargets,
+    networkDevices,
+    selectedDevice,
+  ]);
 
   const onResetToDefaults = () => {
     const handleReset = async () => {
@@ -431,7 +438,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         }
       }
     },
-    [deviceTarget, deviceTargets]
+    [deviceTarget, device?.name]
   );
 
   const [
@@ -530,7 +537,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     } else {
       setWifiDeviceRequired(false);
     }
-  }, [deviceTarget, deviceTarget, deviceTargets]);
+  }, [deviceTarget, deviceTargets]);
 
   const [
     deviceOptionsValidationErrors,
