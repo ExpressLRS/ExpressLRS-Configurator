@@ -6,12 +6,7 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { FunctionComponent, useCallback, useMemo } from 'react';
 import {
   Device,
   FirmwareVersionDataInput,
@@ -67,19 +62,6 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
         }),
     [currentDevice?.targets]
   );
-
-  useEffect(() => {
-    // if the currentTarget is not found, then select the first one by default
-    if (
-      targetMappingsSorted &&
-      targetMappingsSorted.length > 0 &&
-      currentTarget !== null &&
-      !targetMappingsSorted.find((item) => item.id === currentTarget?.id)
-    ) {
-      const target = targetMappingsSorted[0];
-      onChange(target);
-    }
-  }, [onChange, currentTarget, targetMappingsSorted]);
 
   const onFlashingMethodChange = (
     _event: React.ChangeEvent<HTMLInputElement>,

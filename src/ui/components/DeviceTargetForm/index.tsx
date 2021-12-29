@@ -113,6 +113,9 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
     [onChange, currentCategory, targetOptions]
   );
 
+  /*
+    Check if current device & category is present in targetOptions. If not - reset to default state.
+   */
   useEffect(() => {
     const category = targetOptions?.find(
       (item) => item.category === currentCategory
