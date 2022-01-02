@@ -243,6 +243,8 @@ const createWindow = async () => {
         owner: 'ExpressLRS',
         repositoryName: 'ExpressLRS-Configurator',
       },
+      multicastDnsSimulatorEnabled:
+        process.env.MULTICAST_DNS_SIMULATOR_ENABLED === 'true',
       firmwaresPath,
       getPlatformioPath,
       platformioStateTempStoragePath,
