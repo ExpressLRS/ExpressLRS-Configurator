@@ -12,7 +12,9 @@ import {
   FirmwareVersionDataInput,
   Target,
 } from '../../gql/generated/types';
-import FlashingMethodOptions from '../FlashingMethodOptions';
+import FlashingMethodOptions, {
+  sortDeviceTargets,
+} from '../FlashingMethodOptions';
 
 const styles = {
   root: {
@@ -23,14 +25,14 @@ const styles = {
 interface FirmwareVersionCardProps {
   currentTarget: Target | null;
   onChange: (data: Target | null) => void;
-  targetOptions: Device[] | null;
+  deviceOptions: Device[] | null;
   firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
   onChange,
   currentTarget,
-  targetOptions,
+  deviceOptions,
   firmwareVersionData,
 }) => {
   const [currentDevice, setCurrentDevice] = useState<Device | null>(null);
@@ -38,10 +40,10 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
   const [currentCategory, setCurrentCategory] = useState<string | null>(null);
 
   const categorySelectOptions = useMemo(() => {
-    if (targetOptions === null) {
+    if (deviceOptions === null) {
       return [];
     }
-    return targetOptions
+    return deviceOptions
       .map((item) => item.category)
       .filter((value, index, array) => array.indexOf(value) === index) // unique values
       .map((category) => {
@@ -50,14 +52,14 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
           value: category,
         };
       });
-  }, [targetOptions]);
+  }, [deviceOptions]);
 
   const deviceSelectOptions = useMemo(() => {
-    if (targetOptions === null || currentCategory === null) {
+    if (deviceOptions === null || currentCategory === null) {
       return [];
     }
 
-    return targetOptions
+    return deviceOptions
       .filter((item) => item.category === currentCategory)
       .map((item) => {
         return {
@@ -65,11 +67,11 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
           value: item.name,
         };
       });
-  }, [targetOptions, currentCategory]);
+  }, [deviceOptions, currentCategory]);
 
   // Used when currentTarget is changed from Network devices popup
   useEffect(() => {
-    const device = targetOptions?.find((item) =>
+    const device = deviceOptions?.find((item) =>
       item.targets.find((target) => target.id === currentTarget?.id)
     );
 
@@ -82,10 +84,13 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
         setCurrentDevice(device);
       }
     }
-  }, [currentTarget, targetOptions]);
+  }, [currentTarget, deviceOptions]);
 
   const onCategoryChange = useCallback(
     (value: string | null) => {
+      if (value === currentCategory) {
+        return;
+      }
       if (value === null) {
         setCurrentCategory(null);
       } else {
@@ -95,7 +100,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
       setCurrentDevice(null);
       onChange(null);
     },
-    [onChange]
+    [onChange, currentCategory]
   );
 
   const onDeviceChange = useCallback(
@@ -103,24 +108,25 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
       if (value === null) {
         setCurrentDevice(null);
         onChange(null);
-      } else {
+      } else if (value !== currentDevice?.name) {
         const device =
-          targetOptions?.find((item) => item.name === value) ?? null;
+          deviceOptions?.find((item) => item.name === value) ?? null;
         setCurrentDevice(device);
-        onChange(device?.targets[0] ?? null);
+        const targets = sortDeviceTargets(device?.targets ?? []);
+        onChange(targets[0] ?? null);
       }
     },
-    [onChange, currentCategory, targetOptions]
+    [onChange, currentDevice, deviceOptions]
   );
 
   /*
-    Check if current device & category is present in targetOptions. If not - reset to default state.
+    Check if current device & category is present in deviceOptions. If not - reset to default state.
    */
   useEffect(() => {
-    const category = targetOptions?.find(
+    const category = deviceOptions?.find(
       (item) => item.category === currentCategory
     );
-    const device = targetOptions?.find(
+    const device = deviceOptions?.find(
       (item) => item.name === currentDevice?.name
     );
     if (!category && !device) {
@@ -166,7 +172,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
         />
       </Box>
 
-      {currentCategory && currentDevice && targetOptions && (
+      {currentCategory && currentDevice && deviceOptions && (
         <FlashingMethodOptions
           onChange={onFlashingMethodChange}
           currentTarget={currentTarget}

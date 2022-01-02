@@ -800,7 +800,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       currentTarget={deviceTarget}
                       onChange={onDeviceTarget}
                       firmwareVersionData={firmwareVersionData}
-                      targetOptions={deviceTargets}
+                      deviceOptions={deviceTargets}
                     />
                   )}
                   <Loader loading={loadingTargets} />

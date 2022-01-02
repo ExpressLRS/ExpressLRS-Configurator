@@ -44,22 +44,25 @@ interface FlashingMethodsListProps {
   firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
+export const sortDeviceTargets = (targets: readonly Target[]): Target[] => {
+  return targets
+    .filter((item) => {
+      return item.flashingMethod !== null;
+    })
+    .sort((a, b) => {
+      if (a.flashingMethod && b.flashingMethod) {
+        return a.flashingMethod < b.flashingMethod ? -1 : 1;
+      }
+      return 0;
+    });
+};
+
 const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   props
 ) => {
   const { onChange, currentTarget, currentDevice, firmwareVersionData } = props;
   const targetMappingsSorted = useMemo(
-    () =>
-      currentDevice?.targets
-        ?.filter((item) => {
-          return item.flashingMethod !== null;
-        })
-        .sort((a, b) => {
-          if (a.flashingMethod && b.flashingMethod) {
-            return a.flashingMethod < b.flashingMethod ? -1 : 1;
-          }
-          return 0;
-        }),
+    () => sortDeviceTargets(currentDevice?.targets ?? []),
     [currentDevice?.targets]
   );
 
