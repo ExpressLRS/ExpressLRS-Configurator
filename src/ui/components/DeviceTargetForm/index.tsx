@@ -84,7 +84,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
         setCurrentDevice(device);
       }
     }
-  }, [currentTarget, deviceOptions]);
+  }, [currentTarget, currentCategory, currentDevice, deviceOptions]);
 
   const onCategoryChange = useCallback(
     (value: string | null) => {
@@ -123,6 +123,13 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
     Check if current device & category is present in deviceOptions. If not - reset to default state.
    */
   useEffect(() => {
+    if (
+      deviceOptions === null ||
+      currentDevice === null ||
+      currentCategory === null
+    ) {
+      return;
+    }
     const category = deviceOptions?.find(
       (item) => item.category === currentCategory
     );
@@ -132,10 +139,8 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
     if (!category && !device) {
       onCategoryChange(null);
       onDeviceChange(null);
-      onChange(null);
     } else if (category && !device) {
       onDeviceChange(null);
-      onChange(null);
     }
   }, [onCategoryChange, onDeviceChange, currentCategory, currentDevice]);
 
