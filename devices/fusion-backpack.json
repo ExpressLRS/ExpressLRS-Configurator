@@ -1,0 +1,24 @@
+[
+  {
+    "category": "VRX",
+    "name": "TBS Fusion VRX Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "Fusion_Builtin_Backpack_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "Fusion_Builtin_Backpack_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "",
+    "deviceType": "Backpack",
+    "aliases": []
+  }
+]
