@@ -5,6 +5,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import { Config } from '../../config';
 import LogotypeIcon from '../../../../assets/logotype.svg';
 import DiscordIcon from '../../../../assets/DiscordIcon.svg';
+import OpenCollectiveIcon from '../../../../assets/OpenCollective.svg';
 import { useCheckForUpdatesQuery } from '../../gql/generated/types';
 
 const styles = {
@@ -42,7 +43,7 @@ const styles = {
     fontSize: '1em !important',
     marginTop: '-2px',
   },
-  discordIcon: {
+  svgIcon: {
     width: '24px',
     height: 'auto',
   },
@@ -90,7 +91,7 @@ const Header: FunctionComponent = memo(() => {
               <Box
                 component="img"
                 src={DiscordIcon}
-                sx={styles.discordIcon}
+                sx={styles.svgIcon}
                 alt=""
               />
             </IconButton>
@@ -115,6 +116,22 @@ const Header: FunctionComponent = memo(() => {
               size="large"
             >
               <GitHubIcon />
+            </IconButton>
+          </Box>
+          <Box sx={styles.link}>
+            <IconButton
+              href={Config.openCollectiveUrl}
+              target="_blank"
+              title="OpenCollective"
+              rel="noreferrer noreferrer"
+              size="large"
+            >
+              <Box
+                component="img"
+                src={OpenCollectiveIcon}
+                sx={styles.svgIcon}
+                alt=""
+              />
             </IconButton>
           </Box>
         </Box>
