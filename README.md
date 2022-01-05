@@ -3,7 +3,7 @@
 ![Release](https://img.shields.io/github/v/release/ExpressLRS/ExpressLRS-Configurator?include_prereleases)
 ![License](https://img.shields.io/github/license/ExpressLRS/ExpressLRS-Configurator)
 [![Chat](https://img.shields.io/discord/596350022191415318)](http://discord.gg/dS6ReFY)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-253B80.svg)](https://www.paypal.com/donate?hosted_button_id=FLHGG9DAFYQZU)
+[![Open Collective backers](https://img.shields.io/opencollective/backers/expresslrs?label=Open%20Collective%20backers)](https://opencollective.com/expresslrs)
 
 ExpressLRS Configurator is a cross-platform build & configuration tool for the
 [ExpressLRS](https://github.com/ExpressLRS/ExpressLRS) - open source RC link for RC applications.
@@ -12,6 +12,17 @@ ExpressLRS Configurator is a cross-platform build & configuration tool for the
 
 - [Discord Chat](https://discord.gg/dS6ReFY)
 - [Facebook Group](https://www.facebook.com/groups/636441730280366)
+
+## Support ExpressLRS
+
+Supporting ExpressLRS is as easy as contributing a feature, either code or just a fleshed out idea. Coding not your thing? Testing a Pull Request using the convenient Configurator tab and providing feedback is essential as well. We're all working together.
+
+If you don't have the time to contribute in that way, consider making a small donation. Donations are used to buy test equipment, software licenses, and certificates needed to further the project and make it securely accessible. ExpressLRS accepts donations through [Open Collective](https://opencollective.com/expresslrs), which provides recognition of donors and transparency on how that support is utilized.
+
+[![Open Collective backers](https://img.shields.io/opencollective/backers/expresslrs?label=Open%20Collective%20backers)](https://opencollective.com/expresslrs)
+
+## Quick Start Guide
+If you have hardware that you want to flash, please refer to our guides on the [website](https://www.expresslrs.org/), and our [FAQ](https://www.expresslrs.org/faq/)
 
 ## Installation
 
