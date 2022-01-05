@@ -1,7 +1,7 @@
 # ExpressLRS Configurator
 
-![Release](https://img.shields.io/github/v/release/ExpressLRS/ExpressLRS-Configurator?include_prereleases)
-![License](https://img.shields.io/github/license/ExpressLRS/ExpressLRS-Configurator)
+[![Release](https://img.shields.io/github/v/release/ExpressLRS/ExpressLRS-Configurator?include_prereleases)](https://github.com/ExpressLRS/ExpressLRS-Configurator/releases)
+[![License](https://img.shields.io/github/license/ExpressLRS/ExpressLRS-Configurator)](https://github.com/ExpressLRS/ExpressLRS-Configurator/blob/master/LICENSE)
 [![Chat](https://img.shields.io/discord/596350022191415318)](http://discord.gg/dS6ReFY)
 [![Open Collective backers](https://img.shields.io/opencollective/backers/expresslrs?label=Open%20Collective%20backers)](https://opencollective.com/expresslrs)
 
@@ -12,6 +12,7 @@ ExpressLRS Configurator is a cross-platform build & configuration tool for the
 
 - [Discord Chat](https://discord.gg/dS6ReFY)
 - [Facebook Group](https://www.facebook.com/groups/636441730280366)
+- [Documentation](https://www.expresslrs.org/)
 
 ## Support ExpressLRS
 
