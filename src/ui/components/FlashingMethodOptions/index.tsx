@@ -6,12 +6,7 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material';
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { FunctionComponent, useCallback, useMemo } from 'react';
 import {
   Device,
   FirmwareVersionDataInput,
@@ -49,46 +44,37 @@ interface FlashingMethodsListProps {
   firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
+export const sortDeviceTargets = (targets: readonly Target[]): Target[] => {
+  return targets
+    .filter((item) => {
+      return item.flashingMethod !== null;
+    })
+    .sort((a, b) => {
+      if (a.flashingMethod && b.flashingMethod) {
+        return a.flashingMethod < b.flashingMethod ? -1 : 1;
+      }
+      return 0;
+    });
+};
+
 const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   props
 ) => {
   const { onChange, currentTarget, currentDevice, firmwareVersionData } = props;
   const targetMappingsSorted = useMemo(
-    () =>
-      currentDevice?.targets
-        ?.filter((item) => {
-          return item.flashingMethod !== null;
-        })
-        .sort((a, b) => {
-          if (a.flashingMethod && b.flashingMethod) {
-            return a.flashingMethod < b.flashingMethod ? -1 : 1;
-          }
-          return 0;
-        }),
+    () => sortDeviceTargets(currentDevice?.targets ?? []),
     [currentDevice?.targets]
   );
 
-  useEffect(() => {
-    // if the currentTarget is not found, then select the first one by default
-    if (
-      targetMappingsSorted &&
-      targetMappingsSorted.length > 0 &&
-      !targetMappingsSorted.find((item) => item.id === currentTarget?.id)
-    ) {
-      const target = targetMappingsSorted[0];
-      onChange(target);
-    }
-  }, [onChange, currentTarget, targetMappingsSorted]);
-
-  const onFlashingMethodChange = useCallback(
-    (_event: React.ChangeEvent<HTMLInputElement>, value: string) => {
-      const target = targetMappingsSorted?.find((item) => {
-        return item.id === value;
-      });
-      onChange(target ?? null);
-    },
-    [onChange, targetMappingsSorted]
-  );
+  const onFlashingMethodChange = (
+    _event: React.ChangeEvent<HTMLInputElement>,
+    value: string
+  ) => {
+    const target = targetMappingsSorted?.find((item) => {
+      return item.id === value;
+    });
+    onChange(target ?? null);
+  };
 
   const flashingMethodRadioOption = useCallback(
     (targetMapping: Target) => {

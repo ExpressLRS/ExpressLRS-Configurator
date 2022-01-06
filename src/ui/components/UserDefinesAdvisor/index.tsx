@@ -25,10 +25,10 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
       const value = deviceOptionsFormData.userDefineOptions.find(
         (item) => item.key === key
       );
-      if (value?.enabled === enabledValue) {
-        return true;
+      if (value === undefined) {
+        return false;
       }
-      return false;
+      return value?.enabled === enabledValue;
     };
 
     if (isUserDefine(UserDefineKey.UART_INVERTED, false)) {

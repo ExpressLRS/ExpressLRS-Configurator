@@ -461,11 +461,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   }, [deviceTarget]);
 
   const hasLuaScript = useMemo(() => {
-    if (deviceType === DeviceType.ExpressLRS && isTX) {
-      return true;
-    }
-
-    return false;
+    return deviceType === DeviceType.ExpressLRS && isTX;
   }, [deviceType, isTX]);
 
   useEffect(() => {
@@ -804,7 +800,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       currentTarget={deviceTarget}
                       onChange={onDeviceTarget}
                       firmwareVersionData={firmwareVersionData}
-                      targetOptions={deviceTargets}
+                      deviceOptions={deviceTargets}
                     />
                   )}
                   <Loader loading={loadingTargets} />
