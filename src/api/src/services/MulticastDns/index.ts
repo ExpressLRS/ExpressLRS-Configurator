@@ -1,13 +1,12 @@
 import { Service } from 'typedi';
-import { PubSubEngine } from 'graphql-subscriptions';
 import * as http from 'http';
 import makeMdns, { ResponsePacket } from 'multicast-dns';
 import MulticastDnsInformation from '../../models/MulticastDnsInformation';
-import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import { LoggerService } from '../../logger';
 import MulticastDnsEventType from '../../models/enum/MulticastDnsEventType';
 import UserDefine from '../../models/UserDefine';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
+import MulticastDnsNotificationsService from '../MulticastDnsNotificationsService';
 
 export interface MulticastDnsServicePayload {
   type: MulticastDnsEventType;
@@ -24,7 +23,10 @@ export default class MulticastDnsService {
 
   healthCheckTimeout = 3000;
 
-  constructor(private pubSub: PubSubEngine, private logger: LoggerService) {
+  constructor(
+    private notifications: MulticastDnsNotificationsService,
+    private logger: LoggerService
+  ) {
     this.devices = {};
     const mdns = makeMdns();
     mdns.on('response', (response: ResponsePacket) => {
@@ -191,12 +193,12 @@ export default class MulticastDnsService {
 
         if (!this.devices[name]) {
           this.devices[name] = mdnsInformation;
-          this.sendDeviceAdded(mdnsInformation);
+          this.notifications.sendDeviceAdded(mdnsInformation);
         } else if (
           JSON.stringify(this.devices[name]) !== JSON.stringify(mdnsInformation)
         ) {
           this.devices[name] = mdnsInformation;
-          this.sendDeviceUpdated(mdnsInformation);
+          this.notifications.sendDeviceUpdated(mdnsInformation);
         }
       }
     }
@@ -206,42 +208,8 @@ export default class MulticastDnsService {
     if (this.devices[name]) {
       const device = this.devices[name];
       delete this.devices[name];
-      this.sendDeviceRemoved(device);
+      this.notifications.sendDeviceRemoved(device);
     }
-  }
-
-  private async sendDeviceAdded(data: MulticastDnsInformation): Promise<void> {
-    const record = {
-      type: MulticastDnsEventType.DeviceAdded,
-      data,
-    };
-
-    this.logger?.log('multicast dns device added', record);
-    return this.pubSub!.publish(PubSubTopic.MulticastDnsEvents, record);
-  }
-
-  private async sendDeviceRemoved(
-    data: MulticastDnsInformation
-  ): Promise<void> {
-    const record = {
-      type: MulticastDnsEventType.DeviceRemoved,
-      data,
-    };
-
-    this.logger?.log('multicast dns device removed', record);
-    return this.pubSub!.publish(PubSubTopic.MulticastDnsEvents, record);
-  }
-
-  private async sendDeviceUpdated(
-    data: MulticastDnsInformation
-  ): Promise<void> {
-    const record = {
-      type: MulticastDnsEventType.DeviceUpdated,
-      data,
-    };
-
-    this.logger?.log('multicast dns device updated', record);
-    return this.pubSub!.publish(PubSubTopic.MulticastDnsEvents, record);
   }
 
   async getAvailableDevices(): Promise<MulticastDnsInformation[]> {

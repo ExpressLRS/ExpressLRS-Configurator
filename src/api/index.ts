@@ -29,6 +29,8 @@ import MulticastDnsService from './src/services/MulticastDns';
 import MulticastDnsMonitorResolver from './src/graphql/resolvers/MulticastDnsMonitor.resolver';
 import LuaService from './src/services/Lua';
 import LuaResolver from './src/graphql/resolvers/Lua.resolver';
+import MulticastDnsSimulatorService from './src/services/MulticastDns/MulticastDnsSimulator';
+import MulticastDnsNotificationsService from './src/services/MulticastDnsNotificationsService';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -79,7 +81,21 @@ export default class ApiServer {
       new SerialMonitorService(pubSub, logger)
     );
 
-    Container.set(MulticastDnsService, new MulticastDnsService(pubSub, logger));
+    const mDnsNotifications = new MulticastDnsNotificationsService(
+      pubSub,
+      logger
+    );
+    if (config.multicastDnsSimulatorEnabled) {
+      Container.set(
+        MulticastDnsService,
+        new MulticastDnsSimulatorService(mDnsNotifications)
+      );
+    } else {
+      Container.set(
+        MulticastDnsService,
+        new MulticastDnsService(mDnsNotifications, logger)
+      );
+    }
 
     const deviceService = new DeviceService(logger);
     await deviceService.loadFromFileSystemAt(config.devicesPath);

@@ -4,6 +4,7 @@ interface IConfig {
   githubRepositoryUrl: string;
   facebookGroupUrl: string;
   discordUrl: string;
+  openCollectiveUrl: string;
   expressLRSGit: GitRepository;
   backpackGit: GitRepository;
 }
@@ -12,6 +13,7 @@ export const Config: IConfig = {
   githubRepositoryUrl: 'https://github.com/ExpressLRS/ExpressLRS',
   facebookGroupUrl: 'https://www.facebook.com/groups/636441730280366',
   discordUrl: 'https://discord.gg/dS6ReFY',
+  openCollectiveUrl: 'https://opencollective.com/expresslrs',
   expressLRSGit: {
     cloneUrl: 'https://github.com/ExpressLRS/ExpressLRS',
     url: 'https://github.com/ExpressLRS/ExpressLRS',

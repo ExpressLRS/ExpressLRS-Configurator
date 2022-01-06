@@ -6,6 +6,7 @@ export interface IConfig {
     owner: string;
     repositoryName: string;
   };
+  multicastDnsSimulatorEnabled: boolean;
   devicesPath: string;
   firmwaresPath: string;
   PATH: string;
