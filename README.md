@@ -148,6 +148,13 @@ yarn install --frozen-lockfile
 yarn start
 ```
 
+In order to simulate WI-FI devices on your local network you can start application with 
+`MULTICAST_DNS_SIMULATOR_ENABLED` environment variable:
+
+```
+npx cross-env MULTICAST_DNS_SIMULATOR_ENABLED=true yarn start
+```
+
 ## Other useful cli commands
 
 Generate TypeScript types from Graphql schema and Queries located in [src/ui/gql/queries](src/ui/gql/queries):
