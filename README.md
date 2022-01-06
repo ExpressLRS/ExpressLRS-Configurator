@@ -140,7 +140,7 @@ In order to simulate WI-FI devices on your local network you can start applicati
 `MULTICAST_DNS_SIMULATOR_ENABLED` environment variable:
 
 ```
-MULTICAST_DNS_SIMULATOR_ENABLED=true yarn start
+npx cross-env MULTICAST_DNS_SIMULATOR_ENABLED=true yarn start
 ```
 
 ## Other useful cli commands
