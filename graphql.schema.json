@@ -1185,12 +1185,6 @@
             "deprecationReason": null
           },
           {
-            "name": "FAN_MIN_RUNTIME",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "HOME_WIFI_SSID",
             "description": null,
             "isDeprecated": false,

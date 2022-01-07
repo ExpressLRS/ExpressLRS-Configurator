@@ -74,8 +74,7 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB",
-      "UNLOCK_HIGHER_POWER",
-      "FAN_MIN_RUNTIME"
+      "UNLOCK_HIGHER_POWER"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-betafpv2400/",
     "deviceType": "ExpressLRS",

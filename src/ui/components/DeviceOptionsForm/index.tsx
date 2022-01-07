@@ -135,7 +135,6 @@ const userDefinesToCategories = (
       UserDefineKey.MY_STARTUP_MELODY,
       UserDefineKey.USE_DYNAMIC_POWER,
       UserDefineKey.WS2812_IS_GRB,
-      UserDefineKey.FAN_MIN_RUNTIME,
     ],
   };
 
