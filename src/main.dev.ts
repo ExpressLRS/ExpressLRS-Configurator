@@ -230,7 +230,7 @@ const createWindow = async () => {
   localApiServerEnv.PATH = PATH;
 
   const devicesPath = app.isPackaged
-    ? path.join(process.resourcesPath, '../devices')
+    ? path.join(process.resourcesPath, 'devices')
     : path.join(__dirname, '../devices');
 
   logger.log('local api server PATH', {

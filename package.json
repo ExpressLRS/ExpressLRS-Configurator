@@ -141,7 +141,8 @@
       "output": "release"
     },
     "extraResources": [
-      "./assets/**"
+      "./assets/**",
+      "./devices/**"
     ],
     "publish": {
       "provider": "github",
