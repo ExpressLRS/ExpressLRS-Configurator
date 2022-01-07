@@ -888,26 +888,6 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
-        case UserDefineKey.FAN_MIN_RUNTIME:
-          return (
-            <div>
-              <p>
-                For TX devices with fans, FAN_MIN_RUNTIME keeps the fan running
-                even after the power level has dropped below the configured fan
-                threshold. This prevents the fan from turning on and off every
-                few seconds if the power level is constantly changing. Default
-                is 30 seconds if not defined, value can be 0-254 (in seconds).
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
         default:
           return '';
       }

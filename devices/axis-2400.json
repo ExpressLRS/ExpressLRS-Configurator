@@ -28,8 +28,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER",
-      "FAN_MIN_RUNTIME"
+      "USE_DYNAMIC_POWER"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-axis-thor/",
     "deviceType": "ExpressLRS",

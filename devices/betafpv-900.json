@@ -76,8 +76,7 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
-      "UNLOCK_HIGHER_POWER",
-      "FAN_MIN_RUNTIME"
+      "UNLOCK_HIGHER_POWER"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-betafpv900/",
     "deviceType": "ExpressLRS",
