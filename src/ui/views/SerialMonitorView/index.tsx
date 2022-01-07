@@ -1,15 +1,6 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Container,
-  Divider,
-} from '@mui/material';
+import { Button, Card, CardContent, Divider } from '@mui/material';
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
 import DvrIcon from '@mui/icons-material/Dvr';
-import Sidebar from '../../components/Sidebar';
-import Header from '../../components/Header';
 import CardTitle from '../../components/CardTitle';
 import SerialConnectionForm from '../../components/SerialConnectionForm';
 import EventsBatcher from '../../library/EventsBatcher';
@@ -23,17 +14,9 @@ import {
 import Loader from '../../components/Loader';
 import ShowAlerts from '../../components/ShowAlerts';
 import Logs from '../../components/Logs';
+import MainLayout from '../../layouts/MainLayout';
 
 const styles = {
-  root: {
-    display: 'flex',
-  },
-  main: {
-    marginY: 4,
-  },
-  content: {
-    flexGrow: 1,
-  },
   disconnectButton: {
     marginBottom: 4,
   },
@@ -127,53 +110,47 @@ const SerialMonitorView: FunctionComponent = () => {
       .catch(() => {});
   };
   return (
-    <Box component="main" sx={styles.root}>
-      <Sidebar navigationEnabled />
-      <Box sx={styles.content}>
-        <Header />
-        <Container sx={styles.main}>
-          <Card>
-            <CardTitle icon={<DvrIcon />} title="Serial Monitor" />
-            <Divider />
-            <CardContent>
-              {viewState === ViewState.ConnectionConfig && (
-                <>
-                  <SerialConnectionForm
-                    serialDevice={serialDevice}
-                    baudRate={baudRate}
-                    onConnect={onConnect}
-                  />
-                  <Loader loading={connectInProgress} />
-                  {response && !response.connectToSerialDevice.success && (
-                    <ShowAlerts
-                      severity="error"
-                      messages={response.connectToSerialDevice.message}
-                    />
-                  )}
-                  <ShowAlerts severity="error" messages={connectError} />
-                </>
+    <MainLayout>
+      <Card>
+        <CardTitle icon={<DvrIcon />} title="Serial Monitor" />
+        <Divider />
+        <CardContent>
+          {viewState === ViewState.ConnectionConfig && (
+            <>
+              <SerialConnectionForm
+                serialDevice={serialDevice}
+                baudRate={baudRate}
+                onConnect={onConnect}
+              />
+              <Loader loading={connectInProgress} />
+              {response && !response.connectToSerialDevice.success && (
+                <ShowAlerts
+                  severity="error"
+                  messages={response.connectToSerialDevice.message}
+                />
               )}
-              <ShowAlerts severity="error" messages={disconnectError} />
-              {viewState === ViewState.LogsStream && (
-                <>
-                  <Button
-                    onClick={onDisconnect}
-                    color="secondary"
-                    size="large"
-                    variant="contained"
-                    sx={styles.disconnectButton}
-                  >
-                    Disconnect
-                  </Button>
-                  <Loader loading={disconnectInProgress} />
-                  <Logs data={logs} />
-                </>
-              )}
-            </CardContent>
-          </Card>
-        </Container>
-      </Box>
-    </Box>
+              <ShowAlerts severity="error" messages={connectError} />
+            </>
+          )}
+          <ShowAlerts severity="error" messages={disconnectError} />
+          {viewState === ViewState.LogsStream && (
+            <>
+              <Button
+                onClick={onDisconnect}
+                color="secondary"
+                size="large"
+                variant="contained"
+                sx={styles.disconnectButton}
+              >
+                Disconnect
+              </Button>
+              <Loader loading={disconnectInProgress} />
+              <Logs data={logs} />
+            </>
+          )}
+        </CardContent>
+      </Card>
+    </MainLayout>
   );
 };
 

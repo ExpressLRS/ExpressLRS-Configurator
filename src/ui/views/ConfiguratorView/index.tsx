@@ -13,7 +13,6 @@ import {
   Button,
   Card,
   CardContent,
-  Container,
   Dialog,
   DialogActions,
   DialogContent,
@@ -25,13 +24,11 @@ import {
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ipcRenderer } from 'electron';
 import { NetworkWifi } from '@mui/icons-material';
-import Header from '../../components/Header';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
 import DeviceOptionsForm, {
   DeviceOptionsFormData,
 } from '../../components/DeviceOptionsForm';
-import Sidebar from '../../components/Sidebar';
 import ShowAlerts from '../../components/ShowAlerts';
 import CardTitle from '../../components/CardTitle';
 import EventsBatcher from '../../library/EventsBatcher';
@@ -76,20 +73,11 @@ import WifiDeviceSelect from '../../components/WifiDeviceSelect';
 import WifiDeviceList from '../../components/WifiDeviceList';
 import GitRepository from '../../models/GitRepository';
 import ShowTimeoutAlerts from '../../components/ShowTimeoutAlerts';
+import useAppState from '../../hooks/useAppState';
+import AppStatus from '../../models/enum/AppStatus';
+import MainLayout from '../../layouts/MainLayout';
 
 const styles = {
-  root: {
-    display: 'flex',
-  },
-  main: {
-    marginY: 4,
-  },
-  content: {
-    flexGrow: 1,
-    '& .MuiCard-root': {
-      marginBottom: 4,
-    },
-  },
   button: {
     marginRight: 2,
   },
@@ -164,6 +152,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const [viewState, setViewState] = useState<ViewState>(
     ViewState.Configuration
   );
+
+  const { setAppStatus } = useAppState();
 
   const [progressNotifications, setProgressNotifications] = useState<
     BuildProgressNotification[]
@@ -548,6 +538,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const onBack = () => {
     reset();
     setViewState(ViewState.Configuration);
+    setAppStatus(AppStatus.Interactive);
   };
 
   const getAbbreviatedDeviceName = (item: Device) => {
@@ -652,6 +643,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       },
     });
     setViewState(ViewState.Compiling);
+    setAppStatus(AppStatus.Busy);
   };
 
   useEffect(() => {
@@ -769,306 +761,289 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   }, []);
 
   return (
-    <Box component="main" sx={styles.root}>
-      <Sidebar navigationEnabled={!buildInProgress} />
-      <Box sx={styles.content}>
-        <Header />
-        <Container sx={styles.main}>
-          {viewState === ViewState.Configuration && (
-            <>
-              <Card>
-                <CardTitle icon={<SettingsIcon />} title="Firmware version" />
-                <Divider />
-                <CardContent>
-                  <FirmwareVersionForm
-                    onChange={onFirmwareVersionData}
-                    data={firmwareVersionData}
-                    gitRepository={gitRepository}
-                  />
-                  <ShowAlerts
-                    severity="error"
-                    messages={firmwareVersionErrors}
-                  />
-                </CardContent>
-                <Divider />
+    <MainLayout>
+      {viewState === ViewState.Configuration && (
+        <>
+          <Card>
+            <CardTitle icon={<SettingsIcon />} title="Firmware version" />
+            <Divider />
+            <CardContent>
+              <FirmwareVersionForm
+                onChange={onFirmwareVersionData}
+                data={firmwareVersionData}
+                gitRepository={gitRepository}
+              />
+              <ShowAlerts severity="error" messages={firmwareVersionErrors} />
+            </CardContent>
+            <Divider />
 
-                <CardTitle icon={<SettingsIcon />} title="Target" />
-                <Divider />
-                <CardContent>
-                  {!loadingTargets && !targetsResponseError && (
-                    <DeviceTargetForm
-                      currentTarget={deviceTarget}
-                      onChange={onDeviceTarget}
-                      firmwareVersionData={firmwareVersionData}
-                      deviceOptions={deviceTargets}
-                    />
-                  )}
-                  <Loader loading={loadingTargets} />
-                  {luaDownloadButton()}
-                  {hasLuaScript && (
-                    <ShowAlerts
-                      severity="error"
-                      messages={luaScriptResponseError}
-                    />
-                  )}
-                  <ShowAlerts
-                    severity="error"
-                    messages={targetsResponseError}
-                  />
-                  <ShowAlerts severity="error" messages={deviceTargetErrors} />
-                </CardContent>
-                <Divider />
-
-                <CardTitle
-                  icon={<SettingsIcon />}
-                  title={
-                    <div ref={deviceOptionsRef}>
-                      Device options{' '}
-                      {deviceOptionsFormData.userDefinesMode ===
-                        UserDefinesMode.UserInterface &&
-                        deviceTarget !== null &&
-                        !loadingOptions && (
-                          <Tooltip
-                            placement="top"
-                            arrow
-                            title={
-                              <div>
-                                Reset device options to the recommended defaults
-                                on this device target. Except for your custom
-                                binding phrase.
-                              </div>
-                            }
-                          >
-                            <Button onClick={onResetToDefaults} size="small">
-                              Reset
-                            </Button>
-                          </Tooltip>
-                        )}
-                    </div>
-                  }
+            <CardTitle icon={<SettingsIcon />} title="Target" />
+            <Divider />
+            <CardContent>
+              {!loadingTargets && !targetsResponseError && (
+                <DeviceTargetForm
+                  currentTarget={deviceTarget}
+                  onChange={onDeviceTarget}
+                  firmwareVersionData={firmwareVersionData}
+                  deviceOptions={deviceTargets}
                 />
-                <Divider />
-                <CardContent>
-                  {!loadingOptions && (
-                    <DeviceOptionsForm
-                      target={deviceTarget?.name ?? null}
-                      deviceOptions={deviceOptionsFormData}
-                      firmwareVersionData={firmwareVersionData}
-                      onChange={onUserDefines}
-                    />
-                  )}
-                  <ShowAlerts
-                    severity="error"
-                    messages={deviceOptionsResponseError}
-                  />
-                  <ShowAlerts
-                    severity="error"
-                    messages={deviceOptionsValidationErrors}
-                  />
-                  <Loader loading={loadingOptions} />
-                </CardContent>
-                <Divider />
-
-                <CardTitle icon={<SettingsIcon />} title="Actions" />
-                <Divider />
-                <CardContent>
-                  <UserDefinesAdvisor
-                    deviceOptionsFormData={deviceOptionsFormData}
-                  />
-
-                  <div>
-                    {serialPortRequired && (
-                      <SerialDeviceSelect
-                        serialDevice={serialDevice}
-                        onChange={onSerialDevice}
-                      />
-                    )}
-                    {wifiDeviceRequired && (
-                      <WifiDeviceSelect
-                        wifiDevice={wifiDevice}
-                        wifiDevices={Array.from(networkDevices.values()).filter(
-                          (item) => {
-                            return deviceTarget?.name
-                              ?.toUpperCase()
-                              .startsWith(item.target.toUpperCase());
-                          }
-                        )}
-                        onChange={onWifiDevice}
-                      />
-                    )}
-                    <Button
-                      sx={styles.button}
-                      size="large"
-                      variant="contained"
-                      onClick={onBuild}
-                    >
-                      Build
-                    </Button>
-                    {deviceTarget?.flashingMethod !== FlashingMethod.Radio && (
-                      <Button
-                        sx={styles.button}
-                        size="large"
-                        variant="contained"
-                        onClick={onBuildAndFlash}
-                      >
-                        Build & Flash
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                {networkDevices.size > 0 && (
-                  <Box>
-                    <Divider />
-                    <CardTitle icon={<NetworkWifi />} title="Network Devices" />
-                    <Divider />
-                    <CardContent>
-                      <div>
-                        <WifiDeviceList
-                          wifiDevices={Array.from(networkDevices.values())}
-                          onChange={(dnsDevice: MulticastDnsInformation) => {
-                            onDeviceChange(dnsDevice);
-                            handleSelectedDeviceChange(dnsDevice.name);
-                          }}
-                        />
-                      </div>
-                    </CardContent>
-                  </Box>
-                )}
-              </Card>
-              <Dialog
-                open={deviceSelectErrorDialogOpen}
-                onClose={handleDeviceSelectErrorDialogClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">
-                  Device Select Error
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    The target device could not be automatically selected, it
-                    must be done manually.
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleDeviceSelectErrorDialogClose}>
-                    Close
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </>
-          )}
-
-          {viewState === ViewState.Compiling && (
-            <Card>
-              <CardTitle icon={<SettingsIcon />} title="Build" />
-              <Divider />
-              <CardContent>
-                <BuildProgressBar
-                  inProgress={buildInProgress}
-                  jobType={currentJobType}
-                  progressNotification={lastProgressNotification}
-                />
-                <BuildNotificationsList notifications={progressNotifications} />
-
+              )}
+              <Loader loading={loadingTargets} />
+              {luaDownloadButton()}
+              {hasLuaScript && (
                 <ShowAlerts
                   severity="error"
-                  messages={buildFlashErrorResponse}
+                  messages={luaScriptResponseError}
                 />
-              </CardContent>
-
-              {logs.length > 0 && (
-                <>
-                  <CardTitle icon={<SettingsIcon />} title="Logs" />
-                  <Divider />
-                  <CardContent>
-                    <Box sx={styles.longBuildDurationWarning}>
-                      <ShowTimeoutAlerts
-                        severity="warning"
-                        messages="Sometimes builds take at least a few minutes. It is normal, especially for the first time builds."
-                        active={buildInProgress}
-                        timeout={14 * 1000}
-                      />
-                    </Box>
-                    <Logs data={logs} />
-                  </CardContent>
-                  <Divider />
-                </>
               )}
-              {response !== undefined && (
-                <>
-                  <CardTitle icon={<SettingsIcon />} title="Result" />
-                  <Divider />
-                  <CardContent>
-                    <Box sx={styles.buildNotification}>
-                      <BuildResponse response={response?.buildFlashFirmware} />
-                    </Box>
-                    {response?.buildFlashFirmware?.success &&
-                      currentJobType === BuildJobType.Build && (
-                        <>
-                          <Alert sx={styles.buildNotification} severity="info">
-                            <AlertTitle>Build notice</AlertTitle>
-                            {deviceTarget?.flashingMethod !==
-                            FlashingMethod.Radio
-                              ? 'Firmware binary file was opened in the file explorer'
-                              : "Firmware binary file was opened in the file explorer, copy the firmware file to your radios's SD card and flash it to the transmitter using EdgeTX/OpenTX"}
-                          </Alert>
-                        </>
-                      )}
-                    {response?.buildFlashFirmware?.success && hasLuaScript && (
-                      <>
-                        <Alert sx={styles.buildNotification} severity="info">
-                          <AlertTitle>Update Lua Script</AlertTitle>
-                          Make sure to update the Lua script on your radio
-                        </Alert>
-                      </>
-                    )}
-                  </CardContent>
-                  <Divider />
-                </>
-              )}
-              {!buildInProgress && (
-                <>
-                  <CardTitle icon={<SettingsIcon />} title="Actions" />
-                  <Divider />
-                  <CardContent>
-                    <Button
-                      sx={styles.button}
-                      color="primary"
-                      size="large"
-                      variant="contained"
-                      onClick={onBack}
-                    >
-                      Back
-                    </Button>
+              <ShowAlerts severity="error" messages={targetsResponseError} />
+              <ShowAlerts severity="error" messages={deviceTargetErrors} />
+            </CardContent>
+            <Divider />
 
-                    {!response?.buildFlashFirmware.success && (
-                      <Button
-                        sx={styles.button}
-                        size="large"
-                        variant="contained"
-                        onClick={
-                          currentJobType === BuildJobType.Build
-                            ? onBuild
-                            : onBuildAndFlash
+            <CardTitle
+              icon={<SettingsIcon />}
+              title={
+                <div ref={deviceOptionsRef}>
+                  Device options{' '}
+                  {deviceOptionsFormData.userDefinesMode ===
+                    UserDefinesMode.UserInterface &&
+                    deviceTarget !== null &&
+                    !loadingOptions && (
+                      <Tooltip
+                        placement="top"
+                        arrow
+                        title={
+                          <div>
+                            Reset device options to the recommended defaults on
+                            this device target. Except for your custom binding
+                            phrase.
+                          </div>
                         }
                       >
-                        Retry
-                      </Button>
+                        <Button onClick={onResetToDefaults} size="small">
+                          Reset
+                        </Button>
+                      </Tooltip>
                     )}
-
-                    {response?.buildFlashFirmware.success &&
-                      luaDownloadButton()}
-                  </CardContent>
-                </>
+                </div>
+              }
+            />
+            <Divider />
+            <CardContent>
+              {!loadingOptions && (
+                <DeviceOptionsForm
+                  target={deviceTarget?.name ?? null}
+                  deviceOptions={deviceOptionsFormData}
+                  firmwareVersionData={firmwareVersionData}
+                  onChange={onUserDefines}
+                />
               )}
-            </Card>
+              <ShowAlerts
+                severity="error"
+                messages={deviceOptionsResponseError}
+              />
+              <ShowAlerts
+                severity="error"
+                messages={deviceOptionsValidationErrors}
+              />
+              <Loader loading={loadingOptions} />
+            </CardContent>
+            <Divider />
+
+            <CardTitle icon={<SettingsIcon />} title="Actions" />
+            <Divider />
+            <CardContent>
+              <UserDefinesAdvisor
+                deviceOptionsFormData={deviceOptionsFormData}
+              />
+
+              <div>
+                {serialPortRequired && (
+                  <SerialDeviceSelect
+                    serialDevice={serialDevice}
+                    onChange={onSerialDevice}
+                  />
+                )}
+                {wifiDeviceRequired && (
+                  <WifiDeviceSelect
+                    wifiDevice={wifiDevice}
+                    wifiDevices={Array.from(networkDevices.values()).filter(
+                      (item) => {
+                        return deviceTarget?.name
+                          ?.toUpperCase()
+                          .startsWith(item.target.toUpperCase());
+                      }
+                    )}
+                    onChange={onWifiDevice}
+                  />
+                )}
+                <Button
+                  sx={styles.button}
+                  size="large"
+                  variant="contained"
+                  onClick={onBuild}
+                >
+                  Build
+                </Button>
+                {deviceTarget?.flashingMethod !== FlashingMethod.Radio && (
+                  <Button
+                    sx={styles.button}
+                    size="large"
+                    variant="contained"
+                    onClick={onBuildAndFlash}
+                  >
+                    Build & Flash
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            {networkDevices.size > 0 && (
+              <Box>
+                <Divider />
+                <CardTitle icon={<NetworkWifi />} title="Network Devices" />
+                <Divider />
+                <CardContent>
+                  <div>
+                    <WifiDeviceList
+                      wifiDevices={Array.from(networkDevices.values())}
+                      onChange={(dnsDevice: MulticastDnsInformation) => {
+                        onDeviceChange(dnsDevice);
+                        handleSelectedDeviceChange(dnsDevice.name);
+                      }}
+                    />
+                  </div>
+                </CardContent>
+              </Box>
+            )}
+          </Card>
+          <Dialog
+            open={deviceSelectErrorDialogOpen}
+            onClose={handleDeviceSelectErrorDialogClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              Device Select Error
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                The target device could not be automatically selected, it must
+                be done manually.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleDeviceSelectErrorDialogClose}>
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
+      )}
+
+      {viewState === ViewState.Compiling && (
+        <Card>
+          <CardTitle icon={<SettingsIcon />} title="Build" />
+          <Divider />
+          <CardContent>
+            <BuildProgressBar
+              inProgress={buildInProgress}
+              jobType={currentJobType}
+              progressNotification={lastProgressNotification}
+            />
+            <BuildNotificationsList notifications={progressNotifications} />
+
+            <ShowAlerts severity="error" messages={buildFlashErrorResponse} />
+          </CardContent>
+
+          {logs.length > 0 && (
+            <>
+              <CardTitle icon={<SettingsIcon />} title="Logs" />
+              <Divider />
+              <CardContent>
+                <Box sx={styles.longBuildDurationWarning}>
+                  <ShowTimeoutAlerts
+                    severity="warning"
+                    messages="Sometimes builds take at least a few minutes. It is normal, especially for the first time builds."
+                    active={buildInProgress}
+                    timeout={14 * 1000}
+                  />
+                </Box>
+                <Logs data={logs} />
+              </CardContent>
+              <Divider />
+            </>
           )}
-        </Container>
-      </Box>
-    </Box>
+          {response !== undefined && (
+            <>
+              <CardTitle icon={<SettingsIcon />} title="Result" />
+              <Divider />
+              <CardContent>
+                <Box sx={styles.buildNotification}>
+                  <BuildResponse response={response?.buildFlashFirmware} />
+                </Box>
+                {response?.buildFlashFirmware?.success &&
+                  currentJobType === BuildJobType.Build && (
+                    <>
+                      <Alert sx={styles.buildNotification} severity="info">
+                        <AlertTitle>Build notice</AlertTitle>
+                        {deviceTarget?.flashingMethod !== FlashingMethod.Radio
+                          ? 'Firmware binary file was opened in the file explorer'
+                          : "Firmware binary file was opened in the file explorer, copy the firmware file to your radios's SD card and flash it to the transmitter using EdgeTX/OpenTX"}
+                      </Alert>
+                    </>
+                  )}
+                {response?.buildFlashFirmware?.success && hasLuaScript && (
+                  <>
+                    <Alert sx={styles.buildNotification} severity="info">
+                      <AlertTitle>Update Lua Script</AlertTitle>
+                      Make sure to update the Lua script on your radio
+                    </Alert>
+                  </>
+                )}
+              </CardContent>
+              <Divider />
+            </>
+          )}
+          {!buildInProgress && (
+            <>
+              <CardTitle icon={<SettingsIcon />} title="Actions" />
+              <Divider />
+              <CardContent>
+                <Button
+                  sx={styles.button}
+                  color="primary"
+                  size="large"
+                  variant="contained"
+                  onClick={onBack}
+                >
+                  Back
+                </Button>
+
+                {!response?.buildFlashFirmware.success && (
+                  <Button
+                    sx={styles.button}
+                    size="large"
+                    variant="contained"
+                    onClick={
+                      currentJobType === BuildJobType.Build
+                        ? onBuild
+                        : onBuildAndFlash
+                    }
+                  >
+                    Retry
+                  </Button>
+                )}
+
+                {response?.buildFlashFirmware.success && luaDownloadButton()}
+              </CardContent>
+            </>
+          )}
+        </Card>
+      )}
+    </MainLayout>
   );
 };
 
