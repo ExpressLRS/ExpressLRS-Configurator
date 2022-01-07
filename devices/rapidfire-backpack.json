@@ -17,7 +17,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "",
+    "wikiUrl": "https://www.expresslrs.org/{version}/hardware/backpack/backpack-vrx-setup/#rapidfire-backpack-connection",
     "deviceType": "Backpack",
     "aliases": []
   },
@@ -39,7 +39,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "",
+    "wikiUrl": "https://www.expresslrs.org/{version}/hardware/backpack/backpack-vrx-setup/#rapidfire-backpack-connection",
     "deviceType": "Backpack",
     "aliases": []
   }

@@ -31,7 +31,7 @@
       "USE_DYNAMIC_POWER",
       "FAN_MIN_RUNTIME"
     ],
-    "wikiUrl": "",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-axis-thor/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -68,7 +68,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/recievers/rx-axis-thor/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }
