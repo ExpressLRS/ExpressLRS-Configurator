@@ -30,7 +30,8 @@
       "UART_INVERTED",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD"
+      "HOME_WIFI_PASSWORD",
+      "FAN_MIN_RUNTIME"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-es900tx/",
     "deviceType": "ExpressLRS",

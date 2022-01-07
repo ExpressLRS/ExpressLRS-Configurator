@@ -161,6 +161,8 @@ export default class TargetUserDefinesFactory {
               '20',
               true
             );
+          case UserDefineKey.FAN_MIN_RUNTIME:
+            return UserDefine.Text(UserDefineKey.FAN_MIN_RUNTIME, '30', false);
           default:
             throw new Error(`User Define ${userDefine} is not known`);
         }

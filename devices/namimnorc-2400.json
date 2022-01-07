@@ -28,7 +28,8 @@
       "USE_DYNAMIC_POWER",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD"
+      "HOME_WIFI_PASSWORD",
+      "FAN_MIN_RUNTIME"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-flash2400/",
     "deviceType": "ExpressLRS",
@@ -63,7 +64,8 @@
       "USE_DYNAMIC_POWER",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD"
+      "HOME_WIFI_PASSWORD",
+      "FAN_MIN_RUNTIME"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-flash2400/",
     "deviceType": "ExpressLRS",

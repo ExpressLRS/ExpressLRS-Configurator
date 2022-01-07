@@ -36,7 +36,8 @@
       "USE_DYNAMIC_POWER",
       "R9M_UNLOCK_HIGHER_POWER",
       "UNLOCK_HIGHER_POWER",
-      "USE_TX_BACKPACK"
+      "USE_TX_BACKPACK",
+      "FAN_MIN_RUNTIME"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-r9m/",
     "deviceType": "ExpressLRS",

@@ -66,7 +66,8 @@
       "HOME_WIFI_PASSWORD",
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER",
-      "WS2812_IS_GRB"
+      "WS2812_IS_GRB",
+      "FAN_MIN_RUNTIME"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy/",
     "deviceType": "ExpressLRS",
