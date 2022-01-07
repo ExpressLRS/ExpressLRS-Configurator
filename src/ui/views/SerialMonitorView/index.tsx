@@ -128,7 +128,7 @@ const SerialMonitorView: FunctionComponent = () => {
   };
   return (
     <Box component="main" sx={styles.root}>
-      <Sidebar navigationEnabled />
+      <Sidebar />
       <Box sx={styles.content}>
         <Header />
         <Container sx={styles.main}>

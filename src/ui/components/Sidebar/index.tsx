@@ -16,6 +16,8 @@ import DvrIcon from '@mui/icons-material/Dvr';
 import ListIcon from '@mui/icons-material/List';
 import { matchPath, useLocation, Link } from 'react-router-dom';
 import BackpackIcon from '@mui/icons-material/Backpack';
+import useAppState from '../../hooks/useAppState';
+import AppStatus from '../../models/enum/AppStatus';
 
 const drawerWidth = 215;
 
@@ -36,11 +38,7 @@ const styles = {
   },
 };
 
-interface SidebarProps {
-  navigationEnabled: boolean;
-}
-
-const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
+const Sidebar: FunctionComponent = () => {
   const location = useLocation();
   const configuratorActive =
     matchPath(location.pathname, '/configurator') !== null;
@@ -50,6 +48,9 @@ const Sidebar: FunctionComponent<SidebarProps> = ({ navigationEnabled }) => {
   const serialMonitorActive =
     matchPath(location.pathname, '/serial-monitor') !== null;
   const supportActive = matchPath(location.pathname, '/support') !== null;
+  const { appStatus } = useAppState();
+
+  const navigationEnabled = appStatus !== AppStatus.Busy;
 
   return (
     <Drawer sx={styles.drawer} variant="permanent">

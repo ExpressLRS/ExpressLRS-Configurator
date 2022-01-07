@@ -776,7 +776,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   return (
     <Box component="main" sx={styles.root}>
-      <Sidebar navigationEnabled={!buildInProgress} />
+      <Sidebar />
       <Box sx={styles.content}>
         <Header />
         <Container sx={styles.main}>
