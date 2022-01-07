@@ -45,6 +45,21 @@ interface BuildFlashFirmwareParams {
   userDefinesTxt: string;
 }
 
+const maskSensitiveData = (haystack: string): string => {
+  const needles = [
+    'HOME_WIFI_SSID',
+    'HOME_WIFI_PASSWORD',
+    'MY_BINDING_PHRASE',
+    'MY_UID',
+  ];
+  for (let i = 0; i < needles.length; i++) {
+    if (haystack.includes(needles[i])) {
+      return '***';
+    }
+  }
+  return haystack;
+};
+
 const maskBuildFlashFirmwareParams = (
   params: BuildFlashFirmwareParams
 ): BuildFlashFirmwareParams => {
@@ -109,25 +124,12 @@ export default class FirmwareService {
   }
 
   private async updateLogs(data: string): Promise<void> {
-    const maskSensitiveData = (haystack: string): string => {
-      const needles = [
-        'HOME_WIFI_SSID',
-        'HOME_WIFI_PASSWORD',
-        'MY_BINDING_PHRASE',
-        'MY_UID',
-      ];
-      for (let i = 0; i < needles.length; i++) {
-        if (haystack.includes(needles[i])) {
-          return '***';
-        }
-      }
-      return haystack;
-    };
+    const maskedData = maskSensitiveData(data);
     this.logger?.log('logs stream output', {
-      data: maskSensitiveData(data),
+      data: maskedData,
     });
     return this.pubSub!.publish(PubSubTopic.BuildLogsUpdate, {
-      data,
+      data: maskedData,
     });
   }
 
