@@ -76,6 +76,8 @@ import WifiDeviceSelect from '../../components/WifiDeviceSelect';
 import WifiDeviceList from '../../components/WifiDeviceList';
 import GitRepository from '../../models/GitRepository';
 import ShowTimeoutAlerts from '../../components/ShowTimeoutAlerts';
+import useAppState from '../../hooks/useAppState';
+import AppStatus from '../../models/enum/AppStatus';
 
 const styles = {
   root: {
@@ -164,6 +166,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const [viewState, setViewState] = useState<ViewState>(
     ViewState.Configuration
   );
+
+  const { setAppStatus } = useAppState();
 
   const [progressNotifications, setProgressNotifications] = useState<
     BuildProgressNotification[]
@@ -548,6 +552,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const onBack = () => {
     reset();
     setViewState(ViewState.Configuration);
+    setAppStatus(AppStatus.Interactive);
   };
 
   const getAbbreviatedDeviceName = (item: Device) => {
@@ -652,6 +657,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       },
     });
     setViewState(ViewState.Compiling);
+    setAppStatus(AppStatus.Busy);
   };
 
   useEffect(() => {

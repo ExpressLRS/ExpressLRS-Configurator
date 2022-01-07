@@ -15,6 +15,7 @@ import { Config } from './config';
 import { DeviceType, MulticastDnsInformation } from './gql/generated/types';
 import useNetworkDevices from './hooks/useNetworkDevices';
 import WifiDeviceNotification from './components/WifiDeviceNotification';
+import AppStateProvider from './context/AppStateProvider';
 
 export default function App() {
   const {
@@ -46,49 +47,51 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ApolloProvider client={client}>
-          <HashRouter>
-            <Routes>
-              <Route
-                path="/"
-                element={<Navigate replace to="/configurator" />}
-              />
-              <Route
-                path="/configurator"
-                element={
-                  <ConfiguratorView
-                    key="configurator"
-                    gitRepository={Config.expressLRSGit}
-                    selectedDevice={device}
-                    networkDevices={networkDevices}
-                    onDeviceChange={onDeviceChange}
-                    deviceType={DeviceType.ExpressLRS}
-                  />
-                }
-              />
-              <Route
-                path="/backpack"
-                element={
-                  <ConfiguratorView
-                    key="backpack"
-                    gitRepository={Config.backpackGit}
-                    selectedDevice={device}
-                    networkDevices={networkDevices}
-                    onDeviceChange={onDeviceChange}
-                    deviceType={DeviceType.Backpack}
-                  />
-                }
-              />
-              <Route path="/settings" element={<SettingsView />} />
-              <Route path="/logs" element={<LogsView />} />
-              <Route path="/serial-monitor" element={<SerialMonitorView />} />
-              <Route path="/support" element={<SupportView />} />
-            </Routes>
-          </HashRouter>
-          <WifiDeviceNotification
-            newNetworkDevices={newNetworkDevices}
-            removeDeviceFromNewList={removeDeviceFromNewList}
-            onDeviceChange={onDeviceChange}
-          />
+          <AppStateProvider>
+            <HashRouter>
+              <Routes>
+                <Route
+                  path="/"
+                  element={<Navigate replace to="/configurator" />}
+                />
+                <Route
+                  path="/configurator"
+                  element={
+                    <ConfiguratorView
+                      key="configurator"
+                      gitRepository={Config.expressLRSGit}
+                      selectedDevice={device}
+                      networkDevices={networkDevices}
+                      onDeviceChange={onDeviceChange}
+                      deviceType={DeviceType.ExpressLRS}
+                    />
+                  }
+                />
+                <Route
+                  path="/backpack"
+                  element={
+                    <ConfiguratorView
+                      key="backpack"
+                      gitRepository={Config.backpackGit}
+                      selectedDevice={device}
+                      networkDevices={networkDevices}
+                      onDeviceChange={onDeviceChange}
+                      deviceType={DeviceType.Backpack}
+                    />
+                  }
+                />
+                <Route path="/settings" element={<SettingsView />} />
+                <Route path="/logs" element={<LogsView />} />
+                <Route path="/serial-monitor" element={<SerialMonitorView />} />
+                <Route path="/support" element={<SupportView />} />
+              </Routes>
+            </HashRouter>
+            <WifiDeviceNotification
+              newNetworkDevices={newNetworkDevices}
+              removeDeviceFromNewList={removeDeviceFromNewList}
+              onDeviceChange={onDeviceChange}
+            />
+          </AppStateProvider>
         </ApolloProvider>
       </ThemeProvider>
     </StyledEngineProvider>
