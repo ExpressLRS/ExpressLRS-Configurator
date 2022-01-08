@@ -1,258 +1,248 @@
-[
-  {
-    "category": "Frsky R9",
-    "name": "Frsky TX R9M",
-    "targets": [
-      {
-        "flashingMethod": "STLink",
-        "name": "Frsky_TX_R9M_via_STLINK"
-      },
-      {
-        "flashingMethod": "Stock_BL",
-        "name": "Frsky_TX_R9M_via_stock_BL"
-      },
-      {
-        "flashingMethod": "WIFI",
-        "name": "Frsky_TX_R9M_via_WIFI"
-      }
-    ],
-    "userDefines": [
-      "REGULATORY_DOMAIN_AU_915",
-      "REGULATORY_DOMAIN_EU_868",
-      "REGULATORY_DOMAIN_FCC_915",
-      "REGULATORY_DOMAIN_IN_866",
-      "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "USE_ESP8266_BACKPACK",
-      "JUST_BEEP_ONCE",
-      "DISABLE_STARTUP_BEEP",
-      "DISABLE_ALL_BEEPS",
-      "MY_STARTUP_MELODY",
-      "USE_DYNAMIC_POWER",
-      "R9M_UNLOCK_HIGHER_POWER",
-      "UNLOCK_HIGHER_POWER",
-      "USE_TX_BACKPACK"
-    ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-r9m/",
-    "deviceType": "ExpressLRS",
-    "aliases": []
-  },
-  {
-    "category": "Frsky R9",
-    "name": "Frsky TX R9M LITE",
-    "targets": [
-      {
-        "flashingMethod": "STLink",
-        "name": "Frsky_TX_R9M_LITE_via_STLINK"
-      },
-      {
-        "flashingMethod": "Stock_BL",
-        "name": "Frsky_TX_R9M_LITE_via_stock_BL"
-      }
-    ],
-    "userDefines": [
-      "REGULATORY_DOMAIN_AU_915",
-      "REGULATORY_DOMAIN_EU_868",
-      "REGULATORY_DOMAIN_FCC_915",
-      "REGULATORY_DOMAIN_IN_866",
-      "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "JUST_BEEP_ONCE",
-      "DISABLE_STARTUP_BEEP",
-      "DISABLE_ALL_BEEPS",
-      "USE_DYNAMIC_POWER"
-    ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-r9m/",
-    "deviceType": "ExpressLRS",
-    "aliases": []
-  },
-  {
-    "category": "Frsky R9",
-    "name": "Frsky TX R9M LITE PRO",
-    "targets": [
-      {
-        "flashingMethod": "STLink",
-        "name": "Frsky_TX_R9M_LITE_PRO_via_STLINK"
-      }
-    ],
-    "userDefines": [
-      "REGULATORY_DOMAIN_AU_915",
-      "REGULATORY_DOMAIN_EU_868",
-      "REGULATORY_DOMAIN_FCC_915",
-      "REGULATORY_DOMAIN_IN_866",
-      "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "UNLOCK_HIGHER_POWER",
-      "JUST_BEEP_ONCE",
-      "DISABLE_STARTUP_BEEP",
-      "DISABLE_ALL_BEEPS",
-      "USE_DYNAMIC_POWER"
-    ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-r9m/",
-    "deviceType": "ExpressLRS",
-    "aliases": []
-  },
-  {
-    "category": "Frsky R9",
-    "name": "Frsky RX R9MM R9MINI",
-    "targets": [
-      {
-        "flashingMethod": "STLink",
-        "name": "Frsky_RX_R9MM_R9MINI_via_STLINK"
-      },
-      {
-        "flashingMethod": "BetaflightPassthrough",
-        "name": "Frsky_RX_R9MM_R9MINI_via_BetaflightPassthrough"
-      }
-    ],
-    "userDefines": [
-      "REGULATORY_DOMAIN_AU_915",
-      "REGULATORY_DOMAIN_EU_868",
-      "REGULATORY_DOMAIN_FCC_915",
-      "REGULATORY_DOMAIN_IN_866",
-      "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "ARM_CHANNEL",
-      "LOCK_ON_FIRST_CONNECTION",
-      "USE_R9MM_R9MINI_SBUS",
-      "RCVR_UART_BAUD"
-    ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-r9receivers/",
-    "deviceType": "ExpressLRS",
-    "aliases": []
-  },
-  {
-    "category": "Frsky R9",
-    "name": "Frsky RX R9SLIMPLUS",
-    "targets": [
-      {
-        "flashingMethod": "STLink",
-        "name": "Frsky_RX_R9SLIMPLUS_via_STLINK"
-      },
-      {
-        "flashingMethod": "BetaflightPassthrough",
-        "name": "Frsky_RX_R9SLIMPLUS_via_BetaflightPassthrough"
-      }
-    ],
-    "userDefines": [
-      "REGULATORY_DOMAIN_AU_915",
-      "REGULATORY_DOMAIN_EU_868",
-      "REGULATORY_DOMAIN_FCC_915",
-      "REGULATORY_DOMAIN_IN_866",
-      "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "ARM_CHANNEL",
-      "LOCK_ON_FIRST_CONNECTION",
-      "USE_DIVERSITY",
-      "RCVR_UART_BAUD"
-    ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-r9receivers/",
-    "deviceType": "ExpressLRS",
-    "aliases": []
-  },
-  {
-    "category": "Frsky R9",
-    "name": "Frsky RX R9SLIM",
-    "targets": [
-      {
-        "flashingMethod": "STLink",
-        "name": "Frsky_RX_R9SLIM_via_STLINK"
-      },
-      {
-        "flashingMethod": "BetaflightPassthrough",
-        "name": "Frsky_RX_R9SLIM_via_BetaflightPassthrough"
-      }
-    ],
-    "userDefines": [
-      "REGULATORY_DOMAIN_AU_915",
-      "REGULATORY_DOMAIN_EU_868",
-      "REGULATORY_DOMAIN_FCC_915",
-      "REGULATORY_DOMAIN_IN_866",
-      "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "ARM_CHANNEL",
-      "LOCK_ON_FIRST_CONNECTION",
-      "RCVR_UART_BAUD"
-    ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-r9receivers/",
-    "deviceType": "ExpressLRS",
-    "aliases": []
-  },
-  {
-    "category": "Frsky R9",
-    "name": "Frsky RX R9SLIMPLUS OTA",
-    "targets": [
-      {
-        "flashingMethod": "STLink",
-        "name": "Frsky_RX_R9SLIMPLUS_OTA_via_STLINK"
-      },
-      {
-        "flashingMethod": "BetaflightPassthrough",
-        "name": "Frsky_RX_R9SLIMPLUS_OTA_via_BetaflightPassthrough"
-      }
-    ],
-    "userDefines": [
-      "REGULATORY_DOMAIN_AU_915",
-      "REGULATORY_DOMAIN_EU_868",
-      "REGULATORY_DOMAIN_FCC_915",
-      "REGULATORY_DOMAIN_IN_866",
-      "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "ARM_CHANNEL",
-      "LOCK_ON_FIRST_CONNECTION",
-      "USE_DIVERSITY",
-      "RCVR_UART_BAUD"
-    ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-r9receivers/",
-    "deviceType": "ExpressLRS",
-    "aliases": []
-  },
-  {
-    "category": "Frsky R9",
-    "name": "Frsky RX R9MX",
-    "targets": [
-      {
-        "flashingMethod": "STLink",
-        "name": "Frsky_RX_R9MX_via_STLINK"
-      },
-      {
-        "flashingMethod": "BetaflightPassthrough",
-        "name": "Frsky_RX_R9MX_via_BetaflightPassthrough"
-      }
-    ],
-    "userDefines": [
-      "REGULATORY_DOMAIN_AU_915",
-      "REGULATORY_DOMAIN_EU_868",
-      "REGULATORY_DOMAIN_FCC_915",
-      "REGULATORY_DOMAIN_IN_866",
-      "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "ARM_CHANNEL",
-      "LOCK_ON_FIRST_CONNECTION",
-      "RCVR_UART_BAUD"
-    ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-r9receivers/",
-    "deviceType": "ExpressLRS",
-    "aliases": []
-  }
+[{
+        "category": "Frsky R9",
+        "name": "Frsky TX R9M",
+        "targets": [{
+                "flashingMethod": "STLink",
+                "name": "Frsky_TX_R9M_via_STLINK"
+            },
+            {
+                "flashingMethod": "Stock_BL",
+                "name": "Frsky_TX_R9M_via_stock_BL"
+            },
+            {
+                "flashingMethod": "WIFI",
+                "name": "Frsky_TX_R9M_via_WIFI"
+            }
+        ],
+        "userDefines": [
+            "REGULATORY_DOMAIN_AU_915",
+            "REGULATORY_DOMAIN_EU_868",
+            "REGULATORY_DOMAIN_FCC_915",
+            "REGULATORY_DOMAIN_IN_866",
+            "BINDING_PHRASE",
+            "HYBRID_SWITCHES_8",
+            "ENABLE_TELEMETRY",
+            "TLM_REPORT_INTERVAL_MS",
+            "NO_SYNC_ON_ARM",
+            "ARM_CHANNEL",
+            "FEATURE_OPENTX_SYNC",
+            "USE_ESP8266_BACKPACK",
+            "JUST_BEEP_ONCE",
+            "DISABLE_STARTUP_BEEP",
+            "DISABLE_ALL_BEEPS",
+            "MY_STARTUP_MELODY",
+            "USE_DYNAMIC_POWER",
+            "R9M_UNLOCK_HIGHER_POWER",
+            "UNLOCK_HIGHER_POWER",
+            "USE_TX_BACKPACK"
+        ],
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-r9m/",
+        "deviceType": "ExpressLRS",
+        "aliases": []
+    },
+    {
+        "category": "Frsky R9",
+        "name": "Frsky TX R9M LITE",
+        "targets": [{
+                "flashingMethod": "STLink",
+                "name": "Frsky_TX_R9M_LITE_via_STLINK"
+            },
+            {
+                "flashingMethod": "Stock_BL",
+                "name": "Frsky_TX_R9M_LITE_via_stock_BL"
+            }
+        ],
+        "userDefines": [
+            "REGULATORY_DOMAIN_AU_915",
+            "REGULATORY_DOMAIN_EU_868",
+            "REGULATORY_DOMAIN_FCC_915",
+            "REGULATORY_DOMAIN_IN_866",
+            "BINDING_PHRASE",
+            "HYBRID_SWITCHES_8",
+            "ENABLE_TELEMETRY",
+            "TLM_REPORT_INTERVAL_MS",
+            "NO_SYNC_ON_ARM",
+            "ARM_CHANNEL",
+            "FEATURE_OPENTX_SYNC",
+            "JUST_BEEP_ONCE",
+            "DISABLE_STARTUP_BEEP",
+            "DISABLE_ALL_BEEPS",
+            "USE_DYNAMIC_POWER"
+        ],
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-r9m/",
+        "deviceType": "ExpressLRS",
+        "aliases": []
+    },
+    {
+        "category": "Frsky R9",
+        "name": "Frsky TX R9M LITE PRO",
+        "targets": [{
+            "flashingMethod": "STLink",
+            "name": "Frsky_TX_R9M_LITE_PRO_via_STLINK"
+        }],
+        "userDefines": [
+            "REGULATORY_DOMAIN_AU_915",
+            "REGULATORY_DOMAIN_EU_868",
+            "REGULATORY_DOMAIN_FCC_915",
+            "REGULATORY_DOMAIN_IN_866",
+            "BINDING_PHRASE",
+            "HYBRID_SWITCHES_8",
+            "ENABLE_TELEMETRY",
+            "TLM_REPORT_INTERVAL_MS",
+            "NO_SYNC_ON_ARM",
+            "ARM_CHANNEL",
+            "FEATURE_OPENTX_SYNC",
+            "UNLOCK_HIGHER_POWER",
+            "JUST_BEEP_ONCE",
+            "DISABLE_STARTUP_BEEP",
+            "DISABLE_ALL_BEEPS",
+            "USE_DYNAMIC_POWER"
+        ],
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-r9m/",
+        "deviceType": "ExpressLRS",
+        "aliases": []
+    },
+    {
+        "category": "Frsky R9",
+        "name": "Frsky RX R9MM R9MINI",
+        "targets": [{
+                "flashingMethod": "STLink",
+                "name": "Frsky_RX_R9MM_R9MINI_via_STLINK"
+            },
+            {
+                "flashingMethod": "BetaflightPassthrough",
+                "name": "Frsky_RX_R9MM_R9MINI_via_BetaflightPassthrough"
+            }
+        ],
+        "userDefines": [
+            "REGULATORY_DOMAIN_AU_915",
+            "REGULATORY_DOMAIN_EU_868",
+            "REGULATORY_DOMAIN_FCC_915",
+            "REGULATORY_DOMAIN_IN_866",
+            "BINDING_PHRASE",
+            "HYBRID_SWITCHES_8",
+            "ENABLE_TELEMETRY",
+            "ARM_CHANNEL",
+            "LOCK_ON_FIRST_CONNECTION",
+            "USE_R9MM_R9MINI_SBUS",
+            "RCVR_UART_BAUD"
+        ],
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-r9receivers/",
+        "deviceType": "ExpressLRS",
+        "aliases": []
+    },
+    {
+        "category": "Frsky R9",
+        "name": "Frsky RX R9SLIMPLUS",
+        "targets": [{
+                "flashingMethod": "STLink",
+                "name": "Frsky_RX_R9SLIMPLUS_via_STLINK"
+            },
+            {
+                "flashingMethod": "BetaflightPassthrough",
+                "name": "Frsky_RX_R9SLIMPLUS_via_BetaflightPassthrough"
+            }
+        ],
+        "userDefines": [
+            "REGULATORY_DOMAIN_AU_915",
+            "REGULATORY_DOMAIN_EU_868",
+            "REGULATORY_DOMAIN_FCC_915",
+            "REGULATORY_DOMAIN_IN_866",
+            "BINDING_PHRASE",
+            "HYBRID_SWITCHES_8",
+            "ENABLE_TELEMETRY",
+            "ARM_CHANNEL",
+            "LOCK_ON_FIRST_CONNECTION",
+            "USE_DIVERSITY",
+            "RCVR_UART_BAUD"
+        ],
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-r9receivers/",
+        "deviceType": "ExpressLRS",
+        "aliases": []
+    },
+    {
+        "category": "Frsky R9",
+        "name": "Frsky RX R9SLIM",
+        "targets": [{
+                "flashingMethod": "STLink",
+                "name": "Frsky_RX_R9SLIM_via_STLINK"
+            },
+            {
+                "flashingMethod": "BetaflightPassthrough",
+                "name": "Frsky_RX_R9SLIM_via_BetaflightPassthrough"
+            }
+        ],
+        "userDefines": [
+            "REGULATORY_DOMAIN_AU_915",
+            "REGULATORY_DOMAIN_EU_868",
+            "REGULATORY_DOMAIN_FCC_915",
+            "REGULATORY_DOMAIN_IN_866",
+            "BINDING_PHRASE",
+            "HYBRID_SWITCHES_8",
+            "ENABLE_TELEMETRY",
+            "ARM_CHANNEL",
+            "LOCK_ON_FIRST_CONNECTION",
+            "RCVR_UART_BAUD"
+        ],
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-r9receivers/",
+        "deviceType": "ExpressLRS",
+        "aliases": []
+    },
+    {
+        "category": "Frsky R9",
+        "name": "Frsky RX R9SLIMPLUS OTA",
+        "targets": [{
+                "flashingMethod": "STLink",
+                "name": "Frsky_RX_R9SLIMPLUS_OTA_via_STLINK"
+            },
+            {
+                "flashingMethod": "BetaflightPassthrough",
+                "name": "Frsky_RX_R9SLIMPLUS_OTA_via_BetaflightPassthrough"
+            }
+        ],
+        "userDefines": [
+            "REGULATORY_DOMAIN_AU_915",
+            "REGULATORY_DOMAIN_EU_868",
+            "REGULATORY_DOMAIN_FCC_915",
+            "REGULATORY_DOMAIN_IN_866",
+            "BINDING_PHRASE",
+            "HYBRID_SWITCHES_8",
+            "ENABLE_TELEMETRY",
+            "ARM_CHANNEL",
+            "LOCK_ON_FIRST_CONNECTION",
+            "USE_DIVERSITY",
+            "RCVR_UART_BAUD"
+        ],
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-r9receivers/",
+        "deviceType": "ExpressLRS",
+        "aliases": []
+    },
+    {
+        "category": "Frsky R9",
+        "name": "Frsky RX R9MX",
+        "targets": [{
+                "flashingMethod": "STLink",
+                "name": "Frsky_RX_R9MX_via_STLINK"
+            },
+            {
+                "flashingMethod": "BetaflightPassthrough",
+                "name": "Frsky_RX_R9MX_via_BetaflightPassthrough"
+            }
+        ],
+        "userDefines": [
+            "REGULATORY_DOMAIN_AU_915",
+            "REGULATORY_DOMAIN_EU_868",
+            "REGULATORY_DOMAIN_FCC_915",
+            "REGULATORY_DOMAIN_IN_866",
+            "BINDING_PHRASE",
+            "HYBRID_SWITCHES_8",
+            "ENABLE_TELEMETRY",
+            "ARM_CHANNEL",
+            "LOCK_ON_FIRST_CONNECTION",
+            "RCVR_UART_BAUD"
+        ],
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-r9receivers/",
+        "deviceType": "ExpressLRS",
+        "aliases": []
+    }
 ]
