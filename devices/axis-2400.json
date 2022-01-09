@@ -67,7 +67,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/recievers/rx-axis-thor/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-axis-thor/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }
