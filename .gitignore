@@ -36,6 +36,8 @@ node_modules
 /src/main.prod.js.map
 /src/renderer.prod.js
 /src/renderer.prod.js.map
+/src/*.main.prod.js
+/src/main.prod.js.LICENSE.txt
 /src/style.css
 /src/style.css.map
 /src/dist
