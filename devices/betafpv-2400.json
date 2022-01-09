@@ -32,7 +32,7 @@
       "WS2812_IS_GRB",
       "UNLOCK_HIGHER_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
@@ -76,7 +76,7 @@
       "WS2812_IS_GRB",
       "UNLOCK_HIGHER_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -108,7 +108,7 @@
       "USE_DYNAMIC_POWER",
       "UNLOCK_HIGHER_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -145,7 +145,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

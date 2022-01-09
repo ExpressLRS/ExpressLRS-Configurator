@@ -30,7 +30,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy900/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-diy900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -65,7 +65,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy900/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-diy900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -103,7 +103,7 @@
       "HOME_WIFI_PASSWORD",
       "UNLOCK_HIGHER_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy900/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-diy900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -140,7 +140,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy900/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-diy900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -178,7 +178,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers900/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-diyreceivers900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -210,7 +210,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers900/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-diyreceivers900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

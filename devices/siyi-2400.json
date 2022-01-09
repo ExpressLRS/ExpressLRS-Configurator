@@ -26,7 +26,7 @@
       "UART_INVERTED",
       "USE_DYNAMIC_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-siyifm30/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-siyifm30/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -54,7 +54,7 @@
       "USE_DIVERSITY",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-siyiFRmini/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-siyiFRmini/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -85,7 +85,7 @@
       "UART_INVERTED",
       "USE_DYNAMIC_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-siyiFRmini/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-siyiFRmini/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

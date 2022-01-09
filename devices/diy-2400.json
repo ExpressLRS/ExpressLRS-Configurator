@@ -31,7 +31,7 @@
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-diy/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -68,7 +68,7 @@
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-diy/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -104,7 +104,7 @@
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/tx-diy/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-diy/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -141,7 +141,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-diyreceivers/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
@@ -220,7 +220,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-diyreceivers/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -247,7 +247,7 @@
       "USE_500HZ",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/rx-diyreceivers/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-diyreceivers/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }
