@@ -97,6 +97,7 @@ export type Device = {
   readonly userDefines: ReadonlyArray<UserDefineKey>;
   readonly wikiUrl?: Maybe<Scalars['String']>;
   readonly deviceType: DeviceType;
+  readonly verifiedHardware: Scalars['Boolean'];
   readonly parent?: Maybe<Scalars['String']>;
   readonly abbreviatedName?: Maybe<Scalars['String']>;
 };
@@ -462,6 +463,7 @@ export type AvailableFirmwareTargetsQuery = {
       | 'deviceType'
       | 'parent'
       | 'abbreviatedName'
+      | 'verifiedHardware'
     > & {
         readonly targets: ReadonlyArray<
           { readonly __typename?: 'Target' } & Pick<
@@ -842,6 +844,7 @@ export const AvailableFirmwareTargetsDocument = gql`
       deviceType
       parent
       abbreviatedName
+      verifiedHardware
     }
   }
 `;

@@ -113,6 +113,7 @@ export default class DeviceService implements IDevices {
           deviceType,
           parent: null,
           abbreviatedName: value.abbreviatedName,
+          verifiedHardware: value.verifiedHardware ?? true,
         };
 
         devices.push(device);
@@ -124,6 +125,7 @@ export default class DeviceService implements IDevices {
               category: any;
               wikiUrl: any;
               abbreviatedName?: any;
+              verifiedHardware?: boolean;
             }) => {
               devices.push({
                 id: alias.name,
@@ -141,6 +143,7 @@ export default class DeviceService implements IDevices {
                 deviceType: device.deviceType,
                 parent: device.id,
                 abbreviatedName: alias.abbreviatedName,
+                verifiedHardware: alias.verifiedHardware ?? true,
               });
             }
           );

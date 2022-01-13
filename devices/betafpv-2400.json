@@ -39,7 +39,8 @@
         "category": "HiYOUNGER 2.4 GHz",
         "name": "HiYOUNGER TX2G4 2400 TX",
         "wikiUrl": "",
-        "abbreviatedName": "HiYOUNGER TX2G4"
+        "abbreviatedName": "HiYOUNGER TX2G4",
+        "verifiedHardware": false
       }
     ]
   },
