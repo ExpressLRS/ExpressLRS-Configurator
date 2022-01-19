@@ -115,6 +115,7 @@ export enum FlashingMethod {
   Stock_BL = 'Stock_BL',
   UART = 'UART',
   WIFI = 'WIFI',
+  EdgeTxPassthrough = 'EdgeTxPassthrough',
   Radio = 'Radio',
 }
 
