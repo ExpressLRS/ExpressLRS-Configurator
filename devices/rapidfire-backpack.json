@@ -19,7 +19,13 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/hardware/backpack/backpack-vrx-setup/#rapidfire-backpack-connection",
     "deviceType": "Backpack",
-    "aliases": []
+    "aliases": [
+      {
+        "name": "HappyModel EP82 VRX Backpack",
+        "category": "VRX",
+        "wikiUrl": "https://www.expresslrs.org/{version}/hardware/backpack/backpack-vrx-setup/#rapidfire-backpack-connection"
+      }
+    ]
   },
   {
     "category": "VRX",
