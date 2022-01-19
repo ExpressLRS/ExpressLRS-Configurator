@@ -158,7 +158,7 @@ export default class TargetUserDefinesFactory {
           case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
             return UserDefine.Text(
               UserDefineKey.AUTO_WIFI_ON_INTERVAL,
-              '20',
+              '60',
               true
             );
           default:
