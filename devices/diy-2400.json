@@ -226,6 +226,12 @@
         "name": "JHEMCU RX24T 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "JHEMCU RX24T"
+      },
+      {
+        "category": "Jumper 2.4 GHz",
+        "name": "Jumper AION MINI 2400 RX",
+        "wikiUrl": "",
+        "abbreviatedName": "AION RX24 MINI"
       }
     ]
   },
