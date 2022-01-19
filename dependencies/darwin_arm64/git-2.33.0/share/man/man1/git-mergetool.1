@@ -1,0 +1,295 @@
+'\" t
+.\"     Title: git-mergetool
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 08/16/2021
+.\"    Manual: Git Manual
+.\"    Source: Git 2.33.0
+.\"  Language: English
+.\"
+.TH "GIT\-MERGETOOL" "1" "08/16/2021" "Git 2\&.33\&.0" "Git Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+git-mergetool \- Run merge conflict resolution tools to resolve merge conflicts
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit mergetool\fR [\-\-tool=<tool>] [\-y | \-\-[no\-]prompt] [<file>\&...]
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Use \fBgit mergetool\fR to run one of several merge utilities to resolve merge conflicts\&. It is typically run after \fIgit merge\fR\&.
+.sp
+If one or more <file> parameters are given, the merge tool program will be run to resolve differences on each file (skipping those without conflicts)\&. Specifying a directory will include all unresolved files in that path\&. If no <file> names are specified, \fIgit mergetool\fR will run the merge tool program on every file with merge conflicts\&.
+.SH "OPTIONS"
+.PP
+\-t <tool>, \-\-tool=<tool>
+.RS 4
+Use the merge resolution program specified by <tool>\&. Valid values include emerge, gvimdiff, kdiff3, meld, vimdiff, and tortoisemerge\&. Run
+\fBgit mergetool \-\-tool\-help\fR
+for the list of valid <tool> settings\&.
+.sp
+If a merge resolution program is not specified,
+\fIgit mergetool\fR
+will use the configuration variable
+\fBmerge\&.tool\fR\&. If the configuration variable
+\fBmerge\&.tool\fR
+is not set,
+\fIgit mergetool\fR
+will pick a suitable default\&.
+.sp
+You can explicitly provide a full path to the tool by setting the configuration variable
+\fBmergetool\&.<tool>\&.path\fR\&. For example, you can configure the absolute path to kdiff3 by setting
+\fBmergetool\&.kdiff3\&.path\fR\&. Otherwise,
+\fIgit mergetool\fR
+assumes the tool is available in PATH\&.
+.sp
+Instead of running one of the known merge tool programs,
+\fIgit mergetool\fR
+can be customized to run an alternative program by specifying the command line to invoke in a configuration variable
+\fBmergetool\&.<tool>\&.cmd\fR\&.
+.sp
+When
+\fIgit mergetool\fR
+is invoked with this tool (either through the
+\fB\-t\fR
+or
+\fB\-\-tool\fR
+option or the
+\fBmerge\&.tool\fR
+configuration variable) the configured command line will be invoked with
+\fB$BASE\fR
+set to the name of a temporary file containing the common base for the merge, if available;
+\fB$LOCAL\fR
+set to the name of a temporary file containing the contents of the file on the current branch;
+\fB$REMOTE\fR
+set to the name of a temporary file containing the contents of the file to be merged, and
+\fB$MERGED\fR
+set to the name of the file to which the merge tool should write the result of the merge resolution\&.
+.sp
+If the custom merge tool correctly indicates the success of a merge resolution with its exit code, then the configuration variable
+\fBmergetool\&.<tool>\&.trustExitCode\fR
+can be set to
+\fBtrue\fR\&. Otherwise,
+\fIgit mergetool\fR
+will prompt the user to indicate the success of the resolution after the custom tool has exited\&.
+.RE
+.PP
+\-\-tool\-help
+.RS 4
+Print a list of merge tools that may be used with
+\fB\-\-tool\fR\&.
+.RE
+.PP
+\-y, \-\-no\-prompt
+.RS 4
+Don\(cqt prompt before each invocation of the merge resolution program\&. This is the default if the merge resolution program is explicitly specified with the
+\fB\-\-tool\fR
+option or with the
+\fBmerge\&.tool\fR
+configuration variable\&.
+.RE
+.PP
+\-\-prompt
+.RS 4
+Prompt before each invocation of the merge resolution program to give the user a chance to skip the path\&.
+.RE
+.PP
+\-g, \-\-gui
+.RS 4
+When
+\fIgit\-mergetool\fR
+is invoked with the
+\fB\-g\fR
+or
+\fB\-\-gui\fR
+option the default merge tool will be read from the configured
+\fBmerge\&.guitool\fR
+variable instead of
+\fBmerge\&.tool\fR\&. If
+\fBmerge\&.guitool\fR
+is not set, we will fallback to the tool configured under
+\fBmerge\&.tool\fR\&.
+.RE
+.PP
+\-\-no\-gui
+.RS 4
+This overrides a previous
+\fB\-g\fR
+or
+\fB\-\-gui\fR
+setting and reads the default merge tool will be read from the configured
+\fBmerge\&.tool\fR
+variable\&.
+.RE
+.PP
+\-O<orderfile>
+.RS 4
+Process files in the order specified in the <orderfile>, which has one shell glob pattern per line\&. This overrides the
+\fBdiff\&.orderFile\fR
+configuration variable (see
+\fBgit-config\fR(1))\&. To cancel
+\fBdiff\&.orderFile\fR, use
+\fB\-O/dev/null\fR\&.
+.RE
+.SH "CONFIGURATION"
+.PP
+mergetool\&.<tool>\&.path
+.RS 4
+Override the path for the given tool\&. This is useful in case your tool is not in the PATH\&.
+.RE
+.PP
+mergetool\&.<tool>\&.cmd
+.RS 4
+Specify the command to invoke the specified merge tool\&. The specified command is evaluated in shell with the following variables available:
+\fIBASE\fR
+is the name of a temporary file containing the common base of the files to be merged, if available;
+\fILOCAL\fR
+is the name of a temporary file containing the contents of the file on the current branch;
+\fIREMOTE\fR
+is the name of a temporary file containing the contents of the file from the branch being merged;
+\fIMERGED\fR
+contains the name of the file to which the merge tool should write the results of a successful merge\&.
+.RE
+.PP
+mergetool\&.<tool>\&.hideResolved
+.RS 4
+Allows the user to override the global
+\fBmergetool\&.hideResolved\fR
+value for a specific tool\&. See
+\fBmergetool\&.hideResolved\fR
+for the full description\&.
+.RE
+.PP
+mergetool\&.<tool>\&.trustExitCode
+.RS 4
+For a custom merge command, specify whether the exit code of the merge command can be used to determine whether the merge was successful\&. If this is not set to true then the merge target file timestamp is checked and the merge assumed to have been successful if the file has been updated, otherwise the user is prompted to indicate the success of the merge\&.
+.RE
+.PP
+mergetool\&.meld\&.hasOutput
+.RS 4
+Older versions of
+\fBmeld\fR
+do not support the
+\fB\-\-output\fR
+option\&. Git will attempt to detect whether
+\fBmeld\fR
+supports
+\fB\-\-output\fR
+by inspecting the output of
+\fBmeld \-\-help\fR\&. Configuring
+\fBmergetool\&.meld\&.hasOutput\fR
+will make Git skip these checks and use the configured value instead\&. Setting
+\fBmergetool\&.meld\&.hasOutput\fR
+to
+\fBtrue\fR
+tells Git to unconditionally use the
+\fB\-\-output\fR
+option, and
+\fBfalse\fR
+avoids using
+\fB\-\-output\fR\&.
+.RE
+.PP
+mergetool\&.meld\&.useAutoMerge
+.RS 4
+When the
+\fB\-\-auto\-merge\fR
+is given, meld will merge all non\-conflicting parts automatically, highlight the conflicting parts and wait for user decision\&. Setting
+\fBmergetool\&.meld\&.useAutoMerge\fR
+to
+\fBtrue\fR
+tells Git to unconditionally use the
+\fB\-\-auto\-merge\fR
+option with
+\fBmeld\fR\&. Setting this value to
+\fBauto\fR
+makes git detect whether
+\fB\-\-auto\-merge\fR
+is supported and will only use
+\fB\-\-auto\-merge\fR
+when available\&. A value of
+\fBfalse\fR
+avoids using
+\fB\-\-auto\-merge\fR
+altogether, and is the default value\&.
+.RE
+.PP
+mergetool\&.hideResolved
+.RS 4
+During a merge Git will automatically resolve as many conflicts as possible and write the
+\fIMERGED\fR
+file containing conflict markers around any conflicts that it cannot resolve;
+\fILOCAL\fR
+and
+\fIREMOTE\fR
+normally represent the versions of the file from before Git\(cqs conflict resolution\&. This flag causes
+\fILOCAL\fR
+and
+\fIREMOTE\fR
+to be overwriten so that only the unresolved conflicts are presented to the merge tool\&. Can be configured per\-tool via the
+\fBmergetool\&.<tool>\&.hideResolved\fR
+configuration variable\&. Defaults to
+\fBfalse\fR\&.
+.RE
+.PP
+mergetool\&.keepBackup
+.RS 4
+After performing a merge, the original file with conflict markers can be saved as a file with a
+\fB\&.orig\fR
+extension\&. If this variable is set to
+\fBfalse\fR
+then this file is not preserved\&. Defaults to
+\fBtrue\fR
+(i\&.e\&. keep the backup files)\&.
+.RE
+.PP
+mergetool\&.keepTemporaries
+.RS 4
+When invoking a custom merge tool, Git uses a set of temporary files to pass to the tool\&. If the tool returns an error and this variable is set to
+\fBtrue\fR, then these temporary files will be preserved, otherwise they will be removed after the tool has exited\&. Defaults to
+\fBfalse\fR\&.
+.RE
+.PP
+mergetool\&.writeToTemp
+.RS 4
+Git writes temporary
+\fIBASE\fR,
+\fILOCAL\fR, and
+\fIREMOTE\fR
+versions of conflicting files in the worktree by default\&. Git will attempt to use a temporary directory for these files when set
+\fBtrue\fR\&. Defaults to
+\fBfalse\fR\&.
+.RE
+.PP
+mergetool\&.prompt
+.RS 4
+Prompt before each invocation of the merge resolution program\&.
+.RE
+.SH "TEMPORARY FILES"
+.sp
+\fBgit mergetool\fR creates \fB*\&.orig\fR backup files while resolving merges\&. These are safe to remove once a file has been merged and its \fBgit mergetool\fR session has completed\&.
+.sp
+Setting the \fBmergetool\&.keepBackup\fR configuration variable to \fBfalse\fR causes \fBgit mergetool\fR to automatically remove the backup as files are successfully merged\&.
+.SH "GIT"
+.sp
+Part of the \fBgit\fR(1) suite

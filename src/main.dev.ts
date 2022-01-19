@@ -211,20 +211,36 @@ const createWindow = async () => {
     PATH = prependPATH(PATH, portablePythonLocation);
     PATH = prependPATH(PATH, portableGitLocation);
   }
-  if (isMacOS) {
+  if (isMacOS && process.arch === 'x64') {
     const portablePythonLocation = path.join(
       dependenciesPath,
-      'darwin_amd64/python-portable-darwin-3.8.4/bin'
+      'darwin_x64/python-portable-darwin-3.8.4/bin'
     );
     const portableGitLocation = path.join(
       dependenciesPath,
-      'darwin_amd64/git-2.29.2/bin'
+      'darwin_x64/git-2.29.2/bin'
     );
     PATH = prependPATH(PATH, portablePythonLocation);
     PATH = prependPATH(PATH, portableGitLocation);
     localApiServerEnv.GIT_EXEC_PATH = path.join(
       dependenciesPath,
-      'darwin_amd64/git-2.29.2/libexec/git-core'
+      'darwin_x64/git-2.29.2/libexec/git-core'
+    );
+  }
+  if (isMacOS && process.arch === 'arm64') {
+    const portablePythonLocation = path.join(
+      dependenciesPath,
+      'darwin_arm64/python-portable-darwin-3.9.7/bin'
+    );
+    const portableGitLocation = path.join(
+      dependenciesPath,
+      'darwin_arm64/git-2.33.0/bin'
+    );
+    PATH = prependPATH(PATH, portablePythonLocation);
+    PATH = prependPATH(PATH, portableGitLocation);
+    localApiServerEnv.GIT_EXEC_PATH = path.join(
+      dependenciesPath,
+      'darwin_arm64/git-2.33.0/libexec/git-core'
     );
   }
   localApiServerEnv.PATH = PATH;

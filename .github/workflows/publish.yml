@@ -43,12 +43,6 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: powershell
         env:
-          # These values are used for auto updates signing
-          # APPLE_ID: ${{ secrets.APPLE_ID }}
-          # APPLE_ID_PASS: ${{ secrets.APPLE_ID_PASS }}
-          # CSC_LINK: ${{ secrets.CSC_LINK }}
-          # CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-          # This is used for uploading release assets to github
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           yarn build
@@ -57,26 +51,22 @@ jobs:
       - name: Publish macOS releases
         if: matrix.os == 'macos-latest'
         env:
-          # These values are used for auto updates signing
-          # APPLE_ID: ${{ secrets.APPLE_ID }}
-          # APPLE_ID_PASS: ${{ secrets.APPLE_ID_PASS }}
-          # CSC_LINK: ${{ secrets.CSC_LINK }}
-          # CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-          # This is used for uploading release assets to github
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           yarn build
           yarn electron-builder --publish always --x64 --mac
 
+      - name: Publish macOS ARM releases
+        if: matrix.os == 'macos-latest'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          yarn build
+          yarn electron-builder --publish always --arm64 --mac
+
       - name: Publish Linux releases
         if: matrix.os == 'ubuntu-18.04'
         env:
-          # These values are used for auto updates signing
-          # APPLE_ID: ${{ secrets.APPLE_ID }}
-          # APPLE_ID_PASS: ${{ secrets.APPLE_ID_PASS }}
-          # CSC_LINK: ${{ secrets.CSC_LINK }}
-          # CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-          # This is used for uploading release assets to github
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           yarn build

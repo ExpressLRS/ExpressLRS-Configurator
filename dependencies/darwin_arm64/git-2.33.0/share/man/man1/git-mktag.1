@@ -1,0 +1,101 @@
+'\" t
+.\"     Title: git-mktag
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 08/16/2021
+.\"    Manual: Git Manual
+.\"    Source: Git 2.33.0
+.\"  Language: English
+.\"
+.TH "GIT\-MKTAG" "1" "08/16/2021" "Git 2\&.33\&.0" "Git Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+git-mktag \- Creates a tag object with extra validation
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit mktag\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Reads a tag contents on standard input and creates a tag object\&. The output is the new tag\(cqs <object> identifier\&.
+.sp
+This command is mostly equivalent to \fBgit-hash-object\fR(1) invoked with \fB\-t tag \-w \-\-stdin\fR\&. I\&.e\&. both of these will create and write a tag found in \fBmy\-tag\fR:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+git mktag <my\-tag
+git hash\-object \-t tag \-w \-\-stdin <my\-tag
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+The difference is that mktag will die before writing the tag if the tag doesn\(cqt pass a \fBgit-fsck\fR(1) check\&.
+.sp
+The "fsck" check done mktag is stricter than what \fBgit-fsck\fR(1) would run by default in that all \fBfsck\&.<msg\-id>\fR messages are promoted from warnings to errors (so e\&.g\&. a missing "tagger" line is an error)\&.
+.sp
+Extra headers in the object are also an error under mktag, but ignored by \fBgit-fsck\fR(1)\&. This extra check can be turned off by setting the appropriate \fBfsck\&.<msg\-id>\fR varible:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+git \-c fsck\&.extraHeaderEntry=ignore mktag <my\-tag\-with\-headers
+.fi
+.if n \{\
+.RE
+.\}
+.SH "OPTIONS"
+.PP
+\-\-strict
+.RS 4
+By default mktag turns on the equivalent of
+\fBgit-fsck\fR(1)
+\fB\-\-strict\fR
+mode\&. Use
+\fB\-\-no\-strict\fR
+to disable it\&.
+.RE
+.SH "TAG FORMAT"
+.sp
+A tag signature file, to be fed to this command\(cqs standard input, has a very simple fixed format: four lines of
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+object <hash>
+type <typename>
+tag <tagname>
+tagger <tagger>
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+followed by some \fIoptional\fR free\-form message (some tags created by older Git may not have \fBtagger\fR line)\&. The message, when it exists, is separated by a blank line from the header\&. The message part may contain a signature that Git itself doesn\(cqt care about, but that can be verified with gpg\&.
+.SH "GIT"
+.sp
+Part of the \fBgit\fR(1) suite
