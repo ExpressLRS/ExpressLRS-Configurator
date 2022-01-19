@@ -7,6 +7,7 @@ enum FlashingMethod {
   Stock_BL = 'Bootloader',
   UART = 'UART',
   WIFI = 'WIFI',
+  EdgeTxPassthrough = 'EdgeTxPassthrough',
   Radio = 'Radio',
 }
 

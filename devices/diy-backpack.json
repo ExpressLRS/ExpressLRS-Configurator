@@ -16,5 +16,31 @@
     "wikiUrl": "",
     "deviceType": "Backpack",
     "aliases": []
+  },
+  {
+    "category": "TX",
+    "name": "DUPLEX TX Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DUPLETX_TX_Backpack_via_UART"
+      },
+      {
+        "flashingMethod": "EdgeTxPassthrough",
+        "name": "DUPLETX_TX_Backpack_via_ETX"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "DUPLETX_TX_Backpack_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "",
+    "deviceType": "Backpack",
+    "aliases": []
   }
 ]

@@ -191,6 +191,28 @@ const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProp
             </p>
           </div>
         );
+      case FlashingMethod.EdgeTxPassthrough:
+        return (
+          <div>
+            <p>
+              This method allows you to flash your transmitter module while it
+              is connected to your transmitter by using the passthrough feature
+              of the EdgeTX firmware.
+            </p>
+            <p>
+              <DocumentationLink
+                firmwareVersion={firmwareVersionData}
+                url={
+                  wikiUrl ??
+                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                }
+              >
+                Check the Wiki page for your particular device for more
+                information.
+              </DocumentationLink>
+            </p>
+          </div>
+        );
       default:
         return '';
     }
