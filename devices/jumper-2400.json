@@ -5,11 +5,11 @@
     "targets": [
       {
         "flashingMethod": "UART",
-        "name": "AION_NANO_2400_TX_via_UART"
+        "name": "Jumper_AION_NANO_2400_TX_via_UART"
       },
       {
         "flashingMethod": "WIFI",
-        "name": "AION_NANO_2400_TX_via_WIFI"
+        "name": "Jumper_AION_NANO_2400_TX_via_WIFI"
       }
     ],
     "userDefines": [
