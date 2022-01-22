@@ -670,7 +670,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       const dnsDevice = networkDevices.get(deviceName);
       if (dnsDevice) {
         const dnsDeviceName = dnsDevice.deviceName?.toUpperCase();
-        const targetName = dnsDevice.target.toUpperCase();
+        const dnsDeviceTarget = dnsDevice.target.toUpperCase();
 
         let deviceMatches: Device[] | undefined = [];
 
@@ -680,14 +680,18 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         });
 
         // if no matches found by deviceName, then use the target
-        if (deviceMatches?.length === 0 && targetName.trim().length !== 0) {
+        if (
+          deviceMatches?.length === 0 &&
+          dnsDeviceTarget.trim().length !== 0
+        ) {
           deviceMatches = deviceTargets?.filter((item) => {
             // only match on a device that doesn't have a parent, which means it
             // is not an alias of another device
             return (
               !item.parent &&
               item.targets.find((target) => {
-                return target.name.toUpperCase().startsWith(targetName);
+                const baseTargetName = target.name.split('_via_')[0];
+                return baseTargetName.toUpperCase() === dnsDeviceTarget;
               })
             );
           });
@@ -701,7 +705,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         // we do not know which one is correct and do not want to pick the wrong device.
         if (deviceMatches.length > 1) {
           console.error(
-            `multiple device matches found for target ${targetName}!`
+            `multiple device matches found for target ${dnsDeviceTarget}!`
           );
           setDeviceSelectErrorDialogOpen(true);
           return;
