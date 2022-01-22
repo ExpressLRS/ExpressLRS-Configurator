@@ -51,6 +51,9 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
           label: category,
           value: category,
         };
+      })
+      .sort((a, b) => {
+        return a.label.toLowerCase() > b.label.toLowerCase() ? 1 : -1;
       });
   }, [deviceOptions]);
 
@@ -66,6 +69,9 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
           label: item.name,
           value: item.name,
         };
+      })
+      .sort((a, b) => {
+        return a.label.toLowerCase() > b.label.toLowerCase() ? 1 : -1;
       });
   }, [deviceOptions, currentCategory]);
 
