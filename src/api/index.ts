@@ -4,7 +4,7 @@ import * as http from 'http';
 import getPort from 'get-port';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
-import { ConfigToken, IConfig } from './src/config';
+import { ConfigToken, FirmwareTargetsLoaderType, IConfig } from './src/config';
 import FirmwareService from './src/services/Firmware';
 import Platformio from './src/library/Platformio';
 import FirmwareBuilder from './src/library/FirmwareBuilder';
@@ -23,6 +23,7 @@ import UpdatesResolver from './src/graphql/resolvers/Updates.resolver';
 import SerialMonitorResolver from './src/graphql/resolvers/SerialMonitor.resolver';
 import SerialMonitorService from './src/services/SerialMonitor';
 import TargetsService from './src/services/Targets';
+import GitTargetsService from './src/services/Targets/GitTargets';
 import DeviceService from './src/services/Device';
 import TargetUserDefinesFactory from './src/factories/TargetUserDefinesFactory';
 import MulticastDnsService from './src/services/MulticastDns';
@@ -111,7 +112,21 @@ export default class ApiServer {
       new UserDefinesBuilder(logger, targetUserDefinesFactory)
     );
 
-    Container.set(TargetsService, new TargetsService(logger, deviceService));
+    if (config.targetsLoader === FirmwareTargetsLoaderType.Git) {
+      Container.set(
+        TargetsService,
+        new GitTargetsService(
+          logger,
+          deviceService,
+          config.PATH,
+          config.targetsStoragePath
+        )
+      );
+    } else if (config.targetsLoader === FirmwareTargetsLoaderType.Http) {
+      Container.set(TargetsService, new TargetsService(logger, deviceService));
+    } else {
+      throw new Error('FirmwareTargetsLoaderType is not set');
+    }
 
     Container.set(LuaService, new LuaService(logger));
 

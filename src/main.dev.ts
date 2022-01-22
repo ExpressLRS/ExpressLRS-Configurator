@@ -25,6 +25,7 @@ import {
   UpdateBuildStatusRequestBody,
 } from './ipc';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
+import { FirmwareTargetsLoaderType } from './api/src/config';
 
 const logsPath = path.join(app.getPath('userData'), 'logs');
 const logsFilename = 'expressslrs-configurator.log';
@@ -170,6 +171,24 @@ const createWindow = async () => {
     'firmwares',
     'github'
   );
+  const targetsStoragePath = path.join(
+    app.getPath('userData'),
+    'firmwares',
+    'targets'
+  );
+  let targetsLoaderType: FirmwareTargetsLoaderType =
+    FirmwareTargetsLoaderType.Git;
+  if (
+    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareTargetsLoaderType.Git
+  ) {
+    targetsLoaderType = FirmwareTargetsLoaderType.Git;
+  }
+  if (
+    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareTargetsLoaderType.Http
+  ) {
+    targetsLoaderType = FirmwareTargetsLoaderType.Http;
+  }
+
   const dependenciesPath = app.isPackaged
     ? path.join(process.resourcesPath, '../dependencies')
     : path.join(__dirname, '../dependencies');
@@ -236,6 +255,7 @@ const createWindow = async () => {
   logger.log('local api server PATH', {
     PATH,
   });
+
   await localServer.start(
     {
       configuratorGit: {
@@ -251,6 +271,8 @@ const createWindow = async () => {
       PATH,
       env: localApiServerEnv,
       devicesPath,
+      targetsStoragePath,
+      targetsLoader: targetsLoaderType,
     },
     logger,
     port
