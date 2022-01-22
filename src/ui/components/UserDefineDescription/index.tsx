@@ -93,13 +93,13 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
           return (
             <div>
               <p>
-                Both the TX and RX NEED to have the same binding phrase or
-                ExpressLRS will not work. Set something memorable, and limit to
-                alphanumeric phrases conforming to the Latin alphabet. This
-                phrase gets MD5 hashed and gets built into the binary you will
-                be flashing. Receivers flashed with firmware builds that do not
-                have binding phrase enabled will support and require the
-                traditional binding method.
+                Binding phrase pairs receivers to transmitters without requiring
+                you to bind manually. Receivers flashed without a binding phrase
+                will require the traditional binding method. Both the TX and RX
+                need to have the same binding phrase to connect. Set something
+                memorable, and limit to alphanumeric phrases conforming to the
+                Latin alphabet. This is not a password, and does not provide any
+                security, it simply reduces RF collisions with other pilots.
               </p>
               <p>
                 <DocumentationLink
