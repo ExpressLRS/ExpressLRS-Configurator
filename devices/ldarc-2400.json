@@ -1,0 +1,60 @@
+[
+  {
+    "category": "LDARC 2.4 GHz",
+    "name": "LDARC 2400 RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "LDARC_2400_RX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "LDARC_2400_RX_via_WIFI"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "LDARC_2400_RX_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "REGULATORY_DOMAIN_EU_CE_2400",
+      "BINDING_PHRASE",
+      "LOCK_ON_FIRST_CONNECTION",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "RCVR_UART_BAUD",
+      "RCVR_INVERT_TX"
+    ],
+    "wikiUrl": "",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "LDARC 2.4 GHz",
+    "name": "LDARC 2400 RX PWM",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "LDARC_2400_RX_PWM_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "LDARC_2400_RX_PWM_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "REGULATORY_DOMAIN_EU_CE_2400",
+      "BINDING_PHRASE",
+      "LOCK_ON_FIRST_CONNECTION",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  }
+]
