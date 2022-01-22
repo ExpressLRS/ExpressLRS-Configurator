@@ -263,7 +263,7 @@ export default merge(baseConfig, {
     contentBase: path.join(__dirname, 'dist'),
     watchOptions: {
       aggregateTimeout: 300,
-      ignored: /node_modules/,
+      ignored: ['**/node_modules', '**/keybase/**', '/dependencies'],
       poll: 100,
     },
     historyApiFallback: {
