@@ -13,6 +13,11 @@ module.exports = {
     'class-methods-use-this': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     'jsx-a11y/accessible-emoji': 'off',
+    'react-hooks/exhaustive-deps': 'warn',
+    'react/require-default-props': [
+      'error',
+      { ignoreFunctionalComponents: true },
+    ],
   },
   parserOptions: {
     ecmaVersion: 2020,
@@ -33,4 +38,5 @@ module.exports = {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
   },
+  plugins: ['import'],
 };
