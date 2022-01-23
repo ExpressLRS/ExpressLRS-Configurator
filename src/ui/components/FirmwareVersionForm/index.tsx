@@ -46,6 +46,9 @@ const styles = {
   chooseFolderButton: {
     marginTop: 1,
   },
+  releaseNotes: {
+    marginTop: 1,
+  },
   firmwareVersionAlert: {
     marginTop: 2,
   },
@@ -424,6 +427,15 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
                   }
                   onChange={onGitTag}
                 />
+                <Button
+                  size="small"
+                  sx={styles.releaseNotes}
+                  target="_blank"
+                  rel="noreferrer noreferrer"
+                  href={`${gitRepository.url}/releases/tag/${currentGitTag}`}
+                >
+                  Release notes
+                </Button>
                 {currentGitTag &&
                   gitTagOptions.length > 0 &&
                   gitTagOptions[0]?.value !== currentGitTag && (
