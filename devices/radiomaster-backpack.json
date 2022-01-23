@@ -1,0 +1,28 @@
+[
+  {
+    "category": "TX",
+    "name": "RadioMaster Zorro TX Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "Radiomaster_Zorro_TX_Backpack_via_UART"
+      },
+      {
+        "flashingMethod": "EdgeTxPassthrough",
+        "name": "Radiomaster_Zorro_TX_Backpack_via_ETX"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "Radiomaster_Zorro_TX_Backpack_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "",
+    "deviceType": "Backpack",
+    "aliases": []
+  }
+]
