@@ -1,31 +1,19 @@
-import { Octokit } from '@octokit/rest';
 import { Service } from 'typedi';
+import { Octokit } from '@octokit/rest';
 import fetch from 'node-fetch';
 import path from 'path';
-import FirmwareSource from '../../models/enum/FirmwareSource';
-import TargetArgs from '../../graphql/args/Target';
 import { LoggerService } from '../../logger';
-import Device from '../../models/Device';
 import DeviceService from '../Device';
-import extractTargets from './extractTargets';
 import extractTargetFiles from './extractTargetFiles';
+import extractTargets from './extractTargets';
+import TargetArgs from '../../graphql/args/Target';
+import Device from '../../models/Device';
+import FirmwareSource from '../../models/enum/FirmwareSource';
 import loadTargetsFromDirectory from './loadTargetsFromDirectory';
-
-interface GitRepository {
-  owner: string;
-  repositoryName: string;
-  srcFolder: string;
-}
-
-export interface ITargets {
-  loadTargetsList(
-    args: TargetArgs,
-    gitRepository: GitRepository
-  ): Promise<Device[]>;
-}
+import { GitRepository, ITargets } from './index';
 
 @Service()
-export default class TargetsService implements ITargets {
+export default class HttpTargetsService implements ITargets {
   client: Octokit;
 
   constructor(

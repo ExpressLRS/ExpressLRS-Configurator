@@ -25,7 +25,7 @@ import {
   UpdateBuildStatusRequestBody,
 } from './ipc';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
-import { FirmwareTargetsLoaderType } from './api/src/config';
+import { FirmwareParamsLoaderType } from './api/src/config';
 
 const logsPath = path.join(app.getPath('userData'), 'logs');
 const logsFilename = 'expressslrs-configurator.log';
@@ -176,17 +176,31 @@ const createWindow = async () => {
     'firmwares',
     'targets'
   );
-  let targetsLoaderType: FirmwareTargetsLoaderType =
-    FirmwareTargetsLoaderType.Git;
+  let targetsLoaderType: FirmwareParamsLoaderType =
+    FirmwareParamsLoaderType.Git;
   if (
-    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareTargetsLoaderType.Git
+    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareParamsLoaderType.Git
   ) {
-    targetsLoaderType = FirmwareTargetsLoaderType.Git;
+    targetsLoaderType = FirmwareParamsLoaderType.Git;
   }
   if (
-    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareTargetsLoaderType.Http
+    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareParamsLoaderType.Http
   ) {
-    targetsLoaderType = FirmwareTargetsLoaderType.Http;
+    targetsLoaderType = FirmwareParamsLoaderType.Http;
+  }
+
+  const userDefinesStoragePath = path.join(
+    app.getPath('userData'),
+    'firmwares',
+    'userDefines'
+  );
+  let userDefinesLoaderType: FirmwareParamsLoaderType =
+    FirmwareParamsLoaderType.Git;
+  if (process.env.USER_DEFINES_LOADER_TYPE === FirmwareParamsLoaderType.Git) {
+    userDefinesLoaderType = FirmwareParamsLoaderType.Git;
+  }
+  if (process.env.USER_DEFINES_LOADER_TYPE === FirmwareParamsLoaderType.Http) {
+    userDefinesLoaderType = FirmwareParamsLoaderType.Http;
   }
 
   const dependenciesPath = app.isPackaged
@@ -273,6 +287,8 @@ const createWindow = async () => {
       devicesPath,
       targetsStoragePath,
       targetsLoader: targetsLoaderType,
+      userDefinesLoader: userDefinesLoaderType,
+      userDefinesStoragePath,
     },
     logger,
     port

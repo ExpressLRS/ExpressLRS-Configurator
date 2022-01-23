@@ -5,8 +5,7 @@ import TargetArgs from '../../graphql/args/Target';
 import { LoggerService } from '../../logger';
 import Device from '../../models/Device';
 import DeviceService from '../Device';
-import { ITargets } from './index';
-import GitRepository from '../../graphql/inputs/GitRepositoryInput';
+import { GitRepository, ITargets } from './index';
 import loadTargetsFromDirectory from './loadTargetsFromDirectory';
 import {
   findGitExecutable,

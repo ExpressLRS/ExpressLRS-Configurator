@@ -22,7 +22,7 @@ import ClearPlatformioCoreDirResult from '../../models/ClearPlatformioCoreDirRes
 import TargetDeviceOptionsArgs from '../args/TargetDeviceOptions';
 import UserDefinesBuilder from '../../services/UserDefinesBuilder';
 import ClearFirmwareFilesResult from '../../models/ClearFirmwareFiles';
-import TargetsService from '../../services/Targets';
+import TargetsLoader from '../../services/TargetsLoader';
 import TargetArgs from '../args/Target';
 import Device from '../../models/Device';
 import GitRepository from '../inputs/GitRepositoryInput';
@@ -33,7 +33,7 @@ export default class FirmwareResolver {
   constructor(
     private firmwareService: FirmwareService,
     private userDefinesBuilder: UserDefinesBuilder,
-    private targetsService: TargetsService
+    private targetsLoaderService: TargetsLoader
   ) {}
 
   @Query(() => [Device])
@@ -41,7 +41,7 @@ export default class FirmwareResolver {
     @Args() args: TargetArgs,
     @Arg('gitRepository') gitRepository: GitRepository
   ): Promise<Device[]> {
-    return this.targetsService.loadTargetsList(args, gitRepository);
+    return this.targetsLoaderService.loadTargetsList(args, gitRepository);
   }
 
   @Query(() => [UserDefine])
