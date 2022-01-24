@@ -35,6 +35,10 @@
     "name": "Jumper AION T-Pro 2400 TX",
     "targets": [
       {
+        "flashingMethod": "UART",
+        "name": "Jumper_AION_2400_T-Pro_TX_via_UART"
+      },
+      {
         "flashingMethod": "WIFI",
         "name": "Jumper_AION_2400_T-Pro_TX_via_WIFI"
       }
