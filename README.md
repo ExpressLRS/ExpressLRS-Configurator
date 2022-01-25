@@ -40,9 +40,11 @@ The minimum required version of windows is Windows 8.
 #### macOS
 
 Changes to the security model used in the latest versions of MacOS X 10.14 (Mojave) and 10.15 (Catalina)
-mean that the operating system will show an error message ('"ExpressLRS Configurator.app" is damaged and can’t be
-opened. You should move it to the Trash.') when trying to install the application. To work around this, run the
-following command in a terminal after installing:
+mean that the operating system will show an error message ('"ExpressLRS Configurator.app" cannot be openend because the developer cannot be verified') when trying to install the application.
+
+To work around this, click `ExpressLRS Configurator.app` while pressing `control` key, and click `Open`. In the popup, you'll be able to forcefully open the application. (you may need to try this twice.)
+
+Alternatively, run the following command in a terminal after installing:
 
 ```
 sudo xattr -rd com.apple.quarantine /Applications/ExpressLRS\ Configurator.app
