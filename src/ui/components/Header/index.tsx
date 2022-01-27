@@ -2,6 +2,7 @@ import React, { FunctionComponent, memo } from 'react';
 import { AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import WebIcon from '@mui/icons-material/Web';
 import { Config } from '../../config';
 import LogotypeIcon from '../../../../assets/logotype.svg';
 import DiscordIcon from '../../../../assets/DiscordIcon.svg';
@@ -80,6 +81,17 @@ const Header: FunctionComponent = memo(() => {
           </Typography>
         </Box>
         <Box sx={styles.social}>
+          <Box sx={styles.link}>
+            <IconButton
+              href={Config.documentationUrl}
+              target="_blank"
+              title="Documentation"
+              rel="noreferrer noreferrer"
+              size="large"
+            >
+              <WebIcon sx={styles.svgIcon} />
+            </IconButton>
+          </Box>
           <Box sx={styles.link}>
             <IconButton
               href={Config.discordUrl}

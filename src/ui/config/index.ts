@@ -1,6 +1,7 @@
 import GitRepository from '../models/GitRepository';
 
 interface IConfig {
+  documentationUrl: string;
   githubRepositoryUrl: string;
   facebookGroupUrl: string;
   discordUrl: string;
@@ -10,6 +11,7 @@ interface IConfig {
 }
 
 export const Config: IConfig = {
+  documentationUrl: 'https://www.expresslrs.org/',
   githubRepositoryUrl: 'https://github.com/ExpressLRS/ExpressLRS',
   facebookGroupUrl: 'https://www.facebook.com/groups/636441730280366',
   discordUrl: 'https://discord.gg/dS6ReFY',
