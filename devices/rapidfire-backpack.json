@@ -42,5 +42,27 @@
     "wikiUrl": "https://www.expresslrs.org/{version}/hardware/backpack/backpack-vrx-setup/#rapidfire-backpack-connection",
     "deviceType": "Backpack",
     "aliases": []
+  },
+  {
+    "category": "VRX",
+    "name": "Rapidfire ESP12F Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "Rapidfire_ESP12F_Backpack_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "Rapidfire_ESP12F_Backpack_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/hardware/backpack/backpack-vrx-setup/#rapidfire-backpack-connection",
+    "deviceType": "Backpack",
+    "aliases": []
   }
 ]
