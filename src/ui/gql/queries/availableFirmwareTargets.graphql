@@ -29,5 +29,6 @@ query availableFirmwareTargets(
     deviceType
     parent
     abbreviatedName
+    verifiedHardware
   }
 }

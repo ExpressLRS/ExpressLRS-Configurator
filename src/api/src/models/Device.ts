@@ -26,6 +26,9 @@ export default class Device {
   @Field()
   deviceType: DeviceType;
 
+  @Field()
+  verifiedHardware: boolean;
+
   @Field({ nullable: true })
   parent?: string | null;
 
@@ -39,6 +42,7 @@ export default class Device {
     targets: Target[],
     userDefines: UserDefineKey[],
     deviceType: DeviceType,
+    verifiedHardware: boolean,
     wikiUrl?: string,
     parent?: string | null,
     abbreviatedName?: string | null
@@ -50,6 +54,7 @@ export default class Device {
     this.userDefines = userDefines;
     this.wikiUrl = wikiUrl;
     this.deviceType = deviceType;
+    this.verifiedHardware = verifiedHardware;
     this.parent = parent;
     this.abbreviatedName = abbreviatedName;
   }

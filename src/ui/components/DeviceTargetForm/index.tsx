@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { Box } from '@mui/material';
+import { Alert, AlertTitle, Box } from '@mui/material';
 import Omnibox from '../Omnibox';
 import {
   Device,
@@ -19,6 +19,9 @@ import FlashingMethodOptions, {
 const styles = {
   root: {
     marginY: 2,
+  },
+  dangerZone: {
+    marginBottom: 4,
   },
 };
 
@@ -156,6 +159,14 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
 
   return (
     <>
+      {currentDevice && !currentDevice.verifiedHardware && (
+        <Alert severity="warning" sx={styles.dangerZone}>
+          <AlertTitle>UNVERIFIED HARDWARE</AlertTitle>
+          The manufacturer of this hardware has not provided samples to the
+          developers for evaluation and verification, contact them for support
+          or proceed at your own risk. Not all features may work.
+        </Alert>
+      )}
       <Box sx={styles.root}>
         <Omnibox
           title="Device category"

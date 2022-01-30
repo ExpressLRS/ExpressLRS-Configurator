@@ -40,7 +40,8 @@
         "category": "HiYOUNGER 900 MHz",
         "name": "HiYOUNGER 900 TX",
         "wikiUrl": "",
-        "abbreviatedName": "HiYOUNGER 900 TX"
+        "abbreviatedName": "HiYOUNGER 900 TX",
+        "verifiedHardware": false
       }
     ]
   },
@@ -123,7 +124,8 @@
         "category": "HiYOUNGER 900 MHz",
         "name": "HiYOUNGER 900 RX",
         "wikiUrl": "",
-        "abbreviatedName": "HiYOUNGER 900 RX"
+        "abbreviatedName": "HiYOUNGER 900 RX",
+        "verifiedHardware": false
       }
     ]
   }

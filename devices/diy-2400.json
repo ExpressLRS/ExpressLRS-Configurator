@@ -187,49 +187,57 @@
         "category": "Flywoo 2.4 GHz",
         "name": "Flywoo EL24E 2400 RX",
         "wikiUrl": "",
-        "abbreviatedName": "Flywoo EL24E"
+        "abbreviatedName": "Flywoo EL24E",
+        "verifiedHardware": false
       },
       {
         "category": "Flywoo 2.4 GHz",
         "name": "Flywoo EL24P 2400 RX",
         "wikiUrl": "",
-        "abbreviatedName": "Flywoo EL24P"
+        "abbreviatedName": "Flywoo EL24P",
+        "verifiedHardware": false
       },
       {
         "category": "HiYOUNGER 2.4 GHz",
         "name": "HiYOUNGER SP24S 2400 RX",
         "wikiUrl": "",
-        "abbreviatedName": "HiYOUNGER SP24S"
+        "abbreviatedName": "HiYOUNGER SP24S",
+        "verifiedHardware": false
       },
       {
         "category": "HiYOUNGER 2.4 GHz",
         "name": "HiYOUNGER EP24S 2400 RX",
         "wikiUrl": "",
-        "abbreviatedName": "HiYOUNGER EP24S"
+        "abbreviatedName": "HiYOUNGER EP24S",
+        "verifiedHardware": false
       },
       {
         "category": "HiYOUNGER 2.4 GHz",
         "name": "HiYOUNGER RX24T 2400 RX",
         "wikiUrl": "",
-        "abbreviatedName": "HiYOUNGER RX24T"
+        "abbreviatedName": "HiYOUNGER RX24T",
+        "verifiedHardware": false
       },
       {
         "category": "JHEMCU 2.4 GHz",
         "name": "JHEMCU SP24S 2400 RX",
         "wikiUrl": "",
-        "abbreviatedName": "JHEMCU SP24S"
+        "abbreviatedName": "JHEMCU SP24S",
+        "verifiedHardware": false
       },
       {
         "category": "JHEMCU 2.4 GHz",
         "name": "JHEMCU EP24S 2400 RX",
         "wikiUrl": "",
-        "abbreviatedName": "JHEMCU EP24S"
+        "abbreviatedName": "JHEMCU EP24S",
+        "verifiedHardware": false
       },
       {
         "category": "JHEMCU 2.4 GHz",
         "name": "JHEMCU RX24T 2400 RX",
         "wikiUrl": "",
-        "abbreviatedName": "JHEMCU RX24T"
+        "abbreviatedName": "JHEMCU RX24T",
+        "verifiedHardware": false
       },
       {
         "category": "Jumper 2.4 GHz",
