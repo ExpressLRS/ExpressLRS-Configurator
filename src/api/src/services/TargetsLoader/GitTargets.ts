@@ -1,11 +1,10 @@
 import { Service } from 'typedi';
-import path from 'path';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import TargetArgs from '../../graphql/args/Target';
 import { LoggerService } from '../../logger';
 import Device from '../../models/Device';
 import DeviceService from '../Device';
-import { GitRepository, ITargets } from './index';
+import TargetsLoader, { GitRepository } from './index';
 import loadTargetsFromDirectory from './loadTargetsFromDirectory';
 import {
   findGitExecutable,
@@ -13,13 +12,15 @@ import {
 } from '../../library/FirmwareDownloader';
 
 @Service()
-export default class GitTargetsService implements ITargets {
+export default class GitTargetsService extends TargetsLoader {
   constructor(
     private logger: LoggerService,
     private deviceService: DeviceService,
     private PATH: string,
     private targetStoragePath: string
-  ) {}
+  ) {
+    super();
+  }
 
   async loadTargetsList(
     args: TargetArgs,
@@ -52,7 +53,7 @@ export default class GitTargetsService implements ITargets {
       case FirmwareSource.GitBranch:
         const branchResult = await firmwareDownload.checkoutBranch(
           gitRepository.url,
-          path.join(gitRepository.srcFolder, 'targets'),
+          `${gitRepository.srcFolder}/targets`,
           args.gitBranch
         );
         availableTargets = await loadTargetsFromDirectory(branchResult.path);
@@ -60,7 +61,7 @@ export default class GitTargetsService implements ITargets {
       case FirmwareSource.GitCommit:
         const commitResult = await firmwareDownload.checkoutCommit(
           gitRepository.url,
-          path.join(gitRepository.srcFolder, 'targets'),
+          `${gitRepository.srcFolder}/targets`,
           args.gitCommit
         );
         availableTargets = await loadTargetsFromDirectory(commitResult.path);
@@ -68,7 +69,7 @@ export default class GitTargetsService implements ITargets {
       case FirmwareSource.GitTag:
         const tagResult = await firmwareDownload.checkoutTag(
           gitRepository.url,
-          path.join(gitRepository.srcFolder, 'targets'),
+          `${gitRepository.srcFolder}/targets`,
           args.gitTag
         );
         availableTargets = await loadTargetsFromDirectory(tagResult.path);
@@ -79,14 +80,14 @@ export default class GitTargetsService implements ITargets {
         }
         const prResult = await firmwareDownload.checkoutCommit(
           gitRepository.url,
-          path.join(gitRepository.srcFolder, 'targets'),
+          `${gitRepository.srcFolder}/targets`,
           args.gitPullRequest.headCommitHash
         );
         availableTargets = await loadTargetsFromDirectory(prResult.path);
         break;
       case FirmwareSource.Local:
         availableTargets = await loadTargetsFromDirectory(
-          path.join(args.localPath, 'targets')
+          `${args.localPath}/targets`
         );
         break;
       default:
