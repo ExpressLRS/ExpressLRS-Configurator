@@ -391,6 +391,7 @@ export default class FirmwareService {
         );
         if (!compileResult.success) {
           this.logger?.error('compile error', undefined, {
+            code: compileResult.code,
             stderr: compileResult.stderr,
             stdout: compileResult.stdout,
           });
