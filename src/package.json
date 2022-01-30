@@ -15,6 +15,6 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "serialport": "9.0.7"
+    "serialport": "9.2.8"
   }
 }
