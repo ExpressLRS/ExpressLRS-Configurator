@@ -25,6 +25,7 @@ import {
   UpdateBuildStatusRequestBody,
 } from './ipc';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
+import packageJson from '../package.json';
 
 const logsPath = path.join(app.getPath('userData'), 'logs');
 const logsFilename = 'expressslrs-configurator.log';
@@ -239,9 +240,9 @@ const createWindow = async () => {
   await localServer.start(
     {
       configuratorGit: {
-        url: 'https://github.com/ExpressLRS/ExpressLRS-Configurator',
-        owner: 'ExpressLRS',
-        repositoryName: 'ExpressLRS-Configurator',
+        url: packageJson.repository.url.replaceAll('git+', ''),
+        owner: packageJson.build.publish.owner,
+        repositoryName: packageJson.build.publish.repo,
       },
       multicastDnsSimulatorEnabled:
         process.env.MULTICAST_DNS_SIMULATOR_ENABLED === 'true',
