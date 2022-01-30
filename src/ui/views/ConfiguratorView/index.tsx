@@ -75,6 +75,7 @@ import WifiDeviceSelect from '../../components/WifiDeviceSelect';
 import WifiDeviceList from '../../components/WifiDeviceList';
 import GitRepository from '../../models/GitRepository';
 import ShowTimeoutAlerts from '../../components/ShowTimeoutAlerts';
+import ShowAfterTimeout from '../../components/ShowAfterTimeout';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
 import MainLayout from '../../layouts/MainLayout';
@@ -1024,9 +1025,39 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
               <CardTitle icon={<SettingsIcon />} title="Result" />
               <Divider />
               <CardContent>
-                <Box sx={styles.buildNotification}>
-                  <BuildResponse response={response?.buildFlashFirmware} />
-                </Box>
+                {response?.buildFlashFirmware?.success &&
+                  currentJobType === BuildJobType.BuildAndFlash &&
+                  deviceTarget?.flashingMethod === FlashingMethod.WIFI && (
+                    <>
+                      <Alert sx={styles.buildNotification} severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                        Please wait for LED to resume blinking before
+                        disconnecting power
+                      </Alert>
+                    </>
+                  )}
+                <ShowAfterTimeout
+                  timeout={
+                    response?.buildFlashFirmware?.success &&
+                    currentJobType === BuildJobType.BuildAndFlash &&
+                    deviceTarget?.flashingMethod === FlashingMethod.WIFI
+                      ? 15000
+                      : 1000
+                  }
+                  active={!buildInProgress}
+                >
+                  <Box sx={styles.buildNotification}>
+                    <BuildResponse response={response?.buildFlashFirmware} />
+                  </Box>
+                  {response?.buildFlashFirmware?.success && hasLuaScript && (
+                    <>
+                      <Alert sx={styles.buildNotification} severity="info">
+                        <AlertTitle>Update Lua Script</AlertTitle>
+                        Make sure to update the Lua script on your radio
+                      </Alert>
+                    </>
+                  )}
+                </ShowAfterTimeout>
                 {response?.buildFlashFirmware?.success &&
                   currentJobType === BuildJobType.Build && (
                     <>
@@ -1038,14 +1069,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       </Alert>
                     </>
                   )}
-                {response?.buildFlashFirmware?.success && hasLuaScript && (
-                  <>
-                    <Alert sx={styles.buildNotification} severity="info">
-                      <AlertTitle>Update Lua Script</AlertTitle>
-                      Make sure to update the Lua script on your radio
-                    </Alert>
-                  </>
-                )}
               </CardContent>
               <Divider />
             </>
