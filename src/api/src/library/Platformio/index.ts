@@ -85,11 +85,11 @@ export default class Platformio {
   async findPythonExecutable(envPath: string): Promise<string> {
     const IS_WINDOWS = process.platform.startsWith('win');
     const exenames = IS_WINDOWS
-      ? ['python.exe']
+      ? ['python3.exe', 'python.exe']
       : ['python3', 'python', 'python2'];
     const pythonAssertCode = [
       'import sys',
-      'assert sys.version_info >= (2, 7)',
+      'assert sys.version_info >= (3, 6)',
       'print(sys.executable)',
     ];
     // eslint-disable-next-line no-restricted-syntax
