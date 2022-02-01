@@ -568,7 +568,7 @@ export default class FirmwareService {
     const dotPlatformio = path.join(os.homedir(), '.platformio');
     const statResult = await fs.promises.lstat(dotPlatformio);
     if (!statResult.isDirectory()) {
-      throw new Error(`.platformio is not a directory: ${dotPlatformio}`);
+      return Promise.resolve();
     }
     return new Promise((resolve, reject) => {
       rimraf(dotPlatformio, (err) => {
@@ -618,7 +618,7 @@ export default class FirmwareService {
           err: e,
         }
       );
-      return this.clearPlatformioCoreDir();
+      return this.removePlatformioDir();
     }
     return Promise.resolve();
   }
