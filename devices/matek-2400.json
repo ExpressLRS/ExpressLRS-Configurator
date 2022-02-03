@@ -34,7 +34,15 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-matek2400/",
     "deviceType": "ExpressLRS",
-    "aliases": []
+    "aliases": [
+      {
+        "category": "Skystars 2.4 GHz",
+        "name": "Skystars SS24D 2400 RX",
+        "wikiUrl": "",
+        "abbreviatedName": "Skystars SS24D",
+        "verifiedHardware": true
+      }
+    ]
   },
   {
     "category": "Matek 2.4 GHz",
