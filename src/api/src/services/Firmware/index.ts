@@ -454,7 +454,10 @@ export default class FirmwareService {
         );
       }
 
-      if (params.type === BuildJobType.BuildAndFlash) {
+      if (
+        params.type === BuildJobType.BuildAndFlash ||
+        params.type === BuildJobType.ForceFlash
+      ) {
         await this.updateProgress(
           BuildProgressNotificationType.Info,
           BuildFirmwareStep.FLASHING_FIRMWARE
@@ -466,17 +469,26 @@ export default class FirmwareService {
           params.serialDevice,
           (output) => {
             this.updateLogs(output);
-          }
+          },
+          params.type
         );
         if (!flashResult.success) {
           this.logger?.error('flash error', undefined, {
             stderr: flashResult.stderr,
             stdout: flashResult.stdout,
           });
+          const uploadErrorRegexp = /\*\*\* \[upload\] Error (-*\d+)/g;
+          let uploadError = 0;
+          const matches = [...flashResult.stderr.matchAll(uploadErrorRegexp)];
+          if (matches.length > 0) {
+            uploadError = Number.parseInt(matches[0][1], 10);
+          }
           return new BuildFlashFirmwareResult(
             false,
             flashResult.stderr,
-            BuildFirmwareErrorType.FlashError
+            uploadError === -2
+              ? BuildFirmwareErrorType.TargetMismatch
+              : BuildFirmwareErrorType.FlashError
           );
         }
       }

@@ -37,6 +37,8 @@ const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
           return 'Build error';
         case BuildFirmwareErrorType.FlashError:
           return 'Flash error';
+        case BuildFirmwareErrorType.TargetMismatch:
+          return 'The target you are trying to flash does not match the devices current target, if you are sure you want to do this, click Force Flash below';
         default:
           return '';
       }

@@ -5,6 +5,7 @@ import path from 'path';
 import child_process from 'child_process';
 import Commander, { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 import { LoggerService } from '../../logger';
+import BuildJobType from '../../models/enum/BuildJobType';
 
 interface PlatformioCoreState {
   core_version: string;
@@ -229,8 +230,16 @@ export default class Platformio {
     projectDir: string,
     environment: string,
     serialPort: string | undefined,
-    onUpdate: OnOutputFunc = NoOpFunc
+    onUpdate: OnOutputFunc = NoOpFunc,
+    buildJobType: BuildJobType
   ) {
+    let pioTarget = 'upload';
+    if (buildJobType === BuildJobType.ForceFlash) {
+      pioTarget = 'uploadforce';
+    } else if (buildJobType === BuildJobType.CheckTarget) {
+      pioTarget = 'uploadconfirm';
+    }
+
     const params = [
       'run',
       '--project-dir',
@@ -238,7 +247,7 @@ export default class Platformio {
       '--environment',
       environment,
       '--target',
-      'upload',
+      pioTarget,
     ];
     if (serialPort !== undefined && serialPort !== null) {
       params.push('--upload-port');
