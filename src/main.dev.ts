@@ -26,6 +26,7 @@ import {
 } from './ipc';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
 import { FirmwareParamsLoaderType } from './api/src/config';
+import packageJson from '../package.json';
 
 const logsPath = path.join(app.getPath('userData'), 'logs');
 const logsFilename = 'expressslrs-configurator.log';
@@ -235,7 +236,7 @@ const createWindow = async () => {
   if (isWindows) {
     const portablePythonLocation = path.join(
       dependenciesPath,
-      'windows_amd64/python-portable-windows_amd64-3.7.7'
+      'windows_amd64/python-3.11.0a4.amd64'
     );
     const portableGitLocation = path.join(
       dependenciesPath,
@@ -273,9 +274,9 @@ const createWindow = async () => {
   await localServer.start(
     {
       configuratorGit: {
-        url: 'https://github.com/ExpressLRS/ExpressLRS-Configurator',
-        owner: 'ExpressLRS',
-        repositoryName: 'ExpressLRS-Configurator',
+        url: packageJson.repository.url.replaceAll('git+', ''),
+        owner: packageJson.build.publish.owner,
+        repositoryName: packageJson.build.publish.repo,
       },
       multicastDnsSimulatorEnabled:
         process.env.MULTICAST_DNS_SIMULATOR_ENABLED === 'true',

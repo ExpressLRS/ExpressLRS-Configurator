@@ -1,7 +1,7 @@
 {
   "name": "expresslrs-configurator",
   "productName": "ExpressLRS Configurator",
-  "version": "1.3.4",
+  "version": "1.3.6",
   "description": "Cross platform configuration tool for the ExpressLRS firmware",
   "main": "./main.prod.js",
   "author": {
@@ -15,6 +15,6 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "serialport": "9.0.7"
+    "serialport": "9.2.8"
   }
 }

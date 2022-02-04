@@ -41,6 +41,10 @@
       {
         "flashingMethod": "WIFI",
         "name": "Jumper_AION_2400_T-Pro_TX_via_WIFI"
+      },
+      {
+        "flashingMethod": "EdgeTxPassthrough",
+        "name": "Jumper_AION_2400_T-Pro_TX_via_ETX"
       }
     ],
     "userDefines": [

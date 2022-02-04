@@ -51,6 +51,7 @@ export default class Commander {
 
       try {
         const child = spawn(cmd, args, options);
+
         child.stdout?.on('data', (line) => {
           outputLines.push(line);
           onOutput(line.toString());
