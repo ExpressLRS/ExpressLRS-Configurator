@@ -25,6 +25,7 @@ import {
   UpdateBuildStatusRequestBody,
 } from './ipc';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
+import { FirmwareParamsLoaderType } from './api/src/config';
 import packageJson from '../package.json';
 
 const logsPath = path.join(app.getPath('userData'), 'logs');
@@ -171,6 +172,38 @@ const createWindow = async () => {
     'firmwares',
     'github'
   );
+  const targetsStoragePath = path.join(
+    app.getPath('userData'),
+    'firmwares',
+    'targets'
+  );
+  let targetsLoaderType: FirmwareParamsLoaderType =
+    FirmwareParamsLoaderType.Git;
+  if (
+    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareParamsLoaderType.Git
+  ) {
+    targetsLoaderType = FirmwareParamsLoaderType.Git;
+  }
+  if (
+    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareParamsLoaderType.Http
+  ) {
+    targetsLoaderType = FirmwareParamsLoaderType.Http;
+  }
+
+  const userDefinesStoragePath = path.join(
+    app.getPath('userData'),
+    'firmwares',
+    'userDefines'
+  );
+  let userDefinesLoaderType: FirmwareParamsLoaderType =
+    FirmwareParamsLoaderType.Git;
+  if (process.env.USER_DEFINES_LOADER_TYPE === FirmwareParamsLoaderType.Git) {
+    userDefinesLoaderType = FirmwareParamsLoaderType.Git;
+  }
+  if (process.env.USER_DEFINES_LOADER_TYPE === FirmwareParamsLoaderType.Http) {
+    userDefinesLoaderType = FirmwareParamsLoaderType.Http;
+  }
+
   const dependenciesPath = app.isPackaged
     ? path.join(process.resourcesPath, '../dependencies')
     : path.join(__dirname, '../dependencies');
@@ -237,6 +270,7 @@ const createWindow = async () => {
   logger.log('local api server PATH', {
     PATH,
   });
+
   await localServer.start(
     {
       configuratorGit: {
@@ -252,6 +286,10 @@ const createWindow = async () => {
       PATH,
       env: localApiServerEnv,
       devicesPath,
+      targetsStoragePath,
+      targetsLoader: targetsLoaderType,
+      userDefinesLoader: userDefinesLoaderType,
+      userDefinesStoragePath,
     },
     logger,
     port

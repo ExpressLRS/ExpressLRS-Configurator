@@ -1,29 +1,19 @@
-import { Octokit } from '@octokit/rest';
 import { Service } from 'typedi';
+import { Octokit } from '@octokit/rest';
 import fetch from 'node-fetch';
-import * as path from 'path';
-import fs from 'fs';
-import FirmwareSource from '../../models/enum/FirmwareSource';
-import TargetArgs from '../../graphql/args/Target';
+import path from 'path';
 import { LoggerService } from '../../logger';
-import Device from '../../models/Device';
 import DeviceService from '../Device';
-
-interface GitRepository {
-  owner: string;
-  repositoryName: string;
-  srcFolder: string;
-}
-
-export interface ITargets {
-  loadTargetsList(
-    args: TargetArgs,
-    gitRepository: GitRepository
-  ): Promise<Device[]>;
-}
+import extractTargetFiles from './extractTargetFiles';
+import extractTargets from './extractTargets';
+import TargetArgs from '../../graphql/args/Target';
+import Device from '../../models/Device';
+import FirmwareSource from '../../models/enum/FirmwareSource';
+import loadTargetsFromDirectory from './loadTargetsFromDirectory';
+import { GitRepository, ITargets } from './index';
 
 @Service()
-export default class TargetsService implements ITargets {
+export default class HttpTargetsService implements ITargets {
   client: Octokit;
 
   constructor(
@@ -31,20 +21,6 @@ export default class TargetsService implements ITargets {
     private deviceService: DeviceService
   ) {
     this.client = new Octokit();
-  }
-
-  extractTargets(data: string): string[] {
-    const targetsRegexp = /\[env:(.*)\]/g;
-    const parsedResults = [...data.matchAll(targetsRegexp)];
-
-    return parsedResults
-      .map((matchedGroups) => {
-        if (matchedGroups.length === 2) {
-          return matchedGroups[1];
-        }
-        return '';
-      })
-      .filter((i) => i);
   }
 
   async downloadFile(url: string): Promise<string> {
@@ -60,17 +36,6 @@ export default class TargetsService implements ITargets {
     return body;
   }
 
-  extractTargetFiles(platformioFileContents: string): string[] {
-    const extraConfigsRegex = /(targets\/.*?.ini)/g;
-    const extraTargetFiles = [
-      ...platformioFileContents.matchAll(extraConfigsRegex),
-    ];
-
-    return extraTargetFiles.map((item) => {
-      return item[1];
-    });
-  }
-
   async loadTargetsFromGitHub(
     gitRepositoryOwner: string,
     gitRepositoryName: string,
@@ -84,19 +49,19 @@ export default class TargetsService implements ITargets {
       const platformioFile = `https://raw.githubusercontent.com/${gitRepositoryOwner}/${gitRepositoryName}/${ref}${gitRepositorySrcFolder}/platformio.ini`;
       const platformioFileContents = await this.downloadFile(platformioFile);
 
-      const targetFiles = this.extractTargetFiles(platformioFileContents);
+      const targetFiles = extractTargetFiles(platformioFileContents);
 
       const values = await Promise.all(
         targetFiles.map(async (item) => {
           const contents = await this.downloadFile(
             `https://raw.githubusercontent.com/${gitRepositoryOwner}/${gitRepositoryName}/${ref}${gitRepositorySrcFolder}/${item}`
           );
-          const targets = this.extractTargets(contents);
+          const targets = extractTargets(contents);
           return targets;
         })
       );
 
-      const platformioFileTargets = this.extractTargets(platformioFileContents);
+      const platformioFileTargets = extractTargets(platformioFileContents);
 
       values.push(platformioFileTargets);
 
@@ -107,47 +72,6 @@ export default class TargetsService implements ITargets {
       this.logger?.log(`failed to get targets from ref: ${ref}`, { err });
       throw new Error(`failed to get targets from ref: ${ref}.  Error: ${err}`);
     }
-  }
-
-  async loadTargetsFromLocal(localPath: string): Promise<string[]> {
-    if (!fs.existsSync(localPath)) {
-      const errorMessage = `directory ${localPath} does not exist`;
-      this.logger?.log(errorMessage);
-      throw new Error(errorMessage);
-    }
-
-    const platformioFile = path.join(localPath, 'platformio.ini');
-
-    if (!fs.existsSync(platformioFile)) {
-      const errorMessage = `Please select the directory that contains the platformio.ini file`;
-      this.logger?.log(errorMessage);
-      throw new Error(errorMessage);
-    }
-
-    const platformioFileContents = (
-      await fs.promises.readFile(platformioFile)
-    ).toString();
-    const targetFiles = this.extractTargetFiles(platformioFileContents);
-
-    const values = await Promise.all(
-      targetFiles.map(async (file) => {
-        const filePath = path.join(localPath, file);
-        const stat = await fs.promises.stat(filePath);
-        if (stat.isFile()) {
-          const data = await fs.promises.readFile(filePath, 'utf8');
-          return this.extractTargets(data);
-        }
-        return [];
-      })
-    );
-
-    const platformioFileTargets = this.extractTargets(platformioFileContents);
-
-    values.push(platformioFileTargets);
-
-    return values.reduce<string[]>((prev, curr) => {
-      return prev.concat(curr);
-    }, []);
   }
 
   async loadTargetsList(
@@ -180,9 +104,6 @@ export default class TargetsService implements ITargets {
           args.gitTag
         );
         break;
-      case FirmwareSource.Local:
-        availableTargets = await this.loadTargetsFromLocal(args.localPath);
-        break;
       case FirmwareSource.GitPullRequest:
         if (args.gitPullRequest) {
           availableTargets = await this.loadTargetsFromGitHub(
@@ -193,13 +114,17 @@ export default class TargetsService implements ITargets {
           );
         }
         break;
+      case FirmwareSource.Local:
+        availableTargets = await loadTargetsFromDirectory(
+          path.join(args.localPath, 'targets')
+        );
+        break;
       default:
         throw new Error(
           `unsupported firmware source for the targets service: ${args.source}`
         );
     }
-    const devices = await this.deviceService.getDevices();
-
+    const devices = this.deviceService.getDevices();
     return devices
       .map((value) => {
         const device = { ...value };
