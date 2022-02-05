@@ -208,9 +208,11 @@ export default class Platformio {
     onUpdate: OnOutputFunc = NoOpFunc
   ) {
     return this.runPIOCommand(
-      ['run', '--project-dir', projectDir, '--environment', environment],
+      ['run', '--project-dir', `"${projectDir}"`, '--environment', environment],
       {
         env: this.env,
+        shell: true,
+        windowsVerbatimArguments: true,
       },
       onUpdate
     );
@@ -225,7 +227,7 @@ export default class Platformio {
     const params = [
       'run',
       '--project-dir',
-      projectDir,
+      `"${projectDir}"`,
       '--environment',
       environment,
       '--target',
@@ -239,6 +241,8 @@ export default class Platformio {
       params,
       {
         env: this.env,
+        shell: true,
+        windowsVerbatimArguments: true,
       },
       onUpdate
     );
