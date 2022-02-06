@@ -254,7 +254,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   }, [deviceTarget, deviceTargets]);
 
   useEffect(() => {
-    if (firmwareVersionData === null) {
+    if (
+      firmwareVersionData === null ||
+      validateFirmwareVersionData(firmwareVersionData).length > 0
+    ) {
       setDeviceTargets(null);
     } else {
       fetchDeviceTargets({
