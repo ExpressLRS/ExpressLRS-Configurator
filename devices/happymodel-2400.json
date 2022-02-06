@@ -140,7 +140,14 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-hmep2400/",
     "deviceType": "ExpressLRS",
-    "aliases": []
+    "aliases": [
+      {
+        "category": "RadioMaster 2.4 GHz",
+        "name": "RadioMaster EP 2400 RX",
+        "wikiUrl": "",
+        "abbreviatedName": "RM EP 2400RX"
+      }
+    ]
   },
   {
     "category": "Happymodel 2.4 GHz",
