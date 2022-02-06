@@ -55,6 +55,7 @@ import {
   DeviceType,
   UserDefineKey,
   UserDefineKind,
+  TargetDeviceOptionsQuery,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -240,7 +241,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       data: targetsResponse,
       error: targetsResponseError,
     },
-  ] = useAvailableFirmwareTargetsLazyQuery();
+  ] = useAvailableFirmwareTargetsLazyQuery({
+    fetchPolicy: 'network-only',
+  });
 
   const [
     fetchLuaScript,
@@ -297,6 +300,41 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     userDefineOptions: [],
   });
 
+  const handleDeviceOptionsResponse = async (
+    deviceOptionsResponse: TargetDeviceOptionsQuery
+  ) => {
+    const storage = new ApplicationStorage();
+    const deviceName = device?.name || null;
+    const userDefineOptions = await mergeWithDeviceOptionsFromStorage(
+      storage,
+      deviceName,
+      {
+        ...deviceOptionsFormData,
+        userDefineOptions: [...deviceOptionsResponse.targetDeviceOptions],
+      }
+    );
+
+    // if a network device is selected, merge in its options
+    if (selectedDevice && networkDevices.has(selectedDevice)) {
+      const networkDevice = networkDevices.get(selectedDevice);
+      userDefineOptions.userDefineOptions = userDefineOptions.userDefineOptions.map(
+        (userDefineOption) => {
+          const networkDeviceOption = networkDevice?.options.find(
+            (item) => item.key === userDefineOption.key
+          );
+
+          const newUserDefineOption = { ...userDefineOption };
+          if (networkDeviceOption) {
+            newUserDefineOption.enabled = networkDeviceOption.enabled;
+            newUserDefineOption.value = networkDeviceOption.value;
+          }
+          return newUserDefineOption;
+        }
+      );
+    }
+
+    setDeviceOptionsFormData(userDefineOptions);
+  };
   const [
     fetchOptions,
     {
@@ -304,7 +342,14 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       data: deviceOptionsResponse,
       error: deviceOptionsResponseError,
     },
-  ] = useTargetDeviceOptionsLazyQuery();
+  ] = useTargetDeviceOptionsLazyQuery({
+    fetchPolicy: 'network-only',
+    onCompleted: (data) => {
+      handleDeviceOptionsResponse(data).catch((err) => {
+        console.error('failed to handle device options response', err);
+      });
+    },
+  });
 
   useEffect(() => {
     if (
@@ -338,50 +383,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       });
     }
   }, [deviceTarget, firmwareVersionData, gitRepository, fetchOptions]);
-
-  useEffect(() => {
-    if (
-      deviceOptionsResponse?.targetDeviceOptions?.length &&
-      deviceOptionsResponse?.targetDeviceOptions?.length > 0
-    ) {
-      const handleUpdate = async () => {
-        const storage = new ApplicationStorage();
-        const deviceName = device?.name || null;
-        const userDefineOptions = await mergeWithDeviceOptionsFromStorage(
-          storage,
-          deviceName,
-          {
-            ...deviceOptionsFormData,
-            userDefineOptions: [...deviceOptionsResponse.targetDeviceOptions],
-          }
-        );
-
-        // if a network device is selected, merge in its options
-        if (selectedDevice && networkDevices.has(selectedDevice)) {
-          const networkDevice = networkDevices.get(selectedDevice);
-          userDefineOptions.userDefineOptions = userDefineOptions.userDefineOptions.map(
-            (userDefineOption) => {
-              const networkDeviceOption = networkDevice?.options.find(
-                (item) => item.key === userDefineOption.key
-              );
-
-              const newUserDefineOption = { ...userDefineOption };
-              if (networkDeviceOption) {
-                newUserDefineOption.enabled = networkDeviceOption.enabled;
-                newUserDefineOption.value = networkDeviceOption.value;
-              }
-              return newUserDefineOption;
-            }
-          );
-        }
-
-        setDeviceOptionsFormData(userDefineOptions);
-      };
-      handleUpdate().catch((err) => {
-        console.error(`failed to update device options form data: ${err}`);
-      });
-    }
-  }, [deviceOptionsResponse, deviceTargets]);
 
   const onResetToDefaults = () => {
     const handleReset = async () => {
@@ -787,6 +788,14 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             <CardTitle icon={<SettingsIcon />} title="Target" />
             <Divider />
             <CardContent>
+              {firmwareVersionData === null ||
+                (validateFirmwareVersionData(firmwareVersionData).length >
+                  0 && (
+                  <Alert severity="info">
+                    <AlertTitle>Notice</AlertTitle>
+                    Please select a firmware version first
+                  </Alert>
+                ))}
               {!loadingTargets && !targetsResponseError && (
                 <DeviceTargetForm
                   currentTarget={deviceTarget}
@@ -846,6 +855,16 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   onChange={onUserDefines}
                 />
               )}
+              {deviceOptionsFormData.userDefinesMode ===
+                UserDefinesMode.UserInterface &&
+                (firmwareVersionData === null ||
+                  validateFirmwareVersionData(firmwareVersionData).length > 0 ||
+                  deviceTarget === null) && (
+                  <Alert severity="info">
+                    <AlertTitle>Notice</AlertTitle>
+                    Please select a firmware version and device target first
+                  </Alert>
+                )}
               <ShowAlerts
                 severity="error"
                 messages={deviceOptionsResponseError}

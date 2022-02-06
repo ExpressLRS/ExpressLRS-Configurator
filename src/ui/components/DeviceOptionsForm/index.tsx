@@ -233,13 +233,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
           />
         </RadioGroup>
       </FormControl>
-      {target === null &&
-        deviceOptions.userDefinesMode === UserDefinesMode.UserInterface && (
-          <Alert severity="info">
-            <AlertTitle>Notice</AlertTitle>
-            Please select a firmware version and device target first
-          </Alert>
-        )}
       {deviceOptions.userDefinesMode === UserDefinesMode.Manual && (
         <>
           <TextField
