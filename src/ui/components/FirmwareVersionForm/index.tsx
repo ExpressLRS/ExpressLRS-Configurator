@@ -290,7 +290,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         }
       })
       .catch((err) => {
-        console.log('failed to get local directory path: ', err);
+        console.error('failed to get local directory path: ', err);
       });
   };
 

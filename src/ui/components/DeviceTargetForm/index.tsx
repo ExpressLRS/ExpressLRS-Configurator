@@ -167,12 +167,6 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
           or proceed at your own risk. Not all features may work.
         </Alert>
       )}
-      {(deviceOptions === null || deviceOptions.length === 0) && (
-        <Alert severity="info" sx={styles.dangerZone}>
-          <AlertTitle>Notice</AlertTitle>
-          Please select a firmware version first
-        </Alert>
-      )}
       {deviceOptions && deviceOptions?.length > 0 && (
         <>
           <Box sx={styles.root}>

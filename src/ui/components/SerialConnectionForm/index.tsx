@@ -115,7 +115,6 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
   }, [data, previousData]);
   const onSubmit = () => {
     if (currentValue !== null) {
-      console.log('currentValue', currentValue);
       onConnect(currentValue?.value, baudRate);
     }
   };
