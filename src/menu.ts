@@ -60,7 +60,7 @@ export default class MenuBuilder {
 
   buildDarwinTemplate(): MenuItemConstructorOptions[] {
     const subMenuAbout: DarwinMenuItemConstructorOptions = {
-      label: 'ExpressLRS Configurator',
+      label: app.getName(),
       submenu: [
         {
           label: 'About',

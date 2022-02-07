@@ -341,6 +341,10 @@ const createWindow = async () => {
       mainWindow.show();
       mainWindow.focus();
     }
+
+    // set the window title based on package.json
+    const windowTitle = require('./package.json').productName;
+    mainWindow.setTitle(windowTitle);
   });
 
   mainWindow.on('closed', () => {
