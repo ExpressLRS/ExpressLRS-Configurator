@@ -100,7 +100,6 @@
         "pacman",
         "rpm"
       ],
-      "packageName": "expresslrs-configurator",
       "category": "Development",
       "extraFiles": [
         "dependencies/get-platformio.py"
