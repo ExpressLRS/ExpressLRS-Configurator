@@ -52,6 +52,10 @@ const styles = {
   firmwareVersionAlert: {
     marginTop: 2,
   },
+  betaFpvAlert: {
+    marginTop: 2,
+    marginBottom: 1,
+  },
 };
 
 interface FirmwareVersionCardProps {
@@ -388,6 +392,8 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     }));
   }, [gitPullRequests]);
 
+  const showBetaFpvAlert =
+    localPath?.toLocaleLowerCase()?.indexOf('betafpv') > -1;
   return (
     <>
       <Tabs
@@ -505,6 +511,16 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
               value={localPath}
               onChange={onLocalPath}
             />
+
+            {showBetaFpvAlert && (
+              <Alert severity="error" sx={styles.betaFpvAlert}>
+                <AlertTitle>ATTENTION</AlertTitle>
+                You are trying to flash an outdated BetaFPV custom ExpressLRS
+                fork. BetaFPV hardware is fully supported in recent official
+                ExpressLRS releases. We recommend using official firmware to
+                have the best ExpressLRS experience.
+              </Alert>
+            )}
 
             <Button
               color="secondary"
