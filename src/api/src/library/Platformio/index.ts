@@ -194,8 +194,15 @@ export default class Platformio {
       });
     }
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    let { platformio_exe } = state;
+    // if using shell, surround exe in quotes in case path has a space in it
+    if (options.shell) {
+      platformio_exe = `"${platformio_exe}"`;
+    }
+
     return new Commander().runCommand(
-      state.platformio_exe,
+      platformio_exe,
       [...args],
       options,
       onOutput
