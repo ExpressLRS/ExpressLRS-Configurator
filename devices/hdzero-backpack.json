@@ -11,14 +11,6 @@
           "flashingMethod": "WIFI",
           "name": "HDZero_RX5.1_ESP8285_Backpack_via_WIFI"
         }
-        {
-          "flashingMethod": "UART",
-          "name": "HDZero_RX5.1_ESP32_Backpack_via_UART"
-        },
-        {
-          "flashingMethod": "WIFI",
-          "name": "HDZero_RX5.1_ESP32_Backpack_via_WIFI"
-        }
       ],
       "userDefines": [
         "BINDING_PHRASE",
