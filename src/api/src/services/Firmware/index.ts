@@ -564,7 +564,24 @@ export default class FirmwareService {
     await Promise.all(files.map((item) => rmrf(item)));
   }
 
-  async clearPlatformioCoreDir(): Promise<void> {
+  async removePlatformioDir(): Promise<void> {
+    const dotPlatformio = path.join(os.homedir(), '.platformio');
+    const statResult = await fs.promises.lstat(dotPlatformio);
+    if (!statResult.isDirectory()) {
+      return Promise.resolve();
+    }
+    return new Promise((resolve, reject) => {
+      rimraf(dotPlatformio, (err) => {
+        if (err) {
+          reject();
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+  async clearPlatformioUsingCoreState(): Promise<void> {
     const platformioStateJson = await this.platformio.getPlatformioState();
     if (
       platformioStateJson.core_dir === undefined ||
@@ -588,5 +605,21 @@ export default class FirmwareService {
         }
       });
     });
+  }
+
+  async clearPlatformioCoreDir(): Promise<void> {
+    try {
+      await this.clearPlatformioUsingCoreState();
+    } catch (e) {
+      this.logger?.error(
+        'failed to clear platformio files using platformio state',
+        undefined,
+        {
+          err: e,
+        }
+      );
+      return this.removePlatformioDir();
+    }
+    return Promise.resolve();
   }
 }

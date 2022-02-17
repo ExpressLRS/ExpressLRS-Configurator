@@ -158,7 +158,7 @@ export default class DeviceService implements IDevices {
     return devices;
   }
 
-  getDevices() {
+  getDevices(): Device[] {
     return this.devices;
   }
 }

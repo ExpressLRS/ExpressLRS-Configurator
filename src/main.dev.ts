@@ -25,6 +25,8 @@ import {
   UpdateBuildStatusRequestBody,
 } from './ipc';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
+import { FirmwareParamsLoaderType } from './api/src/config';
+import packageJson from '../package.json';
 
 const logsPath = path.join(app.getPath('userData'), 'logs');
 const logsFilename = 'expressslrs-configurator.log';
@@ -170,6 +172,38 @@ const createWindow = async () => {
     'firmwares',
     'github'
   );
+  const targetsStoragePath = path.join(
+    app.getPath('userData'),
+    'firmwares',
+    'targets'
+  );
+  let targetsLoaderType: FirmwareParamsLoaderType =
+    FirmwareParamsLoaderType.Git;
+  if (
+    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareParamsLoaderType.Git
+  ) {
+    targetsLoaderType = FirmwareParamsLoaderType.Git;
+  }
+  if (
+    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareParamsLoaderType.Http
+  ) {
+    targetsLoaderType = FirmwareParamsLoaderType.Http;
+  }
+
+  const userDefinesStoragePath = path.join(
+    app.getPath('userData'),
+    'firmwares',
+    'userDefines'
+  );
+  let userDefinesLoaderType: FirmwareParamsLoaderType =
+    FirmwareParamsLoaderType.Git;
+  if (process.env.USER_DEFINES_LOADER_TYPE === FirmwareParamsLoaderType.Git) {
+    userDefinesLoaderType = FirmwareParamsLoaderType.Git;
+  }
+  if (process.env.USER_DEFINES_LOADER_TYPE === FirmwareParamsLoaderType.Http) {
+    userDefinesLoaderType = FirmwareParamsLoaderType.Http;
+  }
+
   const dependenciesPath = app.isPackaged
     ? path.join(process.resourcesPath, '../dependencies')
     : path.join(__dirname, '../dependencies');
@@ -236,12 +270,13 @@ const createWindow = async () => {
   logger.log('local api server PATH', {
     PATH,
   });
+
   await localServer.start(
     {
       configuratorGit: {
-        url: 'https://github.com/ExpressLRS/ExpressLRS-Configurator',
-        owner: 'ExpressLRS',
-        repositoryName: 'ExpressLRS-Configurator',
+        url: packageJson.repository.url.replaceAll('git+', ''),
+        owner: packageJson.build.publish.owner,
+        repositoryName: packageJson.build.publish.repo,
       },
       multicastDnsSimulatorEnabled:
         process.env.MULTICAST_DNS_SIMULATOR_ENABLED === 'true',
@@ -251,6 +286,10 @@ const createWindow = async () => {
       PATH,
       env: localApiServerEnv,
       devicesPath,
+      targetsStoragePath,
+      targetsLoader: targetsLoaderType,
+      userDefinesLoader: userDefinesLoaderType,
+      userDefinesStoragePath,
     },
     logger,
     port
@@ -302,6 +341,10 @@ const createWindow = async () => {
       mainWindow.show();
       mainWindow.focus();
     }
+
+    // set the window title based on package.json
+    const windowTitle = require('./package.json').productName;
+    mainWindow.setTitle(windowTitle);
   });
 
   mainWindow.on('closed', () => {

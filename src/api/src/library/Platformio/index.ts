@@ -85,11 +85,11 @@ export default class Platformio {
   async findPythonExecutable(envPath: string): Promise<string> {
     const IS_WINDOWS = process.platform.startsWith('win');
     const exenames = IS_WINDOWS
-      ? ['python.exe']
+      ? ['python3.exe', 'python.exe']
       : ['python3', 'python', 'python2'];
     const pythonAssertCode = [
       'import sys',
-      'assert sys.version_info >= (2, 7)',
+      'assert sys.version_info >= (3, 6)',
       'print(sys.executable)',
     ];
     // eslint-disable-next-line no-restricted-syntax
@@ -194,8 +194,15 @@ export default class Platformio {
       });
     }
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    let { platformio_exe } = state;
+    // if using shell, surround exe in quotes in case path has a space in it
+    if (options.shell) {
+      platformio_exe = `"${platformio_exe}"`;
+    }
+
     return new Commander().runCommand(
-      state.platformio_exe,
+      platformio_exe,
       [...args],
       options,
       onOutput
@@ -208,9 +215,11 @@ export default class Platformio {
     onUpdate: OnOutputFunc = NoOpFunc
   ) {
     return this.runPIOCommand(
-      ['run', '--project-dir', projectDir, '--environment', environment],
+      ['run', '--project-dir', `"${projectDir}"`, '--environment', environment],
       {
         env: this.env,
+        shell: true,
+        windowsVerbatimArguments: true,
       },
       onUpdate
     );
@@ -225,7 +234,7 @@ export default class Platformio {
     const params = [
       'run',
       '--project-dir',
-      projectDir,
+      `"${projectDir}"`,
       '--environment',
       environment,
       '--target',
@@ -239,6 +248,8 @@ export default class Platformio {
       params,
       {
         env: this.env,
+        shell: true,
+        windowsVerbatimArguments: true,
       },
       onUpdate
     );

@@ -84,6 +84,13 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     return path.join(this.baseDirectory, path.basename(repository));
   }
 
+  getSourceDirectory(directory: string, srcFolder: string): string {
+    if (srcFolder === '/') {
+      return directory;
+    }
+    return path.join(directory, srcFolder);
+  }
+
   getSimpleGit(repository: string) {
     const options: SimpleGitOptions = {
       baseDir: this.getRepoDirectory(repository),
@@ -148,7 +155,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     const git = this.getSimpleGit(directory);
     await git.checkout(tagName);
     return {
-      path: path.join(directory, srcFolder),
+      path: this.getSourceDirectory(directory, srcFolder),
     };
   }
 
@@ -162,7 +169,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     const git = this.getSimpleGit(directory);
     await git.checkout(`origin/${branch}`);
     return {
-      path: path.join(directory, srcFolder),
+      path: this.getSourceDirectory(directory, srcFolder),
     };
   }
 
@@ -176,7 +183,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     const git = this.getSimpleGit(directory);
     await git.checkout(commit);
     return {
-      path: path.join(directory, srcFolder),
+      path: this.getSourceDirectory(directory, srcFolder),
     };
   }
 }

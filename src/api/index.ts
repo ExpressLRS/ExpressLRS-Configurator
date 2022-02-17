@@ -4,7 +4,7 @@ import * as http from 'http';
 import getPort from 'get-port';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
-import { ConfigToken, IConfig } from './src/config';
+import { ConfigToken, FirmwareParamsLoaderType, IConfig } from './src/config';
 import FirmwareService from './src/services/Firmware';
 import Platformio from './src/library/Platformio';
 import FirmwareBuilder from './src/library/FirmwareBuilder';
@@ -22,7 +22,7 @@ import UpdatesService from './src/services/Updates';
 import UpdatesResolver from './src/graphql/resolvers/Updates.resolver';
 import SerialMonitorResolver from './src/graphql/resolvers/SerialMonitor.resolver';
 import SerialMonitorService from './src/services/SerialMonitor';
-import TargetsService from './src/services/Targets';
+import GitTargetsService from './src/services/TargetsLoader/GitTargets';
 import DeviceService from './src/services/Device';
 import TargetUserDefinesFactory from './src/factories/TargetUserDefinesFactory';
 import MulticastDnsService from './src/services/MulticastDns';
@@ -31,6 +31,10 @@ import LuaService from './src/services/Lua';
 import LuaResolver from './src/graphql/resolvers/Lua.resolver';
 import MulticastDnsSimulatorService from './src/services/MulticastDns/MulticastDnsSimulator';
 import MulticastDnsNotificationsService from './src/services/MulticastDnsNotificationsService';
+import HttpTargetsService from './src/services/TargetsLoader/HttpTargets';
+import TargetsLoader from './src/services/TargetsLoader';
+import HttpUserDefinesLoader from './src/services/UserDefinesLoader/HttpUserDefinesLoader';
+import GitUserDefinesLoader from './src/services/UserDefinesLoader/GitUserDefinesLoader';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -106,12 +110,46 @@ export default class ApiServer {
       deviceService
     );
 
-    Container.set(
-      UserDefinesBuilder,
-      new UserDefinesBuilder(logger, targetUserDefinesFactory)
-    );
+    if (config.userDefinesLoader === FirmwareParamsLoaderType.Git) {
+      Container.set(
+        UserDefinesBuilder,
+        new UserDefinesBuilder(
+          targetUserDefinesFactory,
+          new GitUserDefinesLoader(
+            logger,
+            config.PATH,
+            config.userDefinesStoragePath
+          )
+        )
+      );
+    } else if (config.userDefinesLoader === FirmwareParamsLoaderType.Http) {
+      Container.set(
+        UserDefinesBuilder,
+        new UserDefinesBuilder(
+          targetUserDefinesFactory,
+          new HttpUserDefinesLoader(logger)
+        )
+      );
+    }
 
-    Container.set(TargetsService, new TargetsService(logger, deviceService));
+    if (config.targetsLoader === FirmwareParamsLoaderType.Git) {
+      Container.set(
+        TargetsLoader,
+        new GitTargetsService(
+          logger,
+          deviceService,
+          config.PATH,
+          config.targetsStoragePath
+        )
+      );
+    } else if (config.targetsLoader === FirmwareParamsLoaderType.Http) {
+      Container.set(
+        TargetsLoader,
+        new HttpTargetsService(logger, deviceService)
+      );
+    } else {
+      throw new Error('FirmwareTargetsLoaderType is not set');
+    }
 
     Container.set(LuaService, new LuaService(logger));
 

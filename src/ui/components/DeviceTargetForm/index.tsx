@@ -167,32 +167,36 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
           or proceed at your own risk. Not all features may work.
         </Alert>
       )}
-      <Box sx={styles.root}>
-        <Omnibox
-          title="Device category"
-          currentValue={
-            categorySelectOptions.find(
-              (item) => item.value === currentCategory
-            ) ?? null
-          }
-          onChange={onCategoryChange}
-          options={categorySelectOptions}
-        />
-      </Box>
-      <Box sx={styles.root}>
-        <Omnibox
-          title="Device"
-          currentValue={
-            deviceSelectOptions.find(
-              (item) => item.value === currentDevice?.name
-            ) ?? null
-          }
-          onChange={onDeviceChange}
-          options={deviceSelectOptions}
-          // if no category has been selected, disable the target select box
-          disabled={currentCategory === null}
-        />
-      </Box>
+      {deviceOptions && deviceOptions?.length > 0 && (
+        <>
+          <Box sx={styles.root}>
+            <Omnibox
+              title="Device category"
+              currentValue={
+                categorySelectOptions.find(
+                  (item) => item.value === currentCategory
+                ) ?? null
+              }
+              onChange={onCategoryChange}
+              options={categorySelectOptions}
+            />
+          </Box>
+          <Box sx={styles.root}>
+            <Omnibox
+              title="Device"
+              currentValue={
+                deviceSelectOptions.find(
+                  (item) => item.value === currentDevice?.name
+                ) ?? null
+              }
+              onChange={onDeviceChange}
+              options={deviceSelectOptions}
+              // if no category has been selected, disable the target select box
+              disabled={currentCategory === null}
+            />
+          </Box>
+        </>
+      )}
 
       {currentCategory && currentDevice && deviceOptions && (
         <FlashingMethodOptions
