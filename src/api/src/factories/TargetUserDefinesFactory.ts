@@ -140,6 +140,10 @@ export default class TargetUserDefinesFactory {
               ['AUX1', 'AUX2', 'AUX3', 'AUX4', 'AUX5', 'AUX6'],
               'AUX6'
             );
+          case UserDefineKey.DVR_START_DELAY:
+            return UserDefine.Text(key, '');
+          case UserDefineKey.DVR_STOP_DELAY:
+            return UserDefine.Text(key, '');
           default:
             throw new Error(`User Define ${key} is not known`);
         }

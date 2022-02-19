@@ -163,6 +163,40 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.DVR_START_DELAY:
+          return (
+            <div>
+              <p>
+                This option delays the start of DVR recording by a specified
+                amount of seconds.
+              </p>
+              <p>
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines"
+                >
+                  Check our Wiki page for latest definition.
+                </DocumentationLink>
+              </p>
+            </div>
+          );
+        case UserDefineKey.DVR_STOP_DELAY:
+          return (
+            <div>
+              <p>
+                This option delays the stop of DVR recording by a specified
+                amount of seconds.
+              </p>
+              <p>
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines"
+                >
+                  Check our Wiki page for latest definition.
+                </DocumentationLink>
+              </p>
+            </div>
+          );
         case UserDefineKey.AUTO_WIFI_ON_BOOT:
           return (
             <div>

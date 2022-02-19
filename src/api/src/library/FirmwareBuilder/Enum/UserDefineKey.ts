@@ -52,6 +52,8 @@ enum UserDefineKey {
   DEVICE_NAME = 'DDEVICE_NAME',
   // VRX Backpack
   DVR_START_STOP_CHANNEL = 'DDVR_START_STOP_CHANNEL',
+  DVR_START_DELAY = 'DDVR_START_DELAY',
+  DVR_STOP_DELAY = 'DDVR_STOP_DELAY',
 }
 
 export default UserDefineKey;
