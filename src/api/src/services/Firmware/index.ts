@@ -25,6 +25,7 @@ import FirmwareBuilder from '../../library/FirmwareBuilder';
 import { LoggerService } from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import PullRequest from '../../models/PullRequest';
+import UploadType from '../../library/Platformio/Enum/UploadType';
 
 interface FirmwareVersionData {
   source: FirmwareSource;
@@ -462,6 +463,19 @@ export default class FirmwareService {
           BuildProgressNotificationType.Info,
           BuildFirmwareStep.FLASHING_FIRMWARE
         );
+
+        let uploadType: UploadType;
+        switch (params.type) {
+          case BuildJobType.BuildAndFlash:
+            uploadType = UploadType.Normal;
+            break;
+          case BuildJobType.ForceFlash:
+            uploadType = UploadType.Force;
+            break;
+          default:
+            throw new Error(`Unknown build job type ${params.type}`);
+        }
+
         const flashResult = await this.builder.flash(
           params.target,
           userDefines,
@@ -470,7 +484,7 @@ export default class FirmwareService {
           (output) => {
             this.updateLogs(output);
           },
-          params.type
+          uploadType
         );
         if (!flashResult.success) {
           this.logger?.error('flash error', undefined, {

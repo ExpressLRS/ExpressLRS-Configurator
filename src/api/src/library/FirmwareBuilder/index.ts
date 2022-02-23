@@ -3,7 +3,7 @@ import path from 'path';
 import Platformio from '../Platformio';
 import { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 import UserDefineKey from './Enum/UserDefineKey';
-import BuildJobType from '../../models/enum/BuildJobType';
+import UploadType from '../Platformio/Enum/UploadType';
 
 interface UserDefinesCompatiblityResult {
   compatible: boolean;
@@ -77,7 +77,7 @@ export default class FirmwareBuilder {
     firmwarePath: string,
     serialPort: string | undefined,
     onOutput: OnOutputFunc = NoOpFunc,
-    buildJobType: BuildJobType
+    uploadType: UploadType
   ): Promise<CommandResult> {
     await this.storeUserDefines(firmwarePath, userDefines);
     return this.platformio.flash(
@@ -85,7 +85,7 @@ export default class FirmwareBuilder {
       target,
       serialPort,
       onOutput,
-      buildJobType
+      uploadType
     );
   }
 }
