@@ -137,32 +137,6 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
-        case UserDefineKey.DVR_START_STOP_CHANNEL:
-          return (
-            <div>
-              <p>
-                Use this option to Start / Stop DVR recording using auxiliary
-                input.
-              </p>
-              <p>Available channels:</p>
-              <p>
-                AUX1 - Channel 5<br />
-                AUX2 - Channel 6<br />
-                AUX3 - Channel 7<br />
-                AUX4 - Channel 8<br />
-                AUX5 - Channel 9<br />
-                AUX6 - Channel 10
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
         case UserDefineKey.AUTO_WIFI_ON_BOOT:
           return (
             <div>
@@ -615,7 +589,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
           return (
             <div>
               <p>
-                Do not transmit sync packets while armed. This is useful for
+                Do not transmit sync packets while armed. If you are using a
+                different channel than the default you need to edit (or you may
+                not be able to gain sync safely - default is listed in
+                ARM_CHANNEL as AUX1 which is Channel 5). This is useful for
                 racing as there is less time & packets wasted on sending sync
                 packets. HOWEVER if you are doing serious long range, keep this
                 turned off because in the case of a sustained failsafe, link can

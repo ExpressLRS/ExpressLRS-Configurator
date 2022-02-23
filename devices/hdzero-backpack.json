@@ -1,25 +1,24 @@
 [
-  {
-    "category": "VRX",
-    "name": "HDZero RX5.1 VRX Backpack",
-    "targets": [
-      {
-        "flashingMethod": "UART",
-        "name": "HDZero_RX5.1_ESP8285_Backpack_via_UART"
-      },
-      {
-        "flashingMethod": "WIFI",
-        "name": "HDZero_RX5.1_ESP8285_Backpack_via_WIFI"
-      }
-    ],
-    "userDefines": [
-      "BINDING_PHRASE",
-      "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD",
-      "DVR_START_STOP_CHANNEL"
-    ],
-    "wikiUrl": "",
-    "deviceType": "Backpack",
-    "aliases": []
-  }
-]
+    {
+      "category": "VRX",
+      "name": "HDZero RX5.1 VRX Backpack",
+      "targets": [
+        {
+          "flashingMethod": "UART",
+          "name": "HDZero_RX5.1_ESP8285_Backpack_via_UART"
+        },
+        {
+          "flashingMethod": "WIFI",
+          "name": "HDZero_RX5.1_ESP8285_Backpack_via_WIFI"
+        }
+      ],
+      "userDefines": [
+        "BINDING_PHRASE",
+        "HOME_WIFI_SSID",
+        "HOME_WIFI_PASSWORD"
+      ],
+      "wikiUrl": "",
+      "deviceType": "Backpack",
+      "aliases": []
+    }
+  ]

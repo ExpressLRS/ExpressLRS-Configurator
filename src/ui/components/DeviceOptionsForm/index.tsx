@@ -59,7 +59,6 @@ enum UserDefineCategory {
   CompatibilityOptions = 'COMPATIBILITY_OPTIONS',
   OtherOptions = 'OTHER_OPTIONS',
   NetworkOptions = 'NETWORK_OPTIONS',
-  DvrOptions = 'DVR_OPTIONS',
 }
 
 export type UserDefinesByCategory = {
@@ -81,7 +80,6 @@ const userDefinesToCategories = (
     [UserDefineCategory.CompatibilityOptions]: [],
     [UserDefineCategory.NetworkOptions]: [],
     [UserDefineCategory.OtherOptions]: [],
-    [UserDefineCategory.DvrOptions]: [],
   };
 
   const keysToCategories: UserDefinesKeysByCategory = {
@@ -136,7 +134,6 @@ const userDefinesToCategories = (
       UserDefineKey.USE_DYNAMIC_POWER,
       UserDefineKey.WS2812_IS_GRB,
     ],
-    [UserDefineCategory.DvrOptions]: [UserDefineKey.DVR_START_STOP_CHANNEL],
   };
 
   const defineToCategory = (key: UserDefineKey): UserDefineCategory => {
@@ -284,16 +281,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                       options={
                         categories[UserDefineCategory.CompatibilityOptions]
                       }
-                      onChange={onOptionUpdate}
-                      firmwareVersionData={firmwareVersionData}
-                    />
-                  </>
-                )}
-                {categories[UserDefineCategory.DvrOptions]?.length > 0 && (
-                  <>
-                    <Typography variant="h6">DVR options</Typography>
-                    <UserDefinesList
-                      options={categories[UserDefineCategory.DvrOptions]}
                       onChange={onOptionUpdate}
                       firmwareVersionData={firmwareVersionData}
                     />
