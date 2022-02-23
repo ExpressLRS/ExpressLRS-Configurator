@@ -136,11 +136,7 @@ const userDefinesToCategories = (
       UserDefineKey.USE_DYNAMIC_POWER,
       UserDefineKey.WS2812_IS_GRB,
     ],
-    [UserDefineCategory.DvrOptions]: [
-      UserDefineKey.DVR_START_STOP_CHANNEL,
-      UserDefineKey.DVR_START_DELAY,
-      UserDefineKey.DVR_STOP_DELAY,
-    ],
+    [UserDefineCategory.DvrOptions]: [UserDefineKey.DVR_START_STOP_CHANNEL],
   };
 
   const defineToCategory = (key: UserDefineKey): UserDefineCategory => {
