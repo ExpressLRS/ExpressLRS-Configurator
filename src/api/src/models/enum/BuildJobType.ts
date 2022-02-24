@@ -4,7 +4,6 @@ enum BuildJobType {
   Build = 'Build',
   BuildAndFlash = 'BuildAndFlash',
   ForceFlash = 'ForceFlash',
-  CheckTarget = 'CheckTarget',
 }
 
 registerEnumType(BuildJobType, {

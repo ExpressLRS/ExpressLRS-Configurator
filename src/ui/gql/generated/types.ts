@@ -311,7 +311,6 @@ export enum BuildJobType {
   Build = 'Build',
   BuildAndFlash = 'BuildAndFlash',
   ForceFlash = 'ForceFlash',
-  CheckTarget = 'CheckTarget',
 }
 
 export type FirmwareVersionDataInput = {
