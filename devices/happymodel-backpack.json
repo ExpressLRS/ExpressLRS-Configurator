@@ -20,5 +20,27 @@
     "wikiUrl": "",
     "deviceType": "Backpack",
     "aliases": []
+  },
+  {
+    "category": "VRX",
+    "name": "HappyModel EP82 VRX Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "Rapidfire_HappyModel_EP82_VRX_Backpack_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "Rapidfire_HappyModel_EP82_VRX_Backpack_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "",
+    "deviceType": "Backpack",
+    "aliases": []
   }
 ]
