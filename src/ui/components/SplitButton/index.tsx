@@ -77,6 +77,7 @@ const SplitButton: FunctionComponent<SplitButtonProps> = ({
         role={undefined}
         transition
         disablePortal
+        style={{ zIndex: 2 }}
       >
         {({ TransitionProps, placement }) => (
           <Grow
