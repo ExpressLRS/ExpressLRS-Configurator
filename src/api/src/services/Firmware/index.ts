@@ -25,6 +25,7 @@ import FirmwareBuilder from '../../library/FirmwareBuilder';
 import { LoggerService } from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import PullRequest from '../../models/PullRequest';
+import UploadType from '../../library/Platformio/Enum/UploadType';
 
 interface FirmwareVersionData {
   source: FirmwareSource;
@@ -454,11 +455,27 @@ export default class FirmwareService {
         );
       }
 
-      if (params.type === BuildJobType.BuildAndFlash) {
+      if (
+        params.type === BuildJobType.BuildAndFlash ||
+        params.type === BuildJobType.ForceFlash
+      ) {
         await this.updateProgress(
           BuildProgressNotificationType.Info,
           BuildFirmwareStep.FLASHING_FIRMWARE
         );
+
+        let uploadType: UploadType;
+        switch (params.type) {
+          case BuildJobType.BuildAndFlash:
+            uploadType = UploadType.Normal;
+            break;
+          case BuildJobType.ForceFlash:
+            uploadType = UploadType.Force;
+            break;
+          default:
+            throw new Error(`Unknown build job type ${params.type}`);
+        }
+
         const flashResult = await this.builder.flash(
           params.target,
           userDefines,
@@ -466,17 +483,26 @@ export default class FirmwareService {
           params.serialDevice,
           (output) => {
             this.updateLogs(output);
-          }
+          },
+          uploadType
         );
         if (!flashResult.success) {
           this.logger?.error('flash error', undefined, {
             stderr: flashResult.stderr,
             stdout: flashResult.stdout,
           });
+          const uploadErrorRegexp = /\*\*\* \[upload\] Error (-*\d+)/g;
+          let uploadError = 0;
+          const matches = [...flashResult.stderr.matchAll(uploadErrorRegexp)];
+          if (matches.length > 0) {
+            uploadError = Number.parseInt(matches[0][1], 10);
+          }
           return new BuildFlashFirmwareResult(
             false,
             flashResult.stderr,
-            BuildFirmwareErrorType.FlashError
+            uploadError === -2
+              ? BuildFirmwareErrorType.TargetMismatch
+              : BuildFirmwareErrorType.FlashError
           );
         }
       }

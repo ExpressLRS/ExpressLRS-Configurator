@@ -294,6 +294,7 @@ export enum BuildFirmwareErrorType {
   BuildError = 'BuildError',
   FlashError = 'FlashError',
   GenericError = 'GenericError',
+  TargetMismatch = 'TargetMismatch',
 }
 
 export type BuildFlashFirmwareInput = {
@@ -309,6 +310,7 @@ export type BuildFlashFirmwareInput = {
 export enum BuildJobType {
   Build = 'Build',
   BuildAndFlash = 'BuildAndFlash',
+  ForceFlash = 'ForceFlash',
 }
 
 export type FirmwareVersionDataInput = {

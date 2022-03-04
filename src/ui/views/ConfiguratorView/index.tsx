@@ -56,6 +56,7 @@ import {
   UserDefineKey,
   UserDefineKind,
   TargetDeviceOptionsQuery,
+  BuildFirmwareErrorType,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -77,6 +78,7 @@ import ShowTimeoutAlerts from '../../components/ShowTimeoutAlerts';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
 import MainLayout from '../../layouts/MainLayout';
+import SplitButton from '../../components/SplitButton';
 
 const styles = {
   button: {
@@ -661,6 +663,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   const onBuild = () => sendJob(BuildJobType.Build);
   const onBuildAndFlash = () => sendJob(BuildJobType.BuildAndFlash);
+  const onForceFlash = () => sendJob(BuildJobType.ForceFlash);
 
   const deviceOptionsRef = useRef<HTMLDivElement | null>(null);
 
@@ -913,14 +916,28 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   Build
                 </Button>
                 {deviceTarget?.flashingMethod !== FlashingMethod.Radio && (
-                  <Button
+                  <SplitButton
                     sx={styles.button}
                     size="large"
                     variant="contained"
-                    onClick={onBuildAndFlash}
-                  >
-                    Build & Flash
-                  </Button>
+                    options={[
+                      {
+                        label: 'Build & Flash',
+                        value: BuildJobType.BuildAndFlash,
+                      },
+                      {
+                        label: 'Force Flash',
+                        value: BuildJobType.ForceFlash,
+                      },
+                    ]}
+                    onButtonClick={(value: string | null) => {
+                      if (value === BuildJobType.BuildAndFlash) {
+                        onBuildAndFlash();
+                      } else if (value === BuildJobType.ForceFlash) {
+                        onForceFlash();
+                      }
+                    }}
+                  />
                 )}
               </div>
             </CardContent>
@@ -1053,15 +1070,26 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     sx={styles.button}
                     size="large"
                     variant="contained"
-                    onClick={
-                      currentJobType === BuildJobType.Build
-                        ? onBuild
-                        : onBuildAndFlash
-                    }
+                    onClick={() => {
+                      sendJob(currentJobType);
+                    }}
                   >
                     Retry
                   </Button>
                 )}
+
+                {!response?.buildFlashFirmware.success &&
+                  response?.buildFlashFirmware.errorType ===
+                    BuildFirmwareErrorType.TargetMismatch && (
+                    <Button
+                      sx={styles.button}
+                      size="large"
+                      variant="contained"
+                      onClick={onForceFlash}
+                    >
+                      Force Flash
+                    </Button>
+                  )}
 
                 {response?.buildFlashFirmware.success && luaDownloadButton()}
               </CardContent>
