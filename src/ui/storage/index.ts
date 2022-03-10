@@ -26,6 +26,10 @@ export interface IApplicationStorage {
 
   getBindingPhrase(): Promise<string>;
 
+  updateBindingPhraseHistory(bindingPhrase: string): Promise<void>;
+
+  getBindingPhraseHistory(): Promise<string[]>;
+
   getFirmwareSource(
     gitRepository: GitRepository
   ): Promise<FirmwareVersionDataInput | null>;
@@ -62,6 +66,7 @@ export interface IApplicationStorage {
 
 const DEVICE_OPTIONS_BY_TARGET_KEYSPACE = 'device_options';
 const BINDING_PHRASE_KEY = 'binding_phrase';
+const BINDING_PHRASE_HISTORY_KEY = 'binding_phrase_history';
 const FIRMWARE_SOURCE_KEY = 'firmware_source';
 const UI_SHOW_FIRMWARE_PRE_RELEASES = 'ui_show_pre_releases';
 const WIFI_SSID_KEY = 'wifi_ssid';
@@ -134,6 +139,27 @@ export default class ApplicationStorage implements IApplicationStorage {
       return '';
     }
     return value;
+  }
+
+  async updateBindingPhraseHistory(bindingPhrase: string): Promise<void> {
+    let history = await this.getBindingPhraseHistory();
+    history = history.filter((item) => item !== bindingPhrase);
+    history.push(bindingPhrase);
+    history.length = Math.min(history.length, 10);
+    localStorage.setItem(BINDING_PHRASE_HISTORY_KEY, JSON.stringify(history));
+  }
+
+  async getBindingPhraseHistory(): Promise<string[]> {
+    const history = localStorage.getItem(BINDING_PHRASE_HISTORY_KEY);
+    if (history === null) {
+      return [''];
+    }
+    try {
+      return JSON.parse(history);
+    } catch (error) {
+      console.error(error);
+      return [''];
+    }
   }
 
   async getShowPreReleases(defaultValue: boolean): Promise<boolean> {
