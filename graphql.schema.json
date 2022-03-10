@@ -2329,6 +2329,12 @@
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "TargetMismatch",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "possibleTypes": null
@@ -2452,6 +2458,12 @@
           },
           {
             "name": "BuildAndFlash",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ForceFlash",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
