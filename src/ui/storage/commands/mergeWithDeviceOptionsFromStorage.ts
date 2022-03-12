@@ -1,3 +1,7 @@
+/* Load user options from storage and update DeviceOptions object
+ *  to reflect what is stored.
+ */
+
 import {
   UserDefineOptionGroup,
   UserDefine,
@@ -10,6 +14,7 @@ const mergeWithDeviceOptionsFromStorage = async (
   device: string | null,
   deviceOptions: DeviceOptions
 ): Promise<DeviceOptions> => {
+  // Load saved user options from storage
   const savedBindingPhrase = await storage.getBindingPhrase();
   const savedTargetOptions = device
     ? await storage.getDeviceOptions(device)
@@ -19,6 +24,11 @@ const mergeWithDeviceOptionsFromStorage = async (
   const regulatoryDomain900 = await storage.getRegulatoryDomain900();
   const regulatoryDomain2400 = await storage.getRegulatoryDomain2400();
 
+  /*
+   * Updates the value of a given device option to a storage value where possible
+   * @Param {UserDefine} deviceOption - a single user defined device option
+   * @Returns {UserDefine} deviceOtion with updated value
+   */
   const addOverrides = (deviceOption: UserDefine): UserDefine => {
     if (
       deviceOption.key === UserDefineKey.BINDING_PHRASE &&
@@ -65,6 +75,12 @@ const mergeWithDeviceOptionsFromStorage = async (
     }
     return deviceOption;
   };
+
+  /*
+   * Replaces values in an array of user options to stored values
+   * @Param {UserDefine[]} array of user options
+   * @Returns {UserDefine[]} array of user options with values replaced
+   */
   const userDefineOptions = deviceOptions.userDefineOptions.map(
     (deviceOption) => {
       if (savedTargetOptions === null) {
