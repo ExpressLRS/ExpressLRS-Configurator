@@ -19,11 +19,12 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
+  IconButton,
   Tooltip,
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ipcRenderer } from 'electron';
-import { NetworkWifi } from '@mui/icons-material';
+import { ContentCopy, NetworkWifi } from '@mui/icons-material';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
 import DeviceOptionsForm, {
@@ -1004,7 +1005,24 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
           {logs.length > 0 && (
             <>
-              <CardTitle icon={<SettingsIcon />} title="Logs" />
+              <CardTitle
+                icon={<SettingsIcon />}
+                title={
+                  <Box display="flex" justifyContent="space-between">
+                    <Box>Logs</Box>
+                    <Box>
+                      <IconButton
+                        aria-label="Copy the logs"
+                        onClick={async () => {
+                          await navigator.clipboard.writeText(logs);
+                        }}
+                      >
+                        <ContentCopy />
+                      </IconButton>
+                    </Box>
+                  </Box>
+                }
+              />
               <Divider />
               <CardContent>
                 <Box sx={styles.longBuildDurationWarning}>
