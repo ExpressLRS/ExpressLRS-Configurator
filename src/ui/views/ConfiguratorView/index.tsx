@@ -1065,7 +1065,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   active={!buildInProgress}
                 >
                   <Box sx={styles.buildNotification}>
-                    <BuildResponse response={response?.buildFlashFirmware} />
+                    <BuildResponse
+                      response={response?.buildFlashFirmware}
+                      firmwareVersionData={firmwareVersionData}
+                    />
                   </Box>
                   {response?.buildFlashFirmware?.success && hasLuaScript && (
                     <>
