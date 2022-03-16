@@ -3,6 +3,7 @@ export enum IpcRequest {
   OpenLogsFolder = 'OPEN_LOGS_FOLDER',
   UpdateBuildStatus = 'UPDATE_BUILD_STATUS',
   ChooseFolder = 'CHOOSE_FOLDER',
+  SaveFile = 'SAVE_FILE',
 }
 
 export interface OpenFileLocationRequestBody {
@@ -16,4 +17,14 @@ export interface UpdateBuildStatusRequestBody {
 export interface ChooseFolderResponseBody {
   success: boolean;
   directoryPath: string;
+}
+
+export interface SaveFileRequestBody {
+  defaultPath?: string;
+  data: string | Uint8Array;
+}
+
+export interface SaveFileResponseBody {
+  success: boolean;
+  path: string;
 }

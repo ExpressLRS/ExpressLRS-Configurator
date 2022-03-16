@@ -24,7 +24,7 @@ import {
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ipcRenderer } from 'electron';
-import { ContentCopy, NetworkWifi } from '@mui/icons-material';
+import { ContentCopy, NetworkWifi, Save } from '@mui/icons-material';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
 import DeviceOptionsForm, {
@@ -64,6 +64,8 @@ import BuildResponse from '../../components/BuildResponse';
 import {
   IpcRequest,
   OpenFileLocationRequestBody,
+  SaveFileRequestBody,
+  SaveFileResponseBody,
   UpdateBuildStatusRequestBody,
 } from '../../../ipc';
 import UserDefinesValidator from './UserDefinesValidator';
@@ -773,6 +775,30 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     setDeviceSelectErrorDialogOpen(false);
   }, []);
 
+  const saveBuildLogToFile = useCallback(async () => {
+    const saveFileRequestBody: SaveFileRequestBody = {
+      data: logs,
+      defaultPath: `ExpressLRSBuildLog_${new Date()
+        .toISOString()
+        .replace(/[^0-9]/gi, '')}.txt`,
+    };
+
+    const result: SaveFileResponseBody = await ipcRenderer.invoke(
+      IpcRequest.SaveFile,
+      saveFileRequestBody
+    );
+
+    if (result.success) {
+      const openFileLocationRequestBody: OpenFileLocationRequestBody = {
+        path: result.path,
+      };
+      ipcRenderer.send(
+        IpcRequest.OpenFileLocation,
+        openFileLocationRequestBody
+      );
+    }
+  }, [logs]);
+
   return (
     <MainLayout>
       {viewState === ViewState.Configuration && (
@@ -1012,12 +1038,20 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     <Box>Logs</Box>
                     <Box>
                       <IconButton
-                        aria-label="Copy the logs"
+                        aria-label="Copy log to clipboard"
+                        title="Copy log to clipboard"
                         onClick={async () => {
                           await navigator.clipboard.writeText(logs);
                         }}
                       >
                         <ContentCopy />
+                      </IconButton>
+                      <IconButton
+                        aria-label="Save log to file"
+                        title="Save log to file"
+                        onClick={saveBuildLogToFile}
+                      >
+                        <Save />
                       </IconButton>
                     </Box>
                   </Box>
