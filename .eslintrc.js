@@ -18,6 +18,7 @@ module.exports = {
       'error',
       { ignoreFunctionalComponents: true },
     ],
+    'no-console': ['warn', { allow: ['error'] }],
   },
   parserOptions: {
     ecmaVersion: 2020,
