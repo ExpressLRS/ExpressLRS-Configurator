@@ -77,7 +77,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
         case UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400:
           return (
             <div>
-              <p>EU CE 2.4 GHz regulatory domain is the same as ISM 2.4 GHz regulatory domain but limited to 10mW output.</p>
+              <p>
+                EU CE 2.4 GHz regulatory domain is the same as ISM 2.4 GHz
+                regulatory domain but limited to 10mW output.
+              </p>
               <p>
                 <a
                   target="_blank"
