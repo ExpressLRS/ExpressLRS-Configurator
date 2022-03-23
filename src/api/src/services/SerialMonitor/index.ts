@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import SerialPort from 'serialport';
+import { SerialPort } from 'serialport';
 import { PubSubEngine } from 'graphql-subscriptions';
 import SerialPortInformation from '../../models/SerialPortInformation';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
@@ -55,7 +55,8 @@ export default class SerialMonitorService {
       await this.disconnect();
     }
 
-    this.port = new SerialPort(device, {
+    this.port = new SerialPort({
+      path: device,
       baudRate,
       autoOpen: false,
     });
