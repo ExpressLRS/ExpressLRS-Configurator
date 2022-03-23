@@ -42,23 +42,32 @@ export default function useNetworkDevices() {
     fetchPolicy: 'network-only',
     client,
     onSubscriptionData: (options) => {
-      const data = options.subscriptionData.data?.multicastDnsMonitorUpdates;
-      if (data) {
+      const update = options.subscriptionData.data?.multicastDnsMonitorUpdates;
+
+      if (update) {
         const multicastDnsDevicesCopy = new Map<
           string,
           MulticastDnsInformation
         >(networkDevices);
+        if (update?.type === MulticastDnsEventType.DeviceAdded) {
+          multicastDnsDevicesCopy.set(update.data.name, update.data);
 
-        if (data?.type === MulticastDnsEventType.DeviceAdded) {
-          multicastDnsDevicesCopy.set(data.data.name, data.data);
+          if (!newNetworkDevices.find((d) => d.name === update.data.name)) {
+            const newDevices = newNetworkDevices.map((item) => item);
+            newDevices.push(update.data);
+            setNewNetworkDevices(newDevices);
+          }
+        } else if (update?.type === MulticastDnsEventType.DeviceUpdated) {
+          multicastDnsDevicesCopy.set(update.data.name, update.data);
+        } else if (update?.type === MulticastDnsEventType.DeviceRemoved) {
+          multicastDnsDevicesCopy.delete(update.data.name);
 
-          const newDevices = newNetworkDevices.map((item) => item);
-          newDevices.push(data.data);
-          setNewNetworkDevices(newDevices);
-        } else if (data?.type === MulticastDnsEventType.DeviceUpdated) {
-          multicastDnsDevicesCopy.set(data.data.name, data.data);
-        } else if (data?.type === MulticastDnsEventType.DeviceRemoved) {
-          multicastDnsDevicesCopy.delete(data.data.name);
+          if (newNetworkDevices.find((d) => d.name === update.data.name)) {
+            const newDevices = newNetworkDevices.filter(
+              (d) => d.name !== update.data.name
+            );
+            setNewNetworkDevices(newDevices);
+          }
         }
 
         setNetworkDevices(multicastDnsDevicesCopy);
