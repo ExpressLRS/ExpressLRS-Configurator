@@ -18,6 +18,7 @@ module.exports = {
       'error',
       { ignoreFunctionalComponents: true },
     ],
+    'no-console': ['warn', { allow: ['error'] }],
     // No need to enforce linebreak styles since "* text=auto" in .gitattributes will ensure LF is committed to the repo
     'linebreak-style': 'off',
     'prettier/prettier': [
