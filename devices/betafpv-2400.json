@@ -147,6 +147,21 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-betafpv2400/",
     "deviceType": "ExpressLRS",
-    "aliases": []
+    "aliases": [
+      {
+        "category": "HiYOUNGER 2.4 GHz",
+        "name": "HiYOUNGER RX24T 2400 RX",
+        "wikiUrl": "",
+        "abbreviatedName": "HiYOUNGER RX24T",
+        "verifiedHardware": false
+      },
+      {
+        "category": "JHEMCU 2.4 GHz",
+        "name": "JHEMCU RX24T 2400 RX",
+        "wikiUrl": "",
+        "abbreviatedName": "JHEMCU RX24T",
+        "verifiedHardware": false
+      }
+    ]
   }
 ]
