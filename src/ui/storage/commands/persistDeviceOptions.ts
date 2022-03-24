@@ -22,6 +22,7 @@ const persistDeviceOptions = async (
           switch (userDefine.key) {
             case UserDefineKey.BINDING_PHRASE:
               await storage.setBindingPhrase(userDefine.value);
+              await storage.updateBindingPhraseHistory(userDefine.value);
               break;
             case UserDefineKey.HOME_WIFI_SSID:
               await storage.setWifiSSID(userDefine.value);
