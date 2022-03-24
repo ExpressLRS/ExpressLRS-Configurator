@@ -46,11 +46,16 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
   const [savedBindingPhraseHistory, setBindingPhraseHistory] = useState(['']);
 
   useEffect(() => {
-    // useEffect's callback cannot itself be async so we need to make an async function and then run it
-    (async () => {
-      setBindingPhraseHistory(await storage.getBindingPhraseHistory());
-    })();
-  });
+    storage
+      .getBindingPhrase()
+      .then((data) => {
+        setBindingPhraseHistory([data]);
+      })
+      .catch((error) => {
+        setBindingPhraseHistory(['']);
+        console.error(error);
+      });
+  }, [storage]);
 
   const onChecked = (data: UserDefineKey) => {
     const opt = options.find(({ key }) => key === data);
@@ -138,6 +143,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                   {item.key === UserDefineKey.BINDING_PHRASE && (
                     <Autocomplete
                       freeSolo
+                      fullWidth
                       options={savedBindingPhraseHistory}
                       renderInput={(params) => (
                         <TextField {...params} label={inputLabel(item.key)} />
@@ -154,16 +160,17 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                         label={inputLabel(item.key)}
                       />
                     )}
-                  {item.sensitive && (
-                    <SensitiveTextField
-                      name={item.key}
-                      size="small"
-                      onChange={onUserDefineValueChange(item.key)}
-                      value={item.value}
-                      fullWidth
-                      label={inputLabel(item.key)}
-                    />
-                  )}
+                  {item.sensitive &&
+                    item.key !== UserDefineKey.BINDING_PHRASE && (
+                      <SensitiveTextField
+                        name={item.key}
+                        size="small"
+                        onChange={onUserDefineValueChange(item.key)}
+                        value={item.value}
+                        fullWidth
+                        label={inputLabel(item.key)}
+                      />
+                    )}
                 </ListItem>
               </>
             )}
