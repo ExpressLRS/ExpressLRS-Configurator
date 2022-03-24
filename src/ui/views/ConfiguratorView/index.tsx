@@ -19,11 +19,12 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
+  IconButton,
   Tooltip,
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ipcRenderer } from 'electron';
-import { NetworkWifi } from '@mui/icons-material';
+import { ContentCopy, NetworkWifi, Save } from '@mui/icons-material';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
 import DeviceOptionsForm, {
@@ -63,6 +64,8 @@ import BuildResponse from '../../components/BuildResponse';
 import {
   IpcRequest,
   OpenFileLocationRequestBody,
+  SaveFileRequestBody,
+  SaveFileResponseBody,
   UpdateBuildStatusRequestBody,
 } from '../../../ipc';
 import UserDefinesValidator from './UserDefinesValidator';
@@ -75,6 +78,7 @@ import WifiDeviceSelect from '../../components/WifiDeviceSelect';
 import WifiDeviceList from '../../components/WifiDeviceList';
 import GitRepository from '../../models/GitRepository';
 import ShowTimeoutAlerts from '../../components/ShowTimeoutAlerts';
+import ShowAfterTimeout from '../../components/ShowAfterTimeout';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
 import MainLayout from '../../layouts/MainLayout';
@@ -771,6 +775,30 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     setDeviceSelectErrorDialogOpen(false);
   }, []);
 
+  const saveBuildLogToFile = useCallback(async () => {
+    const saveFileRequestBody: SaveFileRequestBody = {
+      data: logs,
+      defaultPath: `ExpressLRSBuildLog_${new Date()
+        .toISOString()
+        .replace(/[^0-9]/gi, '')}.txt`,
+    };
+
+    const result: SaveFileResponseBody = await ipcRenderer.invoke(
+      IpcRequest.SaveFile,
+      saveFileRequestBody
+    );
+
+    if (result.success) {
+      const openFileLocationRequestBody: OpenFileLocationRequestBody = {
+        path: result.path,
+      };
+      ipcRenderer.send(
+        IpcRequest.OpenFileLocation,
+        openFileLocationRequestBody
+      );
+    }
+  }, [logs]);
+
   return (
     <MainLayout>
       {viewState === ViewState.Configuration && (
@@ -1003,7 +1031,32 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
           {logs.length > 0 && (
             <>
-              <CardTitle icon={<SettingsIcon />} title="Logs" />
+              <CardTitle
+                icon={<SettingsIcon />}
+                title={
+                  <Box display="flex" justifyContent="space-between">
+                    <Box>Logs</Box>
+                    <Box>
+                      <IconButton
+                        aria-label="Copy log to clipboard"
+                        title="Copy log to clipboard"
+                        onClick={async () => {
+                          await navigator.clipboard.writeText(logs);
+                        }}
+                      >
+                        <ContentCopy />
+                      </IconButton>
+                      <IconButton
+                        aria-label="Save log to file"
+                        title="Save log to file"
+                        onClick={saveBuildLogToFile}
+                      >
+                        <Save />
+                      </IconButton>
+                    </Box>
+                  </Box>
+                }
+              />
               <Divider />
               <CardContent>
                 <Box sx={styles.longBuildDurationWarning}>
@@ -1024,9 +1077,42 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
               <CardTitle icon={<SettingsIcon />} title="Result" />
               <Divider />
               <CardContent>
-                <Box sx={styles.buildNotification}>
-                  <BuildResponse response={response?.buildFlashFirmware} />
-                </Box>
+                {response?.buildFlashFirmware?.success &&
+                  currentJobType === BuildJobType.BuildAndFlash &&
+                  deviceTarget?.flashingMethod === FlashingMethod.WIFI && (
+                    <>
+                      <Alert sx={styles.buildNotification} severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                        Please wait for LED to resume blinking before
+                        disconnecting power
+                      </Alert>
+                    </>
+                  )}
+                <ShowAfterTimeout
+                  timeout={
+                    response?.buildFlashFirmware?.success &&
+                    currentJobType === BuildJobType.BuildAndFlash &&
+                    deviceTarget?.flashingMethod === FlashingMethod.WIFI
+                      ? 15000
+                      : 1000
+                  }
+                  active={!buildInProgress}
+                >
+                  <Box sx={styles.buildNotification}>
+                    <BuildResponse
+                      response={response?.buildFlashFirmware}
+                      firmwareVersionData={firmwareVersionData}
+                    />
+                  </Box>
+                  {response?.buildFlashFirmware?.success && hasLuaScript && (
+                    <>
+                      <Alert sx={styles.buildNotification} severity="info">
+                        <AlertTitle>Update Lua Script</AlertTitle>
+                        Make sure to update the Lua script on your radio
+                      </Alert>
+                    </>
+                  )}
+                </ShowAfterTimeout>
                 {response?.buildFlashFirmware?.success &&
                   currentJobType === BuildJobType.Build && (
                     <>
@@ -1038,14 +1124,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       </Alert>
                     </>
                   )}
-                {response?.buildFlashFirmware?.success && hasLuaScript && (
-                  <>
-                    <Alert sx={styles.buildNotification} severity="info">
-                      <AlertTitle>Update Lua Script</AlertTitle>
-                      Make sure to update the Lua script on your radio
-                    </Alert>
-                  </>
-                )}
               </CardContent>
               <Divider />
             </>

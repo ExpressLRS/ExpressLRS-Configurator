@@ -212,13 +212,6 @@
         "verifiedHardware": false
       },
       {
-        "category": "HiYOUNGER 2.4 GHz",
-        "name": "HiYOUNGER RX24T 2400 RX",
-        "wikiUrl": "",
-        "abbreviatedName": "HiYOUNGER RX24T",
-        "verifiedHardware": false
-      },
-      {
         "category": "JHEMCU 2.4 GHz",
         "name": "JHEMCU SP24S 2400 RX",
         "wikiUrl": "",
@@ -230,13 +223,6 @@
         "name": "JHEMCU EP24S 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "JHEMCU EP24S",
-        "verifiedHardware": false
-      },
-      {
-        "category": "JHEMCU 2.4 GHz",
-        "name": "JHEMCU RX24T 2400 RX",
-        "wikiUrl": "",
-        "abbreviatedName": "JHEMCU RX24T",
         "verifiedHardware": false
       },
       {

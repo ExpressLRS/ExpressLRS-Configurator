@@ -16,12 +16,15 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import mkdirp from 'mkdirp';
 import winston from 'winston';
+import fs from 'fs';
 import MenuBuilder from './menu';
 import ApiServer from './api';
 import {
   ChooseFolderResponseBody,
   IpcRequest,
   OpenFileLocationRequestBody,
+  SaveFileRequestBody,
+  SaveFileResponseBody,
   UpdateBuildStatusRequestBody,
 } from './ipc';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
@@ -498,5 +501,26 @@ ipcMain.on(
     logger.log('received a request to update build status', {
       arg,
     });
+  }
+);
+
+ipcMain.handle(
+  IpcRequest.SaveFile,
+  async (_, arg: SaveFileRequestBody): Promise<SaveFileResponseBody> => {
+    const result = await dialog.showSaveDialog({
+      title: 'Save File',
+      defaultPath: arg.defaultPath,
+    });
+    if (result.canceled || !result.filePath || result.filePath.length === 0) {
+      return {
+        success: false,
+        path: '',
+      };
+    }
+    await fs.promises.writeFile(result.filePath, arg.data);
+    return {
+      success: true,
+      path: result.filePath,
+    };
   }
 );

@@ -18,6 +18,14 @@ module.exports = {
       'error',
       { ignoreFunctionalComponents: true },
     ],
+    // No need to enforce linebreak styles since "* text=auto" in .gitattributes will ensure LF is committed to the repo
+    'linebreak-style': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
   parserOptions: {
     ecmaVersion: 2020,
