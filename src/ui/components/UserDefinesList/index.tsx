@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-no-bind */
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
   Checkbox,
+  Autocomplete,
   List,
   ListItem,
   ListItemIcon,
@@ -18,6 +19,7 @@ import {
 import Omnibox from '../Omnibox';
 import UserDefineDescription from '../UserDefineDescription';
 import SensitiveTextField from '../SensitiveTextField';
+import Application from '../../storage';
 
 const styles = {
   icon: {
@@ -39,6 +41,17 @@ interface UserDefinesListProps {
 
 const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
   const { options, onChange, firmwareVersionData } = props;
+
+  const storage = new Application();
+  const [savedBindingPhraseHistory, setBindingPhraseHistory] = useState(['']);
+
+  useEffect(() => {
+    // useEffect's callback cannot itself be async so we need to make an async function and then run it
+    (async () => {
+      setBindingPhraseHistory(await storage.getBindingPhraseHistory());
+    })();
+  });
+
   const onChecked = (data: UserDefineKey) => {
     const opt = options.find(({ key }) => key === data);
     if (opt !== undefined) {
@@ -122,15 +135,25 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
             {item.type === UserDefineKind.Text && item.enabled && (
               <>
                 <ListItem sx={styles.complimentaryItem}>
-                  {!item.sensitive && (
-                    <TextField
-                      size="small"
-                      onChange={onUserDefineValueChange(item.key)}
-                      value={item.value}
-                      fullWidth
-                      label={inputLabel(item.key)}
+                  {item.key === UserDefineKey.BINDING_PHRASE && (
+                    <Autocomplete
+                      freeSolo
+                      options={savedBindingPhraseHistory}
+                      renderInput={(params) => (
+                        <TextField {...params} label={inputLabel(item.key)} />
+                      )}
                     />
                   )}
+                  {!item.sensitive &&
+                    item.key !== UserDefineKey.BINDING_PHRASE && (
+                      <TextField
+                        size="small"
+                        onChange={onUserDefineValueChange(item.key)}
+                        value={item.value}
+                        fullWidth
+                        label={inputLabel(item.key)}
+                      />
+                    )}
                   {item.sensitive && (
                     <SensitiveTextField
                       name={item.key}
