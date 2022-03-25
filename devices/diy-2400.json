@@ -230,6 +230,12 @@
         "name": "Jumper AION Mini 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "AION RX24 MINI"
+      },
+      {
+        "category": "BETAFPV 2.4 GHz",
+        "name": "BETAFPV Lite 2400 RX",
+        "wikiUrl": "",
+        "abbreviatedName": "BFPV Lite 2G4RX"
       }
     ]
   },
@@ -261,7 +267,12 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-diyreceivers/",
     "deviceType": "ExpressLRS",
-    "aliases": []
+    "aliases": [{
+      "category": "BETAFPV 2.4 GHz",
+      "name": "BETAFPV PWM 2400 RX",
+      "wikiUrl": "",
+      "abbreviatedName": "BFPV PWM 2G4RX"
+    }]
   },
   {
     "category": "DIY 2.4 GHz",
