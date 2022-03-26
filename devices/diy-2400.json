@@ -236,6 +236,12 @@
         "name": "BETAFPV Lite 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "BFPV Lite 2G4RX"
+      },
+      {
+        "category": "BETAFPV 2.4 GHz",
+        "name": "BETAFPV Flat 2400 RX",
+        "wikiUrl": "",
+        "abbreviatedName": "BFPV Flat 2G4RX"
       }
     ]
   },
