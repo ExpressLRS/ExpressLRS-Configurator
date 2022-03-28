@@ -114,7 +114,7 @@
   },
   {
     "category": "BETAFPV 2.4 GHz",
-    "name": "BETAFPV 2400 RX",
+    "name": "BETAFPV Nano 2400 RX",
     "targets": [
       {
         "flashingMethod": "UART",
