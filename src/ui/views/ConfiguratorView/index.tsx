@@ -669,6 +669,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const onBuildAndFlash = () => sendJob(BuildJobType.BuildAndFlash);
   const onForceFlash = () => sendJob(BuildJobType.ForceFlash);
 
+  const deviceTargetRef = useRef<HTMLDivElement | null>(null);
   const deviceOptionsRef = useRef<HTMLDivElement | null>(null);
 
   const [
@@ -708,7 +709,12 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           });
         }
 
+        // if no device is found that matches the target
         if (!deviceMatches || deviceMatches.length === 0) {
+          console.error(
+            `no device matches found for target ${dnsDeviceTarget}!`
+          );
+          setDeviceSelectErrorDialogOpen(true);
           return;
         }
 
@@ -733,7 +739,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
         if (dTarget !== deviceTarget) {
           setDeviceTarget(dTarget);
-          deviceOptionsRef?.current?.scrollIntoView({ behavior: 'smooth' });
+          deviceTargetRef?.current?.scrollIntoView({ behavior: 'smooth' });
         }
 
         setWifiDevice(dnsDevice.ip);
@@ -746,7 +752,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     if (selectedDevice) {
       handleSelectedDeviceChange(selectedDevice);
     }
-  }, [handleSelectedDeviceChange, selectedDevice]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDevice]);
 
   const luaDownloadButton = () => {
     if (
@@ -818,7 +825,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
             <CardTitle icon={<SettingsIcon />} title="Target" />
             <Divider />
-            <CardContent>
+            <CardContent ref={deviceTargetRef}>
               {firmwareVersionData === null ||
                 (validateFirmwareVersionData(firmwareVersionData).length >
                   0 && (
