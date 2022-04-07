@@ -1,0 +1,33 @@
+[
+  {
+    "category": "RadioMaster 2.4 GHz",
+    "name": "RadioMaster TX16S 2400 TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "RadioMaster_TX16S_2400_TX_via_UART"
+      },
+      {
+        "flashingMethod": "EdgeTxPassthrough",
+        "name": "RadioMaster_TX16S_2400_TX_via_ETX"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "RadioMaster_TX16S_2400_TX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "REGULATORY_DOMAIN_EU_CE_2400",
+      "BINDING_PHRASE",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-rm-internal/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  }
+]
