@@ -41,6 +41,13 @@
     ],
     "wikiUrl": "",
     "deviceType": "Backpack",
-    "aliases": []
+    "aliases": [
+      {
+        "category": "TX",
+        "name": "RadioMaster TX16S Backpack",
+        "wikiUrl": "",
+        "abbreviatedName": "RM TX16S Backpack"
+      }
+    ]
   }
 ]
