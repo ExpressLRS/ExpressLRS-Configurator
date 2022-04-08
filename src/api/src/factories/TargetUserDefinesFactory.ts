@@ -84,6 +84,9 @@ export default class TargetUserDefinesFactory {
           case UserDefineKey.UNLOCK_HIGHER_POWER:
             return UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER, true);
           case UserDefineKey.USE_DIVERSITY:
+            if (target.startsWith('NamimnoRC_FLASH_2400_ESP_RX_PA')) {
+              return UserDefine.Boolean(UserDefineKey.USE_DIVERSITY, true);
+            }
             return UserDefine.Boolean(UserDefineKey.USE_DIVERSITY);
           case UserDefineKey.NO_SYNC_ON_ARM:
             return UserDefine.Boolean(UserDefineKey.NO_SYNC_ON_ARM);
