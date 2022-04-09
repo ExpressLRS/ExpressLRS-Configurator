@@ -26,6 +26,10 @@ export interface IApplicationStorage {
 
   getBindingPhrase(): Promise<string>;
 
+  getHistory(key: string): Promise<string[]>;
+
+  updateHistory(key: string, value: string): Promise<void>;
+
   getFirmwareSource(
     gitRepository: GitRepository
   ): Promise<FirmwareVersionDataInput | null>;
@@ -134,6 +138,29 @@ export default class ApplicationStorage implements IApplicationStorage {
       return '';
     }
     return value;
+  }
+
+  async getHistory(key: string): Promise<string[]> {
+    const value = localStorage.getItem(`${key}_HISTORY`);
+
+    if (value == null) {
+      return [];
+    }
+
+    try {
+      const parsedValue = JSON.parse(value);
+      return parsedValue;
+    } catch {
+      return [];
+    }
+  }
+
+  async updateHistory(key: string, value: string): Promise<void> {
+    const currentHistory = await this.getHistory(key);
+    const newHistory = currentHistory.filter((word: string) => word !== value);
+    newHistory.unshift(value);
+    newHistory.length = 10;
+    localStorage.setItem(`${key}_HISTORY`, JSON.stringify(newHistory));
   }
 
   async getShowPreReleases(defaultValue: boolean): Promise<boolean> {

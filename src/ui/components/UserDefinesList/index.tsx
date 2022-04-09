@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { FunctionComponent } from 'react';
 import {
+  Autocomplete,
   Checkbox,
   List,
   ListItem,
@@ -122,7 +123,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
             {item.type === UserDefineKind.Text && item.enabled && (
               <>
                 <ListItem sx={styles.complimentaryItem}>
-                  {!item.sensitive && (
+                  {!item.sensitive && !item.historyEnabled && (
                     <TextField
                       size="small"
                       onChange={onUserDefineValueChange(item.key)}
@@ -141,6 +142,23 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                       label={inputLabel(item.key)}
                     />
                   )}
+                  {!item.sensitive &&
+                    item.history &&
+                    item.history?.length > 0 &&
+                    item.historyEnabled && (
+                      <Autocomplete
+                        freeSolo
+                        size="small"
+                        options={item.history}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label={inputLabel(item.key)}
+                            onChange={onUserDefineValueChange(item.key)}
+                          />
+                        )}
+                      />
+                    )}
                 </ListItem>
               </>
             )}

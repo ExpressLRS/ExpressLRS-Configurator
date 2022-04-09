@@ -72,6 +72,7 @@ import UserDefinesValidator from './UserDefinesValidator';
 import ApplicationStorage from '../../storage';
 import persistDeviceOptions from '../../storage/commands/persistDeviceOptions';
 import mergeWithDeviceOptionsFromStorage from '../../storage/commands/mergeWithDeviceOptionsFromStorage';
+import updateDeviceOptionsHistory from '../../storage/commands/updateDeviceOptionsHistory';
 import UserDefinesAdvisor from '../../components/UserDefinesAdvisor';
 import SerialDeviceSelect from '../../components/SerialDeviceSelect';
 import WifiDeviceSelect from '../../components/WifiDeviceSelect';
@@ -619,6 +620,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       type: item.type,
     }));
 
+    const storage = new ApplicationStorage();
+    updateDeviceOptionsHistory(storage, deviceOptionsFormData);
+
     if (device?.parent && device?.name) {
       const deviceName = getAbbreviatedDeviceName(device);
       // add the user define for the device name
@@ -652,6 +656,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         },
       },
     });
+
     setViewState(ViewState.Compiling);
     setAppStatus(AppStatus.Busy);
   };

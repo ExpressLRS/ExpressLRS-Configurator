@@ -11,6 +11,10 @@ const mergeWithDeviceOptionsFromStorage = async (
   deviceOptions: DeviceOptions
 ): Promise<DeviceOptions> => {
   const savedBindingPhrase = await storage.getBindingPhrase();
+  const savedBindingPhraseHistory = await storage.getHistory(
+    UserDefineKey.BINDING_PHRASE
+  );
+
   const savedTargetOptions = device
     ? await storage.getDeviceOptions(device)
     : null;
@@ -27,6 +31,8 @@ const mergeWithDeviceOptionsFromStorage = async (
       return {
         ...deviceOption,
         value: savedBindingPhrase,
+        historyEnabled: true,
+        history: savedBindingPhraseHistory,
       };
     }
     if (

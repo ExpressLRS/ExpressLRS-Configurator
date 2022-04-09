@@ -201,6 +201,8 @@ export type UserDefine = {
   readonly sensitive: Scalars['Boolean'];
   readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
   readonly value?: Maybe<Scalars['String']>;
+  readonly history?: Maybe<ReadonlyArray<Scalars['String']>>;
+  readonly historyEnabled?: Maybe<Scalars['Boolean']>;
   readonly optionGroup?: Maybe<UserDefineOptionGroup>;
 };
 
