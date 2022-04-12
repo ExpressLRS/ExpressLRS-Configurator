@@ -132,7 +132,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                       label={inputLabel(item.key)}
                     />
                   )}
-                  {item.sensitive && (
+                  {item.sensitive && !item.historyEnabled && (
                     <SensitiveTextField
                       name={item.key}
                       size="small"
@@ -142,23 +142,22 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                       label={inputLabel(item.key)}
                     />
                   )}
-                  {!item.sensitive &&
-                    item.history &&
-                    item.history?.length > 0 &&
-                    item.historyEnabled && (
-                      <Autocomplete
-                        freeSolo
-                        size="small"
-                        options={item.history}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            label={inputLabel(item.key)}
-                            onChange={onUserDefineValueChange(item.key)}
-                          />
-                        )}
-                      />
-                    )}
+                  {item.historyEnabled && (
+                    <Autocomplete
+                      freeSolo
+                      fullWidth
+                      size="small"
+                      options={item.history || []}
+                      defaultValue={item.value}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label={inputLabel(item.key)}
+                          onChange={onUserDefineValueChange(item.key)}
+                        />
+                      )}
+                    />
+                  )}
                 </ListItem>
               </>
             )}
