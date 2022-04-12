@@ -8,7 +8,6 @@ const updateDeviceOptionHistory = async (
     await Promise.all(
       deviceOptions.userDefineOptions.map(async (userDefine) => {
         if (
-          userDefine.enabled &&
           userDefine.historyEnabled &&
           userDefine.value &&
           userDefine.value?.length > 0
