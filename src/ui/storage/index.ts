@@ -157,9 +157,11 @@ export default class ApplicationStorage implements IApplicationStorage {
 
   async updateHistory(key: string, value: string): Promise<void> {
     const currentHistory = await this.getHistory(key);
-    const newHistory = currentHistory.filter((word: string) => word !== value);
+    const newHistory = currentHistory.filter(
+      (word: string) => word !== (value || null)
+    );
     newHistory.unshift(value);
-    newHistory.length = 10;
+    newHistory.length = newHistory.length < 10 ? newHistory.length : 10;
     localStorage.setItem(`${key}_HISTORY`, JSON.stringify(newHistory));
   }
 
