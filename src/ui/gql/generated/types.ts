@@ -94,7 +94,7 @@ export type Device = {
   readonly name: Scalars['String'];
   readonly category: Scalars['String'];
   readonly targets: ReadonlyArray<Target>;
-  readonly userDefines: ReadonlyArray<UserDefineKey>;
+  readonly userDefines: ReadonlyArray<UserDefine>;
   readonly wikiUrl?: Maybe<Scalars['String']>;
   readonly deviceType: DeviceType;
   readonly verifiedHardware: Scalars['Boolean'];
@@ -118,6 +118,23 @@ export enum FlashingMethod {
   WIFI = 'WIFI',
   EdgeTxPassthrough = 'EdgeTxPassthrough',
   Radio = 'Radio',
+}
+
+export type UserDefine = {
+  readonly __typename?: 'UserDefine';
+  readonly type: UserDefineKind;
+  readonly key: UserDefineKey;
+  readonly enabled: Scalars['Boolean'];
+  readonly sensitive: Scalars['Boolean'];
+  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
+  readonly value?: Maybe<Scalars['String']>;
+  readonly optionGroup?: Maybe<UserDefineOptionGroup>;
+};
+
+export enum UserDefineKind {
+  Boolean = 'Boolean',
+  Text = 'Text',
+  Enum = 'Enum',
 }
 
 export enum UserDefineKey {
@@ -165,6 +182,11 @@ export enum UserDefineKey {
   DEVICE_NAME = 'DEVICE_NAME',
 }
 
+export enum UserDefineOptionGroup {
+  RegulatoryDomain900 = 'RegulatoryDomain900',
+  RegulatoryDomain2400 = 'RegulatoryDomain2400',
+}
+
 export enum DeviceType {
   ExpressLRS = 'ExpressLRS',
   Backpack = 'Backpack',
@@ -192,28 +214,6 @@ export type PullRequestInput = {
   readonly number: Scalars['Float'];
   readonly headCommitHash: Scalars['String'];
 };
-
-export type UserDefine = {
-  readonly __typename?: 'UserDefine';
-  readonly type: UserDefineKind;
-  readonly key: UserDefineKey;
-  readonly enabled: Scalars['Boolean'];
-  readonly sensitive: Scalars['Boolean'];
-  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
-  readonly value?: Maybe<Scalars['String']>;
-  readonly optionGroup?: Maybe<UserDefineOptionGroup>;
-};
-
-export enum UserDefineKind {
-  Boolean = 'Boolean',
-  Text = 'Text',
-  Enum = 'Enum',
-}
-
-export enum UserDefineOptionGroup {
-  RegulatoryDomain900 = 'RegulatoryDomain900',
-  RegulatoryDomain2400 = 'RegulatoryDomain2400',
-}
 
 export type Release = {
   readonly __typename?: 'Release';
@@ -461,7 +461,6 @@ export type AvailableFirmwareTargetsQuery = {
       | 'name'
       | 'category'
       | 'wikiUrl'
-      | 'userDefines'
       | 'deviceType'
       | 'parent'
       | 'abbreviatedName'
@@ -842,7 +841,6 @@ export const AvailableFirmwareTargetsDocument = gql`
         flashingMethod
       }
       wikiUrl
-      userDefines
       deviceType
       parent
       abbreviatedName

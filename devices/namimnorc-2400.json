@@ -154,7 +154,7 @@
       "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_500HZ",
-      "USE_DIVERSITY",
+      {"key": "USE_DIVERSITY", "enabled": true},
       "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
