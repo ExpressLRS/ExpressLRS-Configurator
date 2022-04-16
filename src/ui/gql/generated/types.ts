@@ -120,23 +120,6 @@ export enum FlashingMethod {
   Radio = 'Radio',
 }
 
-export type UserDefine = {
-  readonly __typename?: 'UserDefine';
-  readonly type: UserDefineKind;
-  readonly key: UserDefineKey;
-  readonly enabled: Scalars['Boolean'];
-  readonly sensitive: Scalars['Boolean'];
-  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
-  readonly value?: Maybe<Scalars['String']>;
-  readonly optionGroup?: Maybe<UserDefineOptionGroup>;
-};
-
-export enum UserDefineKind {
-  Boolean = 'Boolean',
-  Text = 'Text',
-  Enum = 'Enum',
-}
-
 export enum UserDefineKey {
   BINDING_PHRASE = 'BINDING_PHRASE',
   REGULATORY_DOMAIN_AU_915 = 'REGULATORY_DOMAIN_AU_915',
@@ -180,11 +163,6 @@ export enum UserDefineKey {
   AUTO_WIFI_ON_BOOT = 'AUTO_WIFI_ON_BOOT',
   AUTO_WIFI_ON_INTERVAL = 'AUTO_WIFI_ON_INTERVAL',
   DEVICE_NAME = 'DEVICE_NAME',
-}
-
-export enum UserDefineOptionGroup {
-  RegulatoryDomain900 = 'RegulatoryDomain900',
-  RegulatoryDomain2400 = 'RegulatoryDomain2400',
 }
 
 export enum DeviceType {
@@ -238,7 +216,6 @@ export enum UserDefineOptionGroup {
   RegulatoryDomain900 = 'RegulatoryDomain900',
   RegulatoryDomain2400 = 'RegulatoryDomain2400',
 }
-
 
 export type Release = {
   readonly __typename?: 'Release';
