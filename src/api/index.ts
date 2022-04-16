@@ -24,7 +24,6 @@ import SerialMonitorResolver from './src/graphql/resolvers/SerialMonitor.resolve
 import SerialMonitorService from './src/services/SerialMonitor';
 import GitTargetsService from './src/services/TargetsLoader/GitTargets';
 import DeviceService from './src/services/Device';
-import TargetUserDefinesFactory from './src/factories/TargetUserDefinesFactory';
 import MulticastDnsService from './src/services/MulticastDns';
 import MulticastDnsMonitorResolver from './src/graphql/resolvers/MulticastDnsMonitor.resolver';
 import LuaService from './src/services/Lua';
@@ -106,29 +105,22 @@ export default class ApiServer {
 
     Container.set(DeviceService, deviceService);
 
-    const targetUserDefinesFactory = new TargetUserDefinesFactory(
-      deviceService
-    );
-
     if (config.userDefinesLoader === FirmwareParamsLoaderType.Git) {
       Container.set(
         UserDefinesBuilder,
         new UserDefinesBuilder(
-          targetUserDefinesFactory,
           new GitUserDefinesLoader(
             logger,
             config.PATH,
             config.userDefinesStoragePath
-          )
+          ),
+          deviceService
         )
       );
     } else if (config.userDefinesLoader === FirmwareParamsLoaderType.Http) {
       Container.set(
         UserDefinesBuilder,
-        new UserDefinesBuilder(
-          targetUserDefinesFactory,
-          new HttpUserDefinesLoader(logger)
-        )
+        new UserDefinesBuilder(new HttpUserDefinesLoader(logger), deviceService)
       );
     }
 

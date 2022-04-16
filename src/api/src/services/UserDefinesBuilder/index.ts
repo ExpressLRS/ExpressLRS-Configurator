@@ -1,9 +1,9 @@
 import { Service } from 'typedi';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import UserDefine from '../../models/UserDefine';
-import TargetUserDefinesFactory from '../../factories/TargetUserDefinesFactory';
 import PullRequest from '../../models/PullRequest';
 import UserDefinesLoader from '../UserDefinesLoader';
+import DeviceService from '../Device';
 
 interface UserDefineFilters {
   target: string;
@@ -24,17 +24,26 @@ interface GitRepository {
 @Service()
 export default class UserDefinesBuilder {
   constructor(
-    private targetUserDefinesFactory: TargetUserDefinesFactory,
-    private userDefinesLoader: UserDefinesLoader
+    private userDefinesLoader: UserDefinesLoader,
+    private deviceService: DeviceService
   ) {}
 
   async build(
     input: UserDefineFilters,
     gitRepository: GitRepository
   ): Promise<UserDefine[]> {
-    const availableKeys = this.targetUserDefinesFactory.build(input.target);
+    const device = this.deviceService.getDevices().find((item) => {
+      return item.targets.find((t) => t.name === input.target);
+    });
+
+    const userDefines = device?.userDefines || [];
+
+    if (device === undefined) {
+      throw new Error(`device not found for target ${input.target}`);
+    }
+
     if (input.source === FirmwareSource.Local) {
-      return availableKeys;
+      return userDefines;
     }
     const compatibleKeys = await this.userDefinesLoader.loadUserDefinesTxt(
       input,
@@ -45,7 +54,7 @@ export default class UserDefinesBuilder {
         `failed to parse compatible user define keys, list is too small: ${compatibleKeys}`
       );
     }
-    return availableKeys.filter((userDefine) => {
+    return userDefines.filter((userDefine) => {
       return compatibleKeys.indexOf(userDefine.key) > -1;
     });
   }
