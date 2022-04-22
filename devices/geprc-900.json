@@ -1,0 +1,40 @@
+[
+  {
+    "category": "GepRC 900 MHz",
+    "name": "GepRC Nano 900MHz",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "GepRC_Nano_900_RX_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "GepRC_Nano_900_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "GepRC_Nano_900_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "RCVR_UART_BAUD",
+      "RCVR_INVERT_TX"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-hmes900/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  }
+]
