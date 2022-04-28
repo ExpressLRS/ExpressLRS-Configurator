@@ -26,7 +26,7 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER"
     ],
-    "wikiUrl": "",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/vantac2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -58,7 +58,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/vantac2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }
