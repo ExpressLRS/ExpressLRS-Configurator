@@ -104,12 +104,7 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy2400/",
     "deviceType": "ExpressLRS",
-    "aliases": [{
-      "category": "RadioMaster 2.4 GHz",
-      "name": "RadioMaster Zorro 2400 TX",
-	  "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-internal/",
-      "abbreviatedName": "RM Zorro 2400TX"
-    }]
+    "aliases": []
   },
   {
     "category": "DIY 2.4 GHz",
