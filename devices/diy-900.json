@@ -180,7 +180,14 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy900/",
     "deviceType": "ExpressLRS",
-    "aliases": []
+    "aliases": [
+      {
+        "category": "GEPRC 900 MHz",
+        "name": "GEPRC Nano 900 RX",
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/geprc900/",
+        "abbreviatedName": "GEPRC Nano 900RX"
+      }
+	]
   },
   {
     "category": "DIY 900 MHz",
