@@ -238,10 +238,10 @@
         "abbreviatedName": "BFPV Lite 2G4RX"
       },
       {
-        "category": "GepRC 2.4 GHz",
-        "name": "GepRC Nano(SE) 2400 RX",
+        "category": "GEPRC 2.4 GHz",
+        "name": "GEPRC Nano 2400 RX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/geprc2400/",
-        "abbreviatedName": "GepRC Nano 2G4RX"
+        "abbreviatedName": "GEPRC Nano 2G4RX"
       }
     ]
   },

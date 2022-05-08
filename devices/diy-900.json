@@ -182,10 +182,10 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "GepRC 900 MHz",
-        "name": "GepRC Nano 900 RX",
+        "category": "GEPRC 900 MHz",
+        "name": "GEPRC Nano 900 RX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/geprc900/",
-        "abbreviatedName": "GepRC Nano 900RX"
+        "abbreviatedName": "GEPRC Nano 900RX"
       }
 	]
   },
