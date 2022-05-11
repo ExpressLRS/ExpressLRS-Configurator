@@ -30,7 +30,7 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-axis-thor/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/axis-thor/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -67,7 +67,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-axis-thor/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/axis-thor/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

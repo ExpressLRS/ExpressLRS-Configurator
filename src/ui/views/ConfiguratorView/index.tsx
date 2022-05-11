@@ -19,11 +19,12 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
+  IconButton,
   Tooltip,
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ipcRenderer } from 'electron';
-import { NetworkWifi } from '@mui/icons-material';
+import { ContentCopy, NetworkWifi, Save } from '@mui/icons-material';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
 import DeviceOptionsForm, {
@@ -56,12 +57,15 @@ import {
   UserDefineKey,
   UserDefineKind,
   TargetDeviceOptionsQuery,
+  BuildFirmwareErrorType,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
 import {
   IpcRequest,
   OpenFileLocationRequestBody,
+  SaveFileRequestBody,
+  SaveFileResponseBody,
   UpdateBuildStatusRequestBody,
 } from '../../../ipc';
 import UserDefinesValidator from './UserDefinesValidator';
@@ -74,9 +78,11 @@ import WifiDeviceSelect from '../../components/WifiDeviceSelect';
 import WifiDeviceList from '../../components/WifiDeviceList';
 import GitRepository from '../../models/GitRepository';
 import ShowTimeoutAlerts from '../../components/ShowTimeoutAlerts';
+import ShowAfterTimeout from '../../components/ShowAfterTimeout';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
 import MainLayout from '../../layouts/MainLayout';
+import SplitButton from '../../components/SplitButton';
 
 const styles = {
   button: {
@@ -661,7 +667,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   const onBuild = () => sendJob(BuildJobType.Build);
   const onBuildAndFlash = () => sendJob(BuildJobType.BuildAndFlash);
+  const onForceFlash = () => sendJob(BuildJobType.ForceFlash);
 
+  const deviceTargetRef = useRef<HTMLDivElement | null>(null);
   const deviceOptionsRef = useRef<HTMLDivElement | null>(null);
 
   const [
@@ -701,7 +709,12 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           });
         }
 
+        // if no device is found that matches the target
         if (!deviceMatches || deviceMatches.length === 0) {
+          console.error(
+            `no device matches found for target ${dnsDeviceTarget}!`
+          );
+          setDeviceSelectErrorDialogOpen(true);
           return;
         }
 
@@ -726,7 +739,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
         if (dTarget !== deviceTarget) {
           setDeviceTarget(dTarget);
-          deviceOptionsRef?.current?.scrollIntoView({ behavior: 'smooth' });
+          deviceTargetRef?.current?.scrollIntoView({ behavior: 'smooth' });
         }
 
         setWifiDevice(dnsDevice.ip);
@@ -739,7 +752,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     if (selectedDevice) {
       handleSelectedDeviceChange(selectedDevice);
     }
-  }, [handleSelectedDeviceChange, selectedDevice]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDevice]);
 
   const luaDownloadButton = () => {
     if (
@@ -768,6 +782,30 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     setDeviceSelectErrorDialogOpen(false);
   }, []);
 
+  const saveBuildLogToFile = useCallback(async () => {
+    const saveFileRequestBody: SaveFileRequestBody = {
+      data: logs,
+      defaultPath: `ExpressLRSBuildLog_${new Date()
+        .toISOString()
+        .replace(/[^0-9]/gi, '')}.txt`,
+    };
+
+    const result: SaveFileResponseBody = await ipcRenderer.invoke(
+      IpcRequest.SaveFile,
+      saveFileRequestBody
+    );
+
+    if (result.success) {
+      const openFileLocationRequestBody: OpenFileLocationRequestBody = {
+        path: result.path,
+      };
+      ipcRenderer.send(
+        IpcRequest.OpenFileLocation,
+        openFileLocationRequestBody
+      );
+    }
+  }, [logs]);
+
   return (
     <MainLayout>
       {viewState === ViewState.Configuration && (
@@ -787,7 +825,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
             <CardTitle icon={<SettingsIcon />} title="Target" />
             <Divider />
-            <CardContent>
+            <CardContent ref={deviceTargetRef}>
               {firmwareVersionData === null ||
                 (validateFirmwareVersionData(firmwareVersionData).length >
                   0 && (
@@ -913,14 +951,28 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   Build
                 </Button>
                 {deviceTarget?.flashingMethod !== FlashingMethod.Radio && (
-                  <Button
+                  <SplitButton
                     sx={styles.button}
                     size="large"
                     variant="contained"
-                    onClick={onBuildAndFlash}
-                  >
-                    Build & Flash
-                  </Button>
+                    options={[
+                      {
+                        label: 'Build & Flash',
+                        value: BuildJobType.BuildAndFlash,
+                      },
+                      {
+                        label: 'Force Flash',
+                        value: BuildJobType.ForceFlash,
+                      },
+                    ]}
+                    onButtonClick={(value: string | null) => {
+                      if (value === BuildJobType.BuildAndFlash) {
+                        onBuildAndFlash();
+                      } else if (value === BuildJobType.ForceFlash) {
+                        onForceFlash();
+                      }
+                    }}
+                  />
                 )}
               </div>
             </CardContent>
@@ -986,7 +1038,32 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
           {logs.length > 0 && (
             <>
-              <CardTitle icon={<SettingsIcon />} title="Logs" />
+              <CardTitle
+                icon={<SettingsIcon />}
+                title={
+                  <Box display="flex" justifyContent="space-between">
+                    <Box>Logs</Box>
+                    <Box>
+                      <IconButton
+                        aria-label="Copy log to clipboard"
+                        title="Copy log to clipboard"
+                        onClick={async () => {
+                          await navigator.clipboard.writeText(logs);
+                        }}
+                      >
+                        <ContentCopy />
+                      </IconButton>
+                      <IconButton
+                        aria-label="Save log to file"
+                        title="Save log to file"
+                        onClick={saveBuildLogToFile}
+                      >
+                        <Save />
+                      </IconButton>
+                    </Box>
+                  </Box>
+                }
+              />
               <Divider />
               <CardContent>
                 <Box sx={styles.longBuildDurationWarning}>
@@ -1007,9 +1084,42 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
               <CardTitle icon={<SettingsIcon />} title="Result" />
               <Divider />
               <CardContent>
-                <Box sx={styles.buildNotification}>
-                  <BuildResponse response={response?.buildFlashFirmware} />
-                </Box>
+                {response?.buildFlashFirmware?.success &&
+                  currentJobType === BuildJobType.BuildAndFlash &&
+                  deviceTarget?.flashingMethod === FlashingMethod.WIFI && (
+                    <>
+                      <Alert sx={styles.buildNotification} severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                        Please wait for LED to resume blinking before
+                        disconnecting power
+                      </Alert>
+                    </>
+                  )}
+                <ShowAfterTimeout
+                  timeout={
+                    response?.buildFlashFirmware?.success &&
+                    currentJobType === BuildJobType.BuildAndFlash &&
+                    deviceTarget?.flashingMethod === FlashingMethod.WIFI
+                      ? 15000
+                      : 1000
+                  }
+                  active={!buildInProgress}
+                >
+                  <Box sx={styles.buildNotification}>
+                    <BuildResponse
+                      response={response?.buildFlashFirmware}
+                      firmwareVersionData={firmwareVersionData}
+                    />
+                  </Box>
+                  {response?.buildFlashFirmware?.success && hasLuaScript && (
+                    <>
+                      <Alert sx={styles.buildNotification} severity="info">
+                        <AlertTitle>Update Lua Script</AlertTitle>
+                        Make sure to update the Lua script on your radio
+                      </Alert>
+                    </>
+                  )}
+                </ShowAfterTimeout>
                 {response?.buildFlashFirmware?.success &&
                   currentJobType === BuildJobType.Build && (
                     <>
@@ -1021,14 +1131,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       </Alert>
                     </>
                   )}
-                {response?.buildFlashFirmware?.success && hasLuaScript && (
-                  <>
-                    <Alert sx={styles.buildNotification} severity="info">
-                      <AlertTitle>Update Lua Script</AlertTitle>
-                      Make sure to update the Lua script on your radio
-                    </Alert>
-                  </>
-                )}
               </CardContent>
               <Divider />
             </>
@@ -1053,15 +1155,26 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     sx={styles.button}
                     size="large"
                     variant="contained"
-                    onClick={
-                      currentJobType === BuildJobType.Build
-                        ? onBuild
-                        : onBuildAndFlash
-                    }
+                    onClick={() => {
+                      sendJob(currentJobType);
+                    }}
                   >
                     Retry
                   </Button>
                 )}
+
+                {!response?.buildFlashFirmware.success &&
+                  response?.buildFlashFirmware.errorType ===
+                    BuildFirmwareErrorType.TargetMismatch && (
+                    <Button
+                      sx={styles.button}
+                      size="large"
+                      variant="contained"
+                      onClick={onForceFlash}
+                    >
+                      Force Flash
+                    </Button>
+                  )}
 
                 {response?.buildFlashFirmware.success && luaDownloadButton()}
               </CardContent>

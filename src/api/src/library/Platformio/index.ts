@@ -5,6 +5,7 @@ import path from 'path';
 import child_process from 'child_process';
 import Commander, { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 import { LoggerService } from '../../logger';
+import UploadType from './Enum/UploadType';
 
 interface PlatformioCoreState {
   core_version: string;
@@ -229,7 +230,8 @@ export default class Platformio {
     projectDir: string,
     environment: string,
     serialPort: string | undefined,
-    onUpdate: OnOutputFunc = NoOpFunc
+    onUpdate: OnOutputFunc = NoOpFunc,
+    uploadType: UploadType
   ) {
     const params = [
       'run',
@@ -238,7 +240,7 @@ export default class Platformio {
       '--environment',
       environment,
       '--target',
-      'upload',
+      uploadType,
     ];
     if (serialPort !== undefined && serialPort !== null) {
       params.push('--upload-port');

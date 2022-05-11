@@ -1,7 +1,7 @@
 [
   {
     "category": "TX",
-    "name": "Namimno TX Backpack",
+    "name": "Namimno Non-OLED TX Backpack",
     "targets": [
       {
         "flashingMethod": "UART",

@@ -1,33 +1,43 @@
 name: Test
 
-on: [ push, pull_request ]
+on: [ push, pull_request, workflow_dispatch ]
 
 jobs:
-  release:
+  test:
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        os: [ macos-latest, windows-latest, ubuntu-latest ]
+        os: [ macos-latest, windows-2019, ubuntu-latest ]
 
     steps:
-      - name: Check out Git repository
+      - name: Setup apt dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt update
+          sudo apt-get install --no-install-recommends -y libarchive-tools rpm
+
+      - name: Checkout git repo
         uses: actions/checkout@v1
 
-      - name: Install Node.js, NPM and Yarn
+      - name: Install Node, NPM and Yarn
         uses: actions/setup-node@v1
         with:
-          node-version: 14.16.1
+          node-version: 16.15.0
 
-      - name: yarn install
+      - name: Install dependencies
         run: |
-          yarn install --frozen-lockfile --network-timeout 300000
+          yarn install --network-timeout 180000
 
-      - name: yarn test
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: yarn lint
+        run: |
+          yarn lint
+
+      - name: yarn package
         run: |
           yarn package
-          yarn lint
-          yarn tsc
+
+      - name: yarn test
+        run: |
           yarn test
+

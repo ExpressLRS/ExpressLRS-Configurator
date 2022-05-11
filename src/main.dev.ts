@@ -16,12 +16,15 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import mkdirp from 'mkdirp';
 import winston from 'winston';
+import fs from 'fs';
 import MenuBuilder from './menu';
 import ApiServer from './api';
 import {
   ChooseFolderResponseBody,
   IpcRequest,
   OpenFileLocationRequestBody,
+  SaveFileRequestBody,
+  SaveFileResponseBody,
   UpdateBuildStatusRequestBody,
 } from './ipc';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
@@ -146,6 +149,9 @@ const installExtensions = async () => {
     });
 };
 
+const isWindows = process.platform.startsWith('win');
+const isMacOS = process.platform.startsWith('darwin');
+
 const createWindow = async () => {
   if (
     process.env.NODE_ENV === 'development' ||
@@ -231,8 +237,7 @@ const createWindow = async () => {
     }
     return item;
   };
-  const isWindows = process.platform.startsWith('win');
-  const isMacOS = process.platform.startsWith('darwin');
+
   if (isWindows) {
     const portablePythonLocation = path.join(
       dependenciesPath,
@@ -394,6 +399,58 @@ app.on('activate', () => {
   }
 });
 
+autoUpdater.autoDownload = false;
+
+autoUpdater.on('error', (error) => {
+  logger.error(error, error.stack);
+});
+
+autoUpdater.on('update-available', async () => {
+  const response = await dialog.showMessageBox(mainWindow!, {
+    type: 'info',
+    title: 'Found Updates',
+    message: 'Found updates, do you want update now?',
+    buttons: ['Sure', 'Later'],
+  });
+
+  if (response.response === 0) {
+    logger.log('Downloading Update');
+    autoUpdater.downloadUpdate();
+    await dialog.showMessageBox(mainWindow!, {
+      type: 'info',
+      title: 'Update Downloading',
+      message:
+        'Update is being downloaded, you will be notified when it is ready to install',
+      buttons: [],
+    });
+  }
+});
+
+autoUpdater.on('update-downloaded', async () => {
+  const response = await dialog.showMessageBox(mainWindow!, {
+    type: 'info',
+    buttons: ['Restart', 'Later'],
+    title: 'Application Update',
+    message: 'Update',
+    detail:
+      'A new version has been downloaded. Restart the application to apply the updates.',
+  });
+  if (response.response === 0) {
+    setImmediate(() => autoUpdater.quitAndInstall());
+  }
+});
+
+app.on('ready', async () => {
+  // does not work in development and MacOS requires the application to be signed
+  if (process.env.NODE_ENV !== 'development' && !isMacOS) {
+    try {
+      await autoUpdater.checkForUpdates();
+    } catch (error) {
+      logger.error(error);
+    }
+  }
+});
+
 /*
   Handle IPC requests from the User Interface
  */
@@ -444,5 +501,26 @@ ipcMain.on(
     logger.log('received a request to update build status', {
       arg,
     });
+  }
+);
+
+ipcMain.handle(
+  IpcRequest.SaveFile,
+  async (_, arg: SaveFileRequestBody): Promise<SaveFileResponseBody> => {
+    const result = await dialog.showSaveDialog({
+      title: 'Save File',
+      defaultPath: arg.defaultPath,
+    });
+    if (result.canceled || !result.filePath || result.filePath.length === 0) {
+      return {
+        success: false,
+        path: '',
+      };
+    }
+    await fs.promises.writeFile(result.filePath, arg.data);
+    return {
+      success: true,
+      path: result.filePath,
+    };
   }
 );

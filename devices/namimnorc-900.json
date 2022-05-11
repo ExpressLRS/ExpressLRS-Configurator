@@ -29,7 +29,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-voyager900/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/voyager900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -63,7 +63,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-voyager900/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/voyager900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -92,7 +92,7 @@
       "LOCK_ON_FIRST_CONNECTION",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-voyager900/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/voyager900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -130,7 +130,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-voyager900/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/voyager900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

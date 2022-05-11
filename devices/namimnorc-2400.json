@@ -29,7 +29,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-flash2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/flash2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -63,7 +63,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-flash2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/flash2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -90,7 +90,7 @@
       "USE_500HZ",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-flash2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/flash2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -119,7 +119,6 @@
       "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_500HZ",
-      "USE_DIVERSITY",
       "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
@@ -127,7 +126,43 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-flash2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/flash2400/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },{
+    "category": "NamimnoRC FLASH 2.4 GHz",
+    "name": "NamimnoRC FLASH 2400 ESP Diversity RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "NamimnoRC_FLASH_2400_ESP_RX_PA_via_UART"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "NamimnoRC_FLASH_2400_ESP_RX_PA_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "NamimnoRC_FLASH_2400_ESP_RX_PA_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "REGULATORY_DOMAIN_EU_CE_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      {"key": "USE_DIVERSITY", "enabled": true},
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "RCVR_UART_BAUD",
+      "RCVR_INVERT_TX"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/flash2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

@@ -31,7 +31,7 @@
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-diy/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -68,7 +68,7 @@
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-diy/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -102,14 +102,9 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-diy/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy2400/",
     "deviceType": "ExpressLRS",
-    "aliases": [{
-      "category": "RadioMaster 2.4 GHz",
-      "name": "RadioMaster Zorro 2400 TX",
-      "wikiUrl": "",
-      "abbreviatedName": "RM Zorro 2400TX"
-    }]
+    "aliases": []
   },
   {
     "category": "DIY 2.4 GHz",
@@ -143,7 +138,7 @@
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-diy/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -180,7 +175,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-diyreceivers/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
@@ -212,13 +207,6 @@
         "verifiedHardware": false
       },
       {
-        "category": "HiYOUNGER 2.4 GHz",
-        "name": "HiYOUNGER RX24T 2400 RX",
-        "wikiUrl": "",
-        "abbreviatedName": "HiYOUNGER RX24T",
-        "verifiedHardware": false
-      },
-      {
         "category": "JHEMCU 2.4 GHz",
         "name": "JHEMCU SP24S 2400 RX",
         "wikiUrl": "",
@@ -233,17 +221,22 @@
         "verifiedHardware": false
       },
       {
-        "category": "JHEMCU 2.4 GHz",
-        "name": "JHEMCU RX24T 2400 RX",
-        "wikiUrl": "",
-        "abbreviatedName": "JHEMCU RX24T",
-        "verifiedHardware": false
-      },
-      {
         "category": "Jumper 2.4 GHz",
         "name": "Jumper AION Mini 2400 RX",
-        "wikiUrl": "",
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/jumper-aion/",
         "abbreviatedName": "AION RX24 MINI"
+      },
+      {
+        "category": "BETAFPV 2.4 GHz",
+        "name": "BETAFPV Lite 2400 RX",
+		"wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv2400/",
+        "abbreviatedName": "BFPV Lite 2G4RX"
+      },
+      {
+        "category": "GEPRC 2.4 GHz",
+        "name": "GEPRC Nano 2400 RX",
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/geprc2400/",
+        "abbreviatedName": "GEPRC Nano 2G4RX"
       }
     ]
   },
@@ -273,9 +266,14 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-diyreceivers/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
     "deviceType": "ExpressLRS",
-    "aliases": []
+    "aliases": [{
+      "category": "BETAFPV 2.4 GHz",
+      "name": "BETAFPV PWM 2400 RX",
+      "wikiUrl": "",
+      "abbreviatedName": "BFPV PWM 2G4RX"
+    }]
   },
   {
     "category": "DIY 2.4 GHz",
@@ -300,7 +298,7 @@
       "USE_500HZ",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-diyreceivers/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

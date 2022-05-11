@@ -138,7 +138,7 @@ runtime.
 
 Prerequisites
 
-- node >=14.0
+- node >=16.0
 - git >= 2.25
 - python >= 3.6
 - platformio >= 5.0

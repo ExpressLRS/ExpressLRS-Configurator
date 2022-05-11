@@ -126,8 +126,19 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
 
     const git = this.getSimpleGit(directory);
 
-    const isTargetDirectoryEmpty: boolean =
+    let isTargetDirectoryEmpty: boolean =
       (await fs.readdir(directory)).length === 0;
+
+    // if directory is not empty and it is not a valid repo, remove the existing files
+    if (!isTargetDirectoryEmpty && !(await git.checkIsRepo())) {
+      this.logger.log(
+        'Invalid git repository detected, removing the existing files',
+        { directory }
+      );
+      await fs.rm(directory, { recursive: true, force: true });
+      await fs.mkdir(directory, { recursive: true });
+      isTargetDirectoryEmpty = true;
+    }
 
     if (isTargetDirectoryEmpty) {
       await git.clone(repository, directory, [

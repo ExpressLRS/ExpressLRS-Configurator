@@ -19,7 +19,15 @@
     ],
     "wikiUrl": "",
     "deviceType": "Backpack",
-    "aliases": []
+    "aliases": [
+      {
+        "category": "TX",
+        "name": "NamimnoRC FLASH OLED TX Backpack",
+        "wikiUrl": "",
+        "abbreviatedName": "NamimnoTX Backpk",
+        "verifiedHardware": true
+      }
+    ]
   },
   {
     "category": "VRX",

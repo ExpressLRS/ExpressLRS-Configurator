@@ -7,6 +7,9 @@ import FlashingMethod from '../../models/enum/FlashingMethod';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import DeviceType from '../../models/enum/DeviceType';
 import { LoggerService } from '../../logger';
+import UserDefineOverride from '../../models/UserDefineOverride';
+import TargetUserDefinesFactory from '../../factories/TargetUserDefinesFactory';
+import UserDefine from '../../models/UserDefine';
 
 export interface IDevices {
   getDevices(): Device[];
@@ -87,14 +90,33 @@ export default class DeviceService implements IDevices {
           }
         );
 
-        const userDefines = value.userDefines.map((item: string) => {
-          const userDefineKey =
-            UserDefineKey[item as keyof typeof UserDefineKey];
-          if (!userDefineKey) {
+        const targetUserDefinesFactory = new TargetUserDefinesFactory();
+        const userDefines: UserDefine[] = value.userDefines.map(
+          (item: string | UserDefineOverride) => {
+            if (typeof item === 'string') {
+              const userDefineKey =
+                UserDefineKey[item as keyof typeof UserDefineKey];
+              if (!userDefineKey) {
+                throw new Error(`"${item}" is not a valid User Define`);
+              }
+              return targetUserDefinesFactory.build(userDefineKey);
+            }
+
+            if (typeof item === 'object') {
+              const userDefineKey =
+                UserDefineKey[item.key as keyof typeof UserDefineKey];
+              if (!userDefineKey) {
+                throw new Error(`"${item}" is not a valid User Define`);
+              }
+
+              let userDefine = targetUserDefinesFactory.build(userDefineKey);
+              userDefine = this.applyUserDefineOverride(userDefine, item);
+              return userDefine;
+            }
+
             throw new Error(`"${item}" is not a valid User Define`);
           }
-          return userDefineKey;
-        });
+        );
 
         const deviceType =
           DeviceType[value.deviceType as keyof typeof DeviceType];
@@ -121,10 +143,10 @@ export default class DeviceService implements IDevices {
         if (value.aliases) {
           value.aliases.forEach(
             (alias: {
-              name: any;
-              category: any;
-              wikiUrl: any;
-              abbreviatedName?: any;
+              name: string;
+              category: string;
+              wikiUrl: string;
+              abbreviatedName?: string;
               verifiedHardware?: boolean;
             }) => {
               devices.push({
@@ -160,5 +182,29 @@ export default class DeviceService implements IDevices {
 
   getDevices(): Device[] {
     return this.devices;
+  }
+
+  applyUserDefineOverride(
+    userDefine: UserDefine,
+    userDefineOverride: UserDefineOverride
+  ): UserDefine {
+    const userDefineCopy: UserDefine = { ...userDefine };
+
+    if (userDefineOverride.enabled !== undefined) {
+      userDefineCopy.enabled = userDefineOverride.enabled;
+    }
+    if (userDefineOverride.sensitive !== undefined) {
+      userDefineCopy.sensitive = userDefineOverride.sensitive;
+    }
+    if (userDefineOverride.enumValues !== undefined) {
+      userDefineCopy.enumValues = userDefineOverride.enumValues;
+    }
+    if (userDefineOverride.value !== undefined) {
+      userDefineCopy.value = userDefineOverride.value;
+    }
+    if (userDefineOverride.optionGroup !== undefined) {
+      userDefineCopy.optionGroup = userDefineOverride.optionGroup;
+    }
+    return userDefineCopy;
   }
 }

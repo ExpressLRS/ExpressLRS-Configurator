@@ -32,7 +32,7 @@
       "WS2812_IS_GRB",
       "UNLOCK_HIGHER_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
@@ -77,7 +77,7 @@
       "WS2812_IS_GRB",
       "UNLOCK_HIGHER_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -108,7 +108,7 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -148,19 +148,31 @@
   },
   {
     "category": "BETAFPV 2.4 GHz",
-    "name": "BETAFPV 2400 RX",
+    "name": "BETAFPV Nano 2400 RX",
     "targets": [
       {
         "flashingMethod": "UART",
         "name": "BETAFPV_2400_RX_via_UART"
       },
       {
+        "flashingMethod": "UART",
+        "name": "BETAFPV_Nano_2400_RX_via_UART"
+      },
+      {
         "flashingMethod": "WIFI",
         "name": "BETAFPV_2400_RX_via_WIFI"
       },
       {
+        "flashingMethod": "WIFI",
+        "name": "BETAFPV_Nano_2400_RX_via_WIFI"
+      },
+      {
         "flashingMethod": "BetaflightPassthrough",
         "name": "BETAFPV_2400_RX_via_BetaflightPassthrough"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "BETAFPV_Nano_2400_RX_via_BetaflightPassthrough"
       }
     ],
     "userDefines": [
@@ -179,8 +191,23 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/rx-betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv2400/",
     "deviceType": "ExpressLRS",
-    "aliases": []
+    "aliases": [
+      {
+        "category": "HiYOUNGER 2.4 GHz",
+        "name": "HiYOUNGER RX24T 2400 RX",
+        "wikiUrl": "",
+        "abbreviatedName": "HiYOUNGER RX24T",
+        "verifiedHardware": false
+      },
+      {
+        "category": "JHEMCU 2.4 GHz",
+        "name": "JHEMCU RX24T 2400 RX",
+        "wikiUrl": "",
+        "abbreviatedName": "JHEMCU RX24T",
+        "verifiedHardware": false
+      }
+    ]
   }
 ]
