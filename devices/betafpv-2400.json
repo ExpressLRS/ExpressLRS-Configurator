@@ -142,7 +142,7 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/tx-betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
