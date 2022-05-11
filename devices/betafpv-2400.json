@@ -138,9 +138,7 @@
       "FEATURE_OPENTX_SYNC",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER"
+      "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv2400/",
     "deviceType": "ExpressLRS",
