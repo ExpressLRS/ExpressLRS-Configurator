@@ -1,6 +1,7 @@
 import { Service } from 'typedi';
 import * as http from 'http';
 import makeMdns, { ResponsePacket } from 'multicast-dns';
+import { SrvAnswer, StringAnswer, TxtAnswer } from 'dns-packet';
 import MulticastDnsInformation from '../../models/MulticastDnsInformation';
 import { LoggerService } from '../../logger';
 import MulticastDnsEventType from '../../models/enum/MulticastDnsEventType';
@@ -120,88 +121,104 @@ export default class MulticastDnsService {
 
     // check if any of the answers on the response have a name that starts with
     // 'elrs_', which indicates that it is an elers device
-    const isElrs = !!items.find((item: any) => item.name.startsWith('elrs_'));
+    const txtResponses: TxtAnswer[] = items.filter(
+      (answer) => answer.type === 'TXT'
+    ) as TxtAnswer[];
 
-    if (isElrs) {
-      const txtResponse: any = items.find((answer) => answer.type === 'TXT');
+    txtResponses.forEach((item) => {
+      let options: UserDefine[] = [];
+      let version = '';
+      let target = '';
+      let type = '';
+      let vendor = '';
+      let deviceName = '';
 
-      const aResponse: any = items.find((answer) => answer.type === 'A');
+      if (Array.isArray(item.data)) {
+        item.data.forEach((i) => {
+          if (i instanceof Buffer) {
+            const dataItem = i.toString('utf-8');
+            const delimPos = dataItem.indexOf('=');
+            const key = dataItem.substring(0, delimPos);
+            const value = dataItem.substring(delimPos + 1);
 
-      const srvResponse: any = items.find((answer) => answer.type === 'SRV');
+            switch (key) {
+              case 'options':
+                options = this.parseOptions(value);
+                break;
+              case 'version':
+                version = value;
+                break;
+              case 'target':
+                target = value;
+                break;
+              case 'type':
+                type = value;
+                break;
+              case 'vendor':
+                vendor = value;
+                break;
+              case 'device':
+                deviceName = value;
+                break;
+              default:
+                break;
+            }
+          }
+        });
+      }
 
-      if (txtResponse && aResponse && srvResponse) {
-        const dns: string = srvResponse.data?.target;
-        const port: number = srvResponse.data?.port;
-        const ip: string = aResponse.data;
-        const name: string = txtResponse.name?.substring(
-          0,
-          txtResponse.name.indexOf('.')
-        );
-        let options: UserDefine[] = [];
-        let version = '';
-        let target = '';
-        let type = '';
-        let vendor = '';
-        let deviceName = '';
+      if (vendor === 'elrs') {
+        const name = item.name?.substring(0, item.name.indexOf('.'));
 
-        if (Array.isArray(txtResponse.data)) {
-          txtResponse.data.forEach((item: any) => {
-            if (item instanceof Buffer) {
-              const dataItem = item.toString('utf-8');
-              const delimPos = dataItem.indexOf('=');
-              const key = dataItem.substring(0, delimPos);
-              const value = dataItem.substring(delimPos + 1);
+        const srvResponses: SrvAnswer[] = items.filter(
+          (answer) => answer.type === 'SRV'
+        ) as SrvAnswer[];
 
-              switch (key) {
-                case 'options':
-                  options = this.parseOptions(value);
-                  break;
-                case 'version':
-                  version = value;
-                  break;
-                case 'target':
-                  target = value;
-                  break;
-                case 'type':
-                  type = value;
-                  break;
-                case 'vendor':
-                  vendor = value;
-                  break;
-                case 'device':
-                  deviceName = value;
-                  break;
-                default:
-                  break;
+        const srvResponse: SrvAnswer | undefined = srvResponses.find((i) => {
+          return i.name.startsWith(name);
+        });
+
+        if (srvResponse) {
+          const dns: string = srvResponse.data?.target;
+          const port: number = srvResponse.data?.port;
+
+          if (srvResponse) {
+            const aResponse: StringAnswer | undefined = items.find(
+              (answer) =>
+                answer.type === 'A' && answer.name === srvResponse.data.target
+            ) as StringAnswer;
+
+            if (aResponse) {
+              const ip: string = aResponse.data;
+
+              const mdnsInformation: MulticastDnsInformation = {
+                name,
+                dns,
+                ip,
+                options,
+                version,
+                target,
+                type,
+                vendor,
+                port,
+                deviceName,
+              };
+
+              if (!this.devices[name]) {
+                this.devices[name] = mdnsInformation;
+                this.notifications.sendDeviceAdded(mdnsInformation);
+              } else if (
+                JSON.stringify(this.devices[name]) !==
+                JSON.stringify(mdnsInformation)
+              ) {
+                this.devices[name] = mdnsInformation;
+                this.notifications.sendDeviceUpdated(mdnsInformation);
               }
             }
-          });
-        }
-
-        const mdnsInformation: MulticastDnsInformation = {
-          name,
-          dns,
-          ip,
-          options,
-          version,
-          target,
-          type,
-          vendor,
-          port,
-          deviceName,
-        };
-
-        if (!this.devices[name]) {
-          this.devices[name] = mdnsInformation;
-          this.notifications.sendDeviceAdded(mdnsInformation);
-        } else if (
-          JSON.stringify(this.devices[name]) !== JSON.stringify(mdnsInformation)
-        ) {
-          this.devices[name] = mdnsInformation;
-          this.notifications.sendDeviceUpdated(mdnsInformation);
+          }
         }
       }
-    }
+    });
   }
 
   private removeDevice(name: string) {
