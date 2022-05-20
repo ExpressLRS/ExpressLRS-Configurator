@@ -119,13 +119,11 @@ export default class MulticastDnsService {
   private handleMulticastDnsResponse(response: ResponsePacket) {
     const items = [...response.answers, ...response.additionals];
 
-    // check if any of the answers on the response have a name that starts with
-    // 'elrs_', which indicates that it is an elers device
-    const txtResponses: TxtAnswer[] = items.filter(
+    const txtResponse: TxtAnswer = items.find(
       (answer) => answer.type === 'TXT'
-    ) as TxtAnswer[];
+    ) as TxtAnswer;
 
-    txtResponses.forEach((item) => {
+    if (txtResponse) {
       let options: UserDefine[] = [];
       let version = '';
       let target = '';
@@ -133,8 +131,8 @@ export default class MulticastDnsService {
       let vendor = '';
       let deviceName = '';
 
-      if (Array.isArray(item.data)) {
-        item.data.forEach((i) => {
+      if (Array.isArray(txtResponse.data)) {
+        txtResponse.data.forEach((i) => {
           if (i instanceof Buffer) {
             const dataItem = i.toString('utf-8');
             const delimPos = dataItem.indexOf('=');
@@ -168,57 +166,54 @@ export default class MulticastDnsService {
       }
 
       if (vendor === 'elrs') {
-        const name = item.name?.substring(0, item.name.indexOf('.'));
+        const name = txtResponse.name?.substring(
+          0,
+          txtResponse.name.indexOf('.')
+        );
 
-        const srvResponses: SrvAnswer[] = items.filter(
+        const srvResponse: SrvAnswer = items.find(
           (answer) => answer.type === 'SRV'
-        ) as SrvAnswer[];
-
-        const srvResponse: SrvAnswer | undefined = srvResponses.find((i) => {
-          return i.name.startsWith(name);
-        });
+        ) as SrvAnswer;
 
         if (srvResponse) {
           const dns: string = srvResponse.data?.target;
           const port: number = srvResponse.data?.port;
 
-          if (srvResponse) {
-            const aResponse: StringAnswer | undefined = items.find(
-              (answer) =>
-                answer.type === 'A' && answer.name === srvResponse.data.target
-            ) as StringAnswer;
+          const aResponse: StringAnswer = items.find(
+            (answer) =>
+              answer.type === 'A' && answer.name === srvResponse.data.target
+          ) as StringAnswer;
 
-            if (aResponse) {
-              const ip: string = aResponse.data;
+          if (aResponse) {
+            const ip: string = aResponse.data;
 
-              const mdnsInformation: MulticastDnsInformation = {
-                name,
-                dns,
-                ip,
-                options,
-                version,
-                target,
-                type,
-                vendor,
-                port,
-                deviceName,
-              };
+            const mdnsInformation: MulticastDnsInformation = {
+              name,
+              dns,
+              ip,
+              options,
+              version,
+              target,
+              type,
+              vendor,
+              port,
+              deviceName,
+            };
 
-              if (!this.devices[name]) {
-                this.devices[name] = mdnsInformation;
-                this.notifications.sendDeviceAdded(mdnsInformation);
-              } else if (
-                JSON.stringify(this.devices[name]) !==
-                JSON.stringify(mdnsInformation)
-              ) {
-                this.devices[name] = mdnsInformation;
-                this.notifications.sendDeviceUpdated(mdnsInformation);
-              }
+            if (!this.devices[name]) {
+              this.devices[name] = mdnsInformation;
+              this.notifications.sendDeviceAdded(mdnsInformation);
+            } else if (
+              JSON.stringify(this.devices[name]) !==
+              JSON.stringify(mdnsInformation)
+            ) {
+              this.devices[name] = mdnsInformation;
+              this.notifications.sendDeviceUpdated(mdnsInformation);
             }
           }
         }
       }
-    });
+    }
   }
 
   private removeDevice(name: string) {
