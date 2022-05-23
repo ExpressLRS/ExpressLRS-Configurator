@@ -24,7 +24,8 @@
       "FEATURE_OPENTX_SYNC",
       "USE_500HZ",
       "UART_INVERTED",
-      "USE_DYNAMIC_POWER"
+      "USE_DYNAMIC_POWER",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/siyifm30/",
     "deviceType": "ExpressLRS",
@@ -52,7 +53,8 @@
       "LOCK_ON_FIRST_CONNECTION",
       "USE_500HZ",
       "USE_DIVERSITY",
-      "RCVR_UART_BAUD"
+      "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/siyiFRmini/",
     "deviceType": "ExpressLRS",

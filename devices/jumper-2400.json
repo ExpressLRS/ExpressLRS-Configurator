@@ -24,7 +24,8 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER"
+      "USE_DYNAMIC_POWER",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/jumper-aion/",
     "deviceType": "ExpressLRS",

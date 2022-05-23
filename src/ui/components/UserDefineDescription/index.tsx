@@ -692,6 +692,26 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
               </p>
             </div>
           );
+        case UserDefineKey.USE_AIRPORT_AT_BAUD:
+          return (
+            <div>
+              <p>
+                The airport option turns your ExpressLRS transmitter / receiver
+                into a OTA bi-directional transparent serial link. See the wiki
+                link for important information on baud rates. NOTE: Enabling
+                this option will mean that RC / AUX channels will no longer be
+                sent between the TX and RX!
+              </p>
+              <p>
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
+                >
+                  Check our Wiki page for latest definition.
+                </DocumentationLink>
+              </p>
+            </div>
+          );
         case UserDefineKey.RCVR_INVERT_TX:
           return (
             <div>

@@ -27,7 +27,8 @@
       "USE_DYNAMIC_POWER",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD"
+      "HOME_WIFI_PASSWORD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/flash2400/",
     "deviceType": "ExpressLRS",
@@ -61,7 +62,8 @@
       "USE_DYNAMIC_POWER",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD"
+      "HOME_WIFI_PASSWORD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/flash2400/",
     "deviceType": "ExpressLRS",
@@ -88,7 +90,8 @@
       "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_500HZ",
-      "RCVR_UART_BAUD"
+      "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/flash2400/",
     "deviceType": "ExpressLRS",
@@ -124,6 +127,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD",
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/flash2400/",
@@ -160,6 +164,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD",
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/flash2400/",

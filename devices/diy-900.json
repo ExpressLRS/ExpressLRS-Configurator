@@ -28,7 +28,8 @@
       "USE_DYNAMIC_POWER",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD"
+      "HOME_WIFI_PASSWORD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy900/",
     "deviceType": "ExpressLRS",
@@ -63,7 +64,8 @@
       "UART_INVERTED",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD"
+      "HOME_WIFI_PASSWORD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy900/",
     "deviceType": "ExpressLRS",
@@ -101,7 +103,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
-      "UNLOCK_HIGHER_POWER"
+      "UNLOCK_HIGHER_POWER",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy900/",
     "deviceType": "ExpressLRS",
@@ -138,7 +141,8 @@
       "WS2812_IS_GRB",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD"
+      "HOME_WIFI_PASSWORD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy900/",
     "deviceType": "ExpressLRS",
@@ -176,6 +180,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD",
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy900/",

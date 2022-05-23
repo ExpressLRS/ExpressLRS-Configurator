@@ -29,7 +29,8 @@
       "HOME_WIFI_PASSWORD",
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER",
-      "WS2812_IS_GRB"
+      "WS2812_IS_GRB",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/es24tx/",
     "deviceType": "ExpressLRS",
@@ -65,7 +66,8 @@
       "HOME_WIFI_PASSWORD",
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER",
-      "WS2812_IS_GRB"
+      "WS2812_IS_GRB",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/es24tx/",
     "deviceType": "ExpressLRS",
@@ -100,7 +102,8 @@
       "HOME_WIFI_PASSWORD",
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER",
-      "WS2812_IS_GRB"
+      "WS2812_IS_GRB",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/es24tx/",
     "deviceType": "ExpressLRS",
@@ -136,6 +139,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD",
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/hmep2400/",
@@ -170,7 +174,8 @@
       "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_500HZ",
-      "RCVR_UART_BAUD"
+      "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/hmpp2400/",
     "deviceType": "ExpressLRS",

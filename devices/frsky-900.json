@@ -131,7 +131,8 @@
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_R9MM_R9MINI_SBUS",
-      "RCVR_UART_BAUD"
+      "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/r9/",
     "deviceType": "ExpressLRS",
@@ -161,7 +162,8 @@
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_DIVERSITY",
-      "RCVR_UART_BAUD"
+      "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/r9/",
     "deviceType": "ExpressLRS",
@@ -190,7 +192,8 @@
       "ENABLE_TELEMETRY",
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
-      "RCVR_UART_BAUD"
+      "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/r9/",
     "deviceType": "ExpressLRS",
@@ -220,7 +223,8 @@
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_DIVERSITY",
-      "RCVR_UART_BAUD"
+      "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/r9/",
     "deviceType": "ExpressLRS",
@@ -249,7 +253,8 @@
       "ENABLE_TELEMETRY",
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
-      "RCVR_UART_BAUD"
+      "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/r9/",
     "deviceType": "ExpressLRS",

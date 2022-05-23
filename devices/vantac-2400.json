@@ -24,7 +24,8 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER"
+      "USE_DYNAMIC_POWER",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/vantac2400/",
     "deviceType": "ExpressLRS",
@@ -56,6 +57,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD",
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/vantac2400/",

@@ -115,6 +115,7 @@ const userDefinesToCategories = (
       UserDefineKey.UNLOCK_HIGHER_POWER,
       UserDefineKey.USE_R9MM_R9MINI_SBUS,
       UserDefineKey.RCVR_UART_BAUD,
+      UserDefineKey.USE_AIRPORT_AT_BAUD,
       UserDefineKey.RCVR_INVERT_TX,
     ],
     [UserDefineCategory.NetworkOptions]: [

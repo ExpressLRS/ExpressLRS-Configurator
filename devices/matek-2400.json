@@ -30,6 +30,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD",
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/matek2400/",

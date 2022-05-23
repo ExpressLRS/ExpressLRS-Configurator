@@ -31,7 +31,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
-      "UNLOCK_HIGHER_POWER"
+      "UNLOCK_HIGHER_POWER",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv900/",
     "deviceType": "ExpressLRS",
@@ -77,7 +78,8 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
-      "UNLOCK_HIGHER_POWER"
+      "UNLOCK_HIGHER_POWER",
+      "USE_AIRPORT_AT_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv900/",
     "deviceType": "ExpressLRS",
@@ -115,6 +117,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "RCVR_UART_BAUD",
+      "USE_AIRPORT_AT_BAUD",
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv900/",
