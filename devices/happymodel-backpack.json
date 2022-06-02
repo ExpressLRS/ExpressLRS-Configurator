@@ -4,6 +4,9 @@
     "name": "HappyModel TX Backpack",
     "targets": [
       {
+        "flashingMethod": "Passthrough",
+        "name": "HappyModel_TX_Backpack_via_PASSTHRU"
+      },{
         "flashingMethod": "UART",
         "name": "HappyModel_TX_Backpack_via_UART"
       },

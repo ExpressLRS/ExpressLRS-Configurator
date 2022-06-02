@@ -9,6 +9,7 @@ enum FlashingMethod {
   WIFI = 'WIFI',
   EdgeTxPassthrough = 'EdgeTxPassthrough',
   Radio = 'Radio',
+  Passthrough = 'Passthrough',
 }
 
 registerEnumType(FlashingMethod, {

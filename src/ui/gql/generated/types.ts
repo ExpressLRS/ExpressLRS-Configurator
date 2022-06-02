@@ -118,6 +118,7 @@ export enum FlashingMethod {
   WIFI = 'WIFI',
   EdgeTxPassthrough = 'EdgeTxPassthrough',
   Radio = 'Radio',
+  Passthrough = 'Passthrough',
 }
 
 export type UserDefine = {
