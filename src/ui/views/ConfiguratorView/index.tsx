@@ -514,7 +514,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     if (
       deviceTarget &&
       (deviceTarget.flashingMethod === FlashingMethod.BetaflightPassthrough ||
-        deviceTarget.flashingMethod === FlashingMethod.UART)
+        deviceTarget.flashingMethod === FlashingMethod.UART ||
+        deviceTarget.flashingMethod === FlashingMethod.EdgeTxPassthrough ||
+        deviceTarget.flashingMethod === FlashingMethod.Passthrough)
     ) {
       setSerialPortRequired(true);
     } else {
