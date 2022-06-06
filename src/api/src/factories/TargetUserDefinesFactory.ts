@@ -55,7 +55,7 @@ export default class TargetUserDefinesFactory {
       case UserDefineKey.ENABLE_TELEMETRY:
         return UserDefine.Boolean(UserDefineKey.ENABLE_TELEMETRY);
       case UserDefineKey.TLM_REPORT_INTERVAL_MS:
-        return UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '320LU');
+        return UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '240LU');
       // Performance options
       case UserDefineKey.FAST_SYNC:
         return UserDefine.Boolean(UserDefineKey.FAST_SYNC);
