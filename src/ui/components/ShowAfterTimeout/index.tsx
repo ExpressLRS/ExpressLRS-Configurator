@@ -3,6 +3,7 @@ import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
 interface ShowAfterTimeoutProps {
   timeout: number;
   active: boolean;
+  children?: React.ReactNode;
 }
 
 const ShowAfterTimeout: FunctionComponent<ShowAfterTimeoutProps> = ({

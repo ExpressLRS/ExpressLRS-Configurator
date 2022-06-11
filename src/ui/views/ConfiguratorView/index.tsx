@@ -37,27 +37,27 @@ import Logs from '../../components/Logs';
 import BuildProgressBar from '../../components/BuildProgressBar';
 import BuildNotificationsList from '../../components/BuildNotificationsList';
 import {
+  BuildFirmwareErrorType,
   BuildFlashFirmwareInput,
   BuildJobType,
   BuildProgressNotification,
+  Device,
+  DeviceType,
   FirmwareSource,
   FirmwareVersionDataInput,
+  FlashingMethod,
+  MulticastDnsInformation,
+  Target,
+  TargetDeviceOptionsQuery,
+  useAvailableFirmwareTargetsLazyQuery,
   useBuildFlashFirmwareMutation,
   useBuildLogUpdatesSubscription,
   useBuildProgressNotificationsSubscription,
-  UserDefinesMode,
-  useTargetDeviceOptionsLazyQuery,
-  useAvailableFirmwareTargetsLazyQuery,
-  Device,
-  MulticastDnsInformation,
-  Target,
-  FlashingMethod,
   useLuaScriptLazyQuery,
-  DeviceType,
   UserDefineKey,
   UserDefineKind,
-  TargetDeviceOptionsQuery,
-  BuildFirmwareErrorType,
+  UserDefinesMode,
+  useTargetDeviceOptionsLazyQuery,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -287,7 +287,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   useEffect(() => {
     if (targetsResponse?.availableFirmwareTargets) {
-      setDeviceTargets([...targetsResponse.availableFirmwareTargets]);
+      setDeviceTargets([
+        ...(targetsResponse.availableFirmwareTargets as Device[]),
+      ]);
     } else {
       setDeviceTargets(null);
     }
@@ -322,13 +324,14 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           const networkDeviceOption = networkDevice?.options.find(
             (item) => item.key === userDefineOption.key
           );
-
-          const newUserDefineOption = { ...userDefineOption };
           if (networkDeviceOption) {
-            newUserDefineOption.enabled = networkDeviceOption.enabled;
-            newUserDefineOption.value = networkDeviceOption.value;
+            return {
+              ...userDefineOption,
+              enabled: networkDeviceOption.enabled,
+              value: networkDeviceOption.value,
+            };
           }
-          return newUserDefineOption;
+          return userDefineOption;
         });
     }
 

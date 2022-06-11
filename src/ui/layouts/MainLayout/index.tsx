@@ -18,7 +18,11 @@ const styles = {
   },
 };
 
-const MainLayout: FunctionComponent = (props) => {
+interface MainLayoutProps {
+  children?: React.ReactNode;
+}
+
+const MainLayout: FunctionComponent<MainLayoutProps> = (props) => {
   const { children } = props;
   return (
     <Box component="main" sx={styles.root}>

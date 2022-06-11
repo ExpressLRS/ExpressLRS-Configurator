@@ -24,6 +24,7 @@ const toUrl = (
 interface DocumentationLinkProps {
   url: string;
   firmwareVersion: FirmwareVersionDataInput | null;
+  children?: React.ReactNode;
 }
 
 const DocumentationLink: FunctionComponent<DocumentationLinkProps> = ({

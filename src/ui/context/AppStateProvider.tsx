@@ -10,7 +10,13 @@ export const AppStateContext = React.createContext<{
   setAppState: () => {},
 });
 
-const AppStateProvider: FunctionComponent = ({ children }) => {
+interface AppStateProviderContextProps {
+  children?: React.ReactNode;
+}
+
+const AppStateProvider: FunctionComponent<AppStateProviderContextProps> = ({
+  children,
+}) => {
   const [appState, setAppState] = useState<AppState>({
     appStatus: AppStatus.Interactive,
   });
