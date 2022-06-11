@@ -46,6 +46,12 @@ module.exports = (api) => {
       // Stage 2
       'babel-plugin-transform-typescript-metadata',
       [require('@babel/plugin-proposal-decorators'), { legacy: true }],
+      [require('@babel/plugin-proposal-private-methods'), { loose: true }],
+      [
+        require('@babel/plugin-proposal-private-property-in-object'),
+        { loose: true },
+      ],
+
       require('@babel/plugin-proposal-function-sent'),
       require('@babel/plugin-proposal-export-namespace-from'),
       require('@babel/plugin-proposal-numeric-separator'),
