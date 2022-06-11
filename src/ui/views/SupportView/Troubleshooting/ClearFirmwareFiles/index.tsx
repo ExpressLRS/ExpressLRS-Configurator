@@ -11,10 +11,8 @@ const styles = {
 };
 
 const ClearFirmwareFiles: FunctionComponent = () => {
-  const [
-    clearFirmwareFiles,
-    { loading, data, error },
-  ] = useClearFirmwareFilesMutation();
+  const [clearFirmwareFiles, { loading, data, error }] =
+    useClearFirmwareFilesMutation();
   const onSubmit = () => {
     clearFirmwareFiles().catch((err) => {
       console.error('clearFirmwareFiles err: ', err);

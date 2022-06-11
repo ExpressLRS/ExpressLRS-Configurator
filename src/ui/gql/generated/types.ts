@@ -5,10 +5,12 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -1030,7 +1032,8 @@ export function useBuildFlashFirmwareMutation(
 export type BuildFlashFirmwareMutationHookResult = ReturnType<
   typeof useBuildFlashFirmwareMutation
 >;
-export type BuildFlashFirmwareMutationResult = Apollo.MutationResult<BuildFlashFirmwareMutation>;
+export type BuildFlashFirmwareMutationResult =
+  Apollo.MutationResult<BuildFlashFirmwareMutation>;
 export type BuildFlashFirmwareMutationOptions = Apollo.BaseMutationOptions<
   BuildFlashFirmwareMutation,
   BuildFlashFirmwareMutationVariables
@@ -1073,7 +1076,8 @@ export function useBuildLogUpdatesSubscription(
 export type BuildLogUpdatesSubscriptionHookResult = ReturnType<
   typeof useBuildLogUpdatesSubscription
 >;
-export type BuildLogUpdatesSubscriptionResult = Apollo.SubscriptionResult<BuildLogUpdatesSubscription>;
+export type BuildLogUpdatesSubscriptionResult =
+  Apollo.SubscriptionResult<BuildLogUpdatesSubscription>;
 export const BuildProgressNotificationsDocument = gql`
   subscription buildProgressNotifications {
     buildProgressNotifications {
@@ -1114,7 +1118,8 @@ export function useBuildProgressNotificationsSubscription(
 export type BuildProgressNotificationsSubscriptionHookResult = ReturnType<
   typeof useBuildProgressNotificationsSubscription
 >;
-export type BuildProgressNotificationsSubscriptionResult = Apollo.SubscriptionResult<BuildProgressNotificationsSubscription>;
+export type BuildProgressNotificationsSubscriptionResult =
+  Apollo.SubscriptionResult<BuildProgressNotificationsSubscription>;
 export const CheckForUpdatesDocument = gql`
   query checkForUpdates($currentVersion: String!) {
     checkForUpdates(currentVersion: $currentVersion) {
@@ -1219,7 +1224,8 @@ export function useClearFirmwareFilesMutation(
 export type ClearFirmwareFilesMutationHookResult = ReturnType<
   typeof useClearFirmwareFilesMutation
 >;
-export type ClearFirmwareFilesMutationResult = Apollo.MutationResult<ClearFirmwareFilesMutation>;
+export type ClearFirmwareFilesMutationResult =
+  Apollo.MutationResult<ClearFirmwareFilesMutation>;
 export type ClearFirmwareFilesMutationOptions = Apollo.BaseMutationOptions<
   ClearFirmwareFilesMutation,
   ClearFirmwareFilesMutationVariables
@@ -1268,7 +1274,8 @@ export function useClearPlatformioCoreDirMutation(
 export type ClearPlatformioCoreDirMutationHookResult = ReturnType<
   typeof useClearPlatformioCoreDirMutation
 >;
-export type ClearPlatformioCoreDirMutationResult = Apollo.MutationResult<ClearPlatformioCoreDirMutation>;
+export type ClearPlatformioCoreDirMutationResult =
+  Apollo.MutationResult<ClearPlatformioCoreDirMutation>;
 export type ClearPlatformioCoreDirMutationOptions = Apollo.BaseMutationOptions<
   ClearPlatformioCoreDirMutation,
   ClearPlatformioCoreDirMutationVariables
@@ -1318,7 +1325,8 @@ export function useConnectToSerialDeviceMutation(
 export type ConnectToSerialDeviceMutationHookResult = ReturnType<
   typeof useConnectToSerialDeviceMutation
 >;
-export type ConnectToSerialDeviceMutationResult = Apollo.MutationResult<ConnectToSerialDeviceMutation>;
+export type ConnectToSerialDeviceMutationResult =
+  Apollo.MutationResult<ConnectToSerialDeviceMutation>;
 export type ConnectToSerialDeviceMutationOptions = Apollo.BaseMutationOptions<
   ConnectToSerialDeviceMutation,
   ConnectToSerialDeviceMutationVariables
@@ -1456,11 +1464,13 @@ export function useDisconnectFromSerialDeviceMutation(
 export type DisconnectFromSerialDeviceMutationHookResult = ReturnType<
   typeof useDisconnectFromSerialDeviceMutation
 >;
-export type DisconnectFromSerialDeviceMutationResult = Apollo.MutationResult<DisconnectFromSerialDeviceMutation>;
-export type DisconnectFromSerialDeviceMutationOptions = Apollo.BaseMutationOptions<
-  DisconnectFromSerialDeviceMutation,
-  DisconnectFromSerialDeviceMutationVariables
->;
+export type DisconnectFromSerialDeviceMutationResult =
+  Apollo.MutationResult<DisconnectFromSerialDeviceMutation>;
+export type DisconnectFromSerialDeviceMutationOptions =
+  Apollo.BaseMutationOptions<
+    DisconnectFromSerialDeviceMutation,
+    DisconnectFromSerialDeviceMutationVariables
+  >;
 export const GetBranchesDocument = gql`
   query getBranches($owner: String!, $repository: String!) {
     gitBranches(owner: $owner, repository: $repository)
@@ -1768,7 +1778,8 @@ export function useMulticastDnsMonitorUpdatesSubscription(
 export type MulticastDnsMonitorUpdatesSubscriptionHookResult = ReturnType<
   typeof useMulticastDnsMonitorUpdatesSubscription
 >;
-export type MulticastDnsMonitorUpdatesSubscriptionResult = Apollo.SubscriptionResult<MulticastDnsMonitorUpdatesSubscription>;
+export type MulticastDnsMonitorUpdatesSubscriptionResult =
+  Apollo.SubscriptionResult<MulticastDnsMonitorUpdatesSubscription>;
 export const GetTagsDocument = gql`
   query getTags($owner: String!, $repository: String!) {
     gitTags(owner: $owner, repository: $repository)
@@ -1854,7 +1865,8 @@ export function useSerialMonitorEventsSubscription(
 export type SerialMonitorEventsSubscriptionHookResult = ReturnType<
   typeof useSerialMonitorEventsSubscription
 >;
-export type SerialMonitorEventsSubscriptionResult = Apollo.SubscriptionResult<SerialMonitorEventsSubscription>;
+export type SerialMonitorEventsSubscriptionResult =
+  Apollo.SubscriptionResult<SerialMonitorEventsSubscription>;
 export const SerialMonitorLogsDocument = gql`
   subscription serialMonitorLogs {
     serialMonitorLogs {
@@ -1893,4 +1905,5 @@ export function useSerialMonitorLogsSubscription(
 export type SerialMonitorLogsSubscriptionHookResult = ReturnType<
   typeof useSerialMonitorLogsSubscription
 >;
-export type SerialMonitorLogsSubscriptionResult = Apollo.SubscriptionResult<SerialMonitorLogsSubscription>;
+export type SerialMonitorLogsSubscriptionResult =
+  Apollo.SubscriptionResult<SerialMonitorLogsSubscription>;

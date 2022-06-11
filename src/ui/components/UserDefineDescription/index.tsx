@@ -23,8 +23,8 @@ interface UserDefineDescriptionProps {
   firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
-const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = memo(
-  ({ userDefine, firmwareVersionData }) => {
+const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
+  memo(({ userDefine, firmwareVersionData }) => {
     const toText = (key: UserDefineKey) => {
       switch (key) {
         case UserDefineKey.REGULATORY_DOMAIN_AU_433:
@@ -905,7 +905,6 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> = mem
         )}
       </Box>
     );
-  }
-);
+  });
 
 export default UserDefineDescription;

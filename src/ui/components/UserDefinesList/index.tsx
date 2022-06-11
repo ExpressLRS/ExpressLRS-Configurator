@@ -51,20 +51,20 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
     }
   };
 
-  const onUserDefineValueChange = (data: UserDefineKey) => (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    const opt = options.find(({ key }) => key === data);
-    if (opt !== undefined) {
-      const update = {
-        ...opt,
-        value: event.target.value,
-      };
-      onChange(update);
-    } else {
-      throw new Error(`user define key ${data} not found`);
-    }
-  };
+  const onUserDefineValueChange =
+    (data: UserDefineKey) =>
+    (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      const opt = options.find(({ key }) => key === data);
+      if (opt !== undefined) {
+        const update = {
+          ...opt,
+          value: event.target.value,
+        };
+        onChange(update);
+      } else {
+        throw new Error(`user define key ${data} not found`);
+      }
+    };
 
   const onEnumValueChange = (data: UserDefineKey) => (value: string | null) => {
     const opt = options.find(({ key }) => key === data);

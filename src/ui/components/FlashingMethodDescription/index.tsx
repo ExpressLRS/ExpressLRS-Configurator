@@ -24,11 +24,9 @@ interface FlashingMethodDescriptionProps {
   firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
-const FlashingMethodDescription: FunctionComponent<FlashingMethodDescriptionProps> = ({
-  flashingMethod,
-  deviceWikiUrl,
-  firmwareVersionData,
-}) => {
+const FlashingMethodDescription: FunctionComponent<
+  FlashingMethodDescriptionProps
+> = ({ flashingMethod, deviceWikiUrl, firmwareVersionData }) => {
   const wikiUrl = (deviceWikiUrl ?? '').length > 0 ? deviceWikiUrl : null;
   const toText = (key: FlashingMethod) => {
     switch (key) {

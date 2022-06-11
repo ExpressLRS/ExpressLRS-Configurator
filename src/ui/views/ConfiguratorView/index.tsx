@@ -166,10 +166,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     BuildProgressNotification[]
   >([]);
   const progressNotificationsRef = useRef<BuildProgressNotification[]>([]);
-  const [
-    lastProgressNotification,
-    setLastProgressNotification,
-  ] = useState<BuildProgressNotification | null>(null);
+  const [lastProgressNotification, setLastProgressNotification] =
+    useState<BuildProgressNotification | null>(null);
 
   useBuildProgressNotificationsSubscription({
     onSubscriptionData: (options) => {
@@ -210,10 +208,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     },
   });
 
-  const [
-    firmwareVersionData,
-    setFirmwareVersionData,
-  ] = useState<FirmwareVersionDataInput | null>(null);
+  const [firmwareVersionData, setFirmwareVersionData] =
+    useState<FirmwareVersionDataInput | null>(null);
   const [firmwareVersionErrors, setFirmwareVersionErrors] = useState<Error[]>(
     []
   );
@@ -297,14 +293,12 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     }
   }, [targetsResponse]);
 
-  const [
-    deviceOptionsFormData,
-    setDeviceOptionsFormData,
-  ] = useState<DeviceOptionsFormData>({
-    userDefinesTxt: '',
-    userDefinesMode: UserDefinesMode.UserInterface,
-    userDefineOptions: [],
-  });
+  const [deviceOptionsFormData, setDeviceOptionsFormData] =
+    useState<DeviceOptionsFormData>({
+      userDefinesTxt: '',
+      userDefinesMode: UserDefinesMode.UserInterface,
+      userDefineOptions: [],
+    });
 
   const handleDeviceOptionsResponse = async (
     deviceOptionsResponse: TargetDeviceOptionsQuery
@@ -323,8 +317,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     // if a network device is selected, merge in its options
     if (selectedDevice && networkDevices.has(selectedDevice)) {
       const networkDevice = networkDevices.get(selectedDevice);
-      userDefineOptions.userDefineOptions = userDefineOptions.userDefineOptions.map(
-        (userDefineOption) => {
+      userDefineOptions.userDefineOptions =
+        userDefineOptions.userDefineOptions.map((userDefineOption) => {
           const networkDeviceOption = networkDevice?.options.find(
             (item) => item.key === userDefineOption.key
           );
@@ -335,8 +329,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             newUserDefineOption.value = networkDeviceOption.value;
           }
           return newUserDefineOption;
-        }
-      );
+        });
     }
 
     setDeviceOptionsFormData(userDefineOptions);
@@ -530,10 +523,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     }
   }, [deviceTarget, deviceTarget, deviceTargets]);
 
-  const [
-    deviceOptionsValidationErrors,
-    setDeviceOptionsValidationErrors,
-  ] = useState<Error[] | null>(null);
+  const [deviceOptionsValidationErrors, setDeviceOptionsValidationErrors] =
+    useState<Error[] | null>(null);
 
   const reset = () => {
     logsRef.current = [];
@@ -674,10 +665,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const deviceTargetRef = useRef<HTMLDivElement | null>(null);
   const deviceOptionsRef = useRef<HTMLDivElement | null>(null);
 
-  const [
-    deviceSelectErrorDialogOpen,
-    setDeviceSelectErrorDialogOpen,
-  ] = useState<boolean>(false);
+  const [deviceSelectErrorDialogOpen, setDeviceSelectErrorDialogOpen] =
+    useState<boolean>(false);
 
   const handleSelectedDeviceChange = useCallback(
     (deviceName: string) => {

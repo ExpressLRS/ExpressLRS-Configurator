@@ -18,11 +18,8 @@ import WifiDeviceNotification from './components/WifiDeviceNotification';
 import AppStateProvider from './context/AppStateProvider';
 
 export default function App() {
-  const {
-    networkDevices,
-    newNetworkDevices,
-    removeDeviceFromNewList,
-  } = useNetworkDevices();
+  const { networkDevices, newNetworkDevices, removeDeviceFromNewList } =
+    useNetworkDevices();
 
   const [device, setDevice] = useState<string | null>('');
 

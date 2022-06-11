@@ -11,10 +11,8 @@ const styles = {
 };
 
 const ClearPlatformioDependencies: FunctionComponent = () => {
-  const [
-    clearPlatformioCoreDirMutation,
-    { loading, data, error },
-  ] = useClearPlatformioCoreDirMutation();
+  const [clearPlatformioCoreDirMutation, { loading, data, error }] =
+    useClearPlatformioCoreDirMutation();
   const onClearPlatformioDependencies = () => {
     clearPlatformioCoreDirMutation().catch((err) => {
       console.error('clearPlatformioCoreDirMutation err: ', err);

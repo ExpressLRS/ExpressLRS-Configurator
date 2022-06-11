@@ -16,8 +16,8 @@ interface BuildNotificationsListProps {
   notifications: BuildProgressNotification[];
 }
 
-const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = memo(
-  ({ notifications }) => {
+const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> =
+  memo(({ notifications }) => {
     const toSeverity = (
       item: BuildProgressNotificationType
     ): 'error' | 'info' | 'success' => {
@@ -64,7 +64,6 @@ const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = m
         })}
       </>
     );
-  }
-);
+  });
 
 export default BuildNotificationsList;

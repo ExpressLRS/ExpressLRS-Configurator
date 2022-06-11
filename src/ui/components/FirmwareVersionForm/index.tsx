@@ -214,10 +214,8 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     setLocalPath(event.target.value);
   };
 
-  const [
-    currentGitPullRequest,
-    setCurrentGitPullRequest,
-  ] = useState<PullRequestInput | null>(data?.gitPullRequest || null);
+  const [currentGitPullRequest, setCurrentGitPullRequest] =
+    useState<PullRequestInput | null>(data?.gitPullRequest || null);
 
   /*
     Make sure that a valid pull request is selected

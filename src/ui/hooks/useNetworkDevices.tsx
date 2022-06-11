@@ -12,12 +12,11 @@ export default function useNetworkDevices() {
     Map<string, MulticastDnsInformation>
   >(new Map<string, MulticastDnsInformation>());
 
-  const {
-    data: multicastDnsDevicesListData,
-  } = useAvailableMulticastDnsDevicesListQuery({
-    fetchPolicy: 'network-only',
-    client,
-  });
+  const { data: multicastDnsDevicesListData } =
+    useAvailableMulticastDnsDevicesListQuery({
+      fetchPolicy: 'network-only',
+      client,
+    });
 
   useEffect(() => {
     if (multicastDnsDevicesListData) {

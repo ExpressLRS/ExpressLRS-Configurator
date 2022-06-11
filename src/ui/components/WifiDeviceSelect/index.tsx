@@ -56,14 +56,12 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
     return result;
   }, [wifiDevices]);
 
-  const [
-    currentlySelectedValue,
-    setCurrentlySelectedValue,
-  ] = useState<Option | null>(
-    wifiDevice
-      ? options.find((item) => item.value === wifiDevice) ?? null
-      : null
-  );
+  const [currentlySelectedValue, setCurrentlySelectedValue] =
+    useState<Option | null>(
+      wifiDevice
+        ? options.find((item) => item.value === wifiDevice) ?? null
+        : null
+    );
 
   useEffect(() => {
     setCurrentlySelectedValue(
