@@ -335,7 +335,7 @@
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "^0.13.5",
     "semver": "^7.3.7",
-    "simple-git": "^2.48.0",
+    "simple-git": "^3.7.1",
     "source-map-support": "^0.5.21",
     "type-graphql": "^1.1.1",
     "typedi": "^0.10.0",
