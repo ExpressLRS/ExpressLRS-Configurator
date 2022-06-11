@@ -314,7 +314,7 @@
     "@octokit/rest": "^18.12.0",
     "apollo-server-express": "^2.22.2",
     "autosuggest-highlight": "^3.1.1",
-    "class-validator": "^0.13.1",
+    "class-validator": "^0.13.2",
     "cross-spawn": "^7.0.3",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.7",
