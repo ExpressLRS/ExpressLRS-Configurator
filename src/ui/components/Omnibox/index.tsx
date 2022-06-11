@@ -2,8 +2,6 @@ import { Autocomplete, TextField } from '@mui/material';
 import parse from 'autosuggest-highlight/parse';
 import React, { FunctionComponent } from 'react';
 import { FilterOptionsState } from '@mui/material/useAutocomplete';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import { QuickScore } from 'quick-score';
 
 export interface Option {
@@ -50,14 +48,12 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
       const searchResults = new QuickScore(values, ['label']).search(
         inputValue
       );
-      return searchResults.map(
-        (result: { item: Option; matches: { label: number[][] } }) => {
-          return {
-            ...result.item,
-            matches: result.matches.label,
-          };
-        }
-      );
+      return searchResults.map((result) => {
+        return {
+          ...result.item,
+          matches: result.matches.label,
+        };
+      });
     }
     // if no inputValue, then maintain original item order
     return values.map((item) => {
