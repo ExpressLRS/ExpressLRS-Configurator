@@ -9,6 +9,7 @@ import {
   ListItemText,
   TextField,
 } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import {
   FirmwareVersionDataInput,
   UserDefine,
@@ -19,7 +20,7 @@ import Omnibox from '../Omnibox';
 import UserDefineDescription from '../UserDefineDescription';
 import SensitiveTextField from '../SensitiveTextField';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   icon: {
     minWidth: 40,
   },

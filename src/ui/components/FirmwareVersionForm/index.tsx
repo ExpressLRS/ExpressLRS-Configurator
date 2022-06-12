@@ -13,6 +13,7 @@ import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import debounce from 'lodash/debounce';
 import semver from 'semver';
+import { SxProps, Theme } from '@mui/system';
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 import Omnibox from '../Omnibox';
@@ -28,7 +29,7 @@ import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
 import ApplicationStorage from '../../storage';
 import GitRepository from '../../models/GitRepository';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   tabs: {
     marginBottom: 2,
   },

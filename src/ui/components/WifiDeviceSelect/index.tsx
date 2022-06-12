@@ -6,10 +6,11 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { SxProps, Theme } from '@mui/system';
 import Omnibox, { Option } from '../Omnibox';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   root: {
     marginBottom: 2,
   },

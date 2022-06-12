@@ -2,7 +2,7 @@ import { Box, CircularProgress } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
 import React, { FunctionComponent } from 'react';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   root: {
     marginBottom: 3,
     display: 'flex',

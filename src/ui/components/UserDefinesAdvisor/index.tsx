@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import { Alert, Box } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import { DeviceOptionsFormData } from '../DeviceOptionsForm';
 import { UserDefineKey, UserDefinesMode } from '../../gql/generated/types';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   container: {
     marginBottom: 2,
   },

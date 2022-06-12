@@ -1,8 +1,8 @@
 import React, {FunctionComponent, memo, useEffect, useRef} from 'react';
-import { Box } from '@mui/material'
-import { SxProps, Theme } from '@mui/system';
+import {Box} from '@mui/material'
+import {SxProps, Theme} from '@mui/system';
 
-const styles: SxProps<Theme> = {
+const styles: Record<string, SxProps<Theme>> = {
   root: {
     minHeight: '500px',
     maxHeight: '500px',

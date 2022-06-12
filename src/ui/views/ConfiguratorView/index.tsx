@@ -25,6 +25,7 @@ import {
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ipcRenderer } from 'electron';
 import { ContentCopy, NetworkWifi, Save } from '@mui/icons-material';
+import { SxProps, Theme } from '@mui/system';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
 import DeviceOptionsForm, {
@@ -84,7 +85,7 @@ import AppStatus from '../../models/enum/AppStatus';
 import MainLayout from '../../layouts/MainLayout';
 import SplitButton from '../../components/SplitButton';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   button: {
     marginRight: 2,
   },

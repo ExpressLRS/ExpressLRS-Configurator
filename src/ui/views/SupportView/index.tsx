@@ -1,12 +1,13 @@
 import { Button, Card, CardContent, Divider } from '@mui/material';
 import React, { FunctionComponent } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { SxProps, Theme } from '@mui/system';
 import CardTitle from '../../components/CardTitle';
 import ClearPlatformioDependencies from './Troubleshooting/ClearPlatformioDependencies';
 import ClearFirmwareFiles from './Troubleshooting/ClearFirmwareFiles';
 import MainLayout from '../../layouts/MainLayout';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   listContainer: {
     '& .linksList': {
       paddingLeft: 0,

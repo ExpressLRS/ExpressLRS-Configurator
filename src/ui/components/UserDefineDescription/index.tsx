@@ -1,13 +1,14 @@
 import React, { FunctionComponent, memo } from 'react';
 import { Box, Tooltip } from '@mui/material';
 import QuestionIcon from '@mui/icons-material/Help';
+import { SxProps, Theme } from '@mui/system';
 import {
   FirmwareVersionDataInput,
   UserDefineKey,
 } from '../../gql/generated/types';
 import DocumentationLink from '../DocumentationLink';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   root: {
     display: 'inline-block',
   },

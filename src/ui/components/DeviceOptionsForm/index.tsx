@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { FunctionComponent } from 'react';
+import { SxProps, Theme } from '@mui/system';
 import UserDefinesList from '../UserDefinesList';
 import {
   FirmwareVersionDataInput,
@@ -16,7 +17,7 @@ import {
   UserDefinesMode,
 } from '../../gql/generated/types';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   categoryTitle: {
     marginBottom: 1,
   },

@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import { Box, Container } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   root: {
     display: 'flex',
   },

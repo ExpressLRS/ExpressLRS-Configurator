@@ -8,7 +8,7 @@ import {
 } from '../../gql/generated/types';
 import DocumentationLink from '../DocumentationLink';
 
-const styles: SxProps<Theme> = {
+const styles: Record<string, SxProps<Theme>> = {
   errorMessage: {
     a: {
       color: 'white',
