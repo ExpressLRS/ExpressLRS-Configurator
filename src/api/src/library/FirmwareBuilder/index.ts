@@ -76,16 +76,16 @@ export default class FirmwareBuilder {
     userDefines: string,
     firmwarePath: string,
     serialPort: string | undefined,
-    onOutput: OnOutputFunc = NoOpFunc,
-    uploadType: UploadType
+    uploadType: UploadType,
+    onOutput: OnOutputFunc = NoOpFunc
   ): Promise<CommandResult> {
     await this.storeUserDefines(firmwarePath, userDefines);
     return this.platformio.flash(
       firmwarePath,
       target,
       serialPort,
-      onOutput,
-      uploadType
+      uploadType,
+      onOutput
     );
   }
 }

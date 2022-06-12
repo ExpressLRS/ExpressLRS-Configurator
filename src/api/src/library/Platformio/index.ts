@@ -230,8 +230,8 @@ export default class Platformio {
     projectDir: string,
     environment: string,
     serialPort: string | undefined,
-    onUpdate: OnOutputFunc = NoOpFunc,
-    uploadType: UploadType
+    uploadType: UploadType,
+    onUpdate: OnOutputFunc = NoOpFunc
   ) {
     const params = [
       'run',

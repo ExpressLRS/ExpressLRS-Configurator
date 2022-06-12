@@ -20,8 +20,8 @@ export default class Commander {
     onOutput: OnOutputFunc = NoOpFunc
   ): Promise<CommandResult> {
     return new Promise((resolve) => {
-      const outputLines: any[] = [];
-      const errorLines: any[] = [];
+      const outputLines: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
+      const errorLines: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
       let completed = false;
 
       const onExit = (code: number | null) => {
@@ -65,8 +65,9 @@ export default class Commander {
           errorLines.push(err.toString());
           onExit(-1);
         });
-      } catch (err) {
-        errorLines.push(err.toString());
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        errorLines.push(err?.toString());
         onExit(-1);
       }
     });

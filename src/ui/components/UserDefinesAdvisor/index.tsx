@@ -57,19 +57,15 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
       );
     }
   }
-  return (
-    <>
-      {messages.length > 0 && (
-        <Box sx={styles.container}>
-          {messages.map((message, idx) => (
-            <Alert key={idx} severity="warning">
-              {message}
-            </Alert>
-          ))}
-        </Box>
-      )}
-    </>
-  );
+  return messages.length > 0 ? (
+    <Box sx={styles.container}>
+      {messages.map((message, idx) => (
+        <Alert key={idx} severity="warning">
+          {message}
+        </Alert>
+      ))}
+    </Box>
+  ) : null;
 };
 
 export default UserDefinesAdvisor;

@@ -16,15 +16,11 @@ interface LoaderProps {
 }
 
 const Loader: FunctionComponent<LoaderProps> = ({ loading, sx = {} }) => {
-  return (
-    <>
-      {loading && (
-        <Box sx={{ ...styles.root, ...sx }}>
-          <CircularProgress />
-        </Box>
-      )}
-    </>
-  );
+  return loading ? (
+    <Box sx={{ ...styles.root, ...sx }}>
+      <CircularProgress />
+    </Box>
+  ) : null;
 };
 
 export default Loader;

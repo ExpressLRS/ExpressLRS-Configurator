@@ -1,8 +1,8 @@
 import { CardContent, Grid, Typography } from '@mui/material';
-import React, { FunctionComponent, memo } from 'react';
+import React, { FunctionComponent, memo, ReactNode } from 'react';
 
 interface CardTitleProps {
-  icon: any;
+  icon: ReactNode;
   title: string | React.ReactElement;
 }
 

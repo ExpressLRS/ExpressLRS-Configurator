@@ -12,15 +12,11 @@ const ShowAlerts: FunctionComponent<ShowAlertsProps> = memo(
       return e && e.stack && e.message;
     };
     const renderMessage = (message: string | undefined | null | Error) => {
-      return (
-        <>
-          {message && message?.toString()?.length > 0 && (
-            <Alert severity={severity!}>
-              {isError(message) ? message.message : message}
-            </Alert>
-          )}
-        </>
-      );
+      return message && message?.toString()?.length > 0 ? (
+        <Alert severity={severity!}>
+          {isError(message) ? message.message : message}
+        </Alert>
+      ) : null;
     };
     return (
       <>

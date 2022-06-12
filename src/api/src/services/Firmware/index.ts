@@ -482,10 +482,10 @@ export default class FirmwareService {
           userDefines,
           firmwarePath,
           params.serialDevice,
+          uploadType,
           (output) => {
             this.updateLogs(output);
-          },
-          uploadType
+          }
         );
         if (!flashResult.success) {
           this.logger?.error('flash error', undefined, {

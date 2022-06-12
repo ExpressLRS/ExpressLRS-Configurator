@@ -17,7 +17,7 @@ import useNetworkDevices from './hooks/useNetworkDevices';
 import WifiDeviceNotification from './components/WifiDeviceNotification';
 import AppStateProvider from './context/AppStateProvider';
 
-export default function App() {
+const App = () => {
   const { networkDevices, newNetworkDevices, removeDeviceFromNewList } =
     useNetworkDevices();
 
@@ -93,4 +93,6 @@ export default function App() {
       </ThemeProvider>
     </StyledEngineProvider>
   );
-}
+};
+
+export default App;

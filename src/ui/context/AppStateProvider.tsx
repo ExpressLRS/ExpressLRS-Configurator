@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useMemo, useState } from 'react';
 import AppState from '../models/AppState';
 import AppStatus from '../models/enum/AppStatus';
 
@@ -20,9 +20,9 @@ const AppStateProvider: FunctionComponent<AppStateProviderContextProps> = ({
   const [appState, setAppState] = useState<AppState>({
     appStatus: AppStatus.Interactive,
   });
-
+  const value = useMemo(() => ({ appState, setAppState }), [appState]);
   return (
-    <AppStateContext.Provider value={{ appState, setAppState }}>
+    <AppStateContext.Provider value={value}>
       {children}
     </AppStateContext.Provider>
   );

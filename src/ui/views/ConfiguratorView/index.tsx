@@ -1082,13 +1082,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 {response?.buildFlashFirmware?.success &&
                   currentJobType === BuildJobType.BuildAndFlash &&
                   deviceTarget?.flashingMethod === FlashingMethod.WIFI && (
-                    <>
-                      <Alert sx={styles.buildNotification} severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                        Please wait for LED to resume blinking before
-                        disconnecting power
-                      </Alert>
-                    </>
+                    <Alert sx={styles.buildNotification} severity="warning">
+                      <AlertTitle>Warning</AlertTitle>
+                      Please wait for LED to resume blinking before
+                      disconnecting power
+                    </Alert>
                   )}
                 <ShowAfterTimeout
                   timeout={
@@ -1107,24 +1105,20 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     />
                   </Box>
                   {response?.buildFlashFirmware?.success && hasLuaScript && (
-                    <>
-                      <Alert sx={styles.buildNotification} severity="info">
-                        <AlertTitle>Update Lua Script</AlertTitle>
-                        Make sure to update the Lua script on your radio
-                      </Alert>
-                    </>
+                    <Alert sx={styles.buildNotification} severity="info">
+                      <AlertTitle>Update Lua Script</AlertTitle>
+                      Make sure to update the Lua script on your radio
+                    </Alert>
                   )}
                 </ShowAfterTimeout>
                 {response?.buildFlashFirmware?.success &&
                   currentJobType === BuildJobType.Build && (
-                    <>
-                      <Alert sx={styles.buildNotification} severity="info">
-                        <AlertTitle>Build notice</AlertTitle>
-                        {deviceTarget?.flashingMethod !== FlashingMethod.Radio
-                          ? 'Firmware binary file was opened in the file explorer'
-                          : "Firmware binary file was opened in the file explorer, copy the firmware file to your radios's SD card and flash it to the transmitter using EdgeTX/OpenTX"}
-                      </Alert>
-                    </>
+                    <Alert sx={styles.buildNotification} severity="info">
+                      <AlertTitle>Build notice</AlertTitle>
+                      {deviceTarget?.flashingMethod !== FlashingMethod.Radio
+                        ? 'Firmware binary file was opened in the file explorer'
+                        : "Firmware binary file was opened in the file explorer, copy the firmware file to your radios's SD card and flash it to the transmitter using EdgeTX/OpenTX"}
+                    </Alert>
                   )}
               </CardContent>
               <Divider />

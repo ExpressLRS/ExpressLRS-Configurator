@@ -121,29 +121,27 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
               </ListItemSecondaryAction>
             </ListItem>
             {item.type === UserDefineKind.Text && item.enabled && (
-              <>
-                <ListItem sx={styles.complimentaryItem}>
-                  {!item.sensitive && (
-                    <TextField
-                      size="small"
-                      onChange={onUserDefineValueChange(item.key)}
-                      value={item.value}
-                      fullWidth
-                      label={inputLabel(item.key)}
-                    />
-                  )}
-                  {item.sensitive && (
-                    <SensitiveTextField
-                      name={item.key}
-                      size="small"
-                      onChange={onUserDefineValueChange(item.key)}
-                      value={item.value}
-                      fullWidth
-                      label={inputLabel(item.key)}
-                    />
-                  )}
-                </ListItem>
-              </>
+              <ListItem sx={styles.complimentaryItem}>
+                {!item.sensitive && (
+                  <TextField
+                    size="small"
+                    onChange={onUserDefineValueChange(item.key)}
+                    value={item.value}
+                    fullWidth
+                    label={inputLabel(item.key)}
+                  />
+                )}
+                {item.sensitive && (
+                  <SensitiveTextField
+                    name={item.key}
+                    size="small"
+                    onChange={onUserDefineValueChange(item.key)}
+                    value={item.value}
+                    fullWidth
+                    label={inputLabel(item.key)}
+                  />
+                )}
+              </ListItem>
             )}
             {item.type === UserDefineKind.Enum && item.enabled && (
               <ListItem sx={styles.complimentaryItem}>

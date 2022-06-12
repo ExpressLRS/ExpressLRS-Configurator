@@ -70,8 +70,6 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
       } catch (e) {
         console.error('failed to parse number', e);
       }
-    } else {
-      console.log('only numbers');
     }
   };
   useEffect(() => {

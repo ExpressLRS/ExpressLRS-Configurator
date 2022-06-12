@@ -32,7 +32,7 @@ const ShowAfterTimeout: FunctionComponent<ShowAfterTimeoutProps> = ({
       }
     };
   }, [active, timeout]);
-  return <>{visible && props.children}</>;
+  return visible ? props.children : null;
 };
 
 export default ShowAfterTimeout;

@@ -33,7 +33,10 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
   loading = false,
   groupBy,
 }) => {
-  const onInputChange = (_event: any, opt: Option | null) => {
+  const onInputChange = (
+    _event: React.SyntheticEvent<Element, Event>,
+    opt: Option | null
+  ) => {
     if (opt && opt.value) {
       onChange(opt.value);
     } else {
@@ -92,7 +95,7 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
             <div>
               {parts.map(
                 (
-                  part: { highlight: any; text: React.ReactNode },
+                  part: { highlight: boolean; text: React.ReactNode },
                   index: string | number | null | undefined
                 ) => (
                   <span

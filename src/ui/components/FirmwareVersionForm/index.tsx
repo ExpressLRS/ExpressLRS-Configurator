@@ -408,50 +408,47 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         <Tab label="Git Pull Request" value={FirmwareSource.GitPullRequest} />
       </Tabs>
       {firmwareSource === FirmwareSource.GitTag && gitTags !== undefined && (
-        <>
-          <Box sx={styles.tabContents}>
-            {!loading && (
-              <>
-                <FormControlLabel
-                  sx={styles.preReleaseCheckbox}
-                  control={
-                    <Checkbox
-                      checked={showPreReleases}
-                      onChange={onShowPreReleases}
-                    />
-                  }
-                  label="Show pre-releases"
-                />
-                <Omnibox
-                  title="Releases"
-                  options={gitTagOptions}
-                  currentValue={
-                    gitTagOptions.find(
-                      (item) => item.value === currentGitTag
-                    ) ?? null
-                  }
-                  onChange={onGitTag}
-                />
-                <Button
-                  size="small"
-                  sx={styles.releaseNotes}
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href={`${gitRepository.url}/releases/tag/${currentGitTag}`}
-                >
-                  Release notes
-                </Button>
-                {currentGitTag &&
-                  gitTagOptions.length > 0 &&
-                  gitTagOptions[0]?.value !== currentGitTag && (
-                    <Alert sx={styles.firmwareVersionAlert} severity="info">
-                      There is a newer version of the firmware available
-                    </Alert>
-                  )}
-              </>
-            )}
-          </Box>
-        </>
+        <Box sx={styles.tabContents}>
+          {!loading && (
+            <>
+              <FormControlLabel
+                sx={styles.preReleaseCheckbox}
+                control={
+                  <Checkbox
+                    checked={showPreReleases}
+                    onChange={onShowPreReleases}
+                  />
+                }
+                label="Show pre-releases"
+              />
+              <Omnibox
+                title="Releases"
+                options={gitTagOptions}
+                currentValue={
+                  gitTagOptions.find((item) => item.value === currentGitTag) ??
+                  null
+                }
+                onChange={onGitTag}
+              />
+              <Button
+                size="small"
+                sx={styles.releaseNotes}
+                target="_blank"
+                rel="noreferrer noreferrer"
+                href={`${gitRepository.url}/releases/tag/${currentGitTag}`}
+              >
+                Release notes
+              </Button>
+              {currentGitTag &&
+                gitTagOptions.length > 0 &&
+                gitTagOptions[0]?.value !== currentGitTag && (
+                  <Alert sx={styles.firmwareVersionAlert} severity="info">
+                    There is a newer version of the firmware available
+                  </Alert>
+                )}
+            </>
+          )}
+        </Box>
       )}
       {firmwareSource === FirmwareSource.GitBranch &&
         gitBranches !== undefined && (
