@@ -170,6 +170,7 @@ export default class DeviceService implements IDevices {
             }
           );
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         const errormessage = `Issue encountered while parsing device "${value.name}" in the device configuration file devices.json: ${error.message}`;
         this.logger.error(errormessage);

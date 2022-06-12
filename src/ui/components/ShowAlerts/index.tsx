@@ -8,6 +8,7 @@ export interface ShowAlertsProps {
 
 const ShowAlerts: FunctionComponent<ShowAlertsProps> = memo(
   ({ messages, severity }) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isError = (e: any): e is Error => {
       return e && e.stack && e.message;
     };
