@@ -2,6 +2,7 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K];
 };
@@ -11,7 +12,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
   [SubKey in K]: Maybe<T[SubKey]>;
 };
-const defaultOptions = {};
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -21,242 +22,132 @@ export type Scalars = {
   Float: number;
 };
 
-export type Query = {
-  readonly __typename?: 'Query';
-  readonly availableFirmwareTargets: ReadonlyArray<Device>;
-  readonly targetDeviceOptions: ReadonlyArray<UserDefine>;
-  readonly gitBranches: ReadonlyArray<Scalars['String']>;
-  readonly gitTags: ReadonlyArray<Scalars['String']>;
-  readonly releases: ReadonlyArray<Release>;
-  readonly pullRequests: ReadonlyArray<PullRequestType>;
-  readonly checkForUpdates: UpdatesAvailability;
-  readonly availableDevicesList: ReadonlyArray<SerialPortInformation>;
-  readonly availableMulticastDnsDevicesList: ReadonlyArray<MulticastDnsInformation>;
-  readonly luaScript: LuaScript;
+export enum BuildFirmwareErrorType {
+  BuildError = 'BuildError',
+  FlashError = 'FlashError',
+  GenericError = 'GenericError',
+  GitDependencyError = 'GitDependencyError',
+  PlatformioDependencyError = 'PlatformioDependencyError',
+  PythonDependencyError = 'PythonDependencyError',
+  TargetMismatch = 'TargetMismatch',
+}
+
+export enum BuildFirmwareStep {
+  BUILDING_FIRMWARE = 'BUILDING_FIRMWARE',
+  BUILDING_USER_DEFINES = 'BUILDING_USER_DEFINES',
+  DOWNLOADING_FIRMWARE = 'DOWNLOADING_FIRMWARE',
+  FLASHING_FIRMWARE = 'FLASHING_FIRMWARE',
+  VERIFYING_BUILD_SYSTEM = 'VERIFYING_BUILD_SYSTEM',
+}
+
+export type BuildFlashFirmwareInput = {
+  readonly firmware?: InputMaybe<FirmwareVersionDataInput>;
+  readonly serialDevice?: InputMaybe<Scalars['String']>;
+  readonly target?: InputMaybe<Scalars['String']>;
+  readonly type?: InputMaybe<BuildJobType>;
+  readonly userDefines?: InputMaybe<ReadonlyArray<UserDefineInput>>;
+  readonly userDefinesMode?: InputMaybe<UserDefinesMode>;
+  readonly userDefinesTxt?: InputMaybe<Scalars['String']>;
 };
 
-export type QueryAvailableFirmwareTargetsArgs = {
-  gitRepository: GitRepositoryInput;
-  source?: Maybe<FirmwareSource>;
-  gitTag?: Maybe<Scalars['String']>;
-  gitBranch?: Maybe<Scalars['String']>;
-  gitCommit?: Maybe<Scalars['String']>;
-  localPath?: Maybe<Scalars['String']>;
-  gitPullRequest?: Maybe<PullRequestInput>;
+export type BuildFlashFirmwareResult = {
+  readonly __typename?: 'BuildFlashFirmwareResult';
+  readonly errorType?: Maybe<BuildFirmwareErrorType>;
+  readonly firmwareBinPath?: Maybe<Scalars['String']>;
+  readonly message?: Maybe<Scalars['String']>;
+  readonly success: Scalars['Boolean'];
 };
 
-export type QueryTargetDeviceOptionsArgs = {
-  gitRepository: GitRepositoryInput;
-  target?: Maybe<Scalars['String']>;
-  source?: Maybe<FirmwareSource>;
-  gitTag?: Maybe<Scalars['String']>;
-  gitBranch?: Maybe<Scalars['String']>;
-  gitCommit?: Maybe<Scalars['String']>;
-  localPath?: Maybe<Scalars['String']>;
-  gitPullRequest?: Maybe<PullRequestInput>;
+export enum BuildJobType {
+  Build = 'Build',
+  BuildAndFlash = 'BuildAndFlash',
+  ForceFlash = 'ForceFlash',
+}
+
+export type BuildLogUpdate = {
+  readonly __typename?: 'BuildLogUpdate';
+  readonly data: Scalars['String'];
 };
 
-export type QueryGitBranchesArgs = {
-  repository: Scalars['String'];
-  owner: Scalars['String'];
+export type BuildProgressNotification = {
+  readonly __typename?: 'BuildProgressNotification';
+  readonly message?: Maybe<Scalars['String']>;
+  readonly step?: Maybe<BuildFirmwareStep>;
+  readonly type: BuildProgressNotificationType;
 };
 
-export type QueryGitTagsArgs = {
-  repository: Scalars['String'];
-  owner: Scalars['String'];
+export enum BuildProgressNotificationType {
+  Error = 'Error',
+  Info = 'Info',
+  Success = 'Success',
+}
+
+export type ClearFirmwareFilesResult = {
+  readonly __typename?: 'ClearFirmwareFilesResult';
+  readonly message?: Maybe<Scalars['String']>;
+  readonly success: Scalars['Boolean'];
 };
 
-export type QueryReleasesArgs = {
-  repository: Scalars['String'];
-  owner: Scalars['String'];
-};
-
-export type QueryPullRequestsArgs = {
-  repository: Scalars['String'];
-  owner: Scalars['String'];
-};
-
-export type QueryCheckForUpdatesArgs = {
-  currentVersion: Scalars['String'];
-};
-
-export type QueryLuaScriptArgs = {
-  gitRepository: GitRepositoryInput;
-  source?: Maybe<FirmwareSource>;
-  gitTag?: Maybe<Scalars['String']>;
-  gitBranch?: Maybe<Scalars['String']>;
-  gitCommit?: Maybe<Scalars['String']>;
-  localPath?: Maybe<Scalars['String']>;
-  gitPullRequest?: Maybe<PullRequestInput>;
+export type ClearPlatformioCoreDirResult = {
+  readonly __typename?: 'ClearPlatformioCoreDirResult';
+  readonly message?: Maybe<Scalars['String']>;
+  readonly success: Scalars['Boolean'];
 };
 
 export type Device = {
   readonly __typename?: 'Device';
+  readonly abbreviatedName?: Maybe<Scalars['String']>;
+  readonly category: Scalars['String'];
+  readonly deviceType: DeviceType;
   readonly id: Scalars['String'];
   readonly name: Scalars['String'];
-  readonly category: Scalars['String'];
+  readonly parent?: Maybe<Scalars['String']>;
   readonly targets: ReadonlyArray<Target>;
   readonly userDefines: ReadonlyArray<UserDefine>;
-  readonly wikiUrl?: Maybe<Scalars['String']>;
-  readonly deviceType: DeviceType;
   readonly verifiedHardware: Scalars['Boolean'];
-  readonly parent?: Maybe<Scalars['String']>;
-  readonly abbreviatedName?: Maybe<Scalars['String']>;
+  readonly wikiUrl?: Maybe<Scalars['String']>;
 };
 
-export type Target = {
-  readonly __typename?: 'Target';
-  readonly id: Scalars['String'];
-  readonly name: Scalars['String'];
-  readonly flashingMethod: FlashingMethod;
+export enum DeviceType {
+  Backpack = 'Backpack',
+  ExpressLRS = 'ExpressLRS',
+}
+
+export enum FirmwareSource {
+  GitBranch = 'GitBranch',
+  GitCommit = 'GitCommit',
+  GitPullRequest = 'GitPullRequest',
+  GitTag = 'GitTag',
+  Local = 'Local',
+}
+
+export type FirmwareVersionDataInput = {
+  readonly gitBranch?: InputMaybe<Scalars['String']>;
+  readonly gitCommit?: InputMaybe<Scalars['String']>;
+  readonly gitPullRequest?: InputMaybe<PullRequestInput>;
+  readonly gitTag?: InputMaybe<Scalars['String']>;
+  readonly localPath?: InputMaybe<Scalars['String']>;
+  readonly source?: InputMaybe<FirmwareSource>;
 };
 
 export enum FlashingMethod {
   BetaflightPassthrough = 'BetaflightPassthrough',
   DFU = 'DFU',
+  EdgeTxPassthrough = 'EdgeTxPassthrough',
+  Passthrough = 'Passthrough',
+  Radio = 'Radio',
   STLink = 'STLink',
   Stock_BL = 'Stock_BL',
   UART = 'UART',
   WIFI = 'WIFI',
-  EdgeTxPassthrough = 'EdgeTxPassthrough',
-  Radio = 'Radio',
-  Passthrough = 'Passthrough',
-}
-
-export type UserDefine = {
-  readonly __typename?: 'UserDefine';
-  readonly type: UserDefineKind;
-  readonly key: UserDefineKey;
-  readonly enabled: Scalars['Boolean'];
-  readonly sensitive: Scalars['Boolean'];
-  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
-  readonly value?: Maybe<Scalars['String']>;
-  readonly optionGroup?: Maybe<UserDefineOptionGroup>;
-};
-
-export enum UserDefineKind {
-  Boolean = 'Boolean',
-  Text = 'Text',
-  Enum = 'Enum',
-}
-
-export enum UserDefineKey {
-  BINDING_PHRASE = 'BINDING_PHRASE',
-  REGULATORY_DOMAIN_AU_915 = 'REGULATORY_DOMAIN_AU_915',
-  REGULATORY_DOMAIN_EU_868 = 'REGULATORY_DOMAIN_EU_868',
-  REGULATORY_DOMAIN_IN_866 = 'REGULATORY_DOMAIN_IN_866',
-  REGULATORY_DOMAIN_AU_433 = 'REGULATORY_DOMAIN_AU_433',
-  REGULATORY_DOMAIN_EU_433 = 'REGULATORY_DOMAIN_EU_433',
-  REGULATORY_DOMAIN_FCC_915 = 'REGULATORY_DOMAIN_FCC_915',
-  REGULATORY_DOMAIN_ISM_2400 = 'REGULATORY_DOMAIN_ISM_2400',
-  REGULATORY_DOMAIN_EU_CE_2400 = 'REGULATORY_DOMAIN_EU_CE_2400',
-  HYBRID_SWITCHES_8 = 'HYBRID_SWITCHES_8',
-  ENABLE_TELEMETRY = 'ENABLE_TELEMETRY',
-  TLM_REPORT_INTERVAL_MS = 'TLM_REPORT_INTERVAL_MS',
-  FAST_SYNC = 'FAST_SYNC',
-  R9M_UNLOCK_HIGHER_POWER = 'R9M_UNLOCK_HIGHER_POWER',
-  UNLOCK_HIGHER_POWER = 'UNLOCK_HIGHER_POWER',
-  USE_DIVERSITY = 'USE_DIVERSITY',
-  NO_SYNC_ON_ARM = 'NO_SYNC_ON_ARM',
-  ARM_CHANNEL = 'ARM_CHANNEL',
-  FEATURE_OPENTX_SYNC = 'FEATURE_OPENTX_SYNC',
-  FEATURE_OPENTX_SYNC_AUTOTUNE = 'FEATURE_OPENTX_SYNC_AUTOTUNE',
-  LOCK_ON_FIRST_CONNECTION = 'LOCK_ON_FIRST_CONNECTION',
-  LOCK_ON_50HZ = 'LOCK_ON_50HZ',
-  USE_UART2 = 'USE_UART2',
-  UART_INVERTED = 'UART_INVERTED',
-  USE_R9MM_R9MINI_SBUS = 'USE_R9MM_R9MINI_SBUS',
-  RCVR_UART_BAUD = 'RCVR_UART_BAUD',
-  RCVR_INVERT_TX = 'RCVR_INVERT_TX',
-  BLE_HID_JOYSTICK = 'BLE_HID_JOYSTICK',
-  USE_ESP8266_BACKPACK = 'USE_ESP8266_BACKPACK',
-  USE_TX_BACKPACK = 'USE_TX_BACKPACK',
-  JUST_BEEP_ONCE = 'JUST_BEEP_ONCE',
-  DISABLE_ALL_BEEPS = 'DISABLE_ALL_BEEPS',
-  DISABLE_STARTUP_BEEP = 'DISABLE_STARTUP_BEEP',
-  MY_STARTUP_MELODY = 'MY_STARTUP_MELODY',
-  USE_500HZ = 'USE_500HZ',
-  USE_DYNAMIC_POWER = 'USE_DYNAMIC_POWER',
-  WS2812_IS_GRB = 'WS2812_IS_GRB',
-  HOME_WIFI_SSID = 'HOME_WIFI_SSID',
-  HOME_WIFI_PASSWORD = 'HOME_WIFI_PASSWORD',
-  AUTO_WIFI_ON_BOOT = 'AUTO_WIFI_ON_BOOT',
-  AUTO_WIFI_ON_INTERVAL = 'AUTO_WIFI_ON_INTERVAL',
-  DEVICE_NAME = 'DEVICE_NAME',
-}
-
-export enum UserDefineOptionGroup {
-  RegulatoryDomain900 = 'RegulatoryDomain900',
-  RegulatoryDomain2400 = 'RegulatoryDomain2400',
-}
-
-export enum DeviceType {
-  ExpressLRS = 'ExpressLRS',
-  Backpack = 'Backpack',
 }
 
 export type GitRepositoryInput = {
-  readonly url: Scalars['String'];
   readonly owner: Scalars['String'];
-  readonly repositoryName: Scalars['String'];
   readonly rawRepoUrl: Scalars['String'];
+  readonly repositoryName: Scalars['String'];
   readonly srcFolder: Scalars['String'];
-};
-
-export enum FirmwareSource {
-  GitTag = 'GitTag',
-  GitBranch = 'GitBranch',
-  GitCommit = 'GitCommit',
-  Local = 'Local',
-  GitPullRequest = 'GitPullRequest',
-}
-
-export type PullRequestInput = {
-  readonly title: Scalars['String'];
-  readonly id: Scalars['Float'];
-  readonly number: Scalars['Float'];
-  readonly headCommitHash: Scalars['String'];
-};
-
-export type Release = {
-  readonly __typename?: 'Release';
-  readonly tagName: Scalars['String'];
-  readonly preRelease: Scalars['Boolean'];
-};
-
-export type PullRequestType = {
-  readonly __typename?: 'PullRequestType';
-  readonly title: Scalars['String'];
-  readonly id: Scalars['Float'];
-  readonly number: Scalars['Float'];
-  readonly headCommitHash: Scalars['String'];
-};
-
-export type UpdatesAvailability = {
-  readonly __typename?: 'UpdatesAvailability';
-  readonly updateAvailable: Scalars['Boolean'];
-  readonly newestVersion: Scalars['String'];
-  readonly releaseUrl: Scalars['String'];
-};
-
-export type SerialPortInformation = {
-  readonly __typename?: 'SerialPortInformation';
-  readonly path: Scalars['String'];
-  readonly manufacturer: Scalars['String'];
-};
-
-export type MulticastDnsInformation = {
-  readonly __typename?: 'MulticastDnsInformation';
-  readonly name: Scalars['String'];
-  readonly options: ReadonlyArray<UserDefine>;
-  readonly version: Scalars['String'];
-  readonly target: Scalars['String'];
-  readonly type: Scalars['String'];
-  readonly vendor: Scalars['String'];
-  readonly ip: Scalars['String'];
-  readonly dns: Scalars['String'];
-  readonly port: Scalars['Float'];
-  readonly deviceName: Scalars['String'];
+  readonly url: Scalars['String'];
 };
 
 export type LuaScript = {
@@ -264,11 +155,37 @@ export type LuaScript = {
   readonly fileLocation?: Maybe<Scalars['String']>;
 };
 
+export enum MulticastDnsEventType {
+  DeviceAdded = 'DeviceAdded',
+  DeviceRemoved = 'DeviceRemoved',
+  DeviceUpdated = 'DeviceUpdated',
+}
+
+export type MulticastDnsInformation = {
+  readonly __typename?: 'MulticastDnsInformation';
+  readonly deviceName: Scalars['String'];
+  readonly dns: Scalars['String'];
+  readonly ip: Scalars['String'];
+  readonly name: Scalars['String'];
+  readonly options: ReadonlyArray<UserDefine>;
+  readonly port: Scalars['Float'];
+  readonly target: Scalars['String'];
+  readonly type: Scalars['String'];
+  readonly vendor: Scalars['String'];
+  readonly version: Scalars['String'];
+};
+
+export type MulticastDnsMonitorUpdate = {
+  readonly __typename?: 'MulticastDnsMonitorUpdate';
+  readonly data: MulticastDnsInformation;
+  readonly type: MulticastDnsEventType;
+};
+
 export type Mutation = {
   readonly __typename?: 'Mutation';
   readonly buildFlashFirmware: BuildFlashFirmwareResult;
-  readonly clearPlatformioCoreDir: ClearPlatformioCoreDirResult;
   readonly clearFirmwareFiles: ClearFirmwareFilesResult;
+  readonly clearPlatformioCoreDir: ClearPlatformioCoreDirResult;
   readonly connectToSerialDevice: SerialPortConnectResult;
   readonly disconnectFromSerialDevice: SerialPortDisconnectResult;
 };
@@ -282,129 +199,99 @@ export type MutationConnectToSerialDeviceArgs = {
   input: SerialConnectionConfigInput;
 };
 
-export type BuildFlashFirmwareResult = {
-  readonly __typename?: 'BuildFlashFirmwareResult';
-  readonly success: Scalars['Boolean'];
-  readonly errorType?: Maybe<BuildFirmwareErrorType>;
-  readonly message?: Maybe<Scalars['String']>;
-  readonly firmwareBinPath?: Maybe<Scalars['String']>;
+export type PullRequestInput = {
+  readonly headCommitHash: Scalars['String'];
+  readonly id: Scalars['Float'];
+  readonly number: Scalars['Float'];
+  readonly title: Scalars['String'];
 };
 
-export enum BuildFirmwareErrorType {
-  PythonDependencyError = 'PythonDependencyError',
-  PlatformioDependencyError = 'PlatformioDependencyError',
-  GitDependencyError = 'GitDependencyError',
-  BuildError = 'BuildError',
-  FlashError = 'FlashError',
-  GenericError = 'GenericError',
-  TargetMismatch = 'TargetMismatch',
-}
-
-export type BuildFlashFirmwareInput = {
-  readonly type?: Maybe<BuildJobType>;
-  readonly serialDevice?: Maybe<Scalars['String']>;
-  readonly firmware?: Maybe<FirmwareVersionDataInput>;
-  readonly target?: Maybe<Scalars['String']>;
-  readonly userDefinesMode?: Maybe<UserDefinesMode>;
-  readonly userDefines?: Maybe<ReadonlyArray<UserDefineInput>>;
-  readonly userDefinesTxt?: Maybe<Scalars['String']>;
+export type PullRequestType = {
+  readonly __typename?: 'PullRequestType';
+  readonly headCommitHash: Scalars['String'];
+  readonly id: Scalars['Float'];
+  readonly number: Scalars['Float'];
+  readonly title: Scalars['String'];
 };
 
-export enum BuildJobType {
-  Build = 'Build',
-  BuildAndFlash = 'BuildAndFlash',
-  ForceFlash = 'ForceFlash',
-}
-
-export type FirmwareVersionDataInput = {
-  readonly source?: Maybe<FirmwareSource>;
-  readonly gitTag?: Maybe<Scalars['String']>;
-  readonly gitBranch?: Maybe<Scalars['String']>;
-  readonly gitCommit?: Maybe<Scalars['String']>;
-  readonly localPath?: Maybe<Scalars['String']>;
-  readonly gitPullRequest?: Maybe<PullRequestInput>;
+export type Query = {
+  readonly __typename?: 'Query';
+  readonly availableDevicesList: ReadonlyArray<SerialPortInformation>;
+  readonly availableFirmwareTargets: ReadonlyArray<Device>;
+  readonly availableMulticastDnsDevicesList: ReadonlyArray<MulticastDnsInformation>;
+  readonly checkForUpdates: UpdatesAvailability;
+  readonly gitBranches: ReadonlyArray<Scalars['String']>;
+  readonly gitTags: ReadonlyArray<Scalars['String']>;
+  readonly luaScript: LuaScript;
+  readonly pullRequests: ReadonlyArray<PullRequestType>;
+  readonly releases: ReadonlyArray<Release>;
+  readonly targetDeviceOptions: ReadonlyArray<UserDefine>;
 };
 
-export enum UserDefinesMode {
-  UserInterface = 'UserInterface',
-  Manual = 'Manual',
-}
-
-export type UserDefineInput = {
-  readonly type?: Maybe<UserDefineKind>;
-  readonly key?: Maybe<UserDefineKey>;
-  readonly enabled?: Maybe<Scalars['Boolean']>;
-  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
-  readonly value?: Maybe<Scalars['String']>;
+export type QueryAvailableFirmwareTargetsArgs = {
+  gitBranch?: InputMaybe<Scalars['String']>;
+  gitCommit?: InputMaybe<Scalars['String']>;
+  gitPullRequest?: InputMaybe<PullRequestInput>;
+  gitRepository: GitRepositoryInput;
+  gitTag?: InputMaybe<Scalars['String']>;
+  localPath?: InputMaybe<Scalars['String']>;
+  source?: InputMaybe<FirmwareSource>;
 };
 
-export type ClearPlatformioCoreDirResult = {
-  readonly __typename?: 'ClearPlatformioCoreDirResult';
-  readonly success: Scalars['Boolean'];
-  readonly message?: Maybe<Scalars['String']>;
+export type QueryCheckForUpdatesArgs = {
+  currentVersion: Scalars['String'];
 };
 
-export type ClearFirmwareFilesResult = {
-  readonly __typename?: 'ClearFirmwareFilesResult';
-  readonly success: Scalars['Boolean'];
-  readonly message?: Maybe<Scalars['String']>;
+export type QueryGitBranchesArgs = {
+  owner: Scalars['String'];
+  repository: Scalars['String'];
 };
 
-export type SerialPortConnectResult = {
-  readonly __typename?: 'SerialPortConnectResult';
-  readonly success: Scalars['Boolean'];
-  readonly message?: Maybe<Scalars['String']>;
+export type QueryGitTagsArgs = {
+  owner: Scalars['String'];
+  repository: Scalars['String'];
+};
+
+export type QueryLuaScriptArgs = {
+  gitBranch?: InputMaybe<Scalars['String']>;
+  gitCommit?: InputMaybe<Scalars['String']>;
+  gitPullRequest?: InputMaybe<PullRequestInput>;
+  gitRepository: GitRepositoryInput;
+  gitTag?: InputMaybe<Scalars['String']>;
+  localPath?: InputMaybe<Scalars['String']>;
+  source?: InputMaybe<FirmwareSource>;
+};
+
+export type QueryPullRequestsArgs = {
+  owner: Scalars['String'];
+  repository: Scalars['String'];
+};
+
+export type QueryReleasesArgs = {
+  owner: Scalars['String'];
+  repository: Scalars['String'];
+};
+
+export type QueryTargetDeviceOptionsArgs = {
+  gitBranch?: InputMaybe<Scalars['String']>;
+  gitCommit?: InputMaybe<Scalars['String']>;
+  gitPullRequest?: InputMaybe<PullRequestInput>;
+  gitRepository: GitRepositoryInput;
+  gitTag?: InputMaybe<Scalars['String']>;
+  localPath?: InputMaybe<Scalars['String']>;
+  source?: InputMaybe<FirmwareSource>;
+  target?: InputMaybe<Scalars['String']>;
+};
+
+export type Release = {
+  readonly __typename?: 'Release';
+  readonly preRelease: Scalars['Boolean'];
+  readonly tagName: Scalars['String'];
 };
 
 export type SerialConnectionConfigInput = {
-  readonly port?: Maybe<Scalars['String']>;
-  readonly baudRate?: Maybe<Scalars['Float']>;
-};
-
-export type SerialPortDisconnectResult = {
-  readonly __typename?: 'SerialPortDisconnectResult';
-  readonly success: Scalars['Boolean'];
-  readonly message?: Maybe<Scalars['String']>;
-};
-
-export type Subscription = {
-  readonly __typename?: 'Subscription';
-  readonly buildProgressNotifications: BuildProgressNotification;
-  readonly buildLogUpdates: BuildLogUpdate;
-  readonly serialMonitorLogs: SerialMonitorLogUpdate;
-  readonly serialMonitorEvents: SerialMonitorEvent;
-  readonly multicastDnsMonitorUpdates: MulticastDnsMonitorUpdate;
-};
-
-export type BuildProgressNotification = {
-  readonly __typename?: 'BuildProgressNotification';
-  readonly type: BuildProgressNotificationType;
-  readonly step?: Maybe<BuildFirmwareStep>;
-  readonly message?: Maybe<Scalars['String']>;
-};
-
-export enum BuildProgressNotificationType {
-  Success = 'Success',
-  Info = 'Info',
-  Error = 'Error',
-}
-
-export enum BuildFirmwareStep {
-  VERIFYING_BUILD_SYSTEM = 'VERIFYING_BUILD_SYSTEM',
-  DOWNLOADING_FIRMWARE = 'DOWNLOADING_FIRMWARE',
-  BUILDING_USER_DEFINES = 'BUILDING_USER_DEFINES',
-  BUILDING_FIRMWARE = 'BUILDING_FIRMWARE',
-  FLASHING_FIRMWARE = 'FLASHING_FIRMWARE',
-}
-
-export type BuildLogUpdate = {
-  readonly __typename?: 'BuildLogUpdate';
-  readonly data: Scalars['String'];
-};
-
-export type SerialMonitorLogUpdate = {
-  readonly __typename?: 'SerialMonitorLogUpdate';
-  readonly data: Scalars['String'];
+  readonly baudRate?: InputMaybe<Scalars['Float']>;
+  readonly port?: InputMaybe<Scalars['String']>;
 };
 
 export type SerialMonitorEvent = {
@@ -413,35 +300,149 @@ export type SerialMonitorEvent = {
 };
 
 export enum SerialMonitorEventType {
-  Connecting = 'Connecting',
   Connected = 'Connected',
+  Connecting = 'Connecting',
   Disconnected = 'Disconnected',
   Error = 'Error',
 }
 
-export type MulticastDnsMonitorUpdate = {
-  readonly __typename?: 'MulticastDnsMonitorUpdate';
-  readonly type: MulticastDnsEventType;
-  readonly data: MulticastDnsInformation;
+export type SerialMonitorLogUpdate = {
+  readonly __typename?: 'SerialMonitorLogUpdate';
+  readonly data: Scalars['String'];
 };
 
-export enum MulticastDnsEventType {
-  DeviceAdded = 'DeviceAdded',
-  DeviceRemoved = 'DeviceRemoved',
-  DeviceUpdated = 'DeviceUpdated',
+export type SerialPortConnectResult = {
+  readonly __typename?: 'SerialPortConnectResult';
+  readonly message?: Maybe<Scalars['String']>;
+  readonly success: Scalars['Boolean'];
+};
+
+export type SerialPortDisconnectResult = {
+  readonly __typename?: 'SerialPortDisconnectResult';
+  readonly message?: Maybe<Scalars['String']>;
+  readonly success: Scalars['Boolean'];
+};
+
+export type SerialPortInformation = {
+  readonly __typename?: 'SerialPortInformation';
+  readonly manufacturer: Scalars['String'];
+  readonly path: Scalars['String'];
+};
+
+export type Subscription = {
+  readonly __typename?: 'Subscription';
+  readonly buildLogUpdates: BuildLogUpdate;
+  readonly buildProgressNotifications: BuildProgressNotification;
+  readonly multicastDnsMonitorUpdates: MulticastDnsMonitorUpdate;
+  readonly serialMonitorEvents: SerialMonitorEvent;
+  readonly serialMonitorLogs: SerialMonitorLogUpdate;
+};
+
+export type Target = {
+  readonly __typename?: 'Target';
+  readonly flashingMethod: FlashingMethod;
+  readonly id: Scalars['String'];
+  readonly name: Scalars['String'];
+};
+
+export type UpdatesAvailability = {
+  readonly __typename?: 'UpdatesAvailability';
+  readonly newestVersion: Scalars['String'];
+  readonly releaseUrl: Scalars['String'];
+  readonly updateAvailable: Scalars['Boolean'];
+};
+
+export type UserDefine = {
+  readonly __typename?: 'UserDefine';
+  readonly enabled: Scalars['Boolean'];
+  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
+  readonly key: UserDefineKey;
+  readonly optionGroup?: Maybe<UserDefineOptionGroup>;
+  readonly sensitive: Scalars['Boolean'];
+  readonly type: UserDefineKind;
+  readonly value?: Maybe<Scalars['String']>;
+};
+
+export type UserDefineInput = {
+  readonly enabled?: InputMaybe<Scalars['Boolean']>;
+  readonly enumValues?: InputMaybe<ReadonlyArray<Scalars['String']>>;
+  readonly key?: InputMaybe<UserDefineKey>;
+  readonly type?: InputMaybe<UserDefineKind>;
+  readonly value?: InputMaybe<Scalars['String']>;
+};
+
+export enum UserDefineKey {
+  ARM_CHANNEL = 'ARM_CHANNEL',
+  AUTO_WIFI_ON_BOOT = 'AUTO_WIFI_ON_BOOT',
+  AUTO_WIFI_ON_INTERVAL = 'AUTO_WIFI_ON_INTERVAL',
+  BINDING_PHRASE = 'BINDING_PHRASE',
+  BLE_HID_JOYSTICK = 'BLE_HID_JOYSTICK',
+  DEVICE_NAME = 'DEVICE_NAME',
+  DISABLE_ALL_BEEPS = 'DISABLE_ALL_BEEPS',
+  DISABLE_STARTUP_BEEP = 'DISABLE_STARTUP_BEEP',
+  ENABLE_TELEMETRY = 'ENABLE_TELEMETRY',
+  FAST_SYNC = 'FAST_SYNC',
+  FEATURE_OPENTX_SYNC = 'FEATURE_OPENTX_SYNC',
+  FEATURE_OPENTX_SYNC_AUTOTUNE = 'FEATURE_OPENTX_SYNC_AUTOTUNE',
+  HOME_WIFI_PASSWORD = 'HOME_WIFI_PASSWORD',
+  HOME_WIFI_SSID = 'HOME_WIFI_SSID',
+  HYBRID_SWITCHES_8 = 'HYBRID_SWITCHES_8',
+  JUST_BEEP_ONCE = 'JUST_BEEP_ONCE',
+  LOCK_ON_50HZ = 'LOCK_ON_50HZ',
+  LOCK_ON_FIRST_CONNECTION = 'LOCK_ON_FIRST_CONNECTION',
+  MY_STARTUP_MELODY = 'MY_STARTUP_MELODY',
+  NO_SYNC_ON_ARM = 'NO_SYNC_ON_ARM',
+  R9M_UNLOCK_HIGHER_POWER = 'R9M_UNLOCK_HIGHER_POWER',
+  RCVR_INVERT_TX = 'RCVR_INVERT_TX',
+  RCVR_UART_BAUD = 'RCVR_UART_BAUD',
+  REGULATORY_DOMAIN_AU_433 = 'REGULATORY_DOMAIN_AU_433',
+  REGULATORY_DOMAIN_AU_915 = 'REGULATORY_DOMAIN_AU_915',
+  REGULATORY_DOMAIN_EU_433 = 'REGULATORY_DOMAIN_EU_433',
+  REGULATORY_DOMAIN_EU_868 = 'REGULATORY_DOMAIN_EU_868',
+  REGULATORY_DOMAIN_EU_CE_2400 = 'REGULATORY_DOMAIN_EU_CE_2400',
+  REGULATORY_DOMAIN_FCC_915 = 'REGULATORY_DOMAIN_FCC_915',
+  REGULATORY_DOMAIN_IN_866 = 'REGULATORY_DOMAIN_IN_866',
+  REGULATORY_DOMAIN_ISM_2400 = 'REGULATORY_DOMAIN_ISM_2400',
+  TLM_REPORT_INTERVAL_MS = 'TLM_REPORT_INTERVAL_MS',
+  UART_INVERTED = 'UART_INVERTED',
+  UNLOCK_HIGHER_POWER = 'UNLOCK_HIGHER_POWER',
+  USE_500HZ = 'USE_500HZ',
+  USE_DIVERSITY = 'USE_DIVERSITY',
+  USE_DYNAMIC_POWER = 'USE_DYNAMIC_POWER',
+  USE_ESP8266_BACKPACK = 'USE_ESP8266_BACKPACK',
+  USE_R9MM_R9MINI_SBUS = 'USE_R9MM_R9MINI_SBUS',
+  USE_TX_BACKPACK = 'USE_TX_BACKPACK',
+  USE_UART2 = 'USE_UART2',
+  WS2812_IS_GRB = 'WS2812_IS_GRB',
+}
+
+export enum UserDefineKind {
+  Boolean = 'Boolean',
+  Enum = 'Enum',
+  Text = 'Text',
+}
+
+export enum UserDefineOptionGroup {
+  RegulatoryDomain900 = 'RegulatoryDomain900',
+  RegulatoryDomain2400 = 'RegulatoryDomain2400',
+}
+
+export enum UserDefinesMode {
+  Manual = 'Manual',
+  UserInterface = 'UserInterface',
 }
 
 export type AvailableDevicesListQueryVariables = Exact<{
   [key: string]: never;
 }>;
 
-export type AvailableDevicesListQuery = { readonly __typename?: 'Query' } & {
-  readonly availableDevicesList: ReadonlyArray<
-    { readonly __typename?: 'SerialPortInformation' } & Pick<
-      SerialPortInformation,
-      'path' | 'manufacturer'
-    >
-  >;
+export type AvailableDevicesListQuery = {
+  readonly __typename?: 'Query';
+  readonly availableDevicesList: ReadonlyArray<{
+    readonly __typename?: 'SerialPortInformation';
+    readonly path: string;
+    readonly manufacturer: string;
+  }>;
 };
 
 export type AvailableFirmwareTargetsQueryVariables = Exact<{
@@ -450,33 +451,29 @@ export type AvailableFirmwareTargetsQueryVariables = Exact<{
   gitBranch: Scalars['String'];
   gitCommit: Scalars['String'];
   localPath: Scalars['String'];
-  gitPullRequest?: Maybe<PullRequestInput>;
+  gitPullRequest?: InputMaybe<PullRequestInput>;
   gitRepository: GitRepositoryInput;
 }>;
 
 export type AvailableFirmwareTargetsQuery = {
   readonly __typename?: 'Query';
-} & {
-  readonly availableFirmwareTargets: ReadonlyArray<
-    { readonly __typename?: 'Device' } & Pick<
-      Device,
-      | 'id'
-      | 'name'
-      | 'category'
-      | 'wikiUrl'
-      | 'deviceType'
-      | 'parent'
-      | 'abbreviatedName'
-      | 'verifiedHardware'
-    > & {
-        readonly targets: ReadonlyArray<
-          { readonly __typename?: 'Target' } & Pick<
-            Target,
-            'id' | 'name' | 'flashingMethod'
-          >
-        >;
-      }
-  >;
+  readonly availableFirmwareTargets: ReadonlyArray<{
+    readonly __typename?: 'Device';
+    readonly id: string;
+    readonly name: string;
+    readonly category: string;
+    readonly wikiUrl?: string | null;
+    readonly deviceType: DeviceType;
+    readonly parent?: string | null;
+    readonly abbreviatedName?: string | null;
+    readonly verifiedHardware: boolean;
+    readonly targets: ReadonlyArray<{
+      readonly __typename?: 'Target';
+      readonly id: string;
+      readonly name: string;
+      readonly flashingMethod: FlashingMethod;
+    }>;
+  }>;
 };
 
 export type AvailableMulticastDnsDevicesListQueryVariables = Exact<{
@@ -485,28 +482,27 @@ export type AvailableMulticastDnsDevicesListQueryVariables = Exact<{
 
 export type AvailableMulticastDnsDevicesListQuery = {
   readonly __typename?: 'Query';
-} & {
-  readonly availableMulticastDnsDevicesList: ReadonlyArray<
-    { readonly __typename?: 'MulticastDnsInformation' } & Pick<
-      MulticastDnsInformation,
-      | 'name'
-      | 'version'
-      | 'target'
-      | 'type'
-      | 'vendor'
-      | 'ip'
-      | 'dns'
-      | 'port'
-      | 'deviceName'
-    > & {
-        readonly options: ReadonlyArray<
-          { readonly __typename?: 'UserDefine' } & Pick<
-            UserDefine,
-            'type' | 'key' | 'enabled' | 'enumValues' | 'value' | 'sensitive'
-          >
-        >;
-      }
-  >;
+  readonly availableMulticastDnsDevicesList: ReadonlyArray<{
+    readonly __typename?: 'MulticastDnsInformation';
+    readonly name: string;
+    readonly version: string;
+    readonly target: string;
+    readonly type: string;
+    readonly vendor: string;
+    readonly ip: string;
+    readonly dns: string;
+    readonly port: number;
+    readonly deviceName: string;
+    readonly options: ReadonlyArray<{
+      readonly __typename?: 'UserDefine';
+      readonly type: UserDefineKind;
+      readonly key: UserDefineKey;
+      readonly enabled: boolean;
+      readonly enumValues?: ReadonlyArray<string> | null;
+      readonly value?: string | null;
+      readonly sensitive: boolean;
+    }>;
+  }>;
 };
 
 export type BuildFlashFirmwareMutationVariables = Exact<{
@@ -516,13 +512,13 @@ export type BuildFlashFirmwareMutationVariables = Exact<{
 
 export type BuildFlashFirmwareMutation = {
   readonly __typename?: 'Mutation';
-} & {
   readonly buildFlashFirmware: {
     readonly __typename?: 'BuildFlashFirmwareResult';
-  } & Pick<
-    BuildFlashFirmwareResult,
-    'success' | 'errorType' | 'message' | 'firmwareBinPath'
-  >;
+    readonly success: boolean;
+    readonly errorType?: BuildFirmwareErrorType | null;
+    readonly message?: string | null;
+    readonly firmwareBinPath?: string | null;
+  };
 };
 
 export type BuildLogUpdatesSubscriptionVariables = Exact<{
@@ -531,11 +527,10 @@ export type BuildLogUpdatesSubscriptionVariables = Exact<{
 
 export type BuildLogUpdatesSubscription = {
   readonly __typename?: 'Subscription';
-} & {
-  readonly buildLogUpdates: { readonly __typename?: 'BuildLogUpdate' } & Pick<
-    BuildLogUpdate,
-    'data'
-  >;
+  readonly buildLogUpdates: {
+    readonly __typename?: 'BuildLogUpdate';
+    readonly data: string;
+  };
 };
 
 export type BuildProgressNotificationsSubscriptionVariables = Exact<{
@@ -544,23 +539,26 @@ export type BuildProgressNotificationsSubscriptionVariables = Exact<{
 
 export type BuildProgressNotificationsSubscription = {
   readonly __typename?: 'Subscription';
-} & {
   readonly buildProgressNotifications: {
     readonly __typename?: 'BuildProgressNotification';
-  } & Pick<BuildProgressNotification, 'type' | 'step' | 'message'>;
+    readonly type: BuildProgressNotificationType;
+    readonly step?: BuildFirmwareStep | null;
+    readonly message?: string | null;
+  };
 };
 
 export type CheckForUpdatesQueryVariables = Exact<{
   currentVersion: Scalars['String'];
 }>;
 
-export type CheckForUpdatesQuery = { readonly __typename?: 'Query' } & {
+export type CheckForUpdatesQuery = {
+  readonly __typename?: 'Query';
   readonly checkForUpdates: {
     readonly __typename?: 'UpdatesAvailability';
-  } & Pick<
-    UpdatesAvailability,
-    'updateAvailable' | 'newestVersion' | 'releaseUrl'
-  >;
+    readonly updateAvailable: boolean;
+    readonly newestVersion: string;
+    readonly releaseUrl: string;
+  };
 };
 
 export type ClearFirmwareFilesMutationVariables = Exact<{
@@ -569,10 +567,11 @@ export type ClearFirmwareFilesMutationVariables = Exact<{
 
 export type ClearFirmwareFilesMutation = {
   readonly __typename?: 'Mutation';
-} & {
   readonly clearFirmwareFiles: {
     readonly __typename?: 'ClearFirmwareFilesResult';
-  } & Pick<ClearFirmwareFilesResult, 'success' | 'message'>;
+    readonly success: boolean;
+    readonly message?: string | null;
+  };
 };
 
 export type ClearPlatformioCoreDirMutationVariables = Exact<{
@@ -581,10 +580,11 @@ export type ClearPlatformioCoreDirMutationVariables = Exact<{
 
 export type ClearPlatformioCoreDirMutation = {
   readonly __typename?: 'Mutation';
-} & {
   readonly clearPlatformioCoreDir: {
     readonly __typename?: 'ClearPlatformioCoreDirResult';
-  } & Pick<ClearPlatformioCoreDirResult, 'success' | 'message'>;
+    readonly success: boolean;
+    readonly message?: string | null;
+  };
 };
 
 export type ConnectToSerialDeviceMutationVariables = Exact<{
@@ -593,10 +593,11 @@ export type ConnectToSerialDeviceMutationVariables = Exact<{
 
 export type ConnectToSerialDeviceMutation = {
   readonly __typename?: 'Mutation';
-} & {
   readonly connectToSerialDevice: {
     readonly __typename?: 'SerialPortConnectResult';
-  } & Pick<SerialPortConnectResult, 'success' | 'message'>;
+    readonly success: boolean;
+    readonly message?: string | null;
+  };
 };
 
 export type TargetDeviceOptionsQueryVariables = Exact<{
@@ -606,23 +607,22 @@ export type TargetDeviceOptionsQueryVariables = Exact<{
   gitBranch: Scalars['String'];
   gitCommit: Scalars['String'];
   localPath: Scalars['String'];
-  gitPullRequest?: Maybe<PullRequestInput>;
+  gitPullRequest?: InputMaybe<PullRequestInput>;
   gitRepository: GitRepositoryInput;
 }>;
 
-export type TargetDeviceOptionsQuery = { readonly __typename?: 'Query' } & {
-  readonly targetDeviceOptions: ReadonlyArray<
-    { readonly __typename?: 'UserDefine' } & Pick<
-      UserDefine,
-      | 'type'
-      | 'key'
-      | 'enabled'
-      | 'enumValues'
-      | 'value'
-      | 'optionGroup'
-      | 'sensitive'
-    >
-  >;
+export type TargetDeviceOptionsQuery = {
+  readonly __typename?: 'Query';
+  readonly targetDeviceOptions: ReadonlyArray<{
+    readonly __typename?: 'UserDefine';
+    readonly type: UserDefineKind;
+    readonly key: UserDefineKey;
+    readonly enabled: boolean;
+    readonly enumValues?: ReadonlyArray<string> | null;
+    readonly value?: string | null;
+    readonly optionGroup?: UserDefineOptionGroup | null;
+    readonly sensitive: boolean;
+  }>;
 };
 
 export type DisconnectFromSerialDeviceMutationVariables = Exact<{
@@ -631,10 +631,11 @@ export type DisconnectFromSerialDeviceMutationVariables = Exact<{
 
 export type DisconnectFromSerialDeviceMutation = {
   readonly __typename?: 'Mutation';
-} & {
   readonly disconnectFromSerialDevice: {
     readonly __typename?: 'SerialPortDisconnectResult';
-  } & Pick<SerialPortDisconnectResult, 'success' | 'message'>;
+    readonly success: boolean;
+    readonly message?: string | null;
+  };
 };
 
 export type GetBranchesQueryVariables = Exact<{
@@ -642,23 +643,25 @@ export type GetBranchesQueryVariables = Exact<{
   repository: Scalars['String'];
 }>;
 
-export type GetBranchesQuery = { readonly __typename?: 'Query' } & Pick<
-  Query,
-  'gitBranches'
->;
+export type GetBranchesQuery = {
+  readonly __typename?: 'Query';
+  readonly gitBranches: ReadonlyArray<string>;
+};
 
 export type GetPullRequestsQueryVariables = Exact<{
   owner: Scalars['String'];
   repository: Scalars['String'];
 }>;
 
-export type GetPullRequestsQuery = { readonly __typename?: 'Query' } & {
-  readonly pullRequests: ReadonlyArray<
-    { readonly __typename?: 'PullRequestType' } & Pick<
-      PullRequestType,
-      'id' | 'number' | 'title' | 'headCommitHash'
-    >
-  >;
+export type GetPullRequestsQuery = {
+  readonly __typename?: 'Query';
+  readonly pullRequests: ReadonlyArray<{
+    readonly __typename?: 'PullRequestType';
+    readonly id: number;
+    readonly number: number;
+    readonly title: string;
+    readonly headCommitHash: string;
+  }>;
 };
 
 export type GetReleasesQueryVariables = Exact<{
@@ -666,13 +669,13 @@ export type GetReleasesQueryVariables = Exact<{
   repository: Scalars['String'];
 }>;
 
-export type GetReleasesQuery = { readonly __typename?: 'Query' } & {
-  readonly releases: ReadonlyArray<
-    { readonly __typename?: 'Release' } & Pick<
-      Release,
-      'tagName' | 'preRelease'
-    >
-  >;
+export type GetReleasesQuery = {
+  readonly __typename?: 'Query';
+  readonly releases: ReadonlyArray<{
+    readonly __typename?: 'Release';
+    readonly tagName: string;
+    readonly preRelease: boolean;
+  }>;
 };
 
 export type LuaScriptQueryVariables = Exact<{
@@ -681,15 +684,16 @@ export type LuaScriptQueryVariables = Exact<{
   gitBranch: Scalars['String'];
   gitCommit: Scalars['String'];
   localPath: Scalars['String'];
-  gitPullRequest?: Maybe<PullRequestInput>;
+  gitPullRequest?: InputMaybe<PullRequestInput>;
   gitRepository: GitRepositoryInput;
 }>;
 
-export type LuaScriptQuery = { readonly __typename?: 'Query' } & {
-  readonly luaScript: { readonly __typename?: 'LuaScript' } & Pick<
-    LuaScript,
-    'fileLocation'
-  >;
+export type LuaScriptQuery = {
+  readonly __typename?: 'Query';
+  readonly luaScript: {
+    readonly __typename?: 'LuaScript';
+    readonly fileLocation?: string | null;
+  };
 };
 
 export type MulticastDnsMonitorUpdatesSubscriptionVariables = Exact<{
@@ -698,30 +702,31 @@ export type MulticastDnsMonitorUpdatesSubscriptionVariables = Exact<{
 
 export type MulticastDnsMonitorUpdatesSubscription = {
   readonly __typename?: 'Subscription';
-} & {
   readonly multicastDnsMonitorUpdates: {
     readonly __typename?: 'MulticastDnsMonitorUpdate';
-  } & Pick<MulticastDnsMonitorUpdate, 'type'> & {
-      readonly data: { readonly __typename?: 'MulticastDnsInformation' } & Pick<
-        MulticastDnsInformation,
-        | 'name'
-        | 'version'
-        | 'target'
-        | 'type'
-        | 'vendor'
-        | 'ip'
-        | 'dns'
-        | 'port'
-        | 'deviceName'
-      > & {
-          readonly options: ReadonlyArray<
-            { readonly __typename?: 'UserDefine' } & Pick<
-              UserDefine,
-              'type' | 'key' | 'enabled' | 'enumValues' | 'value' | 'sensitive'
-            >
-          >;
-        };
+    readonly type: MulticastDnsEventType;
+    readonly data: {
+      readonly __typename?: 'MulticastDnsInformation';
+      readonly name: string;
+      readonly version: string;
+      readonly target: string;
+      readonly type: string;
+      readonly vendor: string;
+      readonly ip: string;
+      readonly dns: string;
+      readonly port: number;
+      readonly deviceName: string;
+      readonly options: ReadonlyArray<{
+        readonly __typename?: 'UserDefine';
+        readonly type: UserDefineKind;
+        readonly key: UserDefineKey;
+        readonly enabled: boolean;
+        readonly enumValues?: ReadonlyArray<string> | null;
+        readonly value?: string | null;
+        readonly sensitive: boolean;
+      }>;
     };
+  };
 };
 
 export type GetTagsQueryVariables = Exact<{
@@ -729,10 +734,10 @@ export type GetTagsQueryVariables = Exact<{
   repository: Scalars['String'];
 }>;
 
-export type GetTagsQuery = { readonly __typename?: 'Query' } & Pick<
-  Query,
-  'gitTags'
->;
+export type GetTagsQuery = {
+  readonly __typename?: 'Query';
+  readonly gitTags: ReadonlyArray<string>;
+};
 
 export type SerialMonitorEventsSubscriptionVariables = Exact<{
   [key: string]: never;
@@ -740,10 +745,10 @@ export type SerialMonitorEventsSubscriptionVariables = Exact<{
 
 export type SerialMonitorEventsSubscription = {
   readonly __typename?: 'Subscription';
-} & {
   readonly serialMonitorEvents: {
     readonly __typename?: 'SerialMonitorEvent';
-  } & Pick<SerialMonitorEvent, 'type'>;
+    readonly type: SerialMonitorEventType;
+  };
 };
 
 export type SerialMonitorLogsSubscriptionVariables = Exact<{
@@ -752,10 +757,10 @@ export type SerialMonitorLogsSubscriptionVariables = Exact<{
 
 export type SerialMonitorLogsSubscription = {
   readonly __typename?: 'Subscription';
-} & {
   readonly serialMonitorLogs: {
     readonly __typename?: 'SerialMonitorLogUpdate';
-  } & Pick<SerialMonitorLogUpdate, 'data'>;
+    readonly data: string;
+  };
 };
 
 export const AvailableDevicesListDocument = gql`
