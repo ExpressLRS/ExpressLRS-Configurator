@@ -1,6 +1,7 @@
 import { Button, Card, CardContent, Divider } from '@mui/material';
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
 import DvrIcon from '@mui/icons-material/Dvr';
+import { SxProps, Theme } from '@mui/system';
 import CardTitle from '../../components/CardTitle';
 import SerialConnectionForm from '../../components/SerialConnectionForm';
 import EventsBatcher from '../../library/EventsBatcher';
@@ -16,7 +17,7 @@ import ShowAlerts from '../../components/ShowAlerts';
 import Logs from '../../components/Logs';
 import MainLayout from '../../layouts/MainLayout';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   disconnectButton: {
     marginBottom: 4,
   },

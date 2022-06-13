@@ -1,12 +1,13 @@
 import React, { FunctionComponent, memo } from 'react';
 import { Alert } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import {
   BuildFirmwareStep,
   BuildProgressNotification,
   BuildProgressNotificationType,
 } from '../../gql/generated/types';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   notification: {
     marginBottom: 1,
   },
@@ -16,8 +17,8 @@ interface BuildNotificationsListProps {
   notifications: BuildProgressNotification[];
 }
 
-const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = memo(
-  ({ notifications }) => {
+const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> =
+  memo(({ notifications }) => {
     const toSeverity = (
       item: BuildProgressNotificationType
     ): 'error' | 'info' | 'success' => {
@@ -64,7 +65,6 @@ const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> = m
         })}
       </>
     );
-  }
-);
+  });
 
 export default BuildNotificationsList;

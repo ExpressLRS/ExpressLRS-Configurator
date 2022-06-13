@@ -25,6 +25,7 @@ import {
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ipcRenderer } from 'electron';
 import { ContentCopy, NetworkWifi, Save } from '@mui/icons-material';
+import { SxProps, Theme } from '@mui/system';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
 import DeviceOptionsForm, {
@@ -37,27 +38,27 @@ import Logs from '../../components/Logs';
 import BuildProgressBar from '../../components/BuildProgressBar';
 import BuildNotificationsList from '../../components/BuildNotificationsList';
 import {
+  BuildFirmwareErrorType,
   BuildFlashFirmwareInput,
   BuildJobType,
   BuildProgressNotification,
+  Device,
+  DeviceType,
   FirmwareSource,
   FirmwareVersionDataInput,
+  FlashingMethod,
+  MulticastDnsInformation,
+  Target,
+  TargetDeviceOptionsQuery,
+  useAvailableFirmwareTargetsLazyQuery,
   useBuildFlashFirmwareMutation,
   useBuildLogUpdatesSubscription,
   useBuildProgressNotificationsSubscription,
-  UserDefinesMode,
-  useTargetDeviceOptionsLazyQuery,
-  useAvailableFirmwareTargetsLazyQuery,
-  Device,
-  MulticastDnsInformation,
-  Target,
-  FlashingMethod,
   useLuaScriptLazyQuery,
-  DeviceType,
   UserDefineKey,
   UserDefineKind,
-  TargetDeviceOptionsQuery,
-  BuildFirmwareErrorType,
+  UserDefinesMode,
+  useTargetDeviceOptionsLazyQuery,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -84,7 +85,7 @@ import AppStatus from '../../models/enum/AppStatus';
 import MainLayout from '../../layouts/MainLayout';
 import SplitButton from '../../components/SplitButton';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   button: {
     marginRight: 2,
   },
@@ -166,10 +167,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     BuildProgressNotification[]
   >([]);
   const progressNotificationsRef = useRef<BuildProgressNotification[]>([]);
-  const [
-    lastProgressNotification,
-    setLastProgressNotification,
-  ] = useState<BuildProgressNotification | null>(null);
+  const [lastProgressNotification, setLastProgressNotification] =
+    useState<BuildProgressNotification | null>(null);
 
   useBuildProgressNotificationsSubscription({
     onSubscriptionData: (options) => {
@@ -210,10 +209,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     },
   });
 
-  const [
-    firmwareVersionData,
-    setFirmwareVersionData,
-  ] = useState<FirmwareVersionDataInput | null>(null);
+  const [firmwareVersionData, setFirmwareVersionData] =
+    useState<FirmwareVersionDataInput | null>(null);
   const [firmwareVersionErrors, setFirmwareVersionErrors] = useState<Error[]>(
     []
   );
@@ -291,20 +288,20 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   useEffect(() => {
     if (targetsResponse?.availableFirmwareTargets) {
-      setDeviceTargets([...targetsResponse.availableFirmwareTargets]);
+      setDeviceTargets([
+        ...(targetsResponse.availableFirmwareTargets as Device[]),
+      ]);
     } else {
       setDeviceTargets(null);
     }
   }, [targetsResponse]);
 
-  const [
-    deviceOptionsFormData,
-    setDeviceOptionsFormData,
-  ] = useState<DeviceOptionsFormData>({
-    userDefinesTxt: '',
-    userDefinesMode: UserDefinesMode.UserInterface,
-    userDefineOptions: [],
-  });
+  const [deviceOptionsFormData, setDeviceOptionsFormData] =
+    useState<DeviceOptionsFormData>({
+      userDefinesTxt: '',
+      userDefinesMode: UserDefinesMode.UserInterface,
+      userDefineOptions: [],
+    });
 
   const handleDeviceOptionsResponse = async (
     deviceOptionsResponse: TargetDeviceOptionsQuery
@@ -323,20 +320,20 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     // if a network device is selected, merge in its options
     if (selectedDevice && networkDevices.has(selectedDevice)) {
       const networkDevice = networkDevices.get(selectedDevice);
-      userDefineOptions.userDefineOptions = userDefineOptions.userDefineOptions.map(
-        (userDefineOption) => {
+      userDefineOptions.userDefineOptions =
+        userDefineOptions.userDefineOptions.map((userDefineOption) => {
           const networkDeviceOption = networkDevice?.options.find(
             (item) => item.key === userDefineOption.key
           );
-
-          const newUserDefineOption = { ...userDefineOption };
           if (networkDeviceOption) {
-            newUserDefineOption.enabled = networkDeviceOption.enabled;
-            newUserDefineOption.value = networkDeviceOption.value;
+            return {
+              ...userDefineOption,
+              enabled: networkDeviceOption.enabled,
+              value: networkDeviceOption.value,
+            };
           }
-          return newUserDefineOption;
-        }
-      );
+          return userDefineOption;
+        });
     }
 
     setDeviceOptionsFormData(userDefineOptions);
@@ -530,10 +527,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     }
   }, [deviceTarget, deviceTarget, deviceTargets]);
 
-  const [
-    deviceOptionsValidationErrors,
-    setDeviceOptionsValidationErrors,
-  ] = useState<Error[] | null>(null);
+  const [deviceOptionsValidationErrors, setDeviceOptionsValidationErrors] =
+    useState<Error[] | null>(null);
 
   const reset = () => {
     logsRef.current = [];
@@ -674,10 +669,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const deviceTargetRef = useRef<HTMLDivElement | null>(null);
   const deviceOptionsRef = useRef<HTMLDivElement | null>(null);
 
-  const [
-    deviceSelectErrorDialogOpen,
-    setDeviceSelectErrorDialogOpen,
-  ] = useState<boolean>(false);
+  const [deviceSelectErrorDialogOpen, setDeviceSelectErrorDialogOpen] =
+    useState<boolean>(false);
 
   const handleSelectedDeviceChange = useCallback(
     (deviceName: string) => {
@@ -1089,13 +1082,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 {response?.buildFlashFirmware?.success &&
                   currentJobType === BuildJobType.BuildAndFlash &&
                   deviceTarget?.flashingMethod === FlashingMethod.WIFI && (
-                    <>
-                      <Alert sx={styles.buildNotification} severity="warning">
-                        <AlertTitle>Warning</AlertTitle>
-                        Please wait for LED to resume blinking before
-                        disconnecting power
-                      </Alert>
-                    </>
+                    <Alert sx={styles.buildNotification} severity="warning">
+                      <AlertTitle>Warning</AlertTitle>
+                      Please wait for LED to resume blinking before
+                      disconnecting power
+                    </Alert>
                   )}
                 <ShowAfterTimeout
                   timeout={
@@ -1114,24 +1105,20 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     />
                   </Box>
                   {response?.buildFlashFirmware?.success && hasLuaScript && (
-                    <>
-                      <Alert sx={styles.buildNotification} severity="info">
-                        <AlertTitle>Update Lua Script</AlertTitle>
-                        Make sure to update the Lua script on your radio
-                      </Alert>
-                    </>
+                    <Alert sx={styles.buildNotification} severity="info">
+                      <AlertTitle>Update Lua Script</AlertTitle>
+                      Make sure to update the Lua script on your radio
+                    </Alert>
                   )}
                 </ShowAfterTimeout>
                 {response?.buildFlashFirmware?.success &&
                   currentJobType === BuildJobType.Build && (
-                    <>
-                      <Alert sx={styles.buildNotification} severity="info">
-                        <AlertTitle>Build notice</AlertTitle>
-                        {deviceTarget?.flashingMethod !== FlashingMethod.Radio
-                          ? 'Firmware binary file was opened in the file explorer'
-                          : "Firmware binary file was opened in the file explorer, copy the firmware file to your radios's SD card and flash it to the transmitter using EdgeTX/OpenTX"}
-                      </Alert>
-                    </>
+                    <Alert sx={styles.buildNotification} severity="info">
+                      <AlertTitle>Build notice</AlertTitle>
+                      {deviceTarget?.flashingMethod !== FlashingMethod.Radio
+                        ? 'Firmware binary file was opened in the file explorer'
+                        : "Firmware binary file was opened in the file explorer, copy the firmware file to your radios's SD card and flash it to the transmitter using EdgeTX/OpenTX"}
+                    </Alert>
                   )}
               </CardContent>
               <Divider />

@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { FunctionComponent } from 'react';
+import { SxProps, Theme } from '@mui/system';
 import UserDefinesList from '../UserDefinesList';
 import {
   FirmwareVersionDataInput,
@@ -16,7 +17,7 @@ import {
   UserDefinesMode,
 } from '../../gql/generated/types';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   categoryTitle: {
     marginBottom: 1,
   },
@@ -232,109 +233,102 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
         </RadioGroup>
       </FormControl>
       {deviceOptions.userDefinesMode === UserDefinesMode.Manual && (
-        <>
-          <TextField
-            sx={styles.textarea}
-            multiline
-            label="user_defines.txt"
-            onBlur={onUserDefinesTxt}
-            defaultValue={deviceOptions.userDefinesTxt}
-            fullWidth
-            rows={10}
-          />
-        </>
+        <TextField
+          sx={styles.textarea}
+          multiline
+          label="user_defines.txt"
+          onBlur={onUserDefinesTxt}
+          defaultValue={deviceOptions.userDefinesTxt}
+          fullWidth
+          rows={10}
+        />
       )}
       {target !== null &&
         categories !== null &&
         deviceOptions.userDefinesMode === UserDefinesMode.UserInterface && (
-          <>
-            <Grid container spacing={3}>
-              <Grid item xs>
-                {categories[UserDefineCategory.RegulatoryDomains]?.length >
-                  0 && (
-                  <>
-                    <Typography variant="h6" sx={styles.categoryTitle}>
-                      Regulatory domains
-                    </Typography>
-                    <UserDefinesList
-                      options={categories[UserDefineCategory.RegulatoryDomains]}
-                      onChange={onOptionUpdate}
-                      firmwareVersionData={firmwareVersionData}
-                    />
-                  </>
-                )}
-                {categories[UserDefineCategory.BindingPhrase]?.length > 0 && (
-                  <>
-                    <Typography variant="h6">Binding phrase setup</Typography>
-                    <UserDefinesList
-                      options={categories[UserDefineCategory.BindingPhrase]}
-                      onChange={onOptionUpdate}
-                      firmwareVersionData={firmwareVersionData}
-                    />
-                  </>
-                )}
-                {categories[UserDefineCategory.CompatibilityOptions]?.length >
-                  0 && (
-                  <>
-                    <Typography variant="h6">Compatibility options</Typography>
-                    <UserDefinesList
-                      options={
-                        categories[UserDefineCategory.CompatibilityOptions]
-                      }
-                      onChange={onOptionUpdate}
-                      firmwareVersionData={firmwareVersionData}
-                    />
-                  </>
-                )}
-              </Grid>
-
-              <Grid item xs>
-                {categories[UserDefineCategory.PerformanceOptions]?.length >
-                  0 && (
-                  <>
-                    <Typography variant="h6">Performance options</Typography>
-                    <UserDefinesList
-                      options={
-                        categories[UserDefineCategory.PerformanceOptions]
-                      }
-                      onChange={onOptionUpdate}
-                      firmwareVersionData={firmwareVersionData}
-                    />
-                  </>
-                )}
-                {categories[UserDefineCategory.ExtraData]?.length > 0 && (
-                  <>
-                    <Typography variant="h6">Extra data</Typography>
-                    <UserDefinesList
-                      options={categories[UserDefineCategory.ExtraData]}
-                      onChange={onOptionUpdate}
-                      firmwareVersionData={firmwareVersionData}
-                    />
-                  </>
-                )}
-                {categories[UserDefineCategory.NetworkOptions]?.length > 0 && (
-                  <>
-                    <Typography variant="h6">Network</Typography>
-                    <UserDefinesList
-                      options={categories[UserDefineCategory.NetworkOptions]}
-                      onChange={onOptionUpdate}
-                      firmwareVersionData={firmwareVersionData}
-                    />
-                  </>
-                )}
-                {categories[UserDefineCategory.OtherOptions]?.length > 0 && (
-                  <>
-                    <Typography variant="h6">Other options</Typography>
-                    <UserDefinesList
-                      options={categories[UserDefineCategory.OtherOptions]}
-                      onChange={onOptionUpdate}
-                      firmwareVersionData={firmwareVersionData}
-                    />
-                  </>
-                )}
-              </Grid>
+          <Grid container spacing={3}>
+            <Grid item xs>
+              {categories[UserDefineCategory.RegulatoryDomains]?.length > 0 && (
+                <>
+                  <Typography variant="h6" sx={styles.categoryTitle}>
+                    Regulatory domains
+                  </Typography>
+                  <UserDefinesList
+                    options={categories[UserDefineCategory.RegulatoryDomains]}
+                    onChange={onOptionUpdate}
+                    firmwareVersionData={firmwareVersionData}
+                  />
+                </>
+              )}
+              {categories[UserDefineCategory.BindingPhrase]?.length > 0 && (
+                <>
+                  <Typography variant="h6">Binding phrase setup</Typography>
+                  <UserDefinesList
+                    options={categories[UserDefineCategory.BindingPhrase]}
+                    onChange={onOptionUpdate}
+                    firmwareVersionData={firmwareVersionData}
+                  />
+                </>
+              )}
+              {categories[UserDefineCategory.CompatibilityOptions]?.length >
+                0 && (
+                <>
+                  <Typography variant="h6">Compatibility options</Typography>
+                  <UserDefinesList
+                    options={
+                      categories[UserDefineCategory.CompatibilityOptions]
+                    }
+                    onChange={onOptionUpdate}
+                    firmwareVersionData={firmwareVersionData}
+                  />
+                </>
+              )}
             </Grid>
-          </>
+
+            <Grid item xs>
+              {categories[UserDefineCategory.PerformanceOptions]?.length >
+                0 && (
+                <>
+                  <Typography variant="h6">Performance options</Typography>
+                  <UserDefinesList
+                    options={categories[UserDefineCategory.PerformanceOptions]}
+                    onChange={onOptionUpdate}
+                    firmwareVersionData={firmwareVersionData}
+                  />
+                </>
+              )}
+              {categories[UserDefineCategory.ExtraData]?.length > 0 && (
+                <>
+                  <Typography variant="h6">Extra data</Typography>
+                  <UserDefinesList
+                    options={categories[UserDefineCategory.ExtraData]}
+                    onChange={onOptionUpdate}
+                    firmwareVersionData={firmwareVersionData}
+                  />
+                </>
+              )}
+              {categories[UserDefineCategory.NetworkOptions]?.length > 0 && (
+                <>
+                  <Typography variant="h6">Network</Typography>
+                  <UserDefinesList
+                    options={categories[UserDefineCategory.NetworkOptions]}
+                    onChange={onOptionUpdate}
+                    firmwareVersionData={firmwareVersionData}
+                  />
+                </>
+              )}
+              {categories[UserDefineCategory.OtherOptions]?.length > 0 && (
+                <>
+                  <Typography variant="h6">Other options</Typography>
+                  <UserDefinesList
+                    options={categories[UserDefineCategory.OtherOptions]}
+                    onChange={onOptionUpdate}
+                    firmwareVersionData={firmwareVersionData}
+                  />
+                </>
+              )}
+            </Grid>
+          </Grid>
         )}
     </>
   );

@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import { Alert, Box } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import { DeviceOptionsFormData } from '../DeviceOptionsForm';
 import { UserDefineKey, UserDefinesMode } from '../../gql/generated/types';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   container: {
     marginBottom: 2,
   },
@@ -56,19 +57,15 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
       );
     }
   }
-  return (
-    <>
-      {messages.length > 0 && (
-        <Box sx={styles.container}>
-          {messages.map((message, idx) => (
-            <Alert key={idx} severity="warning">
-              {message}
-            </Alert>
-          ))}
-        </Box>
-      )}
-    </>
-  );
+  return messages.length > 0 ? (
+    <Box sx={styles.container}>
+      {messages.map((message, idx) => (
+        <Alert key={idx} severity="warning">
+          {message}
+        </Alert>
+      ))}
+    </Box>
+  ) : null;
 };
 
 export default UserDefinesAdvisor;

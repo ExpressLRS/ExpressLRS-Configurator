@@ -16,12 +16,13 @@ import DvrIcon from '@mui/icons-material/Dvr';
 import ListIcon from '@mui/icons-material/List';
 import { matchPath, useLocation, Link } from 'react-router-dom';
 import BackpackIcon from '@mui/icons-material/Backpack';
+import { SxProps, Theme } from '@mui/system';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
 
 const drawerWidth = 215;
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   drawer: {
     width: drawerWidth,
     flexShrink: 0,

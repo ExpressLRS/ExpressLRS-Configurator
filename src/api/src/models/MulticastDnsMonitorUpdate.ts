@@ -5,7 +5,8 @@ import MulticastDnsInformation from './MulticastDnsInformation';
 
 @ObjectType('MulticastDnsMonitorUpdate')
 export default class MulticastDnsMonitorUpdate
-  implements MulticastDnsServicePayload {
+  implements MulticastDnsServicePayload
+{
   @Field(() => MulticastDnsEventType)
   type: MulticastDnsEventType;
 

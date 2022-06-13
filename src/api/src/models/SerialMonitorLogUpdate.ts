@@ -3,7 +3,8 @@ import { SerialMonitorLogUpdatePayload } from '../services/SerialMonitor';
 
 @ObjectType('SerialMonitorLogUpdate')
 export default class SerialMonitorLogUpdate
-  implements SerialMonitorLogUpdatePayload {
+  implements SerialMonitorLogUpdatePayload
+{
   @Field()
   data: string;
 

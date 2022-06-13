@@ -1,20 +1,19 @@
 import React, { FunctionComponent } from 'react';
 import { Box, Button, Typography } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import { useClearPlatformioCoreDirMutation } from '../../../../gql/generated/types';
 import Loader from '../../../../components/Loader';
 import ShowAlerts from '../../../../components/ShowAlerts';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   actions: {
     marginBottom: 2,
   },
 };
 
 const ClearPlatformioDependencies: FunctionComponent = () => {
-  const [
-    clearPlatformioCoreDirMutation,
-    { loading, data, error },
-  ] = useClearPlatformioCoreDirMutation();
+  const [clearPlatformioCoreDirMutation, { loading, data, error }] =
+    useClearPlatformioCoreDirMutation();
   const onClearPlatformioDependencies = () => {
     clearPlatformioCoreDirMutation().catch((err) => {
       console.error('clearPlatformioCoreDirMutation err: ', err);

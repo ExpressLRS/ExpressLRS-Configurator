@@ -10,10 +10,10 @@ import TargetArgs from '../../graphql/args/Target';
 import Device from '../../models/Device';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import loadTargetsFromDirectory from './loadTargetsFromDirectory';
-import { GitRepository, ITargets } from './index';
+import TargetsLoader, { GitRepository } from './index';
 
 @Service()
-export default class HttpTargetsService implements ITargets {
+export default class HttpTargetsService implements TargetsLoader {
   client: Octokit;
 
   constructor(

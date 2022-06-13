@@ -6,6 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { Alert, AlertTitle, Box } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import Omnibox from '../Omnibox';
 import {
   Device,
@@ -16,7 +17,7 @@ import FlashingMethodOptions, {
   sortDeviceTargets,
 } from '../FlashingMethodOptions';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   root: {
     marginY: 2,
   },

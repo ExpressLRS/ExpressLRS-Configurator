@@ -1,4 +1,8 @@
-import { ApolloServer, PubSub } from 'apollo-server-express';
+import { createServer } from 'http';
+import { ApolloServer } from 'apollo-server-express';
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { PubSub } from 'graphql-subscriptions';
+import { execute, subscribe } from 'graphql';
 import express, { Express } from 'express';
 import * as http from 'http';
 import getPort from 'get-port';
@@ -38,17 +42,13 @@ import GitUserDefinesLoader from './src/services/UserDefinesLoader/GitUserDefine
 export default class ApiServer {
   app: Express | undefined;
 
-  server: http.Server | undefined;
+  httpServer: http.Server | undefined;
 
   static async getPort(port: number | undefined): Promise<number> {
     return getPort({ port });
   }
 
-  async start(
-    config: IConfig,
-    logger: LoggerService,
-    port: number
-  ): Promise<http.Server> {
+  async buildContainer(config: IConfig, logger: LoggerService): Promise<void> {
     const pubSub = new PubSub();
     Container.set([{ id: ConfigToken, value: config }]);
     Container.set([{ id: PubSubToken, value: pubSub }]);
@@ -144,6 +144,22 @@ export default class ApiServer {
     }
 
     Container.set(LuaService, new LuaService(logger));
+  }
+
+  async start(
+    config: IConfig,
+    logger: LoggerService,
+    port: number
+  ): Promise<http.Server> {
+    await this.buildContainer(config, logger);
+    this.app = express();
+
+    this.httpServer = createServer(this.app);
+    /*
+      I know, crazy. It is 45 minutes, but on slower network connection it might take a while to download
+      and install all Platformio dependencies and build firmware.
+     */
+    this.httpServer.setTimeout(45 * 60 * 1000);
 
     const schema = await buildSchema({
       resolvers: [
@@ -155,35 +171,54 @@ export default class ApiServer {
         LuaResolver,
       ],
       container: Container,
-      pubSub,
+      pubSub: Container.get<PubSub>(PubSubToken),
     });
+    let subscriptionServer: SubscriptionServer | undefined;
     const server = new ApolloServer({
       schema,
       introspection: true,
+      plugins: [
+        {
+          async serverWillStart() {
+            return {
+              async drainServer() {
+                subscriptionServer?.close();
+              },
+            };
+          },
+        },
+      ],
     });
-    this.app = express();
+    subscriptionServer = SubscriptionServer.create(
+      {
+        schema,
+        execute,
+        subscribe,
+      },
+      {
+        server: this.httpServer,
+        path: server.graphqlPath,
+      }
+    );
+
+    // You must `await server.start()` before calling `server.applyMiddleware()
+    await server.start();
+
     server.applyMiddleware({
       app: this.app,
     });
 
-    this.server = this.app.listen({ port });
+    this.httpServer = this.httpServer.listen({ port });
 
-    /*
-      I know, crazy. It is 45 minutes, but on slower network connection it might take a while to download
-      and install all Platformio dependencies and build firmware.
-     */
-    this.server.setTimeout(45 * 60 * 1000);
-    server.installSubscriptionHandlers(this.server);
-
-    return this.server;
+    return this.httpServer;
   }
 
   async stop(): Promise<void> {
-    if (this.server === undefined) {
+    if (this.httpServer === undefined) {
       throw new Error('server was not started');
     }
     return new Promise((resolve, reject) => {
-      this.server?.close((err) => {
+      this.httpServer?.close((err) => {
         if (err) {
           reject(err);
         } else {

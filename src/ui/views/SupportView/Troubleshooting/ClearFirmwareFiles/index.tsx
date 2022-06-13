@@ -1,20 +1,19 @@
 import React, { FunctionComponent } from 'react';
 import { Box, Button, Typography } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import { useClearFirmwareFilesMutation } from '../../../../gql/generated/types';
 import Loader from '../../../../components/Loader';
 import ShowAlerts from '../../../../components/ShowAlerts';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   actions: {
     marginBottom: 2,
   },
 };
 
 const ClearFirmwareFiles: FunctionComponent = () => {
-  const [
-    clearFirmwareFiles,
-    { loading, data, error },
-  ] = useClearFirmwareFilesMutation();
+  const [clearFirmwareFiles, { loading, data, error }] =
+    useClearFirmwareFilesMutation();
   const onSubmit = () => {
     clearFirmwareFiles().catch((err) => {
       console.error('clearFirmwareFiles err: ', err);

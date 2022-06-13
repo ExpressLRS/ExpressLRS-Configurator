@@ -32,7 +32,7 @@ const ShowTimeoutAlerts: FunctionComponent<ShowTimeoutAlertsProps> = ({
       }
     };
   }, [active, timeout]);
-  return <>{visible && <ShowAlerts {...props} />}</>;
+  return visible ? <ShowAlerts {...props} /> : null;
 };
 
 export default ShowTimeoutAlerts;

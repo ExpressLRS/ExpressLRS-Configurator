@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { FunctionComponent, useCallback, useMemo } from 'react';
+import { SxProps, Theme } from '@mui/system';
 import {
   Device,
   FirmwareVersionDataInput,
@@ -14,7 +15,7 @@ import {
 } from '../../gql/generated/types';
 import FlashingMethodDescription from '../FlashingMethodDescription';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   root: {
     marginTop: 2,
     marginBottom: 2,

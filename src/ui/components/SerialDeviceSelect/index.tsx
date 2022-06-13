@@ -1,6 +1,7 @@
 import { Box, Tooltip } from '@mui/material';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import QuestionIcon from '@mui/icons-material/Help';
+import { SxProps, Theme } from '@mui/system';
 import Omnibox, { Option } from '../Omnibox';
 import {
   SerialPortInformation,
@@ -9,7 +10,7 @@ import {
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   root: {
     marginBottom: 2,
   },

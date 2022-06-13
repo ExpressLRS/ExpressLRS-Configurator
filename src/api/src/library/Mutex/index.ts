@@ -18,8 +18,10 @@ export default class Mutex {
     const curDateMs = new Date().getTime();
     while (new Date().getTime() - curDateMs < timeout) {
       if (this.isLocked()) {
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        // eslint-disable-next-line no-await-in-loop,no-promise-executor-return
+        await new Promise((resolve) => {
+          setTimeout(resolve, 100);
+        });
       }
       if (!this.isLocked()) {
         this.tryLock();

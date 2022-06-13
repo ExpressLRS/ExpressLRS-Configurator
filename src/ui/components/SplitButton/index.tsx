@@ -35,7 +35,10 @@ const SplitButton: FunctionComponent<SplitButtonProps> = ({
     onButtonClick(options[selectedIndex].value);
   };
 
-  const handleMenuItemClick = (event: any, index: number) => {
+  const handleMenuItemClick = (
+    event: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    index: number
+  ) => {
     setSelectedIndex(index);
     setOpen(false);
   };
@@ -44,11 +47,11 @@ const SplitButton: FunctionComponent<SplitButtonProps> = ({
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event: any) => {
+  const handleClose = (event: MouseEvent | TouchEvent) => {
     if (
       anchorRef.current &&
       event.target &&
-      anchorRef.current.contains(event.target)
+      anchorRef.current.contains(event.target as Node)
     ) {
       return;
     }

@@ -9,6 +9,7 @@ import {
   ListItemText,
   TextField,
 } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import {
   FirmwareVersionDataInput,
   UserDefine,
@@ -19,7 +20,7 @@ import Omnibox from '../Omnibox';
 import UserDefineDescription from '../UserDefineDescription';
 import SensitiveTextField from '../SensitiveTextField';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   icon: {
     minWidth: 40,
   },
@@ -51,20 +52,20 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
     }
   };
 
-  const onUserDefineValueChange = (data: UserDefineKey) => (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    const opt = options.find(({ key }) => key === data);
-    if (opt !== undefined) {
-      const update = {
-        ...opt,
-        value: event.target.value,
-      };
-      onChange(update);
-    } else {
-      throw new Error(`user define key ${data} not found`);
-    }
-  };
+  const onUserDefineValueChange =
+    (data: UserDefineKey) =>
+    (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      const opt = options.find(({ key }) => key === data);
+      if (opt !== undefined) {
+        const update = {
+          ...opt,
+          value: event.target.value,
+        };
+        onChange(update);
+      } else {
+        throw new Error(`user define key ${data} not found`);
+      }
+    };
 
   const onEnumValueChange = (data: UserDefineKey) => (value: string | null) => {
     const opt = options.find(({ key }) => key === data);
@@ -120,29 +121,27 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
               </ListItemSecondaryAction>
             </ListItem>
             {item.type === UserDefineKind.Text && item.enabled && (
-              <>
-                <ListItem sx={styles.complimentaryItem}>
-                  {!item.sensitive && (
-                    <TextField
-                      size="small"
-                      onChange={onUserDefineValueChange(item.key)}
-                      value={item.value}
-                      fullWidth
-                      label={inputLabel(item.key)}
-                    />
-                  )}
-                  {item.sensitive && (
-                    <SensitiveTextField
-                      name={item.key}
-                      size="small"
-                      onChange={onUserDefineValueChange(item.key)}
-                      value={item.value}
-                      fullWidth
-                      label={inputLabel(item.key)}
-                    />
-                  )}
-                </ListItem>
-              </>
+              <ListItem sx={styles.complimentaryItem}>
+                {!item.sensitive && (
+                  <TextField
+                    size="small"
+                    onChange={onUserDefineValueChange(item.key)}
+                    value={item.value}
+                    fullWidth
+                    label={inputLabel(item.key)}
+                  />
+                )}
+                {item.sensitive && (
+                  <SensitiveTextField
+                    name={item.key}
+                    size="small"
+                    onChange={onUserDefineValueChange(item.key)}
+                    value={item.value}
+                    fullWidth
+                    label={inputLabel(item.key)}
+                  />
+                )}
+              </ListItem>
             )}
             {item.type === UserDefineKind.Enum && item.enabled && (
               <ListItem sx={styles.complimentaryItem}>

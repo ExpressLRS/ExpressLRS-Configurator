@@ -1,5 +1,14 @@
 module.exports = {
-  extends: 'erb',
+  extends: [
+    'airbnb',
+    'airbnb-typescript',
+    'airbnb/hooks',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:jest/recommended',
+    'plugin:promise/recommended',
+    'plugin:compat/recommended',
+    'plugin:prettier/recommended',
+  ],
   rules: {
     // A temporary hack related to IDE not resolving correct package.json
     'import/no-extraneous-dependencies': 'off',
@@ -13,7 +22,14 @@ module.exports = {
     'class-methods-use-this': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     'jsx-a11y/accessible-emoji': 'off',
+    'import/no-relative-packages': 'off',
     'react-hooks/exhaustive-deps': 'warn',
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: 'arrow-function',
+      },
+    ],
     'react/require-default-props': [
       'error',
       { ignoreFunctionalComponents: true },
@@ -21,6 +37,10 @@ module.exports = {
     'no-console': ['warn', { allow: ['error'] }],
     // No need to enforce linebreak styles since "* text=auto" in .gitattributes will ensure LF is committed to the repo
     'linebreak-style': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+    'no-param-reassign': ['error', { props: false }],
     'prettier/prettier': [
       'error',
       {
@@ -28,12 +48,17 @@ module.exports = {
       },
     ],
   },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
     createDefaultProgram: true,
+  },
+  env: {
+    browser: true,
+    node: true,
   },
   settings: {
     'import/resolver': {

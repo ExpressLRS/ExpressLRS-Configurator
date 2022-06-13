@@ -29,7 +29,8 @@ import {
 } from './ipc';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
 import { FirmwareParamsLoaderType } from './api/src/config';
-import packageJson from '../package.json';
+
+import packageJson from '../package.json'; // eslint-disable-line import/no-relative-packages
 
 const logsPath = path.join(app.getPath('userData'), 'logs');
 const logsFilename = 'expressslrs-configurator.log';

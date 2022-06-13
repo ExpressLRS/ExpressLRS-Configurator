@@ -336,16 +336,17 @@ export default class FirmwareService {
         params.userDefinesMode === UserDefinesMode.UserInterface &&
         params.firmware.source !== FirmwareSource.Local
       ) {
-        const compatCheck = await this.builder.checkDefaultUserDefinesCompatibilityAtPath(
-          firmwarePath,
-          params.userDefines
-            .filter(
-              (userDefine) =>
-                userDefine.enabled &&
-                userDefine.key !== UserDefineKey.DEVICE_NAME
-            )
-            .map(({ key }) => key)
-        );
+        const compatCheck =
+          await this.builder.checkDefaultUserDefinesCompatibilityAtPath(
+            firmwarePath,
+            params.userDefines
+              .filter(
+                (userDefine) =>
+                  userDefine.enabled &&
+                  userDefine.key !== UserDefineKey.DEVICE_NAME
+              )
+              .map(({ key }) => key)
+          );
         if (!compatCheck.compatible) {
           return new BuildFlashFirmwareResult(
             false,
@@ -481,10 +482,10 @@ export default class FirmwareService {
           userDefines,
           firmwarePath,
           params.serialDevice,
+          uploadType,
           (output) => {
             this.updateLogs(output);
-          },
-          uploadType
+          }
         );
         if (!flashResult.success) {
           this.logger?.error('flash error', undefined, {
@@ -523,13 +524,8 @@ export default class FirmwareService {
   }
 
   generateFirmwareName(params: BuildFlashFirmwareParams): string {
-    const {
-      source,
-      gitBranch,
-      gitCommit,
-      gitTag,
-      gitPullRequest,
-    } = params.firmware;
+    const { source, gitBranch, gitCommit, gitTag, gitPullRequest } =
+      params.firmware;
     const deviceName = params.userDefines.find(
       (userDefine) => userDefine.key === UserDefineKey.DEVICE_NAME
     )?.value;

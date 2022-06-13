@@ -1,12 +1,13 @@
 import React, { FunctionComponent, memo } from 'react';
 import { LinearProgress } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import {
   BuildFirmwareStep,
   BuildJobType,
   BuildProgressNotification,
 } from '../../gql/generated/types';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   root: {
     height: 12,
     marginTop: 1,

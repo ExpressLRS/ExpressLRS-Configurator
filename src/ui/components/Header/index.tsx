@@ -3,13 +3,14 @@ import { AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import WebIcon from '@mui/icons-material/Web';
+import { SxProps, Theme } from '@mui/system';
 import { Config } from '../../config';
 import LogotypeIcon from '../../../../assets/logotype.svg';
 import DiscordIcon from '../../../../assets/DiscordIcon.svg';
 import OpenCollectiveIcon from '../../../../assets/OpenCollective.svg';
 import { useCheckForUpdatesQuery } from '../../gql/generated/types';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   title: {
     fontSize: 'theme.typography.h4.fontSize',
     lineHeight: 'theme.typography.h4.fontSize',

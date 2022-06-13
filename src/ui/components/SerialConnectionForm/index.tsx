@@ -1,5 +1,6 @@
 import { Box, Button, Grid, TextField } from '@mui/material';
 import React, { FunctionComponent, useEffect, useState } from 'react';
+import { SxProps, Theme } from '@mui/system';
 import Omnibox, { Option } from '../Omnibox';
 import {
   SerialPortInformation,
@@ -8,7 +9,7 @@ import {
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   root: {
     marginY: 2,
   },
@@ -69,8 +70,6 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
       } catch (e) {
         console.error('failed to parse number', e);
       }
-    } else {
-      console.log('only numbers');
     }
   };
   useEffect(() => {

@@ -16,38 +16,35 @@ const WifiDeviceNotification: FunctionComponent<WifiDeviceNotificationProps> = (
   const { newNetworkDevices, removeDeviceFromNewList, onDeviceChange } = props;
   const { appStatus } = useAppState();
 
-  return (
-    <>
-      {appStatus === AppStatus.Interactive &&
-        newNetworkDevices.map((dnsDevice) => {
-          const handleClose = () => {
-            removeDeviceFromNewList(dnsDevice.name);
-          };
+  return appStatus === AppStatus.Interactive
+    ? newNetworkDevices.map((dnsDevice) => {
+        const handleClose = () => {
+          removeDeviceFromNewList(dnsDevice.name);
+        };
 
-          return (
-            <Snackbar
-              key={dnsDevice.name}
-              open
-              autoHideDuration={6000}
-              onClose={handleClose}
-            >
-              <Alert onClose={handleClose} severity="info">
-                New Device {dnsDevice.name} ({dnsDevice.ip})
-                <Button
-                  size="small"
-                  onClick={() => {
-                    onDeviceChange(dnsDevice);
-                    removeDeviceFromNewList(dnsDevice.name);
-                  }}
-                >
-                  Select
-                </Button>
-              </Alert>
-            </Snackbar>
-          );
-        })}
-    </>
-  );
+        return (
+          <Snackbar
+            key={dnsDevice.name}
+            open
+            autoHideDuration={6000}
+            onClose={handleClose}
+          >
+            <Alert onClose={handleClose} severity="info">
+              New Device {dnsDevice.name} ({dnsDevice.ip})
+              <Button
+                size="small"
+                onClick={() => {
+                  onDeviceChange(dnsDevice);
+                  removeDeviceFromNewList(dnsDevice.name);
+                }}
+              >
+                Select
+              </Button>
+            </Alert>
+          </Snackbar>
+        );
+      })
+    : null;
 };
 
 export default WifiDeviceNotification;

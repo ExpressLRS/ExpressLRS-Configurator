@@ -33,10 +33,11 @@ export default class MulticastDnsService {
     mdns.on('response', (response: ResponsePacket) => {
       try {
         this.handleMulticastDnsResponse(response);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         this.logger?.error(
           'Error encountered while handling multicast dns response:',
-          e.trace,
+          e?.trace,
           { err: e }
         );
       }

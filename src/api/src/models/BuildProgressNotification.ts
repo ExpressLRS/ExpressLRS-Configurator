@@ -5,7 +5,8 @@ import { BuildProgressNotificationPayload } from '../services/Firmware';
 
 @ObjectType('BuildProgressNotification')
 export default class BuildProgressNotification
-  implements BuildProgressNotificationPayload {
+  implements BuildProgressNotificationPayload
+{
   @Field(() => BuildProgressNotificationType)
   type: BuildProgressNotificationType;
 

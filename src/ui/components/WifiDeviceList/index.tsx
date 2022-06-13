@@ -8,9 +8,10 @@ import {
   TableRow,
 } from '@mui/material';
 import React, { FunctionComponent, useMemo } from 'react';
+import { SxProps, Theme } from '@mui/system';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   root: {
     marginBottom: 2,
     '& a': {

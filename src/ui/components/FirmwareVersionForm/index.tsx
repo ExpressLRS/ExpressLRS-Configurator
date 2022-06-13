@@ -13,6 +13,7 @@ import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { ipcRenderer } from 'electron';
 import debounce from 'lodash/debounce';
 import semver from 'semver';
+import { SxProps, Theme } from '@mui/system';
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 import Omnibox from '../Omnibox';
@@ -28,7 +29,7 @@ import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
 import ApplicationStorage from '../../storage';
 import GitRepository from '../../models/GitRepository';
 
-const styles = {
+const styles: Record<string, SxProps<Theme>> = {
   tabs: {
     marginBottom: 2,
   },
@@ -214,10 +215,8 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     setLocalPath(event.target.value);
   };
 
-  const [
-    currentGitPullRequest,
-    setCurrentGitPullRequest,
-  ] = useState<PullRequestInput | null>(data?.gitPullRequest || null);
+  const [currentGitPullRequest, setCurrentGitPullRequest] =
+    useState<PullRequestInput | null>(data?.gitPullRequest || null);
 
   /*
     Make sure that a valid pull request is selected
@@ -409,50 +408,47 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         <Tab label="Git Pull Request" value={FirmwareSource.GitPullRequest} />
       </Tabs>
       {firmwareSource === FirmwareSource.GitTag && gitTags !== undefined && (
-        <>
-          <Box sx={styles.tabContents}>
-            {!loading && (
-              <>
-                <FormControlLabel
-                  sx={styles.preReleaseCheckbox}
-                  control={
-                    <Checkbox
-                      checked={showPreReleases}
-                      onChange={onShowPreReleases}
-                    />
-                  }
-                  label="Show pre-releases"
-                />
-                <Omnibox
-                  title="Releases"
-                  options={gitTagOptions}
-                  currentValue={
-                    gitTagOptions.find(
-                      (item) => item.value === currentGitTag
-                    ) ?? null
-                  }
-                  onChange={onGitTag}
-                />
-                <Button
-                  size="small"
-                  sx={styles.releaseNotes}
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href={`${gitRepository.url}/releases/tag/${currentGitTag}`}
-                >
-                  Release notes
-                </Button>
-                {currentGitTag &&
-                  gitTagOptions.length > 0 &&
-                  gitTagOptions[0]?.value !== currentGitTag && (
-                    <Alert sx={styles.firmwareVersionAlert} severity="info">
-                      There is a newer version of the firmware available
-                    </Alert>
-                  )}
-              </>
-            )}
-          </Box>
-        </>
+        <Box sx={styles.tabContents}>
+          {!loading && (
+            <>
+              <FormControlLabel
+                sx={styles.preReleaseCheckbox}
+                control={
+                  <Checkbox
+                    checked={showPreReleases}
+                    onChange={onShowPreReleases}
+                  />
+                }
+                label="Show pre-releases"
+              />
+              <Omnibox
+                title="Releases"
+                options={gitTagOptions}
+                currentValue={
+                  gitTagOptions.find((item) => item.value === currentGitTag) ??
+                  null
+                }
+                onChange={onGitTag}
+              />
+              <Button
+                size="small"
+                sx={styles.releaseNotes}
+                target="_blank"
+                rel="noreferrer noreferrer"
+                href={`${gitRepository.url}/releases/tag/${currentGitTag}`}
+              >
+                Release notes
+              </Button>
+              {currentGitTag &&
+                gitTagOptions.length > 0 &&
+                gitTagOptions[0]?.value !== currentGitTag && (
+                  <Alert sx={styles.firmwareVersionAlert} severity="info">
+                    There is a newer version of the firmware available
+                  </Alert>
+                )}
+            </>
+          )}
+        </Box>
       )}
       {firmwareSource === FirmwareSource.GitBranch &&
         gitBranches !== undefined && (
