@@ -26,25 +26,8 @@ import { LoggerService } from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import PullRequest from '../../models/PullRequest';
 import UploadType from '../../library/Platformio/Enum/UploadType';
-
-interface FirmwareVersionData {
-  source: FirmwareSource;
-  gitTag: string;
-  gitBranch: string;
-  gitCommit: string;
-  localPath: string;
-  gitPullRequest: PullRequest | null;
-}
-
-interface BuildFlashFirmwareParams {
-  type: BuildJobType;
-  serialDevice?: string | undefined;
-  firmware: FirmwareVersionData;
-  target: string;
-  userDefinesMode: UserDefinesMode;
-  userDefines: UserDefine[];
-  userDefinesTxt: string;
-}
+import { BuildFlashFirmwareParams } from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
+import { FlashingStrategy } from '../FlashingStrategyLocator/FlashingStrategy';
 
 const maskSensitiveData = (haystack: string): string => {
   const needles = [
@@ -85,18 +68,10 @@ const maskBuildFlashFirmwareParams = (
   return result;
 };
 
-export interface BuildProgressNotificationPayload {
-  type: BuildProgressNotificationType;
-  step?: BuildFirmwareStep;
-  message?: string;
-}
-
-export interface BuildLogUpdatePayload {
-  data: string;
-}
-
 @Service()
-export default class FirmwareService {
+export default class PlatformioFlashingStrategyService
+  implements FlashingStrategy
+{
   mutex: Mutex;
 
   constructor(
@@ -172,6 +147,14 @@ export default class FirmwareService {
       return true;
     }
     return false;
+  }
+
+  async isCompatible(
+    params: BuildFlashFirmwareParams,
+    gitRepositoryUrl: string,
+    gitRepositorySrcFolder: string
+  ) {
+    return true;
   }
 
   async buildFlashFirmware(

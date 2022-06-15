@@ -9,7 +9,7 @@ import getPort from 'get-port';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
 import { ConfigToken, FirmwareParamsLoaderType, IConfig } from './src/config';
-import FirmwareService from './src/services/Firmware';
+import PlatformioFlashingStrategyService from './src/services/PlatformioFlashingStrategy';
 import Platformio from './src/library/Platformio';
 import FirmwareBuilder from './src/library/FirmwareBuilder';
 import PubSubToken from './src/pubsub/PubSubToken';
@@ -38,6 +38,7 @@ import HttpTargetsService from './src/services/TargetsLoader/HttpTargets';
 import TargetsLoader from './src/services/TargetsLoader';
 import HttpUserDefinesLoader from './src/services/UserDefinesLoader/HttpUserDefinesLoader';
 import GitUserDefinesLoader from './src/services/UserDefinesLoader/GitUserDefinesLoader';
+import FlashingStrategyLocatorService from './src/services/FlashingStrategyLocator';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -61,17 +62,30 @@ export default class ApiServer {
       config.env,
       logger
     );
-    Container.set(
-      FirmwareService,
-      new FirmwareService(
+
+    const platformioFlashingStrategyService =
+      new PlatformioFlashingStrategyService(
         config.PATH,
         config.firmwaresPath,
         platformio,
         new FirmwareBuilder(platformio),
         pubSub,
         logger
+      );
+
+    Container.set(
+      PlatformioFlashingStrategyService,
+      PlatformioFlashingStrategyService
+    );
+
+    Container.set(
+      FlashingStrategyLocatorService,
+      new FlashingStrategyLocatorService(
+        [platformioFlashingStrategyService],
+        logger
       )
     );
+
     Container.set(
       UpdatesService,
       new UpdatesService(

@@ -11,10 +11,6 @@ import { Service } from 'typedi';
 import UserDefine from '../../models/UserDefine';
 import BuildFlashFirmwareInput from '../inputs/BuildFlashFirmwareInput';
 import BuildFlashFirmwareResult from '../../models/BuildFlashFirmwareResult';
-import FirmwareService, {
-  BuildLogUpdatePayload,
-  BuildProgressNotificationPayload,
-} from '../../services/Firmware';
 import BuildProgressNotification from '../../models/BuildProgressNotification';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildLogUpdate from '../../models/BuildLogUpdate';
@@ -26,12 +22,17 @@ import TargetsLoader from '../../services/TargetsLoader';
 import TargetArgs from '../args/Target';
 import Device from '../../models/Device';
 import GitRepository from '../inputs/GitRepositoryInput';
+import FlashingStrategyLocatorService from '../../services/FlashingStrategyLocator';
+import { BuildProgressNotificationPayload } from '../../services/FlashingStrategyLocator/BuildProgressNotificationPayload';
+import { BuildLogUpdatePayload } from '../../services/FlashingStrategyLocator/BuildLogUpdatePayload';
+import PlatformioFlashingStrategy from '../../services/PlatformioFlashingStrategy';
 
 @Service()
 @Resolver()
 export default class FirmwareResolver {
   constructor(
-    private firmwareService: FirmwareService,
+    private platformioFlashingStrategy: PlatformioFlashingStrategy,
+    private flashingStrategyLocatorService: FlashingStrategyLocatorService,
     private userDefinesBuilder: UserDefinesBuilder,
     private targetsLoaderService: TargetsLoader
   ) {}
@@ -57,7 +58,12 @@ export default class FirmwareResolver {
     @Arg('input') input: BuildFlashFirmwareInput,
     @Arg('gitRepository') gitRepository: GitRepository
   ): Promise<BuildFlashFirmwareResult> {
-    return this.firmwareService.buildFlashFirmware(
+    const strategy = await this.flashingStrategyLocatorService.locate(
+      input,
+      gitRepository.url,
+      gitRepository.srcFolder
+    );
+    return strategy.buildFlashFirmware(
       input,
       gitRepository.url,
       gitRepository.srcFolder
@@ -67,7 +73,7 @@ export default class FirmwareResolver {
   @Mutation(() => ClearPlatformioCoreDirResult)
   async clearPlatformioCoreDir(): Promise<ClearPlatformioCoreDirResult> {
     try {
-      await this.firmwareService.clearPlatformioCoreDir();
+      await this.platformioFlashingStrategy.clearPlatformioCoreDir();
       return new ClearPlatformioCoreDirResult(true);
     } catch (e) {
       return new ClearPlatformioCoreDirResult(
@@ -80,7 +86,7 @@ export default class FirmwareResolver {
   @Mutation(() => ClearFirmwareFilesResult)
   async clearFirmwareFiles(): Promise<ClearFirmwareFilesResult> {
     try {
-      await this.firmwareService.clearFirmwareFiles();
+      await this.platformioFlashingStrategy.clearFirmwareFiles();
       return new ClearFirmwareFilesResult(true);
     } catch (e) {
       return new ClearFirmwareFilesResult(
