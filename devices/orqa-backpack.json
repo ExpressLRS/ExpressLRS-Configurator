@@ -1,0 +1,24 @@
+[
+  {
+    "category": "Goggles",
+    "name": "Orqa FPV.Connect ESP Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "Orqa_ESP_RX_Backpack_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "Orqa_ESP_RX_Backpack_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "https://github.com/ExpressLRS/Backpack/wiki/Orqa-FPV.Connect-Wiring",
+    "deviceType": "Backpack",
+    "aliases": []
+  }
+]
