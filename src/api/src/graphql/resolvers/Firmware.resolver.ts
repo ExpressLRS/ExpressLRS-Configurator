@@ -25,14 +25,12 @@ import GitRepository from '../inputs/GitRepositoryInput';
 import FlashingStrategyLocatorService from '../../services/FlashingStrategyLocator';
 import { BuildProgressNotificationPayload } from '../../services/FlashingStrategyLocator/BuildProgressNotificationPayload';
 import { BuildLogUpdatePayload } from '../../services/FlashingStrategyLocator/BuildLogUpdatePayload';
-import PlatformioFlashingStrategy from '../../services/PlatformioFlashingStrategy';
 import Platformio from '../../library/Platformio';
 
 @Service()
 @Resolver()
 export default class FirmwareResolver {
   constructor(
-    private platformioFlashingStrategy: PlatformioFlashingStrategy,
     private flashingStrategyLocatorService: FlashingStrategyLocatorService,
     private userDefinesBuilder: UserDefinesBuilder,
     private targetsLoaderService: TargetsLoader,
@@ -88,7 +86,7 @@ export default class FirmwareResolver {
   @Mutation(() => ClearFirmwareFilesResult)
   async clearFirmwareFiles(): Promise<ClearFirmwareFilesResult> {
     try {
-      await this.platformioFlashingStrategy.clearFirmwareFiles();
+      await this.flashingStrategyLocatorService.clearFirmwareFiles();
       return new ClearFirmwareFilesResult(true);
     } catch (e) {
       return new ClearFirmwareFilesResult(

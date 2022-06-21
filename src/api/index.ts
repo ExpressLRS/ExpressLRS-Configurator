@@ -87,11 +87,6 @@ export default class ApiServer {
       );
 
     Container.set(
-      PlatformioFlashingStrategyService,
-      platformioFlashingStrategyService
-    );
-
-    Container.set(
       FlashingStrategyLocatorService,
       new FlashingStrategyLocatorService(
         [platformioFlashingStrategyService],

@@ -13,4 +13,6 @@ export interface FlashingStrategy {
     gitRepositoryUrl: string,
     gitRepositorySrcFolder: string
   ) => Promise<BuildFlashFirmwareResult>;
+
+  clearFirmwareFiles(): Promise<void>;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { Service } from 'typedi';
 import { BuildFlashFirmwareParams } from './BuildFlashFirmwareParams';
 import { FlashingStrategy } from './FlashingStrategy';
@@ -29,5 +30,12 @@ export default class FlashingStrategyLocatorService {
       }
     }
     throw new Error('No compatible flashing strategy found!');
+  }
+
+  async clearFirmwareFiles(): Promise<void> {
+    for (let i = 0; i < this.flashingStrategies.length; i++) {
+      const strategy = this.flashingStrategies[i];
+      await strategy.clearFirmwareFiles();
+    }
   }
 }
