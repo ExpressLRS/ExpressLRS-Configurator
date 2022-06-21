@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
-/* eslint-disable no-await-in-loop */
 import fs from 'fs';
 import path from 'path';
 import child_process from 'child_process';
+import rimraf from 'rimraf';
+import * as os from 'os';
 import Commander, { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 import { LoggerService } from '../../logger';
 import UploadType from './Enum/UploadType';
+import Python from '../Python';
 
 interface PlatformioCoreState {
   core_version: string;
@@ -35,101 +36,24 @@ export default class Platformio {
   constructor(
     private getPlatformioPath: string,
     private stateTempStoragePath: string,
-    private PATH: string,
     private env: NodeJS.ProcessEnv,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private python: Python
   ) {}
 
   async install(onUpdate: OnOutputFunc = NoOpFunc): Promise<CommandResult> {
-    const pyExec = await this.findPythonExecutable(this.PATH);
-    if (pyExec === null) {
-      throw new Error('python executable not found');
-    }
-    return new Commander().runCommand(
-      pyExec,
-      [this.getPlatformioPath],
-      {
-        env: this.env,
-      },
-      onUpdate
-    );
+    return this.python.runPythonScript(this.getPlatformioPath, [], onUpdate);
   }
 
   async checkCore(): Promise<CommandResult> {
-    const pyExec = await this.findPythonExecutable(this.PATH);
-    return new Commander().runCommand(
-      pyExec,
-      [this.getPlatformioPath, 'check', 'core'],
-      {
-        env: this.env,
-      }
-    );
-  }
-
-  async checkPython(): Promise<CommandResult> {
-    const pyExec = await this.findPythonExecutable(this.PATH);
-    return new Commander().runCommand(
-      pyExec,
-      [this.getPlatformioPath, 'check', 'python'],
-      {
-        env: this.env,
-      }
-    );
+    const cmdArgs = ['check', 'core'];
+    return this.python.runPythonScript(this.getPlatformioPath, cmdArgs);
   }
 
   async verifyDependencies(): Promise<boolean> {
     const pio = await this.checkCore();
-    const py = await this.checkPython();
+    const py = await this.python.checkPython();
     return pio.success && py.success;
-  }
-
-  async findPythonExecutable(envPath: string): Promise<string> {
-    const IS_WINDOWS = process.platform.startsWith('win');
-    const exenames = IS_WINDOWS
-      ? ['python3.exe', 'python.exe']
-      : ['python3', 'python', 'python2'];
-    const pythonAssertCode = [
-      'import sys',
-      'assert sys.version_info >= (3, 6)',
-      'print(sys.executable)',
-    ];
-    // eslint-disable-next-line no-restricted-syntax
-    for (const location of envPath.split(path.delimiter)) {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const exename of exenames) {
-        const executable = path
-          .normalize(path.join(location, exename))
-          .replace(/"/g, '');
-        try {
-          let res: CommandResult | null = null;
-          if (
-            fs.existsSync(executable) &&
-            // eslint-disable-next-line no-cond-assign
-            (res = await new Commander().runCommand(executable, [
-              '-c',
-              pythonAssertCode.join(';'),
-            ]))
-          ) {
-            this.logger.log('testing python exec', {
-              executable,
-              stdout: res.stdout,
-              stderr: res.stderr,
-              success: res.success,
-            });
-            if (res.success) {
-              return executable;
-            }
-          }
-        } catch (err) {
-          this.logger.warn('got an exception in python search', {
-            executable,
-            err,
-          });
-        }
-      }
-    }
-
-    throw new Error('python not found');
   }
 
   async getPlatformioState(): Promise<PlatformioCoreState> {
@@ -137,17 +61,14 @@ export default class Platformio {
       this.stateTempStoragePath,
       `core-dump-${Math.round(Math.random() * 1000000)}.json`
     );
-    const pyExec = await this.findPythonExecutable(this.PATH!);
-    const cmdArgs = [
+
+    const cmdArgs = ['check', 'core', '--dump-state', statePath];
+
+    const result = await this.python.runPythonScript(
       this.getPlatformioPath,
-      'check',
-      'core',
-      '--dump-state',
-      statePath,
-    ];
-    const result = await new Commander().runCommand(pyExec, cmdArgs, {
-      env: this.env,
-    });
+      cmdArgs
+    );
+
     if (!result.success) {
       throw new Error(
         `failed to get state json: ${result.stderr} ${result.stdout}`
@@ -255,5 +176,64 @@ export default class Platformio {
       },
       onUpdate
     );
+  }
+
+  async removePlatformioDir(): Promise<void> {
+    const dotPlatformio = path.join(os.homedir(), '.platformio');
+    const statResult = await fs.promises.lstat(dotPlatformio);
+    if (!statResult.isDirectory()) {
+      return Promise.resolve();
+    }
+    return new Promise((resolve, reject) => {
+      rimraf(dotPlatformio, (err) => {
+        if (err) {
+          reject();
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+  async clearPlatformioUsingCoreState(): Promise<void> {
+    const platformioStateJson = await this.getPlatformioState();
+    if (
+      platformioStateJson.core_dir === undefined ||
+      platformioStateJson.core_dir.length === 0 ||
+      platformioStateJson.core_dir.indexOf('.platformio') === -1
+    ) {
+      throw new Error(`core_dir is invalid: ${platformioStateJson.core_dir}`);
+    }
+
+    const statResult = await fs.promises.lstat(platformioStateJson.core_dir);
+    if (!statResult.isDirectory()) {
+      throw new Error(`core_dir is invalid: ${platformioStateJson.core_dir}`);
+    }
+
+    return new Promise((resolve, reject) => {
+      rimraf(platformioStateJson.core_dir, (err) => {
+        if (err) {
+          reject();
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+  async clearPlatformioCoreDir(): Promise<void> {
+    try {
+      await this.clearPlatformioUsingCoreState();
+    } catch (e) {
+      this.logger?.error(
+        'failed to clear platformio files using platformio state',
+        undefined,
+        {
+          err: e,
+        }
+      );
+      return this.removePlatformioDir();
+    }
+    return Promise.resolve();
   }
 }

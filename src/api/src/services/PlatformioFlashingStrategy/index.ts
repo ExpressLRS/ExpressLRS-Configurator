@@ -24,10 +24,10 @@ import Platformio from '../../library/Platformio';
 import FirmwareBuilder from '../../library/FirmwareBuilder';
 import { LoggerService } from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
-import PullRequest from '../../models/PullRequest';
 import UploadType from '../../library/Platformio/Enum/UploadType';
 import { BuildFlashFirmwareParams } from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
 import { FlashingStrategy } from '../FlashingStrategyLocator/FlashingStrategy';
+import Python from '../../library/Python';
 
 const maskSensitiveData = (haystack: string): string => {
   const needles = [
@@ -80,7 +80,8 @@ export default class PlatformioFlashingStrategyService
     private platformio: Platformio,
     private builder: FirmwareBuilder,
     private pubSub: PubSubEngine,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private python: Python
   ) {
     this.mutex = new Mutex();
   }
@@ -192,7 +193,7 @@ export default class PlatformioFlashingStrategyService
         );
       }
 
-      const pythonCheck = await this.platformio.checkPython();
+      const pythonCheck = await this.python.checkPython();
       if (!pythonCheck.success) {
         this.logger?.error('python dependency check error', undefined, {
           stderr: pythonCheck.stderr,
@@ -567,64 +568,5 @@ export default class PlatformioFlashingStrategyService
       throw new Error(`unexpected number of files to remove: ${files}`);
     }
     await Promise.all(files.map((item) => rmrf(item)));
-  }
-
-  async removePlatformioDir(): Promise<void> {
-    const dotPlatformio = path.join(os.homedir(), '.platformio');
-    const statResult = await fs.promises.lstat(dotPlatformio);
-    if (!statResult.isDirectory()) {
-      return Promise.resolve();
-    }
-    return new Promise((resolve, reject) => {
-      rimraf(dotPlatformio, (err) => {
-        if (err) {
-          reject();
-        } else {
-          resolve();
-        }
-      });
-    });
-  }
-
-  async clearPlatformioUsingCoreState(): Promise<void> {
-    const platformioStateJson = await this.platformio.getPlatformioState();
-    if (
-      platformioStateJson.core_dir === undefined ||
-      platformioStateJson.core_dir.length === 0 ||
-      platformioStateJson.core_dir.indexOf('.platformio') === -1
-    ) {
-      throw new Error(`core_dir is invalid: ${platformioStateJson.core_dir}`);
-    }
-
-    const statResult = await fs.promises.lstat(platformioStateJson.core_dir);
-    if (!statResult.isDirectory()) {
-      throw new Error(`core_dir is invalid: ${platformioStateJson.core_dir}`);
-    }
-
-    return new Promise((resolve, reject) => {
-      rimraf(platformioStateJson.core_dir, (err) => {
-        if (err) {
-          reject();
-        } else {
-          resolve();
-        }
-      });
-    });
-  }
-
-  async clearPlatformioCoreDir(): Promise<void> {
-    try {
-      await this.clearPlatformioUsingCoreState();
-    } catch (e) {
-      this.logger?.error(
-        'failed to clear platformio files using platformio state',
-        undefined,
-        {
-          err: e,
-        }
-      );
-      return this.removePlatformioDir();
-    }
-    return Promise.resolve();
   }
 }

@@ -26,6 +26,7 @@ import FlashingStrategyLocatorService from '../../services/FlashingStrategyLocat
 import { BuildProgressNotificationPayload } from '../../services/FlashingStrategyLocator/BuildProgressNotificationPayload';
 import { BuildLogUpdatePayload } from '../../services/FlashingStrategyLocator/BuildLogUpdatePayload';
 import PlatformioFlashingStrategy from '../../services/PlatformioFlashingStrategy';
+import Platformio from '../../library/Platformio';
 
 @Service()
 @Resolver()
@@ -34,7 +35,8 @@ export default class FirmwareResolver {
     private platformioFlashingStrategy: PlatformioFlashingStrategy,
     private flashingStrategyLocatorService: FlashingStrategyLocatorService,
     private userDefinesBuilder: UserDefinesBuilder,
-    private targetsLoaderService: TargetsLoader
+    private targetsLoaderService: TargetsLoader,
+    private platformio: Platformio
   ) {}
 
   @Query(() => [Device])
@@ -73,7 +75,7 @@ export default class FirmwareResolver {
   @Mutation(() => ClearPlatformioCoreDirResult)
   async clearPlatformioCoreDir(): Promise<ClearPlatformioCoreDirResult> {
     try {
-      await this.platformioFlashingStrategy.clearPlatformioCoreDir();
+      await this.platformio.clearPlatformioCoreDir();
       return new ClearPlatformioCoreDirResult(true);
     } catch (e) {
       return new ClearPlatformioCoreDirResult(

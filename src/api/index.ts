@@ -39,6 +39,7 @@ import TargetsLoader from './src/services/TargetsLoader';
 import HttpUserDefinesLoader from './src/services/UserDefinesLoader/HttpUserDefinesLoader';
 import GitUserDefinesLoader from './src/services/UserDefinesLoader/GitUserDefinesLoader';
 import FlashingStrategyLocatorService from './src/services/FlashingStrategyLocator';
+import Python from './src/library/Python';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -55,13 +56,24 @@ export default class ApiServer {
     Container.set([{ id: PubSubToken, value: pubSub }]);
     Container.set([{ id: LoggerToken, value: logger }]);
 
-    const platformio = new Platformio(
+    const python = new Python(
       config.getPlatformioPath,
-      config.platformioStateTempStoragePath,
       config.PATH,
       config.env,
       logger
     );
+
+    Container.set(Python, python);
+
+    const platformio = new Platformio(
+      config.getPlatformioPath,
+      config.platformioStateTempStoragePath,
+      config.env,
+      logger,
+      python
+    );
+
+    Container.set(Platformio, platformio);
 
     const platformioFlashingStrategyService =
       new PlatformioFlashingStrategyService(
@@ -70,12 +82,13 @@ export default class ApiServer {
         platformio,
         new FirmwareBuilder(platformio),
         pubSub,
-        logger
+        logger,
+        python
       );
 
     Container.set(
       PlatformioFlashingStrategyService,
-      PlatformioFlashingStrategyService
+      platformioFlashingStrategyService
     );
 
     Container.set(
