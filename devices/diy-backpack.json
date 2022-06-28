@@ -52,5 +52,27 @@
         "abbreviatedName": "RM TX16S Backpack"
       }
     ]
+  },
+  {
+    "category": "VRX",
+    "name": "DIY ESP32 VRX Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HDZero_RX5.1_ESP32_Backpack_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HDZero_RX5.1_ESP32_Backpack_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "",
+    "deviceType": "Backpack",
+    "aliases": []
   }
 ]
