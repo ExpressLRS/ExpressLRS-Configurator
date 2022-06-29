@@ -1,8 +1,8 @@
 import { createServer } from 'http';
 import { ApolloServer } from 'apollo-server-express';
-import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { PubSub } from 'graphql-subscriptions';
-import { execute, subscribe } from 'graphql';
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
 import express, { Express } from 'express';
 import * as http from 'http';
 import getPort from 'get-port';
@@ -156,10 +156,15 @@ export default class ApiServer {
 
     this.httpServer = createServer(this.app);
     /*
-      I know, crazy. It is 45 minutes, but on slower network connection it might take a while to download
-      and install all Platformio dependencies and build firmware.
-     */
+          I know, crazy. It is 45 minutes, but on slower network connection it might take a while to download
+          and install all Platformio dependencies and build firmware.
+         */
     this.httpServer.setTimeout(45 * 60 * 1000);
+
+    const wsServer = new WebSocketServer({
+      server: this.httpServer,
+      path: '/graphql',
+    });
 
     const schema = await buildSchema({
       resolvers: [
@@ -173,7 +178,11 @@ export default class ApiServer {
       container: Container,
       pubSub: Container.get<PubSub>(PubSubToken),
     });
-    let subscriptionServer: SubscriptionServer | undefined;
+
+    // not a React component
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const serverCleanup = useServer({ schema }, wsServer);
+
     const server = new ApolloServer({
       schema,
       introspection: true,
@@ -182,24 +191,13 @@ export default class ApiServer {
           async serverWillStart() {
             return {
               async drainServer() {
-                subscriptionServer?.close();
+                serverCleanup?.dispose();
               },
             };
           },
         },
       ],
     });
-    subscriptionServer = SubscriptionServer.create(
-      {
-        schema,
-        execute,
-        subscribe,
-      },
-      {
-        server: this.httpServer,
-        path: server.graphqlPath,
-      }
-    );
 
     // You must `await server.start()` before calling `server.applyMiddleware()
     await server.start();
