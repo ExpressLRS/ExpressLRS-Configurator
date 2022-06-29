@@ -1,6 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache, split } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { WebSocketLink } from '@apollo/client/link/ws';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { createClient } from 'graphql-ws';
 
 const searchParams = new URLSearchParams(window.location.search.slice(1));
 const httpLink = new HttpLink({
@@ -11,13 +12,11 @@ const httpLink = new HttpLink({
   }),
 });
 
-const wsLink = new WebSocketLink({
-  uri: searchParams.get('subscriptions_url') ?? 'ws://localhost:3500/graphql',
-  options: {
-    reconnect: true,
-    lazy: true,
-  },
-});
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: searchParams.get('subscriptions_url') ?? 'ws://localhost:3500/graphql',
+  })
+);
 
 // Send query request based on the type definition
 const link = split(

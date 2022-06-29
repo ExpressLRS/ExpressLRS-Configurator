@@ -200,7 +200,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     });
   }, []);
   useBuildLogUpdatesSubscription({
-    fetchPolicy: 'network-only',
     onSubscriptionData: (options) => {
       const args = options.subscriptionData.data?.buildLogUpdates.data;
       if (args !== undefined && eventsBatcherRef.current !== null) {
