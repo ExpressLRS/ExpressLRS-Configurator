@@ -16,6 +16,8 @@ import { DeviceType, MulticastDnsInformation } from './gql/generated/types';
 import useNetworkDevices from './hooks/useNetworkDevices';
 import WifiDeviceNotification from './components/WifiDeviceNotification';
 import AppStateProvider from './context/AppStateProvider';
+import useBuildProgressNotifications from './hooks/useBuildProgressNotifications';
+import useBuildLogs from './hooks/useBuildLogs';
 
 const App = () => {
   const { networkDevices, newNetworkDevices, removeDeviceFromNewList } =
@@ -39,6 +41,14 @@ const App = () => {
     []
   );
 
+  const {
+    buildProgressNotifications,
+    lastBuildProgressNotification,
+    resetBuildProgressNotifications,
+  } = useBuildProgressNotifications();
+
+  const { buildLogs, resetLogs } = useBuildLogs();
+
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
@@ -61,6 +71,15 @@ const App = () => {
                       networkDevices={networkDevices}
                       onDeviceChange={onDeviceChange}
                       deviceType={DeviceType.ExpressLRS}
+                      buildProgressNotifications={buildProgressNotifications}
+                      lastBuildProgressNotification={
+                        lastBuildProgressNotification
+                      }
+                      resetBuildProgressNotifications={
+                        resetBuildProgressNotifications
+                      }
+                      buildLogs={buildLogs}
+                      resetBuildLogs={resetLogs}
                     />
                   }
                 />
@@ -74,6 +93,15 @@ const App = () => {
                       networkDevices={networkDevices}
                       onDeviceChange={onDeviceChange}
                       deviceType={DeviceType.Backpack}
+                      buildProgressNotifications={buildProgressNotifications}
+                      lastBuildProgressNotification={
+                        lastBuildProgressNotification
+                      }
+                      resetBuildProgressNotifications={
+                        resetBuildProgressNotifications
+                      }
+                      buildLogs={buildLogs}
+                      resetBuildLogs={resetLogs}
                     />
                   }
                 />
