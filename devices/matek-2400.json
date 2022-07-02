@@ -109,6 +109,12 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/matek2400/",
     "deviceType": "ExpressLRS",
-    "aliases": []
-  }
+    "aliases": [
+      {
+        "category": "RadioMaster 2.4 GHz",
+        "name": "RadioMaster RP3 Diversiry 2400 RX",
+        "wikiUrl": "",
+        "abbreviatedName": "RM RP3 2400RX"
+      }
+    ]  }
 ]
