@@ -86,6 +86,7 @@
     ],
     "userDefines": [
       "REGULATORY_DOMAIN_ISM_2400",
+      "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
       "HYBRID_SWITCHES_8",
       "ENABLE_TELEMETRY",
