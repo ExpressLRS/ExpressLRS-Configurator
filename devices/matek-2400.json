@@ -34,15 +34,7 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/matek2400/",
     "deviceType": "ExpressLRS",
-    "aliases": [
-      {
-        "category": "Skystars 2.4 GHz",
-        "name": "Skystars SS24D 2400 RX",
-        "wikiUrl": "",
-        "abbreviatedName": "Skystars SS24D",
-        "verifiedHardware": true
-      }
-    ]
+    "aliases": []
   },
   {
     "category": "Matek 2.4 GHz",
@@ -99,7 +91,10 @@
       "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
       "USE_500HZ",
-      { "key": "USE_DIVERSITY", "enabled": true },
+      {
+        "key": "USE_DIVERSITY",
+        "enabled": true
+      },
       "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
@@ -115,6 +110,14 @@
         "name": "RadioMaster RP3 Diversiry 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "RM RP3 2400RX"
+      },
+      {
+        "category": "Skystars 2.4 GHz",
+        "name": "Skystars SS24D 2400 RX",
+        "wikiUrl": "",
+        "abbreviatedName": "Skystars SS24D",
+        "verifiedHardware": true
       }
-    ]  }
+    ]
+  }
 ]
