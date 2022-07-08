@@ -19,7 +19,7 @@ export default class LuaArgs {
   @Field()
   localPath: string;
 
-  @Field(() => PullRequest)
+  @Field(() => PullRequest, { nullable: true })
   gitPullRequest: PullRequest | null;
 
   constructor() {
