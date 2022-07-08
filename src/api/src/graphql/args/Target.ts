@@ -19,7 +19,7 @@ export default class TargetArgs {
   @Field()
   localPath: string;
 
-  @Field(() => PullRequest)
+  @Field(() => PullRequest, { nullable: true })
   gitPullRequest: PullRequest | null;
 
   constructor() {

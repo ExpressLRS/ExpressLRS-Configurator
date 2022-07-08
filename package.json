@@ -335,7 +335,7 @@
     "semver": "^7.3.7",
     "simple-git": "^3.7.1",
     "source-map-support": "^0.5.21",
-    "type-graphql": "^1.1.1",
+    "type-graphql": "1.2.0-rc.1",
     "typedi": "^0.10.0",
     "winston": "^3.7.2",
     "ws": "^8.8.0"
