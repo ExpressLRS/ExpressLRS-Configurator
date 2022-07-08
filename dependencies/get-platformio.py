@@ -25,44 +25,43 @@ UEsDBBQAAAAIAGh51lShf5C3fQIAAGsEAAAYAAAAcGlvaW5zdGFsbGVyL19faW5pdF9fLnB5dVNha9sw
 """
 
 
-def create_temp_dir():
-    try:
-        cur_dir = os.path.dirname(os.path.realpath(__file__))
-        tmp_dir = tempfile.mkdtemp(dir=cur_dir, prefix=".piocore-installer-")
-        testscript_path = os.path.join(tmp_dir, "test.py")
-        with open(testscript_path, "w") as fp:
-            fp.write("print(1)")
-        assert os.path.isfile(testscript_path)
-        os.remove(testscript_path)
-        return tmp_dir
-    except (AssertionError, NameError):
-        pass
-    return tempfile.mkdtemp()
+def create_temp_dir(cur_dir):
+  try:
+    tmp_dir = tempfile.mkdtemp(dir=cur_dir, prefix=".piocore-installer-")
+    testscript_path = os.path.join(tmp_dir, "test.py")
+    with open(testscript_path, "w") as fp:
+      fp.write("print(1)")
+    assert os.path.isfile(testscript_path)
+    os.remove(testscript_path)
+    return tmp_dir
+  except (AssertionError, NameError):
+    pass
+  return tempfile.mkdtemp()
 
 
 def bootstrap():
-    import pioinstaller.__main__
+  import pioinstaller.__main__
 
-    pioinstaller.__main__.main()
+  pioinstaller.__main__.main()
 
 
 def main():
-    runtime_tmp_dir = create_temp_dir()
-    os.environ["TMPDIR"] = runtime_tmp_dir
-    tmp_dir = tempfile.mkdtemp(dir=runtime_tmp_dir)
-    try:
-        pioinstaller_zip = os.path.join(tmp_dir, "pioinstaller.zip")
-        with open(pioinstaller_zip, "wb") as fp:
-            fp.write(b64decode(DEPENDENCIES))
+  runtime_tmp_dir = create_temp_dir(os.environ["PLATFORMIO_INSTALLER_TMPDIR"])
+  os.environ["TMPDIR"] = runtime_tmp_dir
+  tmp_dir = tempfile.mkdtemp(dir=runtime_tmp_dir)
+  try:
+    pioinstaller_zip = os.path.join(tmp_dir, "pioinstaller.zip")
+    with open(pioinstaller_zip, "wb") as fp:
+      fp.write(b64decode(DEPENDENCIES))
 
-        sys.path.insert(0, pioinstaller_zip)
+    sys.path.insert(0, pioinstaller_zip)
 
-        bootstrap()
-    finally:
-        for d in (runtime_tmp_dir, tmp_dir):
-            if d and os.path.isdir(d):
-                shutil.rmtree(d, ignore_errors=True)
+    bootstrap()
+  finally:
+    for d in (runtime_tmp_dir, tmp_dir):
+      if d and os.path.isdir(d):
+        shutil.rmtree(d, ignore_errors=True)
 
 
 if __name__ == "__main__":
-    main()
+  main()
