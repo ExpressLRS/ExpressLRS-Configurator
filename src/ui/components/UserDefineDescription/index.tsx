@@ -79,8 +79,11 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
           return (
             <div>
               <p>
-                EU CE 2.4 GHz regulatory domain is the same as ISM 2.4 GHz
-                regulatory domain but limited to 10mW output.
+                For firmware versions earlier than v3.x, the EU CE 2.4 GHz
+                regulatory domain limits the maxmimum power to 10mW, which does
+                not require LBT (Listen Before Talk). For firmware versions
+                later than v3.x, the EU CE 2.4 GHz regulatory domain limits the
+                maxmimum power to 100mW, and enables LBT (Listen Before Talk).
               </p>
               <p>
                 <a
