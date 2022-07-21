@@ -242,7 +242,7 @@ const createWindow = async () => {
   if (isWindows) {
     const portablePythonLocation = path.join(
       dependenciesPath,
-      'windows_amd64/python-3.11.0a4.amd64'
+      'windows_amd64/python'
     );
     const portableGitLocation = path.join(
       dependenciesPath,
