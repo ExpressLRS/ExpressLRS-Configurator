@@ -42,7 +42,12 @@ export default class FirmwareResolver {
     @Args() args: TargetArgs,
     @Arg('gitRepository') gitRepository: GitRepository
   ): Promise<Device[]> {
-    return this.targetsLoaderService.loadTargetsList(args, gitRepository);
+    const strategy = await this.flashingStrategyLocatorService.locate(
+      args,
+      gitRepository.url,
+      gitRepository.srcFolder
+    );
+    return strategy.availableFirmwareTargets(args, gitRepository);
   }
 
   @Query(() => [UserDefine])
@@ -50,7 +55,12 @@ export default class FirmwareResolver {
     @Args() args: TargetDeviceOptionsArgs,
     @Arg('gitRepository') gitRepository: GitRepository
   ): Promise<UserDefine[]> {
-    return this.userDefinesBuilder.build(args, gitRepository);
+    const strategy = await this.flashingStrategyLocatorService.locate(
+      args,
+      gitRepository.url,
+      gitRepository.srcFolder
+    );
+    return strategy.targetDeviceOptions(args, gitRepository);
   }
 
   @Mutation(() => BuildFlashFirmwareResult)
@@ -59,7 +69,7 @@ export default class FirmwareResolver {
     @Arg('gitRepository') gitRepository: GitRepository
   ): Promise<BuildFlashFirmwareResult> {
     const strategy = await this.flashingStrategyLocatorService.locate(
-      input,
+      input.firmware,
       gitRepository.url,
       gitRepository.srcFolder
     );

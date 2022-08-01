@@ -1,7 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import { Service } from 'typedi';
-import { BuildFlashFirmwareParams } from './BuildFlashFirmwareParams';
-import { FlashingStrategy } from './FlashingStrategy';
+import { FlashingStrategy, IsCompatibleArgs } from './FlashingStrategy';
 import { LoggerService } from '../../logger';
 
 @Service()
@@ -12,7 +11,7 @@ export default class FlashingStrategyLocatorService {
   ) {}
 
   async locate(
-    params: BuildFlashFirmwareParams,
+    params: IsCompatibleArgs,
     gitRepositoryUrl: string,
     gitRepositorySrcFolder: string
   ): Promise<FlashingStrategy> {

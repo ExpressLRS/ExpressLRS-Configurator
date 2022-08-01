@@ -8,6 +8,7 @@ import * as http from 'http';
 import getPort from 'get-port';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
+import path from 'path';
 import { ConfigToken, FirmwareParamsLoaderType, IConfig } from './src/config';
 import PlatformioFlashingStrategyService from './src/services/PlatformioFlashingStrategy';
 import Platformio from './src/library/Platformio';
@@ -40,6 +41,7 @@ import HttpUserDefinesLoader from './src/services/UserDefinesLoader/HttpUserDefi
 import GitUserDefinesLoader from './src/services/UserDefinesLoader/GitUserDefinesLoader';
 import FlashingStrategyLocatorService from './src/services/FlashingStrategyLocator';
 import Python from './src/library/Python';
+import BinaryFlashingStrategyService from './src/services/BinaryFlashingStrategy';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -75,25 +77,6 @@ export default class ApiServer {
 
     Container.set(Platformio, platformio);
 
-    const platformioFlashingStrategyService =
-      new PlatformioFlashingStrategyService(
-        config.PATH,
-        config.firmwaresPath,
-        platformio,
-        new FirmwareBuilder(platformio),
-        pubSub,
-        logger,
-        python
-      );
-
-    Container.set(
-      FlashingStrategyLocatorService,
-      new FlashingStrategyLocatorService(
-        [platformioFlashingStrategyService],
-        logger
-      )
-    );
-
     Container.set(
       UpdatesService,
       new UpdatesService(
@@ -127,43 +110,70 @@ export default class ApiServer {
 
     Container.set(DeviceService, deviceService);
 
+    let userDefinesBuilder: UserDefinesBuilder;
     if (config.userDefinesLoader === FirmwareParamsLoaderType.Git) {
-      Container.set(
-        UserDefinesBuilder,
-        new UserDefinesBuilder(
-          new GitUserDefinesLoader(
-            logger,
-            config.PATH,
-            config.userDefinesStoragePath
-          ),
-          deviceService
-        )
+      userDefinesBuilder = new UserDefinesBuilder(
+        new GitUserDefinesLoader(
+          logger,
+          config.PATH,
+          config.userDefinesStoragePath
+        ),
+        deviceService
       );
     } else if (config.userDefinesLoader === FirmwareParamsLoaderType.Http) {
-      Container.set(
-        UserDefinesBuilder,
-        new UserDefinesBuilder(new HttpUserDefinesLoader(logger), deviceService)
-      );
-    }
-
-    if (config.targetsLoader === FirmwareParamsLoaderType.Git) {
-      Container.set(
-        TargetsLoader,
-        new GitTargetsService(
-          logger,
-          deviceService,
-          config.PATH,
-          config.targetsStoragePath
-        )
-      );
-    } else if (config.targetsLoader === FirmwareParamsLoaderType.Http) {
-      Container.set(
-        TargetsLoader,
-        new HttpTargetsService(logger, deviceService)
+      userDefinesBuilder = new UserDefinesBuilder(
+        new HttpUserDefinesLoader(logger),
+        deviceService
       );
     } else {
       throw new Error('FirmwareTargetsLoaderType is not set');
     }
+
+    Container.set(UserDefinesBuilder, userDefinesBuilder);
+
+    let targetsLoader: TargetsLoader;
+    if (config.targetsLoader === FirmwareParamsLoaderType.Git) {
+      targetsLoader = new GitTargetsService(
+        logger,
+        deviceService,
+        config.PATH,
+        config.targetsStoragePath
+      );
+    } else if (config.targetsLoader === FirmwareParamsLoaderType.Http) {
+      targetsLoader = new HttpTargetsService(logger, deviceService);
+    } else {
+      throw new Error('FirmwareTargetsLoaderType is not set');
+    }
+
+    Container.set(TargetsLoader, targetsLoader);
+
+    const platformioFlashingStrategyService =
+      new PlatformioFlashingStrategyService(
+        config.PATH,
+        config.firmwaresPath,
+        platformio,
+        new FirmwareBuilder(platformio),
+        pubSub,
+        logger,
+        python,
+        userDefinesBuilder,
+        targetsLoader
+      );
+
+    const binaryFlashingStrategyService = new BinaryFlashingStrategyService(
+      config.PATH,
+      path.join(config.userDataPath, 'firmwares', 'binary'),
+      pubSub,
+      logger
+    );
+
+    Container.set(
+      FlashingStrategyLocatorService,
+      new FlashingStrategyLocatorService(
+        [binaryFlashingStrategyService, platformioFlashingStrategyService],
+        logger
+      )
+    );
 
     Container.set(LuaService, new LuaService(logger));
   }

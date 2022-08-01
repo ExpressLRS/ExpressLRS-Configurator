@@ -26,8 +26,17 @@ import { LoggerService } from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import UploadType from '../../library/Platformio/Enum/UploadType';
 import { BuildFlashFirmwareParams } from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
-import { FlashingStrategy } from '../FlashingStrategyLocator/FlashingStrategy';
+import {
+  FlashingStrategy,
+  IsCompatibleArgs,
+} from '../FlashingStrategyLocator/FlashingStrategy';
 import Python from '../../library/Python';
+import UserDefinesBuilder from '../UserDefinesBuilder';
+import TargetsLoader from '../TargetsLoader';
+import TargetArgs from '../../graphql/args/Target';
+import Device from '../../models/Device';
+import { UserDefineFilters } from '../UserDefinesLoader';
+import GitRepository from '../../graphql/inputs/GitRepositoryInput';
 
 const maskSensitiveData = (haystack: string): string => {
   const needles = [
@@ -81,7 +90,9 @@ export default class PlatformioFlashingStrategyService
     private builder: FirmwareBuilder,
     private pubSub: PubSubEngine,
     private logger: LoggerService,
-    private python: Python
+    private python: Python,
+    private userDefinesBuilder: UserDefinesBuilder,
+    private targetsLoader: TargetsLoader
   ) {
     this.mutex = new Mutex();
   }
@@ -108,6 +119,20 @@ export default class PlatformioFlashingStrategyService
     return this.pubSub!.publish(PubSubTopic.BuildLogsUpdate, {
       data: maskedData,
     });
+  }
+
+  async availableFirmwareTargets(
+    args: TargetArgs,
+    gitRepository: GitRepository
+  ): Promise<Device[]> {
+    return this.targetsLoader.loadTargetsList(args, gitRepository);
+  }
+
+  async targetDeviceOptions(
+    args: UserDefineFilters,
+    gitRepository: GitRepository
+  ): Promise<UserDefine[]> {
+    return this.userDefinesBuilder.build(args, gitRepository);
   }
 
   private processUserDefines(userDefines: UserDefine[]): UserDefine[] {
@@ -151,7 +176,7 @@ export default class PlatformioFlashingStrategyService
   }
 
   async isCompatible(
-    params: BuildFlashFirmwareParams,
+    params: IsCompatibleArgs,
     gitRepositoryUrl: string,
     gitRepositorySrcFolder: string
   ) {

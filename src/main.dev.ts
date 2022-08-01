@@ -296,6 +296,7 @@ const createWindow = async () => {
       targetsLoader: targetsLoaderType,
       userDefinesLoader: userDefinesLoaderType,
       userDefinesStoragePath,
+      userDataPath: app.getPath('userData'),
     },
     logger,
     port

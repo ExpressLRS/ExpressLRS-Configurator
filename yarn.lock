@@ -4257,6 +4257,11 @@ bluebird@^3.5.0, bluebird@^3.5.5:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
+bluejay-rtttl-parse@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/bluejay-rtttl-parse/-/bluejay-rtttl-parse-2.0.2.tgz#44111849591a22aac315b5791400b72fb02b88e5"
+  integrity sha512-Rs6eGqbCjSM4n9V93+tC6b9xZMCkTF67aRkfFzaVFlrFPJo8Gxi0swLisdUL4n4bBNfgkGEVzkEPww9L60gMng==
+
 body-parser@1.20.0, body-parser@^1.19.0:
   version "1.20.0"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.20.0.tgz#3de69bd89011c11573d7bfee6a64f11b6bd27cc5"

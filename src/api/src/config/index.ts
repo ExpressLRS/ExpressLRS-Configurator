@@ -22,6 +22,7 @@ export interface IConfig {
   targetsStoragePath: string;
   userDefinesLoader: FirmwareParamsLoaderType;
   userDefinesStoragePath: string;
+  userDataPath: string;
 }
 
 export const ConfigToken = new Token<IConfig>('CONFIG_TOKEN');

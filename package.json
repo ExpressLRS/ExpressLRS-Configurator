@@ -307,6 +307,7 @@
     "@octokit/rest": "^19.0.4",
     "apollo-server-express": "^3.9.0",
     "autosuggest-highlight": "^3.2.1",
+    "bluejay-rtttl-parse": "^2.0.2",
     "class-validator": "^0.13.2",
     "cross-spawn": "^7.0.3",
     "electron-debug": "^3.2.0",
