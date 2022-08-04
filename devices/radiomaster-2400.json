@@ -62,6 +62,13 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-internal/",
     "deviceType": "ExpressLRS",
-    "aliases": []
+    "aliases": [
+      {
+        "category": "RadioMaster 2.4 GHz",
+        "name": "RadioMaster TX12 2400 TX",
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-internal/",
+        "abbreviatedName": "RadioMstr TX12"
+      }
+    ]
   }
 ]
