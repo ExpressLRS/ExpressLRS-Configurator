@@ -186,6 +186,12 @@
         "name": "GEPRC Nano 900 RX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/geprc900/",
         "abbreviatedName": "GEPRC Nano 900RX"
+      },
+      {
+        "category": "EMAX 900 MHz",
+        "name": "EMAX 900MHz RX",
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy900/",
+        "abbreviatedName": "EMAX 900RX"
       }
 	]
   },
