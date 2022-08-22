@@ -1,22 +1,36 @@
 [
   {
     "category": "VRX",
-    "name": "SteadyView ESP RX Backpack",
+    "name": "Steadyview DIY Backpack",
     "targets": [
       {
         "flashingMethod": "UART",
-        "name": "SteadyView_ESP_RX_Backpack_via_UART"
+        "name": "Skyzone_DIY_SteadyView_Backpack_via_UART"
       },
       {
         "flashingMethod": "WIFI",
-        "name": "SteadyView_ESP_RX_Backpack_via_WIFI"
+        "name": "Skyzone_DIY_SteadyView_Backpack_via_WIFI"
       }
     ],
-    "userDefines": [
-      "BINDING_PHRASE",
-      "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD"
+    "userDefines": ["BINDING_PHRASE", "HOME_WIFI_SSID", "HOME_WIFI_PASSWORD"],
+    "wikiUrl": "",
+    "deviceType": "Backpack",
+    "aliases": []
+  },
+  {
+    "category": "VRX",
+    "name": "Steadyview+ELRS Onboard Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "Skyzone_Onboard_ESP32_Backpack_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "Skyzone_Onboard_ESP32_Backpack_via_WIFI"
+      }
     ],
+    "userDefines": ["BINDING_PHRASE", "HOME_WIFI_SSID", "HOME_WIFI_PASSWORD"],
     "wikiUrl": "",
     "deviceType": "Backpack",
     "aliases": []
