@@ -237,6 +237,12 @@
         "name": "GEPRC Nano 2400 RX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/geprc2400/",
         "abbreviatedName": "GEPRC Nano 2G4RX"
+      },
+      {
+        "category": "EMAX 2.4 GHz",
+        "name": "EMAX 2.4GHz RX",
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
+        "abbreviatedName": "EMAX 2400RX"
       }
     ]
   },

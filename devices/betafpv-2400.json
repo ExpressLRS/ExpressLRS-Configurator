@@ -205,6 +205,12 @@
         "wikiUrl": "",
         "abbreviatedName": "JHEMCU RX24T",
         "verifiedHardware": false
+      },
+      {
+        "category": "EMAX 2.4 GHz",
+        "name": "EMAX 2.4GHz PA RX",
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
+        "abbreviatedName": "EMAX 2400RX"
       }
     ]
   }
