@@ -54,10 +54,17 @@ npm-debug.log.*
 /src/api/src/library/Platformio/.piocore-*
 __pycache__
 
-**/.pnp.*
-**/.yarn/*
-**/!.yarn/patches
-**/!.yarn/plugins
-**/!.yarn/releases
-**/!.yarn/sdks
-**/!.yarn/versions
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+src/.pnp.*
+src/.yarn/*
+!src/.yarn/patches
+!src/.yarn/plugins
+!src/.yarn/releases
+!src/.yarn/sdks
+!src/.yarn/versions

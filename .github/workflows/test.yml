@@ -27,8 +27,8 @@ jobs:
 
       - name: Install Yarn
         run: |
-          sudo corepack enable
-          corepack prepare yarn@stable --activate
+          corepack enable
+          corepack prepare yarn@3.2.3 --activate
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
