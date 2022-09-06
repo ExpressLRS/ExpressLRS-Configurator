@@ -26,7 +26,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          yarn install --prefer-offline --frozen-lockfile --network-timeout 180000
+          yarn install --frozen-lockfile --network-timeout 180000
 
       - name: Publish Windows releases
         if: matrix.os == 'windows-2019'
