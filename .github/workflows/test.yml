@@ -20,11 +20,27 @@ jobs:
       - name: Checkout git repo
         uses: actions/checkout@v3
 
-      - name: Install Node, NPM and Yarn
+      - name: Install Node
         uses: actions/setup-node@v3
         with:
           node-version: 16.17.0
-          cache: 'yarn'
+
+      - name: Install Yarn
+        run: |
+          sudo corepack enable
+          corepack prepare yarn@stable --activate
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - name: Restore yarn cache
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
+          restore-keys: |
+            yarn-cache-folder-
 
       - name: Install dependencies
         run: |
