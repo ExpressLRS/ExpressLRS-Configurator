@@ -152,6 +152,38 @@
   },
   {
     "category": "Happymodel 2.4 GHz",
+    "name": "HappyModel EP1 Dual 2400 RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HappyModel_EP_Dual_2400_RX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HappyModel_EP_Dual_2400_RX_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "REGULATORY_DOMAIN_EU_CE_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "RCVR_UART_BAUD",
+      "RCVR_INVERT_TX"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/hmep2400/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "Happymodel 2.4 GHz",
     "name": "HappyModel PP 2400 RX",
     "targets": [
       {
