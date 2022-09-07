@@ -97,6 +97,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
       binary: this.gitBinaryLocation,
       maxConcurrentProcesses: 1,
       config: [],
+      trimmed: false,
     };
     return simpleGit(options);
   }

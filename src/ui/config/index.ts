@@ -22,7 +22,7 @@ export const Config: IConfig = {
     owner: 'ExpressLRS',
     repositoryName: 'ExpressLRS',
     rawRepoUrl: 'https://raw.githubusercontent.com/ExpressLRS/ExpressLRS',
-    srcFolder: '/src',
+    srcFolder: 'src',
     tagExcludes: ['1.0.0-RC1', '1.0.0-RC2', '1.0.0-RC3'],
   },
   backpackGit: {
