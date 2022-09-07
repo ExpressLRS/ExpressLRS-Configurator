@@ -16,10 +16,10 @@ jobs:
           sudo apt-get install --no-install-recommends -y libarchive-tools rpm
 
       - name: Checkout git repo
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Install Node, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 16.15.0
 
@@ -27,7 +27,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - uses: actions/cache@v1
+      - uses: actions/cache@v3
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
