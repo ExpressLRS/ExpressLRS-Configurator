@@ -425,8 +425,8 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
             <div>
               <p>
                 Make the TX module send telemetry data to the handset at a fixed
-                interval. This reduces the "Telemetry Lost" warnings when
-                running at a high telemetry ratio, or low rates like 50hz.
+                interval. This reduces the &quot;Telemetry Lost&quot; warnings
+                when running at a high telemetry ratio, or low rates like 50hz.
               </p>
               <p>
                 Default value is <strong>240LU</strong>. If you want to change
