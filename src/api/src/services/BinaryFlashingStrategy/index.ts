@@ -8,6 +8,8 @@ import rimraf from 'rimraf';
 import cloneDeep from 'lodash/cloneDeep';
 import Crypto from 'crypto';
 import semver from 'semver';
+import FormData from 'form-data';
+import { Blob } from 'buffer';
 import UserDefine from '../../models/UserDefine';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import BuildFlashFirmwareResult from '../../models/BuildFlashFirmwareResult';
@@ -36,6 +38,8 @@ import { UserDefineFilters } from '../UserDefinesLoader';
 import FlashingMethod from '../../models/enum/FlashingMethod';
 import DeviceType from '../../models/enum/DeviceType';
 import TargetUserDefinesFactory from '../../factories/TargetUserDefinesFactory';
+import BuildJobType from '../../models/enum/BuildJobType';
+import { FirmwareFiles } from '../../library/ConfigureFirmware/FirmwareFiles';
 
 const maskSensitiveData = (haystack: string): string => {
   const needles = [
@@ -103,13 +107,13 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     });
   }
 
-  private async updateLogs(data: string): Promise<void> {
+  private async updateLogs(data: string, newline = true): Promise<void> {
     const maskedData = maskSensitiveData(data);
     this.logger?.log('logs stream output', {
       data: maskedData,
     });
     return this.pubSub!.publish(PubSubTopic.BuildLogsUpdate, {
-      data: maskedData,
+      data: maskedData + (newline ? '\n' : ''),
     });
   }
 
@@ -451,7 +455,9 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         BuildProgressNotificationType.Info,
         BuildFirmwareStep.FLASHING_FIRMWARE
       );
-
+      const [manufacturer, type, device, uploadMethod] =
+        params.target.split('.');
+      const flashingMethod = this.uploadMethodToFlashingMethod(uploadMethod);
       const config = await this.getConfig(this.firmwaresPath, params.target);
       // need a better way to do this, it should really be included in the config
       const deviceType = params.target.includes('.tx_') ? 'TX' : 'RX';
@@ -594,21 +600,51 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         folder,
         fcclbt
       );
-      if (firmware.firmware) {
-        const firmwareBinPath = path.join(
-          this.firmwaresPath,
-          `${this.generateFirmwareName(config.product_name, params)}.bin`
-        );
-        fs.promises.writeFile(
-          firmwareBinPath,
-          Buffer.from(firmware.firmware.data.buffer)
-        );
-        return new BuildFlashFirmwareResult(
-          true,
-          undefined,
-          undefined,
-          firmwareBinPath
-        );
+      if (params.type === BuildJobType.Build) {
+        if (firmware.firmware) {
+          const firmwareBinPath = path.join(
+            this.firmwaresPath,
+            `${this.generateFirmwareName(config.product_name, params)}.bin`
+          );
+          fs.promises.writeFile(
+            firmwareBinPath,
+            Buffer.from(firmware.firmware.data.buffer)
+          );
+          return new BuildFlashFirmwareResult(
+            true,
+            undefined,
+            undefined,
+            firmwareBinPath
+          );
+        }
+      } else if (
+        params.type === BuildJobType.BuildAndFlash ||
+        params.type === BuildJobType.ForceFlash
+      ) {
+        const forceFlash = params.type === BuildJobType.ForceFlash;
+
+        if (flashingMethod === FlashingMethod.WIFI) {
+          try {
+            const response = await this.WIFI(
+              params.serialDevice ?? '10.0.0.1',
+              firmware,
+              forceFlash
+            );
+
+            return response;
+          } catch (error: any) {
+            this.logger.error(error);
+            this.updateLogs(error.message);
+            return new BuildFlashFirmwareResult(false, error);
+          }
+        }
+        const message = `Upload Method ${flashingMethod} is not currently supported`;
+        this.updateLogs(message);
+        return new BuildFlashFirmwareResult(false, message);
+      } else {
+        const message = `Build Job Type ${params.type} is not currently supported`;
+        this.updateLogs(message);
+        return new BuildFlashFirmwareResult(false, message);
       }
 
       return new BuildFlashFirmwareResult(true);
@@ -633,7 +669,9 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     const { source, gitBranch, gitCommit, gitTag, gitPullRequest } =
       params.firmware;
 
-    const firmwareName = deviceName?.replaceAll(' ', '_');
+    const firmwareName = deviceName
+      ?.replace(/([^a-z0-9. ]+)/gi, '-')
+      .replaceAll(' ', '_');
 
     switch (source) {
       case FirmwareSource.GitTag:
@@ -647,6 +685,152 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       default:
         return `${firmwareName}`;
     }
+  }
+
+  async WIFI(
+    host: string,
+    firmware: FirmwareFiles,
+    force: boolean
+  ): Promise<BuildFlashFirmwareResult> {
+    /// https://wanago.io/2019/03/18/node-js-typescript-6-sending-http-requests-understanding-multipart-form-data/
+    return new Promise((resolve) => {
+      const output: string[] = [];
+
+      const form = new FormData();
+
+      if (force) {
+        console.log('forcing flash');
+        form.append('force', '1');
+      }
+      const buffer = Buffer.from(firmware.firmware!.data);
+      let uploadSize = 0;
+      let uploaded = 0;
+
+      form.append('data', buffer);
+
+      // get upload size
+      form.getLength((err, size) => {
+        console.log(`upload size: ${size}`);
+        uploadSize = size;
+      });
+
+      const options = {
+        host,
+        path: '/update',
+        headers: {
+          'X-FileSize': buffer.byteLength,
+        },
+      };
+
+      this.updateLogs(`starting upload to ${host}`);
+      const req = form.submit(options, (err, response) => {
+        if (err) {
+          this.logger.error(err.message);
+          resolve(
+            new BuildFlashFirmwareResult(
+              false,
+              err.message,
+              BuildFirmwareErrorType.FlashError
+            )
+          );
+
+          return;
+        }
+
+        const { statusCode, statusMessage, headers } = response;
+        console.log(req.getHeaders()); // 200
+        console.log(req.path); // 200
+        console.log(statusCode); // 200
+        console.log(statusMessage); // 200
+        const chunks: any = [];
+        response.on('data', (chunk) => {
+          chunks.push(chunk);
+        });
+        response.on('end', () => {
+          console.log('response end');
+          const data = Buffer.concat(chunks).toString();
+          const result = {
+            data,
+            headers,
+          };
+
+          console.log(result);
+          this.updateLogs(`response from ${host}`);
+          this.updateLogs(result.data);
+          if (response.statusCode === 200) {
+            let json: any = {};
+            try {
+              json = JSON.parse(data);
+            } catch (e) {
+              this.logger.error(e);
+              console.group(e);
+            }
+
+            if (json.status === 'ok') {
+              resolve(
+                new BuildFlashFirmwareResult(
+                  true,
+                  data,
+                  BuildFirmwareErrorType.FlashError
+                )
+              );
+            } else if (json.status === 'mismatch') {
+              resolve(
+                new BuildFlashFirmwareResult(
+                  false,
+                  data.replaceAll(/<br{0,1}\s*\/{0,1}>/g, ''),
+                  BuildFirmwareErrorType.TargetMismatch
+                )
+              );
+            } else {
+              resolve(
+                new BuildFlashFirmwareResult(
+                  false,
+                  data,
+                  BuildFirmwareErrorType.FlashError
+                )
+              );
+            }
+          } else {
+            resolve(
+              new BuildFlashFirmwareResult(
+                false,
+                data,
+                BuildFirmwareErrorType.FlashError
+              )
+            );
+          }
+        });
+      });
+
+      req.on('error', (error) => {
+        console.log('req error');
+        this.logger.error(error.message);
+        this.updateLogs(error.message);
+        console.log(error); // 200
+        resolve(
+          new BuildFlashFirmwareResult(
+            false,
+            error.message,
+            BuildFirmwareErrorType.FlashError
+          )
+        );
+      });
+
+      form.on('data', (data) => {
+        console.log('data');
+        if (uploadSize > 0) {
+          uploaded += data.length;
+          const progress = (uploaded / uploadSize) * 100;
+          const progressMessage = `progress: ${progress.toLocaleString(
+            undefined,
+            { minimumFractionDigits: 0, maximumFractionDigits: 2 }
+          )}%`;
+          this.updateLogs(progressMessage);
+          // console.log(progressMessage);
+        }
+      });
+    });
   }
 
   async clearFirmwareFiles(): Promise<void> {
