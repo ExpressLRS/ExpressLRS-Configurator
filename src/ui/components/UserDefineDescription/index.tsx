@@ -190,8 +190,8 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 RX by connecting to its wifi network and visiting 10.0.0.1
               </p>
               <p>
-                Wifi internal is defined in <strong>seconds</strong>. Default is
-                20 seconds.
+                Auto on interval is defined in <strong>seconds</strong>. Default
+                is 60 seconds.
               </p>
               <p>
                 <DocumentationLink
@@ -424,19 +424,19 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
           return (
             <div>
               <p>
-                It makes the TX module send the telemetry data to the OpenTX
-                every 320 ms by default. This stops the telemetry lost warnings
-                when running a high telemetry ratio, or low rates like 50hz.
+                Make the TX module send telemetry data to the handset at a fixed
+                interval. This reduces the &quot;Telemetry Lost&quot; warnings
+                when running at a high telemetry ratio, or low rates like 50hz.
               </p>
               <p>
-                Default value is <strong>320LU</strong>. If you want to change
+                Default value is <strong>240LU</strong>. If you want to change
                 that you have to suffix your milliseconds value with{' '}
                 <strong>LU</strong>. For example, in order to specify 100 ms
                 telemetry update rate you have to enter it like this:{' '}
                 <strong>100LU</strong>.
               </p>
               <p>
-                Typically, you want to keep <strong>320LU</strong> value for
+                Typically, you want to keep <strong>240LU</strong> value for
                 OpenTX based radios, and <strong>100LU</strong> for ErskyTx
                 ones.
               </p>
