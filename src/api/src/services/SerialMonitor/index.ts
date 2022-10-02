@@ -5,6 +5,7 @@ import SerialPortInformation from '../../models/SerialPortInformation';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import { LoggerService } from '../../logger';
 import SerialMonitorEventType from '../../models/enum/SerialMonitorEventType';
+import { insideFlatpak, listPorts } from '../../flatpak';
 
 export interface SerialMonitorLogUpdatePayload {
   data: string;
@@ -41,7 +42,12 @@ export default class SerialMonitorService {
   }
 
   async getAvailableDevices(): Promise<SerialPortInformation[]> {
-    const list = await SerialPort.list();
+    let list;
+    if (insideFlatpak()) {
+      list = await listPorts();
+    } else {
+      list = await SerialPort.list();
+    }
     return list.map(
       (item) => new SerialPortInformation(item.path, item.manufacturer || '')
     );
