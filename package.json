@@ -129,6 +129,7 @@
       "depends": [
         "git",
         "python3",
+        "python3-distutils",
         "gconf2",
         "gconf-service",
         "libnotify4",
