@@ -243,6 +243,12 @@
         "name": "EMAX 2.4GHz RX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
         "abbreviatedName": "EMAX 2400RX"
+      },
+      {
+        "category": "Foxeer 2.4 GHz",
+        "name": "Foxeer Lite 2.4 GHz",
+        "wikiUrl": "",
+        "abbreviatedName": "Foxeer Lite 2.4"
       }
     ]
   },
