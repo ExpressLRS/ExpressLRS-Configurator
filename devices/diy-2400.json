@@ -1,5 +1,35 @@
 [
   {
+    "category": "Experimental 2.4 GHz",
+    "name": "Experimental 2.4GHz TX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_2400_TX_Experimental_ESP_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "DIY_2400_TX_Experimental_ESP_via_WIFI"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "REGULATORY_DOMAIN_EU_CE_2400",
+      "BINDING_PHRASE",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "FEATURE_OPENTX_SYNC",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER"
+    ],
+    "wikiUrl": "",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
     "category": "DIY 2.4 GHz",
     "name": "DIY 2400 TX ESP32 SX1280 Mini",
     "targets": [
@@ -229,7 +259,7 @@
       {
         "category": "BETAFPV 2.4 GHz",
         "name": "BETAFPV Lite 2400 RX",
-		"wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv2400/",
+        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv2400/",
         "abbreviatedName": "BFPV Lite 2G4RX"
       },
       {
@@ -274,12 +304,14 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
     "deviceType": "ExpressLRS",
-    "aliases": [{
-      "category": "BETAFPV 2.4 GHz",
-      "name": "BETAFPV PWM 2400 RX",
-      "wikiUrl": "",
-      "abbreviatedName": "BFPV PWM 2G4RX"
-    }]
+    "aliases": [
+      {
+        "category": "BETAFPV 2.4 GHz",
+        "name": "BETAFPV PWM 2400 RX",
+        "wikiUrl": "",
+        "abbreviatedName": "BFPV PWM 2G4RX"
+      }
+    ]
   },
   {
     "category": "DIY 2.4 GHz",
