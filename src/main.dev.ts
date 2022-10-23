@@ -12,8 +12,6 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
 import mkdirp from 'mkdirp';
 import winston from 'winston';
 import fs from 'fs';
@@ -27,10 +25,11 @@ import {
   SaveFileResponseBody,
   UpdateBuildStatusRequestBody,
 } from './ipc';
+import Updater from './app/updater';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
 import { FirmwareParamsLoaderType } from './api/src/config';
 
-import packageJson from '../package.json'; // eslint-disable-line import/no-relative-packages
+import packageJson from '../package.json';
 
 const logsPath = path.join(app.getPath('userData'), 'logs');
 const logsFilename = 'expressslrs-configurator.log';
@@ -111,15 +110,8 @@ if (app.commandLine.hasSwitch('disable-gpu')) {
 }
 
 let mainWindow: BrowserWindow | null = null;
+let updater: Updater | null = null;
 const localServer: ApiServer = new ApiServer();
-
-export default class AppUpdater {
-  constructor() {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -367,9 +359,7 @@ const createWindow = async () => {
     shell.openExternal(url);
   });
 
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  // new AppUpdater();
+  updater = new Updater(logger, mainWindow);
 };
 /**
  * Add event listeners...
@@ -400,56 +390,8 @@ app.on('activate', () => {
   }
 });
 
-autoUpdater.autoDownload = false;
-
-autoUpdater.on('error', (error) => {
-  logger.error(error, error.stack);
-});
-
-autoUpdater.on('update-available', async () => {
-  const response = await dialog.showMessageBox(mainWindow!, {
-    type: 'info',
-    title: 'Found Updates',
-    message: 'Found updates, do you want update now?',
-    buttons: ['Sure', 'Later'],
-  });
-
-  if (response.response === 0) {
-    logger.log('Downloading Update');
-    autoUpdater.downloadUpdate();
-    await dialog.showMessageBox(mainWindow!, {
-      type: 'info',
-      title: 'Update Downloading',
-      message:
-        'Update is being downloaded, you will be notified when it is ready to install',
-      buttons: [],
-    });
-  }
-});
-
-autoUpdater.on('update-downloaded', async () => {
-  const response = await dialog.showMessageBox(mainWindow!, {
-    type: 'info',
-    buttons: ['Restart', 'Later'],
-    title: 'Application Update',
-    message: 'Update',
-    detail:
-      'A new version has been downloaded. Restart the application to apply the updates.',
-  });
-  if (response.response === 0) {
-    setImmediate(() => autoUpdater.quitAndInstall());
-  }
-});
-
 app.on('ready', async () => {
-  // does not work in development and MacOS requires the application to be signed
-  if (process.env.NODE_ENV !== 'development' && !isMacOS) {
-    try {
-      await autoUpdater.checkForUpdates();
-    } catch (error) {
-      logger.error(error);
-    }
-  }
+  updater?.checkForUpdates();
 });
 
 /*
