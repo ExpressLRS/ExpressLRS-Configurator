@@ -289,6 +289,12 @@
         "abbreviatedName": "BFPV Lite 2G4RX"
       },
       {
+        "category": "BETAFPV 2.4 GHz",
+        "name": "BETAFPV AIO 2400 RX",
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv2400/",
+        "abbreviatedName": "BFPV AIO 2G4RX"
+      },      
+      {
         "category": "GEPRC 2.4 GHz",
         "name": "GEPRC Nano 2400 RX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/geprc2400/",
