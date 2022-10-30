@@ -14,8 +14,8 @@ export default class UserDefine {
   @Field()
   enabled: boolean;
 
-  @Field()
-  sensitive: boolean;
+  @Field({ nullable: true })
+  sensitive?: boolean;
 
   @Field(() => [String], { nullable: true })
   enumValues?: string[];
@@ -33,7 +33,7 @@ export default class UserDefine {
     value = '',
     enumValues?: string[],
     optionGroup?: UserDefineOptionGroup,
-    sensitive?: boolean
+    sensitive = false
   ) {
     this.type = type;
 

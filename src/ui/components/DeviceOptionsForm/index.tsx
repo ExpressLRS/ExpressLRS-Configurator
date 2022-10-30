@@ -1,4 +1,5 @@
 import {
+  Button,
   FormControl,
   FormControlLabel,
   Grid,
@@ -7,15 +8,18 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useRef } from 'react';
 import { SxProps, Theme } from '@mui/system';
 import UserDefinesList from '../UserDefinesList';
 import {
   FirmwareVersionDataInput,
+  useBuildUserDefinesTxtMutation,
   UserDefine,
   UserDefineKey,
   UserDefinesMode,
 } from '../../gql/generated/types';
+import ShowAlerts from '../ShowAlerts';
+import Loader from '../Loader';
 
 const styles: Record<string, SxProps<Theme>> = {
   categoryTitle: {
@@ -157,6 +161,16 @@ const userDefinesToCategories = (
   return result;
 };
 
+export const cleanUserDefines = (userDefines: UserDefine[]): UserDefine[] => {
+  return userDefines.map((item) => ({
+    key: item.key,
+    value: item.value,
+    enabled: item.enabled,
+    enumValues: item.enumValues,
+    type: item.type,
+  }));
+};
+
 const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
   props
 ) => {
@@ -209,6 +223,45 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
     });
   };
 
+  const userDefinesTxtRef = useRef<HTMLInputElement>();
+  const [
+    buildUserDefinesTxtMutation,
+    { error: buildError, loading: buildLoading },
+  ] = useBuildUserDefinesTxtMutation();
+  const onCopyFromStandardMode = () => {
+    buildUserDefinesTxtMutation({
+      variables: {
+        input: {
+          userDefines: cleanUserDefines(deviceOptions.userDefineOptions),
+        },
+      },
+    })
+      .then((result) => {
+        if (
+          result.data?.buildUserDefinesTxt === undefined ||
+          result.data?.buildUserDefinesTxt === null
+        ) {
+          return;
+        }
+        const userDefinesTxt =
+          result.data?.buildUserDefinesTxt.userDefinesTxt || '';
+        onChange({
+          ...deviceOptions,
+          userDefinesTxt,
+        });
+        if (
+          userDefinesTxtRef.current !== undefined &&
+          userDefinesTxtRef.current.value !== undefined
+        ) {
+          userDefinesTxtRef.current.value = userDefinesTxt;
+          userDefinesTxtRef.current?.blur();
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   return (
     <>
       <FormControl component="fieldset" sx={styles.userDefinesMode}>
@@ -233,15 +286,26 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
         </RadioGroup>
       </FormControl>
       {deviceOptions.userDefinesMode === UserDefinesMode.Manual && (
-        <TextField
-          sx={styles.textarea}
-          multiline
-          label="user_defines.txt"
-          onBlur={onUserDefinesTxt}
-          defaultValue={deviceOptions.userDefinesTxt}
-          fullWidth
-          rows={10}
-        />
+        <Grid container spacing={3}>
+          <Grid item xs>
+            <TextField
+              sx={styles.textarea}
+              multiline
+              InputLabelProps={{ shrink: true }}
+              inputRef={userDefinesTxtRef}
+              label="user_defines.txt"
+              onBlur={onUserDefinesTxt}
+              defaultValue={deviceOptions.userDefinesTxt}
+              fullWidth
+              rows={10}
+            />
+            <Loader loading={buildLoading} />
+            <ShowAlerts severity="error" messages={buildError} />
+            <Button onClick={onCopyFromStandardMode} size="small">
+              Copy from Standard mode
+            </Button>
+          </Grid>
+        </Grid>
       )}
       {target !== null &&
         categories !== null &&

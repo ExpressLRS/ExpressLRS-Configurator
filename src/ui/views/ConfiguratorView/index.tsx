@@ -29,6 +29,7 @@ import { SxProps, Theme } from '@mui/system';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
 import DeviceOptionsForm, {
+  cleanUserDefines,
   DeviceOptionsFormData,
 } from '../../components/DeviceOptionsForm';
 import ShowAlerts from '../../components/ShowAlerts';
@@ -566,13 +567,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       uploadPort = wifiDevice;
     }
 
-    const userDefines = deviceOptionsFormData.userDefineOptions.map((item) => ({
-      key: item.key,
-      value: item.value,
-      enabled: item.enabled,
-      enumValues: item.enumValues,
-      type: item.type,
-    }));
+    const userDefines = cleanUserDefines(
+      deviceOptionsFormData.userDefineOptions
+    );
 
     if (device?.parent && device?.name) {
       const deviceName = getAbbreviatedDeviceName(device);
