@@ -77,12 +77,6 @@ export default class Platformio {
     );
   }
 
-  async verifyDependencies(): Promise<boolean> {
-    const pio = await this.checkCore();
-    const py = await this.checkPython();
-    return pio.success && py.success;
-  }
-
   async findPythonExecutable(envPath: string): Promise<string> {
     const IS_WINDOWS = process.platform.startsWith('win');
     const exenames = IS_WINDOWS
