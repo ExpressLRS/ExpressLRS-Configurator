@@ -12,9 +12,9 @@ import SerialMonitorService, {
   SerialMonitorLogUpdatePayload,
 } from '../../services/SerialMonitor';
 import SerialPortInformation from '../../models/SerialPortInformation';
-import SerialPortConnectResult from '../../models/SerialPortConnectResult';
+import SerialPortConnectResult from '../objects/SerialPortConnectResult';
 import SerialConnectionConfigInput from '../inputs/SerialConnectionConfigInput';
-import SerialPortDisconnectResult from '../../models/SerialPortDisconnectResult';
+import SerialPortDisconnectResult from '../objects/SerialPortDisconnectResult';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import SerialMonitorLogUpdate from '../../models/SerialMonitorLogUpdate';
 import SerialMonitorEvent from '../../models/SerialMonitorEvent';

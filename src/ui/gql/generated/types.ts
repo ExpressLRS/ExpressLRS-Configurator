@@ -41,13 +41,13 @@ export enum BuildFirmwareStep {
 }
 
 export type BuildFlashFirmwareInput = {
-  readonly firmware?: InputMaybe<FirmwareVersionDataInput>;
+  readonly firmware?: FirmwareVersionDataInput;
   readonly serialDevice?: InputMaybe<Scalars['String']>;
-  readonly target?: InputMaybe<Scalars['String']>;
-  readonly type?: InputMaybe<BuildJobType>;
-  readonly userDefines?: InputMaybe<ReadonlyArray<UserDefineInput>>;
-  readonly userDefinesMode?: InputMaybe<UserDefinesMode>;
-  readonly userDefinesTxt?: InputMaybe<Scalars['String']>;
+  readonly target?: Scalars['String'];
+  readonly type?: BuildJobType;
+  readonly userDefines?: ReadonlyArray<UserDefineInput>;
+  readonly userDefinesMode?: UserDefinesMode;
+  readonly userDefinesTxt?: Scalars['String'];
 };
 
 export type BuildFlashFirmwareResult = {
@@ -81,6 +81,15 @@ export enum BuildProgressNotificationType {
   Info = 'Info',
   Success = 'Success',
 }
+
+export type BuildUserDefinesTxtInput = {
+  readonly userDefines?: ReadonlyArray<UserDefineInput>;
+};
+
+export type BuildUserDefinesTxtResult = {
+  readonly __typename?: 'BuildUserDefinesTxtResult';
+  readonly userDefinesTxt?: Maybe<Scalars['String']>;
+};
 
 export type ClearFirmwareFilesResult = {
   readonly __typename?: 'ClearFirmwareFilesResult';
@@ -122,12 +131,12 @@ export enum FirmwareSource {
 }
 
 export type FirmwareVersionDataInput = {
-  readonly gitBranch?: InputMaybe<Scalars['String']>;
-  readonly gitCommit?: InputMaybe<Scalars['String']>;
+  readonly gitBranch?: Scalars['String'];
+  readonly gitCommit?: Scalars['String'];
   readonly gitPullRequest?: InputMaybe<PullRequestInput>;
-  readonly gitTag?: InputMaybe<Scalars['String']>;
-  readonly localPath?: InputMaybe<Scalars['String']>;
-  readonly source?: InputMaybe<FirmwareSource>;
+  readonly gitTag?: Scalars['String'];
+  readonly localPath?: Scalars['String'];
+  readonly source?: FirmwareSource;
 };
 
 export enum FlashingMethod {
@@ -184,6 +193,7 @@ export type MulticastDnsMonitorUpdate = {
 export type Mutation = {
   readonly __typename?: 'Mutation';
   readonly buildFlashFirmware: BuildFlashFirmwareResult;
+  readonly buildUserDefinesTxt: BuildUserDefinesTxtResult;
   readonly clearFirmwareFiles: ClearFirmwareFilesResult;
   readonly clearPlatformioCoreDir: ClearPlatformioCoreDirResult;
   readonly connectToSerialDevice: SerialPortConnectResult;
@@ -193,6 +203,10 @@ export type Mutation = {
 export type MutationBuildFlashFirmwareArgs = {
   gitRepository: GitRepositoryInput;
   input: BuildFlashFirmwareInput;
+};
+
+export type MutationBuildUserDefinesTxtArgs = {
+  input: BuildUserDefinesTxtInput;
 };
 
 export type MutationConnectToSerialDeviceArgs = {
@@ -229,13 +243,13 @@ export type Query = {
 };
 
 export type QueryAvailableFirmwareTargetsArgs = {
-  gitBranch?: InputMaybe<Scalars['String']>;
-  gitCommit?: InputMaybe<Scalars['String']>;
+  gitBranch?: Scalars['String'];
+  gitCommit?: Scalars['String'];
   gitPullRequest?: InputMaybe<PullRequestInput>;
   gitRepository: GitRepositoryInput;
-  gitTag?: InputMaybe<Scalars['String']>;
-  localPath?: InputMaybe<Scalars['String']>;
-  source?: InputMaybe<FirmwareSource>;
+  gitTag?: Scalars['String'];
+  localPath?: Scalars['String'];
+  source?: FirmwareSource;
 };
 
 export type QueryCheckForUpdatesArgs = {
@@ -253,13 +267,13 @@ export type QueryGitTagsArgs = {
 };
 
 export type QueryLuaScriptArgs = {
-  gitBranch?: InputMaybe<Scalars['String']>;
-  gitCommit?: InputMaybe<Scalars['String']>;
+  gitBranch?: Scalars['String'];
+  gitCommit?: Scalars['String'];
   gitPullRequest?: InputMaybe<PullRequestInput>;
   gitRepository: GitRepositoryInput;
-  gitTag?: InputMaybe<Scalars['String']>;
-  localPath?: InputMaybe<Scalars['String']>;
-  source?: InputMaybe<FirmwareSource>;
+  gitTag?: Scalars['String'];
+  localPath?: Scalars['String'];
+  source?: FirmwareSource;
 };
 
 export type QueryPullRequestsArgs = {
@@ -273,14 +287,14 @@ export type QueryReleasesArgs = {
 };
 
 export type QueryTargetDeviceOptionsArgs = {
-  gitBranch?: InputMaybe<Scalars['String']>;
-  gitCommit?: InputMaybe<Scalars['String']>;
+  gitBranch?: Scalars['String'];
+  gitCommit?: Scalars['String'];
   gitPullRequest?: InputMaybe<PullRequestInput>;
   gitRepository: GitRepositoryInput;
-  gitTag?: InputMaybe<Scalars['String']>;
-  localPath?: InputMaybe<Scalars['String']>;
-  source?: InputMaybe<FirmwareSource>;
-  target?: InputMaybe<Scalars['String']>;
+  gitTag?: Scalars['String'];
+  localPath?: Scalars['String'];
+  source?: FirmwareSource;
+  target?: Scalars['String'];
 };
 
 export type Release = {
@@ -290,8 +304,8 @@ export type Release = {
 };
 
 export type SerialConnectionConfigInput = {
-  readonly baudRate?: InputMaybe<Scalars['Float']>;
-  readonly port?: InputMaybe<Scalars['String']>;
+  readonly baudRate?: Scalars['Float'];
+  readonly port?: Scalars['String'];
 };
 
 export type SerialMonitorEvent = {
@@ -358,16 +372,16 @@ export type UserDefine = {
   readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
   readonly key: UserDefineKey;
   readonly optionGroup?: Maybe<UserDefineOptionGroup>;
-  readonly sensitive: Scalars['Boolean'];
+  readonly sensitive?: Maybe<Scalars['Boolean']>;
   readonly type: UserDefineKind;
   readonly value?: Maybe<Scalars['String']>;
 };
 
 export type UserDefineInput = {
-  readonly enabled?: InputMaybe<Scalars['Boolean']>;
+  readonly enabled?: Scalars['Boolean'];
   readonly enumValues?: InputMaybe<ReadonlyArray<Scalars['String']>>;
-  readonly key?: InputMaybe<UserDefineKey>;
-  readonly type?: InputMaybe<UserDefineKind>;
+  readonly key?: UserDefineKey;
+  readonly type?: UserDefineKind;
   readonly value?: InputMaybe<Scalars['String']>;
 };
 
@@ -500,7 +514,7 @@ export type AvailableMulticastDnsDevicesListQuery = {
       readonly enabled: boolean;
       readonly enumValues?: ReadonlyArray<string> | null;
       readonly value?: string | null;
-      readonly sensitive: boolean;
+      readonly sensitive?: boolean | null;
     }>;
   }>;
 };
@@ -544,6 +558,18 @@ export type BuildProgressNotificationsSubscription = {
     readonly type: BuildProgressNotificationType;
     readonly step?: BuildFirmwareStep | null;
     readonly message?: string | null;
+  };
+};
+
+export type BuildUserDefinesTxtMutationVariables = Exact<{
+  input: BuildUserDefinesTxtInput;
+}>;
+
+export type BuildUserDefinesTxtMutation = {
+  readonly __typename?: 'Mutation';
+  readonly buildUserDefinesTxt: {
+    readonly __typename?: 'BuildUserDefinesTxtResult';
+    readonly userDefinesTxt?: string | null;
   };
 };
 
@@ -621,7 +647,7 @@ export type TargetDeviceOptionsQuery = {
     readonly enumValues?: ReadonlyArray<string> | null;
     readonly value?: string | null;
     readonly optionGroup?: UserDefineOptionGroup | null;
-    readonly sensitive: boolean;
+    readonly sensitive?: boolean | null;
   }>;
 };
 
@@ -723,7 +749,7 @@ export type MulticastDnsMonitorUpdatesSubscription = {
         readonly enabled: boolean;
         readonly enumValues?: ReadonlyArray<string> | null;
         readonly value?: string | null;
-        readonly sensitive: boolean;
+        readonly sensitive?: boolean | null;
       }>;
     };
   };
@@ -1125,6 +1151,56 @@ export type BuildProgressNotificationsSubscriptionHookResult = ReturnType<
 >;
 export type BuildProgressNotificationsSubscriptionResult =
   Apollo.SubscriptionResult<BuildProgressNotificationsSubscription>;
+export const BuildUserDefinesTxtDocument = gql`
+  mutation buildUserDefinesTxt($input: BuildUserDefinesTxtInput!) {
+    buildUserDefinesTxt(input: $input) {
+      userDefinesTxt
+    }
+  }
+`;
+export type BuildUserDefinesTxtMutationFn = Apollo.MutationFunction<
+  BuildUserDefinesTxtMutation,
+  BuildUserDefinesTxtMutationVariables
+>;
+
+/**
+ * __useBuildUserDefinesTxtMutation__
+ *
+ * To run a mutation, you first call `useBuildUserDefinesTxtMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBuildUserDefinesTxtMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [buildUserDefinesTxtMutation, { data, loading, error }] = useBuildUserDefinesTxtMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useBuildUserDefinesTxtMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    BuildUserDefinesTxtMutation,
+    BuildUserDefinesTxtMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    BuildUserDefinesTxtMutation,
+    BuildUserDefinesTxtMutationVariables
+  >(BuildUserDefinesTxtDocument, options);
+}
+export type BuildUserDefinesTxtMutationHookResult = ReturnType<
+  typeof useBuildUserDefinesTxtMutation
+>;
+export type BuildUserDefinesTxtMutationResult =
+  Apollo.MutationResult<BuildUserDefinesTxtMutation>;
+export type BuildUserDefinesTxtMutationOptions = Apollo.BaseMutationOptions<
+  BuildUserDefinesTxtMutation,
+  BuildUserDefinesTxtMutationVariables
+>;
 export const CheckForUpdatesDocument = gql`
   query checkForUpdates($currentVersion: String!) {
     checkForUpdates(currentVersion: $currentVersion) {

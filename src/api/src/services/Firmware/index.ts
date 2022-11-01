@@ -9,7 +9,7 @@ import BuildJobType from '../../models/enum/BuildJobType';
 import UserDefinesMode from '../../models/enum/UserDefinesMode';
 import UserDefine from '../../models/UserDefine';
 import FirmwareSource from '../../models/enum/FirmwareSource';
-import BuildFlashFirmwareResult from '../../models/BuildFlashFirmwareResult';
+import BuildFlashFirmwareResult from '../../graphql/objects/BuildFlashFirmwareResult';
 import Mutex from '../../library/Mutex';
 import BuildFirmwareErrorType from '../../models/enum/BuildFirmwareErrorType';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
@@ -172,6 +172,11 @@ export default class FirmwareService {
       return true;
     }
     return false;
+  }
+
+  async buildUserDefinesTxt(userDefines: UserDefine[]): Promise<string> {
+    const userDefinesBuilder = new UserDefinesTxtFactory();
+    return userDefinesBuilder.build(this.processUserDefines(userDefines));
   }
 
   async buildFlashFirmware(
