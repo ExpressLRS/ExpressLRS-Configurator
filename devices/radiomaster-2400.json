@@ -128,13 +128,36 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-external/",
     "deviceType": "ExpressLRS",
-    "aliases": [
+    "aliases": []
+  },
+  {
+    "category": "RadioMaster 2.4 GHz",
+    "name": "RadioMaster Ranger Nano 2400 TX",
+    "targets": [
       {
-        "category": "RadioMaster 2.4 GHz",
-        "name": "RadioMaster Ranger Nano 2400 TX",
-        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-external/",
-        "abbreviatedName": "RM Ranger Nano"
+        "flashingMethod": "UART",
+        "name": "RadioMaster_Ranger_Nano_2400_TX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "RadioMaster_Ranger_Nano_2400_TX_via_WIFI"
       }
-    ]
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "REGULATORY_DOMAIN_EU_CE_2400",
+      "BINDING_PHRASE",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "FEATURE_OPENTX_SYNC",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "BLE_HID_JOYSTICK",
+      "USE_DYNAMIC_POWER"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-external/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
   }
 ]
