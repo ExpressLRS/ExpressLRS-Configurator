@@ -5,7 +5,7 @@ import SerialPortInformation from '../../models/SerialPortInformation';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import { LoggerService } from '../../logger';
 import SerialMonitorEventType from '../../models/enum/SerialMonitorEventType';
-import { insideFlatpak, listPorts } from '../../flatpak';
+import { insideFlatpak, listPorts } from './flatpak';
 
 export interface SerialMonitorLogUpdatePayload {
   data: string;
