@@ -213,5 +213,41 @@
         "abbreviatedName": "EMAX 2400RX"
       }
     ]
+  },
+  {
+    "category": "BETAFPV 2.4 GHz",
+    "name": "BETAFPV SuperD 2.4GHz RX",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "BETAFPV_SuperD_2400_RX_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "BETAFPV_SuperD_2400_RX_via_WIFI"
+      },
+      {
+        "flashingMethod": "BetaflightPassthrough",
+        "name": "BETAFPV_SuperD_2400_RX_via_BetaflightPassthrough"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_ISM_2400",
+      "REGULATORY_DOMAIN_EU_CE_2400",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "LOCK_ON_FIRST_CONNECTION",
+      "USE_500HZ",
+      "AUTO_WIFI_ON_BOOT",
+      "AUTO_WIFI_ON_INTERVAL",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD",
+      "RCVR_UART_BAUD",
+      "RCVR_INVERT_TX"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
   }
 ]

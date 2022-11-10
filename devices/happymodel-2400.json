@@ -184,14 +184,7 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/hmep2400/",
     "deviceType": "ExpressLRS",
-    "aliases": [
-      {
-        "category": "BETAFPV 2.4 GHz",
-        "name": "BETAFPV SuperD 2.4GHz RX",
-        "wikiUrl": "",
-        "abbreviatedName": "BFPV SuperD 2G4"
-      }
-	  ]
+    "aliases": []
   },
   {
     "category": "Happymodel 2.4 GHz",
