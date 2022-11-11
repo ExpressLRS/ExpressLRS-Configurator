@@ -293,7 +293,7 @@
         "name": "BETAFPV AIO 2400 RX",
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv2400/",
         "abbreviatedName": "BFPV AIO 2G4RX"
-      },      
+      },
       {
         "category": "GEPRC 2.4 GHz",
         "name": "GEPRC Nano 2400 RX",
@@ -348,6 +348,12 @@
         "name": "BETAFPV PWM 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "BFPV PWM 2G4RX"
+      },
+      {
+        "category": "RadioMaster 2.4 GHz",
+        "name": "RadioMaster ER5A/C 2.4GHz PWM RX",
+        "wikiUrl": "",
+        "abbreviatedName": "RM ER5A/C 2G4RX"
       }
     ]
   },
