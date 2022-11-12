@@ -1,6 +1,6 @@
 /* eslint-disable no-bitwise */
-import {Service} from 'typedi';
-import {PubSubEngine} from 'graphql-subscriptions';
+import { Service } from 'typedi';
+import { PubSubEngine } from 'graphql-subscriptions';
 import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -16,28 +16,28 @@ import BuildFirmwareErrorType from '../../models/enum/BuildFirmwareErrorType';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildProgressNotificationType from '../../models/enum/BuildProgressNotificationType';
 import BuildFirmwareStep from '../../models/enum/FirmwareBuildStep';
-import {LoggerService} from '../../logger';
+import { LoggerService } from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
-import {BuildFlashFirmwareParams} from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
+import { BuildFlashFirmwareParams } from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
 import {
   FlashingStrategy,
   IsCompatibleArgs,
 } from '../FlashingStrategyLocator/FlashingStrategy';
 import ConfigureFirmware from '../../library/ConfigureFirmware';
-import {Options} from '../../library/ConfigureFirmware/Options';
-import {Config} from '../../library/ConfigureFirmware/Config';
+import { Options } from '../../library/ConfigureFirmware/Options';
+import { Config } from '../../library/ConfigureFirmware/Config';
 import Domain from '../../library/ConfigureFirmware/Domain';
 import Target from '../../models/Target';
-import {Targets} from '../../library/ConfigureFirmware/Targets';
+import { Targets } from '../../library/ConfigureFirmware/Targets';
 import TargetArgs from '../../graphql/args/Target';
 import GitRepository from '../../graphql/inputs/GitRepositoryInput';
 import Device from '../../models/Device';
-import {UserDefineFilters} from '../UserDefinesLoader';
+import { UserDefineFilters } from '../UserDefinesLoader';
 import FlashingMethod from '../../models/enum/FlashingMethod';
 import DeviceType from '../../models/enum/DeviceType';
 import TargetUserDefinesFactory from '../../factories/TargetUserDefinesFactory';
 import BuildJobType from '../../models/enum/BuildJobType';
-import {FirmwareFiles} from '../../library/ConfigureFirmware/FirmwareFiles';
+import { FirmwareFiles } from '../../library/ConfigureFirmware/FirmwareFiles';
 import BuildFlashFirmwareResult from '../../graphql/objects/BuildFlashFirmwareResult';
 
 const maskSensitiveData = (haystack: string): string => {
@@ -82,6 +82,7 @@ const maskBuildFlashFirmwareParams = (
 @Service()
 export default class BinaryFlashingStrategyService implements FlashingStrategy {
   readonly name: string = 'BinaryFlashingStrategy';
+
   mutex: Mutex;
 
   constructor(
@@ -387,7 +388,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
   private osUsernameContainsAmpersand(): boolean {
     if (
       os.platform() === 'win32' &&
-      os.userInfo({encoding: 'utf8'}).username.indexOf('&') > -1
+      os.userInfo({ encoding: 'utf8' }).username.indexOf('&') > -1
     ) {
       return true;
     }
@@ -401,7 +402,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
   ) {
     if (
       gitRepositoryUrl.toLowerCase() ===
-      'https://github.com/ExpressLRS/ExpressLRS'.toLowerCase() &&
+        'https://github.com/ExpressLRS/ExpressLRS'.toLowerCase() &&
       params.source === FirmwareSource.GitTag &&
       semver.compare(params.gitTag, '3.0.0') >= 0
     ) {
@@ -666,7 +667,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     deviceName: string,
     params: BuildFlashFirmwareParams
   ): string {
-    const {source, gitBranch, gitCommit, gitTag, gitPullRequest} =
+    const { source, gitBranch, gitCommit, gitTag, gitPullRequest } =
       params.firmware;
 
     const firmwareName = deviceName
@@ -737,7 +738,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           return;
         }
 
-        const {statusCode, statusMessage, headers} = response;
+        const { statusCode, statusMessage, headers } = response;
         console.log(req.getHeaders()); // 200
         console.log(req.path); // 200
         console.log(statusCode); // 200
@@ -824,7 +825,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           const progress = (uploaded / uploadSize) * 100;
           const progressMessage = `progress: ${progress.toLocaleString(
             undefined,
-            {minimumFractionDigits: 0, maximumFractionDigits: 2}
+            { minimumFractionDigits: 0, maximumFractionDigits: 2 }
           )}%`;
           this.updateLogs(progressMessage);
           // console.log(progressMessage);
