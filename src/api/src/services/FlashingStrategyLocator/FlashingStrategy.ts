@@ -1,12 +1,12 @@
 import TargetArgs from '../../graphql/args/Target';
 import GitRepository from '../../graphql/inputs/GitRepositoryInput';
-import BuildFlashFirmwareResult from '../../models/BuildFlashFirmwareResult';
-import { BuildFlashFirmwareParams } from './BuildFlashFirmwareParams';
+import {BuildFlashFirmwareParams} from './BuildFlashFirmwareParams';
 import Device from '../../models/Device';
-import { UserDefineFilters } from '../UserDefinesLoader';
+import {UserDefineFilters} from '../UserDefinesLoader';
 import UserDefine from '../../models/UserDefine';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import PullRequest from '../../models/PullRequest';
+import BuildFlashFirmwareResult from '../../graphql/objects/BuildFlashFirmwareResult';
 
 export interface IsCompatibleArgs {
   source: FirmwareSource;
@@ -18,6 +18,8 @@ export interface IsCompatibleArgs {
 }
 
 export interface FlashingStrategy {
+  name: string;
+
   isCompatible: (
     params: IsCompatibleArgs,
     gitRepositoryUrl: string,

@@ -124,9 +124,13 @@
             "name": "firmware",
             "description": null,
             "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "FirmwareVersionDataInput",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "FirmwareVersionDataInput",
+                "ofType": null
+              }
             },
             "defaultValue": "{gitBranch: \"\", gitCommit: \"\", gitPullRequest: null, gitTag: \"\", localPath: \"\", source: GitBranch}",
             "isDeprecated": false,
@@ -148,9 +152,13 @@
             "name": "target",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": "\"DIY_2400_TX_ESP32_SX1280_E28_via_UART\"",
             "isDeprecated": false,
@@ -160,9 +168,13 @@
             "name": "type",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "BuildJobType",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "BuildJobType",
+                "ofType": null
+              }
             },
             "defaultValue": "Build",
             "isDeprecated": false,
@@ -172,15 +184,19 @@
             "name": "userDefines",
             "description": null,
             "type": {
-              "kind": "LIST",
+              "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "NON_NULL",
+                "kind": "LIST",
                 "name": null,
                 "ofType": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "UserDefineInput",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "UserDefineInput",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -192,9 +208,13 @@
             "name": "userDefinesMode",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "UserDefinesMode",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "UserDefinesMode",
+                "ofType": null
+              }
             },
             "defaultValue": "UserInterface",
             "isDeprecated": false,
@@ -204,9 +224,13 @@
             "name": "userDefinesTxt",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": "\"\"",
             "isDeprecated": false,
@@ -414,6 +438,64 @@
             "deprecationReason": null
           }
         ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "BuildUserDefinesTxtInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "userDefines",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "UserDefineInput",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "defaultValue": "[]",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "BuildUserDefinesTxtResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "userDefinesTxt",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -743,9 +825,13 @@
             "name": "gitBranch",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": "\"\"",
             "isDeprecated": false,
@@ -755,9 +841,13 @@
             "name": "gitCommit",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": "\"\"",
             "isDeprecated": false,
@@ -779,9 +869,13 @@
             "name": "gitTag",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": "\"\"",
             "isDeprecated": false,
@@ -791,9 +885,13 @@
             "name": "localPath",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": "\"\"",
             "isDeprecated": false,
@@ -803,9 +901,13 @@
             "name": "source",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "FirmwareSource",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "FirmwareSource",
+                "ofType": null
+              }
             },
             "defaultValue": "GitBranch",
             "isDeprecated": false,
@@ -1311,6 +1413,39 @@
             "deprecationReason": null
           },
           {
+            "name": "buildUserDefinesTxt",
+            "description": null,
+            "args": [
+              {
+                "name": "input",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "BuildUserDefinesTxtInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "BuildUserDefinesTxtResult",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "clearFirmwareFiles",
             "description": null,
             "args": [],
@@ -1584,9 +1719,13 @@
                 "name": "gitBranch",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"\"",
                 "isDeprecated": false,
@@ -1596,9 +1735,13 @@
                 "name": "gitCommit",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"\"",
                 "isDeprecated": false,
@@ -1636,9 +1779,13 @@
                 "name": "gitTag",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"\"",
                 "isDeprecated": false,
@@ -1648,9 +1795,13 @@
                 "name": "localPath",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"\"",
                 "isDeprecated": false,
@@ -1660,9 +1811,13 @@
                 "name": "source",
                 "description": null,
                 "type": {
-                  "kind": "ENUM",
-                  "name": "FirmwareSource",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "FirmwareSource",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "GitBranch",
                 "isDeprecated": false,
@@ -1868,9 +2023,13 @@
                 "name": "gitBranch",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"\"",
                 "isDeprecated": false,
@@ -1880,9 +2039,13 @@
                 "name": "gitCommit",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"\"",
                 "isDeprecated": false,
@@ -1920,9 +2083,13 @@
                 "name": "gitTag",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"\"",
                 "isDeprecated": false,
@@ -1932,9 +2099,13 @@
                 "name": "localPath",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"\"",
                 "isDeprecated": false,
@@ -1944,9 +2115,13 @@
                 "name": "source",
                 "description": null,
                 "type": {
-                  "kind": "ENUM",
-                  "name": "FirmwareSource",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "FirmwareSource",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "GitBranch",
                 "isDeprecated": false,
@@ -2087,9 +2262,13 @@
                 "name": "gitBranch",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"\"",
                 "isDeprecated": false,
@@ -2099,9 +2278,13 @@
                 "name": "gitCommit",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"\"",
                 "isDeprecated": false,
@@ -2139,9 +2322,13 @@
                 "name": "gitTag",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"\"",
                 "isDeprecated": false,
@@ -2151,9 +2338,13 @@
                 "name": "localPath",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"\"",
                 "isDeprecated": false,
@@ -2163,9 +2354,13 @@
                 "name": "source",
                 "description": null,
                 "type": {
-                  "kind": "ENUM",
-                  "name": "FirmwareSource",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "FirmwareSource",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "GitBranch",
                 "isDeprecated": false,
@@ -2175,9 +2370,13 @@
                 "name": "target",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": "\"DIY_2400_TX_ESP32_SX1280_E28_via_UART\"",
                 "isDeprecated": false,
@@ -2263,9 +2462,13 @@
             "name": "baudRate",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
             },
             "defaultValue": "420000",
             "isDeprecated": false,
@@ -2275,9 +2478,13 @@
             "name": "port",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": "\"\"",
             "isDeprecated": false,
@@ -2791,13 +2998,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2846,9 +3049,13 @@
             "name": "enabled",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "defaultValue": "false",
             "isDeprecated": false,
@@ -2878,9 +3085,13 @@
             "name": "key",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "UserDefineKey",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "UserDefineKey",
+                "ofType": null
+              }
             },
             "defaultValue": "FEATURE_OPENTX_SYNC",
             "isDeprecated": false,
@@ -2890,9 +3101,13 @@
             "name": "type",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "UserDefineKind",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "UserDefineKind",
+                "ofType": null
+              }
             },
             "defaultValue": "Boolean",
             "isDeprecated": false,
@@ -3329,7 +3544,20 @@
           {
             "name": "args",
             "description": null,
-            "args": [],
+            "args": [
+              {
+                "name": "includeDeprecated",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": "false",
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
             "type": {
               "kind": "NON_NULL",
               "name": null,

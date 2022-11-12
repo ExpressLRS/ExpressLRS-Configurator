@@ -1,5 +1,5 @@
 import { Field, ObjectType } from 'type-graphql';
-import BuildFirmwareErrorType from './enum/BuildFirmwareErrorType';
+import BuildFirmwareErrorType from '../../models/enum/BuildFirmwareErrorType';
 
 @ObjectType('BuildFlashFirmwareResult')
 export default class BuildFlashFirmwareResult {

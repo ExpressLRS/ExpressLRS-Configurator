@@ -7,35 +7,38 @@ import {
   Root,
   Subscription,
 } from 'type-graphql';
-import { Service } from 'typedi';
+import {Service} from 'typedi';
 import UserDefine from '../../models/UserDefine';
 import BuildFlashFirmwareInput from '../inputs/BuildFlashFirmwareInput';
-import BuildFlashFirmwareResult from '../../models/BuildFlashFirmwareResult';
+import BuildFlashFirmwareResult from '../objects/BuildFlashFirmwareResult';
 import BuildProgressNotification from '../../models/BuildProgressNotification';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildLogUpdate from '../../models/BuildLogUpdate';
-import ClearPlatformioCoreDirResult from '../../models/ClearPlatformioCoreDirResult';
+import ClearPlatformioCoreDirResult from '../objects/ClearPlatformioCoreDirResult';
 import TargetDeviceOptionsArgs from '../args/TargetDeviceOptions';
 import UserDefinesBuilder from '../../services/UserDefinesBuilder';
-import ClearFirmwareFilesResult from '../../models/ClearFirmwareFiles';
-import TargetsLoader from '../../services/TargetsLoader';
+import ClearFirmwareFilesResult from '../objects/ClearFirmwareFilesResult';
 import TargetArgs from '../args/Target';
 import Device from '../../models/Device';
 import GitRepository from '../inputs/GitRepositoryInput';
 import FlashingStrategyLocatorService from '../../services/FlashingStrategyLocator';
-import { BuildProgressNotificationPayload } from '../../services/FlashingStrategyLocator/BuildProgressNotificationPayload';
-import { BuildLogUpdatePayload } from '../../services/FlashingStrategyLocator/BuildLogUpdatePayload';
+import {
+  BuildProgressNotificationPayload
+} from '../../services/FlashingStrategyLocator/BuildProgressNotificationPayload';
+import {BuildLogUpdatePayload} from '../../services/FlashingStrategyLocator/BuildLogUpdatePayload';
 import Platformio from '../../library/Platformio';
+import BuildUserDefinesTxtInput from '../inputs/BuildUserDefinesTxtInput';
+import BuildUserDefinesTxtResult from '../objects/BuilduserDefinesTxtResult';
 
 @Service()
 @Resolver()
 export default class FirmwareResolver {
   constructor(
     private flashingStrategyLocatorService: FlashingStrategyLocatorService,
+    private platformio: Platformio,
     private userDefinesBuilder: UserDefinesBuilder,
-    private targetsLoaderService: TargetsLoader,
-    private platformio: Platformio
-  ) {}
+  ) {
+  }
 
   @Query(() => [Device])
   async availableFirmwareTargets(
@@ -78,6 +81,16 @@ export default class FirmwareResolver {
       gitRepository.url,
       gitRepository.srcFolder
     );
+  }
+
+  @Mutation(() => BuildUserDefinesTxtResult)
+  async buildUserDefinesTxt(
+    @Arg('input') input: BuildUserDefinesTxtInput
+  ): Promise<BuildUserDefinesTxtResult> {
+    const userDefinesTxt = await this.userDefinesBuilder.buildUserDefinesTxt(
+      input.userDefines
+    );
+    return new BuildUserDefinesTxtResult(userDefinesTxt);
   }
 
   @Mutation(() => ClearPlatformioCoreDirResult)

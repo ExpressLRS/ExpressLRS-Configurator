@@ -1,14 +1,15 @@
 /* eslint-disable no-await-in-loop */
-import { Service } from 'typedi';
-import { FlashingStrategy, IsCompatibleArgs } from './FlashingStrategy';
-import { LoggerService } from '../../logger';
+import {Service} from 'typedi';
+import {FlashingStrategy, IsCompatibleArgs} from './FlashingStrategy';
+import {LoggerService} from '../../logger';
 
 @Service()
 export default class FlashingStrategyLocatorService {
   constructor(
     private flashingStrategies: FlashingStrategy[],
     private logger: LoggerService
-  ) {}
+  ) {
+  }
 
   async locate(
     params: IsCompatibleArgs,
@@ -25,6 +26,9 @@ export default class FlashingStrategyLocatorService {
           gitRepositorySrcFolder
         )
       ) {
+        this.logger.log('picked flashing strategy', {
+          strategy: strategy.name,
+        });
         return strategy;
       }
     }
@@ -32,9 +36,7 @@ export default class FlashingStrategyLocatorService {
   }
 
   async clearFirmwareFiles(): Promise<void> {
-    for (let i = 0; i < this.flashingStrategies.length; i++) {
-      const strategy = this.flashingStrategies[i];
-      await strategy.clearFirmwareFiles();
-    }
+    const jobs = this.flashingStrategies.map((strategy) => strategy.clearFirmwareFiles());
+    await Promise.all(jobs);
   }
 }

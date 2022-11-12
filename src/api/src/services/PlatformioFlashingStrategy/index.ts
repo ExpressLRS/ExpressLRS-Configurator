@@ -1,15 +1,15 @@
-import { Service } from 'typedi';
-import { PubSubEngine } from 'graphql-subscriptions';
+import {Service} from 'typedi';
+import {PubSubEngine} from 'graphql-subscriptions';
 import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
 import rimraf from 'rimraf';
-import cloneDeep from 'lodash/cloneDeep';
+import cloneDeep from 'lodash.clonedeep';
 import BuildJobType from '../../models/enum/BuildJobType';
 import UserDefinesMode from '../../models/enum/UserDefinesMode';
 import UserDefine from '../../models/UserDefine';
 import FirmwareSource from '../../models/enum/FirmwareSource';
-import BuildFlashFirmwareResult from '../../models/BuildFlashFirmwareResult';
+import BuildFlashFirmwareResult from '../../graphql/objects/BuildFlashFirmwareResult';
 import Mutex from '../../library/Mutex';
 import BuildFirmwareErrorType from '../../models/enum/BuildFirmwareErrorType';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
@@ -19,13 +19,12 @@ import {
   findGitExecutable,
   GitFirmwareDownloader,
 } from '../../library/FirmwareDownloader';
-import UserDefinesTxtFactory from '../../factories/UserDefinesTxtFactory';
 import Platformio from '../../library/Platformio';
 import FirmwareBuilder from '../../library/FirmwareBuilder';
-import { LoggerService } from '../../logger';
+import {LoggerService} from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import UploadType from '../../library/Platformio/Enum/UploadType';
-import { BuildFlashFirmwareParams } from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
+import {BuildFlashFirmwareParams} from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
 import {
   FlashingStrategy,
   IsCompatibleArgs,
@@ -35,7 +34,7 @@ import UserDefinesBuilder from '../UserDefinesBuilder';
 import TargetsLoader from '../TargetsLoader';
 import TargetArgs from '../../graphql/args/Target';
 import Device from '../../models/Device';
-import { UserDefineFilters } from '../UserDefinesLoader';
+import {UserDefineFilters} from '../UserDefinesLoader';
 import GitRepository from '../../graphql/inputs/GitRepositoryInput';
 
 const maskSensitiveData = (haystack: string): string => {
@@ -79,8 +78,8 @@ const maskBuildFlashFirmwareParams = (
 
 @Service()
 export default class PlatformioFlashingStrategyService
-  implements FlashingStrategy
-{
+  implements FlashingStrategy {
+  readonly name: string = 'PlatformioFlashingStrategy';
   mutex: Mutex;
 
   constructor(
@@ -132,43 +131,13 @@ export default class PlatformioFlashingStrategyService
     args: UserDefineFilters,
     gitRepository: GitRepository
   ): Promise<UserDefine[]> {
-    return this.userDefinesBuilder.build(args, gitRepository);
-  }
-
-  private processUserDefines(userDefines: UserDefine[]): UserDefine[] {
-    const overrideUserDefineTo = (
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      userDefines: UserDefine[],
-      defaultUserDefine: UserDefine
-    ): UserDefine[] => {
-      const exists =
-        userDefines.find(({ key }) => key === defaultUserDefine.key) !==
-        undefined;
-      if (exists) {
-        return userDefines.map((item) => {
-          if (item.key === defaultUserDefine.key) {
-            return defaultUserDefine;
-          }
-          return item;
-        });
-      }
-      return [...userDefines, defaultUserDefine];
-    };
-    const overrides = [
-      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
-      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ, false),
-    ];
-    let result = userDefines;
-    overrides.forEach((override) => {
-      result = overrideUserDefineTo(result, override);
-    });
-    return result;
+    return this.userDefinesBuilder.loadForDevice(args, gitRepository);
   }
 
   private osUsernameContainsAmpersand(): boolean {
     if (
       os.platform() === 'win32' &&
-      os.userInfo({ encoding: 'utf8' }).username.indexOf('&') > -1
+      os.userInfo({encoding: 'utf8'}).username.indexOf('&') > -1
     ) {
       return true;
     }
@@ -176,9 +145,9 @@ export default class PlatformioFlashingStrategyService
   }
 
   async isCompatible(
-    params: IsCompatibleArgs,
-    gitRepositoryUrl: string,
-    gitRepositorySrcFolder: string
+    _params: IsCompatibleArgs,
+    _gitRepositoryUrl: string,
+    _gitRepositorySrcFolder: string
   ) {
     return true;
   }
@@ -354,7 +323,7 @@ export default class PlatformioFlashingStrategyService
                   userDefine.enabled &&
                   userDefine.key !== UserDefineKey.DEVICE_NAME
               )
-              .map(({ key }) => key)
+              .map(({key}) => key)
           );
         if (!compatCheck.compatible) {
           return new BuildFlashFirmwareResult(
@@ -365,16 +334,13 @@ export default class PlatformioFlashingStrategyService
         }
       }
 
-      const userDefinesBuilder = new UserDefinesTxtFactory();
       let userDefines = '';
       switch (params.userDefinesMode) {
         case UserDefinesMode.Manual:
           userDefines = params.userDefinesTxt;
           break;
         case UserDefinesMode.UserInterface:
-          userDefines = userDefinesBuilder.build(
-            this.processUserDefines(params.userDefines)
-          );
+          userDefines = await this.userDefinesBuilder.buildUserDefinesTxt(params.userDefines);
           break;
         default:
           throw new Error(
@@ -533,7 +499,7 @@ export default class PlatformioFlashingStrategyService
   }
 
   generateFirmwareName(params: BuildFlashFirmwareParams): string {
-    const { source, gitBranch, gitCommit, gitTag, gitPullRequest } =
+    const {source, gitBranch, gitCommit, gitTag, gitPullRequest} =
       params.firmware;
     const deviceName = params.userDefines.find(
       (userDefine) => userDefine.key === UserDefineKey.DEVICE_NAME

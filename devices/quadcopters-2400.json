@@ -33,42 +33,14 @@
     ],
     "wikiUrl": "",
     "deviceType": "ExpressLRS",
-    "aliases": []
-  },
-  {
-    "category": "QuadKopters 2.4 Ghz",
-    "name": "QuadKopters Slim 2400 TX",
-    "targets": [
+    "aliases": [
       {
-        "flashingMethod": "UART",
-        "name": "QuadKopters_SLIM_2400_TX_via_UART"
-      },
-      {
-        "flashingMethod": "WIFI",
-        "name": "QuadKopters_SLIM_2400_TX_via_WIFI"
+        "category": "QuadKopters 2.4 Ghz",
+        "name": "QuadKopters Slim 2400 TX",
+        "wikiUrl": "",
+        "abbreviatedName": "QuadKopters 2G4"
       }
-    ],
-    "userDefines": [
-      "REGULATORY_DOMAIN_ISM_2400",
-      "REGULATORY_DOMAIN_EU_CE_2400",
-      "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "USE_500HZ",
-      "UART_INVERTED",
-      "AUTO_WIFI_ON_INTERVAL",
-      "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER"
-    ],
-    "wikiUrl": "",
-    "deviceType": "ExpressLRS",
-    "aliases": []
+    ]
   },
   {
     "category": "QuadKopters 2.4 Ghz",

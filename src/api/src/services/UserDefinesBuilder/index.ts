@@ -4,6 +4,8 @@ import UserDefine from '../../models/UserDefine';
 import PullRequest from '../../models/PullRequest';
 import UserDefinesLoader from '../UserDefinesLoader';
 import DeviceService from '../Device';
+import UserDefinesTxtFactory from '../../factories/UserDefinesTxtFactory';
+import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 
 interface UserDefineFilters {
   target: string;
@@ -28,7 +30,42 @@ export default class UserDefinesBuilder {
     private deviceService: DeviceService
   ) {}
 
-  async build(
+  async buildUserDefinesTxt(userDefines: UserDefine[]): Promise<string> {
+    const userDefinesBuilder = new UserDefinesTxtFactory();
+    return userDefinesBuilder.build(this.processUserDefines(userDefines));
+  }
+
+  private processUserDefines(userDefines: UserDefine[]): UserDefine[] {
+    const overrideUserDefineTo = (
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      userDefines: UserDefine[],
+      defaultUserDefine: UserDefine
+    ): UserDefine[] => {
+      const exists =
+        userDefines.find(({ key }) => key === defaultUserDefine.key) !==
+        undefined;
+      if (exists) {
+        return userDefines.map((item) => {
+          if (item.key === defaultUserDefine.key) {
+            return defaultUserDefine;
+          }
+          return item;
+        });
+      }
+      return [...userDefines, defaultUserDefine];
+    };
+    const overrides = [
+      UserDefine.Boolean(UserDefineKey.FAST_SYNC, true),
+      UserDefine.Boolean(UserDefineKey.LOCK_ON_50HZ, false),
+    ];
+    let result = userDefines;
+    overrides.forEach((override) => {
+      result = overrideUserDefineTo(result, override);
+    });
+    return result;
+  }
+
+  async loadForDevice(
     input: UserDefineFilters,
     gitRepository: GitRepository
   ): Promise<UserDefine[]> {

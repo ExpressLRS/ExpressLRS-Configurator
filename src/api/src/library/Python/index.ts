@@ -1,8 +1,8 @@
 /* eslint-disable no-await-in-loop */
 import fs from 'fs';
 import path from 'path';
-import Commander, { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
-import { LoggerService } from '../../logger';
+import Commander, {CommandResult, NoOpFunc, OnOutputFunc} from '../Commander';
+import {LoggerService} from '../../logger';
 
 export default class Python {
   constructor(
@@ -10,7 +10,8 @@ export default class Python {
     private PATH: string,
     private env: NodeJS.ProcessEnv,
     private logger: LoggerService
-  ) {}
+  ) {
+  }
 
   async runPythonScript(
     script: string,

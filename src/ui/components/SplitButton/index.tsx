@@ -9,7 +9,7 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { FunctionComponent, useState } from 'react';
-import { uniqueId } from 'lodash';
+import uniqueId from 'lodash.uniqueid';
 
 export interface Option {
   label: string;
@@ -36,7 +36,7 @@ const SplitButton: FunctionComponent<SplitButtonProps> = ({
   };
 
   const handleMenuItemClick = (
-    event: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    _event: React.MouseEvent<HTMLLIElement, MouseEvent>,
     index: number
   ) => {
     setSelectedIndex(index);

@@ -3,8 +3,8 @@ import path from 'path';
 import child_process from 'child_process';
 import rimraf from 'rimraf';
 import * as os from 'os';
-import Commander, { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
-import { LoggerService } from '../../logger';
+import Commander, {CommandResult, NoOpFunc, OnOutputFunc} from '../Commander';
+import {LoggerService} from '../../logger';
 import UploadType from './Enum/UploadType';
 import Python from '../Python';
 
@@ -39,7 +39,8 @@ export default class Platformio {
     private env: NodeJS.ProcessEnv,
     private logger: LoggerService,
     private python: Python
-  ) {}
+  ) {
+  }
 
   async install(onUpdate: OnOutputFunc = NoOpFunc): Promise<CommandResult> {
     return this.python.runPythonScript(this.getPlatformioPath, [], onUpdate);
@@ -48,12 +49,6 @@ export default class Platformio {
   async checkCore(): Promise<CommandResult> {
     const cmdArgs = ['check', 'core'];
     return this.python.runPythonScript(this.getPlatformioPath, cmdArgs);
-  }
-
-  async verifyDependencies(): Promise<boolean> {
-    const pio = await this.checkCore();
-    const py = await this.python.checkPython();
-    return pio.success && py.success;
   }
 
   async getPlatformioState(): Promise<PlatformioCoreState> {
@@ -117,7 +112,7 @@ export default class Platformio {
     }
 
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    let { platformio_exe } = state;
+    let {platformio_exe} = state;
     // if using shell, surround exe in quotes in case path has a space in it
     if (options.shell) {
       platformio_exe = `"${platformio_exe}"`;

@@ -5,7 +5,7 @@ import { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 import UserDefineKey from './Enum/UserDefineKey';
 import UploadType from '../Platformio/Enum/UploadType';
 
-interface UserDefinesCompatiblityResult {
+interface UserDefinesCompatibilityResult {
   compatible: boolean;
   incompatibleKeys: string[];
 }
@@ -16,7 +16,7 @@ export default class FirmwareBuilder {
   async checkDefaultUserDefinesCompatibilityAtPath(
     firmwarePath: string,
     keys: UserDefineKey[]
-  ): Promise<UserDefinesCompatiblityResult> {
+  ): Promise<UserDefinesCompatibilityResult> {
     const userDefinesPath = path.join(firmwarePath, 'user_defines.txt');
     const userDefinesTxt = await fs.promises.readFile(userDefinesPath, 'utf8');
     return this.checkDefaultUserDefinesCompatibility(userDefinesTxt, keys);
@@ -25,7 +25,7 @@ export default class FirmwareBuilder {
   async checkDefaultUserDefinesCompatibility(
     userDefinesTxt: string,
     keys: UserDefineKey[]
-  ): Promise<UserDefinesCompatiblityResult> {
+  ): Promise<UserDefinesCompatibilityResult> {
     const incompatibleKeys = keys.filter(
       (key) => userDefinesTxt.indexOf(key) === -1
     );
@@ -61,6 +61,30 @@ export default class FirmwareBuilder {
     await fs.promises.writeFile(userDefinesPath, userDefinesTxt);
   }
 
+  // hotfix for https://github.com/ExpressLRS/ExpressLRS/pull/1911
+  async removeStaleBinaries(projectDir: string, environment: string) {
+    try {
+      const paths = [
+        path.join(projectDir, '.pio', 'build', environment, 'firmware.elrs'),
+        path.join(projectDir, '.pio', 'build', environment, 'backpack.bin'),
+        path.join(projectDir, '.pio', 'build', environment, 'firmware.bin'),
+      ];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const location of paths) {
+        if (fs.existsSync(location)) {
+          this.logger?.log('removing stale bin', {
+            location,
+          });
+          fs.unlinkSync(location);
+        }
+      }
+    } catch (e) {
+      this.logger.error('failed to unlink stale binaries', undefined, {
+        err: e,
+      });
+    }
+  }
+
   async build(
     target: string,
     userDefines: string,
@@ -68,6 +92,7 @@ export default class FirmwareBuilder {
     onOutput: OnOutputFunc = NoOpFunc
   ): Promise<CommandResult> {
     await this.storeUserDefines(firmwarePath, userDefines);
+    await this.removeStaleBinaries(firmwarePath, target);
     return this.platformio.build(firmwarePath, target, onOutput);
   }
 
@@ -80,6 +105,7 @@ export default class FirmwareBuilder {
     onOutput: OnOutputFunc = NoOpFunc
   ): Promise<CommandResult> {
     await this.storeUserDefines(firmwarePath, userDefines);
+    await this.removeStaleBinaries(firmwarePath, target);
     return this.platformio.flash(
       firmwarePath,
       target,
