@@ -118,23 +118,6 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               </p>
             </div>
           );
-        case UserDefineKey.WS2812_IS_GRB:
-          return (
-            <div>
-              <p>
-                Enable this if your LED is GRB. If this is disabled your led
-                will be used in RGB configuration.
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
         case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
           return (
             <div>
@@ -397,25 +380,6 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
                   url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.USE_TX_BACKPACK:
-          return (
-            <div>
-              <p>
-                Enables code for talking to a connected backpack on the TX
-                module, and associated Lua params The device target should
-                enable this automatically for devices that come with this, but
-                can be added to any device.
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>

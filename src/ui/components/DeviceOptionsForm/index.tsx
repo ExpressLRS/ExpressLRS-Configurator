@@ -114,12 +114,10 @@ const userDefinesToCategories = (
       UserDefineKey.HOME_WIFI_PASSWORD,
     ],
     [UserDefineCategory.OtherOptions]: [
-      UserDefineKey.USE_TX_BACKPACK,
       UserDefineKey.JUST_BEEP_ONCE,
       UserDefineKey.DISABLE_STARTUP_BEEP,
       UserDefineKey.DISABLE_ALL_BEEPS,
       UserDefineKey.MY_STARTUP_MELODY,
-      UserDefineKey.WS2812_IS_GRB,
     ],
   };
 

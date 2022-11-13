@@ -20,8 +20,7 @@
       "UART_INVERTED",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD",
-      "WS2812_IS_GRB"
+      "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "",
     "deviceType": "ExpressLRS",
@@ -56,7 +55,6 @@
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
       "LOCK_ON_FIRST_CONNECTION",
-      "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",

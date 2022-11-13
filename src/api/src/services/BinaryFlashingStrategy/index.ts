@@ -236,8 +236,6 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
             flags.push(['--r9mm-mini-sbus']);
             break;
           // not supported
-          case UserDefineKey.USE_TX_BACKPACK:
-          case UserDefineKey.WS2812_IS_GRB:
           case UserDefineKey.DEVICE_NAME:
             break;
           default:

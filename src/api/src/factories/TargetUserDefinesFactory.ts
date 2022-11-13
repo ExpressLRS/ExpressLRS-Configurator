@@ -67,8 +67,6 @@ export default class TargetUserDefinesFactory {
       case UserDefineKey.RCVR_INVERT_TX:
         return UserDefine.Boolean(UserDefineKey.RCVR_INVERT_TX);
       // Other options
-      case UserDefineKey.USE_TX_BACKPACK:
-        return UserDefine.Boolean(UserDefineKey.USE_TX_BACKPACK);
       case UserDefineKey.JUST_BEEP_ONCE:
         return UserDefine.Boolean(UserDefineKey.JUST_BEEP_ONCE);
       case UserDefineKey.DISABLE_ALL_BEEPS:
@@ -77,8 +75,6 @@ export default class TargetUserDefinesFactory {
         return UserDefine.Boolean(UserDefineKey.DISABLE_STARTUP_BEEP);
       case UserDefineKey.MY_STARTUP_MELODY:
         return UserDefine.Text(UserDefineKey.MY_STARTUP_MELODY);
-      case UserDefineKey.WS2812_IS_GRB:
-        return UserDefine.Boolean(UserDefineKey.WS2812_IS_GRB);
       // Network
       case UserDefineKey.HOME_WIFI_SSID:
         return UserDefine.Text(UserDefineKey.HOME_WIFI_SSID, '', false, true);
