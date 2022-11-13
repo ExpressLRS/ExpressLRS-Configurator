@@ -4,6 +4,7 @@ import Platformio from '../Platformio';
 import { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 import UserDefineKey from './Enum/UserDefineKey';
 import UploadType from '../Platformio/Enum/UploadType';
+import { LoggerService } from '../../logger';
 
 interface UserDefinesCompatibilityResult {
   compatible: boolean;
@@ -11,7 +12,7 @@ interface UserDefinesCompatibilityResult {
 }
 
 export default class FirmwareBuilder {
-  constructor(private platformio: Platformio) {}
+  constructor(private platformio: Platformio, private logger: LoggerService) {}
 
   async checkDefaultUserDefinesCompatibilityAtPath(
     firmwarePath: string,
@@ -72,7 +73,7 @@ export default class FirmwareBuilder {
       // eslint-disable-next-line no-restricted-syntax
       for (const location of paths) {
         if (fs.existsSync(location)) {
-          this.logger?.log('removing stale bin', {
+          this.logger.log('removing stale bin', {
             location,
           });
           fs.unlinkSync(location);

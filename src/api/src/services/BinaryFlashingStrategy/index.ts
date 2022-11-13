@@ -6,9 +6,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import rimraf from 'rimraf';
 import cloneDeep from 'lodash/cloneDeep';
-import Crypto from 'crypto';
 import semver from 'semver';
-import FormData from 'form-data';
 import UserDefine from '../../models/UserDefine';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import Mutex from '../../library/Mutex';
@@ -23,22 +21,19 @@ import {
   FlashingStrategy,
   IsCompatibleArgs,
 } from '../FlashingStrategyLocator/FlashingStrategy';
-import ConfigureFirmware from '../../library/ConfigureFirmware';
-import { Options } from '../../library/ConfigureFirmware/Options';
-import { Config } from '../../library/ConfigureFirmware/Config';
-import Domain from '../../library/ConfigureFirmware/Domain';
-import Target from '../../models/Target';
-import { Targets } from '../../library/ConfigureFirmware/Targets';
 import TargetArgs from '../../graphql/args/Target';
 import GitRepository from '../../graphql/inputs/GitRepositoryInput';
 import Device from '../../models/Device';
 import { UserDefineFilters } from '../UserDefinesLoader';
-import FlashingMethod from '../../models/enum/FlashingMethod';
-import DeviceType from '../../models/enum/DeviceType';
-import TargetUserDefinesFactory from '../../factories/TargetUserDefinesFactory';
 import BuildJobType from '../../models/enum/BuildJobType';
-import { FirmwareFiles } from '../../library/ConfigureFirmware/FirmwareFiles';
 import BuildFlashFirmwareResult from '../../graphql/objects/BuildFlashFirmwareResult';
+import Python from '../../library/Python';
+import {
+  findGitExecutable,
+  GitFirmwareDownloader,
+} from '../../library/FirmwareDownloader';
+import DeviceDescriptionsLoader from './DeviceDescriptionsLoader';
+import FlashingMethod from '../../models/enum/FlashingMethod';
 
 const maskSensitiveData = (haystack: string): string => {
   const needles = [
@@ -83,12 +78,14 @@ const maskBuildFlashFirmwareParams = (
 export default class BinaryFlashingStrategyService implements FlashingStrategy {
   readonly name: string = 'BinaryFlashingStrategy';
 
-  mutex: Mutex;
+  private mutex: Mutex;
 
   constructor(
     private PATH: string,
     private firmwaresPath: string,
     private pubSub: PubSubEngine,
+    private python: Python,
+    private deviceDescriptionsLoader: DeviceDescriptionsLoader,
     private logger: LoggerService
   ) {
     this.mutex = new Mutex();
@@ -118,271 +115,21 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     });
   }
 
-  async getTargets(workingDirectory: string) {
-    const targetsFile = path.join(workingDirectory, 'hardware', 'targets.json');
-    this.logger.log(`Loading targets from ${targetsFile}`);
-    const targets = JSON.parse(
-      await fs.promises.readFile(targetsFile, 'utf-8')
-    ) as Targets;
-    return targets;
-  }
-
-  async getConfig(workingDirectory: string, devicePath: string) {
-    const [manufacturer, type, product] = devicePath.split('.');
-    const targets = await this.getTargets(workingDirectory);
-    let config: Config;
-    if (type === 'rx_2400') {
-      config = targets[manufacturer].rx_2400[product];
-    } else if (type === 'rx_900') {
-      config = targets[manufacturer].rx_900[product];
-    } else if (type === 'tx_2400') {
-      config = targets[manufacturer].tx_2400[product];
-    } else if (type === 'tx_900') {
-      config = targets[manufacturer].tx_900[product];
-    } else {
-      throw new Error(`Unknown type ${type} encountered`);
-    }
-    return config;
-  }
-
-  uploadMethodToFlashingMethod(uploadMethod: string): FlashingMethod {
-    switch (uploadMethod.toLowerCase()) {
-      case 'betaflight':
-        return FlashingMethod.BetaflightPassthrough;
-        break;
-      case 'dfu':
-        return FlashingMethod.DFU;
-        break;
-      case 'etx':
-        return FlashingMethod.EdgeTxPassthrough;
-        break;
-      case 'stlink':
-        return FlashingMethod.STLink;
-        break;
-      case 'uart':
-        return FlashingMethod.UART;
-        break;
-      case 'wifi':
-        return FlashingMethod.WIFI;
-        break;
-
-      default:
-        throw new Error(`Upload Method ${uploadMethod} Not Recognized!`);
-        break;
-    }
-  }
-
-  configToDevice(id: string, category: string, config: Config): Device {
-    return new Device(
-      id,
-      config.product_name,
-      category,
-      config.upload_methods.map((uploadMethod) => {
-        const targetName = `${id}.${uploadMethod}`;
-        return new Target(
-          targetName,
-          targetName,
-          this.uploadMethodToFlashingMethod(uploadMethod)
-        );
-      }),
-      [],
-      DeviceType.ExpressLRS,
-      true
-    );
-  }
-
-  verifyConfig(id: string, config: Config) {
-    let missingFields = '';
-    const logMissingField = (field: string) => {
-      if (missingFields.length > 0) {
-        missingFields += ', ';
-      }
-      missingFields += field;
-    };
-    let valid = true;
-    if (!config.firmware) {
-      logMissingField('firmware');
-      valid = false;
-    }
-    if (!config.platform) {
-      logMissingField('platform');
-      valid = false;
-    }
-    if (!config.product_name) {
-      logMissingField('product_name');
-      valid = false;
-    }
-    if (!config.upload_methods) {
-      logMissingField('upload_methods');
-      valid = false;
-    }
-
-    if (!valid) {
-      this.logger.error(
-        `${id} in targets file is not a valid Config, missing fields ${missingFields}`
-      );
-    }
-    return valid;
-  }
-
   async availableFirmwareTargets(
     args: TargetArgs,
     gitRepository: GitRepository
   ): Promise<Device[]> {
-    const targets = await this.getTargets(this.firmwaresPath);
-    const devices: Device[] = [];
-    Object.keys(targets).forEach((manufacturerKey) => {
-      const manufacturerConfig = targets[manufacturerKey];
-      if (manufacturerConfig.rx_2400) {
-        Object.keys(manufacturerConfig.rx_2400).forEach((deviceKey) => {
-          const deviceConfig = manufacturerConfig.rx_2400[deviceKey];
-          const id = `${manufacturerKey}.rx_2400.${deviceKey}`;
-
-          if (this.verifyConfig(id, deviceConfig)) {
-            const device = this.configToDevice(
-              id,
-              manufacturerConfig.name,
-              deviceConfig
-            );
-            devices.push(device);
-          }
-        });
-      }
-      if (manufacturerConfig.rx_900) {
-        Object.keys(manufacturerConfig.rx_900).forEach((deviceKey) => {
-          const deviceConfig = manufacturerConfig.rx_900[deviceKey];
-          const id = `${manufacturerKey}.rx_900.${deviceKey}`;
-
-          if (this.verifyConfig(id, deviceConfig)) {
-            const device = this.configToDevice(
-              id,
-              manufacturerConfig.name,
-              deviceConfig
-            );
-            devices.push(device);
-          }
-        });
-      }
-      if (manufacturerConfig.tx_2400) {
-        Object.keys(manufacturerConfig.tx_2400).forEach((deviceKey) => {
-          const deviceConfig = manufacturerConfig.tx_2400[deviceKey];
-          const id = `${manufacturerKey}.tx_2400.${deviceKey}`;
-
-          if (this.verifyConfig(id, deviceConfig)) {
-            const device = this.configToDevice(
-              id,
-              manufacturerConfig.name,
-              deviceConfig
-            );
-            devices.push(device);
-          }
-        });
-      }
-      if (manufacturerConfig.tx_900) {
-        Object.keys(manufacturerConfig.tx_900).forEach((deviceKey) => {
-          const deviceConfig = manufacturerConfig.tx_900[deviceKey];
-          const id = `${manufacturerKey}.tx_900.${deviceKey}`;
-
-          if (this.verifyConfig(id, deviceConfig)) {
-            const device = this.configToDevice(
-              id,
-              manufacturerConfig.name,
-              deviceConfig
-            );
-            devices.push(device);
-          }
-        });
-      }
-    });
-    return devices;
+    return this.deviceDescriptionsLoader.loadTargetsList(args, gitRepository);
   }
 
   async targetDeviceOptions(
     args: UserDefineFilters,
     gitRepository: GitRepository
   ): Promise<UserDefine[]> {
-    const config = await this.getConfig(this.firmwaresPath, args.target);
-    const userDefines: UserDefine[] = [];
-    const targetUserDefinesFactory = new TargetUserDefinesFactory();
-    userDefines.push(
-      targetUserDefinesFactory.build(UserDefineKey.BINDING_PHRASE)
+    return this.deviceDescriptionsLoader.targetDeviceOptions(
+      args,
+      gitRepository
     );
-    if (args.target.includes('_2400.')) {
-      userDefines.push(
-        targetUserDefinesFactory.build(
-          UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400
-        )
-      );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400)
-      );
-    }
-    if (args.target.includes('_900.')) {
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_AU_915)
-      );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_EU_868)
-      );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_FCC_915)
-      );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_IN_866)
-      );
-    }
-    if (['esp32', 'esp8285'].includes(config.platform)) {
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.HOME_WIFI_SSID)
-      );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.HOME_WIFI_SSID)
-      );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.AUTO_WIFI_ON_INTERVAL)
-      );
-    }
-    if (config.features && config.features.includes('buzzer')) {
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.DISABLE_ALL_BEEPS)
-      );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.JUST_BEEP_ONCE)
-      );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.MY_STARTUP_MELODY)
-      );
-    }
-    if (config.features && config.features.includes('unlock-higher-power')) {
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.UNLOCK_HIGHER_POWER)
-      );
-    }
-    if (config.features && config.features.includes('sbus-uart')) {
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.USE_R9MM_R9MINI_SBUS)
-      );
-    }
-    if (args.target.includes('.tx_')) {
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.TLM_REPORT_INTERVAL_MS)
-      );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.UART_INVERTED)
-      );
-    }
-    if (args.target.includes('.rx_')) {
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.RCVR_UART_BAUD)
-      );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.RCVR_INVERT_TX)
-      );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.LOCK_ON_FIRST_CONNECTION)
-      );
-    }
-    return userDefines;
   }
 
   private osUsernameContainsAmpersand(): boolean {
@@ -395,14 +142,16 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     return false;
   }
 
+  // @TODO: check remote build cache
+  // @TODO: checkout git repository for a full check
   async isCompatible(
     params: IsCompatibleArgs,
     gitRepositoryUrl: string,
-    gitRepositorySrcFolder: string
+    _gitRepositorySrcFolder: string
   ) {
     if (
       gitRepositoryUrl.toLowerCase() ===
-        'https://github.com/ExpressLRS/ExpressLRS'.toLowerCase() &&
+        'https://github.com/expresslrs/expresslrs'.toLowerCase() &&
       params.source === FirmwareSource.GitTag &&
       semver.compare(params.gitTag, '3.0.0') >= 0
     ) {
@@ -410,6 +159,93 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     }
 
     return false;
+  }
+
+  userDefinesToFlags(userDefines: UserDefine[]): string[][] {
+    const flags: string[][] = [];
+    userDefines
+      .filter(({ enabled }) => enabled)
+      .forEach((userDefine) => {
+        switch (userDefine.key) {
+          case UserDefineKey.BINDING_PHRASE:
+            flags.push(['--phrase', userDefine.value!]);
+            break;
+          case UserDefineKey.REGULATORY_DOMAIN_AU_433:
+            flags.push(['--domain', 'au_433']);
+            break;
+          case UserDefineKey.REGULATORY_DOMAIN_EU_433:
+            flags.push(['--domain', 'eu_433']);
+            break;
+          case UserDefineKey.REGULATORY_DOMAIN_AU_915:
+            flags.push(['--domain', 'au_915']);
+            break;
+          case UserDefineKey.REGULATORY_DOMAIN_FCC_915:
+            flags.push(['--domain', 'fcc_915']);
+            break;
+          case UserDefineKey.REGULATORY_DOMAIN_EU_868:
+            flags.push(['--domain', 'eu_868']);
+            break;
+          case UserDefineKey.REGULATORY_DOMAIN_IN_866:
+            flags.push(['--domain', 'in_866']);
+            break;
+          case UserDefineKey.REGULATORY_DOMAIN_ISM_2400:
+            break;
+          case UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400:
+            flags.push(['--lbt']);
+            break;
+          case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
+            flags.push(['--auto-wifi', userDefine.value!]);
+            break;
+          case UserDefineKey.HOME_WIFI_SSID:
+            flags.push(['--ssid', userDefine.value!]);
+            break;
+          case UserDefineKey.HOME_WIFI_PASSWORD:
+            flags.push(['--password', userDefine.value!]);
+            break;
+          case UserDefineKey.LOCK_ON_FIRST_CONNECTION:
+            break;
+          case UserDefineKey.JUST_BEEP_ONCE:
+            flags.push(['--buzzer-mode', 'one-beep']);
+            break;
+          case UserDefineKey.DISABLE_ALL_BEEPS:
+            flags.push(['--buzzer-mode', 'quiet']);
+            break;
+          case UserDefineKey.DISABLE_STARTUP_BEEP:
+            flags.push(['--buzzer-mode', 'quiet']);
+            break;
+          case UserDefineKey.MY_STARTUP_MELODY:
+            flags.push(['--buzzer-mode', 'custom']);
+            flags.push(['--buzzer-melody', userDefine.key]);
+            break;
+          case UserDefineKey.RCVR_INVERT_TX:
+            flags.push(['--invert-tx']);
+            break;
+          case UserDefineKey.RCVR_UART_BAUD:
+            flags.push(['--rx-baud', userDefine.value!]);
+            break;
+          case UserDefineKey.TLM_REPORT_INTERVAL_MS:
+            flags.push(['--tlm-report', userDefine.value!]);
+            break;
+          case UserDefineKey.UART_INVERTED:
+            flags.push(['--uart-inverted']);
+            break;
+          case UserDefineKey.UNLOCK_HIGHER_POWER:
+            flags.push(['--unlock-higher-power']);
+            break;
+          case UserDefineKey.USE_R9MM_R9MINI_SBUS:
+            flags.push(['--r9mm-mini-sbus']);
+            break;
+          // not supported
+          case UserDefineKey.USE_TX_BACKPACK:
+          case UserDefineKey.WS2812_IS_GRB:
+          case UserDefineKey.DEVICE_NAME:
+            break;
+          default:
+            const exhaustiveCheck: never = userDefine.key;
+            throw new Error(`Unhandled color case: ${exhaustiveCheck}`);
+        }
+      });
+    return flags;
   }
 
   async buildFlashFirmware(
@@ -452,203 +288,148 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         BuildFirmwareStep.DOWNLOADING_FIRMWARE
       );
 
+      let gitPath = '';
+      try {
+        gitPath = await findGitExecutable(this.PATH);
+      } catch (e) {
+        this.logger?.error('failed to find git', undefined, {
+          PATH: this.PATH,
+          err: e,
+        });
+        return new BuildFlashFirmwareResult(
+          false,
+          `${e}`,
+          BuildFirmwareErrorType.GitDependencyError
+        );
+      }
+      this.logger?.log('git path', {
+        gitPath,
+      });
+
+      const firmwareDownload = new GitFirmwareDownloader(
+        {
+          baseDirectory: this.firmwaresPath,
+          gitBinaryLocation: gitPath,
+        },
+        this.logger
+      );
+
+      await this.updateProgress(
+        BuildProgressNotificationType.Info,
+        BuildFirmwareStep.DOWNLOADING_FIRMWARE
+      );
+      let firmwarePath = '';
+      switch (params.firmware.source) {
+        case FirmwareSource.GitTag:
+          const tagResult = await firmwareDownload.checkoutTag(
+            gitRepositoryUrl,
+            gitRepositorySrcFolder,
+            params.firmware.gitTag
+          );
+          firmwarePath = tagResult.path;
+          break;
+        case FirmwareSource.GitBranch:
+          const branchResult = await firmwareDownload.checkoutBranch(
+            gitRepositoryUrl,
+            gitRepositorySrcFolder,
+            params.firmware.gitBranch
+          );
+          firmwarePath = branchResult.path;
+          break;
+        case FirmwareSource.GitCommit:
+          const commitResult = await firmwareDownload.checkoutCommit(
+            gitRepositoryUrl,
+            gitRepositorySrcFolder,
+            params.firmware.gitCommit
+          );
+          firmwarePath = commitResult.path;
+          break;
+        case FirmwareSource.Local:
+          firmwarePath = params.firmware.localPath;
+          break;
+        case FirmwareSource.GitPullRequest:
+          if (params.firmware.gitPullRequest) {
+            const pullRequestResult = await firmwareDownload.checkoutCommit(
+              gitRepositoryUrl,
+              gitRepositorySrcFolder,
+              params.firmware.gitPullRequest.headCommitHash
+            );
+            firmwarePath = pullRequestResult.path;
+          }
+          break;
+        default:
+          throw new Error(
+            `unsupported firmware source: ${params.firmware.source}`
+          );
+      }
+      this.logger?.log('firmware path', {
+        firmwarePath,
+        gitRepositoryUrl,
+      });
+
       await this.updateProgress(
         BuildProgressNotificationType.Info,
         BuildFirmwareStep.FLASHING_FIRMWARE
       );
-      const [manufacturer, type, device, uploadMethod] =
-        params.target.split('.');
-      const flashingMethod = this.uploadMethodToFlashingMethod(uploadMethod);
-      const config = await this.getConfig(this.firmwaresPath, params.target);
-      // need a better way to do this, it should really be included in the config
-      const deviceType = params.target.includes('.tx_') ? 'TX' : 'RX';
-      const radioType = params.target.includes('_900.') ? 'sx127x' : 'sx128x';
 
-      // assign some default values
-      const options: Options = {
-        'wifi-on-interval': 60,
-      };
+      const config = await this.deviceDescriptionsLoader.getDeviceConfig(
+        {
+          ...params.firmware,
+          target: params.target,
+        },
+        {
+          url: gitRepositoryUrl,
+          srcFolder: gitRepositorySrcFolder,
+        }
+      );
 
-      if (deviceType === 'RX') {
-        options['rcvr-uart-baud'] = 420000;
-        options['rcvr-invert-tx'] = false;
-        options['lock-on-first-connection'] = false;
-      } else {
-        options['tlm-interval'] = 240;
+      let regulatoryDomain: 'LBT' | 'FCC' = 'FCC';
+      const regDomainCE2400 = params.userDefines.find(
+        ({ key }) => key === UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400
+      );
+      if (regDomainCE2400?.enabled) {
+        regulatoryDomain = 'LBT';
       }
 
-      let fcclbt = 'FCC';
-      params.userDefines.forEach((userDefine) => {
-        if (
-          userDefine.key === UserDefineKey.AUTO_WIFI_ON_INTERVAL &&
-          userDefine.value &&
-          userDefine.enabled
-        ) {
-          const wifiOnInterval = Number.parseInt(userDefine.value, 10);
-          if (!Number.isNaN(wifiOnInterval)) {
-            options['wifi-on-interval'] = wifiOnInterval;
-          }
-        } else if (
-          userDefine.key === UserDefineKey.BINDING_PHRASE &&
-          userDefine.value &&
-          userDefine.enabled
-        ) {
-          const bindingPhraseFull = `-DMY_BINDING_PHRASE="${userDefine.value}"`;
-          const bindingPhraseHashed = new Uint8Array(
-            Crypto.createHash('md5').update(bindingPhraseFull).digest()
-          );
-          options.uid = Array.from(bindingPhraseHashed.subarray(0, 6));
-        } else if (
-          userDefine.key === UserDefineKey.DISABLE_ALL_BEEPS &&
-          userDefine.enabled
-        ) {
-          options.beeptype = 0;
-        } else if (
-          userDefine.key === UserDefineKey.JUST_BEEP_ONCE &&
-          userDefine.enabled
-        ) {
-          options.beeptype = 1;
-        } else if (
-          userDefine.key === UserDefineKey.MY_STARTUP_MELODY &&
-          userDefine.enabled &&
-          userDefine.value
-        ) {
-          options.beeptype = 4;
-          // TODO: Fix melody parsing, importing module bluejay-rtttl-parse gives the error Unexpected token 'export'
-          // options.melody = MelodyParser.parseToArray(userDefine.value);
-        } else if (
-          userDefine.key === UserDefineKey.REGULATORY_DOMAIN_AU_433 &&
-          userDefine.enabled
-        ) {
-          options.domain = Domain.AU433;
-        } else if (
-          userDefine.key === UserDefineKey.REGULATORY_DOMAIN_AU_915 &&
-          userDefine.enabled
-        ) {
-          options.domain = Domain.AU915;
-        } else if (
-          userDefine.key === UserDefineKey.REGULATORY_DOMAIN_EU_433 &&
-          userDefine.enabled
-        ) {
-          options.domain = Domain.EU433;
-        } else if (
-          userDefine.key === UserDefineKey.REGULATORY_DOMAIN_EU_868 &&
-          userDefine.enabled
-        ) {
-          options.domain = Domain.EU868;
-        } else if (
-          userDefine.key === UserDefineKey.REGULATORY_DOMAIN_FCC_915 &&
-          userDefine.enabled
-        ) {
-          options.domain = Domain.FCC915;
-        } else if (
-          userDefine.key === UserDefineKey.REGULATORY_DOMAIN_IN_866 &&
-          userDefine.enabled
-        ) {
-          options.domain = Domain.IN866;
-        } else if (
-          userDefine.key === UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400 &&
-          userDefine.enabled
-        ) {
-          fcclbt = 'LBT';
-        } else if (
-          userDefine.key === UserDefineKey.REGULATORY_DOMAIN_ISM_2400 &&
-          userDefine.enabled
-        ) {
-          fcclbt = 'FCC';
-        } else if (userDefine.key === UserDefineKey.LOCK_ON_FIRST_CONNECTION) {
-          options['lock-on-first-connection'] = userDefine.enabled;
-        } else if (
-          userDefine.key === UserDefineKey.RCVR_UART_BAUD &&
-          userDefine.enabled &&
-          userDefine.value
-        ) {
-          const RCVR_UART_BAUD = Number.parseInt(userDefine.value, 10);
-          options['rcvr-uart-baud'] = RCVR_UART_BAUD;
-        } else if (userDefine.key === UserDefineKey.RCVR_INVERT_TX) {
-          options['rcvr-invert-tx'] = userDefine.enabled;
-        } else if (
-          userDefine.key === UserDefineKey.TLM_REPORT_INTERVAL_MS &&
-          userDefine.enabled &&
-          userDefine.value
-        ) {
-          const TLM_REPORT_INTERVAL_MS = Number.parseInt(userDefine.value, 10);
-          options['tlm-interval'] = TLM_REPORT_INTERVAL_MS;
-        } else if (userDefine.key === UserDefineKey.UART_INVERTED) {
-          options['uart-inverted'] = userDefine.enabled;
-        } else if (userDefine.key === UserDefineKey.UNLOCK_HIGHER_POWER) {
-          options['unlock-higher-power'] = userDefine.enabled;
-        } else if (
-          userDefine.key === UserDefineKey.HOME_WIFI_PASSWORD &&
-          userDefine.enabled
-        ) {
-          options['wifi-password'] = userDefine.value;
-        } else if (
-          userDefine.key === UserDefineKey.HOME_WIFI_SSID &&
-          userDefine.enabled
-        ) {
-          options['wifi-ssid'] = userDefine.value;
-        } else if (userDefine.key === UserDefineKey.USE_R9MM_R9MINI_SBUS) {
-          options['r9mm-mini-sbus'] = userDefine.enabled;
-        }
-      });
-      const folder = this.firmwaresPath;
-      const firmware = await ConfigureFirmware.getFirmware(
-        deviceType,
-        radioType,
-        config,
-        options,
-        folder,
-        fcclbt
-      );
+      const flags: string[][] = [];
+      const [manufacturer, subType, device, uploadMethod] =
+        params.target.split('.');
+      flags.push(['--target', `${manufacturer}.${subType}.${device}`]);
+      if (subType.toLocaleLowerCase().includes('tx_')) {
+        flags.push(['--tx']);
+      }
+      flags.push(...this.userDefinesToFlags(params.userDefines));
+
       if (params.type === BuildJobType.Build) {
-        if (firmware.firmware) {
-          const firmwareBinPath = path.join(
-            this.firmwaresPath,
-            `${this.generateFirmwareName(config.product_name, params)}.bin`
-          );
-          fs.promises.writeFile(
-            firmwareBinPath,
-            Buffer.from(firmware.firmware.data.buffer)
-          );
-          return new BuildFlashFirmwareResult(
-            true,
-            undefined,
-            undefined,
-            firmwareBinPath
-          );
-        }
-      } else if (
+        const firmwareBinPath = path.join(
+          this.firmwaresPath,
+          `${this.generateFirmwareName(config.product_name, params)}.bin`
+        );
+        fs.promises.writeFile(firmwareBinPath, Buffer.from([]));
+        return new BuildFlashFirmwareResult(
+          true,
+          undefined,
+          undefined,
+          firmwareBinPath
+        );
+      }
+
+      if (params.type === BuildJobType.ForceFlash) {
+        flags.push(['--force']);
+      }
+
+      if (
         params.type === BuildJobType.BuildAndFlash ||
         params.type === BuildJobType.ForceFlash
       ) {
-        const forceFlash = params.type === BuildJobType.ForceFlash;
+        flags.push(['--flash', uploadMethod]);
 
-        if (flashingMethod === FlashingMethod.WIFI) {
-          try {
-            const response = await this.WIFI(
-              params.serialDevice ?? '10.0.0.1',
-              firmware,
-              forceFlash
-            );
-
-            return response;
-          } catch (error: any) {
-            this.logger.error(error);
-            this.updateLogs(error.message);
-            return new BuildFlashFirmwareResult(false, error);
-          }
-        }
-        const message = `Upload Method ${flashingMethod} is not currently supported`;
-        this.updateLogs(message);
-        return new BuildFlashFirmwareResult(false, message);
-      } else {
-        const message = `Build Job Type ${params.type} is not currently supported`;
-        this.updateLogs(message);
-        return new BuildFlashFirmwareResult(false, message);
+        return new BuildFlashFirmwareResult(true, '');
       }
 
-      return new BuildFlashFirmwareResult(true);
+      const message = `Build Job Type ${params.type} is not currently supported`;
+      this.updateLogs(message);
+      return new BuildFlashFirmwareResult(false, message);
     } catch (e) {
       this.logger?.error('generic error', undefined, {
         err: e,
@@ -686,152 +467,6 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       default:
         return `${firmwareName}`;
     }
-  }
-
-  async WIFI(
-    host: string,
-    firmware: FirmwareFiles,
-    force: boolean
-  ): Promise<BuildFlashFirmwareResult> {
-    /// https://wanago.io/2019/03/18/node-js-typescript-6-sending-http-requests-understanding-multipart-form-data/
-    return new Promise((resolve) => {
-      const output: string[] = [];
-
-      const form = new FormData();
-
-      if (force) {
-        console.log('forcing flash');
-        form.append('force', '1');
-      }
-      const buffer = Buffer.from(firmware.firmware!.data);
-      let uploadSize = 0;
-      let uploaded = 0;
-
-      form.append('data', buffer);
-
-      // get upload size
-      form.getLength((err, size) => {
-        console.log(`upload size: ${err} ${size}`);
-        uploadSize = size;
-      });
-
-      const options = {
-        host,
-        path: '/update',
-        headers: {
-          'X-FileSize': buffer.byteLength,
-        },
-      };
-
-      this.updateLogs(`starting upload to ${host}`);
-      const req = form.submit(options, (err, response) => {
-        if (err) {
-          this.logger.error(err.message);
-          resolve(
-            new BuildFlashFirmwareResult(
-              false,
-              err.message,
-              BuildFirmwareErrorType.FlashError
-            )
-          );
-
-          return;
-        }
-
-        const { statusCode, statusMessage, headers } = response;
-        console.log(req.getHeaders()); // 200
-        console.log(req.path); // 200
-        console.log(statusCode); // 200
-        console.log(statusMessage); // 200
-        const chunks: any = [];
-        response.on('data', (chunk) => {
-          chunks.push(chunk);
-        });
-        response.on('end', () => {
-          console.log('response end');
-          const data = Buffer.concat(chunks).toString();
-          const result = {
-            data,
-            headers,
-          };
-
-          console.log(result);
-          this.updateLogs(`response from ${host}`);
-          this.updateLogs(result.data);
-          if (response.statusCode === 200) {
-            let json: any = {};
-            try {
-              json = JSON.parse(data);
-            } catch (e) {
-              this.logger.error(e);
-              console.group(e);
-            }
-
-            if (json.status === 'ok') {
-              resolve(
-                new BuildFlashFirmwareResult(
-                  true,
-                  data,
-                  BuildFirmwareErrorType.FlashError
-                )
-              );
-            } else if (json.status === 'mismatch') {
-              resolve(
-                new BuildFlashFirmwareResult(
-                  false,
-                  data.replaceAll(/<br{0,1}\s*\/{0,1}>/g, ''),
-                  BuildFirmwareErrorType.TargetMismatch
-                )
-              );
-            } else {
-              resolve(
-                new BuildFlashFirmwareResult(
-                  false,
-                  data,
-                  BuildFirmwareErrorType.FlashError
-                )
-              );
-            }
-          } else {
-            resolve(
-              new BuildFlashFirmwareResult(
-                false,
-                data,
-                BuildFirmwareErrorType.FlashError
-              )
-            );
-          }
-        });
-      });
-
-      req.on('error', (error) => {
-        console.log('req error');
-        this.logger.error(error.message);
-        this.updateLogs(error.message);
-        console.log(error); // 200
-        resolve(
-          new BuildFlashFirmwareResult(
-            false,
-            error.message,
-            BuildFirmwareErrorType.FlashError
-          )
-        );
-      });
-
-      form.on('data', (data) => {
-        console.log('data');
-        if (uploadSize > 0) {
-          uploaded += data.length;
-          const progress = (uploaded / uploadSize) * 100;
-          const progressMessage = `progress: ${progress.toLocaleString(
-            undefined,
-            { minimumFractionDigits: 0, maximumFractionDigits: 2 }
-          )}%`;
-          this.updateLogs(progressMessage);
-          // console.log(progressMessage);
-        }
-      });
-    });
   }
 
   async clearFirmwareFiles(): Promise<void> {

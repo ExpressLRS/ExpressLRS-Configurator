@@ -1,4 +1,3 @@
-import { RepeatOneSharp } from '@mui/icons-material';
 import { Octokit } from '@octokit/rest';
 import { Service } from 'typedi';
 import PullRequest from '../../models/PullRequest';
@@ -79,10 +78,11 @@ export default class OctopusGitHubClient implements IGitHubClient {
   }
 
   async getRelease(owner: string, repository: string, tag: string) {
-    const response = await this.client.repos.listReleases({
+    const response = await this.client.repos.getReleaseByTag({
       owner,
       repo: repository,
+      tag,
     });
-    return response.data.find((value) => value.tag_name === tag);
+    return response.data;
   }
 }

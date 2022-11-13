@@ -900,30 +900,28 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 >
                   Build
                 </Button>
-                {deviceTarget?.flashingMethod !== FlashingMethod.Radio && (
-                  <SplitButton
-                    sx={styles.button}
-                    size="large"
-                    variant="contained"
-                    options={[
-                      {
-                        label: 'Build & Flash',
-                        value: BuildJobType.BuildAndFlash,
-                      },
-                      {
-                        label: 'Force Flash',
-                        value: BuildJobType.ForceFlash,
-                      },
-                    ]}
-                    onButtonClick={(value: string | null) => {
-                      if (value === BuildJobType.BuildAndFlash) {
-                        onBuildAndFlash();
-                      } else if (value === BuildJobType.ForceFlash) {
-                        onForceFlash();
-                      }
-                    }}
-                  />
-                )}
+                <SplitButton
+                  sx={styles.button}
+                  size="large"
+                  variant="contained"
+                  options={[
+                    {
+                      label: 'Build & Flash',
+                      value: BuildJobType.BuildAndFlash,
+                    },
+                    {
+                      label: 'Force Flash',
+                      value: BuildJobType.ForceFlash,
+                    },
+                  ]}
+                  onButtonClick={(value: string | null) => {
+                    if (value === BuildJobType.BuildAndFlash) {
+                      onBuildAndFlash();
+                    } else if (value === BuildJobType.ForceFlash) {
+                      onForceFlash();
+                    }
+                  }}
+                />
               </div>
             </CardContent>
           </Card>
@@ -1072,9 +1070,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   currentJobType === BuildJobType.Build && (
                     <Alert sx={styles.buildNotification} severity="info">
                       <AlertTitle>Build notice</AlertTitle>
-                      {deviceTarget?.flashingMethod !== FlashingMethod.Radio
-                        ? 'Firmware binary file was opened in the file explorer'
-                        : "Firmware binary file was opened in the file explorer, copy the firmware file to your radios's SD card and flash it to the transmitter using EdgeTX/OpenTX"}
+                      Firmware binary file was opened in the file explorer
                     </Alert>
                   )}
               </CardContent>

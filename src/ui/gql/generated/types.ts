@@ -144,7 +144,6 @@ export enum FlashingMethod {
   DFU = 'DFU',
   EdgeTxPassthrough = 'EdgeTxPassthrough',
   Passthrough = 'Passthrough',
-  Radio = 'Radio',
   STLink = 'STLink',
   Stock_BL = 'Stock_BL',
   UART = 'UART',
@@ -386,27 +385,16 @@ export type UserDefineInput = {
 };
 
 export enum UserDefineKey {
-  ARM_CHANNEL = 'ARM_CHANNEL',
-  AUTO_WIFI_ON_BOOT = 'AUTO_WIFI_ON_BOOT',
   AUTO_WIFI_ON_INTERVAL = 'AUTO_WIFI_ON_INTERVAL',
   BINDING_PHRASE = 'BINDING_PHRASE',
-  BLE_HID_JOYSTICK = 'BLE_HID_JOYSTICK',
   DEVICE_NAME = 'DEVICE_NAME',
   DISABLE_ALL_BEEPS = 'DISABLE_ALL_BEEPS',
   DISABLE_STARTUP_BEEP = 'DISABLE_STARTUP_BEEP',
-  ENABLE_TELEMETRY = 'ENABLE_TELEMETRY',
-  FAST_SYNC = 'FAST_SYNC',
-  FEATURE_OPENTX_SYNC = 'FEATURE_OPENTX_SYNC',
-  FEATURE_OPENTX_SYNC_AUTOTUNE = 'FEATURE_OPENTX_SYNC_AUTOTUNE',
   HOME_WIFI_PASSWORD = 'HOME_WIFI_PASSWORD',
   HOME_WIFI_SSID = 'HOME_WIFI_SSID',
-  HYBRID_SWITCHES_8 = 'HYBRID_SWITCHES_8',
   JUST_BEEP_ONCE = 'JUST_BEEP_ONCE',
-  LOCK_ON_50HZ = 'LOCK_ON_50HZ',
   LOCK_ON_FIRST_CONNECTION = 'LOCK_ON_FIRST_CONNECTION',
   MY_STARTUP_MELODY = 'MY_STARTUP_MELODY',
-  NO_SYNC_ON_ARM = 'NO_SYNC_ON_ARM',
-  R9M_UNLOCK_HIGHER_POWER = 'R9M_UNLOCK_HIGHER_POWER',
   RCVR_INVERT_TX = 'RCVR_INVERT_TX',
   RCVR_UART_BAUD = 'RCVR_UART_BAUD',
   REGULATORY_DOMAIN_AU_433 = 'REGULATORY_DOMAIN_AU_433',
@@ -420,13 +408,8 @@ export enum UserDefineKey {
   TLM_REPORT_INTERVAL_MS = 'TLM_REPORT_INTERVAL_MS',
   UART_INVERTED = 'UART_INVERTED',
   UNLOCK_HIGHER_POWER = 'UNLOCK_HIGHER_POWER',
-  USE_500HZ = 'USE_500HZ',
-  USE_DIVERSITY = 'USE_DIVERSITY',
-  USE_DYNAMIC_POWER = 'USE_DYNAMIC_POWER',
-  USE_ESP8266_BACKPACK = 'USE_ESP8266_BACKPACK',
   USE_R9MM_R9MINI_SBUS = 'USE_R9MM_R9MINI_SBUS',
   USE_TX_BACKPACK = 'USE_TX_BACKPACK',
-  USE_UART2 = 'USE_UART2',
   WS2812_IS_GRB = 'WS2812_IS_GRB',
 }
 
@@ -825,6 +808,7 @@ export function useAvailableDevicesListQuery(
     AvailableDevicesListQueryVariables
   >(AvailableDevicesListDocument, options);
 }
+
 export function useAvailableDevicesListLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     AvailableDevicesListQuery,
@@ -837,6 +821,7 @@ export function useAvailableDevicesListLazyQuery(
     AvailableDevicesListQueryVariables
   >(AvailableDevicesListDocument, options);
 }
+
 export type AvailableDevicesListQueryHookResult = ReturnType<
   typeof useAvailableDevicesListQuery
 >;
@@ -917,6 +902,7 @@ export function useAvailableFirmwareTargetsQuery(
     AvailableFirmwareTargetsQueryVariables
   >(AvailableFirmwareTargetsDocument, options);
 }
+
 export function useAvailableFirmwareTargetsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     AvailableFirmwareTargetsQuery,
@@ -929,6 +915,7 @@ export function useAvailableFirmwareTargetsLazyQuery(
     AvailableFirmwareTargetsQueryVariables
   >(AvailableFirmwareTargetsDocument, options);
 }
+
 export type AvailableFirmwareTargetsQueryHookResult = ReturnType<
   typeof useAvailableFirmwareTargetsQuery
 >;
@@ -990,6 +977,7 @@ export function useAvailableMulticastDnsDevicesListQuery(
     AvailableMulticastDnsDevicesListQueryVariables
   >(AvailableMulticastDnsDevicesListDocument, options);
 }
+
 export function useAvailableMulticastDnsDevicesListLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     AvailableMulticastDnsDevicesListQuery,
@@ -1002,6 +990,7 @@ export function useAvailableMulticastDnsDevicesListLazyQuery(
     AvailableMulticastDnsDevicesListQueryVariables
   >(AvailableMulticastDnsDevicesListDocument, options);
 }
+
 export type AvailableMulticastDnsDevicesListQueryHookResult = ReturnType<
   typeof useAvailableMulticastDnsDevicesListQuery
 >;
@@ -1060,6 +1049,7 @@ export function useBuildFlashFirmwareMutation(
     BuildFlashFirmwareMutationVariables
   >(BuildFlashFirmwareDocument, options);
 }
+
 export type BuildFlashFirmwareMutationHookResult = ReturnType<
   typeof useBuildFlashFirmwareMutation
 >;
@@ -1104,6 +1094,7 @@ export function useBuildLogUpdatesSubscription(
     BuildLogUpdatesSubscriptionVariables
   >(BuildLogUpdatesDocument, options);
 }
+
 export type BuildLogUpdatesSubscriptionHookResult = ReturnType<
   typeof useBuildLogUpdatesSubscription
 >;
@@ -1146,6 +1137,7 @@ export function useBuildProgressNotificationsSubscription(
     BuildProgressNotificationsSubscriptionVariables
   >(BuildProgressNotificationsDocument, options);
 }
+
 export type BuildProgressNotificationsSubscriptionHookResult = ReturnType<
   typeof useBuildProgressNotificationsSubscription
 >;
@@ -1192,6 +1184,7 @@ export function useBuildUserDefinesTxtMutation(
     BuildUserDefinesTxtMutationVariables
   >(BuildUserDefinesTxtDocument, options);
 }
+
 export type BuildUserDefinesTxtMutationHookResult = ReturnType<
   typeof useBuildUserDefinesTxtMutation
 >;
@@ -1239,6 +1232,7 @@ export function useCheckForUpdatesQuery(
     options
   );
 }
+
 export function useCheckForUpdatesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     CheckForUpdatesQuery,
@@ -1251,6 +1245,7 @@ export function useCheckForUpdatesLazyQuery(
     CheckForUpdatesQueryVariables
   >(CheckForUpdatesDocument, options);
 }
+
 export type CheckForUpdatesQueryHookResult = ReturnType<
   typeof useCheckForUpdatesQuery
 >;
@@ -1302,6 +1297,7 @@ export function useClearFirmwareFilesMutation(
     ClearFirmwareFilesMutationVariables
   >(ClearFirmwareFilesDocument, options);
 }
+
 export type ClearFirmwareFilesMutationHookResult = ReturnType<
   typeof useClearFirmwareFilesMutation
 >;
@@ -1352,6 +1348,7 @@ export function useClearPlatformioCoreDirMutation(
     ClearPlatformioCoreDirMutationVariables
   >(ClearPlatformioCoreDirDocument, options);
 }
+
 export type ClearPlatformioCoreDirMutationHookResult = ReturnType<
   typeof useClearPlatformioCoreDirMutation
 >;
@@ -1403,6 +1400,7 @@ export function useConnectToSerialDeviceMutation(
     ConnectToSerialDeviceMutationVariables
   >(ConnectToSerialDeviceDocument, options);
 }
+
 export type ConnectToSerialDeviceMutationHookResult = ReturnType<
   typeof useConnectToSerialDeviceMutation
 >;
@@ -1479,6 +1477,7 @@ export function useTargetDeviceOptionsQuery(
     TargetDeviceOptionsQueryVariables
   >(TargetDeviceOptionsDocument, options);
 }
+
 export function useTargetDeviceOptionsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     TargetDeviceOptionsQuery,
@@ -1491,6 +1490,7 @@ export function useTargetDeviceOptionsLazyQuery(
     TargetDeviceOptionsQueryVariables
   >(TargetDeviceOptionsDocument, options);
 }
+
 export type TargetDeviceOptionsQueryHookResult = ReturnType<
   typeof useTargetDeviceOptionsQuery
 >;
@@ -1542,6 +1542,7 @@ export function useDisconnectFromSerialDeviceMutation(
     DisconnectFromSerialDeviceMutationVariables
   >(DisconnectFromSerialDeviceDocument, options);
 }
+
 export type DisconnectFromSerialDeviceMutationHookResult = ReturnType<
   typeof useDisconnectFromSerialDeviceMutation
 >;
@@ -1587,6 +1588,7 @@ export function useGetBranchesQuery(
     options
   );
 }
+
 export function useGetBranchesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     GetBranchesQuery,
@@ -1599,6 +1601,7 @@ export function useGetBranchesLazyQuery(
     options
   );
 }
+
 export type GetBranchesQueryHookResult = ReturnType<typeof useGetBranchesQuery>;
 export type GetBranchesLazyQueryHookResult = ReturnType<
   typeof useGetBranchesLazyQuery
@@ -1647,6 +1650,7 @@ export function useGetPullRequestsQuery(
     options
   );
 }
+
 export function useGetPullRequestsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     GetPullRequestsQuery,
@@ -1659,6 +1663,7 @@ export function useGetPullRequestsLazyQuery(
     GetPullRequestsQueryVariables
   >(GetPullRequestsDocument, options);
 }
+
 export type GetPullRequestsQueryHookResult = ReturnType<
   typeof useGetPullRequestsQuery
 >;
@@ -1707,6 +1712,7 @@ export function useGetReleasesQuery(
     options
   );
 }
+
 export function useGetReleasesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     GetReleasesQuery,
@@ -1719,6 +1725,7 @@ export function useGetReleasesLazyQuery(
     options
   );
 }
+
 export type GetReleasesQueryHookResult = ReturnType<typeof useGetReleasesQuery>;
 export type GetReleasesLazyQueryHookResult = ReturnType<
   typeof useGetReleasesLazyQuery
@@ -1782,6 +1789,7 @@ export function useLuaScriptQuery(
     options
   );
 }
+
 export function useLuaScriptLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     LuaScriptQuery,
@@ -1794,6 +1802,7 @@ export function useLuaScriptLazyQuery(
     options
   );
 }
+
 export type LuaScriptQueryHookResult = ReturnType<typeof useLuaScriptQuery>;
 export type LuaScriptLazyQueryHookResult = ReturnType<
   typeof useLuaScriptLazyQuery
@@ -1856,6 +1865,7 @@ export function useMulticastDnsMonitorUpdatesSubscription(
     MulticastDnsMonitorUpdatesSubscriptionVariables
   >(MulticastDnsMonitorUpdatesDocument, options);
 }
+
 export type MulticastDnsMonitorUpdatesSubscriptionHookResult = ReturnType<
   typeof useMulticastDnsMonitorUpdatesSubscription
 >;
@@ -1893,6 +1903,7 @@ export function useGetTagsQuery(
     options
   );
 }
+
 export function useGetTagsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>
 ) {
@@ -1902,6 +1913,7 @@ export function useGetTagsLazyQuery(
     options
   );
 }
+
 export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>;
 export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>;
 export type GetTagsQueryResult = Apollo.QueryResult<
@@ -1943,6 +1955,7 @@ export function useSerialMonitorEventsSubscription(
     SerialMonitorEventsSubscriptionVariables
   >(SerialMonitorEventsDocument, options);
 }
+
 export type SerialMonitorEventsSubscriptionHookResult = ReturnType<
   typeof useSerialMonitorEventsSubscription
 >;
@@ -1983,6 +1996,7 @@ export function useSerialMonitorLogsSubscription(
     SerialMonitorLogsSubscriptionVariables
   >(SerialMonitorLogsDocument, options);
 }
+
 export type SerialMonitorLogsSubscriptionHookResult = ReturnType<
   typeof useSerialMonitorLogsSubscription
 >;

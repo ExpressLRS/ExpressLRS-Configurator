@@ -9,7 +9,7 @@ import getPort from 'get-port';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
 import path from 'path';
-import { ConfigToken, FirmwareParamsLoaderType, IConfig } from './src/config';
+import { ConfigToken, IConfig } from './src/config';
 import PlatformioFlashingStrategyService from './src/services/PlatformioFlashingStrategy';
 import Platformio from './src/library/Platformio';
 import FirmwareBuilder from './src/library/FirmwareBuilder';
@@ -35,13 +35,12 @@ import LuaService from './src/services/Lua';
 import LuaResolver from './src/graphql/resolvers/Lua.resolver';
 import MulticastDnsSimulatorService from './src/services/MulticastDns/MulticastDnsSimulator';
 import MulticastDnsNotificationsService from './src/services/MulticastDnsNotificationsService';
-import HttpTargetsService from './src/services/TargetsLoader/HttpTargets';
 import TargetsLoader from './src/services/TargetsLoader';
-import HttpUserDefinesLoader from './src/services/UserDefinesLoader/HttpUserDefinesLoader';
 import GitUserDefinesLoader from './src/services/UserDefinesLoader/GitUserDefinesLoader';
 import FlashingStrategyLocatorService from './src/services/FlashingStrategyLocator';
 import Python from './src/library/Python';
 import BinaryFlashingStrategyService from './src/services/BinaryFlashingStrategy';
+import DeviceDescriptionsLoader from './src/services/BinaryFlashingStrategy/DeviceDescriptionsLoader';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -58,12 +57,7 @@ export default class ApiServer {
     Container.set([{ id: PubSubToken, value: pubSub }]);
     Container.set([{ id: LoggerToken, value: logger }]);
 
-    const python = new Python(
-      config.getPlatformioPath,
-      config.PATH,
-      config.env,
-      logger
-    );
+    const python = new Python(config.PATH, config.env, logger);
 
     Container.set(Python, python);
 
@@ -110,41 +104,23 @@ export default class ApiServer {
 
     Container.set(DeviceService, deviceService);
 
-    let userDefinesBuilder: UserDefinesBuilder;
-    if (config.userDefinesLoader === FirmwareParamsLoaderType.Git) {
-      userDefinesBuilder = new UserDefinesBuilder(
-        new GitUserDefinesLoader(
-          logger,
-          config.PATH,
-          config.userDefinesStoragePath
-        ),
-        deviceService
-      );
-    } else if (config.userDefinesLoader === FirmwareParamsLoaderType.Http) {
-      userDefinesBuilder = new UserDefinesBuilder(
-        new HttpUserDefinesLoader(logger),
-        deviceService
-      );
-    } else {
-      throw new Error('FirmwareTargetsLoaderType is not set');
-    }
+    const userDefinesBuilder = new UserDefinesBuilder(
+      new GitUserDefinesLoader(
+        logger,
+        config.PATH,
+        config.userDefinesStoragePath
+      ),
+      deviceService
+    );
 
     Container.set(UserDefinesBuilder, userDefinesBuilder);
 
-    let targetsLoader: TargetsLoader;
-    if (config.targetsLoader === FirmwareParamsLoaderType.Git) {
-      targetsLoader = new GitTargetsService(
-        logger,
-        deviceService,
-        config.PATH,
-        config.targetsStoragePath
-      );
-    } else if (config.targetsLoader === FirmwareParamsLoaderType.Http) {
-      targetsLoader = new HttpTargetsService(logger, deviceService);
-    } else {
-      throw new Error('FirmwareTargetsLoaderType is not set');
-    }
-
+    const targetsLoader = new GitTargetsService(
+      logger,
+      deviceService,
+      config.PATH,
+      config.targetsStoragePath
+    );
     Container.set(TargetsLoader, targetsLoader);
 
     const platformioFlashingStrategyService =
@@ -152,18 +128,24 @@ export default class ApiServer {
         config.PATH,
         config.firmwaresPath,
         platformio,
-        new FirmwareBuilder(platformio),
+        new FirmwareBuilder(platformio, logger),
         pubSub,
         logger,
-        python,
         userDefinesBuilder,
         targetsLoader
       );
 
+    const deviceDescriptionsLoader = new DeviceDescriptionsLoader(
+      logger,
+      config.PATH,
+      path.join(config.userDataPath, 'firmwares', 'binary-targets')
+    );
     const binaryFlashingStrategyService = new BinaryFlashingStrategyService(
       config.PATH,
       path.join(config.userDataPath, 'firmwares', 'binary'),
       pubSub,
+      python,
+      deviceDescriptionsLoader,
       logger
     );
 

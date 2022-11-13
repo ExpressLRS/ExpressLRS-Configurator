@@ -1,5 +1,5 @@
-import {Service} from 'typedi';
-import {PubSubEngine} from 'graphql-subscriptions';
+import { Service } from 'typedi';
+import { PubSubEngine } from 'graphql-subscriptions';
 import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -21,21 +21,21 @@ import {
 } from '../../library/FirmwareDownloader';
 import Platformio from '../../library/Platformio';
 import FirmwareBuilder from '../../library/FirmwareBuilder';
-import {LoggerService} from '../../logger';
+import { LoggerService } from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import UploadType from '../../library/Platformio/Enum/UploadType';
-import {BuildFlashFirmwareParams} from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
+import { BuildFlashFirmwareParams } from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
 import {
   FlashingStrategy,
   IsCompatibleArgs,
 } from '../FlashingStrategyLocator/FlashingStrategy';
-import Python from '../../library/Python';
 import UserDefinesBuilder from '../UserDefinesBuilder';
 import TargetsLoader from '../TargetsLoader';
 import TargetArgs from '../../graphql/args/Target';
 import Device from '../../models/Device';
-import {UserDefineFilters} from '../UserDefinesLoader';
+import { UserDefineFilters } from '../UserDefinesLoader';
 import GitRepository from '../../graphql/inputs/GitRepositoryInput';
+import UserDefinesTxtFactory from '../../factories/UserDefinesTxtFactory';
 
 const maskSensitiveData = (haystack: string): string => {
   const needles = [
@@ -78,8 +78,10 @@ const maskBuildFlashFirmwareParams = (
 
 @Service()
 export default class PlatformioFlashingStrategyService
-  implements FlashingStrategy {
+  implements FlashingStrategy
+{
   readonly name: string = 'PlatformioFlashingStrategy';
+
   mutex: Mutex;
 
   constructor(
@@ -89,7 +91,6 @@ export default class PlatformioFlashingStrategyService
     private builder: FirmwareBuilder,
     private pubSub: PubSubEngine,
     private logger: LoggerService,
-    private python: Python,
     private userDefinesBuilder: UserDefinesBuilder,
     private targetsLoader: TargetsLoader
   ) {
@@ -137,7 +138,7 @@ export default class PlatformioFlashingStrategyService
   private osUsernameContainsAmpersand(): boolean {
     if (
       os.platform() === 'win32' &&
-      os.userInfo({encoding: 'utf8'}).username.indexOf('&') > -1
+      os.userInfo({ encoding: 'utf8' }).username.indexOf('&') > -1
     ) {
       return true;
     }
@@ -187,7 +188,7 @@ export default class PlatformioFlashingStrategyService
         );
       }
 
-      const pythonCheck = await this.python.checkPython();
+      const pythonCheck = await this.platformio.checkPython();
       if (!pythonCheck.success) {
         this.logger?.error('python dependency check error', undefined, {
           stderr: pythonCheck.stderr,
@@ -323,7 +324,7 @@ export default class PlatformioFlashingStrategyService
                   userDefine.enabled &&
                   userDefine.key !== UserDefineKey.DEVICE_NAME
               )
-              .map(({key}) => key)
+              .map(({ key }) => key)
           );
         if (!compatCheck.compatible) {
           return new BuildFlashFirmwareResult(
@@ -340,7 +341,7 @@ export default class PlatformioFlashingStrategyService
           userDefines = params.userDefinesTxt;
           break;
         case UserDefinesMode.UserInterface:
-          userDefines = await this.userDefinesBuilder.buildUserDefinesTxt(params.userDefines);
+          userDefines = new UserDefinesTxtFactory().build(params.userDefines);
           break;
         default:
           throw new Error(
@@ -499,7 +500,7 @@ export default class PlatformioFlashingStrategyService
   }
 
   generateFirmwareName(params: BuildFlashFirmwareParams): string {
-    const {source, gitBranch, gitCommit, gitTag, gitPullRequest} =
+    const { source, gitBranch, gitCommit, gitTag, gitPullRequest } =
       params.firmware;
     const deviceName = params.userDefines.find(
       (userDefine) => userDefine.key === UserDefineKey.DEVICE_NAME

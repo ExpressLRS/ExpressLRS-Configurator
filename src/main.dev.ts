@@ -27,7 +27,6 @@ import {
 } from './ipc';
 import Updater from './app/updater';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
-import { FirmwareParamsLoaderType } from './api/src/config';
 
 import packageJson from '../package.json';
 
@@ -176,32 +175,11 @@ const createWindow = async () => {
     'firmwares',
     'targets'
   );
-  let targetsLoaderType: FirmwareParamsLoaderType =
-    FirmwareParamsLoaderType.Git;
-  if (
-    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareParamsLoaderType.Git
-  ) {
-    targetsLoaderType = FirmwareParamsLoaderType.Git;
-  }
-  if (
-    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareParamsLoaderType.Http
-  ) {
-    targetsLoaderType = FirmwareParamsLoaderType.Http;
-  }
-
   const userDefinesStoragePath = path.join(
     app.getPath('userData'),
     'firmwares',
     'userDefines'
   );
-  let userDefinesLoaderType: FirmwareParamsLoaderType =
-    FirmwareParamsLoaderType.Git;
-  if (process.env.USER_DEFINES_LOADER_TYPE === FirmwareParamsLoaderType.Git) {
-    userDefinesLoaderType = FirmwareParamsLoaderType.Git;
-  }
-  if (process.env.USER_DEFINES_LOADER_TYPE === FirmwareParamsLoaderType.Http) {
-    userDefinesLoaderType = FirmwareParamsLoaderType.Http;
-  }
 
   const dependenciesPath = app.isPackaged
     ? path.join(process.resourcesPath, '../dependencies')
@@ -285,8 +263,6 @@ const createWindow = async () => {
       env: localApiServerEnv,
       devicesPath,
       targetsStoragePath,
-      targetsLoader: targetsLoaderType,
-      userDefinesLoader: userDefinesLoaderType,
       userDefinesStoragePath,
       userDataPath: app.getPath('userData'),
     },

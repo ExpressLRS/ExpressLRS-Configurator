@@ -1,17 +1,15 @@
 /* eslint-disable no-await-in-loop */
 import fs from 'fs';
 import path from 'path';
-import Commander, {CommandResult, NoOpFunc, OnOutputFunc} from '../Commander';
-import {LoggerService} from '../../logger';
+import Commander, { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
+import { LoggerService } from '../../logger';
 
 export default class Python {
   constructor(
-    private getPlatformioPath: string,
-    private PATH: string,
+    public PATH: string,
     private env: NodeJS.ProcessEnv,
     private logger: LoggerService
-  ) {
-  }
+  ) {}
 
   async runPythonScript(
     script: string,
@@ -29,17 +27,6 @@ export default class Python {
         env: this.env,
       },
       onUpdate
-    );
-  }
-
-  async checkPython(): Promise<CommandResult> {
-    const pyExec = await this.findPythonExecutable(this.PATH);
-    return new Commander().runCommand(
-      pyExec,
-      [this.getPlatformioPath, 'check', 'python'],
-      {
-        env: this.env,
-      }
     );
   }
 

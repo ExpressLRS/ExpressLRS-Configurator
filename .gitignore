@@ -52,4 +52,5 @@ npm-debug.log.*
 *.scss.d.ts
 
 /src/api/src/library/Platformio/.piocore-*
+/src/api/src/services/BinaryFlashingStrategy/firmware
 __pycache__

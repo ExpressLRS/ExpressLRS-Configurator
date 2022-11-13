@@ -8,7 +8,6 @@ enum FlashingMethod {
   UART = 'UART',
   WIFI = 'WIFI',
   EdgeTxPassthrough = 'EdgeTxPassthrough',
-  Radio = 'Radio',
   Passthrough = 'Passthrough',
 }
 

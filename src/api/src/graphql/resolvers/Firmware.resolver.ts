@@ -7,7 +7,7 @@ import {
   Root,
   Subscription,
 } from 'type-graphql';
-import {Service} from 'typedi';
+import { Service } from 'typedi';
 import UserDefine from '../../models/UserDefine';
 import BuildFlashFirmwareInput from '../inputs/BuildFlashFirmwareInput';
 import BuildFlashFirmwareResult from '../objects/BuildFlashFirmwareResult';
@@ -16,29 +16,25 @@ import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildLogUpdate from '../../models/BuildLogUpdate';
 import ClearPlatformioCoreDirResult from '../objects/ClearPlatformioCoreDirResult';
 import TargetDeviceOptionsArgs from '../args/TargetDeviceOptions';
-import UserDefinesBuilder from '../../services/UserDefinesBuilder';
 import ClearFirmwareFilesResult from '../objects/ClearFirmwareFilesResult';
 import TargetArgs from '../args/Target';
 import Device from '../../models/Device';
 import GitRepository from '../inputs/GitRepositoryInput';
 import FlashingStrategyLocatorService from '../../services/FlashingStrategyLocator';
-import {
-  BuildProgressNotificationPayload
-} from '../../services/FlashingStrategyLocator/BuildProgressNotificationPayload';
-import {BuildLogUpdatePayload} from '../../services/FlashingStrategyLocator/BuildLogUpdatePayload';
+import { BuildProgressNotificationPayload } from '../../services/FlashingStrategyLocator/BuildProgressNotificationPayload';
+import { BuildLogUpdatePayload } from '../../services/FlashingStrategyLocator/BuildLogUpdatePayload';
 import Platformio from '../../library/Platformio';
 import BuildUserDefinesTxtInput from '../inputs/BuildUserDefinesTxtInput';
 import BuildUserDefinesTxtResult from '../objects/BuilduserDefinesTxtResult';
+import UserDefinesTxtFactory from '../../factories/UserDefinesTxtFactory';
 
 @Service()
 @Resolver()
 export default class FirmwareResolver {
   constructor(
     private flashingStrategyLocatorService: FlashingStrategyLocatorService,
-    private platformio: Platformio,
-    private userDefinesBuilder: UserDefinesBuilder,
-  ) {
-  }
+    private platformio: Platformio
+  ) {}
 
   @Query(() => [Device])
   async availableFirmwareTargets(
@@ -87,9 +83,7 @@ export default class FirmwareResolver {
   async buildUserDefinesTxt(
     @Arg('input') input: BuildUserDefinesTxtInput
   ): Promise<BuildUserDefinesTxtResult> {
-    const userDefinesTxt = await this.userDefinesBuilder.buildUserDefinesTxt(
-      input.userDefines
-    );
+    const userDefinesTxt = new UserDefinesTxtFactory().build(input.userDefines);
     return new BuildUserDefinesTxtResult(userDefinesTxt);
   }
 

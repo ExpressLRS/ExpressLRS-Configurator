@@ -82,8 +82,6 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
 
   const inputLabel = (key: UserDefineKey): string => {
     switch (key) {
-      case UserDefineKey.ARM_CHANNEL:
-        return 'Arm channel';
       case UserDefineKey.BINDING_PHRASE:
         return 'Custom binding phrase';
       case UserDefineKey.MY_STARTUP_MELODY:

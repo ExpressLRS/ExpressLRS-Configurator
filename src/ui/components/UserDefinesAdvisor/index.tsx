@@ -37,25 +37,6 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
         'Disabling UART_INVERTED is uncommon. Please make sure that your transmitter supports that.'
       );
     }
-
-    if (isUserDefine(UserDefineKey.FEATURE_OPENTX_SYNC, false)) {
-      messages.push(
-        'Disabling FEATURE_OPENTX_SYNC is uncommon. Keeping it disabled will prevent the ExpressLRS LUA script from communicating with the TX module properly.'
-      );
-    }
-
-    if (isUserDefine(UserDefineKey.NO_SYNC_ON_ARM, true)) {
-      messages.push(
-        'NO_SYNC_ON_ARM is an advanced performance option. Make sure to read the documentation on how it works.'
-      );
-    }
-
-    if (isUserDefine(UserDefineKey.USE_DIVERSITY, true)) {
-      messages.push(
-        `USE_DIVERSITY requires hardware support. Make sure to attach both antennas to your device. Safe to leave on
-        for hardware that does not have diversity except DIY builds, which did not populate the RF switch.`
-      );
-    }
   }
   return messages.length > 0 ? (
     <Box sx={styles.container}>
