@@ -6,7 +6,8 @@
       {
         "flashingMethod": "Passthrough",
         "name": "HappyModel_TX_Backpack_via_PASSTHRU"
-      },{
+      },
+      {
         "flashingMethod": "UART",
         "name": "HappyModel_TX_Backpack_via_UART"
       },
@@ -27,8 +28,13 @@
         "category": "TX",
         "name": "NamimnoRC FLASH OLED TX Backpack",
         "wikiUrl": "",
-        "abbreviatedName": "NamimnoTX Backpk",
-        "verifiedHardware": true
+        "abbreviatedName": "NamimnoTX Backpk"
+      },
+      {
+        "category": "TX",
+        "name": "RadioMaster Ranger Backpack",
+        "wikiUrl": "",
+        "abbreviatedName": "RM Ranger Backpack"
       }
     ]
   },
