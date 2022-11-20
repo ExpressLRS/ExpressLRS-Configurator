@@ -31,15 +31,7 @@ import { FirmwareParamsLoaderType } from './api/src/config';
 
 import packageJson from '../package.json';
 
-const isWindows = process.platform.startsWith('win');
-const isMacOS = process.platform.startsWith('darwin');
-
-let userDataDirectory = app.getPath('userData');
-if (isWindows) {
-  userDataDirectory = path.join('c:', '.expresslrs');
-}
-
-const logsPath = path.join(userDataDirectory, 'logs');
+const logsPath = path.join(app.getPath('userData'), 'logs');
 const logsFilename = 'expressslrs-configurator.log';
 const winstonLogger = winston.createLogger({
   level: 'debug',
@@ -69,6 +61,26 @@ const logger = new WinstonLoggerService(winstonLogger);
 logger.log('path', {
   PATH: process.env.PATH,
 });
+
+const isWindows = process.platform.startsWith('win');
+const isMacOS = process.platform.startsWith('darwin');
+let userDataDirectory = app.getPath('userData');
+if (isWindows) {
+  const dirtyUserDataDirectory = path.join('c:', '.expresslrs');
+  try {
+    mkdirp.sync(dirtyUserDataDirectory);
+    userDataDirectory = dirtyUserDataDirectory;
+    logger.log('using c:/.expresslrs directory for firmware storage');
+  } catch (err) {
+    logger.error(
+      'failed to create c:/.expresslrs directory, will use usual path',
+      undefined,
+      {
+        err,
+      }
+    );
+  }
+}
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const handleFatalError = (err: Error | object | null | undefined) => {
@@ -172,6 +184,7 @@ const createWindow = async () => {
 
   logger.log('starting server...');
   const firmwaresPath = path.join(userDataDirectory, 'firmwares', 'github');
+  await mkdirp(firmwaresPath);
   const targetsStoragePath = path.join(
     userDataDirectory,
     'firmwares',
@@ -214,7 +227,6 @@ const createWindow = async () => {
     'platformio-temp-state-storage'
   );
 
-  await mkdirp(firmwaresPath);
   const localApiServerEnv = process.env;
   localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = userDataDirectory;
 
