@@ -62,6 +62,26 @@ logger.log('path', {
   PATH: process.env.PATH,
 });
 
+const isWindows = process.platform.startsWith('win');
+const isMacOS = process.platform.startsWith('darwin');
+let userDataDirectory = app.getPath('userData');
+if (isWindows) {
+  const dirtyUserDataDirectory = path.join('c:', '.expresslrs');
+  try {
+    mkdirp.sync(dirtyUserDataDirectory);
+    userDataDirectory = dirtyUserDataDirectory;
+    logger.log('using c:/.expresslrs directory for firmware storage');
+  } catch (err) {
+    logger.error(
+      'failed to create c:/.expresslrs directory, will use usual path',
+      undefined,
+      {
+        err,
+      }
+    );
+  }
+}
+
 // eslint-disable-next-line @typescript-eslint/ban-types
 const handleFatalError = (err: Error | object | null | undefined) => {
   logger.error(`handling fatal error: ${err}`);
@@ -142,9 +162,6 @@ const installExtensions = async () => {
     });
 };
 
-const isWindows = process.platform.startsWith('win');
-const isMacOS = process.platform.startsWith('darwin');
-
 const createWindow = async () => {
   if (
     process.env.NODE_ENV === 'development' ||
@@ -166,13 +183,10 @@ const createWindow = async () => {
   logger.log(`received unused port`, { port });
 
   logger.log('starting server...');
-  const firmwaresPath = path.join(
-    app.getPath('userData'),
-    'firmwares',
-    'github'
-  );
+  const firmwaresPath = path.join(userDataDirectory, 'firmwares', 'github');
+  await mkdirp(firmwaresPath);
   const targetsStoragePath = path.join(
-    app.getPath('userData'),
+    userDataDirectory,
     'firmwares',
     'targets'
   );
@@ -190,7 +204,7 @@ const createWindow = async () => {
   }
 
   const userDefinesStoragePath = path.join(
-    app.getPath('userData'),
+    userDataDirectory,
     'firmwares',
     'userDefines'
   );
@@ -209,13 +223,12 @@ const createWindow = async () => {
 
   const getPlatformioPath = path.join(dependenciesPath, 'get-platformio.py');
   const platformioStateTempStoragePath = path.join(
-    app.getPath('userData'),
+    userDataDirectory,
     'platformio-temp-state-storage'
   );
 
-  await mkdirp(firmwaresPath);
   const localApiServerEnv = process.env;
-  localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = app.getPath('userData');
+  localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = userDataDirectory;
 
   /*
     We manually prepend $PATH on Windows and macOS machines with portable Git and Python locations.
