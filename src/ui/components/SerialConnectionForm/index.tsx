@@ -32,9 +32,16 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
 ) => {
   const { onConnect, serialDevice, baudRate } = props;
 
-  const { loading, data, error, previousData } = useAvailableDevicesListQuery({
-    pollInterval: 1000,
-  });
+  const { loading, data, error, previousData, startPolling, stopPolling } =
+    useAvailableDevicesListQuery();
+
+  useEffect(() => {
+    startPolling(1000);
+    return () => {
+      stopPolling();
+    };
+  }, [startPolling, stopPolling]);
+
   const options: Option[] =
     data?.availableDevicesList?.map((target) => ({
       label: `${target.path} ${target.manufacturer}`,
