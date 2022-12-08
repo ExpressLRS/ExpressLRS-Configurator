@@ -1,0 +1,270 @@
+'\" t
+.\"     Title: git-fsck
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 08/16/2021
+.\"    Manual: Git Manual
+.\"    Source: Git 2.33.0
+.\"  Language: English
+.\"
+.TH "GIT\-FSCK" "1" "08/16/2021" "Git 2\&.33\&.0" "Git Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+git-fsck \- Verifies the connectivity and validity of the objects in the database
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit fsck\fR [\-\-tags] [\-\-root] [\-\-unreachable] [\-\-cache] [\-\-no\-reflogs]
+         [\-\-[no\-]full] [\-\-strict] [\-\-verbose] [\-\-lost\-found]
+         [\-\-[no\-]dangling] [\-\-[no\-]progress] [\-\-connectivity\-only]
+         [\-\-[no\-]name\-objects] [<object>*]
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Verifies the connectivity and validity of the objects in the database\&.
+.SH "OPTIONS"
+.PP
+<object>
+.RS 4
+An object to treat as the head of an unreachability trace\&.
+.sp
+If no objects are given,
+\fIgit fsck\fR
+defaults to using the index file, all SHA\-1 references in
+\fBrefs\fR
+namespace, and all reflogs (unless \-\-no\-reflogs is given) as heads\&.
+.RE
+.PP
+\-\-unreachable
+.RS 4
+Print out objects that exist but that aren\(cqt reachable from any of the reference nodes\&.
+.RE
+.PP
+\-\-[no\-]dangling
+.RS 4
+Print objects that exist but that are never
+\fIdirectly\fR
+used (default)\&.
+\fB\-\-no\-dangling\fR
+can be used to omit this information from the output\&.
+.RE
+.PP
+\-\-root
+.RS 4
+Report root nodes\&.
+.RE
+.PP
+\-\-tags
+.RS 4
+Report tags\&.
+.RE
+.PP
+\-\-cache
+.RS 4
+Consider any object recorded in the index also as a head node for an unreachability trace\&.
+.RE
+.PP
+\-\-no\-reflogs
+.RS 4
+Do not consider commits that are referenced only by an entry in a reflog to be reachable\&. This option is meant only to search for commits that used to be in a ref, but now aren\(cqt, but are still in that corresponding reflog\&.
+.RE
+.PP
+\-\-full
+.RS 4
+Check not just objects in GIT_OBJECT_DIRECTORY ($GIT_DIR/objects), but also the ones found in alternate object pools listed in GIT_ALTERNATE_OBJECT_DIRECTORIES or $GIT_DIR/objects/info/alternates, and in packed Git archives found in $GIT_DIR/objects/pack and corresponding pack subdirectories in alternate object pools\&. This is now default; you can turn it off with \-\-no\-full\&.
+.RE
+.PP
+\-\-connectivity\-only
+.RS 4
+Check only the connectivity of reachable objects, making sure that any objects referenced by a reachable tag, commit, or tree is present\&. This speeds up the operation by avoiding reading blobs entirely (though it does still check that referenced blobs exist)\&. This will detect corruption in commits and trees, but not do any semantic checks (e\&.g\&., for format errors)\&. Corruption in blob objects will not be detected at all\&.
+.sp
+Unreachable tags, commits, and trees will also be accessed to find the tips of dangling segments of history\&. Use
+\fB\-\-no\-dangling\fR
+if you don\(cqt care about this output and want to speed it up further\&.
+.RE
+.PP
+\-\-strict
+.RS 4
+Enable more strict checking, namely to catch a file mode recorded with g+w bit set, which was created by older versions of Git\&. Existing repositories, including the Linux kernel, Git itself, and sparse repository have old objects that triggers this check, but it is recommended to check new projects with this flag\&.
+.RE
+.PP
+\-\-verbose
+.RS 4
+Be chatty\&.
+.RE
+.PP
+\-\-lost\-found
+.RS 4
+Write dangling objects into \&.git/lost\-found/commit/ or \&.git/lost\-found/other/, depending on type\&. If the object is a blob, the contents are written into the file, rather than its object name\&.
+.RE
+.PP
+\-\-name\-objects
+.RS 4
+When displaying names of reachable objects, in addition to the SHA\-1 also display a name that describes
+\fBhow\fR
+they are reachable, compatible with
+\fBgit-rev-parse\fR(1), e\&.g\&.
+\fBHEAD@{1234567890}~25^2:src/\fR\&.
+.RE
+.PP
+\-\-[no\-]progress
+.RS 4
+Progress status is reported on the standard error stream by default when it is attached to a terminal, unless \-\-no\-progress or \-\-verbose is specified\&. \-\-progress forces progress status even if the standard error stream is not directed to a terminal\&.
+.RE
+.SH "CONFIGURATION"
+.PP
+fsck\&.<msg\-id>
+.RS 4
+During fsck git may find issues with legacy data which wouldn\(cqt be generated by current versions of git, and which wouldn\(cqt be sent over the wire if
+\fBtransfer\&.fsckObjects\fR
+was set\&. This feature is intended to support working with legacy repositories containing such data\&.
+.sp
+Setting
+\fBfsck\&.<msg\-id>\fR
+will be picked up by
+\fBgit-fsck\fR(1), but to accept pushes of such data set
+\fBreceive\&.fsck\&.<msg\-id>\fR
+instead, or to clone or fetch it set
+\fBfetch\&.fsck\&.<msg\-id>\fR\&.
+.sp
+The rest of the documentation discusses
+\fBfsck\&.*\fR
+for brevity, but the same applies for the corresponding
+\fBreceive\&.fsck\&.*\fR
+and
+\fBfetch\&.<msg\-id>\&.*\fR\&. variables\&.
+.sp
+Unlike variables like
+\fBcolor\&.ui\fR
+and
+\fBcore\&.editor\fR
+the
+\fBreceive\&.fsck\&.<msg\-id>\fR
+and
+\fBfetch\&.fsck\&.<msg\-id>\fR
+variables will not fall back on the
+\fBfsck\&.<msg\-id>\fR
+configuration if they aren\(cqt set\&. To uniformly configure the same fsck settings in different circumstances all three of them they must all set to the same values\&.
+.sp
+When
+\fBfsck\&.<msg\-id>\fR
+is set, errors can be switched to warnings and vice versa by configuring the
+\fBfsck\&.<msg\-id>\fR
+setting where the
+\fB<msg\-id>\fR
+is the fsck message ID and the value is one of
+\fBerror\fR,
+\fBwarn\fR
+or
+\fBignore\fR\&. For convenience, fsck prefixes the error/warning with the message ID, e\&.g\&. "missingEmail: invalid author/committer line \- missing email" means that setting
+\fBfsck\&.missingEmail = ignore\fR
+will hide that issue\&.
+.sp
+In general, it is better to enumerate existing objects with problems with
+\fBfsck\&.skipList\fR, instead of listing the kind of breakages these problematic objects share to be ignored, as doing the latter will allow new instances of the same breakages go unnoticed\&.
+.sp
+Setting an unknown
+\fBfsck\&.<msg\-id>\fR
+value will cause fsck to die, but doing the same for
+\fBreceive\&.fsck\&.<msg\-id>\fR
+and
+\fBfetch\&.fsck\&.<msg\-id>\fR
+will only cause git to warn\&.
+.RE
+.PP
+fsck\&.skipList
+.RS 4
+The path to a list of object names (i\&.e\&. one unabbreviated SHA\-1 per line) that are known to be broken in a non\-fatal way and should be ignored\&. On versions of Git 2\&.20 and later comments (\fI#\fR), empty lines, and any leading and trailing whitespace is ignored\&. Everything but a SHA\-1 per line will error out on older versions\&.
+.sp
+This feature is useful when an established project should be accepted despite early commits containing errors that can be safely ignored such as invalid committer email addresses\&. Note: corrupt objects cannot be skipped with this setting\&.
+.sp
+Like
+\fBfsck\&.<msg\-id>\fR
+this variable has corresponding
+\fBreceive\&.fsck\&.skipList\fR
+and
+\fBfetch\&.fsck\&.skipList\fR
+variants\&.
+.sp
+Unlike variables like
+\fBcolor\&.ui\fR
+and
+\fBcore\&.editor\fR
+the
+\fBreceive\&.fsck\&.skipList\fR
+and
+\fBfetch\&.fsck\&.skipList\fR
+variables will not fall back on the
+\fBfsck\&.skipList\fR
+configuration if they aren\(cqt set\&. To uniformly configure the same fsck settings in different circumstances all three of them they must all set to the same values\&.
+.sp
+Older versions of Git (before 2\&.20) documented that the object names list should be sorted\&. This was never a requirement, the object names could appear in any order, but when reading the list we tracked whether the list was sorted for the purposes of an internal binary search implementation, which could save itself some work with an already sorted list\&. Unless you had a humongous list there was no reason to go out of your way to pre\-sort the list\&. After Git version 2\&.20 a hash implementation is used instead, so there\(cqs now no reason to pre\-sort the list\&.
+.RE
+.SH "DISCUSSION"
+.sp
+git\-fsck tests SHA\-1 and general object sanity, and it does full tracking of the resulting reachability and everything else\&. It prints out any corruption it finds (missing or bad objects), and if you use the \fB\-\-unreachable\fR flag it will also print out objects that exist but that aren\(cqt reachable from any of the specified head nodes (or the default set, as mentioned above)\&.
+.sp
+Any corrupt objects you will have to find in backups or other archives (i\&.e\&., you can just remove them and do an \fIrsync\fR with some other site in the hopes that somebody else has the object you have corrupted)\&.
+.sp
+If core\&.commitGraph is true, the commit\-graph file will also be inspected using \fIgit commit\-graph verify\fR\&. See \fBgit-commit-graph\fR(1)\&.
+.SH "EXTRACTED DIAGNOSTICS"
+.PP
+unreachable <type> <object>
+.RS 4
+The <type> object <object>, isn\(cqt actually referred to directly or indirectly in any of the trees or commits seen\&. This can mean that there\(cqs another root node that you\(cqre not specifying or that the tree is corrupt\&. If you haven\(cqt missed a root node then you might as well delete unreachable nodes since they can\(cqt be used\&.
+.RE
+.PP
+missing <type> <object>
+.RS 4
+The <type> object <object>, is referred to but isn\(cqt present in the database\&.
+.RE
+.PP
+dangling <type> <object>
+.RS 4
+The <type> object <object>, is present in the database but never
+\fIdirectly\fR
+used\&. A dangling commit could be a root node\&.
+.RE
+.PP
+hash mismatch <object>
+.RS 4
+The database has an object whose hash doesn\(cqt match the object database value\&. This indicates a serious data integrity problem\&.
+.RE
+.SH "ENVIRONMENT VARIABLES"
+.PP
+GIT_OBJECT_DIRECTORY
+.RS 4
+used to specify the object database root (usually $GIT_DIR/objects)
+.RE
+.PP
+GIT_INDEX_FILE
+.RS 4
+used to specify the index file of the index
+.RE
+.PP
+GIT_ALTERNATE_OBJECT_DIRECTORIES
+.RS 4
+used to specify additional object database roots (usually unset)
+.RE
+.SH "GIT"
+.sp
+Part of the \fBgit\fR(1) suite

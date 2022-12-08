@@ -1,0 +1,9 @@
+#!/bin/sh
+if test "z$*" = zversion ||
+   test "z$*" = z--version
+then
+	echo 'git-gui version 0.21.0.99.gdf4f9e-dirty'
+else
+	libdir="${GIT_GUI_LIB_DIR:-/usr/local/git/share/git-gui/lib}"
+	exec "$libdir/Git Gui.app/Contents/MacOS/Wish" "$0" "$@"
+fi

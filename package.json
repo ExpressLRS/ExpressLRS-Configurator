@@ -56,6 +56,10 @@
       "target": [
         "dmg"
       ],
+      "arch": [
+        "x64",
+        "arm64"
+      ],
       "type": "distribution",
       "hardenedRuntime": true,
       "entitlements": "assets/entitlements.mac.plist",
@@ -63,7 +67,7 @@
       "gatekeeperAssess": false,
       "category": "public.app-category.developer-tools",
       "extraFiles": [
-        "dependencies/darwin_amd64",
+        "dependencies/darwin_${arch}",
         "dependencies/get-platformio.py"
       ]
     },

@@ -1,0 +1,100 @@
+'\" t
+.\"     Title: git-http-fetch
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 08/16/2021
+.\"    Manual: Git Manual
+.\"    Source: Git 2.33.0
+.\"  Language: English
+.\"
+.TH "GIT\-HTTP\-FETCH" "1" "08/16/2021" "Git 2\&.33\&.0" "Git Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+git-http-fetch \- Download from a remote Git repository via HTTP
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit http\-fetch\fR [\-c] [\-t] [\-a] [\-d] [\-v] [\-w filename] [\-\-recover] [\-\-stdin | \-\-packfile=<hash> | <commit>] <url>
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Downloads a remote Git repository via HTTP\&.
+.sp
+This command always gets all objects\&. Historically, there were three options \fB\-a\fR, \fB\-c\fR and \fB\-t\fR for choosing which objects to download\&. They are now silently ignored\&.
+.SH "OPTIONS"
+.PP
+commit\-id
+.RS 4
+Either the hash or the filename under [URL]/refs/ to pull\&.
+.RE
+.PP
+\-a, \-c, \-t
+.RS 4
+These options are ignored for historical reasons\&.
+.RE
+.PP
+\-v
+.RS 4
+Report what is downloaded\&.
+.RE
+.PP
+\-w <filename>
+.RS 4
+Writes the commit\-id into the filename under $GIT_DIR/refs/<filename> on the local end after the transfer is complete\&.
+.RE
+.PP
+\-\-stdin
+.RS 4
+Instead of a commit id on the command line (which is not expected in this case),
+\fIgit http\-fetch\fR
+expects lines on stdin in the format
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+<commit\-id>[\*(Aq\et\*(Aq<filename\-as\-in\-\-w>]
+.fi
+.if n \{\
+.RE
+.\}
+.RE
+.PP
+\-\-packfile=<hash>
+.RS 4
+For internal use only\&. Instead of a commit id on the command line (which is not expected in this case),
+\fIgit http\-fetch\fR
+fetches the packfile directly at the given URL and uses index\-pack to generate corresponding \&.idx and \&.keep files\&. The hash is used to determine the name of the temporary file and is arbitrary\&. The output of index\-pack is printed to stdout\&. Requires \-\-index\-pack\-args\&.
+.RE
+.PP
+\-\-index\-pack\-args=<args>
+.RS 4
+For internal use only\&. The command to run on the contents of the downloaded pack\&. Arguments are URL\-encoded separated by spaces\&.
+.RE
+.PP
+\-\-recover
+.RS 4
+Verify that everything reachable from target is fetched\&. Used after an earlier fetch is interrupted\&.
+.RE
+.SH "GIT"
+.sp
+Part of the \fBgit\fR(1) suite
