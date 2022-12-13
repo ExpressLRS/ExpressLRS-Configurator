@@ -129,9 +129,17 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
 
   const gitTags = useMemo(() => {
     return (
-      gitTagsResponse?.releases.filter(
-        ({ tagName }) => !gitRepository.tagExcludes.includes(tagName)
-      ) ?? []
+      gitTagsResponse?.releases.filter(({ tagName }) => {
+        for (let i = 0; i < gitRepository.tagExcludes.length; i++) {
+          const tagExclude = gitRepository.tagExcludes[i];
+          if (
+            semver.satisfies(tagName, tagExclude, { includePrerelease: true })
+          ) {
+            return false;
+          }
+        }
+        return true;
+      }) ?? []
     ).sort((a, b) => semver.rcompare(a.tagName, b.tagName));
   }, [gitRepository.tagExcludes, gitTagsResponse?.releases]);
 
