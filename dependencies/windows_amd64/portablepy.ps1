@@ -4,7 +4,7 @@
 param ($source, $destination, $pythonVersion)
 
 if (!$source) {
-    $source = 'https://www.python.org/ftp/python/3.9.13/python-3.9.13-embed-amd64.zip'
+    $source = 'https://www.python.org/ftp/python/3.10.8/python-3.10.8-embed-amd64.zip'
 }
 
 if (!$pythonVersion) {
@@ -40,7 +40,7 @@ Expand-Archive -Path $package -DestinationPath $destination
 
 # Uncomment to run site.main() automatically
 import site
-" | Out-File -FilePath "$($destination)$($pythonVersion)._pth" -encoding ASCII 
+" | Out-File -FilePath "$($destination)$($pythonVersion)._pth" -encoding ASCII
 
 
 "Creating DLLs dir"
