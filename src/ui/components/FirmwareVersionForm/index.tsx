@@ -401,6 +401,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
 
   const showBetaFpvAlert =
     localPath?.toLocaleLowerCase()?.indexOf('betafpv') > -1;
+
   return (
     <>
       <Tabs
@@ -452,6 +453,13 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
                 gitTagOptions[0]?.value !== currentGitTag && (
                   <Alert sx={styles.firmwareVersionAlert} severity="info">
                     There is a newer version of the firmware available
+                  </Alert>
+                )}
+              {(currentGitTag === '2.5.0' || currentGitTag === '2.5.1') &&
+                gitRepository.repositoryName === 'ExpressLRS' && (
+                  <Alert sx={styles.firmwareVersionAlert} severity="warning">
+                    ExpressLRS 2.X is no longer supported. Please upgrade to
+                    ExpressLRS 3.X.
                   </Alert>
                 )}
             </>
