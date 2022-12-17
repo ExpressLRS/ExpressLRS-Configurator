@@ -66,7 +66,9 @@ const isWindows = process.platform.startsWith('win');
 const isMacOS = process.platform.startsWith('darwin');
 let userDataDirectory = app.getPath('userData');
 if (isWindows) {
-  const dirtyUserDataDirectory = path.join('c:', `.${packageJson.name}`);
+  const dirtyUserDataDirectory = app.isPackaged
+    ? path.join('c:', `.${packageJson.name}`)
+    : path.join('c:', `.${packageJson.name}-dev`);
   try {
     mkdirp.sync(dirtyUserDataDirectory);
     userDataDirectory = dirtyUserDataDirectory;
