@@ -28,8 +28,13 @@
         "category": "TX",
         "name": "NamimnoRC FLASH OLED TX Backpack",
         "wikiUrl": "",
-        "abbreviatedName": "NamimnoTX Backpk",
-        "verifiedHardware": true
+        "abbreviatedName": "NamimnoTX Backpk"
+      },
+      {
+        "category": "TX",
+        "name": "RadioMaster Ranger Backpack",
+        "wikiUrl": "",
+        "abbreviatedName": "RM Ranger Backpack"
       }
     ]
   },

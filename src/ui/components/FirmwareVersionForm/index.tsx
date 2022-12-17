@@ -129,9 +129,17 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
 
   const gitTags = useMemo(() => {
     return (
-      gitTagsResponse?.releases.filter(
-        ({ tagName }) => !gitRepository.tagExcludes.includes(tagName)
-      ) ?? []
+      gitTagsResponse?.releases.filter(({ tagName }) => {
+        for (let i = 0; i < gitRepository.tagExcludes.length; i++) {
+          const tagExclude = gitRepository.tagExcludes[i];
+          if (
+            semver.satisfies(tagName, tagExclude, { includePrerelease: true })
+          ) {
+            return false;
+          }
+        }
+        return true;
+      }) ?? []
     ).sort((a, b) => semver.rcompare(a.tagName, b.tagName));
   }, [gitRepository.tagExcludes, gitTagsResponse?.releases]);
 
@@ -393,6 +401,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
 
   const showBetaFpvAlert =
     localPath?.toLocaleLowerCase()?.indexOf('betafpv') > -1;
+
   return (
     <>
       <Tabs
@@ -444,6 +453,13 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
                 gitTagOptions[0]?.value !== currentGitTag && (
                   <Alert sx={styles.firmwareVersionAlert} severity="info">
                     There is a newer version of the firmware available
+                  </Alert>
+                )}
+              {(currentGitTag === '2.5.0' || currentGitTag === '2.5.1') &&
+                gitRepository.repositoryName === 'ExpressLRS' && (
+                  <Alert sx={styles.firmwareVersionAlert} severity="warning">
+                    ExpressLRS 2.X is no longer supported. Please upgrade to
+                    ExpressLRS 3.X.
                   </Alert>
                 )}
             </>

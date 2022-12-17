@@ -32,14 +32,33 @@ const prependPATH = (pth: string, item: string): string => {
   return item;
 };
 
+const envFilter = (
+  env: NodeJS.ProcessEnv,
+  blacklist: string[]
+): NodeJS.ProcessEnv => {
+  const result: NodeJS.ProcessEnv = {};
+  Object.keys(env).forEach((key) => {
+    if (!blacklist.includes(key)) {
+      result[key] = env[key];
+    }
+  });
+  return result;
+};
+
 export default class Platformio {
+  private env: NodeJS.ProcessEnv;
+
   constructor(
     private getPlatformioPath: string,
     private stateTempStoragePath: string,
-    private env: NodeJS.ProcessEnv,
+    env: NodeJS.ProcessEnv,
     private logger: LoggerService,
     private python: Python
-  ) {}
+  ) {
+    // Fix for https://github.com/ExpressLRS/ExpressLRS-Configurator/issues/440
+    const blacklistedEnvKeys = ['PYTHONPATH', 'PYTHONHOME'];
+    this.env = envFilter(env, blacklistedEnvKeys);
+  }
 
   async install(onUpdate: OnOutputFunc = NoOpFunc): Promise<CommandResult> {
     return this.python.runPythonScript(this.getPlatformioPath, [], onUpdate);
