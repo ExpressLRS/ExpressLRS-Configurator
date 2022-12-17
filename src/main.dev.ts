@@ -66,11 +66,13 @@ const isWindows = process.platform.startsWith('win');
 const isMacOS = process.platform.startsWith('darwin');
 let userDataDirectory = app.getPath('userData');
 if (isWindows) {
-  const dirtyUserDataDirectory = path.join('c:', '.expresslrs');
+  const dirtyUserDataDirectory = path.join('c:', `.${packageJson.name}`);
   try {
     mkdirp.sync(dirtyUserDataDirectory);
     userDataDirectory = dirtyUserDataDirectory;
-    logger.log('using c:/.expresslrs directory for firmware storage');
+    logger.log(
+      `using ${dirtyUserDataDirectory} directory for firmware storage`
+    );
   } catch (err) {
     logger.error(
       'failed to create c:/.expresslrs directory, will use usual path',
