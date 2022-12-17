@@ -23,6 +23,13 @@
     ],
     "wikiUrl": "",
     "deviceType": "Backpack",
-    "aliases": []
+    "aliases": [
+      {
+        "category": "TX",
+        "name": "RadioMaster Boxer Backpack",
+        "wikiUrl": "",
+        "abbreviatedName": "RM Boxer Backpack"
+      }
+    ]
   }
 ]
