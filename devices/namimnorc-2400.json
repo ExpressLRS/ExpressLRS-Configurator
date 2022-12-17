@@ -1,6 +1,6 @@
 [
   {
-    "category": "NamimnoRC FLASH 2.4 GHz",
+    "category": "NamimnoRC 2.4 GHz",
     "name": "NamimnoRC FLASH 2400 TX",
     "targets": [
       {
@@ -35,7 +35,7 @@
     "aliases": []
   },
   {
-    "category": "NamimnoRC FLASH 2.4 GHz",
+    "category": "NamimnoRC 2.4 GHz",
     "name": "NamimnoRC FLASH 2400 OLED TX",
     "targets": [
       {
@@ -70,7 +70,7 @@
     "aliases": []
   },
   {
-    "category": "NamimnoRC FLASH 2.4 GHz",
+    "category": "NamimnoRC 2.4 GHz",
     "name": "NamimnoRC FLASH 2400 RX",
     "targets": [
       {
@@ -97,7 +97,7 @@
     "aliases": []
   },
   {
-    "category": "NamimnoRC FLASH 2.4 GHz",
+    "category": "NamimnoRC 2.4 GHz",
     "name": "NamimnoRC FLASH 2400 ESP RX",
     "targets": [
       {
@@ -133,7 +133,7 @@
     "aliases": []
   },
   {
-    "category": "NamimnoRC FLASH 2.4 GHz",
+    "category": "NamimnoRC 2.4 GHz",
     "name": "NamimnoRC FLASH 2400 ESP Diversity RX",
     "targets": [
       {
