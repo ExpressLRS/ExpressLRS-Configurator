@@ -332,6 +332,7 @@
     "react-router-dom": "^6.3.0",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "^0.13.5",
+    "sanitize-filename": "^1.6.3",
     "semver": "^7.3.8",
     "simple-git": "^3.14.1",
     "source-map-support": "^0.5.21",
