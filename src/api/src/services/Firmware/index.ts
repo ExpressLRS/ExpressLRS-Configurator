@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import rimraf from 'rimraf';
 import cloneDeep from 'lodash.clonedeep';
+import sanitize from 'sanitize-filename';
 import BuildJobType from '../../models/enum/BuildJobType';
 import UserDefinesMode from '../../models/enum/UserDefinesMode';
 import UserDefine from '../../models/UserDefine';
@@ -541,7 +542,11 @@ export default class FirmwareService {
       target = target.substring(0, viaIndex);
     }
 
-    const firmwareName = deviceName?.replaceAll(' ', '_') || target;
+    const replacement = '_';
+
+    const firmwareName = deviceName
+      ? sanitize(deviceName, { replacement }).replaceAll(' ', replacement)
+      : target;
 
     switch (source) {
       case FirmwareSource.GitTag:
