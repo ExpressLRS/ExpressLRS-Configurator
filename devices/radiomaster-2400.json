@@ -95,7 +95,8 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER"
+      "USE_DYNAMIC_POWER",
+      "UART_INVERTED"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-external/",
     "deviceType": "ExpressLRS"
@@ -124,7 +125,8 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER"
+      "USE_DYNAMIC_POWER",
+      "UART_INVERTED"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-external/",
     "deviceType": "ExpressLRS",
@@ -154,7 +156,8 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
       "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER"
+      "USE_DYNAMIC_POWER",
+      "UART_INVERTED"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-external/",
     "deviceType": "ExpressLRS",
