@@ -15,11 +15,12 @@ jobs:
 
     strategy:
       matrix:
-        os: [ 'ubuntu-18.04', 'windows-2019', 'macos-latest' ]
+        os: ['ubuntu-20.04', 'windows-2019', 'macos-latest']
+      fail-fast: false
 
     steps:
       - name: Setup apt dependencies
-        if: matrix.os == 'ubuntu-18.04'
+        if: matrix.os == 'ubuntu-20.04'
         run: |
           sudo apt update
           sudo apt-get install --no-install-recommends -y libarchive-tools rpm
@@ -30,7 +31,7 @@ jobs:
       - name: Install Node, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16.16.0
+          node-version: 18.12.1
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -59,4 +60,3 @@ jobs:
       - name: yarn test
         run: |
           yarn test
-
