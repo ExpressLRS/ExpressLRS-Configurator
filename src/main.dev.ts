@@ -397,6 +397,12 @@ app
   .catch((err: Error) => {
     logger.error(`createWindow error ${err}`);
     handleFatalError(err);
+  })
+  .then(() => {
+    return updater?.checkForUpdates();
+  })
+  .catch((err: Error) => {
+    logger.error(`Auto update error ${err}`);
   });
 
 app.on('activate', () => {
@@ -405,10 +411,6 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
-});
-
-app.on('ready', async () => {
-  updater?.checkForUpdates();
 });
 
 /*
