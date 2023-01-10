@@ -184,6 +184,19 @@ export default class DeviceDescriptionsLoader {
     }
   }
 
+  private splitLastOccurrence(
+    str: string,
+    substring: string
+  ): [string, string] {
+    const lastIndex = str.lastIndexOf(substring);
+
+    const before = str.slice(0, lastIndex);
+
+    const after = str.slice(lastIndex + 1);
+
+    return [before, after];
+  }
+
   async getDeviceConfig(
     args: UserDefineFilters,
     gitRepository: GitRepository
@@ -197,10 +210,21 @@ export default class DeviceDescriptionsLoader {
     const data = await targetsJSONLoader.loadDeviceDescriptions(
       targetsJSONPath
     );
-    if (typeof data[args.target] === 'undefined') {
+
+    /*
+      axis.tx_2400.thor.uart split at last index gives us axis.tx_2400.thor.
+     */
+    const [target] = this.splitLastOccurrence(args.target, '.');
+
+    if (typeof data[target] === 'undefined') {
       throw new Error(`failed to find device description for ${args.target}`);
     }
-    const { config } = data[args.target];
+    const { config } = data[target];
+    this.logger.log('device config', {
+      target,
+      config,
+    });
+
     return config;
   }
 
@@ -245,7 +269,7 @@ export default class DeviceDescriptionsLoader {
         targetUserDefinesFactory.build(UserDefineKey.HOME_WIFI_SSID)
       );
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.HOME_WIFI_SSID)
+        targetUserDefinesFactory.build(UserDefineKey.HOME_WIFI_PASSWORD)
       );
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.AUTO_WIFI_ON_INTERVAL)

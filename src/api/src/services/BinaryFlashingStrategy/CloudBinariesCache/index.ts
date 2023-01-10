@@ -1,1 +1,1 @@
-export class CloudBinariesCache {}
+export default class CloudBinariesCache {}

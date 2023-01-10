@@ -41,6 +41,7 @@ import FlashingStrategyLocatorService from './src/services/FlashingStrategyLocat
 import Python from './src/library/Python';
 import BinaryFlashingStrategyService from './src/services/BinaryFlashingStrategy';
 import DeviceDescriptionsLoader from './src/services/BinaryFlashingStrategy/DeviceDescriptionsLoader';
+import BinaryConfigurator from './src/services/BinaryFlashingStrategy/BinaryConfigurator';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -123,12 +124,13 @@ export default class ApiServer {
     );
     Container.set(TargetsLoader, targetsLoader);
 
+    const firmwareBuilder = new FirmwareBuilder(platformio, logger);
     const platformioFlashingStrategyService =
       new PlatformioFlashingStrategyService(
         config.PATH,
         config.firmwaresPath,
         platformio,
-        new FirmwareBuilder(platformio, logger),
+        firmwareBuilder,
         pubSub,
         logger,
         userDefinesBuilder,
@@ -140,11 +142,14 @@ export default class ApiServer {
       config.PATH,
       path.join(config.userDataPath, 'firmwares', 'binary-targets')
     );
+    const binaryConfigurator = new BinaryConfigurator(python, logger);
     const binaryFlashingStrategyService = new BinaryFlashingStrategyService(
       config.PATH,
       path.join(config.userDataPath, 'firmwares', 'binary'),
       pubSub,
-      python,
+      binaryConfigurator,
+      platformio,
+      firmwareBuilder,
       deviceDescriptionsLoader,
       logger
     );

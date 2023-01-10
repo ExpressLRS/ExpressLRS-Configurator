@@ -1,6 +1,7 @@
 /* eslint-disable no-await-in-loop */
 import fs from 'fs';
 import path from 'path';
+import child_process from 'child_process';
 import Commander, { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 import { LoggerService } from '../../logger';
 
@@ -14,18 +15,26 @@ export default class Python {
   async runPythonScript(
     script: string,
     args: string[],
-    onUpdate: OnOutputFunc = NoOpFunc
+    onUpdate: OnOutputFunc = NoOpFunc,
+    options: child_process.SpawnOptions = {}
   ): Promise<CommandResult> {
     const pyExec = await this.findPythonExecutable(this.PATH);
     if (pyExec === null) {
       throw new Error('python executable not found');
     }
+    let spawnOptions = {
+      env: this.env,
+    };
+    if (options !== undefined) {
+      spawnOptions = {
+        env: this.env,
+        ...options,
+      };
+    }
     return new Commander().runCommand(
       pyExec,
       [script, ...args],
-      {
-        env: this.env,
-      },
+      spawnOptions,
       onUpdate
     );
   }

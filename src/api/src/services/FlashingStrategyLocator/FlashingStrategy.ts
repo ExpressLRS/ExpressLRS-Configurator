@@ -1,8 +1,8 @@
 import TargetArgs from '../../graphql/args/Target';
 import GitRepository from '../../graphql/inputs/GitRepositoryInput';
-import {BuildFlashFirmwareParams} from './BuildFlashFirmwareParams';
+import { BuildFlashFirmwareParams } from './BuildFlashFirmwareParams';
 import Device from '../../models/Device';
-import {UserDefineFilters} from '../UserDefinesLoader';
+import { UserDefineFilters } from '../UserDefinesLoader';
 import UserDefine from '../../models/UserDefine';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import PullRequest from '../../models/PullRequest';

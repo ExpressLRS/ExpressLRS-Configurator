@@ -1,15 +1,14 @@
 /* eslint-disable no-await-in-loop */
-import {Service} from 'typedi';
-import {FlashingStrategy, IsCompatibleArgs} from './FlashingStrategy';
-import {LoggerService} from '../../logger';
+import { Service } from 'typedi';
+import { FlashingStrategy, IsCompatibleArgs } from './FlashingStrategy';
+import { LoggerService } from '../../logger';
 
 @Service()
 export default class FlashingStrategyLocatorService {
   constructor(
     private flashingStrategies: FlashingStrategy[],
     private logger: LoggerService
-  ) {
-  }
+  ) {}
 
   async locate(
     params: IsCompatibleArgs,
@@ -36,7 +35,9 @@ export default class FlashingStrategyLocatorService {
   }
 
   async clearFirmwareFiles(): Promise<void> {
-    const jobs = this.flashingStrategies.map((strategy) => strategy.clearFirmwareFiles());
+    const jobs = this.flashingStrategies.map((strategy) =>
+      strategy.clearFirmwareFiles()
+    );
     await Promise.all(jobs);
   }
 }

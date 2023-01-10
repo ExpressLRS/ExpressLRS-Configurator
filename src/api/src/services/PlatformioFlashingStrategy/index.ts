@@ -1,11 +1,6 @@
 import { Service } from 'typedi';
 import { PubSubEngine } from 'graphql-subscriptions';
 import * as os from 'os';
-import * as fs from 'fs';
-import * as path from 'path';
-import rimraf from 'rimraf';
-import cloneDeep from 'lodash.clonedeep';
-import sanitize from 'sanitize-filename';
 import BuildJobType from '../../models/enum/BuildJobType';
 import UserDefinesMode from '../../models/enum/UserDefinesMode';
 import UserDefine from '../../models/UserDefine';
@@ -27,6 +22,10 @@ import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import UploadType from '../../library/Platformio/Enum/UploadType';
 import { BuildFlashFirmwareParams } from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
 import {
+  createBinaryCopyWithCanonicalName,
+  removeDirectoryContents,
+} from '../FlashingStrategyLocator/artefacts';
+import {
   FlashingStrategy,
   IsCompatibleArgs,
 } from '../FlashingStrategyLocator/FlashingStrategy';
@@ -37,45 +36,10 @@ import Device from '../../models/Device';
 import { UserDefineFilters } from '../UserDefinesLoader';
 import GitRepository from '../../graphql/inputs/GitRepositoryInput';
 import UserDefinesTxtFactory from '../../factories/UserDefinesTxtFactory';
-
-const maskSensitiveData = (haystack: string): string => {
-  const needles = [
-    'HOME_WIFI_SSID',
-    'HOME_WIFI_PASSWORD',
-    'MY_BINDING_PHRASE',
-    'MY_UID',
-  ];
-  for (let i = 0; i < needles.length; i++) {
-    if (haystack.includes(needles[i])) {
-      return '***';
-    }
-  }
-  return haystack;
-};
-
-const maskBuildFlashFirmwareParams = (
-  params: BuildFlashFirmwareParams
-): BuildFlashFirmwareParams => {
-  const result = cloneDeep(params);
-  if (result.userDefinesTxt?.length > 0) {
-    result.userDefinesTxt = '******';
-  }
-  result.userDefines = result.userDefines.map((userDefine) => {
-    const sensitiveDataKeys = [
-      UserDefineKey.BINDING_PHRASE,
-      UserDefineKey.HOME_WIFI_SSID,
-      UserDefineKey.HOME_WIFI_PASSWORD,
-    ];
-    if (sensitiveDataKeys.includes(userDefine.key)) {
-      return {
-        ...userDefine,
-        value: '***',
-      };
-    }
-    return userDefine;
-  });
-  return result;
-};
+import {
+  maskBuildFlashFirmwareParams,
+  maskSensitiveData,
+} from '../FlashingStrategyLocator/masks';
 
 @Service()
 export default class PlatformioFlashingStrategyService
@@ -147,8 +111,11 @@ export default class PlatformioFlashingStrategyService
   }
 
   async isCompatible(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _params: IsCompatibleArgs,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _gitRepositoryUrl: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _gitRepositorySrcFolder: string
   ) {
     return true;
@@ -381,55 +348,18 @@ export default class PlatformioFlashingStrategyService
           );
         }
 
-        let firmwareBinPath = this.builder.getFirmwareBinPath(
+        const firmwareBinPath = this.builder.getFirmwareBinPath(
           params.target,
           firmwarePath
         );
-
-        if (fs.existsSync(firmwareBinPath)) {
-          const newFirmwareBaseName = this.generateFirmwareName(params);
-          const firmwareExtension = path.extname(firmwareBinPath);
-
-          const tmpPath = await fs.promises.mkdtemp(
-            path.join(os.tmpdir(), `${params.target}_`)
-          );
-
-          // copy with original filename to tmpPath
-          const tmpFirmwareBinPathOriginalName = path.join(
-            tmpPath,
-            path.basename(firmwareBinPath)
-          );
-          try {
-            await fs.promises.copyFile(
-              firmwareBinPath,
-              tmpFirmwareBinPathOriginalName
-            );
-          } catch (err) {
-            this.logger?.error(
-              `error copying file from ${firmwareBinPath} to ${tmpFirmwareBinPathOriginalName}: ${err}`
-            );
-          }
-
-          const tmpFirmwareBinPath = path.join(
-            tmpPath,
-            `${newFirmwareBaseName}${firmwareExtension}`
-          );
-
-          try {
-            await fs.promises.copyFile(firmwareBinPath, tmpFirmwareBinPath);
-            firmwareBinPath = tmpFirmwareBinPath;
-          } catch (err) {
-            this.logger?.error(
-              `error copying file from ${firmwareBinPath} to ${tmpFirmwareBinPath}: ${err}`
-            );
-          }
-        }
+        const canonicalFirmwareBinPath =
+          await createBinaryCopyWithCanonicalName(params, firmwareBinPath);
 
         return new BuildFlashFirmwareResult(
           true,
           undefined,
           undefined,
-          firmwareBinPath
+          canonicalFirmwareBinPath
         );
       }
 
@@ -500,70 +430,7 @@ export default class PlatformioFlashingStrategyService
     }
   }
 
-  generateFirmwareName(params: BuildFlashFirmwareParams): string {
-    const { source, gitBranch, gitCommit, gitTag, gitPullRequest } =
-      params.firmware;
-    const deviceName = params.userDefines.find(
-      (userDefine) => userDefine.key === UserDefineKey.DEVICE_NAME
-    )?.value;
-    let target = params.target.toString();
-
-    const viaIndex = params.target?.lastIndexOf('_via');
-    if (viaIndex > 0) {
-      target = target.substring(0, viaIndex);
-    }
-
-    const replacement = '_';
-
-    const firmwareName = deviceName
-      ? sanitize(deviceName, { replacement }).replaceAll(' ', replacement)
-      : target;
-
-    switch (source) {
-      case FirmwareSource.GitTag:
-        return `${firmwareName}-${gitTag}`;
-      case FirmwareSource.GitBranch:
-        return `${firmwareName}-${gitBranch}`;
-      case FirmwareSource.GitCommit:
-        return `${firmwareName}-${gitCommit}`;
-      case FirmwareSource.GitPullRequest:
-        return `${firmwareName}-PR_${gitPullRequest?.number}`;
-      default:
-        return `${firmwareName}`;
-    }
-  }
-
   async clearFirmwareFiles(): Promise<void> {
-    const rmrf = async (file: string): Promise<void> => {
-      return new Promise((resolve, reject) => {
-        rimraf(file, (err) => {
-          if (err) {
-            reject();
-          } else {
-            resolve();
-          }
-        });
-      });
-    };
-    const listFiles = async (directory: string): Promise<string[]> => {
-      return new Promise((resolve, reject) => {
-        fs.readdir(directory, (err, files) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(files.map((file) => path.join(directory, file)));
-          }
-        });
-      });
-    };
-    const files = await listFiles(this.firmwaresPath);
-    this.logger?.log('removing firmware files', {
-      firmwaresPath: this.firmwaresPath,
-      files,
-    });
-    if (files.length > 4) {
-      throw new Error(`unexpected number of files to remove: ${files}`);
-    }
-    await Promise.all(files.map((item) => rmrf(item)));
+    return removeDirectoryContents(this.firmwaresPath);
   }
 }
