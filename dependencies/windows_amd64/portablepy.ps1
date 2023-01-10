@@ -55,6 +55,10 @@ cp "$($destination)python.exe" "$($destination)$($pythonMajorVersion).exe"
 Invoke-WebRequest -OutFile "$($destination)get-pip.py" "https://bootstrap.pypa.io/get-pip.py"
 & "$($destination)python.exe" "$($destination)get-pip.py"
 
+"Installing pyserial"
+& "$($destination)python.exe" -m pip install pyserial
+
+
 "Cleaning up"
 Remove-Item -Path "$($package)" -Confirm:$false -Force
 Remove-Item -Path "$($destination)get-pip.py" -Confirm:$false -Force

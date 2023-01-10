@@ -80,10 +80,10 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
             <div>
               <p>
                 For firmware versions earlier than v3.x, the EU CE 2.4 GHz
-                regulatory domain limits the maxmimum power to 10mW, which does
+                regulatory domain limits the maximum power to 10mW, which does
                 not require LBT (Listen Before Talk). For firmware versions
                 later than v3.x, the EU CE 2.4 GHz regulatory domain limits the
-                maxmimum power to 100mW, and enables LBT (Listen Before Talk).
+                maximum power to 100mW, and enables LBT (Listen Before Talk).
               </p>
               <p>
                 <a

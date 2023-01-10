@@ -65,11 +65,15 @@ const isWindows = process.platform.startsWith('win');
 const isMacOS = process.platform.startsWith('darwin');
 let userDataDirectory = app.getPath('userData');
 if (isWindows) {
-  const dirtyUserDataDirectory = path.join('c:', '.expresslrs');
+  const dirtyUserDataDirectory = app.isPackaged
+    ? path.join('c:', `.${packageJson.name}`)
+    : path.join('c:', `.${packageJson.name}-dev`);
   try {
     mkdirp.sync(dirtyUserDataDirectory);
     userDataDirectory = dirtyUserDataDirectory;
-    logger.log('using c:/.expresslrs directory for firmware storage');
+    logger.log(
+      `using ${dirtyUserDataDirectory} directory for firmware storage`
+    );
   } catch (err) {
     logger.error(
       'failed to create c:/.expresslrs directory, will use usual path',
@@ -370,6 +374,12 @@ app
   .catch((err: Error) => {
     logger.error(`createWindow error ${err}`);
     handleFatalError(err);
+  })
+  .then(() => {
+    return updater?.checkForUpdates();
+  })
+  .catch((err: Error) => {
+    logger.error(`Auto update error ${err}`);
   });
 
 app.on('activate', () => {
@@ -378,10 +388,6 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
-});
-
-app.on('ready', async () => {
-  updater?.checkForUpdates();
 });
 
 /*
