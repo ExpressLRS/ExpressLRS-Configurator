@@ -87,8 +87,6 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER",
       "UART_INVERTED"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-external/",
@@ -115,8 +113,6 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER",
       "UART_INVERTED"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-external/",
@@ -144,8 +140,6 @@
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER",
       "UART_INVERTED"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-external/",
@@ -174,13 +168,9 @@
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "FEATURE_OPENTX_SYNC",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER"
+      "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-internal/",
     "deviceType": "ExpressLRS",
