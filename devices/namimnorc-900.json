@@ -1,6 +1,6 @@
 [
   {
-    "category": "NamimnoRC VOYAGER 900 MHz",
+    "category": "NamimnoRC",
     "name": "NamimnoRC VOYAGER 900 TX",
     "targets": [
       {
@@ -27,7 +27,7 @@
     "aliases": []
   },
   {
-    "category": "NamimnoRC VOYAGER 900 MHz",
+    "category": "NamimnoRC",
     "name": "NamimnoRC VOYAGER 900 OLED TX",
     "targets": [
       {
@@ -54,7 +54,7 @@
     "aliases": []
   },
   {
-    "category": "NamimnoRC VOYAGER 900 MHz",
+    "category": "NamimnoRC",
     "name": "NamimnoRC VOYAGER 900 RX",
     "targets": [
       {
@@ -80,7 +80,7 @@
     "aliases": []
   },
   {
-    "category": "NamimnoRC VOYAGER 900 MHz",
+    "category": "NamimnoRC",
     "name": "NamimnoRC VOYAGER 900 ESP RX",
     "targets": [
       {

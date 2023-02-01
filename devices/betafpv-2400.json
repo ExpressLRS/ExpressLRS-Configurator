@@ -1,6 +1,6 @@
 [
   {
-    "category": "BETAFPV 2.4 GHz",
+    "category": "BETAFPV",
     "name": "BETAFPV 2400 TX Nano",
     "targets": [
       {
@@ -27,7 +27,7 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "HiYOUNGER 2.4 GHz",
+        "category": "HiYOUNGER",
         "name": "HiYOUNGER TX2G4 2400 TX",
         "wikiUrl": "",
         "abbreviatedName": "HiYOUNGER TX2G4",
@@ -36,7 +36,7 @@
     ]
   },
   {
-    "category": "BETAFPV 2.4 GHz",
+    "category": "BETAFPV",
     "name": "BETAFPV 2400 TX Micro",
     "targets": [
       {
@@ -64,7 +64,7 @@
     "aliases": []
   },
   {
-    "category": "BETAFPV 2.4 GHz",
+    "category": "BETAFPV",
     "name": "BETAFPV 2400 TX Micro 1000mW",
     "targets": [
       {
@@ -91,7 +91,7 @@
     "aliases": []
   },
   {
-    "category": "BETAFPV 2.4 GHz",
+    "category": "BETAFPV",
     "name": "BETAFPV LiteRadio 3 Pro",
     "targets": [
       {
@@ -121,7 +121,7 @@
     "aliases": []
   },
   {
-    "category": "BETAFPV 2.4 GHz",
+    "category": "BETAFPV",
     "name": "BETAFPV Nano 2400 RX",
     "targets": [
       {
@@ -164,21 +164,21 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "HiYOUNGER 2.4 GHz",
+        "category": "HiYOUNGER",
         "name": "HiYOUNGER RX24T 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "HiYOUNGER RX24T",
         "verifiedHardware": false
       },
       {
-        "category": "JHEMCU 2.4 GHz",
+        "category": "JHEMCU",
         "name": "JHEMCU RX24T 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "JHEMCU RX24T",
         "verifiedHardware": false
       },
       {
-        "category": "EMAX 2.4 GHz",
+        "category": "EMAX",
         "name": "EMAX 2.4GHz PA RX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
         "abbreviatedName": "EMAX 2400RX"
@@ -186,7 +186,7 @@
     ]
   },
   {
-    "category": "BETAFPV 2.4 GHz",
+    "category": "BETAFPV",
     "name": "BETAFPV SuperD 2.4GHz RX",
     "targets": [
       {

@@ -1,6 +1,6 @@
 [
   {
-    "category": "HGLRC 2.4 GHz",
+    "category": "HGLRC",
     "name": "HGLRC Hermes 2400 TX",
     "targets": [
       {
@@ -27,7 +27,7 @@
     "aliases": []
   },
   {
-    "category": "HGLRC 2.4 GHz",
+    "category": "HGLRC",
     "name": "HGLRC Hermes 2400 RX",
     "targets": [
       {

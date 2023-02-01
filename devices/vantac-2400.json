@@ -1,6 +1,6 @@
 [
   {
-    "category": "Vantac 2.4 GHz",
+    "category": "Vantac",
     "name": "Vantac Lite 2400 TX",
     "targets": [
       {
@@ -27,7 +27,7 @@
     "aliases": []
   },
   {
-    "category": "Vantac 2.4 GHz",
+    "category": "Vantac",
     "name": "Vantac 2400 RX",
     "targets": [
       {

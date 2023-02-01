@@ -1,6 +1,6 @@
 [
   {
-    "category": "Happymodel 2.4 GHz",
+    "category": "Happymodel",
     "name": "HappyModel ES24TX 2400 TX",
     "targets": [
       {
@@ -27,7 +27,7 @@
     "aliases": []
   },
   {
-    "category": "Happymodel 2.4 GHz",
+    "category": "Happymodel",
     "name": "HM ES24TX Pro Series 2400 TX",
     "targets": [
       {
@@ -54,7 +54,7 @@
     "aliases": []
   },
   {
-    "category": "Happymodel 2.4 GHz",
+    "category": "Happymodel",
     "name": "HappyModel EP 2400 RX",
     "targets": [
       {
@@ -85,7 +85,7 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "RadioMaster 2.4 GHz",
+        "category": "RadioMaster",
         "name": "RadioMaster RP1/2 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "RM RP 2400RX"
@@ -93,7 +93,7 @@
     ]
   },
   {
-    "category": "Happymodel 2.4 GHz",
+    "category": "Happymodel",
     "name": "HappyModel EP1 Dual 2400 RX",
     "targets": [
       {
@@ -125,7 +125,7 @@
     "aliases": []
   },
   {
-    "category": "Happymodel 2.4 GHz",
+    "category": "Happymodel",
     "name": "HappyModel PP 2400 RX",
     "targets": [
       {

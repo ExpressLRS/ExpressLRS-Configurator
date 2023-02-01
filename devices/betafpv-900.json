@@ -1,6 +1,6 @@
 [
   {
-    "category": "BETAFPV 900 MHz",
+    "category": "BETAFPV",
     "name": "BETAFPV 900 TX",
     "targets": [
       {
@@ -29,7 +29,7 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "HiYOUNGER 900 MHz",
+        "category": "HiYOUNGER",
         "name": "HiYOUNGER 900 TX",
         "wikiUrl": "",
         "abbreviatedName": "HiYOUNGER 900 TX",
@@ -38,7 +38,7 @@
     ]
   },
   {
-    "category": "BETAFPV 900 MHz",
+    "category": "BETAFPV",
     "name": "BETAFPV 900 TX Micro",
     "targets": [
       {
@@ -68,7 +68,7 @@
     "aliases": []
   },
   {
-    "category": "BETAFPV 900 MHz",
+    "category": "BETAFPV",
     "name": "BETAFPV 900 RX",
     "targets": [
       {
@@ -101,7 +101,7 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "HiYOUNGER 900 MHz",
+        "category": "HiYOUNGER",
         "name": "HiYOUNGER 900 RX",
         "wikiUrl": "",
         "abbreviatedName": "HiYOUNGER 900 RX",

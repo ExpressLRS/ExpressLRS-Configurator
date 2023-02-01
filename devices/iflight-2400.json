@@ -1,6 +1,6 @@
 [
   {
-    "category": "iFlight 2.4 GHz",
+    "category": "iFlight",
     "name": "iFlight 2400TX",
     "targets": [
       {
@@ -27,7 +27,7 @@
     "aliases": []
   },
   {
-    "category": "iFlight 2.4 GHz",
+    "category": "iFlight",
     "name": "iFlight 2400RX",
     "targets": [
       {

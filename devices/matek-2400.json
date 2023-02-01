@@ -1,6 +1,6 @@
 [
   {
-    "category": "Matek 2.4 GHz",
+    "category": "Matek",
     "name": "Matek 2400 RX",
     "targets": [
       {
@@ -32,7 +32,7 @@
     "aliases": []
   },
   {
-    "category": "Matek 2.4 GHz",
+    "category": "Matek",
     "name": "Matek 2400 RX PWM",
     "targets": [
       {
@@ -58,7 +58,7 @@
     "aliases": []
   },
   {
-    "category": "Matek 2.4 GHz",
+    "category": "Matek",
     "name": "Matek 2400 RX R24D",
     "targets": [
       {
@@ -89,13 +89,13 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "RadioMaster 2.4 GHz",
+        "category": "RadioMaster",
         "name": "RadioMaster RP3 Diversity 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "RM RP3 2400RX"
       },
       {
-        "category": "Skystars 2.4 GHz",
+        "category": "Skystars",
         "name": "Skystars SS24D 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "Skystars SS24D",

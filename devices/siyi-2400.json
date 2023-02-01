@@ -1,6 +1,6 @@
 [
   {
-    "category": "SIYI 2.4 GHz",
+    "category": "SIYI",
     "name": "FM30 TX",
     "targets": [
       {
@@ -24,7 +24,7 @@
     "aliases": []
   },
   {
-    "category": "SIYI 2.4 GHz",
+    "category": "SIYI",
     "name": "FM30 RX MINI",
     "targets": [
       {
@@ -48,7 +48,7 @@
     "aliases": []
   },
   {
-    "category": "SIYI 2.4 GHz",
+    "category": "SIYI",
     "name": "FM30 RX MINI AS TX",
     "targets": [
       {

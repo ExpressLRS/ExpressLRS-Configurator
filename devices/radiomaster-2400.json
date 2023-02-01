@@ -1,6 +1,6 @@
 [
   {
-    "category": "RadioMaster 2.4 GHz",
+    "category": "RadioMaster",
     "name": "RadioMaster TX16S 2400 TX",
     "targets": [
       {
@@ -30,7 +30,7 @@
     "aliases": []
   },
   {
-    "category": "RadioMaster 2.4 GHz",
+    "category": "RadioMaster",
     "name": "RadioMaster Zorro 2400 TX",
     "targets": [
       {
@@ -59,7 +59,7 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "RadioMaster 2.4 GHz",
+        "category": "RadioMaster",
         "name": "RadioMaster TX12 2400 TX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-internal/",
         "abbreviatedName": "RM TX12"
@@ -67,7 +67,7 @@
     ]
   },
   {
-    "category": "RadioMaster 2.4 GHz",
+    "category": "RadioMaster",
     "name": "RadioMaster Ranger 2400 TX",
     "targets": [
       {
@@ -93,7 +93,7 @@
     "deviceType": "ExpressLRS"
   },
   {
-    "category": "RadioMaster 2.4 GHz",
+    "category": "RadioMaster",
     "name": "RadioMaster Ranger Micro 2400 TX",
     "targets": [
       {
@@ -120,7 +120,7 @@
     "aliases": []
   },
   {
-    "category": "RadioMaster 2.4 GHz",
+    "category": "RadioMaster",
     "name": "RadioMaster Ranger Nano 2400 TX",
     "targets": [
       {
@@ -147,7 +147,7 @@
     "aliases": []
   },
   {
-    "category": "RadioMaster 2.4 GHz",
+    "category": "RadioMaster",
     "name": "RadioMaster Boxer 2400 TX",
     "targets": [
       {

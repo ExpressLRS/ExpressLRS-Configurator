@@ -1,6 +1,6 @@
 [
   {
-    "category": "iFlight 900 MHz",
+    "category": "iFlight",
     "name": "iFlight 900TX",
     "targets": [
       {
@@ -29,7 +29,7 @@
     "aliases": []
   },
   {
-    "category": "iFlight 900 MHz",
+    "category": "iFlight",
     "name": "iFlight 900RX",
     "targets": [
       {

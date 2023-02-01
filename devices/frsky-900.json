@@ -1,6 +1,6 @@
 [
   {
-    "category": "Frsky R9",
+    "category": "Frsky",
     "name": "Frsky TX R9M",
     "targets": [
       {
@@ -34,7 +34,7 @@
     "aliases": []
   },
   {
-    "category": "Frsky R9",
+    "category": "Frsky",
     "name": "Frsky TX R9M LITE",
     "targets": [
       {
@@ -62,7 +62,7 @@
     "aliases": []
   },
   {
-    "category": "Frsky R9",
+    "category": "Frsky",
     "name": "Frsky TX R9M LITE PRO",
     "targets": [
       {
@@ -87,7 +87,7 @@
     "aliases": []
   },
   {
-    "category": "Frsky R9",
+    "category": "Frsky",
     "name": "Frsky RX R9MM R9MINI",
     "targets": [
       {
@@ -114,7 +114,7 @@
     "aliases": []
   },
   {
-    "category": "Frsky R9",
+    "category": "Frsky",
     "name": "Frsky RX R9SLIMPLUS",
     "targets": [
       {
@@ -140,7 +140,7 @@
     "aliases": []
   },
   {
-    "category": "Frsky R9",
+    "category": "Frsky",
     "name": "Frsky RX R9SLIM",
     "targets": [
       {
@@ -166,7 +166,7 @@
     "aliases": []
   },
   {
-    "category": "Frsky R9",
+    "category": "Frsky",
     "name": "Frsky RX R9SLIMPLUS OTA",
     "targets": [
       {
@@ -192,7 +192,7 @@
     "aliases": []
   },
   {
-    "category": "Frsky R9",
+    "category": "Frsky",
     "name": "Frsky RX R9MX",
     "targets": [
       {

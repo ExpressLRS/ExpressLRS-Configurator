@@ -1,6 +1,6 @@
 [
   {
-    "category": "QuadKopters 2.4 Ghz",
+    "category": "QuadKopters",
     "name": "QuadKopters JR 2400 TX",
     "targets": [
       {
@@ -26,7 +26,7 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "QuadKopters 2.4 Ghz",
+        "category": "QuadKopters",
         "name": "QuadKopters Slim 2400 TX",
         "wikiUrl": "",
         "abbreviatedName": "QuadKopters 2G4"
@@ -34,7 +34,7 @@
     ]
   },
   {
-    "category": "QuadKopters 2.4 Ghz",
+    "category": "QuadKopters",
     "name": "QuadKopters NANO RX",
     "targets": [
       {

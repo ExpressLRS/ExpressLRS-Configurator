@@ -1,6 +1,6 @@
 [
   {
-    "category": "ImmersionRC Ghost",
+    "category": "ImmersionRC",
     "name": "GHOST 2400 TX",
     "targets": [
       {
@@ -23,7 +23,7 @@
     "aliases": []
   },
   {
-    "category": "ImmersionRC Ghost",
+    "category": "ImmersionRC",
     "name": "GHOST 2400 TX LITE",
     "targets": [
       {
@@ -46,7 +46,7 @@
     "aliases": []
   },
   {
-    "category": "ImmersionRC Ghost",
+    "category": "ImmersionRC",
     "name": "GHOST ATTO 2400 RX",
     "targets": [
       {

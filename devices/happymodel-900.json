@@ -1,6 +1,6 @@
 [
   {
-    "category": "Happymodel 900 MHz",
+    "category": "Happymodel",
     "name": "HappyModel TX ES900TX",
     "targets": [
       {
@@ -30,7 +30,7 @@
     "aliases": []
   },
   {
-    "category": "Happymodel 900 MHz",
+    "category": "Happymodel",
     "name": "HappyModel RX ES900RX",
     "targets": [
       {
@@ -64,7 +64,7 @@
     "aliases": []
   },
   {
-    "category": "Happymodel 900 MHz",
+    "category": "Happymodel",
     "name": "HappyModel TX ES915TX",
     "targets": [
       {
@@ -101,7 +101,7 @@
     "aliases": []
   },
   {
-    "category": "Happymodel 900 MHz",
+    "category": "Happymodel",
     "name": "HappyModel RX ES915RX",
     "targets": [
       {

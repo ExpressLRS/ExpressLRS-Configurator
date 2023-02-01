@@ -1,6 +1,6 @@
 [
   {
-    "category": "DIY 2.4 GHz",
+    "category": "DIY devices",
     "name": "Experimental 2.4GHz TX",
     "targets": [
       {
@@ -26,7 +26,7 @@
     "aliases": []
   },
   {
-    "category": "DIY 2.4 GHz",
+    "category": "DIY devices",
     "name": "DIY 2400 RX PWM VARIO",
     "targets": [
       {
@@ -52,7 +52,7 @@
     "aliases": []
   },
   {
-    "category": "DIY 2.4 GHz",
+    "category": "DIY devices",
     "name": "DIY 2400 TX ESP32 SX1280 Mini",
     "targets": [
       {
@@ -79,7 +79,7 @@
     "aliases": []
   },
   {
-    "category": "DIY 2.4 GHz",
+    "category": "DIY devices",
     "name": "DIY 2400 TX ESP32 SX1280 E28",
     "targets": [
       {
@@ -106,7 +106,7 @@
     "aliases": []
   },
   {
-    "category": "DIY 2.4 GHz",
+    "category": "DIY devices",
     "name": "DIY 2400 DUPLETX",
     "targets": [
       {
@@ -136,7 +136,7 @@
     "aliases": []
   },
   {
-    "category": "DIY 2.4 GHz",
+    "category": "DIY devices",
     "name": "DIY 2400 TX ESP32 SX1280 LORA1280F27",
     "targets": [
       {
@@ -163,7 +163,7 @@
     "aliases": []
   },
   {
-    "category": "DIY 2.4 GHz",
+    "category": "DIY devices",
     "name": "DIY 2400 RX ESP8285 SX1280",
     "targets": [
       {
@@ -194,79 +194,79 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "Flywoo 2.4 GHz",
+        "category": "Flywoo",
         "name": "Flywoo EL24E 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "Flywoo EL24E",
         "verifiedHardware": false
       },
       {
-        "category": "Flywoo 2.4 GHz",
+        "category": "Flywoo",
         "name": "Flywoo EL24P 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "Flywoo EL24P",
         "verifiedHardware": false
       },
       {
-        "category": "HiYOUNGER 2.4 GHz",
+        "category": "HiYOUNGER",
         "name": "HiYOUNGER SP24S 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "HiYOUNGER SP24S",
         "verifiedHardware": false
       },
       {
-        "category": "HiYOUNGER 2.4 GHz",
+        "category": "HiYOUNGER",
         "name": "HiYOUNGER EP24S 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "HiYOUNGER EP24S",
         "verifiedHardware": false
       },
       {
-        "category": "JHEMCU 2.4 GHz",
+        "category": "JHEMCU",
         "name": "JHEMCU SP24S 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "JHEMCU SP24S",
         "verifiedHardware": false
       },
       {
-        "category": "JHEMCU 2.4 GHz",
+        "category": "JHEMCU",
         "name": "JHEMCU EP24S 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "JHEMCU EP24S",
         "verifiedHardware": false
       },
       {
-        "category": "Jumper 2.4 GHz",
+        "category": "Jumper",
         "name": "Jumper AION Mini 2400 RX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/jumper-aion/",
         "abbreviatedName": "AION RX24 MINI"
       },
       {
-        "category": "BETAFPV 2.4 GHz",
+        "category": "BETAFPV",
         "name": "BETAFPV Lite 2400 RX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv2400/",
         "abbreviatedName": "BFPV Lite 2G4RX"
       },
       {
-        "category": "BETAFPV 2.4 GHz",
+        "category": "BETAFPV",
         "name": "BETAFPV AIO 2400 RX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv2400/",
         "abbreviatedName": "BFPV AIO 2G4RX"
       },
       {
-        "category": "GEPRC 2.4 GHz",
+        "category": "GEPRC",
         "name": "GEPRC Nano 2400 RX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/geprc2400/",
         "abbreviatedName": "GEPRC Nano 2G4RX"
       },
       {
-        "category": "EMAX 2.4 GHz",
+        "category": "EMAX",
         "name": "EMAX 2.4GHz RX",
         "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
         "abbreviatedName": "EMAX 2400RX"
       },
       {
-        "category": "Foxeer 2.4 GHz",
+        "category": "Foxeer",
         "name": "Foxeer Lite 2.4 GHz",
         "wikiUrl": "",
         "abbreviatedName": "Foxeer Lite 2.4"
@@ -274,7 +274,7 @@
     ]
   },
   {
-    "category": "DIY 2.4 GHz",
+    "category": "DIY devices",
     "name": "DIY 2400 RX PWMP",
     "targets": [
       {
@@ -299,13 +299,13 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "BETAFPV 2.4 GHz",
+        "category": "BETAFPV",
         "name": "BETAFPV PWM 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "BFPV PWM 2G4RX"
       },
       {
-        "category": "RadioMaster 2.4 GHz",
+        "category": "RadioMaster",
         "name": "RadioMaster ER5A/C 2.4GHz PWM RX",
         "wikiUrl": "",
         "abbreviatedName": "RM ER5A/C 2G4RX"
@@ -313,7 +313,7 @@
     ]
   },
   {
-    "category": "DIY 2.4 GHz",
+    "category": "DIY devices",
     "name": "DIY 2400 RX PWMP EX",
     "targets": [
       {
@@ -339,7 +339,7 @@
     "aliases": []
   },
   {
-    "category": "DIY 2.4 GHz",
+    "category": "DIY devices",
     "name": "DIY 2400 RX STM32 CCG Nano v0 5",
     "targets": [
       {

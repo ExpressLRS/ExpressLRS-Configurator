@@ -1,6 +1,6 @@
 [
   {
-    "category": "Jumper 2.4 GHz",
+    "category": "Jumper",
     "name": "Jumper AION Nano 2400 TX",
     "targets": [
       {
@@ -27,7 +27,7 @@
     "aliases": []
   },
   {
-    "category": "Jumper 2.4 GHz",
+    "category": "Jumper",
     "name": "Jumper AION T-Pro 2400 TX",
     "targets": [
       {
@@ -57,7 +57,7 @@
     "aliases": []
   },
   {
-    "category": "Jumper 2.4 GHz",
+    "category": "Jumper",
     "name": "Jumper AION T-Lite 2400 TX",
     "targets": [
       {
@@ -87,7 +87,7 @@
     "aliases": []
   },
   {
-    "category": "Jumper 2.4 GHz",
+    "category": "Jumper",
     "name": "Jumper AION Nano 2400 RX",
     "targets": [
       {
