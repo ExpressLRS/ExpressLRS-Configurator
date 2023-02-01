@@ -15,7 +15,7 @@ if (!$pythonVersion) {
 }
 
 if (!$destination) {
-    $destination = '.\'
+    $destination = '.\python\'
 }
 
 
@@ -58,6 +58,8 @@ Invoke-WebRequest -OutFile "$($destination)get-pip.py" "https://bootstrap.pypa.i
 "Installing pyserial"
 & "$($destination)python.exe" -m pip install pyserial
 
+"Installing esptool"
+& "$($destination)python.exe" -m pip install esptool
 
 "Cleaning up"
 Remove-Item -Path "$($package)" -Confirm:$false -Force
