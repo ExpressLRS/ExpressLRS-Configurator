@@ -18,6 +18,7 @@ import UserDefine from '../../../models/UserDefine';
 import TargetUserDefinesFactory from '../../../factories/TargetUserDefinesFactory';
 import UserDefineKey from '../../../library/FirmwareBuilder/Enum/UserDefineKey';
 import PullRequest from '../../../models/PullRequest';
+import { removeDirectoryContents } from '../../FlashingStrategyLocator/artefacts';
 
 export interface GitRepository {
   url: string;
@@ -316,5 +317,14 @@ export default class DeviceDescriptionsLoader {
       );
     }
     return userDefines;
+  }
+
+  async clearCache() {
+    await this.mutex.tryLockWithTimeout(60000);
+    try {
+      return await removeDirectoryContents(this.targetStoragePath);
+    } finally {
+      this.mutex.unlock();
+    }
   }
 }

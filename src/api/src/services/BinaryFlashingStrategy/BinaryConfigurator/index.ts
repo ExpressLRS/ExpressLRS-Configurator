@@ -149,16 +149,18 @@ export default class BinaryConfigurator {
 
   async run(
     firmwareSourcePath: string,
+    hardwareDefinitionsPath: string,
     firmwareBinaryPath: string,
     flags: string[][],
     onUpdate: OnOutputFunc = NoOpFunc
   ) {
     this.logger.log('flags', {
       flags: maskSensitiveFlags(flags),
+      hardwareDefinitionsPath,
       firmwareBinaryPath,
     });
     const binaryConfiguratorArgs = [
-      ...this.stringifyFlags(flags),
+      ...this.stringifyFlags([...flags, ['--dir', hardwareDefinitionsPath]]),
       firmwareBinaryPath,
     ];
     return this.python.runPythonScript(

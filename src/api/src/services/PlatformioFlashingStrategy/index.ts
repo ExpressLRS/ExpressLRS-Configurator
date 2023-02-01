@@ -431,6 +431,11 @@ export default class PlatformioFlashingStrategyService
   }
 
   async clearFirmwareFiles(): Promise<void> {
+    await this.targetsLoader.clearCache();
+
+    this.logger.log('PlatformioConfigurator - clearFirmwareFiles', {
+      firmwaresPath: this.firmwaresPath,
+    });
     return removeDirectoryContents(this.firmwaresPath);
   }
 }

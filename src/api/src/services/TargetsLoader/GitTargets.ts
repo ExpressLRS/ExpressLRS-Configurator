@@ -12,6 +12,7 @@ import {
   GitFirmwareDownloader,
 } from '../../library/FirmwareDownloader';
 import Mutex from '../../library/Mutex';
+import { removeDirectoryContents } from '../FlashingStrategyLocator/artefacts';
 
 @Service()
 export default class GitTargetsService extends TargetsLoader {
@@ -115,6 +116,15 @@ export default class GitTargetsService extends TargetsLoader {
           return device;
         })
         .filter((item) => item.targets.length > 0);
+    } finally {
+      this.mutex.unlock();
+    }
+  }
+
+  async clearCache() {
+    await this.mutex.tryLockWithTimeout(60000);
+    try {
+      return await removeDirectoryContents(this.targetStoragePath);
     } finally {
       this.mutex.unlock();
     }

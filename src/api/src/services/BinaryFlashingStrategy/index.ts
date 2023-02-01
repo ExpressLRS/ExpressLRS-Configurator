@@ -125,7 +125,9 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         params.source === FirmwareSource.GitTag &&
         semver.compare(params.gitTag, '3.0.0') >= 0) ||
       (params.source === FirmwareSource.GitBranch &&
-        params.gitBranch === 'master')
+        params.gitBranch === 'master') ||
+      (params.source === FirmwareSource.GitBranch &&
+        params.gitBranch === 'flasher')
     ) {
       return true;
     }
@@ -392,12 +394,15 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         BuildFirmwareStep.BUILDING_FIRMWARE
       );
 
+      const hardwareDefinitionsPath = firmwareSourcePath;
+
       // TODO: pip3 install pyserial esptool
       // python-serial
       const flags: string[][] =
         this.binaryConfigurator.buildBinaryConfigFlags(params);
       const binaryConfiguratorResult = await this.binaryConfigurator.run(
         firmwareSourcePath,
+        hardwareDefinitionsPath,
         firmwareBinaryPath,
         flags,
         (output) => {
@@ -456,6 +461,11 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
   }
 
   async clearFirmwareFiles(): Promise<void> {
+    await this.deviceDescriptionsLoader.clearCache();
+
+    this.logger.log('BinaryConfigurator - clearFirmwareFiles', {
+      firmwaresPath: this.firmwaresPath,
+    });
     return removeDirectoryContents(this.firmwaresPath);
   }
 }

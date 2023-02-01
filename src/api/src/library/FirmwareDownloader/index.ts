@@ -165,6 +165,12 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     const directory = this.getRepoDirectory(repository);
     await this.syncRepo(repository, srcFolder);
     const git = this.getSimpleGit(directory);
+    this.logger.log('check out tag', {
+      repository,
+      directory,
+      srcFolder,
+      tagName,
+    });
     await git.checkout(tagName);
     return {
       path: this.getSourceDirectory(directory, srcFolder),
@@ -179,6 +185,12 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     const directory = this.getRepoDirectory(repository);
     await this.syncRepo(repository, srcFolder);
     const git = this.getSimpleGit(directory);
+    this.logger.log('check out branch', {
+      repository,
+      directory,
+      srcFolder,
+      branch,
+    });
     await git.checkout(`origin/${branch}`);
     return {
       path: this.getSourceDirectory(directory, srcFolder),
@@ -193,6 +205,12 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     const directory = this.getRepoDirectory(repository);
     await this.syncRepo(repository, srcFolder);
     const git = this.getSimpleGit(directory);
+    this.logger.log('check out commit', {
+      repository,
+      directory,
+      srcFolder,
+      commit,
+    });
     await git.checkout(commit);
     return {
       path: this.getSourceDirectory(directory, srcFolder),
