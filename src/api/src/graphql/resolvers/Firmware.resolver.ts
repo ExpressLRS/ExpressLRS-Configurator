@@ -43,8 +43,7 @@ export default class FirmwareResolver {
   ): Promise<Device[]> {
     const strategy = await this.flashingStrategyLocatorService.locate(
       args,
-      gitRepository.url,
-      gitRepository.srcFolder
+      gitRepository
     );
     return strategy.availableFirmwareTargets(args, gitRepository);
   }
@@ -56,8 +55,7 @@ export default class FirmwareResolver {
   ): Promise<UserDefine[]> {
     const strategy = await this.flashingStrategyLocatorService.locate(
       args,
-      gitRepository.url,
-      gitRepository.srcFolder
+      gitRepository
     );
     return strategy.targetDeviceOptions(args, gitRepository);
   }
@@ -69,14 +67,9 @@ export default class FirmwareResolver {
   ): Promise<BuildFlashFirmwareResult> {
     const strategy = await this.flashingStrategyLocatorService.locate(
       input.firmware,
-      gitRepository.url,
-      gitRepository.srcFolder
+      gitRepository
     );
-    return strategy.buildFlashFirmware(
-      input,
-      gitRepository.url,
-      gitRepository.srcFolder
-    );
+    return strategy.buildFlashFirmware(input, gitRepository);
   }
 
   @Mutation(() => BuildUserDefinesTxtResult)

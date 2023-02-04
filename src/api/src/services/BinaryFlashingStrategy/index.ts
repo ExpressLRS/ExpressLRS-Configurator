@@ -3,6 +3,7 @@ import { Service } from 'typedi';
 import { PubSubEngine } from 'graphql-subscriptions';
 import * as os from 'os';
 import semver from 'semver';
+import path from 'path';
 import UserDefine from '../../models/UserDefine';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import Mutex from '../../library/Mutex';
@@ -14,8 +15,8 @@ import { LoggerService } from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import { BuildFlashFirmwareParams } from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
 import {
-  removeDirectoryContents,
   createBinaryCopyWithCanonicalName,
+  removeDirectoryContents,
 } from '../FlashingStrategyLocator/artefacts';
 import {
   FlashingStrategy,
@@ -42,6 +43,7 @@ import {
   maskBuildFlashFirmwareParams,
   maskSensitiveData,
 } from '../FlashingStrategyLocator/masks';
+import CloudBinariesCache from './CloudBinariesCache';
 
 @Service()
 export default class BinaryFlashingStrategyService implements FlashingStrategy {
@@ -57,6 +59,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     private platformio: Platformio,
     private builder: FirmwareBuilder,
     private deviceDescriptionsLoader: DeviceDescriptionsLoader,
+    private cloudBinariesCache: CloudBinariesCache,
     private logger: LoggerService
   ) {
     this.mutex = new Mutex();
@@ -113,21 +116,16 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     return false;
   }
 
-  async isCompatible(
-    params: IsCompatibleArgs,
-    gitRepositoryUrl: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _gitRepositorySrcFolder: string
-  ) {
+  async isCompatible(params: IsCompatibleArgs, gitRepository: GitRepository) {
     if (
-      (gitRepositoryUrl.toLowerCase() ===
+      (gitRepository.url.toLowerCase() ===
         'https://github.com/expresslrs/expresslrs'.toLowerCase() &&
         params.source === FirmwareSource.GitTag &&
         semver.compare(params.gitTag, '3.0.0') >= 0) ||
       (params.source === FirmwareSource.GitBranch &&
         params.gitBranch === 'master') ||
-      (params.source === FirmwareSource.GitBranch &&
-        params.gitBranch === 'flasher')
+      (params.source === FirmwareSource.GitPullRequest &&
+        params.gitPullRequest?.number === 2064)
     ) {
       return true;
     }
@@ -211,8 +209,42 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     return firmwarePath;
   }
 
-  async isCachedBinariesAvailable(): Promise<boolean> {
-    return false;
+  async getCurrentSourceCommit(gitRepositoryUrl: string): Promise<string> {
+    let gitPath = '';
+    try {
+      gitPath = await findGitExecutable(this.PATH);
+    } catch (e) {
+      this.logger?.error('failed to find git', undefined, {
+        PATH: this.PATH,
+        err: e,
+      });
+      throw e;
+    }
+    this.logger?.log('git path', {
+      gitPath,
+    });
+
+    const firmwareDownload = new GitFirmwareDownloader(
+      {
+        baseDirectory: this.firmwaresPath,
+        gitBinaryLocation: gitPath,
+      },
+      this.logger
+    );
+
+    return firmwareDownload.currentCommitHash(gitRepositoryUrl);
+  }
+
+  isRequestCompatibleWithCache(params: BuildFlashFirmwareParams): boolean {
+    if (params.userDefinesMode === UserDefinesMode.Manual) {
+      return false;
+    }
+
+    if (params.firmware.source === FirmwareSource.Local) {
+      return false;
+    }
+
+    return true;
   }
 
   async compileBinary(
@@ -320,9 +352,10 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
   async buildFlashFirmware(
     params: BuildFlashFirmwareParams,
-    gitRepositoryUrl: string,
-    gitRepositorySrcFolder: string
+    gitRepository: GitRepository
   ): Promise<BuildFlashFirmwareResult> {
+    const gitRepositoryUrl = gitRepository.url;
+    const gitRepositorySrcFolder = gitRepository.srcFolder;
     this.logger?.log('received build firmware request', {
       params: maskBuildFlashFirmwareParams(params),
       gitRepositoryUrl,
@@ -374,10 +407,41 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         }
       );
 
-      const isCachedBinariesAvailable = await this.isCachedBinariesAvailable();
       let firmwareBinaryPath = '';
-      if (isCachedBinariesAvailable) {
-        this.logger.log('cached binaries are available');
+      if (this.isRequestCompatibleWithCache(params)) {
+        const currentCommitHash = await this.getCurrentSourceCommit(
+          gitRepositoryUrl
+        );
+        this.logger.log('firmware build request is compatible with cache', {
+          currentCommitHash,
+        });
+        try {
+          const cacheLocation = await this.cloudBinariesCache.download(
+            gitRepository.repositoryName,
+            currentCommitHash
+          );
+          const cachedBinaryPath = await this.getCachedBuildPath(
+            config.firmware,
+            params.userDefines
+          );
+          firmwareBinaryPath = path.join(cacheLocation, cachedBinaryPath);
+        } catch (e) {
+          this.logger.log(
+            'failed to get cached build, reverting to building firmware locally',
+            {
+              e,
+              currentCommitHash,
+            }
+          );
+          const target = `${config.firmware}_via_UART`;
+          firmwareBinaryPath = await this.compileBinary(
+            target,
+            firmwareSourcePath,
+            params.userDefinesMode,
+            params.userDefinesTxt,
+            params.userDefines
+          );
+        }
       } else {
         const target = `${config.firmware}_via_UART`;
         firmwareBinaryPath = await this.compileBinary(
@@ -388,6 +452,9 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           params.userDefines
         );
       }
+      this.logger.log('firmware binaries path', {
+        firmwareBinaryPath,
+      });
 
       await this.updateProgress(
         BuildProgressNotificationType.Info,

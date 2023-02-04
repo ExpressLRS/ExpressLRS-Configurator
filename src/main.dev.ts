@@ -188,6 +188,12 @@ const createWindow = async () => {
   logger.log('starting server...');
   const firmwaresPath = path.join(userDataDirectory, 'firmwares', 'github');
   await mkdirp(firmwaresPath);
+  const firmwareCloudCachePath = path.join(
+    userDataDirectory,
+    'firmwares',
+    'cloud'
+  );
+  await mkdirp(firmwareCloudCachePath);
   const targetsStoragePath = path.join(
     userDataDirectory,
     'firmwares',
@@ -274,6 +280,8 @@ const createWindow = async () => {
       multicastDnsSimulatorEnabled:
         process.env.MULTICAST_DNS_SIMULATOR_ENABLED === 'true',
       firmwaresPath,
+      cloudCacheServer: 'https://pub-3d47e112f78c4850a8f0d49a65030eac.r2.dev',
+      firmwareCloudCachePath,
       getPlatformioPath,
       platformioStateTempStoragePath,
       PATH,

@@ -33,6 +33,8 @@ export interface IFirmwareDownloader {
     srcFolder: string,
     commit: string
   ): Promise<FirmwareResult>;
+
+  currentCommitHash(repository: string): Promise<string>;
 }
 
 export const findGitExecutable = async (envPath: string): Promise<string> => {
@@ -155,6 +157,12 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
       await git.reset(ResetMode.HARD);
       await git.fetch('origin', ['--tags']);
     }
+  }
+
+  async currentCommitHash(repository: string): Promise<string> {
+    const directory = this.getRepoDirectory(repository);
+    const git = this.getSimpleGit(directory);
+    return git.revparse('HEAD');
   }
 
   async checkoutTag(

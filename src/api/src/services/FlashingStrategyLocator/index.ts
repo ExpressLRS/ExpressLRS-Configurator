@@ -2,6 +2,7 @@
 import { Service } from 'typedi';
 import { FlashingStrategy, IsCompatibleArgs } from './FlashingStrategy';
 import { LoggerService } from '../../logger';
+import GitRepository from '../../graphql/inputs/GitRepositoryInput';
 
 @Service()
 export default class FlashingStrategyLocatorService {
@@ -12,18 +13,13 @@ export default class FlashingStrategyLocatorService {
 
   async locate(
     params: IsCompatibleArgs,
-    gitRepositoryUrl: string,
-    gitRepositorySrcFolder: string
+    gitRepository: GitRepository
   ): Promise<FlashingStrategy> {
     for (let i = 0; i < this.flashingStrategies.length; i++) {
       const strategy = this.flashingStrategies[i];
       if (
         // eslint-disable-next-line no-await-in-loop
-        await strategy.isCompatible(
-          params,
-          gitRepositoryUrl,
-          gitRepositorySrcFolder
-        )
+        await strategy.isCompatible(params, gitRepository)
       ) {
         this.logger.log('picked flashing strategy', {
           strategy: strategy.name,

@@ -22,14 +22,12 @@ export interface FlashingStrategy {
 
   isCompatible: (
     params: IsCompatibleArgs,
-    gitRepositoryUrl: string,
-    gitRepositorySrcFolder: string
+    gitRepository: GitRepository
   ) => Promise<boolean>;
 
   buildFlashFirmware: (
     params: BuildFlashFirmwareParams,
-    gitRepositoryUrl: string,
-    gitRepositorySrcFolder: string
+    gitRepository: GitRepository
   ) => Promise<BuildFlashFirmwareResult>;
 
   availableFirmwareTargets: (

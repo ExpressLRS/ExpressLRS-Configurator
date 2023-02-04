@@ -9,6 +9,8 @@ export interface IConfig {
   multicastDnsSimulatorEnabled: boolean;
   devicesPath: string;
   firmwaresPath: string;
+  cloudCacheServer: string;
+  firmwareCloudCachePath: string;
   PATH: string;
   env: NodeJS.ProcessEnv;
   getPlatformioPath: string;

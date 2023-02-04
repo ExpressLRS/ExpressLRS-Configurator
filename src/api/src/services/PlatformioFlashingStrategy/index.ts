@@ -114,18 +114,17 @@ export default class PlatformioFlashingStrategyService
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _params: IsCompatibleArgs,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _gitRepositoryUrl: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _gitRepositorySrcFolder: string
+    _gitRepository: GitRepository
   ) {
     return true;
   }
 
   async buildFlashFirmware(
     params: BuildFlashFirmwareParams,
-    gitRepositoryUrl: string,
-    gitRepositorySrcFolder: string
+    gitRepository: GitRepository
   ): Promise<BuildFlashFirmwareResult> {
+    const gitRepositoryUrl = gitRepository.url;
+    const gitRepositorySrcFolder = gitRepository.srcFolder;
     this.logger?.log('received build firmware request', {
       params: maskBuildFlashFirmwareParams(params),
       gitRepositoryUrl,

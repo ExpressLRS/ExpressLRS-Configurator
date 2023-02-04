@@ -42,6 +42,7 @@ import Python from './src/library/Python';
 import BinaryFlashingStrategyService from './src/services/BinaryFlashingStrategy';
 import DeviceDescriptionsLoader from './src/services/BinaryFlashingStrategy/DeviceDescriptionsLoader';
 import BinaryConfigurator from './src/services/BinaryFlashingStrategy/BinaryConfigurator';
+import CloudBinariesCache from './src/services/BinaryFlashingStrategy/CloudBinariesCache';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -142,6 +143,10 @@ export default class ApiServer {
       config.PATH,
       path.join(config.userDataPath, 'firmwares', 'binary-targets')
     );
+    const cloudBinariesCache = new CloudBinariesCache(
+      config.cloudCacheServer,
+      config.firmwareCloudCachePath
+    );
     const binaryConfigurator = new BinaryConfigurator(python, logger);
     const binaryFlashingStrategyService = new BinaryFlashingStrategyService(
       config.PATH,
@@ -151,6 +156,7 @@ export default class ApiServer {
       platformio,
       firmwareBuilder,
       deviceDescriptionsLoader,
+      cloudBinariesCache,
       logger
     );
 
