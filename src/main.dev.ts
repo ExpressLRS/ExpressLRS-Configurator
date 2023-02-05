@@ -61,19 +61,30 @@ logger.log('path', {
   PATH: process.env.PATH,
 });
 
+function isASCII(str: string) {
+  return /^[\x20-\x7F]*$/.test(str);
+}
+
 const isWindows = process.platform.startsWith('win');
 const isMacOS = process.platform.startsWith('darwin');
 let userDataDirectory = app.getPath('userData');
+
 if (isWindows) {
   const dirtyUserDataDirectory = app.isPackaged
     ? path.join('c:', `.${packageJson.name}`)
     : path.join('c:', `.${packageJson.name}-dev`);
   try {
-    mkdirp.sync(dirtyUserDataDirectory);
-    userDataDirectory = dirtyUserDataDirectory;
-    logger.log(
-      `using ${dirtyUserDataDirectory} directory for firmware storage`
-    );
+    if (!isASCII(userDataDirectory)) {
+      mkdirp.sync(dirtyUserDataDirectory);
+      userDataDirectory = dirtyUserDataDirectory;
+      logger.log(
+        `Non-ASCII path detected, using ${dirtyUserDataDirectory} directory for firmware storage`
+      );
+    } else {
+      logger.log(
+        `using appdata path ${userDataDirectory} for firmware storage`
+      );
+    }
   } catch (err) {
     logger.error(
       'failed to create c:/.expresslrs directory, will use usual path',

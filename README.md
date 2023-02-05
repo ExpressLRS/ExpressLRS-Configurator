@@ -53,7 +53,7 @@ sudo xattr -rd com.apple.quarantine /Applications/ExpressLRS\ Configurator.app
 #### Linux
 
 Linux users have to install udev rules for PlatformIO supported boards/devices. The latest version of rules may be found
-at https://raw.githubusercontent.com/platformio/platformio-core/master/scripts/99-platformio-udev.rules
+at https://raw.githubusercontent.com/platformio/platformio-core/master/platformio/assets/system/99-platformio-udev.rules
 
 This file must be placed at `/etc/udev/rules.d/99-platformio-udev.rules` (preferred location) or
 `/lib/udev/rules.d/99-platformio-udev.rules` (required on some broken systems).
@@ -62,7 +62,7 @@ Please open system Terminal and type:
 
 ```bash
 # Recommended
-curl -fsSL https://raw.githubusercontent.com/platformio/platformio-core/master/scripts/99-platformio-udev.rules | sudo tee /etc/udev/rules.d/99-platformio-udev.rules
+curl -fsSL https://raw.githubusercontent.com/platformio/platformio-core/master/platformio/assets/system/99-platformio-udev.rules | sudo tee /etc/udev/rules.d/99-platformio-udev.rules
 
 # OR, manually download and copy this file to destination folder
 sudo cp 99-platformio-udev.rules /etc/udev/rules.d/99-platformio-udev.rules
