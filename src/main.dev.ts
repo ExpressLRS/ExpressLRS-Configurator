@@ -61,19 +61,18 @@ logger.log('path', {
   PATH: process.env.PATH,
 });
 
-function isASCII(str: string) {
-  return /^[\x20-\x7F]*$/.test(str);
-}
-
 const isWindows = process.platform.startsWith('win');
 const isMacOS = process.platform.startsWith('darwin');
 let userDataDirectory = app.getPath('userData');
 
 if (isWindows) {
   const dirtyUserDataDirectory = app.isPackaged
-    ? path.join('c:', `.${packageJson.name}`)
-    : path.join('c:', `.${packageJson.name}-dev`);
+    ? path.join('c:', 'ProgramData', packageJson.name)
+    : path.join('c:', 'ProgramData', `${packageJson.name}-dev`);
   try {
+    const isASCII = (str: string) => {
+      return /^[\x20-\x7F]*$/.test(str);
+    };
     if (!isASCII(userDataDirectory)) {
       mkdirp.sync(dirtyUserDataDirectory);
       userDataDirectory = dirtyUserDataDirectory;
