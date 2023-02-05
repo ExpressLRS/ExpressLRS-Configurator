@@ -86,13 +86,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 maximum power to 100mW, and enables LBT (Listen Before Talk).
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#regulatory-domain"
+                <DocumentationLink
+                  firmwareVersion={firmwareVersionData}
+                  url="https://www.expresslrs.org/{version}/software/user-defines/#regulatory-domain"
                 >
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
