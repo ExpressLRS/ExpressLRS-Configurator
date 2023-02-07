@@ -18,7 +18,7 @@
       "DISABLE_ALL_BEEPS",
       "MY_STARTUP_MELODY"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/ghost2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/ghost2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -41,7 +41,7 @@
       "DISABLE_ALL_BEEPS",
       "MY_STARTUP_MELODY"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/ghost2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/ghost2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -65,7 +65,7 @@
       "LOCK_ON_FIRST_CONNECTION",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/ghost2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/ghost2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

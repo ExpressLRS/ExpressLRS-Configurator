@@ -839,7 +839,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <DeviceOptionsForm
                   target={deviceTarget?.name ?? null}
                   deviceOptions={deviceOptionsFormData}
-                  firmwareVersionData={firmwareVersionData}
                   onChange={onUserDefines}
                 />
               )}

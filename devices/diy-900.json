@@ -24,7 +24,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy900/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -53,7 +53,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy900/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -83,7 +83,7 @@
       "HOME_WIFI_PASSWORD",
       "UNLOCK_HIGHER_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy900/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -112,7 +112,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy900/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -146,19 +146,19 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy900/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
         "category": "GEPRC",
         "name": "GEPRC Nano 900 RX",
-        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/geprc900/",
+        "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/geprc900/",
         "abbreviatedName": "GEPRC Nano 900RX"
       },
       {
         "category": "EMAX",
         "name": "EMAX 900MHz RX",
-        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy900/",
+        "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
         "abbreviatedName": "EMAX 900RX"
       }
     ]
@@ -187,7 +187,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy900/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

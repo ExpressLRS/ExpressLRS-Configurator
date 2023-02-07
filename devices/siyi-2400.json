@@ -19,7 +19,7 @@
       "TLM_REPORT_INTERVAL_MS",
       "UART_INVERTED"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/siyifm30/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/siyifm30/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -43,7 +43,7 @@
       "LOCK_ON_FIRST_CONNECTION",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/siyiFRmini/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/siyiFRmini/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -67,7 +67,7 @@
       "TLM_REPORT_INTERVAL_MS",
       "UART_INVERTED"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/siyiFRmini/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/siyiFRmini/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

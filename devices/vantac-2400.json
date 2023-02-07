@@ -22,7 +22,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/vantac2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/vantac-lite/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -54,7 +54,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/vantac2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/vantac2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

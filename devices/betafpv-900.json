@@ -25,7 +25,7 @@
       "HOME_WIFI_PASSWORD",
       "UNLOCK_HIGHER_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv900/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv900/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
@@ -63,7 +63,7 @@
       "HOME_WIFI_PASSWORD",
       "UNLOCK_HIGHER_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv900/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -97,7 +97,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv900/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/betafpv900/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {

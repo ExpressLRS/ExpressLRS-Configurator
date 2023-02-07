@@ -25,7 +25,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-internal/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/rm-internal/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -55,13 +55,13 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-internal/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/rm-internal/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
         "category": "RadioMaster",
         "name": "RadioMaster TX12 2400 TX",
-        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-internal/",
+        "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/rm-internal/",
         "abbreviatedName": "RM TX12"
       }
     ]
@@ -89,7 +89,7 @@
       "HOME_WIFI_PASSWORD",
       "UART_INVERTED"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-external/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/rm-ranger/",
     "deviceType": "ExpressLRS"
   },
   {
@@ -115,7 +115,7 @@
       "HOME_WIFI_PASSWORD",
       "UART_INVERTED"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-external/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/rm-ranger/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -142,7 +142,7 @@
       "HOME_WIFI_PASSWORD",
       "UART_INVERTED"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-external/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/rm-ranger/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -172,7 +172,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/rm-internal/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/rm-internal/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

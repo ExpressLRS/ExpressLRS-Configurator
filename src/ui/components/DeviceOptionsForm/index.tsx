@@ -12,7 +12,6 @@ import React, { FunctionComponent, useRef } from 'react';
 import { SxProps, Theme } from '@mui/system';
 import UserDefinesList from '../UserDefinesList';
 import {
-  FirmwareVersionDataInput,
   useBuildUserDefinesTxtMutation,
   UserDefine,
   UserDefineKey,
@@ -53,7 +52,6 @@ interface DeviceOptionsFormProps {
   target: string | null;
   deviceOptions: DeviceOptionsFormData;
   onChange: (data: DeviceOptionsFormData) => void;
-  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 enum UserDefineCategory {
@@ -154,7 +152,7 @@ export const cleanUserDefines = (userDefines: UserDefine[]): UserDefine[] => {
 const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
   props
 ) => {
-  const { target, deviceOptions, onChange, firmwareVersionData } = props;
+  const { target, deviceOptions, onChange } = props;
   const categories = userDefinesToCategories(deviceOptions.userDefineOptions);
 
   const onOptionUpdate = (data: UserDefine) => {
@@ -300,7 +298,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <UserDefinesList
                     options={categories[UserDefineCategory.RegulatoryDomains]}
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}
@@ -310,7 +307,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <UserDefinesList
                     options={categories[UserDefineCategory.BindingPhrase]}
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}
@@ -323,7 +319,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                       categories[UserDefineCategory.CompatibilityOptions]
                     }
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}
@@ -337,7 +332,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <UserDefinesList
                     options={categories[UserDefineCategory.PerformanceOptions]}
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}
@@ -347,7 +341,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <UserDefinesList
                     options={categories[UserDefineCategory.ExtraData]}
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}
@@ -357,7 +350,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <UserDefinesList
                     options={categories[UserDefineCategory.NetworkOptions]}
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}
@@ -367,7 +359,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <UserDefinesList
                     options={categories[UserDefineCategory.OtherOptions]}
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}

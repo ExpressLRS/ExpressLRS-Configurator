@@ -2,10 +2,7 @@ import React, { FunctionComponent, memo } from 'react';
 import { Box, Tooltip } from '@mui/material';
 import QuestionIcon from '@mui/icons-material/Help';
 import { SxProps, Theme } from '@mui/system';
-import {
-  FirmwareVersionDataInput,
-  UserDefineKey,
-} from '../../gql/generated/types';
+import { UserDefineKey } from '../../gql/generated/types';
 import DocumentationLink from '../DocumentationLink';
 
 const styles: Record<string, SxProps<Theme>> = {
@@ -21,11 +18,10 @@ const styles: Record<string, SxProps<Theme>> = {
 
 interface UserDefineDescriptionProps {
   userDefine: UserDefineKey;
-  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
-  memo(({ userDefine, firmwareVersionData }) => {
+  memo(({ userDefine }) => {
     const toText = (key: UserDefineKey) => {
       switch (key) {
         case UserDefineKey.REGULATORY_DOMAIN_AU_433:
@@ -48,10 +44,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 for a regulatory domain to use in your location.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#regulatory-domain"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#regulatory-domain">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -66,10 +59,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 any country.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#regulatory-domain"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#regulatory-domain">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -86,10 +76,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 maximum power to 100mW, and enables LBT (Listen Before Talk).
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#regulatory-domain"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#regulatory-domain">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -108,10 +95,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 security, it simply reduces RF collisions with other pilots.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#binding-phrase"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#binding-phrase">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -131,10 +115,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 is 60 seconds.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#network-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -161,10 +142,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 ones.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#telemetry"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -182,10 +160,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 (until it receives a power reset).
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#performance-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -199,10 +174,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 song.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#other-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -213,10 +185,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
             <div>
               <p>This sets if the TX shall stay quiet on startup.</p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#other-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -227,10 +196,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
             <div>
               <p>Disable all beeps.</p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#other-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -285,10 +251,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 is great resource for discovering new melodies.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#other-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -308,20 +271,14 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               </p>
               <p>
                 We published{' '}
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/hardware/fan-mod/"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/hardware/fan-mod/">
                   R9M Fan Mod Cover
                 </DocumentationLink>
                 , a custom 3d printed backplate with room for a fan and extra
                 cooling to allow for maximum power (1-2W depending on the mod).
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#output-power-limit"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#output-power-limit">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -337,10 +294,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 V2 or you use Deviation firmware turn this setting off.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/quick-start/firmware-options/#other-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -355,10 +309,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 controllers.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#compatibility-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -376,10 +327,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 software. ESP-based receivers only.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/quick-start/firmware-options/#output-inverting">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -400,10 +348,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 compatibility
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#compatibility-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -417,10 +362,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 hardware to connect to the home network automatically.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#network-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -434,10 +376,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 hardware to connect to the home network automatically.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#network-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>

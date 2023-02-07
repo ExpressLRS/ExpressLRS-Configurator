@@ -22,7 +22,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/es24tx/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/es24tx/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -49,7 +49,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/es24tx/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/es24tx/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -81,7 +81,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/hmep2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/hmep2400/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
@@ -120,7 +120,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/hmep2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/hmep2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -144,7 +144,7 @@
       "LOCK_ON_FIRST_CONNECTION",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/hmpp2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/hmpp2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

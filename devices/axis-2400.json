@@ -22,7 +22,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/axis-thor/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/axisflying-thor/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -54,7 +54,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/axis-thor/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/axisflying-thor/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

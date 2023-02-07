@@ -23,7 +23,7 @@
       "HOME_WIFI_PASSWORD",
       "UNLOCK_HIGHER_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
@@ -59,7 +59,7 @@
       "HOME_WIFI_PASSWORD",
       "UNLOCK_HIGHER_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -86,7 +86,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -116,7 +116,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -160,7 +160,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
@@ -180,7 +180,7 @@
       {
         "category": "EMAX",
         "name": "EMAX 2.4GHz PA RX",
-        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
+        "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
         "abbreviatedName": "EMAX 2400RX"
       }
     ]
@@ -213,7 +213,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

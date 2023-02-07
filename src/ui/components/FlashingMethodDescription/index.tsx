@@ -55,7 +55,7 @@ const FlashingMethodDescription: FunctionComponent<
                 firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
-                  'https://www.expresslrs.org/{version}/software/updating/betaflight-passthrough/'
+                  'https://www.expresslrs.org/software/updating/betaflight-passthrough/'
                 }
               >
                 Check our Wiki page for latest definition.
@@ -75,7 +75,7 @@ const FlashingMethodDescription: FunctionComponent<
                 firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
-                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                  'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 Check the Wiki page for your particular device for more
@@ -96,7 +96,7 @@ const FlashingMethodDescription: FunctionComponent<
                 firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
-                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                  'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 Check the Wiki page for your particular device for more
@@ -117,7 +117,7 @@ const FlashingMethodDescription: FunctionComponent<
                 firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
-                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                  'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 Check the Wiki page for your particular device for more
@@ -138,7 +138,7 @@ const FlashingMethodDescription: FunctionComponent<
                 firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
-                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                  'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 Check the Wiki page for your particular device for more
@@ -159,7 +159,7 @@ const FlashingMethodDescription: FunctionComponent<
                 firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
-                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                  'https://www.expresslrs.org/software/updating/wifi-updating/'
                 }
               >
                 Check the Wiki page for your particular device for more
@@ -181,7 +181,7 @@ const FlashingMethodDescription: FunctionComponent<
                 firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
-                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                  'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 Check the Wiki page for your particular device for more
@@ -202,7 +202,7 @@ const FlashingMethodDescription: FunctionComponent<
                 firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
-                  'https://www.expresslrs.org/{version}/quick-start/getting-started/'
+                  'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 Check the Wiki page for your particular device for more

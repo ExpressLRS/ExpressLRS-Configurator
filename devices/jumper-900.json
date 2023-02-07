@@ -21,7 +21,7 @@
       "LOCK_ON_FIRST_CONNECTION",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/jumper900/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/jumper900/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

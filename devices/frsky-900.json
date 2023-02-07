@@ -29,7 +29,7 @@
       "MY_STARTUP_MELODY",
       "UNLOCK_HIGHER_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/frsky-r9modules/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/frsky-r9modules/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -57,7 +57,7 @@
       "DISABLE_STARTUP_BEEP",
       "DISABLE_ALL_BEEPS"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/frsky-r9modules/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/frsky-r9modules/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -82,7 +82,7 @@
       "DISABLE_STARTUP_BEEP",
       "DISABLE_ALL_BEEPS"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/frsky-r9modules/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/frsky-r9modules/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -109,7 +109,7 @@
       "USE_R9MM_R9MINI_SBUS",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/r9/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/r9/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -135,7 +135,7 @@
       "LOCK_ON_FIRST_CONNECTION",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/r9/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/r9/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -161,7 +161,7 @@
       "LOCK_ON_FIRST_CONNECTION",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/r9/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/r9/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -187,7 +187,7 @@
       "LOCK_ON_FIRST_CONNECTION",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/r9/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/r9/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -213,7 +213,7 @@
       "LOCK_ON_FIRST_CONNECTION",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/r9/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/r9/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }
