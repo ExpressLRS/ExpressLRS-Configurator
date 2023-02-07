@@ -15,7 +15,7 @@ export default class CloudBinariesCache {
       commitHash
     );
     await mkdirp(workingDir);
-    const firmwareCacheDir = path.join(workingDir, 'firmware');
+    const firmwareCacheDir = path.join(workingDir, 'dist', 'firmware');
 
     // if we have firmware in our local cache already no need to download it the second time.
     if (fs.existsSync(firmwareCacheDir)) {
