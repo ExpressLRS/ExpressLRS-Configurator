@@ -87,7 +87,7 @@
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -124,7 +124,7 @@
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -158,7 +158,7 @@
       "BLE_HID_JOYSTICK",
       "USE_DYNAMIC_POWER"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -194,7 +194,7 @@
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/diy2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -231,7 +231,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
@@ -279,31 +279,31 @@
       {
         "category": "Jumper 2.4 GHz",
         "name": "Jumper AION Mini 2400 RX",
-        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/jumper-aion/",
+        "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/jumper-aion/",
         "abbreviatedName": "AION RX24 MINI"
       },
       {
         "category": "BETAFPV 2.4 GHz",
         "name": "BETAFPV Lite 2400 RX",
-        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv2400/",
+        "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/betafpv2400/",
         "abbreviatedName": "BFPV Lite 2G4RX"
       },
       {
         "category": "BETAFPV 2.4 GHz",
         "name": "BETAFPV AIO 2400 RX",
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/betafpv2400/",
+        "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/betafpv2400/",
         "abbreviatedName": "BFPV AIO 2G4RX"
       },
       {
         "category": "GEPRC 2.4 GHz",
         "name": "GEPRC Nano 2400 RX",
-        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/geprc2400/",
+        "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/geprc2400/",
         "abbreviatedName": "GEPRC Nano 2G4RX"
       },
       {
         "category": "EMAX 2.4 GHz",
         "name": "EMAX 2.4GHz RX",
-        "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
+        "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
         "abbreviatedName": "EMAX 2400RX"
       },
       {
@@ -340,7 +340,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
@@ -379,7 +379,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -406,7 +406,7 @@
       "USE_500HZ",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/diy2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

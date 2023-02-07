@@ -30,7 +30,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/flash2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/flash2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -65,7 +65,7 @@
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/flash2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/flash2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -92,7 +92,7 @@
       "USE_500HZ",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/flash2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/flash2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -128,7 +128,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/flash2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/flash2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -165,7 +165,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/flash2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/flash2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }

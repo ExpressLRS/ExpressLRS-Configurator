@@ -64,21 +64,21 @@ const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
               message. If you have not already done so, visit{' '}
               <DocumentationLink
                 firmwareVersion={firmwareVersionData}
-                url="https://www.expresslrs.org/{version}/"
+                url="https://www.expresslrs.org/"
               >
                 Expresslrs.org
               </DocumentationLink>{' '}
               and read the{' '}
               <DocumentationLink
                 firmwareVersion={firmwareVersionData}
-                url="https://www.expresslrs.org/{version}/quick-start/getting-started/"
+                url="https://www.expresslrs.org/quick-start/getting-started/"
               >
                 Flashing Guide
               </DocumentationLink>{' '}
               for your particular device as well as the{' '}
               <DocumentationLink
                 firmwareVersion={firmwareVersionData}
-                url="https://www.expresslrs.org/{version}/quick-start/troubleshooting/#flashingupdating"
+                url="https://www.expresslrs.org/quick-start/troubleshooting/#flashingupdating"
               >
                 Troubleshooting Guide
               </DocumentationLink>
