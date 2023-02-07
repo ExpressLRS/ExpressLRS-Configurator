@@ -50,7 +50,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#regulatory-domain"
+                  url="https://www.expresslrs.org/software/user-defines/#regulatory-domain"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -68,7 +68,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#regulatory-domain"
+                  url="https://www.expresslrs.org/software/user-defines/#regulatory-domain"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -89,7 +89,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 <a
                   target="_blank"
                   rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/release/software/user-defines/#regulatory-domain"
+                  href="https://www.expresslrs.org/software/user-defines/#regulatory-domain"
                 >
                   Check our Wiki page for latest definition.
                 </a>
@@ -111,7 +111,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#binding-phrase"
+                  url="https://www.expresslrs.org/software/user-defines/#binding-phrase"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -137,7 +137,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
+                  url="https://www.expresslrs.org/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -156,7 +156,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -173,7 +173,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -196,7 +196,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/user-defines/#network-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -213,7 +213,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -231,7 +231,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
+                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -245,7 +245,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
+                  url="https://www.expresslrs.org/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -279,14 +279,14 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 Check our{' '}
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/quick-start/tx-prep/"
+                  url="https://www.expresslrs.org/quick-start/transmitters/tx-prep/"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>{' '}
                 and{' '}
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
+                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
                 >
                   Wiki page for latest definition.
                 </DocumentationLink>
@@ -321,14 +321,14 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 Check our{' '}
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/quick-start/tx-prep/"
+                  url="https://www.expresslrs.org/quick-start/transmitters/tx-prep/"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>{' '}
                 and{' '}
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
+                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
                 >
                   Wiki page for latest definition.
                 </DocumentationLink>
@@ -378,7 +378,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#switches"
+                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -413,7 +413,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#telemetry"
+                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -443,7 +443,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#telemetry"
+                  url="https://www.expresslrs.org/software/user-defines/"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -464,7 +464,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
+                  url="https://www.expresslrs.org/software/user-defines/#performance-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -482,7 +482,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
+                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -499,7 +499,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -513,7 +513,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -527,7 +527,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -585,7 +585,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -618,7 +618,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
+                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -642,7 +642,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 We published{' '}
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/hardware/fan-mod/"
+                  url="https://www.expresslrs.org/hardware/fan-mod/"
                 >
                   R9M Fan Mod Cover
                 </DocumentationLink>
@@ -652,7 +652,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#output-power-limit"
+                  url="https://www.expresslrs.org/software/user-defines/#output-power-limit"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -671,7 +671,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
+                  url="https://www.expresslrs.org/quick-start/firmware-options/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -689,7 +689,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
+                  url="https://www.expresslrs.org/software/user-defines/#compatibility-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -710,7 +710,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
+                  url="https://www.expresslrs.org/quick-start/firmware-options/#output-inverting"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -729,7 +729,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/dynamic-transmit-power"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -762,14 +762,14 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 Check our{' '}
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/quick-start/tx-prep/"
+                  url="https://www.expresslrs.org/quick-start/transmitters/tx-prep/"
                 >
                   radio setup page
                 </DocumentationLink>{' '}
                 and{' '}
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#performance-options"
+                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
                 >
                   Wiki page for latest definition.
                 </DocumentationLink>
@@ -788,7 +788,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -807,7 +807,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/user-defines/#other-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -831,7 +831,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
+                  url="https://www.expresslrs.org/software/user-defines/#compatibility-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -854,7 +854,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#compatability-options"
+                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -871,7 +871,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/user-defines/#network-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
@@ -888,7 +888,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <DocumentationLink
                   firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/{version}/software/user-defines/#other-options"
+                  url="https://www.expresslrs.org/software/user-defines/#network-options"
                 >
                   Check our Wiki page for latest definition.
                 </DocumentationLink>

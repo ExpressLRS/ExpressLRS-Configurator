@@ -31,7 +31,7 @@
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/es24tx/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/es24tx/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -67,7 +67,7 @@
       "USE_DYNAMIC_POWER",
       "WS2812_IS_GRB"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/transmitters/es24tx/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/es24tx/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -103,7 +103,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/hmep2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/hmep2400/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
@@ -146,7 +146,7 @@
       "RCVR_UART_BAUD",
       "RCVR_INVERT_TX"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/hmep2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/hmep2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
@@ -173,7 +173,7 @@
       "USE_500HZ",
       "RCVR_UART_BAUD"
     ],
-    "wikiUrl": "https://www.expresslrs.org/{version}/quick-start/receivers/hmpp2400/",
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/hmpp2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   }
