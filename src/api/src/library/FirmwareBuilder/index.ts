@@ -42,18 +42,35 @@ export default class FirmwareBuilder {
     };
   }
 
+  getFirmwareBuildPath(target: string, firmwarePath: string): string {
+    return path.join(firmwarePath, '.pio', 'build', target);
+  }
+
+  getFirmwareBinFiles(target: string, firmwarePath: string): string[] {
+    const firmwareBuildPath = this.getFirmwareBuildPath(target, firmwarePath);
+    const binaryExtensions = ['.elrs', '.bin'];
+
+    const firmwareBinFiles = fs
+      .readdirSync(firmwareBuildPath)
+      .filter((filename) => binaryExtensions.includes(path.extname(filename)));
+
+    return firmwareBinFiles.map((filename) =>
+      path.join(firmwareBuildPath, filename)
+    );
+  }
+
   getFirmwareBinPath(target: string, firmwarePath: string): string {
-    const paths = [
-      path.join(firmwarePath, '.pio', 'build', target, 'firmware.elrs'),
-      path.join(firmwarePath, '.pio', 'build', target, 'backpack.bin'),
-    ];
-    // eslint-disable-next-line no-restricted-syntax
-    for (const location of paths) {
-      if (fs.existsSync(location)) {
-        return location;
-      }
-    }
-    return path.join(firmwarePath, '.pio', 'build', target, 'firmware.bin');
+    const firmwareBuildPath = this.getFirmwareBuildPath(target, firmwarePath);
+    const firmwareBinFiles = this.getFirmwareBinFiles(target, firmwarePath);
+    const searchValues = ['firmware.elrs', 'backpack.bin', 'firmware.bin'];
+
+    const matchedBinFile = firmwareBinFiles.find((firmwareBinPath) =>
+      searchValues.find(
+        (searchValue) => searchValue === path.basename(firmwareBinPath)
+      )
+    );
+
+    return matchedBinFile || path.join(firmwareBuildPath, 'firmware.bin');
   }
 
   private async storeUserDefines(firmwarePath: string, userDefinesTxt: string) {

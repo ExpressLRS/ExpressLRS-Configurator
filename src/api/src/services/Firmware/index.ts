@@ -423,22 +423,25 @@ export default class FirmwareService {
             path.join(os.tmpdir(), `${params.target}_`)
           );
 
-          // copy with original filename to tmpPath
-          const tmpFirmwareBinPathOriginalName = path.join(
-            tmpPath,
-            path.basename(firmwareBinPath)
+          // copy all binary files to tmpPath
+          const binaryFiles = this.builder.getFirmwareBinFiles(
+            params.target,
+            firmwarePath
           );
-          try {
-            await fs.promises.copyFile(
-              firmwareBinPath,
-              tmpFirmwareBinPathOriginalName
-            );
-          } catch (err) {
-            this.logger?.error(
-              `error copying file from ${firmwareBinPath} to ${tmpFirmwareBinPathOriginalName}: ${err}`
-            );
-          }
 
+          binaryFiles.forEach((file) => {
+            const newPath = path.join(tmpPath, path.basename(file));
+
+            try {
+              fs.copyFileSync(file, newPath);
+            } catch (err) {
+              this.logger?.error(
+                `error copying file from ${firmwareBinPath} to ${newPath}: ${err}`
+              );
+            }
+          });
+
+          // copy named bin file to tmpPath
           const tmpFirmwareBinPath = path.join(
             tmpPath,
             `${newFirmwareBaseName}${firmwareExtension}`
