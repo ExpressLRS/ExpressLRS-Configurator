@@ -121,11 +121,9 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       (gitRepository.url.toLowerCase() ===
         'https://github.com/expresslrs/expresslrs'.toLowerCase() &&
         params.source === FirmwareSource.GitTag &&
-        semver.compare(params.gitTag, '3.0.0') >= 0) ||
+        semver.compare(params.gitTag, '3.2.0') >= 0) ||
       (params.source === FirmwareSource.GitBranch &&
-        params.gitBranch === 'master') ||
-      (params.source === FirmwareSource.GitPullRequest &&
-        params.gitPullRequest?.number === 2064)
+        params.gitBranch === 'master')
     ) {
       return true;
     }
