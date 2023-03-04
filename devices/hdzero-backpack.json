@@ -20,5 +20,27 @@
     "wikiUrl": "",
     "deviceType": "Backpack",
     "aliases": []
+  },
+  {
+    "category": "VRX",
+    "name": "HDZero Goggle VRX Backpack",
+    "targets": [
+      {
+        "flashingMethod": "UART",
+        "name": "HDZero_Goggle_RX5.1_ESP32_Backpack_via_UART"
+      },
+      {
+        "flashingMethod": "WIFI",
+        "name": "HDZero_Goggle_RX5.1_ESP32_Backpack_via_UART"
+      }
+    ],
+    "userDefines": [
+      "BINDING_PHRASE",
+      "HOME_WIFI_SSID",
+      "HOME_WIFI_PASSWORD"
+    ],
+    "wikiUrl": "",
+    "deviceType": "Backpack",
+    "aliases": []
   }
 ]
