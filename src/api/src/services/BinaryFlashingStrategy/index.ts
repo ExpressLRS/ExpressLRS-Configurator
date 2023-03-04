@@ -118,17 +118,20 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
   async isCompatible(params: IsCompatibleArgs, gitRepository: GitRepository) {
     if (
-      (gitRepository.url.toLowerCase() ===
-        'https://github.com/expresslrs/expresslrs'.toLowerCase() &&
-        params.source === FirmwareSource.GitTag &&
-        semver.compare(params.gitTag, '3.2.0') >= 0) ||
-      (params.source === FirmwareSource.GitBranch &&
-        params.gitBranch === 'master')
+      gitRepository.url.toLowerCase() !==
+      'https://github.com/expresslrs/expresslrs'.toLowerCase()
     ) {
-      return true;
+      return false;
     }
 
-    return false;
+    if (
+      params.source === FirmwareSource.GitTag &&
+      semver.lte(params.gitTag, '3.2.0')
+    ) {
+      return false;
+    }
+
+    return true;
   }
 
   async downloadSource(
