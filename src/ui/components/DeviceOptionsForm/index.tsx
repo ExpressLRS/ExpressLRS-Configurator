@@ -282,6 +282,11 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
             <Button onClick={onCopyFromStandardMode} size="small">
               Copy from Standard mode
             </Button>
+
+            <ShowAlerts
+              severity="warning"
+              messages="When using the manual user-defined mode, the cloud binaries cache is disabled, resulting in much longer build times."
+            />
           </Grid>
         </Grid>
       )}
