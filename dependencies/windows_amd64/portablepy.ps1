@@ -61,8 +61,10 @@ Invoke-WebRequest -OutFile "$($destination)get-pip.py" "https://bootstrap.pypa.i
 "Installing pyserial"
 & "$($destination)python.exe" -m pip install pyserial
 
+<# Do not install esptool, the expresslrs firmware already bundles it
 "Installing esptool"
 & "$($destination)python.exe" -m pip install esptool
+#>
 
 "Cleaning up"
 Remove-Item -Path "$($package)" -Confirm:$false -Force

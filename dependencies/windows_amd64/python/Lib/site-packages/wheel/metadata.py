@@ -3,13 +3,83 @@ Tools for converting old- to new-style metadata.
 """
 from __future__ import annotations
 
+import functools
+import itertools
 import os.path
+import re
 import textwrap
 from email.message import Message
 from email.parser import Parser
 from typing import Iterator
 
-from pkg_resources import Requirement, safe_extra, split_sections
+from .vendored.packaging.requirements import Requirement
+
+
+def _nonblank(str):
+    return str and not str.startswith("#")
+
+
+@functools.singledispatch
+def yield_lines(iterable):
+    r"""
+    Yield valid lines of a string or iterable.
+    >>> list(yield_lines(''))
+    []
+    >>> list(yield_lines(['foo', 'bar']))
+    ['foo', 'bar']
+    >>> list(yield_lines('foo\nbar'))
+    ['foo', 'bar']
+    >>> list(yield_lines('\nfoo\n#bar\nbaz #comment'))
+    ['foo', 'baz #comment']
+    >>> list(yield_lines(['foo\nbar', 'baz', 'bing\n\n\n']))
+    ['foo', 'bar', 'baz', 'bing']
+    """
+    return itertools.chain.from_iterable(map(yield_lines, iterable))
+
+
+@yield_lines.register(str)
+def _(text):
+    return filter(_nonblank, map(str.strip, text.splitlines()))
+
+
+def split_sections(s):
+    """Split a string or iterable thereof into (section, content) pairs
+    Each ``section`` is a stripped version of the section header ("[section]")
+    and each ``content`` is a list of stripped lines excluding blank lines and
+    comment-only lines.  If there are any such lines before the first section
+    header, they're returned in a first ``section`` of ``None``.
+    """
+    section = None
+    content = []
+    for line in yield_lines(s):
+        if line.startswith("["):
+            if line.endswith("]"):
+                if section or content:
+                    yield section, content
+                section = line[1:-1].strip()
+                content = []
+            else:
+                raise ValueError("Invalid section heading", line)
+        else:
+            content.append(line)
+
+    # wrap up last segment
+    yield section, content
+
+
+def safe_extra(extra):
+    """Convert an arbitrary string to a standard 'extra' name
+    Any runs of non-alphanumeric characters are replaced with a single '_',
+    and the result is always lowercased.
+    """
+    return re.sub("[^A-Za-z0-9.-]+", "_", extra).lower()
+
+
+def safe_name(name):
+    """Convert an arbitrary string to a standard distribution name
+    Any runs of non-alphanumeric/. characters are replaced with a single '-'.
+    """
+    return re.sub("[^A-Za-z0-9.]+", "-", name)
 
 
 def requires_to_requires_dist(requirement: Requirement) -> str:
@@ -18,8 +88,8 @@ def requires_to_requires_dist(requirement: Requirement) -> str:
         return " @ " + requirement.url
 
     requires_dist = []
-    for op, ver in requirement.specs:
-        requires_dist.append(op + ver)
+    for spec in requirement.specifier:
+        requires_dist.append(spec.operator + spec.version)
 
     if requires_dist:
         return " (" + ",".join(sorted(requires_dist)) + ")"
@@ -30,13 +100,13 @@ def requires_to_requires_dist(requirement: Requirement) -> str:
 def convert_requirements(requirements: list[str]) -> Iterator[str]:
     """Yield Requires-Dist: strings for parsed requirements strings."""
     for req in requirements:
-        parsed_requirement = Requirement.parse(req)
+        parsed_requirement = Requirement(req)
         spec = requires_to_requires_dist(parsed_requirement)
-        extras = ",".join(sorted(parsed_requirement.extras))
+        extras = ",".join(sorted(safe_extra(e) for e in parsed_requirement.extras))
         if extras:
             extras = f"[{extras}]"
 
-        yield parsed_requirement.project_name + extras + spec
+        yield safe_name(parsed_requirement.name) + extras + spec
 
 
 def generate_requirements(
@@ -82,7 +152,7 @@ def pkginfo_to_metadata(egg_info_path: str, pkginfo_path: str) -> Message:
     del pkg_info["Requires-Dist"]
     requires_path = os.path.join(egg_info_path, "requires.txt")
     if os.path.exists(requires_path):
-        with open(requires_path) as requires_file:
+        with open(requires_path, encoding="utf-8") as requires_file:
             requires = requires_file.read()
 
         parsed_requirements = sorted(split_sections(requires), key=lambda x: x[0] or "")

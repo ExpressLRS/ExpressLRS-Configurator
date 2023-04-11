@@ -31,10 +31,38 @@ def convert_f(args):
     convert(args.files, args.dest_dir, args.verbose)
 
 
+def tags_f(args):
+    from .tags import tags
+
+    names = (
+        tags(
+            wheel,
+            args.python_tag,
+            args.abi_tag,
+            args.platform_tag,
+            args.build,
+            args.remove,
+        )
+        for wheel in args.wheel
+    )
+
+    for name in names:
+        print(name)
+
+
 def version_f(args):
     from .. import __version__
 
     print("wheel %s" % __version__)
+
+
+TAGS_HELP = """\
+Make a new wheel with given tags. Any tags unspecified will remain the same.
+Starting the tags with a "+" will append to the existing tags. Starting with a
+"-" will remove a tag (use --option=-TAG syntax). Multiple tags can be
+separated by ".". The original file will remain unless --remove is given.  The
+output filename(s) will be displayed on stdout for further processing.
+"""
 
 
 def parser():
@@ -71,6 +99,27 @@ def parser():
     )
     convert_parser.add_argument("--verbose", "-v", action="store_true")
     convert_parser.set_defaults(func=convert_f)
+
+    tags_parser = s.add_parser(
+        "tags", help="Add or replace the tags on a wheel", description=TAGS_HELP
+    )
+    tags_parser.add_argument("wheel", nargs="*", help="Existing wheel(s) to retag")
+    tags_parser.add_argument(
+        "--remove",
+        action="store_true",
+        help="Remove the original files, keeping only the renamed ones",
+    )
+    tags_parser.add_argument(
+        "--python-tag", metavar="TAG", help="Specify an interpreter tag(s)"
+    )
+    tags_parser.add_argument("--abi-tag", metavar="TAG", help="Specify an ABI tag(s)")
+    tags_parser.add_argument(
+        "--platform-tag", metavar="TAG", help="Specify a platform tag(s)"
+    )
+    tags_parser.add_argument(
+        "--build", type=int, metavar="NUMBER", help="Specify a build number"
+    )
+    tags_parser.set_defaults(func=tags_f)
 
     version_parser = s.add_parser("version", help="Print version and exit")
     version_parser.set_defaults(func=version_f)
