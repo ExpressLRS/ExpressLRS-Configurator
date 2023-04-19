@@ -29,6 +29,22 @@ export default class BinaryConfigurator {
     });
   }
 
+  // Map targets.json flashing methods to binary_flash.py
+  // https://github.com/ExpressLRS/ExpressLRS/blame/master/src/python/binary_flash.py
+  mapUploadMethod(input: string): string {
+    const mapped: { [n: string]: string } = {
+      uart: 'uart',
+      betaflight: 'bf',
+      wifi: 'wifi',
+      etx: 'etx',
+      stlink: 'stlink',
+    };
+    if (typeof mapped[input] === 'string') {
+      return mapped[input];
+    }
+    return input;
+  }
+
   buildBinaryConfigFlags(params: BuildFlashFirmwareParams): string[][] {
     const flags: string[][] = [];
     const [manufacturer, subType, device, uploadMethod] =
@@ -47,7 +63,7 @@ export default class BinaryConfigurator {
       params.type === BuildJobType.BuildAndFlash ||
       params.type === BuildJobType.ForceFlash
     ) {
-      flags.push(['--flash', uploadMethod]);
+      flags.push(['--flash', this.mapUploadMethod(uploadMethod)]);
     }
 
     if (
