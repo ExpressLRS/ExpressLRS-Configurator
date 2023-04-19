@@ -127,7 +127,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
     if (
       params.source === FirmwareSource.GitTag &&
-      semver.lte(params.gitTag, '3.2.0')
+      semver.lt(params.gitTag, '3.0.0')
     ) {
       return false;
     }
