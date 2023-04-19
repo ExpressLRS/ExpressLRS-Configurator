@@ -1,4 +1,3 @@
-import path from 'path';
 import { BuildFlashFirmwareParams } from '../../FlashingStrategyLocator/BuildFlashFirmwareParams';
 import BuildJobType from '../../../models/enum/BuildJobType';
 import UserDefine from '../../../models/UserDefine';
@@ -150,21 +149,24 @@ export default class BinaryConfigurator {
   async run(
     firmwareSourcePath: string,
     hardwareDefinitionsPath: string,
+    flasherPath: string,
     firmwareBinaryPath: string,
     flags: string[][],
     onUpdate: OnOutputFunc = NoOpFunc
   ) {
     this.logger.log('flags', {
+      firmwareSourcePath,
       flags: maskSensitiveFlags(flags),
       hardwareDefinitionsPath,
       firmwareBinaryPath,
+      flasherPath,
     });
     const binaryConfiguratorArgs = [
       ...this.stringifyFlags([...flags, ['--dir', hardwareDefinitionsPath]]),
       firmwareBinaryPath,
     ];
     return this.python.runPythonScript(
-      path.join(firmwareSourcePath, 'python', 'binary_configurator.py'),
+      flasherPath,
       binaryConfiguratorArgs,
       onUpdate,
       {

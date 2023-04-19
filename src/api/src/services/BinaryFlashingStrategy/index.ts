@@ -4,6 +4,7 @@ import { PubSubEngine } from 'graphql-subscriptions';
 import * as os from 'os';
 import semver from 'semver';
 import path from 'path';
+import fs from 'fs';
 import UserDefine from '../../models/UserDefine';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import Mutex from '../../library/Mutex';
@@ -409,6 +410,11 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       );
 
       let firmwareBinaryPath = '';
+      let flasherPath = path.join(
+        firmwareSourcePath,
+        'python',
+        'binary_configurator.py'
+      );
       if (this.isRequestCompatibleWithCache(params)) {
         const currentCommitHash = await this.getCurrentSourceCommit(
           gitRepositoryUrl
@@ -426,6 +432,11 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
             params.userDefines
           );
           firmwareBinaryPath = path.join(cacheLocation, cachedBinaryPath);
+
+          const flasherPyzPath = path.join(cacheLocation, 'flasher.pyz');
+          if (fs.existsSync(flasherPyzPath)) {
+            flasherPath = flasherPyzPath;
+          }
         } catch (e) {
           this.logger.log(
             'failed to get cached build, reverting to building firmware locally',
@@ -464,13 +475,12 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
       const hardwareDefinitionsPath = firmwareSourcePath;
 
-      // TODO: pip3 install pyserial esptool
-      // python-serial
       const flags: string[][] =
         this.binaryConfigurator.buildBinaryConfigFlags(params);
       const binaryConfiguratorResult = await this.binaryConfigurator.run(
         firmwareSourcePath,
         hardwareDefinitionsPath,
+        flasherPath,
         firmwareBinaryPath,
         flags,
         (output) => {

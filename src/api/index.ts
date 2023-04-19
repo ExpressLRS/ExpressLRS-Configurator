@@ -141,7 +141,8 @@ export default class ApiServer {
     const deviceDescriptionsLoader = new DeviceDescriptionsLoader(
       logger,
       config.PATH,
-      path.join(config.userDataPath, 'firmwares', 'binary-targets')
+      path.join(config.userDataPath, 'firmwares', 'binary-targets'),
+      path.join(config.userDataPath, 'firmwares', 'device-options')
     );
     const cloudBinariesCache = new CloudBinariesCache(
       config.cloudCacheServer,

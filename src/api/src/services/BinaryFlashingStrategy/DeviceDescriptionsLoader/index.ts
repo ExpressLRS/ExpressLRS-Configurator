@@ -36,14 +36,18 @@ export interface FirmwareVersion {
 
 @Service()
 export default class DeviceDescriptionsLoader {
-  mutex: Mutex;
+  targetsMutex: Mutex;
+
+  deviceOptionsMutex: Mutex;
 
   constructor(
     private logger: LoggerService,
     private PATH: string,
-    private targetStoragePath: string
+    private targetStorageGitPath: string,
+    private deviceOptionsGitPath: string
   ) {
-    this.mutex = new Mutex();
+    this.targetsMutex = new Mutex();
+    this.deviceOptionsMutex = new Mutex();
   }
 
   private uploadMethodToFlashingMethod(uploadMethod: string): FlashingMethod {
@@ -92,31 +96,32 @@ export default class DeviceDescriptionsLoader {
     args: TargetArgs,
     gitRepository: GitRepository
   ): Promise<Device[]> {
-    await this.mutex.tryLockWithTimeout(60000);
+    let targetsDataDirectory = '';
+    await this.targetsMutex.tryLockWithTimeout(15 * 60 * 1000);
     try {
-      const targetsDataDirectory = await this.loadTargetsData(
+      targetsDataDirectory = await this.loadTargetsData(
+        this.targetStorageGitPath,
         args,
         gitRepository
       );
-
-      const targetsJSONLoader = new TargetsJSONLoader(this.logger);
-      const targetsJSONPath = path.join(targetsDataDirectory, 'targets.json');
-      const data = await targetsJSONLoader.loadDeviceDescriptions(
-        targetsJSONPath
-      );
-      const devices: Device[] = [];
-      Object.keys(data).forEach((id) => {
-        devices.push(
-          this.configToDevice(id, data[id].category, data[id].config)
-        );
-      });
-      return devices;
     } finally {
-      this.mutex.unlock();
+      this.targetsMutex.unlock();
     }
+
+    const targetsJSONLoader = new TargetsJSONLoader(this.logger);
+    const targetsJSONPath = path.join(targetsDataDirectory, 'targets.json');
+    const data = await targetsJSONLoader.loadDeviceDescriptions(
+      targetsJSONPath
+    );
+    const devices: Device[] = [];
+    Object.keys(data).forEach((id) => {
+      devices.push(this.configToDevice(id, data[id].category, data[id].config));
+    });
+    return devices;
   }
 
   private async loadTargetsData(
+    gitRepositoryPath: string,
     args: FirmwareVersion,
     gitRepository: GitRepository
   ): Promise<string> {
@@ -136,7 +141,7 @@ export default class DeviceDescriptionsLoader {
 
     const firmwareDownload = new GitFirmwareDownloader(
       {
-        baseDirectory: this.targetStoragePath,
+        baseDirectory: gitRepositoryPath,
         gitBinaryLocation: gitPath,
       },
       this.logger
@@ -202,10 +207,18 @@ export default class DeviceDescriptionsLoader {
     args: UserDefineFilters,
     gitRepository: GitRepository
   ): Promise<DeviceDescription> {
-    const targetsDataDirectory = await this.loadTargetsData(
-      args,
-      gitRepository
-    );
+    let targetsDataDirectory = '';
+    await this.deviceOptionsMutex.tryLockWithTimeout(15 * 60 * 1000);
+    try {
+      targetsDataDirectory = await this.loadTargetsData(
+        this.deviceOptionsGitPath,
+        args,
+        gitRepository
+      );
+    } finally {
+      this.deviceOptionsMutex.unlock();
+    }
+
     const targetsJSONLoader = new TargetsJSONLoader(this.logger);
     const targetsJSONPath = path.join(targetsDataDirectory, 'targets.json');
     const data = await targetsJSONLoader.loadDeviceDescriptions(
@@ -320,11 +333,18 @@ export default class DeviceDescriptionsLoader {
   }
 
   async clearCache() {
-    await this.mutex.tryLockWithTimeout(60000);
+    await this.targetsMutex.tryLockWithTimeout(60000);
     try {
-      return await removeDirectoryContents(this.targetStoragePath);
+      return await removeDirectoryContents(this.targetStorageGitPath);
     } finally {
-      this.mutex.unlock();
+      this.targetsMutex.unlock();
+    }
+
+    await this.deviceOptionsMutex.tryLockWithTimeout(60000);
+    try {
+      return await removeDirectoryContents(this.deviceOptionsGitPath);
+    } finally {
+      this.deviceOptionsMutex.unlock();
     }
   }
 }

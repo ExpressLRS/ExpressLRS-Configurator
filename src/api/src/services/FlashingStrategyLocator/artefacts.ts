@@ -102,6 +102,9 @@ const listFiles = async (directory: string): Promise<string[]> => {
 };
 
 export const removeDirectoryContents = async (firmwaresPath: string) => {
+  if (!fs.existsSync(firmwaresPath)) {
+    return;
+  }
   const files = await listFiles(firmwaresPath);
   if (files.length > 4) {
     throw new Error(`unexpected number of files to remove: ${files}`);
