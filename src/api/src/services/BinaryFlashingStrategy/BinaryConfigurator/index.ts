@@ -8,11 +8,13 @@ import { LoggerService } from '../../../logger';
 
 const maskSensitiveFlags = (data: string[][]): string[][] => {
   const sensitiveData = ['--phrase', '--ssid', '--password'];
-  const result = [...data];
+  const result: string[][] = [];
   for (let i = 0; i < data.length; i++) {
-    if (sensitiveData.includes(data[i][0])) {
-      result[i][1] = '***';
+    const item = [...data[i]];
+    if (sensitiveData.includes(item[0])) {
+      item[1] = '***';
     }
+    result.push(item);
   }
   return result;
 };
