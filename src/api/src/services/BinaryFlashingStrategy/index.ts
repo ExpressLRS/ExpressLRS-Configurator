@@ -410,6 +410,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       );
 
       let firmwareBinaryPath = '';
+      let hardwareDefinitionsPath = firmwareSourcePath;
       let flasherPath = path.join(
         firmwareSourcePath,
         'python',
@@ -437,6 +438,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           if (fs.existsSync(flasherPyzPath)) {
             flasherPath = flasherPyzPath;
           }
+          hardwareDefinitionsPath = cacheLocation;
         } catch (e) {
           this.logger.log(
             'failed to get cached build, reverting to building firmware locally',
@@ -472,8 +474,6 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         BuildProgressNotificationType.Info,
         BuildFirmwareStep.BUILDING_FIRMWARE
       );
-
-      const hardwareDefinitionsPath = firmwareSourcePath;
 
       const flags: string[][] =
         this.binaryConfigurator.buildBinaryConfigFlags(params);
