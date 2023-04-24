@@ -69,13 +69,14 @@ function isASCII(str: string) {
 const isWindows = process.platform.startsWith('win');
 const isMacOS = process.platform.startsWith('darwin');
 let userDataDirectory = app.getPath('userData');
+const forceDirtyPath = true;
 
 if (isWindows) {
   const dirtyUserDataDirectory = app.isPackaged
     ? path.join('c:', `.${packageJson.name}`)
     : path.join('c:', `.${packageJson.name}-dev`);
   try {
-    if (!isASCII(userDataDirectory)) {
+    if (!isASCII(userDataDirectory) || forceDirtyPath) {
       mkdirp.sync(dirtyUserDataDirectory);
       userDataDirectory = dirtyUserDataDirectory;
       logger.log(
