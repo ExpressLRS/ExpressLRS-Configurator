@@ -71,9 +71,6 @@ const isMacOS = process.platform.startsWith('darwin');
 let userDataDirectory = app.getPath('userData');
 const forceDirtyPath = false;
 
-/* Set the temp directory for the PlatformIO Installer */
-process.env.PLATFORMIO_INSTALLER_TMPDIR = userDataDirectory;
-
 if (isWindows) {
   const dirtyUserDataDirectory = app.isPackaged
     ? path.join('c:', `.${packageJson.name}`)
@@ -93,36 +90,6 @@ if (isWindows) {
   } catch (err) {
     logger.error(
       'failed to create c:/.expresslrs directory, will use usual path',
-      undefined,
-      {
-        err,
-      }
-    );
-  }
-
-  process.env.PLATFORMIO_INSTALLER_TMPDIR = userDataDirectory;
-
-  const publicFolder = 'C:\\Users\\Public';
-  try {
-    // As of 2023-04-25, Platform IO installer fails on "building wheel for platformio"
-    // if the path to the installer temporary directory is too long, so use the Public
-    // User folder instead of the app data directory
-    if (fs.existsSync(publicFolder)) {
-      const testFile = path.join(publicFolder, `${Date.now()}.txt`);
-      fs.writeFileSync(testFile, '');
-      fs.unlinkSync(testFile);
-      process.env.PLATFORMIO_INSTALLER_TMPDIR = publicFolder;
-      logger.log(
-        `using public folder ${publicFolder} for PlatformIO Installer`
-      );
-    } else {
-      logger.log(
-        `using appdata path ${userDataDirectory} for PlatformIO Installer`
-      );
-    }
-  } catch (err) {
-    logger.error(
-      `${publicFolder} not writable, using ${userDataDirectory} for PlatformIO Installer`,
       undefined,
       {
         err,
@@ -276,7 +243,40 @@ const createWindow = async () => {
     'platformio-temp-state-storage'
   );
 
-  const localApiServerEnv = process.env;
+  const localApiServerEnv = { ...process.env };
+
+  /* Set the temp directory for the PlatformIO Installer */
+  localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = userDataDirectory;
+
+  if (isWindows) {
+    const publicFolder = 'C:\\Users\\Public';
+    try {
+      // As of 2023-04-25, Platform IO installer fails on "building wheel for platformio"
+      // if the path to the installer temporary directory is too long, so use the Public
+      // User folder instead of the app data directory
+      if (fs.existsSync(publicFolder)) {
+        const testFile = path.join(publicFolder, `${Date.now()}.txt`);
+        fs.writeFileSync(testFile, '');
+        fs.unlinkSync(testFile);
+        localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = publicFolder;
+        logger.log(
+          `using public folder ${publicFolder} for PlatformIO Installer`
+        );
+      } else {
+        logger.log(
+          `using appdata path ${userDataDirectory} for PlatformIO Installer`
+        );
+      }
+    } catch (err) {
+      logger.error(
+        `${publicFolder} not writable, using ${userDataDirectory} for PlatformIO Installer`,
+        undefined,
+        {
+          err,
+        }
+      );
+    }
+  }
 
   /*
     We manually prepend $PATH on Windows and macOS machines with portable Git and Python locations.
