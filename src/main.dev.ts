@@ -243,7 +243,7 @@ const createWindow = async () => {
     'platformio-temp-state-storage'
   );
 
-  const localApiServerEnv = { ...process.env };
+  const localApiServerEnv = process.env;
 
   /* Set the temp directory for the PlatformIO Installer */
   localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = userDataDirectory;
