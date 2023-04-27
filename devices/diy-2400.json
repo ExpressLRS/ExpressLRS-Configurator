@@ -270,6 +270,12 @@
         "name": "Foxeer Lite 2.4 GHz",
         "wikiUrl": "",
         "abbreviatedName": "Foxeer Lite 2.4"
+      },
+      {
+        "category": "NewBeeDrone 2.4 GHz",
+        "name": "NewBeeDrone Diversity 2.4Ghz RX",
+        "wikiUrl": "",
+        "abbreviatedName": "NBD 2400RX"
       }
     ]
   },
@@ -309,6 +315,12 @@
         "name": "RadioMaster ER5A/C 2.4GHz PWM RX",
         "wikiUrl": "",
         "abbreviatedName": "RM ER5A/C 2G4RX"
+      },
+      {
+        "category": "Happymodel 2.4 GHz",
+        "name": "Happymodel EPW5 2.4GHz PWM RX",
+        "wikiUrl": "",
+        "abbreviatedName": "HM EPW5 2G4RX"
       }
     ]
   },
@@ -336,7 +348,14 @@
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
     "deviceType": "ExpressLRS",
-    "aliases": []
+    "aliases": [
+      {
+        "category": "Happymodel 2.4 GHz",
+        "name": "Happymodel EPW6 2.4GHz PWM RX",
+        "wikiUrl": "",
+        "abbreviatedName": "HM EPW6 2G4RX"
+      }
+    ]
   },
   {
     "category": "DIY devices",

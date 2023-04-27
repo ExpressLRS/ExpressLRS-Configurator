@@ -225,8 +225,40 @@ const createWindow = async () => {
     'platformio-temp-state-storage'
   );
 
-  const localApiServerEnv = process.env;
+  const localApiServerEnv = { ...process.env };
+
+  /* Set the temp directory for the PlatformIO Installer */
   localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = userDataDirectory;
+
+  if (isWindows) {
+    const publicFolder = 'C:\\Users\\Public';
+    try {
+      // As of 2023-04-25, Platform IO installer fails on "building wheel for platformio"
+      // if the path to the installer temporary directory is too long, so use the Public
+      // User folder instead of the app data directory
+      if (fs.existsSync(publicFolder)) {
+        const testFile = path.join(publicFolder, `${Date.now()}.txt`);
+        fs.writeFileSync(testFile, '');
+        fs.unlinkSync(testFile);
+        localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = publicFolder;
+        logger.log(
+          `using public folder ${publicFolder} for PlatformIO Installer`
+        );
+      } else {
+        logger.log(
+          `using appdata path ${userDataDirectory} for PlatformIO Installer`
+        );
+      }
+    } catch (err) {
+      logger.error(
+        `${publicFolder} not writable, using ${userDataDirectory} for PlatformIO Installer`,
+        undefined,
+        {
+          err,
+        }
+      );
+    }
+  }
 
   /*
     We manually prepend $PATH on Windows and macOS machines with portable Git and Python locations.
@@ -401,7 +433,7 @@ app
   });
 
 app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
+  // On macOS, it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow();
