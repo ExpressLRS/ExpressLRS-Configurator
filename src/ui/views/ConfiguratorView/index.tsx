@@ -638,7 +638,15 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
         // try to find the device by the deviceName
         deviceMatches = deviceTargets?.filter((item) => {
-          return getAbbreviatedDeviceName(item).toUpperCase() === dnsDeviceName;
+          if (getAbbreviatedDeviceName(item).toUpperCase() === dnsDeviceName) {
+            return true;
+          }
+
+          if (item.luaName?.toUpperCase() === dnsDeviceName) {
+            return true;
+          }
+
+          return false;
         });
 
         // if no matches found by deviceName, then use the target
@@ -649,13 +657,16 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           deviceMatches = deviceTargets?.filter((item) => {
             // only match on a device that doesn't have a parent, which means it
             // is not an alias of another device
-            return (
-              !item.parent &&
-              item.targets.find((target) => {
+            if (!item.parent) {
+              if (dnsDeviceTarget === item.priorTargetName) {
+                return true;
+              }
+              return item.targets.find((target) => {
                 const baseTargetName = target.name.split('_via_')[0];
                 return baseTargetName.toUpperCase() === dnsDeviceTarget;
-              })
-            );
+              });
+            }
+            return false;
           });
         }
 

@@ -35,6 +35,12 @@ export default class Device {
   @Field({ nullable: true })
   abbreviatedName?: string | null;
 
+  @Field({ nullable: true })
+  luaName?: string | null;
+
+  @Field({ nullable: true })
+  priorTargetName?: string | null;
+
   constructor(
     id: string,
     name: string,
@@ -45,7 +51,9 @@ export default class Device {
     verifiedHardware: boolean,
     wikiUrl?: string,
     parent?: string | null,
-    abbreviatedName?: string | null
+    abbreviatedName?: string | null,
+    luaName?: string | null,
+    priorTargetName?: string | null
   ) {
     this.id = id;
     this.name = name;
@@ -57,5 +65,7 @@ export default class Device {
     this.verifiedHardware = verifiedHardware;
     this.parent = parent;
     this.abbreviatedName = abbreviatedName;
+    this.luaName = luaName;
+    this.priorTargetName = priorTargetName;
   }
 }
