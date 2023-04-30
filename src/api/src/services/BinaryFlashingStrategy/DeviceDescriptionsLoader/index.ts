@@ -323,9 +323,6 @@ export default class DeviceDescriptionsLoader {
         targetUserDefinesFactory.build(UserDefineKey.RCVR_UART_BAUD)
       );
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.RCVR_INVERT_TX)
-      );
-      userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.LOCK_ON_FIRST_CONNECTION)
       );
     }

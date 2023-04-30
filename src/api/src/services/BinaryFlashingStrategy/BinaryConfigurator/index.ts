@@ -134,9 +134,6 @@ export default class BinaryConfigurator {
             flags.push(['--buzzer-mode', 'custom']);
             flags.push(['--buzzer-melody', userDefine.key]);
             break;
-          case UserDefineKey.RCVR_INVERT_TX:
-            flags.push(['--invert-tx']);
-            break;
           case UserDefineKey.RCVR_UART_BAUD:
             flags.push(['--rx-baud', userDefine.value!]);
             break;
