@@ -305,11 +305,6 @@ export default class DeviceDescriptionsLoader {
         targetUserDefinesFactory.build(UserDefineKey.UNLOCK_HIGHER_POWER)
       );
     }
-    if (config.features && config.features.includes('sbus-uart')) {
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.USE_R9MM_R9MINI_SBUS)
-      );
-    }
     if (args.target.includes('.tx_')) {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.TLM_REPORT_INTERVAL_MS)
