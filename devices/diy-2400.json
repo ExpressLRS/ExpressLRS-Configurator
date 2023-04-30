@@ -399,6 +399,12 @@
         "name": "Happymodel EPW6 2.4GHz PWM RX",
         "wikiUrl": "",
         "abbreviatedName": "HM EPW6 2G4RX"
+      },
+      {
+        "category": "Matek 2.4 GHz",
+        "name": "Matek R24-P6 PWM 2.4GHz RX",
+        "wikiUrl": "",
+        "abbreviatedName": "Matek R24-P6"
       }
     ]
   },
