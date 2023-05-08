@@ -45,6 +45,7 @@ import {
   maskSensitiveData,
 } from '../FlashingStrategyLocator/masks';
 import CloudBinariesCache from './CloudBinariesCache';
+import { DeviceDescription } from './TargetsJSONLoader';
 
 @Service()
 export default class BinaryFlashingStrategyService implements FlashingStrategy {
@@ -352,6 +353,14 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     return `${regulatoryDomain}/${platformioTarget}/firmware.bin`;
   }
 
+  getCompileTarget(config: DeviceDescription): string {
+    let target = `${config.firmware}_via_UART`;
+    if (config.upload_methods.includes('stlink')) {
+      target = `${config.firmware}_via_STLINK`;
+    }
+    return target;
+  }
+
   async buildFlashFirmware(
     params: BuildFlashFirmwareParams,
     gitRepository: GitRepository
@@ -447,7 +456,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
               currentCommitHash,
             }
           );
-          const target = `${config.firmware}_via_UART`;
+          const target = this.getCompileTarget(config);
           firmwareBinaryPath = await this.compileBinary(
             target,
             firmwareSourcePath,
@@ -457,7 +466,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           );
         }
       } else {
-        const target = `${config.firmware}_via_UART`;
+        const target = this.getCompileTarget(config);
         firmwareBinaryPath = await this.compileBinary(
           target,
           firmwareSourcePath,
