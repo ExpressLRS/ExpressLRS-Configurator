@@ -131,8 +131,8 @@ export default class BinaryConfigurator {
             flags.push(['--buzzer-mode', 'quiet']);
             break;
           case UserDefineKey.MY_STARTUP_MELODY:
-            flags.push(['--buzzer-mode', 'custom']);
-            flags.push(['--buzzer-melody', userDefine.key]);
+            flags.push(['--buzzer-mode', 'custom-tune']);
+            flags.push(['--buzzer-melody', userDefine.value || '']);
             break;
           case UserDefineKey.RCVR_UART_BAUD:
             flags.push(['--rx-baud', userDefine.value!]);
