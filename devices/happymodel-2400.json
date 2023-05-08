@@ -55,7 +55,7 @@
   },
   {
     "category": "Happymodel",
-    "name": "HappyModel EP 2400 RX",
+    "name": "HappyModel EP1/2 2400 RX",
     "targets": [
       {
         "flashingMethod": "UART",
