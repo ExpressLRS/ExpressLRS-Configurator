@@ -642,6 +642,18 @@
             "deprecationReason": null
           },
           {
+            "name": "luaName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "name",
             "description": null,
             "args": [],
@@ -659,6 +671,18 @@
           },
           {
             "name": "parent",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "priorTargetName",
             "description": null,
             "args": [],
             "type": {
@@ -946,12 +970,6 @@
           },
           {
             "name": "Passthrough",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Radio",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -3093,7 +3111,7 @@
                 "ofType": null
               }
             },
-            "defaultValue": "FEATURE_OPENTX_SYNC",
+            "defaultValue": "AUTO_WIFI_ON_INTERVAL",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -3139,18 +3157,6 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "ARM_CHANNEL",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "AUTO_WIFI_ON_BOOT",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "AUTO_WIFI_ON_INTERVAL",
             "description": null,
             "isDeprecated": false,
@@ -3158,12 +3164,6 @@
           },
           {
             "name": "BINDING_PHRASE",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "BLE_HID_JOYSTICK",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -3187,30 +3187,6 @@
             "deprecationReason": null
           },
           {
-            "name": "ENABLE_TELEMETRY",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "FAST_SYNC",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "FEATURE_OPENTX_SYNC",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "FEATURE_OPENTX_SYNC_AUTOTUNE",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "HOME_WIFI_PASSWORD",
             "description": null,
             "isDeprecated": false,
@@ -3223,19 +3199,7 @@
             "deprecationReason": null
           },
           {
-            "name": "HYBRID_SWITCHES_8",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "JUST_BEEP_ONCE",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "LOCK_ON_50HZ",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -3248,18 +3212,6 @@
           },
           {
             "name": "MY_STARTUP_MELODY",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "NO_SYNC_ON_ARM",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "R9M_UNLOCK_HIGHER_POWER",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -3343,49 +3295,7 @@
             "deprecationReason": null
           },
           {
-            "name": "USE_500HZ",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "USE_DIVERSITY",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "USE_DYNAMIC_POWER",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "USE_ESP8266_BACKPACK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "USE_R9MM_R9MINI_SBUS",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "USE_TX_BACKPACK",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "USE_UART2",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "WS2812_IS_GRB",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -4406,11 +4316,7 @@
         "name": "include",
         "description": "Directs the executor to include this field or fragment only when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": [
-          "FIELD",
-          "FRAGMENT_SPREAD",
-          "INLINE_FRAGMENT"
-        ],
+        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
         "args": [
           {
             "name": "if",
@@ -4434,11 +4340,7 @@
         "name": "skip",
         "description": "Directs the executor to skip this field or fragment when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": [
-          "FIELD",
-          "FRAGMENT_SPREAD",
-          "INLINE_FRAGMENT"
-        ],
+        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
         "args": [
           {
             "name": "if",
@@ -4462,9 +4364,7 @@
         "name": "specifiedBy",
         "description": "Exposes a URL that specifies the behaviour of this scalar.",
         "isRepeatable": false,
-        "locations": [
-          "SCALAR"
-        ],
+        "locations": ["SCALAR"],
         "args": [
           {
             "name": "url",

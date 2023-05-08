@@ -88,7 +88,12 @@ export default class DeviceDescriptionsLoader {
       }),
       [],
       DeviceType.ExpressLRS,
-      true
+      true,
+      undefined,
+      undefined,
+      undefined,
+      config.lua_name,
+      config.prior_target_name
     );
   }
 
