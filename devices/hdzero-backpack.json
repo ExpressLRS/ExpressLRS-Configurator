@@ -5,18 +5,14 @@
     "targets": [
       {
         "flashingMethod": "UART",
-        "name": "HDZero_RX5.1_ESP8285_Backpack_via_UART"
+        "name": "HDZero_RX51_ESP8285_Backpack_via_UART"
       },
       {
         "flashingMethod": "WIFI",
-        "name": "HDZero_RX5.1_ESP8285_Backpack_via_WIFI"
+        "name": "HDZero_RX51_ESP8285_Backpack_via_WIFI"
       }
     ],
-    "userDefines": [
-      "BINDING_PHRASE",
-      "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD"
-    ],
+    "userDefines": ["BINDING_PHRASE", "HOME_WIFI_SSID", "HOME_WIFI_PASSWORD"],
     "wikiUrl": "",
     "deviceType": "Backpack",
     "aliases": []
@@ -27,18 +23,14 @@
     "targets": [
       {
         "flashingMethod": "UART",
-        "name": "HDZero_Goggle_RX5.1_ESP32_Backpack_via_UART"
+        "name": "HDZero_Goggle_ESP32_Backpack_via_UART"
       },
       {
         "flashingMethod": "WIFI",
-        "name": "HDZero_Goggle_RX5.1_ESP32_Backpack_via_UART"
+        "name": "HDZero_Goggle_ESP32_Backpack_via_UART"
       }
     ],
-    "userDefines": [
-      "BINDING_PHRASE",
-      "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD"
-    ],
+    "userDefines": ["BINDING_PHRASE", "HOME_WIFI_SSID", "HOME_WIFI_PASSWORD"],
     "wikiUrl": "",
     "deviceType": "Backpack",
     "aliases": []
