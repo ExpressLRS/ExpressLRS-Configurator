@@ -226,5 +226,34 @@
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
     "deviceType": "ExpressLRS",
     "aliases": []
+  },
+  {
+    "category": "DIY 900 MHz",
+    "name": "DIY 900 RX PCB",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "DIY_900_RX_PCB_via_STLINK"
+      },
+      {
+        "flashingMethod": "UART",
+        "name": "DIY_900_RX_PCB_via_UART"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "ARM_CHANNEL",
+      "LOCK_ON_FIRST_CONNECTION",
+      "RCVR_UART_BAUD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
   }
 ]
