@@ -229,15 +229,11 @@
   },
   {
     "category": "DIY 900 MHz",
-    "name": "DIY 900 RX PCB",
+    "name": "DIY 900 RX STM32 SX1272",
     "targets": [
       {
         "flashingMethod": "STLink",
-        "name": "DIY_900_RX_PCB_via_STLINK"
-      },
-      {
-        "flashingMethod": "UART",
-        "name": "DIY_900_RX_PCB_via_UART"
+        "name": "DIY_900_RX_STM32_SX1272_via_STLINK"
       }
     ],
     "userDefines": [
@@ -251,6 +247,34 @@
       "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
       "RCVR_UART_BAUD"
+    ],
+    "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
+    "deviceType": "ExpressLRS",
+    "aliases": []
+  },
+  {
+    "category": "DIY 900 MHz",
+    "name": "DIY 900 TX STM32 SX1272",
+    "targets": [
+      {
+        "flashingMethod": "STLink",
+        "name": "DIY_900_TX_STM32_SX1272_via_STLINK"
+      }
+    ],
+    "userDefines": [
+      "REGULATORY_DOMAIN_AU_915",
+      "REGULATORY_DOMAIN_EU_868",
+      "REGULATORY_DOMAIN_FCC_915",
+      "REGULATORY_DOMAIN_IN_866",
+      "BINDING_PHRASE",
+      "HYBRID_SWITCHES_8",
+      "ENABLE_TELEMETRY",
+      "TLM_REPORT_INTERVAL_MS",
+      "NO_SYNC_ON_ARM",
+      "ARM_CHANNEL",
+      "FEATURE_OPENTX_SYNC",
+      "UART_INVERTED",
+      "USE_DYNAMIC_POWER"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
     "deviceType": "ExpressLRS",
