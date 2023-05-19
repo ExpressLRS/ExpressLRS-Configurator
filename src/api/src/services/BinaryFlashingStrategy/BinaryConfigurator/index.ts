@@ -151,6 +151,7 @@ export default class BinaryConfigurator {
             flags.push(['--r9mm-mini-sbus']);
             break;
           // not supported
+          case UserDefineKey.RCVR_INVERT_TX:
           case UserDefineKey.DEVICE_NAME:
             break;
           default:
