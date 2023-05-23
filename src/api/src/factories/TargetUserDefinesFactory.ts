@@ -54,7 +54,7 @@ export default class TargetUserDefinesFactory {
         return UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '240LU');
       // Performance options
       case UserDefineKey.UNLOCK_HIGHER_POWER:
-        return UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER, true);
+        return UserDefine.Boolean(UserDefineKey.UNLOCK_HIGHER_POWER, false);
       case UserDefineKey.LOCK_ON_FIRST_CONNECTION:
         return UserDefine.Boolean(UserDefineKey.LOCK_ON_FIRST_CONNECTION, true);
       // Compatibility options
