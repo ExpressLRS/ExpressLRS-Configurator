@@ -64,6 +64,8 @@ export default class DeviceDescriptionsLoader {
         return FlashingMethod.UART;
       case 'wifi':
         return FlashingMethod.WIFI;
+      case 'stock':
+        return FlashingMethod.Stock_BL;
       default:
         throw new Error(`Upload Method ${uploadMethod} Not Recognized!`);
     }

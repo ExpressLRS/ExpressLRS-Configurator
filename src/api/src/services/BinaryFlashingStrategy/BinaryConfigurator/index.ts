@@ -40,6 +40,7 @@ export default class BinaryConfigurator {
       wifi: 'wifi',
       etx: 'etx',
       stlink: 'stlink',
+      stock: 'stock',
     };
     if (typeof mapped[input] === 'string') {
       return mapped[input];
