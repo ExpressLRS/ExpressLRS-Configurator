@@ -414,7 +414,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   const isTX = useMemo(() => {
     if (deviceTarget) {
-      return deviceTarget.name?.indexOf('_TX_') > -1;
+      return deviceTarget.name?.toLocaleLowerCase().indexOf('tx_') > -1;
     }
     return false;
   }, [deviceTarget]);
@@ -804,7 +804,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 />
               )}
               <Loader loading={loadingTargets} />
-              {luaDownloadButton()}
+              {!loadingTargets && luaDownloadButton()}
               {hasLuaScript && (
                 <ShowAlerts
                   severity="error"
@@ -910,28 +910,30 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 >
                   Build
                 </Button>
-                <SplitButton
-                  sx={styles.button}
-                  size="large"
-                  variant="contained"
-                  options={[
-                    {
-                      label: 'Build & Flash',
-                      value: BuildJobType.BuildAndFlash,
-                    },
-                    {
-                      label: 'Force Flash',
-                      value: BuildJobType.ForceFlash,
-                    },
-                  ]}
-                  onButtonClick={(value: string | null) => {
-                    if (value === BuildJobType.BuildAndFlash) {
-                      onBuildAndFlash();
-                    } else if (value === BuildJobType.ForceFlash) {
-                      onForceFlash();
-                    }
-                  }}
-                />
+                {deviceTarget?.flashingMethod !== FlashingMethod.Stock_BL && (
+                  <SplitButton
+                    sx={styles.button}
+                    size="large"
+                    variant="contained"
+                    options={[
+                      {
+                        label: 'Build & Flash',
+                        value: BuildJobType.BuildAndFlash,
+                      },
+                      {
+                        label: 'Force Flash',
+                        value: BuildJobType.ForceFlash,
+                      },
+                    ]}
+                    onButtonClick={(value: string | null) => {
+                      if (value === BuildJobType.BuildAndFlash) {
+                        onBuildAndFlash();
+                      } else if (value === BuildJobType.ForceFlash) {
+                        onForceFlash();
+                      }
+                    }}
+                  />
+                )}
               </div>
             </CardContent>
           </Card>
