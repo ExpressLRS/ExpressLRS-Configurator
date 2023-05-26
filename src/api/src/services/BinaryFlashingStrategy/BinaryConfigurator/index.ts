@@ -1,3 +1,4 @@
+import path from 'path';
 import { BuildFlashFirmwareParams } from '../../FlashingStrategyLocator/BuildFlashFirmwareParams';
 import BuildJobType from '../../../models/enum/BuildJobType';
 import UserDefine from '../../../models/UserDefine';
@@ -48,8 +49,15 @@ export default class BinaryConfigurator {
     return input;
   }
 
-  buildBinaryConfigFlags(params: BuildFlashFirmwareParams): string[][] {
+  buildBinaryConfigFlags(
+    firmwareBinaryPath: string,
+    hardwareDefinitionsPath: string,
+    params: BuildFlashFirmwareParams
+  ): string[][] {
     const flags: string[][] = [];
+
+    flags.push(['--dir', hardwareDefinitionsPath]);
+
     const [manufacturer, subType, device, uploadMethod] =
       params.target.split('.');
     flags.push(['--target', `${manufacturer}.${subType}.${device}`]);
@@ -69,12 +77,21 @@ export default class BinaryConfigurator {
       flags.push(['--flash', this.mapUploadMethod(uploadMethod)]);
     }
 
+    // https://github.com/ExpressLRS/ExpressLRS/pull/2224/files
+    if (uploadMethod === 'stock') {
+      flags.push(['--flash', 'stock']);
+      flags.push(['--out', path.dirname(firmwareBinaryPath)]);
+    }
+
     if (
       params.serialDevice?.length !== undefined &&
       params.serialDevice?.length > 0
     ) {
       flags.push(['--port', params.serialDevice]);
     }
+
+    // must be the last one, since it a positional arg
+    flags.push([firmwareBinaryPath]);
 
     return flags;
   }
@@ -165,23 +182,16 @@ export default class BinaryConfigurator {
 
   async run(
     firmwareSourcePath: string,
-    hardwareDefinitionsPath: string,
     flasherPath: string,
-    firmwareBinaryPath: string,
     flags: string[][],
     onUpdate: OnOutputFunc = NoOpFunc
   ) {
     this.logger.log('flags', {
       firmwareSourcePath,
       flags: maskSensitiveFlags(flags),
-      hardwareDefinitionsPath,
-      firmwareBinaryPath,
       flasherPath,
     });
-    const binaryConfiguratorArgs = [
-      ...this.stringifyFlags([...flags, ['--dir', hardwareDefinitionsPath]]),
-      firmwareBinaryPath,
-    ];
+    const binaryConfiguratorArgs = this.stringifyFlags(flags);
     return this.python.runPythonScript(
       flasherPath,
       binaryConfiguratorArgs,

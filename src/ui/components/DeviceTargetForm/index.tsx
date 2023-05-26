@@ -8,11 +8,7 @@ import React, {
 import { Alert, AlertTitle, Box } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
 import Omnibox from '../Omnibox';
-import {
-  Device,
-  FirmwareVersionDataInput,
-  Target,
-} from '../../gql/generated/types';
+import { Device, Target } from '../../gql/generated/types';
 import FlashingMethodOptions, {
   sortDeviceTargets,
 } from '../FlashingMethodOptions';
@@ -30,14 +26,12 @@ interface FirmwareVersionCardProps {
   currentTarget: Target | null;
   onChange: (data: Target | null) => void;
   deviceOptions: Device[] | null;
-  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
   onChange,
   currentTarget,
   deviceOptions,
-  firmwareVersionData,
 }) => {
   const [currentDevice, setCurrentDevice] = useState<Device | null>(null);
 
@@ -204,7 +198,6 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
           onChange={onFlashingMethodChange}
           currentTarget={currentTarget}
           currentDevice={currentDevice}
-          firmwareVersionData={firmwareVersionData}
         />
       )}
     </>

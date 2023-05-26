@@ -361,6 +361,38 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     return target;
   }
 
+  getFirmwareBinFiles(firmwareSearchPath: string): string[] {
+    const binaryExtensions = ['.elrs', '.bin'];
+
+    const firmwareBinFiles = fs
+      .readdirSync(firmwareSearchPath)
+      .filter((filename) => binaryExtensions.includes(path.extname(filename)));
+
+    return firmwareBinFiles.map((filename) =>
+      path.join(firmwareSearchPath, filename)
+    );
+  }
+
+  searchFirmwareBinPath(target: string, firmwareSearchPath: string): string {
+    const firmwareBinFiles = this.getFirmwareBinFiles(firmwareSearchPath);
+    let searchValues = ['backpack.bin', 'firmware.bin'];
+    if (target.endsWith('.stock')) {
+      searchValues = ['firmware.elrs', ...searchValues];
+    }
+    const matchedFilenameFile = searchValues.find((searchFile) => {
+      return (
+        firmwareBinFiles.find(
+          (firmwareBinPath) => searchFile === path.basename(firmwareBinPath)
+        ) !== undefined
+      );
+    });
+    if (matchedFilenameFile !== undefined) {
+      return path.join(firmwareSearchPath, matchedFilenameFile);
+    }
+
+    return path.join(firmwareSearchPath, 'firmware.bin');
+  }
+
   async buildFlashFirmware(
     params: BuildFlashFirmwareParams,
     gitRepository: GitRepository
@@ -484,13 +516,14 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         BuildFirmwareStep.BUILDING_FIRMWARE
       );
 
-      const flags: string[][] =
-        this.binaryConfigurator.buildBinaryConfigFlags(params);
+      const flags: string[][] = this.binaryConfigurator.buildBinaryConfigFlags(
+        firmwareBinaryPath,
+        hardwareDefinitionsPath,
+        params
+      );
       const binaryConfiguratorResult = await this.binaryConfigurator.run(
         firmwareSourcePath,
-        hardwareDefinitionsPath,
         flasherPath,
-        firmwareBinaryPath,
         flags,
         (output) => {
           this.updateLogs(output);
@@ -510,9 +543,13 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       }
 
       if (params.type === BuildJobType.Build) {
+        const bin = this.searchFirmwareBinPath(
+          params.target,
+          path.dirname(firmwareBinaryPath)
+        );
         const canonicalBinPath = await createBinaryCopyWithCanonicalName(
           params,
-          firmwareBinaryPath
+          bin
         );
         return new BuildFlashFirmwareResult(
           true,

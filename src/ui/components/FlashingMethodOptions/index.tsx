@@ -8,11 +8,7 @@ import {
 } from '@mui/material';
 import React, { FunctionComponent, useCallback, useMemo } from 'react';
 import { SxProps, Theme } from '@mui/system';
-import {
-  Device,
-  FirmwareVersionDataInput,
-  Target,
-} from '../../gql/generated/types';
+import { Device, Target } from '../../gql/generated/types';
 import FlashingMethodDescription from '../FlashingMethodDescription';
 
 const styles: Record<string, SxProps<Theme>> = {
@@ -42,7 +38,6 @@ interface FlashingMethodsListProps {
   currentTarget: Target | null;
   currentDevice: Device | null;
   onChange: (data: Target | null) => void;
-  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 export const sortDeviceTargets = (targets: readonly Target[]): Target[] => {
@@ -61,7 +56,7 @@ export const sortDeviceTargets = (targets: readonly Target[]): Target[] => {
 const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   props
 ) => {
-  const { onChange, currentTarget, currentDevice, firmwareVersionData } = props;
+  const { onChange, currentTarget, currentDevice } = props;
   const targetMappingsSorted = useMemo(
     () => sortDeviceTargets(currentDevice?.targets ?? []),
     [currentDevice?.targets]
@@ -88,7 +83,6 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
             <FlashingMethodDescription
               flashingMethod={targetMapping.flashingMethod}
               deviceWikiUrl={currentDevice?.wikiUrl ?? null}
-              firmwareVersionData={firmwareVersionData}
             />
           )}
         </>
@@ -104,7 +98,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
         />
       );
     },
-    [currentDevice?.wikiUrl, firmwareVersionData]
+    [currentDevice?.wikiUrl]
   );
 
   return (

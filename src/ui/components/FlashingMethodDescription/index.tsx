@@ -2,10 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Box, Tooltip } from '@mui/material';
 import QuestionIcon from '@mui/icons-material/Help';
 import { SxProps, Theme } from '@mui/system';
-import {
-  FirmwareVersionDataInput,
-  FlashingMethod,
-} from '../../gql/generated/types';
+import { FlashingMethod } from '../../gql/generated/types';
 import DocumentationLink from '../DocumentationLink';
 
 const styles: Record<string, SxProps<Theme>> = {
@@ -22,12 +19,11 @@ const styles: Record<string, SxProps<Theme>> = {
 interface FlashingMethodDescriptionProps {
   flashingMethod: FlashingMethod;
   deviceWikiUrl: string | null;
-  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 const FlashingMethodDescription: FunctionComponent<
   FlashingMethodDescriptionProps
-> = ({ flashingMethod, deviceWikiUrl, firmwareVersionData }) => {
+> = ({ flashingMethod, deviceWikiUrl }) => {
   const wikiUrl = (deviceWikiUrl ?? '').length > 0 ? deviceWikiUrl : null;
   const toText = (key: FlashingMethod) => {
     switch (key) {
@@ -52,7 +48,6 @@ const FlashingMethodDescription: FunctionComponent<
             </ol>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/software/updating/betaflight-passthrough/'
@@ -72,7 +67,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/quick-start/getting-started/'
@@ -93,7 +87,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/quick-start/getting-started/'
@@ -114,7 +107,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/quick-start/getting-started/'
@@ -135,7 +127,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/quick-start/getting-started/'
@@ -156,7 +147,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/software/updating/wifi-updating/'
@@ -178,7 +168,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/quick-start/getting-started/'
@@ -199,7 +188,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/quick-start/getting-started/'
