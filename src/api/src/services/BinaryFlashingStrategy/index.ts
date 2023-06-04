@@ -120,8 +120,10 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
   async isCompatible(params: IsCompatibleArgs, gitRepository: GitRepository) {
     if (
-      gitRepository.url.toLowerCase() !==
-      'https://github.com/expresslrs/expresslrs'.toLowerCase()
+      gitRepository.url.toLowerCase() ===
+        'https://github.com/expresslrs/backpack'.toLowerCase() &&
+      params.source === FirmwareSource.GitTag &&
+      semver.lte(params.gitTag, '1.3.0')
     ) {
       return false;
     }
@@ -345,6 +347,10 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     platformioTarget: string,
     userDefines: UserDefine[]
   ): Promise<string> {
+    if (platformioTarget.includes('Backpack')) {
+      return `${platformioTarget}/firmware.bin`;
+    }
+
     let regulatoryDomain: 'LBT' | 'FCC' = 'FCC';
     const regDomainCE2400 = userDefines.find(
       ({ key }) => key === UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400

@@ -58,6 +58,8 @@ export default class DeviceDescriptionsLoader {
         return FlashingMethod.DFU;
       case 'etx':
         return FlashingMethod.EdgeTxPassthrough;
+      case 'passthru':
+        return FlashingMethod.Passthrough;
       case 'stlink':
         return FlashingMethod.STLink;
       case 'uart':
