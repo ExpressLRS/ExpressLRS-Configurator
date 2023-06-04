@@ -38,6 +38,7 @@ export default class BinaryConfigurator {
     const mapped: { [n: string]: string } = {
       uart: 'uart',
       betaflight: 'bf',
+      passthru: 'passthru',
       wifi: 'wifi',
       etx: 'etx',
       stlink: 'stlink',
