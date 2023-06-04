@@ -49,13 +49,15 @@ export default class FirmwareBuilder {
 
   getFirmwareBinFiles(target: string, firmwarePath: string): string[] {
     const firmwareBuildPath = this.getFirmwareBuildPath(target, firmwarePath);
-    const binaryExtensions = ['.elrs', '.bin'];
+    const binaryExtensions = ['.bin.gz', '.elrs', '.bin'];
 
     const firmwareBinFiles = fs
       .readdirSync(firmwareBuildPath)
-      .filter((filename) => binaryExtensions.includes(path.extname(filename)));
+      .filter((filename: string) =>
+        binaryExtensions.includes(path.extname(filename))
+      );
 
-    return firmwareBinFiles.map((filename) =>
+    return firmwareBinFiles.map((filename: string) =>
       path.join(firmwareBuildPath, filename)
     );
   }
@@ -63,7 +65,12 @@ export default class FirmwareBuilder {
   getFirmwareBinPath(target: string, firmwarePath: string): string {
     const firmwareBuildPath = this.getFirmwareBuildPath(target, firmwarePath);
     const firmwareBinFiles = this.getFirmwareBinFiles(target, firmwarePath);
-    const searchValues = ['firmware.elrs', 'backpack.bin', 'firmware.bin'];
+    const searchValues = [
+      'firmware.elrs',
+      'firmware.bin.gz',
+      'backpack.bin',
+      'firmware.bin',
+    ];
 
     const matchedBinFile = firmwareBinFiles.find((firmwareBinPath) =>
       searchValues.find(

@@ -127,6 +127,8 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     }
 
     if (
+      gitRepository.url.toLowerCase() ===
+        'https://github.com/expresslrs/expresslrs'.toLowerCase() &&
       params.source === FirmwareSource.GitTag &&
       semver.lt(params.gitTag, '3.0.0')
     ) {
@@ -378,6 +380,9 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     let searchValues = ['backpack.bin', 'firmware.bin'];
     if (target.endsWith('.stock')) {
       searchValues = ['firmware.elrs', ...searchValues];
+    }
+    if (target.endsWith('.wifi')) {
+      searchValues = ['firmware.bin.gz', ...searchValues];
     }
     const matchedFilenameFile = searchValues.find((searchFile) => {
       return (
