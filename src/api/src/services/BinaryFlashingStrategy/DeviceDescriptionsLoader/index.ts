@@ -294,9 +294,11 @@ export default class DeviceDescriptionsLoader {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.HOME_WIFI_PASSWORD)
       );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.AUTO_WIFI_ON_INTERVAL)
-      );
+      if (!config.firmware.endsWith('_Backpack')) {
+        userDefines.push(
+          targetUserDefinesFactory.build(UserDefineKey.AUTO_WIFI_ON_INTERVAL)
+        );
+      }
     }
     if (config.features && config.features.includes('buzzer')) {
       userDefines.push(
