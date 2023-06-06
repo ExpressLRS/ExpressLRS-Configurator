@@ -13,6 +13,8 @@ export interface DeviceDescription {
   features?: string[];
   prior_target_name: string;
   overlay?: { [key: string]: string };
+  frequency?: number;
+  type?: string;
 }
 
 export type TargetsJSONRaw = {
@@ -61,9 +63,23 @@ export class TargetsJSONLoader {
         Object.keys(configs).forEach((deviceDescriptionKey) => {
           const id = `${categoryKey}.${subTypeKey}.${deviceDescriptionKey}`;
           const config = configs[deviceDescriptionKey];
+
+          const [type, frequency] = subTypeKey.split('_');
+          config.type = type.toUpperCase();
+          const frequencyNumber = parseInt(frequency, 10);
+
+          let category = categoryName;
+
+          if (frequencyNumber) {
+            config.frequency = frequencyNumber;
+            category = `${categoryName} ${this.frequencyFormatter(
+              config.frequency
+            )}`;
+          }
+
           if (this.validConfig(id, config)) {
             result[id] = {
-              category: categoryName,
+              category,
               config,
             };
           }
@@ -105,5 +121,12 @@ export class TargetsJSONLoader {
       );
     }
     return valid;
+  }
+
+  private frequencyFormatter(frequency: number) {
+    if (frequency >= 1000) {
+      return `${(frequency / 1000).toFixed(1)} GHz`;
+    }
+    return `${frequency} MHz`;
   }
 }
