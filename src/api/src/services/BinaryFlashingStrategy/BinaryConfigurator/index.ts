@@ -55,18 +55,18 @@ export default class BinaryConfigurator {
       flags.push(['--force']);
     }
 
-    if (
+    // https://github.com/ExpressLRS/ExpressLRS/pull/2224/files
+    if (uploadMethod === 'stock') {
+      flags.push(['--flash', 'stock']);
+      flags.push(['--out', outputDirectory]);
+    } else if (params.type === BuildJobType.Build && outputDirectory !== '') {
+      flags.push(['--flash', 'dir']);
+      flags.push(['--out', outputDirectory]);
+    } else if (
       params.type === BuildJobType.BuildAndFlash ||
       params.type === BuildJobType.ForceFlash
     ) {
       flags.push(['--flash', this.mapUploadMethod(uploadMethod)]);
-    }
-
-    flags.push(['--out', outputDirectory]);
-
-    // https://github.com/ExpressLRS/ExpressLRS/pull/2224/files
-    if (uploadMethod === 'stock') {
-      flags.push(['--flash', 'stock']);
     }
 
     if (
@@ -77,7 +77,9 @@ export default class BinaryConfigurator {
     }
 
     // must be the last one, since it a positional arg
-    flags.push([firmwareBinaryPath]);
+    if (firmwareBinaryPath !== '') {
+      flags.push([firmwareBinaryPath]);
+    }
 
     return flags;
   }
