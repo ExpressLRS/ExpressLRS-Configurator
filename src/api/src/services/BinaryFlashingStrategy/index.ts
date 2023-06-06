@@ -370,7 +370,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
   }
 
   getFirmwareBinFiles(firmwareSearchPath: string): string[] {
-    const binaryExtensions = ['.elrs', '.bin'];
+    const binaryExtensions = ['.elrs', '.bin', '.gz'];
 
     const firmwareBinFiles = fs
       .readdirSync(firmwareSearchPath)
@@ -381,15 +381,15 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     );
   }
 
-  searchFirmwareBinPath(target: string, firmwareSearchPath: string): string {
+  searchFirmwareBinPath(firmwareSearchPath: string): string {
     const firmwareBinFiles = this.getFirmwareBinFiles(firmwareSearchPath);
-    let searchValues = ['backpack.bin', 'firmware.bin'];
-    if (target.endsWith('.stock')) {
-      searchValues = ['firmware.elrs', ...searchValues];
-    }
-    if (target.endsWith('.wifi')) {
-      searchValues = ['firmware.bin.gz', ...searchValues];
-    }
+    const searchValues = [
+      'firmware.elrs',
+      'firmware.bin.gz',
+      'firmware.bin',
+      'backpack.bin.gz',
+      'backpack.bin',
+    ];
     const matchedFilenameFile = searchValues.find((searchFile) => {
       return (
         firmwareBinFiles.find(
@@ -401,7 +401,22 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       return path.join(firmwareSearchPath, matchedFilenameFile);
     }
 
-    return path.join(firmwareSearchPath, 'firmware.bin');
+    throw new Error('failed to find firmware binary path');
+  }
+
+  async createWorkingDirectory(target: string): Promise<string> {
+    return fs.promises.mkdtemp(path.join(os.tmpdir(), `${target}_`));
+  }
+
+  async copyFirmwareArtifacts(sourceDir: string, target: string) {
+    const firmwareBinFiles = this.getFirmwareBinFiles(sourceDir);
+    const jobs = firmwareBinFiles.map((artifact) => {
+      return fs.promises.copyFile(
+        artifact,
+        path.join(target, path.basename(artifact))
+      );
+    });
+    await Promise.all(jobs);
   }
 
   async buildFlashFirmware(
@@ -461,8 +476,9 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         }
       );
 
-      let firmwareBinaryPath = '';
-      let hardwareDefinitionsPath = firmwareSourcePath;
+      let sourceFirmwareBinPath = '';
+      let firmwareArtifactsDirPath = '';
+      let hardwareDescriptionsPath = firmwareSourcePath;
       let flasherPath = path.join(
         firmwareSourcePath,
         'python',
@@ -484,13 +500,20 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
             config.firmware,
             params.userDefines
           );
-          firmwareBinaryPath = path.join(cacheLocation, cachedBinaryPath);
+          sourceFirmwareBinPath = path.join(cacheLocation, cachedBinaryPath);
 
           const flasherPyzPath = path.join(cacheLocation, 'flasher.pyz');
           if (fs.existsSync(flasherPyzPath)) {
             flasherPath = flasherPyzPath;
           }
-          hardwareDefinitionsPath = cacheLocation;
+          hardwareDescriptionsPath = cacheLocation;
+          this.logger.log('paths', {
+            cacheLocation,
+            cachedBinaryPath,
+            flasherPyzPath,
+            sourceFirmwareBinaryPath: sourceFirmwareBinPath,
+            hardwareDescriptionsPath,
+          });
         } catch (e) {
           this.logger.log(
             'failed to get cached build, reverting to building firmware locally',
@@ -500,7 +523,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
             }
           );
           const target = this.getCompileTarget(config);
-          firmwareBinaryPath = await this.compileBinary(
+          sourceFirmwareBinPath = await this.compileBinary(
             target,
             firmwareSourcePath,
             params.userDefinesMode,
@@ -510,7 +533,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         }
       } else {
         const target = this.getCompileTarget(config);
-        firmwareBinaryPath = await this.compileBinary(
+        sourceFirmwareBinPath = await this.compileBinary(
           target,
           firmwareSourcePath,
           params.userDefinesMode,
@@ -519,7 +542,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         );
       }
       this.logger.log('firmware binaries path', {
-        firmwareBinaryPath,
+        firmwareBinaryPath: sourceFirmwareBinPath,
       });
 
       await this.updateProgress(
@@ -527,15 +550,26 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         BuildFirmwareStep.BUILDING_FIRMWARE
       );
 
-      const flags: string[][] = this.binaryConfigurator.buildBinaryConfigFlags(
-        firmwareBinaryPath,
-        hardwareDefinitionsPath,
+      // In some cases we need to copy multiple artifacts, for example hdzero goggles contains
+      // boot_app0.bin, bootloader.bin, firmware.bin, partitions.bin files
+      firmwareArtifactsDirPath = path.dirname(sourceFirmwareBinPath);
+
+      const outputDirectory = await this.createWorkingDirectory(params.target);
+      await this.copyFirmwareArtifacts(
+        firmwareArtifactsDirPath,
+        outputDirectory
+      );
+      const firmwareBinFile = path.join(outputDirectory, 'firmware.bin');
+
+      const flasherArgs = this.binaryConfigurator.buildBinaryConfigFlags(
+        outputDirectory,
+        firmwareBinFile,
+        hardwareDescriptionsPath,
         params
       );
       const binaryConfiguratorResult = await this.binaryConfigurator.run(
-        firmwareSourcePath,
         flasherPath,
-        flags,
+        flasherArgs,
         (output) => {
           this.updateLogs(output);
         }
@@ -554,13 +588,13 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       }
 
       if (params.type === BuildJobType.Build) {
-        const bin = this.searchFirmwareBinPath(
-          params.target,
-          path.dirname(firmwareBinaryPath)
+        const mainArtifactBinary = this.searchFirmwareBinPath(
+          path.dirname(firmwareBinFile)
         );
         const canonicalBinPath = await createBinaryCopyWithCanonicalName(
           params,
-          bin
+          mainArtifactBinary,
+          outputDirectory
         );
         return new BuildFlashFirmwareResult(
           true,

@@ -44,15 +44,19 @@ export const generateFirmwareFileName = (
 
 export const createBinaryCopyWithCanonicalName = async (
   params: BuildFlashFirmwareParams,
-  firmwareBinPath: string
+  firmwareBinPath: string,
+  tmpPath = ''
 ): Promise<string> => {
   if (fs.existsSync(firmwareBinPath)) {
     const newFirmwareBaseName = generateFirmwareFileName(params);
     const firmwareExtension = path.extname(firmwareBinPath);
 
-    const tmpPath = await fs.promises.mkdtemp(
-      path.join(os.tmpdir(), `${params.target}_`)
-    );
+    if (tmpPath.length === 0) {
+      // eslint-disable-next-line no-param-reassign
+      tmpPath = await fs.promises.mkdtemp(
+        path.join(os.tmpdir(), `${params.target}_`)
+      );
+    }
 
     // copy with original filename to tmpPath
     const tmpFirmwareBinPathOriginalName = path.join(

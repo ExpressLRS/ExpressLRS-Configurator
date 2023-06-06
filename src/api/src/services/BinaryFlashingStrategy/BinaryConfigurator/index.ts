@@ -1,4 +1,3 @@
-import path from 'path';
 import { BuildFlashFirmwareParams } from '../../FlashingStrategyLocator/BuildFlashFirmwareParams';
 import BuildJobType from '../../../models/enum/BuildJobType';
 import UserDefine from '../../../models/UserDefine';
@@ -34,23 +33,8 @@ export default class BinaryConfigurator {
 
   // Map targets.json flashing methods to binary_flash.py
   // https://github.com/ExpressLRS/ExpressLRS/blame/master/src/python/binary_flash.py
-  mapUploadMethod(input: string): string {
-    const mapped: { [n: string]: string } = {
-      uart: 'uart',
-      betaflight: 'bf',
-      passthru: 'passthru',
-      wifi: 'wifi',
-      etx: 'etx',
-      stlink: 'stlink',
-      stock: 'stock',
-    };
-    if (typeof mapped[input] === 'string') {
-      return mapped[input];
-    }
-    return input;
-  }
-
   buildBinaryConfigFlags(
+    outputDirectory: string,
     firmwareBinaryPath: string,
     hardwareDefinitionsPath: string,
     params: BuildFlashFirmwareParams
@@ -78,10 +62,11 @@ export default class BinaryConfigurator {
       flags.push(['--flash', this.mapUploadMethod(uploadMethod)]);
     }
 
+    flags.push(['--out', outputDirectory]);
+
     // https://github.com/ExpressLRS/ExpressLRS/pull/2224/files
     if (uploadMethod === 'stock') {
       flags.push(['--flash', 'stock']);
-      flags.push(['--out', path.dirname(firmwareBinaryPath)]);
     }
 
     if (
@@ -95,6 +80,22 @@ export default class BinaryConfigurator {
     flags.push([firmwareBinaryPath]);
 
     return flags;
+  }
+
+  mapUploadMethod(input: string): string {
+    const mapped: { [n: string]: string } = {
+      uart: 'uart',
+      betaflight: 'bf',
+      passthru: 'passthru',
+      wifi: 'wifi',
+      etx: 'etx',
+      stlink: 'stlink',
+      stock: 'stock',
+    };
+    if (typeof mapped[input] === 'string') {
+      return mapped[input];
+    }
+    return input;
   }
 
   userDefinesToFlags(userDefines: UserDefine[]): string[][] {
@@ -182,13 +183,11 @@ export default class BinaryConfigurator {
   }
 
   async run(
-    firmwareSourcePath: string,
     flasherPath: string,
     flags: string[][],
     onUpdate: OnOutputFunc = NoOpFunc
   ) {
     this.logger.log('flags', {
-      firmwareSourcePath,
       flags: maskSensitiveFlags(flags),
       flasherPath,
     });
@@ -196,10 +195,7 @@ export default class BinaryConfigurator {
     return this.python.runPythonScript(
       flasherPath,
       binaryConfiguratorArgs,
-      onUpdate,
-      {
-        cwd: firmwareSourcePath,
-      }
+      onUpdate
     );
   }
 }
