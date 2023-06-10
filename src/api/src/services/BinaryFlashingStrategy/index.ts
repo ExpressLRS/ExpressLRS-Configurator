@@ -478,12 +478,22 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
       let sourceFirmwareBinPath = '';
       let firmwareArtifactsDirPath = '';
+      let outputDirectory = '';
+      let firmwareBinFile = '';
       let hardwareDescriptionsPath = firmwareSourcePath;
       let flasherPath = path.join(
         firmwareSourcePath,
         'python',
         'binary_configurator.py'
       );
+
+      if (
+        params.type === BuildJobType.Build ||
+        params.target.endsWith('.stock')
+      ) {
+        outputDirectory = await this.createWorkingDirectory(params.target);
+      }
+
       if (this.isRequestCompatibleWithCache(params)) {
         const currentCommitHash = await this.getCurrentSourceCommit(
           gitRepositoryUrl
@@ -522,16 +532,10 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
               currentCommitHash,
             }
           );
-          const target = this.getCompileTarget(config);
-          sourceFirmwareBinPath = await this.compileBinary(
-            target,
-            firmwareSourcePath,
-            params.userDefinesMode,
-            params.userDefinesTxt,
-            params.userDefines
-          );
         }
-      } else {
+      }
+
+      if (hardwareDescriptionsPath === firmwareSourcePath) {
         const target = this.getCompileTarget(config);
         sourceFirmwareBinPath = await this.compileBinary(
           target,
@@ -540,6 +544,15 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           params.userDefinesTxt,
           params.userDefines
         );
+        // In some cases we need to copy multiple artifacts, for example hdzero goggles contains
+        // boot_app0.bin, bootloader.bin, firmware.bin, partitions.bin files
+        firmwareArtifactsDirPath = path.dirname(sourceFirmwareBinPath);
+
+        await this.copyFirmwareArtifacts(
+          firmwareArtifactsDirPath,
+          outputDirectory
+        );
+        firmwareBinFile = path.join(outputDirectory, 'firmware.bin');
       }
       this.logger.log('firmware binaries path', {
         firmwareBinaryPath: sourceFirmwareBinPath,
@@ -550,23 +563,13 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         BuildFirmwareStep.BUILDING_FIRMWARE
       );
 
-      // In some cases we need to copy multiple artifacts, for example hdzero goggles contains
-      // boot_app0.bin, bootloader.bin, firmware.bin, partitions.bin files
-      firmwareArtifactsDirPath = path.dirname(sourceFirmwareBinPath);
-
-      const outputDirectory = await this.createWorkingDirectory(params.target);
-      await this.copyFirmwareArtifacts(
-        firmwareArtifactsDirPath,
-        outputDirectory
-      );
-      const firmwareBinFile = path.join(outputDirectory, 'firmware.bin');
-
-      const flasherArgs = this.binaryConfigurator.buildBinaryConfigFlags(
-        outputDirectory,
-        firmwareBinFile,
-        hardwareDescriptionsPath,
-        params
-      );
+      const flasherArgs: string[][] =
+        this.binaryConfigurator.buildBinaryConfigFlags(
+          outputDirectory,
+          firmwareBinFile,
+          hardwareDescriptionsPath,
+          params
+        );
       const binaryConfiguratorResult = await this.binaryConfigurator.run(
         flasherPath,
         flasherArgs,
@@ -588,14 +591,18 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       }
 
       if (params.type === BuildJobType.Build) {
-        const mainArtifactBinary = this.searchFirmwareBinPath(
-          path.dirname(firmwareBinFile)
-        );
-        const canonicalBinPath = await createBinaryCopyWithCanonicalName(
-          params,
-          mainArtifactBinary,
-          outputDirectory
-        );
+        let mainArtifactBinary = this.searchFirmwareBinPath(outputDirectory);
+        let canonicalBinPath = mainArtifactBinary;
+        if (firmwareBinFile !== '') {
+          mainArtifactBinary = this.searchFirmwareBinPath(
+            path.dirname(firmwareBinFile)
+          );
+          canonicalBinPath = await createBinaryCopyWithCanonicalName(
+            params,
+            mainArtifactBinary,
+            outputDirectory
+          );
+        }
         return new BuildFlashFirmwareResult(
           true,
           undefined,
