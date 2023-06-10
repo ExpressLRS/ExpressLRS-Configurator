@@ -1,6 +1,6 @@
 [
   {
-    "category": "EMAX 900 MHz",
+    "category": "EMAX",
     "name": "EMAX OLED 900MHz TX",
     "targets": [
       {
@@ -29,7 +29,7 @@
     "aliases": []
   },
   {
-    "category": "EMAX 900 MHz",
+    "category": "EMAX",
     "name": "EMAX Nano 900MHz TX",
     "targets": [
       {

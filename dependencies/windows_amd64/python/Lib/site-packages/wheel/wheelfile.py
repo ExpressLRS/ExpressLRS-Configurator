@@ -153,6 +153,13 @@ class WheelFile(ZipFile):
         self.writestr(zinfo, data, compress_type)
 
     def writestr(self, zinfo_or_arcname, data, compress_type=None):
+        if isinstance(zinfo_or_arcname, str):
+            zinfo_or_arcname = ZipInfo(
+                zinfo_or_arcname, date_time=get_zipinfo_datetime()
+            )
+            zinfo_or_arcname.compress_type = self.compression
+            zinfo_or_arcname.external_attr = (0o664 | stat.S_IFREG) << 16
+
         if isinstance(data, str):
             data = data.encode("utf-8")
 
@@ -183,9 +190,6 @@ class WheelFile(ZipFile):
                 )
             )
             writer.writerow((format(self.record_path), "", ""))
-            zinfo = ZipInfo(self.record_path, date_time=get_zipinfo_datetime())
-            zinfo.compress_type = self.compression
-            zinfo.external_attr = 0o664 << 16
-            self.writestr(zinfo, data.getvalue())
+            self.writestr(self.record_path, data.getvalue())
 
         ZipFile.close(self)

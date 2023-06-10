@@ -1,6 +1,6 @@
 [
   {
-    "category": "NamimnoRC 2.4 GHz",
+    "category": "NamimnoRC",
     "name": "NamimnoRC FLASH 2400 TX",
     "targets": [
       {
@@ -16,16 +16,8 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "USE_500HZ",
       "UART_INVERTED",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
@@ -35,7 +27,7 @@
     "aliases": []
   },
   {
-    "category": "NamimnoRC 2.4 GHz",
+    "category": "NamimnoRC",
     "name": "NamimnoRC FLASH 2400 OLED TX",
     "targets": [
       {
@@ -51,16 +43,8 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "USE_500HZ",
       "UART_INVERTED",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
@@ -70,7 +54,7 @@
     "aliases": []
   },
   {
-    "category": "NamimnoRC 2.4 GHz",
+    "category": "NamimnoRC",
     "name": "NamimnoRC FLASH 2400 RX",
     "targets": [
       {
@@ -86,10 +70,7 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
-      "USE_500HZ",
       "RCVR_UART_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/flash2400/",
@@ -97,7 +78,7 @@
     "aliases": []
   },
   {
-    "category": "NamimnoRC 2.4 GHz",
+    "category": "NamimnoRC",
     "name": "NamimnoRC FLASH 2400 ESP RX",
     "targets": [
       {
@@ -117,11 +98,7 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
-      "USE_500HZ",
-      "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
@@ -133,7 +110,7 @@
     "aliases": []
   },
   {
-    "category": "NamimnoRC 2.4 GHz",
+    "category": "NamimnoRC",
     "name": "NamimnoRC FLASH 2400 ESP Diversity RX",
     "targets": [
       {
@@ -153,12 +130,7 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
-      "USE_500HZ",
-      { "key": "USE_DIVERSITY", "enabled": true },
-      "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",

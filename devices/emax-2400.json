@@ -1,6 +1,6 @@
 [
   {
-    "category": "EMAX 2.4 GHz",
+    "category": "EMAX",
     "name": "EMAX OLED 2.4GHz TX",
     "targets": [
       {
@@ -27,7 +27,7 @@
     "aliases": []
   },
   {
-    "category": "EMAX 2.4 GHz",
+    "category": "EMAX",
     "name": "EMAX Nano 2.4GHz TX",
     "targets": [
       {

@@ -3135,6 +3135,14 @@
     "@types/dns-packet" "*"
     "@types/node" "*"
 
+"@types/node-fetch@^2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.6.2.tgz#d1a9c5fd049d9415dce61571557104dec3ec81da"
+  integrity sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==
+  dependencies:
+    "@types/node" "*"
+    form-data "^3.0.0"
+
 "@types/node@*":
   version "18.7.15"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.15.tgz#20ae1ec80c57ee844b469f968a1cd511d4088b29"
@@ -4322,6 +4330,11 @@ bluebird@^3.5.0, bluebird@^3.5.5:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
+
+bluejay-rtttl-parse@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/bluejay-rtttl-parse/-/bluejay-rtttl-parse-2.0.2.tgz#44111849591a22aac315b5791400b72fb02b88e5"
+  integrity sha512-Rs6eGqbCjSM4n9V93+tC6b9xZMCkTF67aRkfFzaVFlrFPJo8Gxi0swLisdUL4n4bBNfgkGEVzkEPww9L60gMng==
 
 body-parser@1.20.0, body-parser@^1.19.0:
   version "1.20.0"

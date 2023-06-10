@@ -12,7 +12,6 @@ import React, { FunctionComponent, useRef } from 'react';
 import { SxProps, Theme } from '@mui/system';
 import UserDefinesList from '../UserDefinesList';
 import {
-  FirmwareVersionDataInput,
   useBuildUserDefinesTxtMutation,
   UserDefine,
   UserDefineKey,
@@ -53,7 +52,6 @@ interface DeviceOptionsFormProps {
   target: string | null;
   deviceOptions: DeviceOptionsFormData;
   onChange: (data: DeviceOptionsFormData) => void;
-  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 enum UserDefineCategory {
@@ -97,47 +95,27 @@ const userDefinesToCategories = (
       UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
     ],
     [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
-    [UserDefineCategory.ExtraData]: [
-      UserDefineKey.HYBRID_SWITCHES_8,
-      UserDefineKey.ENABLE_TELEMETRY,
-      UserDefineKey.TLM_REPORT_INTERVAL_MS,
-    ],
+    [UserDefineCategory.ExtraData]: [UserDefineKey.TLM_REPORT_INTERVAL_MS],
     [UserDefineCategory.PerformanceOptions]: [
-      UserDefineKey.FAST_SYNC,
-      UserDefineKey.NO_SYNC_ON_ARM,
-      UserDefineKey.ARM_CHANNEL,
-      UserDefineKey.FEATURE_OPENTX_SYNC,
-      UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE,
       UserDefineKey.LOCK_ON_FIRST_CONNECTION,
-      UserDefineKey.LOCK_ON_50HZ,
-      UserDefineKey.USE_500HZ,
-      UserDefineKey.USE_DIVERSITY,
     ],
     [UserDefineCategory.CompatibilityOptions]: [
       UserDefineKey.UART_INVERTED,
-      UserDefineKey.USE_UART2,
-      UserDefineKey.R9M_UNLOCK_HIGHER_POWER, // deprecated
       UserDefineKey.UNLOCK_HIGHER_POWER,
       UserDefineKey.USE_R9MM_R9MINI_SBUS,
       UserDefineKey.RCVR_UART_BAUD,
       UserDefineKey.RCVR_INVERT_TX,
     ],
     [UserDefineCategory.NetworkOptions]: [
-      UserDefineKey.AUTO_WIFI_ON_BOOT,
       UserDefineKey.AUTO_WIFI_ON_INTERVAL,
       UserDefineKey.HOME_WIFI_SSID,
       UserDefineKey.HOME_WIFI_PASSWORD,
     ],
     [UserDefineCategory.OtherOptions]: [
-      UserDefineKey.BLE_HID_JOYSTICK,
-      UserDefineKey.USE_ESP8266_BACKPACK,
-      UserDefineKey.USE_TX_BACKPACK,
       UserDefineKey.JUST_BEEP_ONCE,
       UserDefineKey.DISABLE_STARTUP_BEEP,
       UserDefineKey.DISABLE_ALL_BEEPS,
       UserDefineKey.MY_STARTUP_MELODY,
-      UserDefineKey.USE_DYNAMIC_POWER,
-      UserDefineKey.WS2812_IS_GRB,
     ],
   };
 
@@ -174,7 +152,7 @@ export const cleanUserDefines = (userDefines: UserDefine[]): UserDefine[] => {
 const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
   props
 ) => {
-  const { target, deviceOptions, onChange, firmwareVersionData } = props;
+  const { target, deviceOptions, onChange } = props;
   const categories = userDefinesToCategories(deviceOptions.userDefineOptions);
 
   const onOptionUpdate = (data: UserDefine) => {
@@ -304,6 +282,11 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
             <Button onClick={onCopyFromStandardMode} size="small">
               Copy from Standard mode
             </Button>
+
+            <ShowAlerts
+              severity="warning"
+              messages="When using the manual user-defined mode, the cloud binaries cache is disabled, resulting in much longer build times."
+            />
           </Grid>
         </Grid>
       )}
@@ -320,7 +303,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <UserDefinesList
                     options={categories[UserDefineCategory.RegulatoryDomains]}
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}
@@ -330,7 +312,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <UserDefinesList
                     options={categories[UserDefineCategory.BindingPhrase]}
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}
@@ -343,7 +324,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                       categories[UserDefineCategory.CompatibilityOptions]
                     }
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}
@@ -357,7 +337,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <UserDefinesList
                     options={categories[UserDefineCategory.PerformanceOptions]}
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}
@@ -367,7 +346,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <UserDefinesList
                     options={categories[UserDefineCategory.ExtraData]}
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}
@@ -377,7 +355,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <UserDefinesList
                     options={categories[UserDefineCategory.NetworkOptions]}
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}
@@ -387,7 +364,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
                   <UserDefinesList
                     options={categories[UserDefineCategory.OtherOptions]}
                     onChange={onOptionUpdate}
-                    firmwareVersionData={firmwareVersionData}
                   />
                 </>
               )}

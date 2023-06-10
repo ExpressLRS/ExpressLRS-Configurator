@@ -29,5 +29,7 @@ query availableFirmwareTargets(
     parent
     abbreviatedName
     verifiedHardware
+    luaName
+    priorTargetName
   }
 }

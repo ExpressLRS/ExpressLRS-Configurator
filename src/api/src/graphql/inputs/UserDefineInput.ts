@@ -21,7 +21,7 @@ export default class UserDefineInput {
 
   constructor() {
     this.type = UserDefineKind.Boolean;
-    this.key = UserDefineKey.FEATURE_OPENTX_SYNC;
+    this.key = UserDefineKey.AUTO_WIFI_ON_INTERVAL;
     this.enabled = false;
   }
 }

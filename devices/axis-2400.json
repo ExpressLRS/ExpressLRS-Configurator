@@ -1,6 +1,6 @@
 [
   {
-    "category": "AXIS 2.4 GHz",
+    "category": "Axisflying",
     "name": "AXIS THOR 2400TX",
     "targets": [
       {
@@ -16,26 +16,18 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "USE_500HZ",
       "UART_INVERTED",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER"
+      "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/axisflying-thor/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
-    "category": "AXIS 2.4 GHz",
+    "category": "Axisflying",
     "name": "AXIS THOR 2400RX",
     "targets": [
       {
@@ -55,12 +47,7 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
-      "USE_500HZ",
-      "USE_DIVERSITY",
-      "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",

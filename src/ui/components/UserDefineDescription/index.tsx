@@ -2,10 +2,7 @@ import React, { FunctionComponent, memo } from 'react';
 import { Box, Tooltip } from '@mui/material';
 import QuestionIcon from '@mui/icons-material/Help';
 import { SxProps, Theme } from '@mui/system';
-import {
-  FirmwareVersionDataInput,
-  UserDefineKey,
-} from '../../gql/generated/types';
+import { UserDefineKey } from '../../gql/generated/types';
 import DocumentationLink from '../DocumentationLink';
 
 const styles: Record<string, SxProps<Theme>> = {
@@ -21,11 +18,10 @@ const styles: Record<string, SxProps<Theme>> = {
 
 interface UserDefineDescriptionProps {
   userDefine: UserDefineKey;
-  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
-  memo(({ userDefine, firmwareVersionData }) => {
+  memo(({ userDefine }) => {
     const toText = (key: UserDefineKey) => {
       switch (key) {
         case UserDefineKey.REGULATORY_DOMAIN_AU_433:
@@ -48,10 +44,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 for a regulatory domain to use in your location.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#regulatory-domain"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#regulatory-domain">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -66,10 +59,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 any country.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#regulatory-domain"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#regulatory-domain">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -86,13 +76,9 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 maximum power to 100mW, and enables LBT (Listen Before Talk).
               </p>
               <p>
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.expresslrs.org/software/user-defines/#regulatory-domain"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#regulatory-domain">
                   Check our Wiki page for latest definition.
-                </a>
+                </DocumentationLink>
               </p>
             </div>
           );
@@ -109,72 +95,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 security, it simply reduces RF collisions with other pilots.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#binding-phrase"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.ARM_CHANNEL:
-          return (
-            <div>
-              <p>ARM channels</p>
-              <p>
-                AUX1 - Channel 5<br />
-                AUX2 - Channel 6<br />
-                AUX3 - Channel 7<br />
-                AUX4 - Channel 8<br />
-                AUX5 - Channel 9<br />
-                AUX6 - Channel 10
-                <br />
-                AUX7 - Channel 11
-                <br />
-                AUX8 - Channel 12
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#performance-options"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.AUTO_WIFI_ON_BOOT:
-          return (
-            <div>
-              <p>
-                This will automatically turn the wifi on for any module that has
-                an ESP8285 on it if no connection is found after ~10 seconds
-                from boot. This enables pushing firmware updates to the RX by
-                connecting to its wifi network and visiting 10.0.0.1
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#other-options"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.WS2812_IS_GRB:
-          return (
-            <div>
-              <p>
-                Enable this if your LED is GRB. If this is disabled your led
-                will be used in RGB configuration.
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#binding-phrase">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -194,227 +115,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 is 60 seconds.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#network-options"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.BLE_HID_JOYSTICK:
-          return (
-            <div>
-              <p>
-                Use your transmitter module as a Bluetooth joystick and play
-                drone simulators wirelessly.
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#other-options"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.USE_DIVERSITY:
-          return (
-            <div>
-              <p>
-                Enable antenna-switching diversity for RX that support it. Safe
-                to leave on for hardware that does not have diversity except DIY
-                builds, which did not populate the RF switch.
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.FAST_SYNC:
-          return (
-            <div>
-              <p>Experimental option that adds faster initial syncing.</p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#performance-options"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.FEATURE_OPENTX_SYNC:
-          return (
-            <div>
-              <p>
-                This option lowers latency and{' '}
-                <strong>should be kept enabled</strong>. It requires{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.open-tx.org/downloads"
-                >
-                  OpenTX 2.3.12 or Newer
-                </a>{' '}
-                or{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://github.com/EdgeTX/edgetx"
-                >
-                  EdgeTX
-                </a>
-                .
-              </p>
-              <p>
-                Check our{' '}
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/quick-start/transmitters/tx-prep/"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>{' '}
-                and{' '}
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
-                >
-                  Wiki page for latest definition.
-                </DocumentationLink>
-                .
-              </p>
-            </div>
-          );
-        case UserDefineKey.FEATURE_OPENTX_SYNC_AUTOTUNE:
-          return (
-            <div>
-              <p>
-                This option is more experimental and can lower the offset from
-                the radio by tuning it as close as possible to 0. It requires{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.open-tx.org/downloads"
-                >
-                  OpenTX 2.3.12 or Newer
-                </a>{' '}
-                or{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://github.com/EdgeTX/edgetx"
-                >
-                  EdgeTX
-                </a>
-                .
-              </p>
-              <p>
-                Check our{' '}
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/quick-start/transmitters/tx-prep/"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>{' '}
-                and{' '}
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
-                >
-                  Wiki page for latest definition.
-                </DocumentationLink>
-                .
-              </p>
-            </div>
-          );
-        case UserDefineKey.HYBRID_SWITCHES_8:
-          return (
-            <div>
-              <p>
-                The switch mode MUST match on the transmitter and all receivers
-                that you use with it. Do not mix switch modes. Older versions of
-                the firmware (prior to November 30th 2020) did not check to make
-                sure the transmitter and receiver are using the same mode, so
-                the switch positions could be misinterpreted leading to
-                unexpected behaviour, possibly including unintentional arming.
-                Current versions include a check that should prevent receivers
-                and transmitters with different switch settings from
-                establishing a link, but it is still recommended to pick one
-                switch mode and use it for all your transmitters and receivers.
-              </p>
-              <p>There are 2 available choices here.</p>
-
-              <ol>
-                <li>
-                  The default choice is to have 4 1bit switches (which
-                  corresponds to 2 position switches).
-                </li>
-                <li>
-                  The other option is DHYBRID_SWITCHES_8 where the first switch
-                  is treated as a low-latency switch to be used for arm/disarm.
-                  It is sent with every packet. For the remaining 7 switches the
-                  first 3 bits are the switch ID, followed by 2 bits for the
-                  switch value. Switches that have changed are given priority,
-                  otherwise each switch value is sent in a round-robin. All
-                  switches are encoded for 3 position support. All analog
-                  channels are reduced to 10 bit resolution to free up space in
-                  the RC packet for switches. For all use cases besides absolute
-                  speed we recommend using hybrid switches over sequential or
-                  1-bit switches. The only &quot;downside&quot; is the reduced
-                  channel resolution, but that turns out to not be important
-                  because Betaflight only interprets channels as 10bit, so no
-                  resolution is actually lost.
-                </li>
-              </ol>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.ENABLE_TELEMETRY:
-          return (
-            <div>
-              <p>
-                Enable advanced telemetry support. This option must be enabled
-                on both <strong>TX</strong> and <strong>RX</strong>. The
-                following telemetry messages are supported:
-              </p>
-              <ul>
-                <li>GPS</li>
-                <li>BATTERY_SENSOR</li>
-                <li>ATTITUDE</li>
-                <li>DEVICE_INFO</li>
-                <li>FLIGHT_MODE</li>
-              </ul>
-              <p>
-                <strong>Note #1</strong>: Increase the telemetry rate with the
-                ExpressLRS lua script. Increase the rate until the sensor lost
-                warnings go away. It is normal to set it up to 1:16 with 200 Hz
-                refresh rate.
-              </p>
-              <p>
-                <strong>Note #2</strong>: It must be enabled together with{' '}
-                <strong>HYBRID_SWITCHES_8</strong>.
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#network-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -441,10 +142,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 ones.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -462,28 +160,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 (until it receives a power reset).
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#performance-options"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.LOCK_ON_50HZ:
-          return (
-            <div>
-              <p>
-                This locks the RX at 50Hz mode from the power-up. Only
-                recommended for long range, and partly redundant with
-                LOCK_ON_FIRST_CONNECTION.
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#performance-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -497,10 +174,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 song.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#other-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -511,10 +185,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
             <div>
               <p>This sets if the TX shall stay quiet on startup.</p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#other-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -525,10 +196,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
             <div>
               <p>Disable all beeps.</p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#other-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -583,49 +251,12 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 is great resource for discovering new melodies.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#other-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
             </div>
           );
-        case UserDefineKey.NO_SYNC_ON_ARM:
-          return (
-            <div>
-              <p>
-                Do not transmit sync packets while armed. If you are using a
-                different channel than the default you need to edit (or you may
-                not be able to gain sync safely - default is listed in
-                ARM_CHANNEL as AUX1 which is Channel 5). This is useful for
-                racing as there is less time & packets wasted on sending sync
-                packets. HOWEVER if you are doing serious long range, keep this
-                turned off because in the case of a sustained failsafe, link can
-                not be regained while armed.
-              </p>
-              <p>
-                <strong>
-                  This feature assumes that a low value of the arm switch is
-                  disarmed, and a high value is armed
-                </strong>
-                . If you have the arm switch reversed it will not work
-                correctly, and the link will not be established. For this reason
-                it may be best not to enable no sync on arm when you are first
-                setting up ExpressLRS as it can be a source of confusion.
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.R9M_UNLOCK_HIGHER_POWER:
         case UserDefineKey.UNLOCK_HIGHER_POWER:
           return (
             <div>
@@ -640,20 +271,14 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               </p>
               <p>
                 We published{' '}
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/hardware/fan-mod/"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/hardware/fan-mod/">
                   R9M Fan Mod Cover
                 </DocumentationLink>
                 , a custom 3d printed backplate with room for a fan and extra
                 cooling to allow for maximum power (1-2W depending on the mod).
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#output-power-limit"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#output-power-limit">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -669,10 +294,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 V2 or you use Deviation firmware turn this setting off.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/quick-start/firmware-options/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/quick-start/firmware-options/#other-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -687,10 +309,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 controllers.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#compatibility-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#compatibility-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -708,107 +327,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 software. ESP-based receivers only.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/quick-start/firmware-options/#output-inverting"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.USE_DYNAMIC_POWER:
-          return (
-            <div>
-              <p>
-                Dynamic power feature uses LQ-based power boost up to detect
-                quick drops in link quality and RSSI-based power adjustments
-                which are working slowly, suitable for a general long-range
-                flights.
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/dynamic-transmit-power"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.USE_500HZ:
-          return (
-            <div>
-              <p>
-                Enables 500Hz mode. It requires{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://www.open-tx.org/downloads"
-                >
-                  OpenTX 2.3.12 or Newer
-                </a>{' '}
-                or{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://github.com/EdgeTX/edgetx"
-                >
-                  EdgeTX
-                </a>
-                .
-              </p>
-              <p>
-                Check our{' '}
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/quick-start/transmitters/tx-prep/"
-                >
-                  radio setup page
-                </DocumentationLink>{' '}
-                and{' '}
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
-                >
-                  Wiki page for latest definition.
-                </DocumentationLink>
-                .
-              </p>
-            </div>
-          );
-        case UserDefineKey.USE_ESP8266_BACKPACK:
-          return (
-            <div>
-              <p>
-                This enables communication with the ESP Backpack for
-                over-the-air updates (DeviceTarget: FrSky_TX_R9M_via_WiFi) 🖥️
-                and debugging via WebSocket 🔍
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.USE_TX_BACKPACK:
-          return (
-            <div>
-              <p>
-                Enables code for talking to a connected backpack on the TX
-                module, and associated Lua params The device target should
-                enable this automatically for devices that come with this, but
-                can be added to any device.
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#other-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/quick-start/firmware-options/#output-inverting">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -829,33 +348,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 compatibility
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#compatibility-options"
-                >
-                  Check our Wiki page for latest definition.
-                </DocumentationLink>
-              </p>
-            </div>
-          );
-        case UserDefineKey.USE_UART2:
-          return (
-            <div>
-              <p>
-                This enables integration with Jye&apos;s{' '}
-                <a
-                  target="_blank"
-                  rel="noreferrer noreferrer"
-                  href="https://github.com/JyeSmith/FENIX-rx5808-pro-diversity"
-                >
-                  FENIX rx5805 pro-diversity module
-                </a>
-              </p>
-              <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/obsolete-defines/#obsolete-defines"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#compatibility-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -869,10 +362,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 hardware to connect to the home network automatically.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#network-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#network-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>
@@ -886,10 +376,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                 hardware to connect to the home network automatically.
               </p>
               <p>
-                <DocumentationLink
-                  firmwareVersion={firmwareVersionData}
-                  url="https://www.expresslrs.org/software/user-defines/#network-options"
-                >
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#network-options">
                   Check our Wiki page for latest definition.
                 </DocumentationLink>
               </p>

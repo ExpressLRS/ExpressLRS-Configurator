@@ -37,13 +37,8 @@ def pack(directory: str, dest_dir: str, build_number: str | None):
     # Read the tags and the existing build number from .dist-info/WHEEL
     existing_build_number = None
     wheel_file_path = os.path.join(directory, dist_info_dir, "WHEEL")
-    with open(wheel_file_path) as f:
-        tags = []
-        for line in f:
-            if line.startswith("Tag: "):
-                tags.append(line.split(" ")[1].rstrip())
-            elif line.startswith("Build: "):
-                existing_build_number = line.split(" ")[1].rstrip()
+    with open(wheel_file_path, "rb") as f:
+        tags, existing_build_number = read_tags(f.read())
 
         if not tags:
             raise WheelError(
@@ -58,28 +53,16 @@ def pack(directory: str, dest_dir: str, build_number: str | None):
             name_version += "-" + build_number
 
         if build_number != existing_build_number:
-            replacement = (
-                ("Build: %s\r\n" % build_number).encode("ascii")
-                if build_number
-                else b""
-            )
             with open(wheel_file_path, "rb+") as f:
                 wheel_file_content = f.read()
-                wheel_file_content, num_replaced = BUILD_NUM_RE.subn(
-                    replacement, wheel_file_content
-                )
-                if not num_replaced:
-                    wheel_file_content += replacement
+                wheel_file_content = set_build_number(wheel_file_content, build_number)
 
                 f.seek(0)
                 f.truncate()
                 f.write(wheel_file_content)
 
     # Reassemble the tags for the wheel file
-    impls = sorted({tag.split("-")[0] for tag in tags})
-    abivers = sorted({tag.split("-")[1] for tag in tags})
-    platforms = sorted({tag.split("-")[2] for tag in tags})
-    tagline = "-".join([".".join(impls), ".".join(abivers), ".".join(platforms)])
+    tagline = compute_tagline(tags)
 
     # Repack the wheel
     wheel_path = os.path.join(dest_dir, f"{name_version}-{tagline}.whl")
@@ -88,3 +71,54 @@ def pack(directory: str, dest_dir: str, build_number: str | None):
         wf.write_files(directory)
 
     print("OK")
+
+
+def read_tags(input_str: bytes) -> tuple[list[str], str | None]:
+    """Read tags from a string.
+
+    :param input_str: A string containing one or more tags, separated by spaces
+    :return: A list of tags and a list of build tags
+    """
+
+    tags = []
+    existing_build_number = None
+    for line in input_str.splitlines():
+        if line.startswith(b"Tag: "):
+            tags.append(line.split(b" ")[1].rstrip().decode("ascii"))
+        elif line.startswith(b"Build: "):
+            existing_build_number = line.split(b" ")[1].rstrip().decode("ascii")
+
+    return tags, existing_build_number
+
+
+def set_build_number(wheel_file_content: bytes, build_number: str | None) -> bytes:
+    """Compute a build tag and add/replace/remove as necessary.
+
+    :param wheel_file_content: The contents of .dist-info/WHEEL
+    :param build_number: The build tags present in .dist-info/WHEEL
+    :return: The (modified) contents of .dist-info/WHEEL
+    """
+    replacement = (
+        ("Build: %s\r\n" % build_number).encode("ascii") if build_number else b""
+    )
+
+    wheel_file_content, num_replaced = BUILD_NUM_RE.subn(
+        replacement, wheel_file_content
+    )
+
+    if not num_replaced:
+        wheel_file_content += replacement
+
+    return wheel_file_content
+
+
+def compute_tagline(tags: list[str]) -> str:
+    """Compute a tagline from a list of tags.
+
+    :param tags: A list of tags
+    :return: A tagline
+    """
+    impls = sorted({tag.split("-")[0] for tag in tags})
+    abivers = sorted({tag.split("-")[1] for tag in tags})
+    platforms = sorted({tag.split("-")[2] for tag in tags})
+    return "-".join([".".join(impls), ".".join(abivers), ".".join(platforms)])

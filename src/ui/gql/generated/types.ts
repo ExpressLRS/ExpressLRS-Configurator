@@ -109,8 +109,10 @@ export type Device = {
   readonly category: Scalars['String'];
   readonly deviceType: DeviceType;
   readonly id: Scalars['String'];
+  readonly luaName?: Maybe<Scalars['String']>;
   readonly name: Scalars['String'];
   readonly parent?: Maybe<Scalars['String']>;
+  readonly priorTargetName?: Maybe<Scalars['String']>;
   readonly targets: ReadonlyArray<Target>;
   readonly userDefines: ReadonlyArray<UserDefine>;
   readonly verifiedHardware: Scalars['Boolean'];
@@ -144,7 +146,6 @@ export enum FlashingMethod {
   DFU = 'DFU',
   EdgeTxPassthrough = 'EdgeTxPassthrough',
   Passthrough = 'Passthrough',
-  Radio = 'Radio',
   STLink = 'STLink',
   Stock_BL = 'Stock_BL',
   UART = 'UART',
@@ -386,27 +387,16 @@ export type UserDefineInput = {
 };
 
 export enum UserDefineKey {
-  ARM_CHANNEL = 'ARM_CHANNEL',
-  AUTO_WIFI_ON_BOOT = 'AUTO_WIFI_ON_BOOT',
   AUTO_WIFI_ON_INTERVAL = 'AUTO_WIFI_ON_INTERVAL',
   BINDING_PHRASE = 'BINDING_PHRASE',
-  BLE_HID_JOYSTICK = 'BLE_HID_JOYSTICK',
   DEVICE_NAME = 'DEVICE_NAME',
   DISABLE_ALL_BEEPS = 'DISABLE_ALL_BEEPS',
   DISABLE_STARTUP_BEEP = 'DISABLE_STARTUP_BEEP',
-  ENABLE_TELEMETRY = 'ENABLE_TELEMETRY',
-  FAST_SYNC = 'FAST_SYNC',
-  FEATURE_OPENTX_SYNC = 'FEATURE_OPENTX_SYNC',
-  FEATURE_OPENTX_SYNC_AUTOTUNE = 'FEATURE_OPENTX_SYNC_AUTOTUNE',
   HOME_WIFI_PASSWORD = 'HOME_WIFI_PASSWORD',
   HOME_WIFI_SSID = 'HOME_WIFI_SSID',
-  HYBRID_SWITCHES_8 = 'HYBRID_SWITCHES_8',
   JUST_BEEP_ONCE = 'JUST_BEEP_ONCE',
-  LOCK_ON_50HZ = 'LOCK_ON_50HZ',
   LOCK_ON_FIRST_CONNECTION = 'LOCK_ON_FIRST_CONNECTION',
   MY_STARTUP_MELODY = 'MY_STARTUP_MELODY',
-  NO_SYNC_ON_ARM = 'NO_SYNC_ON_ARM',
-  R9M_UNLOCK_HIGHER_POWER = 'R9M_UNLOCK_HIGHER_POWER',
   RCVR_INVERT_TX = 'RCVR_INVERT_TX',
   RCVR_UART_BAUD = 'RCVR_UART_BAUD',
   REGULATORY_DOMAIN_AU_433 = 'REGULATORY_DOMAIN_AU_433',
@@ -420,14 +410,7 @@ export enum UserDefineKey {
   TLM_REPORT_INTERVAL_MS = 'TLM_REPORT_INTERVAL_MS',
   UART_INVERTED = 'UART_INVERTED',
   UNLOCK_HIGHER_POWER = 'UNLOCK_HIGHER_POWER',
-  USE_500HZ = 'USE_500HZ',
-  USE_DIVERSITY = 'USE_DIVERSITY',
-  USE_DYNAMIC_POWER = 'USE_DYNAMIC_POWER',
-  USE_ESP8266_BACKPACK = 'USE_ESP8266_BACKPACK',
   USE_R9MM_R9MINI_SBUS = 'USE_R9MM_R9MINI_SBUS',
-  USE_TX_BACKPACK = 'USE_TX_BACKPACK',
-  USE_UART2 = 'USE_UART2',
-  WS2812_IS_GRB = 'WS2812_IS_GRB',
 }
 
 export enum UserDefineKind {
@@ -481,6 +464,8 @@ export type AvailableFirmwareTargetsQuery = {
     readonly parent?: string | null;
     readonly abbreviatedName?: string | null;
     readonly verifiedHardware: boolean;
+    readonly luaName?: string | null;
+    readonly priorTargetName?: string | null;
     readonly targets: ReadonlyArray<{
       readonly __typename?: 'Target';
       readonly id: string;
@@ -879,6 +864,8 @@ export const AvailableFirmwareTargetsDocument = gql`
       parent
       abbreviatedName
       verifiedHardware
+      luaName
+      priorTargetName
     }
   }
 `;

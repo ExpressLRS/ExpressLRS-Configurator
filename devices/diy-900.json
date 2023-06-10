@@ -1,6 +1,6 @@
 [
   {
-    "category": "DIY 900 MHz",
+    "category": "DIY devices",
     "name": "DIY 900 TX TTGO V1 SX127x",
     "targets": [
       {
@@ -18,14 +18,8 @@
       "REGULATORY_DOMAIN_FCC_915",
       "REGULATORY_DOMAIN_IN_866",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
       "UART_INVERTED",
-      "USE_DYNAMIC_POWER",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
@@ -35,7 +29,7 @@
     "aliases": []
   },
   {
-    "category": "DIY 900 MHz",
+    "category": "DIY devices",
     "name": "DIY 900 TX TTGO V2 SX127x",
     "targets": [
       {
@@ -53,13 +47,7 @@
       "REGULATORY_DOMAIN_FCC_915",
       "REGULATORY_DOMAIN_IN_866",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "USE_DYNAMIC_POWER",
       "UART_INVERTED",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
@@ -70,7 +58,7 @@
     "aliases": []
   },
   {
-    "category": "DIY 900 MHz",
+    "category": "DIY devices",
     "name": "DIY 900 TX ESP32 SX127x E19",
     "targets": [
       {
@@ -88,16 +76,8 @@
       "REGULATORY_DOMAIN_FCC_915",
       "REGULATORY_DOMAIN_IN_866",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
       "UART_INVERTED",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER",
-      "WS2812_IS_GRB",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
@@ -108,7 +88,7 @@
     "aliases": []
   },
   {
-    "category": "DIY 900 MHz",
+    "category": "DIY devices",
     "name": "DIY 900 TX ESP32 SX127x RFM95",
     "targets": [
       {
@@ -126,16 +106,8 @@
       "REGULATORY_DOMAIN_FCC_915",
       "REGULATORY_DOMAIN_IN_866",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
       "UART_INVERTED",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER",
-      "WS2812_IS_GRB",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
@@ -145,7 +117,7 @@
     "aliases": []
   },
   {
-    "category": "DIY 900 MHz",
+    "category": "DIY devices",
     "name": "DIY 900 RX ESP8285 SX127x",
     "targets": [
       {
@@ -167,11 +139,7 @@
       "REGULATORY_DOMAIN_FCC_915",
       "REGULATORY_DOMAIN_IN_866",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
-      "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
@@ -182,13 +150,13 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "GEPRC 900 MHz",
+        "category": "GEPRC",
         "name": "GEPRC Nano 900 RX",
         "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/geprc900/",
         "abbreviatedName": "GEPRC Nano 900RX"
       },
       {
-        "category": "EMAX 900 MHz",
+        "category": "EMAX",
         "name": "EMAX 900MHz RX",
         "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
         "abbreviatedName": "EMAX 900RX"
@@ -196,7 +164,7 @@
     ]
   },
   {
-    "category": "DIY 900 MHz",
+    "category": "DIY devices",
     "name": "DIY 900 RX PWMP",
     "targets": [
       {
@@ -214,11 +182,7 @@
       "REGULATORY_DOMAIN_FCC_915",
       "REGULATORY_DOMAIN_IN_866",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
-      "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
@@ -242,9 +206,6 @@
       "REGULATORY_DOMAIN_FCC_915",
       "REGULATORY_DOMAIN_IN_866",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
       "RCVR_UART_BAUD"
     ],
@@ -267,14 +228,8 @@
       "REGULATORY_DOMAIN_FCC_915",
       "REGULATORY_DOMAIN_IN_866",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "UART_INVERTED",
-      "USE_DYNAMIC_POWER"
+      "UART_INVERTED"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
     "deviceType": "ExpressLRS",

@@ -1,6 +1,6 @@
 [
   {
-    "category": "Matek 2.4 GHz",
+    "category": "Matek",
     "name": "Matek 2400 RX",
     "targets": [
       {
@@ -20,12 +20,7 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
-      "USE_500HZ",
-      "USE_DIVERSITY",
-      "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
@@ -37,7 +32,7 @@
     "aliases": []
   },
   {
-    "category": "Matek 2.4 GHz",
+    "category": "Matek",
     "name": "Matek 2400 RX PWM",
     "targets": [
       {
@@ -53,11 +48,7 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
-      "USE_500HZ",
-      "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
@@ -67,7 +58,7 @@
     "aliases": []
   },
   {
-    "category": "Matek 2.4 GHz",
+    "category": "Matek",
     "name": "Matek 2400 RX R24D",
     "targets": [
       {
@@ -87,15 +78,7 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
-      "USE_500HZ",
-      {
-        "key": "USE_DIVERSITY",
-        "enabled": true
-      },
-      "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
@@ -106,13 +89,13 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "RadioMaster 2.4 GHz",
+        "category": "RadioMaster",
         "name": "RadioMaster RP3 Diversity 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "RM RP3 2400RX"
       },
       {
-        "category": "Skystars 2.4 GHz",
+        "category": "Skystars",
         "name": "Skystars SS24D 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "Skystars SS24D",

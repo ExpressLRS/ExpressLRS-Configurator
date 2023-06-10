@@ -20,7 +20,6 @@ export default class MulticastDnsSimulatorService {
           true,
           true
         ),
-        UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
         UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
       ],
       version: '2.0.0 (5c4808)',
@@ -41,7 +40,6 @@ export default class MulticastDnsSimulatorService {
           true,
           true
         ),
-        UserDefine.Boolean(UserDefineKey.FEATURE_OPENTX_SYNC, true),
         UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
       ],
       version: '2.0.0 (5c4808)',

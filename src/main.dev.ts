@@ -27,7 +27,6 @@ import {
 } from './ipc';
 import Updater from './app/updater';
 import WinstonLoggerService from './api/src/logger/WinstonLogger';
-import { FirmwareParamsLoaderType } from './api/src/config';
 
 import packageJson from '../package.json';
 
@@ -62,21 +61,19 @@ logger.log('path', {
   PATH: process.env.PATH,
 });
 
-function isASCII(str: string) {
-  return /^[\x20-\x7F]*$/.test(str);
-}
-
 const isWindows = process.platform.startsWith('win');
 const isMacOS = process.platform.startsWith('darwin');
 let userDataDirectory = app.getPath('userData');
-const forceDirtyPath = false;
 
 if (isWindows) {
   const dirtyUserDataDirectory = app.isPackaged
-    ? path.join('c:', `.${packageJson.name}`)
-    : path.join('c:', `.${packageJson.name}-dev`);
+    ? path.join('c:', 'ProgramData', packageJson.name)
+    : path.join('c:', 'ProgramData', `${packageJson.name}-dev`);
   try {
-    if (!isASCII(userDataDirectory) || forceDirtyPath) {
+    const isASCII = (str: string) => {
+      return /^[\x20-\x7F]*$/.test(str);
+    };
+    if (!isASCII(userDataDirectory)) {
       mkdirp.sync(dirtyUserDataDirectory);
       userDataDirectory = dirtyUserDataDirectory;
       logger.log(
@@ -201,37 +198,22 @@ const createWindow = async () => {
   logger.log('starting server...');
   const firmwaresPath = path.join(userDataDirectory, 'firmwares', 'github');
   await mkdirp(firmwaresPath);
+  const firmwareCloudCachePath = path.join(
+    userDataDirectory,
+    'firmwares',
+    'cloud'
+  );
+  await mkdirp(firmwareCloudCachePath);
   const targetsStoragePath = path.join(
     userDataDirectory,
     'firmwares',
     'targets'
   );
-  let targetsLoaderType: FirmwareParamsLoaderType =
-    FirmwareParamsLoaderType.Git;
-  if (
-    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareParamsLoaderType.Git
-  ) {
-    targetsLoaderType = FirmwareParamsLoaderType.Git;
-  }
-  if (
-    process.env.FIRMWARE_TARGETS_LOADER_TYPE === FirmwareParamsLoaderType.Http
-  ) {
-    targetsLoaderType = FirmwareParamsLoaderType.Http;
-  }
-
   const userDefinesStoragePath = path.join(
     userDataDirectory,
     'firmwares',
     'userDefines'
   );
-  let userDefinesLoaderType: FirmwareParamsLoaderType =
-    FirmwareParamsLoaderType.Git;
-  if (process.env.USER_DEFINES_LOADER_TYPE === FirmwareParamsLoaderType.Git) {
-    userDefinesLoaderType = FirmwareParamsLoaderType.Git;
-  }
-  if (process.env.USER_DEFINES_LOADER_TYPE === FirmwareParamsLoaderType.Http) {
-    userDefinesLoaderType = FirmwareParamsLoaderType.Http;
-  }
 
   const dependenciesPath = app.isPackaged
     ? path.join(process.resourcesPath, '../dependencies')
@@ -340,15 +322,16 @@ const createWindow = async () => {
       multicastDnsSimulatorEnabled:
         process.env.MULTICAST_DNS_SIMULATOR_ENABLED === 'true',
       firmwaresPath,
+      cloudCacheServer: 'https://artifactory.expresslrs.org',
+      firmwareCloudCachePath,
       getPlatformioPath,
       platformioStateTempStoragePath,
       PATH,
       env: localApiServerEnv,
       devicesPath,
       targetsStoragePath,
-      targetsLoader: targetsLoaderType,
-      userDefinesLoader: userDefinesLoaderType,
       userDefinesStoragePath,
+      userDataPath: app.getPath('userData'),
     },
     logger,
     port
@@ -450,7 +433,7 @@ app
   });
 
 app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
+  // On macOS, it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow();

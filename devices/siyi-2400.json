@@ -1,6 +1,6 @@
 [
   {
-    "category": "SIYI 2.4 GHz",
+    "category": "SIYI",
     "name": "FM30 TX",
     "targets": [
       {
@@ -16,22 +16,15 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "USE_500HZ",
-      "UART_INVERTED",
-      "USE_DYNAMIC_POWER"
+      "UART_INVERTED"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/siyifm30/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
-    "category": "SIYI 2.4 GHz",
+    "category": "SIYI",
     "name": "FM30 RX MINI",
     "targets": [
       {
@@ -47,11 +40,7 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
-      "USE_500HZ",
-      "USE_DIVERSITY",
       "RCVR_UART_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/siyiFRmini/",
@@ -59,7 +48,7 @@
     "aliases": []
   },
   {
-    "category": "SIYI 2.4 GHz",
+    "category": "SIYI",
     "name": "FM30 RX MINI AS TX",
     "targets": [
       {
@@ -75,15 +64,8 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "USE_500HZ",
-      "UART_INVERTED",
-      "USE_DYNAMIC_POWER"
+      "UART_INVERTED"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/siyiFRmini/",
     "deviceType": "ExpressLRS",

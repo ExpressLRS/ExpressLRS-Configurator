@@ -78,24 +78,11 @@ export default class UserDefinesValidator {
     return results;
   }
 
-  validateArmChannel(data: UserDefine[]): Error[] {
-    const results: Error[] = [];
-
-    const option = data.find(({ key }) => key === UserDefineKey.ARM_CHANNEL);
-
-    if (option && option.enabled && option.value && option.value.length === 0) {
-      results.push(new Error('Arm channel selected, but not entered'));
-    }
-
-    return results;
-  }
-
   validate(data: UserDefine[]): Error[] {
     return [
       ...this.validateRegulatoryDomains(data),
       ...this.validateBindingPhrase(data),
       ...this.validateStartupMelody(data),
-      ...this.validateArmChannel(data),
     ];
   }
 }

@@ -1,6 +1,6 @@
 [
   {
-    "category": "BETAFPV 2.4 GHz",
+    "category": "BETAFPV",
     "name": "BETAFPV 2400 TX Nano",
     "targets": [
       {
@@ -16,27 +16,18 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "USE_500HZ",
       "UART_INVERTED",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER",
-      "WS2812_IS_GRB",
       "UNLOCK_HIGHER_POWER"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "HiYOUNGER 2.4 GHz",
+        "category": "HiYOUNGER",
         "name": "HiYOUNGER TX2G4 2400 TX",
         "wikiUrl": "",
         "abbreviatedName": "HiYOUNGER TX2G4",
@@ -45,7 +36,7 @@
     ]
   },
   {
-    "category": "BETAFPV 2.4 GHz",
+    "category": "BETAFPV",
     "name": "BETAFPV 2400 TX Micro",
     "targets": [
       {
@@ -61,20 +52,11 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "ARM_CHANNEL",
-      "FEATURE_OPENTX_SYNC",
-      "USE_500HZ",
       "UART_INVERTED",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER",
-      "WS2812_IS_GRB",
       "UNLOCK_HIGHER_POWER"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv2400/",
@@ -82,7 +64,7 @@
     "aliases": []
   },
   {
-    "category": "BETAFPV 2.4 GHz",
+    "category": "BETAFPV",
     "name": "BETAFPV 2400 TX Micro 1000mW",
     "targets": [
       {
@@ -99,21 +81,17 @@
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "FEATURE_OPENTX_SYNC",
       "UART_INVERTED",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
-      "HOME_WIFI_PASSWORD",
-      "BLE_HID_JOYSTICK",
-      "USE_DYNAMIC_POWER"
+      "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv2400/",
     "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
-    "category": "BETAFPV 2.4 GHz",
+    "category": "BETAFPV",
     "name": "BETAFPV LiteRadio 3 Pro",
     "targets": [
       {
@@ -134,8 +112,6 @@
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
       "TLM_REPORT_INTERVAL_MS",
-      "NO_SYNC_ON_ARM",
-      "FEATURE_OPENTX_SYNC",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD"
@@ -145,7 +121,7 @@
     "aliases": []
   },
   {
-    "category": "BETAFPV 2.4 GHz",
+    "category": "BETAFPV",
     "name": "BETAFPV Nano 2400 RX",
     "targets": [
       {
@@ -177,12 +153,7 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
-      "USE_500HZ",
-      "USE_DIVERSITY",
-      "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",
@@ -193,21 +164,21 @@
     "deviceType": "ExpressLRS",
     "aliases": [
       {
-        "category": "HiYOUNGER 2.4 GHz",
+        "category": "HiYOUNGER",
         "name": "HiYOUNGER RX24T 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "HiYOUNGER RX24T",
         "verifiedHardware": false
       },
       {
-        "category": "JHEMCU 2.4 GHz",
+        "category": "JHEMCU",
         "name": "JHEMCU RX24T 2400 RX",
         "wikiUrl": "",
         "abbreviatedName": "JHEMCU RX24T",
         "verifiedHardware": false
       },
       {
-        "category": "EMAX 2.4 GHz",
+        "category": "EMAX",
         "name": "EMAX 2.4GHz PA RX",
         "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
         "abbreviatedName": "EMAX 2400RX"
@@ -215,7 +186,7 @@
     ]
   },
   {
-    "category": "BETAFPV 2.4 GHz",
+    "category": "BETAFPV",
     "name": "BETAFPV SuperD 2.4GHz RX",
     "targets": [
       {
@@ -235,11 +206,7 @@
       "REGULATORY_DOMAIN_ISM_2400",
       "REGULATORY_DOMAIN_EU_CE_2400",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
       "LOCK_ON_FIRST_CONNECTION",
-      "USE_500HZ",
-      "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",

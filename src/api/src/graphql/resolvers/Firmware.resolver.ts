@@ -11,31 +11,29 @@ import { Service } from 'typedi';
 import UserDefine from '../../models/UserDefine';
 import BuildFlashFirmwareInput from '../inputs/BuildFlashFirmwareInput';
 import BuildFlashFirmwareResult from '../objects/BuildFlashFirmwareResult';
-import FirmwareService, {
-  BuildLogUpdatePayload,
-  BuildProgressNotificationPayload,
-} from '../../services/Firmware';
 import BuildProgressNotification from '../../models/BuildProgressNotification';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildLogUpdate from '../../models/BuildLogUpdate';
 import ClearPlatformioCoreDirResult from '../objects/ClearPlatformioCoreDirResult';
 import TargetDeviceOptionsArgs from '../args/TargetDeviceOptions';
-import UserDefinesBuilder from '../../services/UserDefinesBuilder';
 import ClearFirmwareFilesResult from '../objects/ClearFirmwareFilesResult';
-import TargetsLoader from '../../services/TargetsLoader';
 import TargetArgs from '../args/Target';
 import Device from '../../models/Device';
 import GitRepository from '../inputs/GitRepositoryInput';
+import FlashingStrategyLocatorService from '../../services/FlashingStrategyLocator';
+import { BuildProgressNotificationPayload } from '../../services/FlashingStrategyLocator/BuildProgressNotificationPayload';
+import { BuildLogUpdatePayload } from '../../services/FlashingStrategyLocator/BuildLogUpdatePayload';
+import Platformio from '../../library/Platformio';
 import BuildUserDefinesTxtInput from '../inputs/BuildUserDefinesTxtInput';
 import BuildUserDefinesTxtResult from '../objects/BuilduserDefinesTxtResult';
+import UserDefinesTxtFactory from '../../factories/UserDefinesTxtFactory';
 
 @Service()
 @Resolver()
 export default class FirmwareResolver {
   constructor(
-    private firmwareService: FirmwareService,
-    private userDefinesBuilder: UserDefinesBuilder,
-    private targetsLoaderService: TargetsLoader
+    private flashingStrategyLocatorService: FlashingStrategyLocatorService,
+    private platformio: Platformio
   ) {}
 
   @Query(() => [Device])
@@ -43,7 +41,11 @@ export default class FirmwareResolver {
     @Args() args: TargetArgs,
     @Arg('gitRepository') gitRepository: GitRepository
   ): Promise<Device[]> {
-    return this.targetsLoaderService.loadTargetsList(args, gitRepository);
+    const strategy = await this.flashingStrategyLocatorService.locate(
+      args,
+      gitRepository
+    );
+    return strategy.availableFirmwareTargets(args, gitRepository);
   }
 
   @Query(() => [UserDefine])
@@ -51,7 +53,11 @@ export default class FirmwareResolver {
     @Args() args: TargetDeviceOptionsArgs,
     @Arg('gitRepository') gitRepository: GitRepository
   ): Promise<UserDefine[]> {
-    return this.userDefinesBuilder.build(args, gitRepository);
+    const strategy = await this.flashingStrategyLocatorService.locate(
+      args,
+      gitRepository
+    );
+    return strategy.targetDeviceOptions(args, gitRepository);
   }
 
   @Mutation(() => BuildFlashFirmwareResult)
@@ -59,27 +65,25 @@ export default class FirmwareResolver {
     @Arg('input') input: BuildFlashFirmwareInput,
     @Arg('gitRepository') gitRepository: GitRepository
   ): Promise<BuildFlashFirmwareResult> {
-    return this.firmwareService.buildFlashFirmware(
-      input,
-      gitRepository.url,
-      gitRepository.srcFolder
+    const strategy = await this.flashingStrategyLocatorService.locate(
+      input.firmware,
+      gitRepository
     );
+    return strategy.buildFlashFirmware(input, gitRepository);
   }
 
   @Mutation(() => BuildUserDefinesTxtResult)
   async buildUserDefinesTxt(
     @Arg('input') input: BuildUserDefinesTxtInput
   ): Promise<BuildUserDefinesTxtResult> {
-    const userDefinesTxt = await this.firmwareService.buildUserDefinesTxt(
-      input.userDefines
-    );
+    const userDefinesTxt = new UserDefinesTxtFactory().build(input.userDefines);
     return new BuildUserDefinesTxtResult(userDefinesTxt);
   }
 
   @Mutation(() => ClearPlatformioCoreDirResult)
   async clearPlatformioCoreDir(): Promise<ClearPlatformioCoreDirResult> {
     try {
-      await this.firmwareService.clearPlatformioCoreDir();
+      await this.platformio.clearPlatformioCoreDir();
       return new ClearPlatformioCoreDirResult(true);
     } catch (e) {
       return new ClearPlatformioCoreDirResult(
@@ -92,7 +96,7 @@ export default class FirmwareResolver {
   @Mutation(() => ClearFirmwareFilesResult)
   async clearFirmwareFiles(): Promise<ClearFirmwareFilesResult> {
     try {
-      await this.firmwareService.clearFirmwareFiles();
+      await this.flashingStrategyLocatorService.clearFirmwareFiles();
       return new ClearFirmwareFilesResult(true);
     } catch (e) {
       return new ClearFirmwareFilesResult(

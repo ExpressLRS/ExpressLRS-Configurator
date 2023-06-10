@@ -2,10 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Box, Tooltip } from '@mui/material';
 import QuestionIcon from '@mui/icons-material/Help';
 import { SxProps, Theme } from '@mui/system';
-import {
-  FirmwareVersionDataInput,
-  FlashingMethod,
-} from '../../gql/generated/types';
+import { FlashingMethod } from '../../gql/generated/types';
 import DocumentationLink from '../DocumentationLink';
 
 const styles: Record<string, SxProps<Theme>> = {
@@ -22,12 +19,11 @@ const styles: Record<string, SxProps<Theme>> = {
 interface FlashingMethodDescriptionProps {
   flashingMethod: FlashingMethod;
   deviceWikiUrl: string | null;
-  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 const FlashingMethodDescription: FunctionComponent<
   FlashingMethodDescriptionProps
-> = ({ flashingMethod, deviceWikiUrl, firmwareVersionData }) => {
+> = ({ flashingMethod, deviceWikiUrl }) => {
   const wikiUrl = (deviceWikiUrl ?? '').length > 0 ? deviceWikiUrl : null;
   const toText = (key: FlashingMethod) => {
     switch (key) {
@@ -52,7 +48,6 @@ const FlashingMethodDescription: FunctionComponent<
             </ol>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/software/updating/betaflight-passthrough/'
@@ -61,28 +56,6 @@ const FlashingMethodDescription: FunctionComponent<
                 Check our Wiki page for latest definition.
               </DocumentationLink>
             </p>
-          </div>
-        );
-      case FlashingMethod.Radio:
-        return (
-          <div>
-            <p>
-              This method allows you to build the firmware which can then be
-              copied to your radio and flashed to the transmitter using
-              EdgeTX/OpenTX
-            </p>
-            <ol>
-              <li>Run Build</li>
-              <li>
-                Put the firmware on your radio&apos;s SD Card (recommended
-                location is inside the /FIRMWARE folder)
-              </li>
-              <li>
-                On your radio, navigate to where the firmware file was placed
-                (/FIRMWARE), select the firmware file, click-hold the Enter
-                button and select &quot;Flash External ELRS&quot;
-              </li>
-            </ol>
           </div>
         );
       case FlashingMethod.DFU:
@@ -94,7 +67,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/quick-start/getting-started/'
@@ -115,7 +87,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/quick-start/getting-started/'
@@ -136,7 +107,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/quick-start/getting-started/'
@@ -157,7 +127,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/quick-start/getting-started/'
@@ -178,7 +147,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/software/updating/wifi-updating/'
@@ -200,7 +168,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/quick-start/getting-started/'
@@ -221,7 +188,6 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
             <p>
               <DocumentationLink
-                firmwareVersion={firmwareVersionData}
                 url={
                   wikiUrl ??
                   'https://www.expresslrs.org/quick-start/getting-started/'

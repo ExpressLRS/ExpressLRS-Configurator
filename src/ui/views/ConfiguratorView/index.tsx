@@ -414,7 +414,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   const isTX = useMemo(() => {
     if (deviceTarget) {
-      return deviceTarget.name?.indexOf('_TX_') > -1;
+      return deviceTarget.name?.toLocaleLowerCase().indexOf('tx_') > -1;
     }
     return false;
   }, [deviceTarget]);
@@ -638,7 +638,15 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
         // try to find the device by the deviceName
         deviceMatches = deviceTargets?.filter((item) => {
-          return getAbbreviatedDeviceName(item).toUpperCase() === dnsDeviceName;
+          if (getAbbreviatedDeviceName(item).toUpperCase() === dnsDeviceName) {
+            return true;
+          }
+
+          if (item.luaName?.toUpperCase() === dnsDeviceName) {
+            return true;
+          }
+
+          return false;
         });
 
         // if no matches found by deviceName, then use the target
@@ -649,13 +657,16 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           deviceMatches = deviceTargets?.filter((item) => {
             // only match on a device that doesn't have a parent, which means it
             // is not an alias of another device
-            return (
-              !item.parent &&
-              item.targets.find((target) => {
+            if (!item.parent) {
+              if (dnsDeviceTarget === item.priorTargetName) {
+                return true;
+              }
+              return item.targets.find((target) => {
                 const baseTargetName = target.name.split('_via_')[0];
                 return baseTargetName.toUpperCase() === dnsDeviceTarget;
-              })
-            );
+              });
+            }
+            return false;
           });
         }
 
@@ -788,12 +799,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <DeviceTargetForm
                   currentTarget={deviceTarget}
                   onChange={onDeviceTarget}
-                  firmwareVersionData={firmwareVersionData}
                   deviceOptions={deviceTargets}
                 />
               )}
               <Loader loading={loadingTargets} />
-              {luaDownloadButton()}
+              {!loadingTargets && luaDownloadButton()}
               {hasLuaScript && (
                 <ShowAlerts
                   severity="error"
@@ -839,7 +849,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <DeviceOptionsForm
                   target={deviceTarget?.name ?? null}
                   deviceOptions={deviceOptionsFormData}
-                  firmwareVersionData={firmwareVersionData}
                   onChange={onUserDefines}
                 />
               )}
@@ -892,15 +901,24 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     onChange={onWifiDevice}
                   />
                 )}
-                <Button
-                  sx={styles.button}
-                  size="large"
-                  variant="contained"
-                  onClick={onBuild}
-                >
-                  Build
-                </Button>
-                {deviceTarget?.flashingMethod !== FlashingMethod.Radio && (
+                {deviceTarget?.flashingMethod !== FlashingMethod.UART &&
+                  deviceTarget?.flashingMethod !== FlashingMethod.Passthrough &&
+                  deviceTarget?.flashingMethod !==
+                    FlashingMethod.EdgeTxPassthrough &&
+                  deviceTarget?.flashingMethod !== FlashingMethod.DFU &&
+                  deviceTarget?.flashingMethod !== FlashingMethod.STLink &&
+                  deviceTarget?.flashingMethod !==
+                    FlashingMethod.BetaflightPassthrough && (
+                    <Button
+                      sx={styles.button}
+                      size="large"
+                      variant="contained"
+                      onClick={onBuild}
+                    >
+                      Build
+                    </Button>
+                  )}
+                {deviceTarget?.flashingMethod !== FlashingMethod.Stock_BL && (
                   <SplitButton
                     sx={styles.button}
                     size="large"
@@ -1072,9 +1090,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   currentJobType === BuildJobType.Build && (
                     <Alert sx={styles.buildNotification} severity="info">
                       <AlertTitle>Build notice</AlertTitle>
-                      {deviceTarget?.flashingMethod !== FlashingMethod.Radio
-                        ? 'Firmware binary file was opened in the file explorer'
-                        : "Firmware binary file was opened in the file explorer, copy the firmware file to your radios's SD card and flash it to the transmitter using EdgeTX/OpenTX"}
+                      Firmware binary file was opened in the file explorer
                     </Alert>
                   )}
               </CardContent>

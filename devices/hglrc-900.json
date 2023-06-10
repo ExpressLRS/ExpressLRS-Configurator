@@ -1,6 +1,6 @@
 [
   {
-    "category": "HGLRC 900 MHz",
+    "category": "HGLRC",
     "name": "HGLRC Hermes 900 RX",
     "targets": [
       {
@@ -22,11 +22,7 @@
       "REGULATORY_DOMAIN_FCC_915",
       "REGULATORY_DOMAIN_IN_866",
       "BINDING_PHRASE",
-      "HYBRID_SWITCHES_8",
-      "ENABLE_TELEMETRY",
-      "ARM_CHANNEL",
       "LOCK_ON_FIRST_CONNECTION",
-      "AUTO_WIFI_ON_BOOT",
       "AUTO_WIFI_ON_INTERVAL",
       "HOME_WIFI_SSID",
       "HOME_WIFI_PASSWORD",

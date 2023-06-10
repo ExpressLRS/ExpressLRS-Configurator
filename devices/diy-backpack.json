@@ -24,7 +24,8 @@
       {
         "flashingMethod": "Passthrough",
         "name": "DUPLETX_TX_Backpack_via_PASSTHRU"
-      },{
+      },
+      {
         "flashingMethod": "UART",
         "name": "DUPLETX_TX_Backpack_via_UART"
       },

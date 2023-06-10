@@ -76,4 +76,13 @@ export default class OctopusGitHubClient implements IGitHubClient {
       };
     });
   }
+
+  async getRelease(owner: string, repository: string, tag: string) {
+    const response = await this.client.repos.getReleaseByTag({
+      owner,
+      repo: repository,
+      tag,
+    });
+    return response.data;
+  }
 }

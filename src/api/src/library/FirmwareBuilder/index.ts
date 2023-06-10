@@ -4,6 +4,7 @@ import Platformio from '../Platformio';
 import { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 import UserDefineKey from './Enum/UserDefineKey';
 import UploadType from '../Platformio/Enum/UploadType';
+import { LoggerService } from '../../logger';
 
 interface UserDefinesCompatibilityResult {
   compatible: boolean;
@@ -11,7 +12,7 @@ interface UserDefinesCompatibilityResult {
 }
 
 export default class FirmwareBuilder {
-  constructor(private platformio: Platformio) {}
+  constructor(private platformio: Platformio, private logger: LoggerService) {}
 
   async checkDefaultUserDefinesCompatibilityAtPath(
     firmwarePath: string,
@@ -48,13 +49,15 @@ export default class FirmwareBuilder {
 
   getFirmwareBinFiles(target: string, firmwarePath: string): string[] {
     const firmwareBuildPath = this.getFirmwareBuildPath(target, firmwarePath);
-    const binaryExtensions = ['.elrs', '.bin'];
+    const binaryExtensions = ['.bin.gz', '.elrs', '.bin'];
 
     const firmwareBinFiles = fs
       .readdirSync(firmwareBuildPath)
-      .filter((filename) => binaryExtensions.includes(path.extname(filename)));
+      .filter((filename: string) =>
+        binaryExtensions.includes(path.extname(filename))
+      );
 
-    return firmwareBinFiles.map((filename) =>
+    return firmwareBinFiles.map((filename: string) =>
       path.join(firmwareBuildPath, filename)
     );
   }
@@ -62,7 +65,12 @@ export default class FirmwareBuilder {
   getFirmwareBinPath(target: string, firmwarePath: string): string {
     const firmwareBuildPath = this.getFirmwareBuildPath(target, firmwarePath);
     const firmwareBinFiles = this.getFirmwareBinFiles(target, firmwarePath);
-    const searchValues = ['firmware.elrs', 'backpack.bin', 'firmware.bin'];
+    const searchValues = [
+      'firmware.elrs',
+      'firmware.bin.gz',
+      'backpack.bin',
+      'firmware.bin',
+    ];
 
     const matchedBinFile = firmwareBinFiles.find((firmwareBinPath) =>
       searchValues.find(
@@ -89,7 +97,7 @@ export default class FirmwareBuilder {
       // eslint-disable-next-line no-restricted-syntax
       for (const location of paths) {
         if (fs.existsSync(location)) {
-          this.logger?.log('removing stale bin', {
+          this.logger.log('removing stale bin', {
             location,
           });
           fs.unlinkSync(location);

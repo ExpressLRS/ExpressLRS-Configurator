@@ -15,7 +15,7 @@ if (!$pythonVersion) {
 }
 
 if (!$destination) {
-    $destination = '.\'
+    $destination = '.\python\'
 }
 
 
@@ -31,7 +31,7 @@ $package = "$($destination)embedpython.zip"
 Invoke-WebRequest -Uri $source -OutFile $package
 Expand-Archive -Path $package -DestinationPath $destination
 
-
+<#
 "Writing $($pythonVersion)._pth"
 
 "Lib/site-packages
@@ -41,7 +41,10 @@ Expand-Archive -Path $package -DestinationPath $destination
 # Uncomment to run site.main() automatically
 import site
 " | Out-File -FilePath "$($destination)$($pythonVersion)._pth" -encoding ASCII
+#>
 
+"Removing *._pth files because they put python into isolated mode, which doesn't allow a script to import other scripts in the same directory"
+get-childitem "$($destination)" | Where-Object {$_.Name -match "\._pth"} | Remove-Item
 
 "Creating DLLs dir"
 mkdir "$($destination)DLLs"
@@ -58,6 +61,10 @@ Invoke-WebRequest -OutFile "$($destination)get-pip.py" "https://bootstrap.pypa.i
 "Installing pyserial"
 & "$($destination)python.exe" -m pip install pyserial
 
+<# Do not install esptool, the expresslrs firmware already bundles it
+"Installing esptool"
+& "$($destination)python.exe" -m pip install esptool
+#>
 
 "Cleaning up"
 Remove-Item -Path "$($package)" -Confirm:$false -Force

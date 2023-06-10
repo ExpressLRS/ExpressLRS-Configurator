@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
 import {
-  FirmwareVersionDataInput,
   UserDefine,
   UserDefineKey,
   UserDefineKind,
@@ -35,11 +34,10 @@ const styles: Record<string, SxProps<Theme>> = {
 interface UserDefinesListProps {
   options: UserDefine[];
   onChange: (data: UserDefine) => void;
-  firmwareVersionData: FirmwareVersionDataInput | null;
 }
 
 const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
-  const { options, onChange, firmwareVersionData } = props;
+  const { options, onChange } = props;
   const onChecked = (data: UserDefineKey) => {
     const opt = options.find(({ key }) => key === data);
     if (opt !== undefined) {
@@ -82,8 +80,6 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
 
   const inputLabel = (key: UserDefineKey): string => {
     switch (key) {
-      case UserDefineKey.ARM_CHANNEL:
-        return 'Arm channel';
       case UserDefineKey.BINDING_PHRASE:
         return 'Custom binding phrase';
       case UserDefineKey.MY_STARTUP_MELODY:
@@ -114,10 +110,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
               </ListItemIcon>
               <ListItemText>{item.key}</ListItemText>
               <ListItemSecondaryAction>
-                <UserDefineDescription
-                  userDefine={item.key}
-                  firmwareVersionData={firmwareVersionData}
-                />
+                <UserDefineDescription userDefine={item.key} />
               </ListItemSecondaryAction>
             </ListItem>
             {item.type === UserDefineKind.Text && item.enabled && (

@@ -28,7 +28,7 @@ export default class UserDefinesBuilder {
     private deviceService: DeviceService
   ) {}
 
-  async build(
+  async loadForDevice(
     input: UserDefineFilters,
     gitRepository: GitRepository
   ): Promise<UserDefine[]> {

@@ -33,6 +33,8 @@ export interface IFirmwareDownloader {
     srcFolder: string,
     commit: string
   ): Promise<FirmwareResult>;
+
+  currentCommitHash(repository: string): Promise<string>;
 }
 
 export const findGitExecutable = async (envPath: string): Promise<string> => {
@@ -157,6 +159,12 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     }
   }
 
+  async currentCommitHash(repository: string): Promise<string> {
+    const directory = this.getRepoDirectory(repository);
+    const git = this.getSimpleGit(directory);
+    return git.revparse('HEAD');
+  }
+
   async checkoutTag(
     repository: string,
     srcFolder: string,
@@ -165,6 +173,12 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     const directory = this.getRepoDirectory(repository);
     await this.syncRepo(repository, srcFolder);
     const git = this.getSimpleGit(directory);
+    this.logger.log('check out tag', {
+      repository,
+      directory,
+      srcFolder,
+      tagName,
+    });
     await git.checkout(tagName);
     return {
       path: this.getSourceDirectory(directory, srcFolder),
@@ -179,6 +193,12 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     const directory = this.getRepoDirectory(repository);
     await this.syncRepo(repository, srcFolder);
     const git = this.getSimpleGit(directory);
+    this.logger.log('check out branch', {
+      repository,
+      directory,
+      srcFolder,
+      branch,
+    });
     await git.checkout(`origin/${branch}`);
     return {
       path: this.getSourceDirectory(directory, srcFolder),
@@ -193,6 +213,12 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     const directory = this.getRepoDirectory(repository);
     await this.syncRepo(repository, srcFolder);
     const git = this.getSimpleGit(directory);
+    this.logger.log('check out commit', {
+      repository,
+      directory,
+      srcFolder,
+      commit,
+    });
     await git.checkout(commit);
     return {
       path: this.getSourceDirectory(directory, srcFolder),

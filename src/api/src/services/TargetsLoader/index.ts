@@ -13,4 +13,6 @@ export default abstract class TargetsLoader {
     args: TargetArgs,
     gitRepository: GitRepository
   ): Promise<Device[]>;
+
+  abstract clearCache(): Promise<void>;
 }
