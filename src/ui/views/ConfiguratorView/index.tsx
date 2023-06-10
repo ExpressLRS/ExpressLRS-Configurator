@@ -901,14 +901,23 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     onChange={onWifiDevice}
                   />
                 )}
-                <Button
-                  sx={styles.button}
-                  size="large"
-                  variant="contained"
-                  onClick={onBuild}
-                >
-                  Build
-                </Button>
+                {deviceTarget?.flashingMethod !== FlashingMethod.UART &&
+                  deviceTarget?.flashingMethod !== FlashingMethod.Passthrough &&
+                  deviceTarget?.flashingMethod !==
+                    FlashingMethod.EdgeTxPassthrough &&
+                  deviceTarget?.flashingMethod !== FlashingMethod.DFU &&
+                  deviceTarget?.flashingMethod !== FlashingMethod.STLink &&
+                  deviceTarget?.flashingMethod !==
+                    FlashingMethod.BetaflightPassthrough && (
+                    <Button
+                      sx={styles.button}
+                      size="large"
+                      variant="contained"
+                      onClick={onBuild}
+                    >
+                      Build
+                    </Button>
+                  )}
                 {deviceTarget?.flashingMethod !== FlashingMethod.Stock_BL && (
                   <SplitButton
                     sx={styles.button}
