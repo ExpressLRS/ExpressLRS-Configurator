@@ -59,7 +59,7 @@ export default class BinaryConfigurator {
     if (uploadMethod === 'stock') {
       flags.push(['--flash', 'stock']);
       flags.push(['--out', outputDirectory]);
-    } else if (params.type === BuildJobType.Build && outputDirectory !== '') {
+    } else if (params.type === BuildJobType.Build) {
       flags.push(['--flash', 'dir']);
       flags.push(['--out', outputDirectory]);
     } else if (

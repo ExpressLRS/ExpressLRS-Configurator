@@ -478,7 +478,8 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
       let sourceFirmwareBinPath = '';
       let firmwareArtifactsDirPath = '';
-      let outputDirectory = '';
+      const workingDirectory = await this.createWorkingDirectory(params.target);
+      const outputDirectory = await this.createWorkingDirectory(params.target);
       let firmwareBinFile = '';
       let hardwareDescriptionsPath = firmwareSourcePath;
       let flasherPath = path.join(
@@ -486,13 +487,6 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         'python',
         'binary_configurator.py'
       );
-
-      if (
-        params.type === BuildJobType.Build ||
-        params.target.endsWith('.stock')
-      ) {
-        outputDirectory = await this.createWorkingDirectory(params.target);
-      }
 
       if (this.isRequestCompatibleWithCache(params)) {
         const currentCommitHash = await this.getCurrentSourceCommit(
@@ -535,6 +529,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         }
       }
 
+      // we were not able to find cloud binaries, so we will build them on the spot
       if (hardwareDescriptionsPath === firmwareSourcePath) {
         const target = this.getCompileTarget(config);
         sourceFirmwareBinPath = await this.compileBinary(
@@ -547,12 +542,11 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         // In some cases we need to copy multiple artifacts, for example hdzero goggles contains
         // boot_app0.bin, bootloader.bin, firmware.bin, partitions.bin files
         firmwareArtifactsDirPath = path.dirname(sourceFirmwareBinPath);
-
         await this.copyFirmwareArtifacts(
           firmwareArtifactsDirPath,
-          outputDirectory
+          workingDirectory
         );
-        firmwareBinFile = path.join(outputDirectory, 'firmware.bin');
+        firmwareBinFile = path.join(workingDirectory, 'firmware.bin');
       }
       this.logger.log('firmware binaries path', {
         firmwareBinaryPath: sourceFirmwareBinPath,
