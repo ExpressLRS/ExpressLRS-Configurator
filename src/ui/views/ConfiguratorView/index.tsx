@@ -893,9 +893,17 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     wifiDevice={wifiDevice}
                     wifiDevices={Array.from(networkDevices.values()).filter(
                       (item) => {
-                        return deviceTarget?.name
-                          ?.toUpperCase()
-                          .startsWith(item.target.toUpperCase());
+                        return (
+                          deviceTarget?.name
+                            ?.toUpperCase()
+                            .startsWith(item.target.toUpperCase()) ||
+                          device?.luaName?.toUpperCase() ===
+                            item.deviceName.toUpperCase() ||
+                          (device?.priorTargetName &&
+                            item.target
+                              .toUpperCase()
+                              .startsWith(device.priorTargetName.toUpperCase()))
+                        );
                       }
                     )}
                     onChange={onWifiDevice}
