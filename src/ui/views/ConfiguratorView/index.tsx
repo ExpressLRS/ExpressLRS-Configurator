@@ -13,6 +13,7 @@ import {
   Button,
   Card,
   CardContent,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
@@ -20,7 +21,12 @@ import {
   DialogTitle,
   Divider,
   IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ipcRenderer } from 'electron';
@@ -423,6 +429,26 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     return deviceType === DeviceType.ExpressLRS && isTX;
   }, [deviceType, isTX]);
 
+  const eraseSupported = useMemo(() => {
+    if (!deviceTarget || !device) {
+      return false;
+    }
+    if (deviceTarget.flashingMethod === FlashingMethod.UART) {
+      return true;
+    }
+    if (
+      deviceTarget.flashingMethod === FlashingMethod.BetaflightPassthrough &&
+      device.platform === 'esp8285'
+    ) {
+      return true;
+    }
+    if (deviceTarget?.flashingMethod === FlashingMethod.EdgeTxPassthrough) {
+      return true;
+    }
+
+    return false;
+  }, [deviceTarget, device]);
+
   useEffect(() => {
     if (firmwareVersionData && isTX && hasLuaScript) {
       fetchLuaScript({
@@ -465,6 +491,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const onWifiDevice = useCallback((newWifiDevice: string | null) => {
     setWifiDevice(newWifiDevice);
   }, []);
+
+  const [erase, setErase] = useState<boolean>(false);
+  const [forceFlash, setForceFlash] = useState<boolean>(false);
 
   const [serialPortRequired, setSerialPortRequired] = useState<boolean>(false);
   const [wifiDeviceRequired, setWifiDeviceRequired] = useState<boolean>(false);
@@ -591,6 +620,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       userDefinesMode: deviceOptionsFormData.userDefinesMode,
       userDefines,
       serialDevice: uploadPort,
+      erase,
     };
     buildFlashFirmwareMutation({
       variables: {
@@ -618,7 +648,14 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   }, [buildInProgress, response]);
 
   const onBuild = () => sendJob(BuildJobType.Build);
-  const onBuildAndFlash = () => sendJob(BuildJobType.BuildAndFlash);
+  const onBuildAndFlash = () => {
+    if (forceFlash) {
+      sendJob(BuildJobType.ForceFlash);
+    } else {
+      sendJob(BuildJobType.BuildAndFlash);
+    }
+  };
+
   const onForceFlash = () => sendJob(BuildJobType.ForceFlash);
 
   const deviceTargetRef = useRef<HTMLDivElement | null>(null);
@@ -909,6 +946,49 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     onChange={onWifiDevice}
                   />
                 )}
+                <Typography variant="h6" sx={styles.categoryTitle}>
+                  Flashing Options
+                </Typography>
+                <List>
+                  {eraseSupported && (
+                    <ListItem
+                      dense
+                      selected={erase}
+                      button
+                      onClick={() => {
+                        setErase(!erase);
+                      }}
+                    >
+                      <ListItemIcon sx={styles.icon}>
+                        <Checkbox
+                          edge="start"
+                          checked={erase}
+                          tabIndex={-1}
+                          disableRipple
+                        />
+                      </ListItemIcon>
+                      <ListItemText>Erase Before Flash</ListItemText>
+                    </ListItem>
+                  )}
+                  <ListItem
+                    dense
+                    selected={forceFlash}
+                    button
+                    onClick={() => {
+                      setForceFlash(!forceFlash);
+                    }}
+                  >
+                    <ListItemIcon sx={styles.icon}>
+                      <Checkbox
+                        edge="start"
+                        checked={forceFlash}
+                        tabIndex={-1}
+                        disableRipple
+                      />
+                    </ListItemIcon>
+                    <ListItemText>Force Flash</ListItemText>
+                  </ListItem>
+                </List>
                 {deviceTarget?.flashingMethod !== FlashingMethod.UART &&
                   deviceTarget?.flashingMethod !== FlashingMethod.Passthrough &&
                   deviceTarget?.flashingMethod !==
@@ -927,28 +1007,14 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     </Button>
                   )}
                 {deviceTarget?.flashingMethod !== FlashingMethod.Stock_BL && (
-                  <SplitButton
+                  <Button
                     sx={styles.button}
                     size="large"
                     variant="contained"
-                    options={[
-                      {
-                        label: 'Build & Flash',
-                        value: BuildJobType.BuildAndFlash,
-                      },
-                      {
-                        label: 'Force Flash',
-                        value: BuildJobType.ForceFlash,
-                      },
-                    ]}
-                    onButtonClick={(value: string | null) => {
-                      if (value === BuildJobType.BuildAndFlash) {
-                        onBuildAndFlash();
-                      } else if (value === BuildJobType.ForceFlash) {
-                        onForceFlash();
-                      }
-                    }}
-                  />
+                    onClick={onBuildAndFlash}
+                  >
+                    Build & Flash
+                  </Button>
                 )}
               </div>
             </CardContent>

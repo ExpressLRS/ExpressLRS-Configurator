@@ -81,6 +81,10 @@ export default class BinaryConfigurator {
       flags.push([firmwareBinaryPath]);
     }
 
+    if (params.erase) {
+      flags.push(['--erase']);
+    }
+
     return flags;
   }
 

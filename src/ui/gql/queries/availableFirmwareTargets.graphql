@@ -31,5 +31,6 @@ query availableFirmwareTargets(
     verifiedHardware
     luaName
     priorTargetName
+    platform
   }
 }
