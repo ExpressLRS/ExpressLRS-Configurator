@@ -1,10 +1,12 @@
 import { Card, CardContent, Divider, Typography } from '@mui/material';
 import React, { FunctionComponent } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { useTranslation } from 'react-i18next';
 import CardTitle from '../../components/CardTitle';
 import MainLayout from '../../layouts/MainLayout';
 
 const SettingsView: FunctionComponent = () => {
+  const { t } = useTranslation();
   return (
     <MainLayout>
       <Card>
@@ -13,8 +15,8 @@ const SettingsView: FunctionComponent = () => {
         <CardContent>
           <Typography variant="h6">Todo:</Typography>
           <ul>
-            <li>Display configurator version</li>
-            <li>Language selector</li>
+            <li>{t('SettingsView.DisplayConfiguratorVersion')}</li>
+            <li>{t('SettingsView.LanguageSelector')}</li>
           </ul>
         </CardContent>
       </Card>

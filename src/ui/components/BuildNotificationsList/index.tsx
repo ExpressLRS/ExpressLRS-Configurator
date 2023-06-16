@@ -1,6 +1,7 @@
 import React, { FunctionComponent, memo } from 'react';
 import { Alert } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import {
   BuildFirmwareStep,
   BuildProgressNotification,
@@ -19,6 +20,8 @@ interface BuildNotificationsListProps {
 
 const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> =
   memo(({ notifications }) => {
+    const { t } = useTranslation();
+
     const toSeverity = (
       item: BuildProgressNotificationType
     ): 'error' | 'info' | 'success' => {
@@ -37,15 +40,15 @@ const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> =
     const toText = (step: BuildFirmwareStep): string => {
       switch (step) {
         case BuildFirmwareStep.VERIFYING_BUILD_SYSTEM:
-          return 'Verifying build system';
+          return t('BuildNotificationsList.VerifyingBuildSystem');
         case BuildFirmwareStep.DOWNLOADING_FIRMWARE:
-          return 'Downloading firmware';
+          return t('BuildNotificationsList.DownloadingFirmware');
         case BuildFirmwareStep.BUILDING_USER_DEFINES:
-          return 'Building user_defines.txt';
+          return t('BuildNotificationsList.BuildingUserDefinesTXT');
         case BuildFirmwareStep.BUILDING_FIRMWARE:
-          return 'Compiling firmware';
+          return t('BuildNotificationsList.CompilingFirmware');
         case BuildFirmwareStep.FLASHING_FIRMWARE:
-          return 'Flashing device';
+          return t('BuildNotificationsList.FlashingDevice');
         default:
           return '';
       }

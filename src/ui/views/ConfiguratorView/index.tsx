@@ -26,6 +26,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { ipcRenderer } from 'electron';
 import { ContentCopy, NetworkWifi, Save } from '@mui/icons-material';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
 import DeviceOptionsForm, {
@@ -152,6 +153,8 @@ interface ConfiguratorViewProps {
 }
 
 const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
+  const { t } = useTranslation();
+
   const {
     gitRepository,
     selectedDevice,
@@ -732,7 +735,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           href={luaScriptResponse?.luaScript.fileLocation ?? ''}
           download
         >
-          Download LUA script
+          {t('ConfiguratorView.DownloadLUAScript')}
         </Button>
       );
     }
@@ -772,7 +775,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       {viewState === ViewState.Configuration && (
         <>
           <Card>
-            <CardTitle icon={<SettingsIcon />} title="Firmware version" />
+            <CardTitle
+              icon={<SettingsIcon />}
+              title={t('ConfiguratorView.FirmwareVersion')}
+            />
             <Divider />
             <CardContent>
               <FirmwareVersionForm
@@ -784,15 +790,18 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             </CardContent>
             <Divider />
 
-            <CardTitle icon={<SettingsIcon />} title="Target" />
+            <CardTitle
+              icon={<SettingsIcon />}
+              title={t('ConfiguratorView.Target')}
+            />
             <Divider />
             <CardContent ref={deviceTargetRef}>
               {firmwareVersionData === null ||
                 (validateFirmwareVersionData(firmwareVersionData).length >
                   0 && (
                   <Alert severity="info">
-                    <AlertTitle>Notice</AlertTitle>
-                    Please select a firmware version first
+                    <AlertTitle>{t('ConfiguratorView.Notice')}</AlertTitle>
+                    {t('ConfiguratorView.SelectFirmwareVersionFirst')}
                   </Alert>
                 ))}
               {!loadingTargets && !targetsResponseError && (
@@ -819,7 +828,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
               icon={<SettingsIcon />}
               title={
                 <div ref={deviceOptionsRef}>
-                  Device options{' '}
+                  {t('ConfiguratorView.DeviceOptions')}{' '}
                   {deviceOptionsFormData.userDefinesMode ===
                     UserDefinesMode.UserInterface &&
                     deviceTarget !== null &&
@@ -828,15 +837,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                         placement="top"
                         arrow
                         title={
-                          <div>
-                            Reset device options to the recommended defaults on
-                            this device target. Except for your custom binding
-                            phrase.
-                          </div>
+                          <div>{t('ConfiguratorView.ResetDeviceice')}</div>
                         }
                       >
                         <Button onClick={onResetToDefaults} size="small">
-                          Reset
+                          {t('ConfiguratorView.Reset')}
                         </Button>
                       </Tooltip>
                     )}
@@ -858,8 +863,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   validateFirmwareVersionData(firmwareVersionData).length > 0 ||
                   deviceTarget === null) && (
                   <Alert severity="info">
-                    <AlertTitle>Notice</AlertTitle>
-                    Please select a firmware version and device target first
+                    <AlertTitle>{t('ConfiguratorView.Notice')}</AlertTitle>
+                    {t('ConfiguratorView.SelectFirmwareVersionFirst')}
                   </Alert>
                 )}
               <ShowAlerts
@@ -923,7 +928,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       variant="contained"
                       onClick={onBuild}
                     >
-                      Build
+                      {t('ConfiguratorView.Build')}
                     </Button>
                   )}
                 {deviceTarget?.flashingMethod !== FlashingMethod.Stock_BL && (
@@ -933,11 +938,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     variant="contained"
                     options={[
                       {
-                        label: 'Build & Flash',
+                        label: t('ConfiguratorView.Build&Flash'),
                         value: BuildJobType.BuildAndFlash,
                       },
                       {
-                        label: 'Force Flash',
+                        label: t('ConfiguratorView.ForceFlash'),
                         value: BuildJobType.ForceFlash,
                       },
                     ]}
@@ -957,7 +962,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             {networkDevices.size > 0 && (
               <Box>
                 <Divider />
-                <CardTitle icon={<NetworkWifi />} title="Network Devices" />
+                <CardTitle
+                  icon={<NetworkWifi />}
+                  title={t('ConfiguratorView.NetworkDevices')}
+                />
                 <Divider />
                 <CardContent>
                   <div>
@@ -980,17 +988,16 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              Device Select Error
+              {t('ConfiguratorView.NetworkDevices')}
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                The target device could not be automatically selected, it must
-                be done manually.
+                {t('ConfiguratorView.DeviceCouldNotBeAutomaticallySelected')}
               </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleDeviceSelectErrorDialogClose}>
-                Close
+                {t('ConfiguratorView.Close')}
               </Button>
             </DialogActions>
           </Dialog>
@@ -999,7 +1006,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
       {viewState === ViewState.Compiling && (
         <Card>
-          <CardTitle icon={<SettingsIcon />} title="Build" />
+          <CardTitle
+            icon={<SettingsIcon />}
+            title={t('ConfiguratorView.Build')}
+          />
           <Divider />
           <CardContent>
             <BuildProgressBar
@@ -1023,8 +1033,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     <Box>Logs</Box>
                     <Box>
                       <IconButton
-                        aria-label="Copy log to clipboard"
-                        title="Copy log to clipboard"
+                        aria-label={t('ConfiguratorView.CopyLogToClipboard')}
+                        title={t('ConfiguratorView.CopyLogToClipboard')}
                         onClick={async () => {
                           await navigator.clipboard.writeText(buildLogs);
                         }}
@@ -1032,8 +1042,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                         <ContentCopy />
                       </IconButton>
                       <IconButton
-                        aria-label="Save log to file"
-                        title="Save log to file"
+                        aria-label={t('ConfiguratorView.SaveLogToFile')}
+                        title={t('ConfiguratorView.SaveLogToFile')}
                         onClick={saveBuildLogToFile}
                       >
                         <Save />
@@ -1047,7 +1057,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <Box sx={styles.longBuildDurationWarning}>
                   <ShowTimeoutAlerts
                     severity="warning"
-                    messages="Sometimes builds take at least a few minutes. It is normal, especially for the first time builds."
+                    messages={t('ConfiguratorView.BuildsTakeMminutesFirstTime')}
                     active={buildInProgress}
                     timeout={14 * 1000}
                   />
@@ -1066,9 +1076,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   currentJobType === BuildJobType.BuildAndFlash &&
                   deviceTarget?.flashingMethod === FlashingMethod.WIFI && (
                     <Alert sx={styles.buildNotification} severity="warning">
-                      <AlertTitle>Warning</AlertTitle>
-                      Please wait for LED to resume blinking before
-                      disconnecting power
+                      <AlertTitle>{t('ConfiguratorView.Warning')}</AlertTitle>
+                      {t('ConfiguratorView.WaitForLEDBeforeDisconnectingPower')}
                     </Alert>
                   )}
                 <ShowAfterTimeout
@@ -1089,16 +1098,20 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   </Box>
                   {response?.buildFlashFirmware?.success && hasLuaScript && (
                     <Alert sx={styles.buildNotification} severity="info">
-                      <AlertTitle>Update Lua Script</AlertTitle>
-                      Make sure to update the Lua script on your radio
+                      <AlertTitle>
+                        {t('ConfiguratorView.UpdateLuaScript')}
+                      </AlertTitle>
+                      {t('ConfiguratorView.UpdateLuaScriptOnRadio')}
                     </Alert>
                   )}
                 </ShowAfterTimeout>
                 {response?.buildFlashFirmware?.success &&
                   currentJobType === BuildJobType.Build && (
                     <Alert sx={styles.buildNotification} severity="info">
-                      <AlertTitle>Build notice</AlertTitle>
-                      Firmware binary file was opened in the file explorer
+                      <AlertTitle>
+                        {t('ConfiguratorView.BuildNotice')}
+                      </AlertTitle>
+                      {t('ConfiguratorView.FirmwareOpenedInFileExplorer')}
                     </Alert>
                   )}
               </CardContent>
@@ -1117,7 +1130,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   variant="contained"
                   onClick={onBack}
                 >
-                  Back
+                  {t('ConfiguratorView.Back')}
                 </Button>
 
                 {!response?.buildFlashFirmware.success && (
@@ -1129,7 +1142,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       sendJob(currentJobType);
                     }}
                   >
-                    Retry
+                    {t('ConfiguratorView.Retry')}
                   </Button>
                 )}
 
@@ -1142,7 +1155,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       variant="contained"
                       onClick={onForceFlash}
                     >
-                      Force Flash
+                      {t('ConfiguratorView.ForceFlash')}
                     </Button>
                   )}
 

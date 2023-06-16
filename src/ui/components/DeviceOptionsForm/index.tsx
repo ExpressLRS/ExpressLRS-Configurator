@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import React, { FunctionComponent, useRef } from 'react';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import UserDefinesList from '../UserDefinesList';
 import {
   useBuildUserDefinesTxtMutation,
@@ -154,6 +155,7 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
 ) => {
   const { target, deviceOptions, onChange } = props;
   const categories = userDefinesToCategories(deviceOptions.userDefineOptions);
+  const { t } = useTranslation();
 
   const onOptionUpdate = (data: UserDefine) => {
     const updatedOptions = deviceOptions?.userDefineOptions.map((opt) => {
@@ -253,13 +255,13 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
             value={UserDefinesMode.UserInterface}
             sx={styles.radioControl}
             control={<Radio sx={styles.radio} color="primary" />}
-            label="Standard mode"
+            label={t('DeviceOptionsForm.StandardMode')}
           />
           <FormControlLabel
             value={UserDefinesMode.Manual}
             sx={styles.radioControl}
             control={<Radio sx={styles.radio} color="primary" />}
-            label="Manual mode"
+            label={t('DeviceOptionsForm.ManualMode')}
           />
         </RadioGroup>
       </FormControl>
@@ -280,12 +282,12 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
             <Loader loading={buildLoading} />
             <ShowAlerts severity="error" messages={buildError} />
             <Button onClick={onCopyFromStandardMode} size="small">
-              Copy from Standard mode
+              {t('DeviceOptionsForm.CopyFromStandardMode')}
             </Button>
 
             <ShowAlerts
               severity="warning"
-              messages="When using the manual user-defined mode, the cloud binaries cache is disabled, resulting in much longer build times."
+              messages={t('DeviceOptionsForm.LongerBuildTimeWarning')}
             />
           </Grid>
         </Grid>
@@ -298,7 +300,7 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
               {categories[UserDefineCategory.RegulatoryDomains]?.length > 0 && (
                 <>
                   <Typography variant="h6" sx={styles.categoryTitle}>
-                    Regulatory domains
+                    {t('DeviceOptionsForm.RegulatoryDomains')}
                   </Typography>
                   <UserDefinesList
                     options={categories[UserDefineCategory.RegulatoryDomains]}
@@ -308,7 +310,9 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
               )}
               {categories[UserDefineCategory.BindingPhrase]?.length > 0 && (
                 <>
-                  <Typography variant="h6">Binding phrase setup</Typography>
+                  <Typography variant="h6">
+                    {t('DeviceOptionsForm.BindingPhraseSetup')}
+                  </Typography>
                   <UserDefinesList
                     options={categories[UserDefineCategory.BindingPhrase]}
                     onChange={onOptionUpdate}
@@ -318,7 +322,9 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
               {categories[UserDefineCategory.CompatibilityOptions]?.length >
                 0 && (
                 <>
-                  <Typography variant="h6">Compatibility options</Typography>
+                  <Typography variant="h6">
+                    {t('DeviceOptionsForm.CompatibilityOptions')}
+                  </Typography>
                   <UserDefinesList
                     options={
                       categories[UserDefineCategory.CompatibilityOptions]
@@ -333,7 +339,9 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
               {categories[UserDefineCategory.PerformanceOptions]?.length >
                 0 && (
                 <>
-                  <Typography variant="h6">Performance options</Typography>
+                  <Typography variant="h6">
+                    {t('DeviceOptionsForm.PerformanceOptions')}
+                  </Typography>
                   <UserDefinesList
                     options={categories[UserDefineCategory.PerformanceOptions]}
                     onChange={onOptionUpdate}
@@ -342,7 +350,9 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
               )}
               {categories[UserDefineCategory.ExtraData]?.length > 0 && (
                 <>
-                  <Typography variant="h6">Extra data</Typography>
+                  <Typography variant="h6">
+                    {t('DeviceOptionsForm.ExtraData')}
+                  </Typography>
                   <UserDefinesList
                     options={categories[UserDefineCategory.ExtraData]}
                     onChange={onOptionUpdate}
@@ -351,7 +361,9 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
               )}
               {categories[UserDefineCategory.NetworkOptions]?.length > 0 && (
                 <>
-                  <Typography variant="h6">Network</Typography>
+                  <Typography variant="h6">
+                    {t('DeviceOptionsForm.Network')}
+                  </Typography>
                   <UserDefinesList
                     options={categories[UserDefineCategory.NetworkOptions]}
                     onChange={onOptionUpdate}
@@ -360,7 +372,9 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
               )}
               {categories[UserDefineCategory.OtherOptions]?.length > 0 && (
                 <>
-                  <Typography variant="h6">Other options</Typography>
+                  <Typography variant="h6">
+                    {t('DeviceOptionsForm.OtherOptions')}
+                  </Typography>
                   <UserDefinesList
                     options={categories[UserDefineCategory.OtherOptions]}
                     onChange={onOptionUpdate}

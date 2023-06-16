@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Box, Tooltip } from '@mui/material';
 import QuestionIcon from '@mui/icons-material/Help';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import { FlashingMethod } from '../../gql/generated/types';
 import DocumentationLink from '../DocumentationLink';
 
@@ -25,26 +26,18 @@ const FlashingMethodDescription: FunctionComponent<
   FlashingMethodDescriptionProps
 > = ({ flashingMethod, deviceWikiUrl }) => {
   const wikiUrl = (deviceWikiUrl ?? '').length > 0 ? deviceWikiUrl : null;
+  const { t } = useTranslation();
+
   const toText = (key: FlashingMethod) => {
     switch (key) {
       case FlashingMethod.BetaflightPassthrough:
         return (
           <div>
-            <p>
-              This method allows you to flash your receiver while it is
-              connected to your flight controller by using the passthrough
-              feature of the flight controller.
-            </p>
+            <p>{t('FlashingMethodDescription.BetaflightPassthroughP1')}</p>
             <ol>
-              <li>
-                Plug in your FC to your computer, but do NOT connect to
-                betaflight configurator.
-              </li>
-              <li>
-                Select your desired Device Options and your flight controllers
-                serial device below.
-              </li>
-              <li>Run Build & Flash</li>
+              <li>{t('FlashingMethodDescription.BetaflightPassthroughP2')}</li>
+              <li>{t('FlashingMethodDescription.BetaflightPassthroughP3')}</li>
+              <li>{t('FlashingMethodDescription.RunBuild&Flash')}</li>
             </ol>
             <p>
               <DocumentationLink
@@ -53,7 +46,7 @@ const FlashingMethodDescription: FunctionComponent<
                   'https://www.expresslrs.org/software/updating/betaflight-passthrough/'
                 }
               >
-                Check our Wiki page for latest definition.
+                {t('FlashingMethodDescription.BetaflightPassthroughWiki')}
               </DocumentationLink>
             </p>
           </div>
@@ -61,10 +54,7 @@ const FlashingMethodDescription: FunctionComponent<
       case FlashingMethod.DFU:
         return (
           <div>
-            <p>
-              This method allows you to flash your receiver or transmitter via
-              the Devices Firmware Upgrade mode.
-            </p>
+            <p>{t('FlashingMethodDescription.DFU')}</p>
             <p>
               <DocumentationLink
                 url={
@@ -72,8 +62,7 @@ const FlashingMethodDescription: FunctionComponent<
                   'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
-                Check the Wiki page for your particular device for more
-                information.
+                {t('FlashingMethodDescription.GeneralWiki')}
               </DocumentationLink>
             </p>
           </div>
@@ -81,10 +70,7 @@ const FlashingMethodDescription: FunctionComponent<
       case FlashingMethod.STLink:
         return (
           <div>
-            <p>
-              This method allows you to flash your receiver or transmitter using
-              an STLink programmer connected to the device.
-            </p>
+            <p>{t('FlashingMethodDescription.STLink')}</p>
             <p>
               <DocumentationLink
                 url={
@@ -92,8 +78,7 @@ const FlashingMethodDescription: FunctionComponent<
                   'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
-                Check the Wiki page for your particular device for more
-                information.
+                {t('FlashingMethodDescription.GeneralWiki')}
               </DocumentationLink>
             </p>
           </div>
@@ -101,10 +86,7 @@ const FlashingMethodDescription: FunctionComponent<
       case FlashingMethod.Stock_BL:
         return (
           <div>
-            <p>
-              This method allows you to flash your receiver or transmitter using
-              the bootloader on the device.
-            </p>
+            <p>{t('FlashingMethodDescription.StockBL')}</p>
             <p>
               <DocumentationLink
                 url={
@@ -112,8 +94,7 @@ const FlashingMethodDescription: FunctionComponent<
                   'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
-                Check the Wiki page for your particular device for more
-                information.
+                {t('FlashingMethodDescription.GeneralWiki')}
               </DocumentationLink>
             </p>
           </div>
@@ -121,10 +102,7 @@ const FlashingMethodDescription: FunctionComponent<
       case FlashingMethod.UART:
         return (
           <div>
-            <p>
-              This method allows you to flash your receiver or transmitter via
-              its USB port or wiring up an FTDI device.
-            </p>
+            <p>{t('FlashingMethodDescription.UART')}</p>
             <p>
               <DocumentationLink
                 url={
@@ -132,8 +110,7 @@ const FlashingMethodDescription: FunctionComponent<
                   'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
-                Check the Wiki page for your particular device for more
-                information.
+                {t('FlashingMethodDescription.GeneralWiki')}
               </DocumentationLink>
             </p>
           </div>
@@ -141,10 +118,7 @@ const FlashingMethodDescription: FunctionComponent<
       case FlashingMethod.WIFI:
         return (
           <div>
-            <p>
-              This method creates a firmware file you can upload to your
-              receiver or transmitter by connecting to its built in wifi.
-            </p>
+            <p>{t('FlashingMethodDescription.WIFI')}</p>
             <p>
               <DocumentationLink
                 url={
@@ -152,8 +126,7 @@ const FlashingMethodDescription: FunctionComponent<
                   'https://www.expresslrs.org/software/updating/wifi-updating/'
                 }
               >
-                Check the Wiki page for your particular device for more
-                information.
+                {t('FlashingMethodDescription.GeneralWiki')}
               </DocumentationLink>
             </p>
           </div>
@@ -161,11 +134,7 @@ const FlashingMethodDescription: FunctionComponent<
       case FlashingMethod.EdgeTxPassthrough:
         return (
           <div>
-            <p>
-              This method allows you to flash your transmitter module while it
-              is connected to your transmitter by using the passthrough feature
-              of the EdgeTX firmware.
-            </p>
+            <p>{t('FlashingMethodDescription.EdgeTxPassthrough')}</p>
             <p>
               <DocumentationLink
                 url={
@@ -173,8 +142,7 @@ const FlashingMethodDescription: FunctionComponent<
                   'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
-                Check the Wiki page for your particular device for more
-                information.
+                {t('FlashingMethodDescription.GeneralWiki')}
               </DocumentationLink>
             </p>
           </div>
@@ -182,10 +150,7 @@ const FlashingMethodDescription: FunctionComponent<
       case FlashingMethod.Passthrough:
         return (
           <div>
-            <p>
-              This method allows you to flash your module while it is connected
-              to your transmitter by using the passthrough feature.
-            </p>
+            <p>{t('FlashingMethodDescription.Passthrough')}</p>
             <p>
               <DocumentationLink
                 url={
@@ -193,8 +158,7 @@ const FlashingMethodDescription: FunctionComponent<
                   'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
-                Check the Wiki page for your particular device for more
-                information.
+                {t('FlashingMethodDescription.GeneralWiki')}
               </DocumentationLink>
             </p>
           </div>

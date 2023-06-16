@@ -7,6 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import Omnibox, { Option } from '../Omnibox';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 
@@ -36,6 +37,7 @@ enum WifiSourceType {
 
 const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   const { wifiDevice, wifiDevices, onChange } = props;
+  const { t } = useTranslation();
 
   const options = useMemo(() => {
     const result = wifiDevices.map((target) => {
@@ -49,7 +51,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
 
     if (result.length === 0) {
       result.push({
-        label: `Default (10.0.0.1)`,
+        label: t('WifiDeviceSelect.DefaultWifiIp'),
         value: `10.0.0.1`,
       });
     }
@@ -122,13 +124,19 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
         value={wifiSource}
         onChange={handleWifiSourceChange}
       >
-        <Tab label="WiFi Devices" value={WifiSourceType.LIST} />
-        <Tab label="Manual" value={WifiSourceType.MANUAL} />
+        <Tab
+          label={t('WifiDeviceSelect.WiFiDevices')}
+          value={WifiSourceType.LIST}
+        />
+        <Tab
+          label={t('WifiDeviceSelect.Manual')}
+          value={WifiSourceType.MANUAL}
+        />
       </Tabs>
       {wifiSource === WifiSourceType.LIST && (
         <Box sx={styles.inner}>
           <Omnibox
-            title="WiFi Device Selection"
+            title={t('WifiDeviceSelect.WiFiDeviceSelection')}
             currentValue={
               options.find(
                 (item) => item.value === currentlySelectedValue?.value
@@ -145,7 +153,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
           <TextField
             onChange={onTextFieldValueChange}
             fullWidth
-            label="IP Address"
+            label={t('WifiDeviceSelect.IPAddress')}
             value={currentTextBoxValue}
           />
         </div>

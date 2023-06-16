@@ -4,6 +4,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import WebIcon from '@mui/icons-material/Web';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import { Config } from '../../config';
 import LogotypeIcon from '../../../../assets/logotype.svg';
 import DiscordIcon from '../../../../assets/DiscordIcon.svg';
@@ -52,6 +53,8 @@ const styles: Record<string, SxProps<Theme>> = {
 };
 
 const Header: FunctionComponent = memo(() => {
+  const { t } = useTranslation();
+
   const { data: updateResponse } = useCheckForUpdatesQuery({
     variables: {
       currentVersion: process.env.EXPRESSLRS_CONFIGURATOR_VERSION || '0.0.1',
@@ -61,7 +64,7 @@ const Header: FunctionComponent = memo(() => {
     <AppBar position="static" color="default">
       <Toolbar sx={styles.toolbar}>
         <Box sx={styles.logotype}>
-          <img src={LogotypeIcon} alt="ExpressLrs Configurator" />
+          <img src={LogotypeIcon} alt={t('Header.ExpressLrsConfigurator')} />
           <Typography variant="h4" sx={styles.title}>
             {process.env.EXPRESSLRS_CONFIGURATOR_TITLE}{' '}
             <Box component="span" sx={styles.version}>
@@ -72,11 +75,11 @@ const Header: FunctionComponent = memo(() => {
                 component="a"
                 href={updateResponse?.checkForUpdates?.releaseUrl}
                 target="_blank"
-                title="Click to download a newest release"
+                title={t('Header.DownloadNewestRelease')}
                 rel="noreferrer noreferrer"
                 sx={styles.updateAvailable}
               >
-                Update is available!
+                {t('Header.UpdateAvailable')}
               </Box>
             )}
           </Typography>
@@ -86,7 +89,7 @@ const Header: FunctionComponent = memo(() => {
             <IconButton
               href={Config.documentationUrl}
               target="_blank"
-              title="Documentation"
+              title={t('Header.Documentation')}
               rel="noreferrer noreferrer"
               size="large"
             >
@@ -97,7 +100,7 @@ const Header: FunctionComponent = memo(() => {
             <IconButton
               href={Config.discordUrl}
               target="_blank"
-              title="Discord"
+              title={t('Header.Discord')}
               rel="noreferrer noreferrer"
               size="large"
             >
@@ -113,7 +116,7 @@ const Header: FunctionComponent = memo(() => {
             <IconButton
               href={Config.facebookGroupUrl}
               target="_blank"
-              title="Facebook group"
+              title={t('Header.FacebookGroup')}
               rel="noreferrer noreferrer"
               size="large"
             >
@@ -124,7 +127,7 @@ const Header: FunctionComponent = memo(() => {
             <IconButton
               href={Config.githubRepositoryUrl}
               target="_blank"
-              title="Github"
+              title={t('Header.Github')}
               rel="noreferrer noreferrer"
               size="large"
             >
@@ -135,7 +138,7 @@ const Header: FunctionComponent = memo(() => {
             <IconButton
               href={Config.openCollectiveUrl}
               target="_blank"
-              title="OpenCollective"
+              title={t('Header.OpenCollective')}
               rel="noreferrer noreferrer"
               size="large"
             >

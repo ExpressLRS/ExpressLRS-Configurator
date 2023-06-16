@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import { Alert, AlertTitle, Box } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import Omnibox from '../Omnibox';
 import { Device, Target } from '../../gql/generated/types';
 import FlashingMethodOptions, {
@@ -36,6 +37,8 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
   const [currentDevice, setCurrentDevice] = useState<Device | null>(null);
 
   const [currentCategory, setCurrentCategory] = useState<string | null>(null);
+
+  const { t } = useTranslation();
 
   const categorySelectOptions = useMemo(() => {
     if (deviceOptions === null) {
@@ -156,17 +159,17 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
     <>
       {currentDevice && !currentDevice.verifiedHardware && (
         <Alert severity="warning" sx={styles.dangerZone}>
-          <AlertTitle>UNVERIFIED HARDWARE</AlertTitle>
-          The manufacturer of this hardware has not provided samples to the
-          developers for evaluation and verification, contact them for support
-          or proceed at your own risk. Not all features may work.
+          <AlertTitle>
+            {t('DeviceTargetForm.UnverifiedHardwareTitle')}
+          </AlertTitle>
+          {t('DeviceTargetForm.UnverifiedHardwareContent')}
         </Alert>
       )}
       {deviceOptions && deviceOptions?.length > 0 && (
         <>
           <Box sx={styles.root}>
             <Omnibox
-              title="Device category"
+              title={t('DeviceTargetForm.DeviceCategory')}
               currentValue={
                 categorySelectOptions.find(
                   (item) => item.value === currentCategory
@@ -178,7 +181,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
           </Box>
           <Box sx={styles.root}>
             <Omnibox
-              title="Device"
+              title={t('DeviceTargetForm.Device')}
               currentValue={
                 deviceSelectOptions.find(
                   (item) => item.value === currentDevice?.name
