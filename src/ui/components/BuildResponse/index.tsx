@@ -63,34 +63,32 @@ const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
               )}
             </AlertTitle>
             <p>
-              {/* How to guess the translation indexes correctly: https://react.i18next.com/latest/trans-component#how-to-get-the-correct-translation-string */}
               <Trans
                 i18nKey="BuildResponse.ErrorDetails"
-                firmwareVersion={firmwareVersionData}
-              >
-                An error has occured, see the above log for the exact error
-                message. If you have not already done so, visit{' '}
-                <DocumentationLink url="https://www.expresslrs.org/">
-                  Expresslrs.org
-                </DocumentationLink>{' '}
-                and read the{' '}
-                <DocumentationLink url="https://www.expresslrs.org/quick-start/getting-started/">
-                  Flashing Guide
-                </DocumentationLink>{' '}
-                for your particular device as well as the{' '}
-                <DocumentationLink url="https://www.expresslrs.org/quick-start/troubleshooting/#flashingupdating">
-                  Troubleshooting Guide
-                </DocumentationLink>
-                . If you are still having issues after reviewing the
-                documentation, please copy the build logs above to an online
-                paste site and post in the #help-and-support channel on the{' '}
-                <DocumentationLink url="https://discord.gg/dS6ReFY">
-                  ExpressLRS Discord
-                </DocumentationLink>{' '}
-                with a link to the logs and other relevant information like your
-                device, which flashing method you were using, and what steps you
-                have already taken to resolve the issue.
-              </Trans>
+                defaults="An error has occured, see the above log for the exact error message. If you have not 
+                already done so, visit <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> and read 
+                the <FlashingGuideLink>Flashing Guide</FlashingGuideLink> for your particular device as well as the 
+                <TroubleshootingGuideLink>Troubleshooting Guide<TroubleshootingGuideLink>. If you are 
+                still having issues after reviewing the documentation, please copy the build logs above to 
+                an online paste site and post in the #help-and-support channel on the 
+                <ExpressLRSDiscordLink>ExpressLRS Discord</ExpressLRSDiscordLink> with a link to the logs and other 
+                relevant information like your device, which flashing method you were using, and what steps you
+                have already taken to resolve the issue."
+                components={{
+                  ExpresslrsLink: (
+                    <DocumentationLink url="https://www.expresslrs.org/" />
+                  ),
+                  FlashingGuideLink: (
+                    <DocumentationLink url="https://www.expresslrs.org/quick-start/getting-started/" />
+                  ),
+                  TroubleshootingGuideLink: (
+                    <DocumentationLink url="https://www.expresslrs.org/quick-start/troubleshooting/#flashingupdating" />
+                  ),
+                  ExpressLRSDiscordLink: (
+                    <DocumentationLink url="https://discord.gg/dS6ReFY" />
+                  ),
+                }}
+              />
             </p>
           </Alert>
         )}

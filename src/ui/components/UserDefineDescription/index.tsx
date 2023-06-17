@@ -35,14 +35,15 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
           return (
             <div>
               <p>
-                {/* How to guess the translation indexes correctly: https://react.i18next.com/latest/trans-component#how-to-get-the-correct-translation-string */}
-                <Trans i18nKey="UserDefineDescription.RegulatoryDomain915">
-                  Consult{' '}
-                  <DocumentationLink url="https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html">
-                    LoRaWAN Frequency Plans and Regulations
-                  </DocumentationLink>{' '}
-                  for a regulatory domain to use in your location.
-                </Trans>
+                <Trans
+                  i18nKey="UserDefineDescription.RegulatoryDomain915"
+                  defaults="Consult <LoRaWANLink>LoRaWAN Frequency Plans and Regulations</LoRaWANLink> for a regulatory domain to use in your location."
+                  components={{
+                    LoRaWANLink: (
+                      <DocumentationLink url="https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html" />
+                    ),
+                  }}
+                />
               </p>
               <p>
                 <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#regulatory-domain">
@@ -184,38 +185,32 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
         case UserDefineKey.MY_STARTUP_MELODY:
           return (
             <div>
-              {/* How to guess the translation indexes correctly: https://react.i18next.com/latest/trans-component#how-to-get-the-correct-translation-string */}
-              <Trans i18nKey="UserDefineDescription.MyStartupMelody">
-                <p>
-                  Use this to define your own startup melody using the BlHeli32
-                  syntax. The parameters music string and bpm are required,
-                  whereas semitone offset is optional to transpose the entire
-                  melody up or down by the defined amount of semitones. Example
-                  BlHeli32 melodies are available on{' '}
-                  <DocumentationLink url="https://www.youtube.com/playlist?list=PL_O0XT_1mZinetucKyuBUvkju8P7DEg-v">
-                    Rox Wolfs youtube channel
-                  </DocumentationLink>
-                  , some experimentation may be required though.
-                </p>
-                <p>
-                  To write your own melody,{' '}
-                  <DocumentationLink url="https://github.com/nseidle/AxelF_DoorBell/wiki/How-to-convert-sheet-music-into-an-Arduino-Sketch">
-                    Sheet Music 101
-                  </DocumentationLink>{' '}
-                  and this{' '}
-                  <DocumentationLink url="https://dra6n.github.io/blhelikeyboard.github.io/">
-                    BLHeli Piano
-                  </DocumentationLink>{' '}
-                  are useful resources.
-                </p>
-                <p>
-                  This option also supports melodies in RTTTL format now.{' '}
-                  <DocumentationLink url="http://esctunes.com/tunes">
-                    EscTunes.com
-                  </DocumentationLink>{' '}
-                  is great resource for discovering new melodies.
-                </p>
-              </Trans>
+              <Trans
+                i18nKey="UserDefineDescription.MyStartupMelody"
+                defaults="<p>Use this to define your own startup melody using the BlHeli32
+                syntax. The parameters music string and bpm are required,
+                whereas semitone offset is optional to transpose the entire
+                melody up or down by the defined amount of semitones. Example
+                BlHeli32 melodies are available on <RoxWolfsYoutubeChannelLink>Rox Wolfs Youtube channel</RoxWolfsYoutubeChannelLink>, 
+                some experimentation may be required though.</p><p>To write your own melody, 
+                <SheetMusic101lLink>Sheet Music 101</SheetMusic101lLink> and this <BLHeliPianoLink>BLHeli Piano</BLHeliPianoLink> are useful 
+                resources.</p><p>This option also supports melodies in RTTTL format now. 
+                <EscTunesLink>EscTunes.com</EscTunesLink> is great resource for discovering new melodies.</p>"
+                components={{
+                  RoxWolfsYoutubeChannelLink: (
+                    <DocumentationLink url="https://www.youtube.com/playlist?list=PL_O0XT_1mZinetucKyuBUvkju8P7DEg-v" />
+                  ),
+                  SheetMusic101lLink: (
+                    <DocumentationLink url="https://github.com/nseidle/AxelF_DoorBell/wiki/How-to-convert-sheet-music-into-an-Arduino-Sketch" />
+                  ),
+                  BLHeliPianoLink: (
+                    <DocumentationLink url="https://dra6n.github.io/blhelikeyboard.github.io/" />
+                  ),
+                  EscTunesLink: (
+                    <DocumentationLink url="http://esctunes.com/tunes" />
+                  ),
+                }}
+              />
               <p>
                 <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#other-options">
                   {t('UserDefineDescription.Wiki')}
@@ -226,27 +221,23 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
         case UserDefineKey.UNLOCK_HIGHER_POWER:
           return (
             <div>
-              {/* How to guess the translation indexes correctly: https://react.i18next.com/latest/trans-component#how-to-get-the-correct-translation-string */}
-              <Trans i18nKey="UserDefineDescription.UnlockHigherPower">
-                <p>
-                  There has been some reports of the R9M modules showing
-                  instability at &gt; 250mw with stock cooling. This in part
-                  because the ELRS uses a higher duty cycle for transmission
-                  compared to stock firmware. By default the power is limited to
-                  250mw. You can unlock up to 1000mw by enabling the following
-                  option. Do this at your own risk if you make no cooling
-                  modifications.
-                </p>
-                <p>
-                  We published{' '}
-                  <DocumentationLink url="https://www.expresslrs.org/hardware/fan-mod/">
-                    R9M Fan Mod Cover
-                  </DocumentationLink>
-                  , a custom 3d printed backplate with room for a fan and extra
-                  cooling to allow for maximum power (1-2W depending on the
-                  mod).
-                </p>
-              </Trans>
+              <Trans
+                i18nKey="UserDefineDescription.UnlockHigherPower"
+                defaults="<p>There has been some reports of the R9M modules showing
+                instability at >250mw with stock cooling. This in part
+                because the ELRS uses a higher duty cycle for transmission
+                compared to stock firmware. By default the power is limited to
+                250mw. You can unlock up to 1000mw by enabling the following
+                option. Do this at your own risk if you make no cooling
+                modifications.</p><p>We published <R9MFanModCoverLink>R9M Fan Mod Cover</R9MFanModCoverLink>, 
+                a custom 3d printed backplate with room for a fan and extra cooling to allow 
+                for maximum power (1-2W depending on the mod).</p>"
+                components={{
+                  R9MFanModCoverLink: (
+                    <DocumentationLink url="https://www.expresslrs.org/hardware/fan-mod/" />
+                  ),
+                }}
+              />
               <p>
                 <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#output-power-limit">
                   {t('UserDefineDescription.Wiki')}
