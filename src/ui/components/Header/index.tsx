@@ -64,7 +64,7 @@ const Header: FunctionComponent = memo(() => {
     <AppBar position="static" color="default">
       <Toolbar sx={styles.toolbar}>
         <Box sx={styles.logotype}>
-          <img src={LogotypeIcon} alt={t('Header.ExpressLrsConfigurator')} />
+          <img src={LogotypeIcon} alt={t('Header.ExpressLRSConfigurator')} />
           <Typography variant="h4" sx={styles.title}>
             {process.env.EXPRESSLRS_CONFIGURATOR_TITLE}{' '}
             <Box component="span" sx={styles.version}>

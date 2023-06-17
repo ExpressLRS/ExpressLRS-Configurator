@@ -487,7 +487,9 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         gitBranches !== undefined && (
           <>
             <Alert severity="warning" sx={styles.dangerZone}>
-              <AlertTitle>{t('FirmwareVersionForm.DangerZoneTile')}</AlertTitle>
+              <AlertTitle>
+                {t('FirmwareVersionForm.DangerZoneTitle')}
+              </AlertTitle>
               {t('FirmwareVersionForm.DangerZoneContent')}
             </Alert>
             <Box sx={styles.tabContents}>
@@ -509,7 +511,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       {firmwareSource === FirmwareSource.GitCommit && (
         <>
           <Alert severity="warning" sx={styles.dangerZone}>
-            <AlertTitle>{t('FirmwareVersionForm.DangerZoneTile')}</AlertTitle>
+            <AlertTitle>{t('FirmwareVersionForm.DangerZoneTitle')}</AlertTitle>
             {t('FirmwareVersionForm.DangerZoneContent')}
           </Alert>
           <Box sx={styles.tabContents}>
@@ -526,7 +528,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       {firmwareSource === FirmwareSource.Local && (
         <>
           <Alert severity="warning" sx={styles.dangerZone}>
-            <AlertTitle>{t('FirmwareVersionForm.DangerZoneTile')}</AlertTitle>
+            <AlertTitle>{t('FirmwareVersionForm.DangerZoneTitle')}</AlertTitle>
             {t('FirmwareVersionForm.DangerZoneContent')}
           </Alert>
           <Box sx={styles.tabContents}>
@@ -563,7 +565,9 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         gitPullRequests !== undefined && (
           <>
             <Alert severity="warning" sx={styles.dangerZone}>
-              <AlertTitle>{t('FirmwareVersionForm.DangerZoneTile')}</AlertTitle>
+              <AlertTitle>
+                {t('FirmwareVersionForm.DangerZoneTitle')}
+              </AlertTitle>
               {t('FirmwareVersionForm.DangerZoneContent')}
             </Alert>
             <Box sx={styles.tabContents}>

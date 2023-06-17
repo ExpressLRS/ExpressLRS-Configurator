@@ -106,7 +106,7 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
     <Box sx={styles.root}>
       <Box sx={styles.inner}>
         <Omnibox
-          title={t('SerialDeviceSelect.ManualSelection')}
+          title={t('SerialDeviceSelect.ManualSelectionTitle')}
           currentValue={currentValue}
           onChange={onSerialDeviceChange}
           options={options}

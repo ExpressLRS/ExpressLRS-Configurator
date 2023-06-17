@@ -35,7 +35,7 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
     };
 
     if (isUserDefine(UserDefineKey.UART_INVERTED, false)) {
-      messages.push(t('UserDefinesAdvisor.DisablUARTInvertedrWarning'));
+      messages.push(t('UserDefinesAdvisor.DisableUARTInvertedWarning'));
     }
   }
   return messages.length > 0 ? (

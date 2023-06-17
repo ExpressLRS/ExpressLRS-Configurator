@@ -125,7 +125,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
         onChange={handleWifiSourceChange}
       >
         <Tab
-          label={t('WifiDeviceSelect.WiFiDevices')}
+          label={t('WifiDeviceSelect.WifiDevices')}
           value={WifiSourceType.LIST}
         />
         <Tab
@@ -136,7 +136,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
       {wifiSource === WifiSourceType.LIST && (
         <Box sx={styles.inner}>
           <Omnibox
-            title={t('WifiDeviceSelect.WiFiDeviceSelection')}
+            title={t('WifiDeviceSelect.WifiDeviceSelection')}
             currentValue={
               options.find(
                 (item) => item.value === currentlySelectedValue?.value

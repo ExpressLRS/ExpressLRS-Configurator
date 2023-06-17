@@ -33,10 +33,12 @@ const FlashingMethodDescription: FunctionComponent<
       case FlashingMethod.BetaflightPassthrough:
         return (
           <div>
-            <p>{t('FlashingMethodDescription.BetaflightPassthroughP1')}</p>
+            <p>
+              {t('FlashingMethodDescription.BetaflightPassthroughDescription')}
+            </p>
             <ol>
-              <li>{t('FlashingMethodDescription.BetaflightPassthroughP2')}</li>
-              <li>{t('FlashingMethodDescription.BetaflightPassthroughP3')}</li>
+              <li>{t('FlashingMethodDescription.PlugInFCToComputer')}</li>
+              <li>{t('FlashingMethodDescription.SelectDesiredDevice')}</li>
               <li>{t('FlashingMethodDescription.RunBuild&Flash')}</li>
             </ol>
             <p>

@@ -19,7 +19,7 @@ export default class Updater {
       const response = await dialog.showMessageBox(this.mainWindow, {
         type: 'info',
         title: t('Updater.FoundUpdates'),
-        message: t('Updater.UdateNow'),
+        message: t('Updater.UpdateNow'),
         buttons: [t('Updater.Sure'), t('Updater.Later')],
       });
 
@@ -29,7 +29,7 @@ export default class Updater {
         await dialog.showMessageBox(this.mainWindow, {
           type: 'info',
           title: t('Updater.UpdateDownloading'),
-          message: t('Updater.notifiedWhenReadyToInstall'),
+          message: t('Updater.NotifiedWhenReadyToInstall'),
           buttons: [],
         });
       }

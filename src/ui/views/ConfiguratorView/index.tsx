@@ -879,7 +879,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             </CardContent>
             <Divider />
 
-            <CardTitle icon={<SettingsIcon />} title="Actions" />
+            <CardTitle
+              icon={<SettingsIcon />}
+              title={t('ConfiguratorView.Actions')}
+            />
             <Divider />
             <CardContent>
               <UserDefinesAdvisor
@@ -1030,7 +1033,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 icon={<SettingsIcon />}
                 title={
                   <Box display="flex" justifyContent="space-between">
-                    <Box>Logs</Box>
+                    <Box>{t('ConfiguratorView.Logs')}</Box>
                     <Box>
                       <IconButton
                         aria-label={t('ConfiguratorView.CopyLogToClipboard')}
@@ -1057,7 +1060,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <Box sx={styles.longBuildDurationWarning}>
                   <ShowTimeoutAlerts
                     severity="warning"
-                    messages={t('ConfiguratorView.BuildsTakeMminutesFirstTime')}
+                    messages={t('ConfiguratorView.BuildsTakeMinutesFirstTime')}
                     active={buildInProgress}
                     timeout={14 * 1000}
                   />
@@ -1069,7 +1072,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           )}
           {response !== undefined && (
             <>
-              <CardTitle icon={<SettingsIcon />} title="Result" />
+              <CardTitle
+                icon={<SettingsIcon />}
+                title={t('ConfiguratorView.Result')}
+              />
               <Divider />
               <CardContent>
                 {response?.buildFlashFirmware?.success &&
@@ -1120,7 +1126,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           )}
           {!buildInProgress && (
             <>
-              <CardTitle icon={<SettingsIcon />} title="Actions" />
+              <CardTitle
+                icon={<SettingsIcon />}
+                title={t('ConfiguratorView.Actions')}
+              />
               <Divider />
               <CardContent>
                 <Button

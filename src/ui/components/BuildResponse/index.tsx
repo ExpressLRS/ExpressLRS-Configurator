@@ -1,7 +1,7 @@
 import React, { FunctionComponent, memo } from 'react';
 import { Alert, AlertTitle } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import {
   BuildFirmwareErrorType,
   BuildFlashFirmwareResult,
@@ -63,35 +63,34 @@ const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
               )}
             </AlertTitle>
             <p>
-              {t('BuildResponse.DodumentP1')}{' '}
-              <DocumentationLink
+              {/* How to guess the translation indexes correctly: https://react.i18next.com/latest/trans-component#how-to-get-the-correct-translation-string */}
+              <Trans
+                i18nKey="BuildResponse.ErrorDetails"
                 firmwareVersion={firmwareVersionData}
-                url="https://www.expresslrs.org/"
               >
-                Expresslrs.org
-              </DocumentationLink>{' '}
-              {t('BuildResponse.DodumentP2')}{' '}
-              <DocumentationLink
-                firmwareVersion={firmwareVersionData}
-                url="https://www.expresslrs.org/quick-start/getting-started/"
-              >
-                {t('BuildResponse.DodumentP3')}
-              </DocumentationLink>{' '}
-              {t('BuildResponse.DodumentP4')}{' '}
-              <DocumentationLink
-                firmwareVersion={firmwareVersionData}
-                url="https://www.expresslrs.org/quick-start/troubleshooting/#flashingupdating"
-              >
-                {t('BuildResponse.DodumentP5')}
-              </DocumentationLink>
-              {t('BuildResponse.DodumentP6')}{' '}
-              <DocumentationLink
-                firmwareVersion={firmwareVersionData}
-                url="https://discord.gg/dS6ReFY"
-              >
-                ExpressLRS Discord
-              </DocumentationLink>{' '}
-              {t('BuildResponse.DodumentP7')}
+                An error has occured, see the above log for the exact error
+                message. If you have not already done so, visit{' '}
+                <DocumentationLink url="https://www.expresslrs.org/">
+                  Expresslrs.org
+                </DocumentationLink>{' '}
+                and read the{' '}
+                <DocumentationLink url="https://www.expresslrs.org/quick-start/getting-started/">
+                  Flashing Guide
+                </DocumentationLink>{' '}
+                for your particular device as well as the{' '}
+                <DocumentationLink url="https://www.expresslrs.org/quick-start/troubleshooting/#flashingupdating">
+                  Troubleshooting Guide
+                </DocumentationLink>
+                . If you are still having issues after reviewing the
+                documentation, please copy the build logs above to an online
+                paste site and post in the #help-and-support channel on the{' '}
+                <DocumentationLink url="https://discord.gg/dS6ReFY">
+                  ExpressLRS Discord
+                </DocumentationLink>{' '}
+                with a link to the logs and other relevant information like your
+                device, which flashing method you were using, and what steps you
+                have already taken to resolve the issue.
+              </Trans>
             </p>
           </Alert>
         )}

@@ -15,13 +15,7 @@
     "FlashError": "刷写错误",
     "TargetMismatch": "您尝试刷写的目标与当前设备不匹配，如果您确定要这样做，请单击下面的强制刷写",
     "Success": "成功！",
-    "DodumentP1": "发生了一个错误，确切的错误信息请见上述日志。如果你还没有这样做，请访问",
-    "DodumentP2": "并对于您的特定设备阅读",
-    "DodumentP3": "刷写指南",
-    "DodumentP4": "以及",
-    "DodumentP5": "故障排除指南",
-    "DodumentP6": "。 如果你在查看文档后仍有问题，请将上述构建日志复制到一个在线粘贴站点，并在 #help-and-support 频道中发布，该频道位于",
-    "DodumentP7": "并附上日志的链接和其他相关信息，如你的设备，你使用的是哪种刷写方法，以及你已经采取了哪些措施来解决问题。"
+    "ErrorDetails": "发生了一个错误，确切的错误信息请见上述日志。如果你还没有这样做，请访问 <2>Expresslrs.org</2> 并对于您的特定设备阅读 <6>刷写指南</6> 以及 <10>故障排除指南</10>。 如果你在查看文档后仍有问题，请将上述构建日志复制到一个在线粘贴站点，并在 #help-and-support 频道中发布，该频道位于 <13>ExpressLRS Discord</13> 并附上日志的链接和其他相关信息，如你的设备，你使用的是哪种刷写方法，以及你已经采取了哪些措施来解决问题。"
   },
   "DeviceOptionsForm": {
     "StandardMode": "标准模式",
@@ -43,17 +37,17 @@
     "Device": "设备"
   },
   "FirmwareVersionForm": {
-    "OfficialReleases": "正式版发布",
+    "OfficialReleases": "正式版",
     "GitBranch": "Git 分支",
     "GitCommit": "Git 提交",
     "Local": "本地",
     "GitPullRequest": "Git 拉取请求",
     "ShowPreRreleases": "显示候选正式版",
-    "Releases": "发布",
+    "Releases": "版本",
     "ReleaseNotes": "发布日志",
     "NewerVersionAvailable": "有一个较新版本的固件可用",
     "UpgradeToV3": "ExpressLRS 2.X 已经不再被支持。请升级到ExpressLRS 3.X。",
-    "DangerZoneTile": "！！！危险区！！！",
+    "DangerZoneTitle": "！！！危险区！！！",
     "DangerZoneContent": "只有在你知道你在做什么或被项目开发人员指示的情况下，才使用这些来源。",
     "GitBranches": "Git 分支",
     "GitCommitHash": "Git 提交 hash",
@@ -78,8 +72,11 @@
     "EdgeTxPassthrough": "这种方法允许你在遥控器与高频头连接时，利用 EdgeTX 固件的直通功能对其进行刷写。",
     "Passthrough": "这种方法允许你在你的模块与发射器连接时，通过使用直通功能进行刷写。"
   },
+  "FlashingMethodOptions": {
+    "FlashingMethod": "刷写方式"
+  },
   "Header": {
-    "ExpressLrsConfigurator": "ExpressLRS 配置器",
+    "ExpressLRSConfigurator": "ExpressLRS 配置器",
     "DownloadNewestRelease": "点击下载最新版本",
     "UpdateAvailable": "更新可用！",
     "Documentation": "文档",
@@ -101,54 +98,32 @@
     "Configurator": "配置器",
     "Backpack": "背包",
     "Logs": "日志",
-    "SerialMonitor": "串口显示器",
+    "SerialMonitor": "串口监视器",
     "Support": "支持"
   },
   "UserDefineDescription": {
-    "915RegulationP1": "咨询",
-    "915RegulationP2": "LoRaWAN 频率计划和条例",
-    "915RegulationP3": "用于在您所在位置使用的监管域。",
+    "RegulatoryDomain915": "咨询 <2>LoRaWAN 频率计划和条例</2> 来查看您所在位置使用的监管域。",
     "Wiki": "请查看我们的 Wiki 页面了解最新定义。",
-    "2400ISMRegulation": "ISM 无线电波段是国际上保留的无线电频谱的一部分。你可以在任何国家安全地使用这一监管领域。",
-    "2400EURegulation": "对于早于 v3.x 的固件版本，EU CE 2.4 GHz 监管域将最大功率限制在 10mW，不需要 LBT（先听后说）。对于晚于 v3.x 的固件版本，EU CE 2.4 GHz 监管域将最大功率限制在 100mW，并启用 LBT（先听后说）。",
+    "RegulatoryDomainISM2400": "ISM 无线电波段是国际上保留的无线电频谱的一部分。你可以在任何国家安全地使用这一监管领域。",
+    "RegulatoryDomainEUCE2400": "对于早于 v3.x 的固件版本，EU CE 2.4 GHz 监管域将最大功率限制在 10mW，不需要 LBT（Listen Before Talk）。对于晚于 v3.x 的固件版本，EU CE 2.4 GHz 监管域将最大功率限制在 100mW，并启用 LBT（Listen Before Talk）。",
     "BindingPhrase": "对频短语将接收机与高频头对频，不需要你手动对频。没有对频短语的接收机将需要传统的对频方法。高频头和接收机都需要有相同的对频短语来连接。设置一些令人难忘的东西，并限制在符合拉丁字母的字母数字短语上。这不是一个密码，也不提供任何安全保障，它只是减少与其他飞行员的射频碰撞。",
-    "AutoWifiOnIntervalP1": "如果在启动后的几秒钟内没有找到连接，这将自动为任何有 ESP8285 的模块打开 WiFi。这使得通过连接到 RX 的 WiFi 网络和访问 10.0.0.1 来推送固件更新。",
-    "AutoWifiOnIntervalP2": "自动开启的时间间隔是以",
-    "AutoWifiOnIntervalP3": "秒",
-    "AutoWifiOnIntervalP4": "为单位。默认是 60 秒。",
-    "TLMReportIntervalMSP1": "使 TX 模块以一个固定的时间间隔向遥控器发送回传数据。这可以减少在高回传率下运行时的「回传丢失」警告，或者像 50hz 这样的低速率。",
-    "TLMReportIntervalMSP2": "默认值是",
-    "TLMReportIntervalMSP3": "如果你想改变它，你必须在你的毫秒值后加上",
-    "TLMReportIntervalMSP4": "。 例如，为了指定 100 毫秒的回传率，你必须这样输入：",
-    "TLMReportIntervalMSP5": "通常，对于基于 EdgeTX/OpenTX 的遥控器，你要保持",
-    "TLMReportIntervalMSP6": "对于 ErskyTx 的遥控器，则要保持",
-    "TLMReportIntervalMSP7": "",
+    "AutoWifiOnInterval": "<p>如果在启动后的几秒钟内没有找到连接，这将自动为任何有 ESP8285 的模块打开 WiFi。这使得通过连接到 RX 的 WiFi 网络和访问 10.0.0.1 来推送固件更新。</p><p>自动开启的时间间隔是以 <strong>秒</strong> 为单位。默认是 60 秒。</p>",
+    "TLMReportIntervalMs": "<p>使 TX 模块以一个固定的时间间隔向遥控器发送回传数据。这可以减少在高回传率下运行时的「回传丢失」警告，或者像 50hz 这样的低速率。</p><p>默认值是 <strong>240LU</strong>。如果你想更改它，必须在毫秒值后加上 <strong>LU</strong>。 例如，为了指定 100 毫秒的回传率，你必须这样输入：<strong>100LU</strong>。</p><p>通常，对于基于 EdgeTX/OpenTX 的遥控器，要设置为 <strong>240LU</strong>。对于 ErskyTx 的遥控器，则要设置为 <strong>100LU</strong>。</p>",
     "LockOnFirstConnection": "RF 模式锁定 - 默认模式是 RX 在可用的 RF 模式之间循环，从最高模式到最低模式暂停 5 秒，并找到 TX 传输的模式。这允许 RX 循环，但一旦建立连接，RX 将不再通过 RF 模式循环（直到它收到电源重置）。",
-    "JustBeepOnce": "这设置了 TX 是否只发出一次提示音，而不是播放启动歌曲。",
+    "JustBeepOnce": "这设置了 TX 是否只发出一次提示音，而不是播放启动旋律。",
     "DisableStartupBeep": "这设置了 TX 在启动时是否应保持安静。",
     "DisableAllBeeps": "禁用所有的蜂鸣声。",
-    "MyStartupMelodyP1": "使用 BlHeli32 语法来定义你自己的启动旋律。参数 music string 和 bpm 是必须的，而 semitone offset 是可选的，用于将整个旋律向上或向下移位到定义的半音数量。BlHeli32 旋律的例子可以在以下网站找到",
-    "MyStartupMelodyP2": "Rox Wolfs YouTube 频道",
-    "MyStartupMelodyP3": "，不过可能需要进行一些实验。",
-    "MyStartupMelodyP4": "要写出自己的旋律，",
-    "MyStartupMelodyP5": "和",
-    "MyStartupMelodyP6": "是有用的资源。",
-    "MyStartupMelodyP7": "这个选项现在也支持 RTTTL 格式的旋律。",
-    "MyStartupMelodyP8": "是发现新旋律的重要资源。",
-    "UnlockHigherPowerP1": "有一些报告称，原装散热的 R9M 模块在 > 250mw 时显示不稳定。这部分是因为与原装固件相比，ELRS 使用更高的传输占空比。默认情况下，功率限制为 250mw。通过启用以下选项，您最多可以解锁 1000mw。如果您不进行散热改装，请自行承担风险。",
-    "UnlockHigherPowerP2": "我们发布了",
-    "UnlockHigherPowerP3": "R9M 风扇改装外壳",
-    "UnlockHigherPowerP4": "，一个定制的 3D 打印背板，为风扇和额外的散热提供了空间，以允许最大功率（1-2W，取决于 mod）。",
+    "MyStartupMelody": "<0>使用 BlHeli32 语法来定义你自己的启动旋律。参数 music string 和 bpm 是必须的，而 semitone offset 是可选的，用于将整个旋律向上或向下移位到定义的半音数量。BlHeli32 旋律的例子可以在以下网站找到 <2>Rox Wolfs YouTube 频道</2>，不过可能需要进行一些测试。</0><1>要写出自己的旋律，<2>Sheet Music 101</2> 和 <6>BLHeli Piano</6> 是有用的资源。</1><2>这个选项现在也支持 RTTTL 格式的旋律。<2>EscTunes.com</2> 是发现新旋律的重要资源。</2>",
+    "UnlockHigherPower": "<0>有一些报告称，原装散热的 R9M 模块在 >250mw 时显示不稳定。这部分是因为与原装固件相比，ELRS 使用更高的传输占空比。默认情况下，功率限制为 250mw。通过启用以下选项，您最多可以解锁 1000mw。如果您不进行散热改装，请自行承担风险。</0><1>我们发布了 <2>R9M 风扇改装外壳</2>，一个定制的 3D 打印背板，为风扇和额外的散热提供了空间，以允许最大功率（1-2W，取决于 mod）。</1>",
     "UARTInverted": "启用与输出「反向CRSF」的遥控器的兼容性，如 FRSky QX7、TBS Tango 2、RadioMaster TX16S。在大多数情况下，你要保持这个功能的启用。如果你的遥控器是 T8SG V2 或你使用 Deviation 固件，请关闭此设置。",
     "RCVRUARTBaud": "接收机 UART 波特率。默认为420000。将此选项设置为 400000，您的接收机将与 Kiss v1 飞控一起工作。",
     "RCVRInvertTX": "如果使用一个只有 RXI/SBUS（RX反向）焊盘的飞控，打开这个选项，将接收器的 CRSF 输出反向，以便能够使用该焊盘。这不会将输出转换为 SBUS，它是反向的 CRSF，所以 CRSF 仍应是飞控软件中选择的接收机协议。仅限基于 ESP 的接收机。",
-    "UseR9MMR9MINISBUSP1": "！！！这不会启用 SBUS 协议！！！",
-    "UseR9MMR9MINISBUSP2": "这对没有非反向 UART 选项的 F4 飞控很有用。这只是一种方式，所以你会失去对无线电的回传下行链路以及直通刷写。这将从你的 R9MM/R9Mini 的默认 S.BUS 引脚中输出。",
+    "UseR9MMR9MiniSBUS": "<p><strong>！！！这不会启用 SBUS 协议！！！</strong></p><p>这对没有非反向 UART 选项的 F4 飞控很有用。这只是一种方式，所以你会失去对无线电的回传下行链路以及直通刷写。这将从你的 R9MM/R9Mini 的默认 S.BUS 引脚中输出。</p>",
     "HomeWifiSSID": "设置家庭 WiFi 网络名称（SSID）。它将允许支持 WiFi 的硬件自动连接到家庭网络。",
     "HomeWifiPassword": "设置家庭 WiFi 网络密码。它将允许支持 WiFi 的硬件自动连接到家庭网络。"
   },
   "UserDefinesAdvisor": {
-    "DisablUARTInvertedrWarning": "禁用 UART_INVERTED 是不常见的。请确保你的遥控器支持这一点。"
+    "DisableUARTInvertedWarning": "禁用 UART_INVERTED 是不常见的。请确保你的遥控器支持这一点。"
   },
   "UserDefinesList": {
     "CustomBindingPhrase": "自定义对频短语",
@@ -157,18 +132,18 @@
   },
   "WifiDeviceSelect": {
     "DefaultWifiIp": "默认 (10.0.0.1)",
-    "WiFiDevices": "WiFi 设备",
+    "WifiDevices": "WiFi 设备",
     "Manual": "手动",
-    "WiFiDeviceSelection": "WiFi 设备选择",
+    "WifiDeviceSelection": "WiFi 设备选择",
     "IPAddress": "IP 地址"
   },
   "Updater": {
     "FoundUpdates": "发现更新",
-    "UdateNow": "发现更新，是否现在更新？",
+    "UpdateNow": "发现更新，是否现在更新？",
     "Sure": "是的",
     "Later": "稍后",
     "UpdateDownloading": "正在下载更新",
-    "notifiedWhenReadyToInstall.": "更新正在下载中，当它准备好安装时，你会得到通知。",
+    "NotifiedWhenReadyToInstall.": "更新正在下载中，当它准备好安装时，你会得到通知。",
     "Restart": "重启",
     "ApplicationUpdate": "应用程序更新",
     "Update": "更新",
@@ -180,6 +155,7 @@
     "Target": "目标",
     "Notice": "注意",
     "SelectFirmwareVersionFirst": "请先选择一个固件版本。",
+    "Actions": "动作",
     "DeviceOptions": "设备选项",
     "ResetDeviceice": "将设备选项重置为该设备目标上的推荐默认值。除了你的自定义对频短语。",
     "Reset": "重置",
@@ -190,9 +166,11 @@
     "DeviceSelectError": "设备选择错误",
     "DeviceCouldNotBeAutomaticallySelected": "无法自动选择目标设备，必须手动完成。",
     "Close": "关闭",
+    "Logs": "日志",
     "CopyLogToClipboard": "复制日志到剪贴板",
     "SaveLogToFile": "保存日志到文件",
-    "BuildsTakeMminutesFirstTime": "有时构建至少需要几分钟。这是正常的，特别是对于第一次构建。",
+    "BuildsTakeMinutesFirstTime": "有时构建至少需要几分钟。这是正常的，特别是对于第一次构建。",
+    "Result": "结果",
     "Warning": "警告",
     "WaitForLEDBeforeDisconnectingPower": "请等待 LED 恢复闪烁后再断开电源",
     "UpdateLuaScript": "更新 Lua 脚本",
@@ -206,6 +184,14 @@
     "Logs": "日志",
     "OpenLogsFolder": "打开日志文件夹"
   },
+  "SerialMonitorView": {
+    "SerialMonitor": "串口监视器",
+    "Disconnect": "断开连接"
+  },
+  "SettingsView": {
+    "DisplayConfiguratorVersion": "显示配置器版本",
+    "LanguageSelector": "语言选择"
+  },
   "SupportView": {
     "Support": "支持",
     "JoinTheCommunity": "需要帮助吗？感到困惑？加入社区！",
@@ -216,12 +202,12 @@
     "LegalDisclaimer": "法律免责声明",
     "UseAtYourOwnRisk": "使用和操作这种类型的设备可能需要许可证，一些国家可能禁止使用。确保遵守当地法规完全取决于终端用户。这是实验性的软件/硬件，不保证其稳定性或可靠性。使用风险自负。",
     "CorruptedFirmwareFiles": "损坏的固件文件",
-    "YouCanManuallyClearAllFiles": "如果您在 git 下载固件文件时关闭配置器，git 仓库状态可能会被破坏。你可以手动清除所有文件，并重新开始构建过程。",
+    "YouCanManuallyClearAllFiles": "如果您在 Git 下载固件文件时关闭配置器，Git 仓库状态可能会被破坏。你可以手动清除所有文件，并重新开始构建过程。",
     "ClearFirmwareFiles": "清除固件文件",
-    "CorruptedFirmwareFilesDeleted": "损坏的固件文件已被删除，git 仓库已被清理。请尝试重新构建。",
-    "CorruptedPlatformioDependencies": "损坏的 platformio 依赖文件",
-    "YouCanManuallyClearAllDependencies": "如果你在 platformio 下载依赖文件时关闭配置器，git 仓库的状态会被破坏。你可以手动清除所有的依赖项，然后重新开始构建过程。",
-    "ClearPlatformioDependencies": "清除 platformio 依赖文件",
-    "CorruptedPlatformioDependenciesDeleted": "损坏的 platformio 依赖关系已被删除，git 存储库已被清理。试着重新构建。"
+    "CorruptedFirmwareFilesDeleted": "损坏的固件文件已被删除，Git 仓库已被清理。请尝试重新构建。",
+    "CorruptedPlatformioDependencies": "损坏的 Platformio 依赖文件",
+    "YouCanManuallyClearAllDependencies": "如果你在 platformio 下载依赖文件时关闭配置器，Git 仓库的状态会被破坏。你可以手动清除所有的依赖项，然后重新开始构建过程。",
+    "ClearPlatformioDependencies": "清除 Platformio 依赖文件",
+    "CorruptedPlatformioDependenciesDeleted": "损坏的 Platformio 依赖关系已被删除，Git 存储库已被清理。试着重新构建。"
   }
 }

@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import React, { FunctionComponent, useCallback, useMemo } from 'react';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import { Device, Target } from '../../gql/generated/types';
 import FlashingMethodDescription from '../FlashingMethodDescription';
 
@@ -57,6 +58,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   props
 ) => {
   const { onChange, currentTarget, currentDevice } = props;
+  const { t } = useTranslation();
   const targetMappingsSorted = useMemo(
     () => sortDeviceTargets(currentDevice?.targets ?? []),
     [currentDevice?.targets]
@@ -104,7 +106,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
   return (
     <Box sx={styles.root}>
       <Typography variant="h6" sx={styles.categoryTitle}>
-        Flashing Method
+        {t('FlashingMethodOptions.FlashingMethod')}
       </Typography>
       <FormControl component="fieldset" sx={styles.flashingMethods}>
         <RadioGroup
