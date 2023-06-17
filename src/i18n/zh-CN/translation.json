@@ -1,8 +1,8 @@
 {
   "BuildNotificationsList": {
-    "VerifyingBuildSystem": "正在验证构建环境",
+    "VerifyingBuildSystem": "正在验证编译环境",
     "DownloadingFirmware": "正在下载固件",
-    "BuildingUserDefinesTXT": "正在构建 user_defines.txt",
+    "BuildingUserDefinesTXT": "正在编译 user_defines.txt",
     "CompilingFirmware": "正在编译固件",
     "FlashingDevice": "正在刷写设备"
   },
@@ -11,17 +11,17 @@
     "GitDependencyError": "Git 依赖错误",
     "PythonDependencyError": "Python 依赖错误",
     "PlatformioDependencyError": "Platformio 依赖错误",
-    "BuildError": "构建错误",
+    "BuildError": "编译错误",
     "FlashError": "刷写错误",
     "TargetMismatch": "您尝试刷写的目标与当前设备不匹配，如果您确定要这样做，请单击下面的强制刷写",
     "Success": "成功！",
-    "ErrorDetails": "发生了一个错误，确切的错误信息请见上述日志。如果你还没有这样做，请访问 <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> 并对于您的特定设备阅读 <FlashingGuideLink>刷写指南</FlashingGuideLink> 以及 <TroubleshootingGuideLink>故障排除指南</TroubleshootingGuideLink>。 如果你在查看文档后仍有问题，请将上述构建日志复制到一个在线粘贴站点，并在 #help-and-support 频道中发布，该频道位于 <ExpressLRSDiscordLink>ExpressLRS Discord</ExpressLRSDiscordLink> 并附上日志的链接和其他相关信息，如你的设备，你使用的是哪种刷写方法，以及你已经采取了哪些措施来解决问题。"
+    "ErrorDetails": "发生了一个错误，确切的错误信息请见上述日志。如果你还没有这样做，请访问 <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> 并对于您的特定设备阅读 <FlashingGuideLink>刷写指南</FlashingGuideLink> 以及 <TroubleshootingGuideLink>故障排除指南</TroubleshootingGuideLink>。 如果你在查看文档后仍有问题，请将上述编译日志复制到一个在线粘贴站点，并在 #help-and-support 频道中发布，该频道位于 <ExpressLRSDiscordLink>ExpressLRS Discord</ExpressLRSDiscordLink> 并附上日志的链接和其他相关信息，如你的设备，你使用的是哪种刷写方法，以及你已经采取了哪些措施来解决问题。"
   },
   "DeviceOptionsForm": {
     "StandardMode": "标准模式",
     "ManualMode": "手动模式",
     "CopyFromStandardMode": "从标准模式复制",
-    "LongerBuildTimeWarning": "当使用手动用户定义模式时，云二进制缓存被禁用，导致构建时间大大延长。",
+    "LongerBuildTimeWarning": "当使用手动用户定义模式时，云二进制缓存被禁用，导致编译时间大大延长。",
     "RegulatoryDomains": "监管领域",
     "BindingPhraseSetup": "对频短语的设置",
     "CompatibilityOptions": "兼容性选项",
@@ -61,7 +61,7 @@
     "BetaflightPassthroughP1": "这种方法允许你在接收机与飞控连接时，通过使用飞控的直通功能进行刷写。",
     "BetaflightPassthroughP2": "将飞控插到电脑上，但不要连接到 betaflight 配置器。",
     "BetaflightPassthroughP3": "在下面选择你想要的设备选项和你的飞控串行设备。",
-    "RunBuild&Flash": "运行 构建 & 刷写.",
+    "RunBuild&Flash": "运行 编译 & 刷写.",
     "BetaflightPassthroughWiki": "请查看我们的 Wiki 页面了解最新定义。",
     "DFU": "这种方法允许你通过 DFU 模式对你的接收机或高频头进行刷写。",
     "GeneralWiki": "请查看你的特定设备的 Wiki 页面以了解更多信息。",
@@ -159,8 +159,8 @@
     "DeviceOptions": "设备选项",
     "ResetDeviceice": "将设备选项重置为该设备目标上的推荐默认值。除了你的自定义对频短语。",
     "Reset": "重置",
-    "Build": "构建",
-    "Build&Flash": "构建 & 刷写",
+    "Build": "编译",
+    "Build&Flash": "编译 & 刷写",
     "ForceFlash": "强制刷写",
     "NetworkDevices": "网络设备",
     "DeviceSelectError": "设备选择错误",
@@ -169,13 +169,13 @@
     "Logs": "日志",
     "CopyLogToClipboard": "复制日志到剪贴板",
     "SaveLogToFile": "保存日志到文件",
-    "BuildsTakeMinutesFirstTime": "有时构建至少需要几分钟。这是正常的，特别是对于第一次构建。",
+    "BuildsTakeMinutesFirstTime": "有时编译至少需要几分钟。这是正常的，特别是对于第一次编译。",
     "Result": "结果",
     "Warning": "警告",
     "WaitForLEDBeforeDisconnectingPower": "请等待 LED 恢复闪烁后再断开电源",
     "UpdateLuaScript": "更新 Lua 脚本",
     "UpdateLuaScriptOnRadio": "确保更新遥控器上的 Lua 脚本",
-    "BuildNotice": "构建通知",
+    "BuildNotice": "编译通知",
     "FirmwareOpenedInFileExplorer": "固件二进制文件已在文件资源管理器中打开",
     "Back": "返回",
     "Retry": "重试"
@@ -202,12 +202,12 @@
     "LegalDisclaimer": "法律免责声明",
     "UseAtYourOwnRisk": "使用和操作这种类型的设备可能需要许可证，一些国家可能禁止使用。确保遵守当地法规完全取决于终端用户。这是实验性的软件/硬件，不保证其稳定性或可靠性。使用风险自负。",
     "CorruptedFirmwareFiles": "损坏的固件文件",
-    "YouCanManuallyClearAllFiles": "如果您在 Git 下载固件文件时关闭配置器，Git 仓库状态可能会被破坏。你可以手动清除所有文件，并重新开始构建过程。",
+    "YouCanManuallyClearAllFiles": "如果您在 Git 下载固件文件时关闭配置器，Git 仓库状态可能会被破坏。你可以手动清除所有文件，并重新开始编译过程。",
     "ClearFirmwareFiles": "清除固件文件",
-    "CorruptedFirmwareFilesDeleted": "损坏的固件文件已被删除，Git 仓库已被清理。请尝试重新构建。",
+    "CorruptedFirmwareFilesDeleted": "损坏的固件文件已被删除，Git 仓库已被清理。请尝试重新编译。",
     "CorruptedPlatformioDependencies": "损坏的 Platformio 依赖文件",
-    "YouCanManuallyClearAllDependencies": "如果你在 platformio 下载依赖文件时关闭配置器，Git 仓库的状态会被破坏。你可以手动清除所有的依赖项，然后重新开始构建过程。",
+    "YouCanManuallyClearAllDependencies": "如果你在 platformio 下载依赖文件时关闭配置器，Git 仓库的状态会被破坏。你可以手动清除所有的依赖项，然后重新开始编译过程。",
     "ClearPlatformioDependencies": "清除 Platformio 依赖文件",
-    "CorruptedPlatformioDependenciesDeleted": "损坏的 Platformio 依赖关系已被删除，Git 存储库已被清理。试着重新构建。"
+    "CorruptedPlatformioDependenciesDeleted": "损坏的 Platformio 依赖关系已被删除，Git 存储库已被清理。试着重新编译。"
   }
 }
