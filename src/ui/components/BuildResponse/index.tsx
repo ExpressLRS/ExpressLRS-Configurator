@@ -26,7 +26,6 @@ const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
   ({ response, firmwareVersionData }) => {
     const { t } = useTranslation();
 
-    // TODO: translations
     const toTitle = (errorType: BuildFirmwareErrorType | undefined): string => {
       if (errorType === null || errorType === undefined) {
         return t('BuildResponse.Error');

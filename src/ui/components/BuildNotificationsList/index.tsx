@@ -36,7 +36,6 @@ const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> =
           return 'info';
       }
     };
-    // TODO: this should be used for translations
     const toText = (step: BuildFirmwareStep): string => {
       switch (step) {
         case BuildFirmwareStep.VERIFYING_BUILD_SYSTEM:

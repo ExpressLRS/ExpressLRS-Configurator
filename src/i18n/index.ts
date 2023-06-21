@@ -1,10 +1,10 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector'; // For auto-detecting language
-import Bankend from 'i18next-http-backend'; // For loading translations from backend
+import Backend from 'i18next-http-backend'; // For loading translations from backend
 
 i18n
-  .use(Bankend)
+  .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
