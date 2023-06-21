@@ -15,7 +15,7 @@
     "FlashError": "刷写错误",
     "TargetMismatch": "您尝试刷写的目标与当前设备不匹配，如果您确定要这样做，请单击下面的强制刷写",
     "Success": "成功！",
-    "ErrorDetails": "发生了一个错误，确切的错误信息请见上述日志。如果你还没有这样做，请访问 <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> 并对于您的特定设备阅读 <FlashingGuideLink>刷写指南</FlashingGuideLink> 以及 <TroubleshootingGuideLink>故障排除指南</TroubleshootingGuideLink>。 如果你在查看文档后仍有问题，请将上述编译日志复制到一个在线粘贴站点，并在 #help-and-support 频道中发布，该频道位于 <ExpressLRSDiscordLink>ExpressLRS Discord</ExpressLRSDiscordLink> 并附上日志的链接和其他相关信息，如你的设备，你使用的是哪种刷写方法，以及你已经采取了哪些措施来解决问题。"
+    "ErrorDetails": "发生了一个错误，详细的错误信息请见上述日志。如果你还没有这样做，请访问 <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> 并对于您的特定设备阅读 <FlashingGuideLink>刷写指南</FlashingGuideLink> 以及 <TroubleshootingGuideLink>故障排除指南</TroubleshootingGuideLink>。 如果你在查看文档后仍有问题，请将上述编译日志复制到一个在线粘贴站点，并在 #help-and-support 频道中发布，该频道位于 <ExpressLRSDiscordLink>ExpressLRS Discord</ExpressLRSDiscordLink> 并附上日志的链接和其他相关信息，如你的设备，你使用的是哪种刷写方法，以及你已经采取了哪些措施来解决问题。"
   },
   "DeviceOptionsForm": {
     "StandardMode": "标准模式",

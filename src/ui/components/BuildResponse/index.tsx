@@ -65,15 +65,6 @@ const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
             <p>
               <Trans
                 i18nKey="BuildResponse.ErrorDetails"
-                defaults="An error has occured, see the above log for the exact error message. If you have not 
-                already done so, visit <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> and read 
-                the <FlashingGuideLink>Flashing Guide</FlashingGuideLink> for your particular device as well as the 
-                <TroubleshootingGuideLink>Troubleshooting Guide<TroubleshootingGuideLink>. If you are 
-                still having issues after reviewing the documentation, please copy the build logs above to 
-                an online paste site and post in the #help-and-support channel on the 
-                <ExpressLRSDiscordLink>ExpressLRS Discord</ExpressLRSDiscordLink> with a link to the logs and other 
-                relevant information like your device, which flashing method you were using, and what steps you
-                have already taken to resolve the issue."
                 components={{
                   ExpresslrsLink: (
                     <DocumentationLink url="https://www.expresslrs.org/" />

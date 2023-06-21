@@ -154,7 +154,7 @@
     "FirmwareVersion": "Firmware version",
     "Target": "Target",
     "Notice": "Notice",
-    "SelectFirmwareVersionFirst.": "Please select a firmware version first.",
+    "SelectFirmwareVersionFirst": "Please select a firmware version first.",
     "Actions": "Actions",
     "DeviceOptions": "Device options",
     "ResetDeviceice": "Reset device options to the recommended defaults on this device target. Except for your custom binding phrase.",

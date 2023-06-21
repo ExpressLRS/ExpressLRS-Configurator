@@ -37,7 +37,6 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               <p>
                 <Trans
                   i18nKey="UserDefineDescription.RegulatoryDomain915"
-                  defaults="Consult <LoRaWANLink>LoRaWAN Frequency Plans and Regulations</LoRaWANLink> for a regulatory domain to use in your location."
                   components={{
                     LoRaWANLink: (
                       <DocumentationLink url="https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html" />
@@ -88,19 +87,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
         case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
           return (
             <div>
-              <Trans i18nKey="UserDefineDescription.AutoWifiOnInterval">
-                <p>
-                  This will automatically turn the wifi on for any module that
-                  has an ESP8285 on it if no connection is found after set
-                  amount of seconds from boot. This enables pushing firmware
-                  updates to the RX by connecting to its wifi network and
-                  visiting 10.0.0.1
-                </p>
-                <p>
-                  Auto on interval is defined in <strong>seconds</strong>.
-                  Default is 60 seconds.
-                </p>
-              </Trans>
+              <Trans i18nKey="UserDefineDescription.AutoWifiOnInterval" />
               <p>
                 <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#network-options">
                   {t('UserDefineDescription.Wiki')}
@@ -111,26 +98,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
         case UserDefineKey.TLM_REPORT_INTERVAL_MS:
           return (
             <div>
-              <Trans i18nKey="UserDefineDescription.TLMReportIntervalMs">
-                <p>
-                  Make the TX module send telemetry data to the handset at a
-                  fixed interval. This reduces the 「Telemetry Lost」warnings
-                  when running at a high telemetry ratio, or low rates like
-                  50hz.
-                </p>
-                <p>
-                  Default value is <strong>240LU</strong>. If you want to change
-                  that you have to suffix your milliseconds value with{' '}
-                  <strong>LU</strong>. For example, in order to specify 100 ms
-                  telemetry update rate you have to enter it like this:{' '}
-                  <strong>100LU</strong>.
-                </p>
-                <p>
-                  Typically, you want to keep <strong>240LU</strong> value for
-                  EdgeTX/OpenTX based radios, and <strong>100LU</strong> for
-                  ErskyTx ones.
-                </p>
-              </Trans>
+              <Trans i18nKey="UserDefineDescription.TLMReportIntervalMs" />
               <p>
                 <DocumentationLink url="https://www.expresslrs.org/software/user-defines/">
                   {t('UserDefineDescription.Wiki')}
@@ -187,15 +155,6 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
             <div>
               <Trans
                 i18nKey="UserDefineDescription.MyStartupMelody"
-                defaults="<p>Use this to define your own startup melody using the BlHeli32
-                syntax. The parameters music string and bpm are required,
-                whereas semitone offset is optional to transpose the entire
-                melody up or down by the defined amount of semitones. Example
-                BlHeli32 melodies are available on <RoxWolfsYoutubeChannelLink>Rox Wolfs Youtube channel</RoxWolfsYoutubeChannelLink>, 
-                some experimentation may be required though.</p><p>To write your own melody, 
-                <SheetMusic101lLink>Sheet Music 101</SheetMusic101lLink> and this <BLHeliPianoLink>BLHeli Piano</BLHeliPianoLink> are useful 
-                resources.</p><p>This option also supports melodies in RTTTL format now. 
-                <EscTunesLink>EscTunes.com</EscTunesLink> is great resource for discovering new melodies.</p>"
                 components={{
                   RoxWolfsYoutubeChannelLink: (
                     <DocumentationLink url="https://www.youtube.com/playlist?list=PL_O0XT_1mZinetucKyuBUvkju8P7DEg-v" />
@@ -223,15 +182,6 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
             <div>
               <Trans
                 i18nKey="UserDefineDescription.UnlockHigherPower"
-                defaults="<p>There has been some reports of the R9M modules showing
-                instability at >250mw with stock cooling. This in part
-                because the ELRS uses a higher duty cycle for transmission
-                compared to stock firmware. By default the power is limited to
-                250mw. You can unlock up to 1000mw by enabling the following
-                option. Do this at your own risk if you make no cooling
-                modifications.</p><p>We published <R9MFanModCoverLink>R9M Fan Mod Cover</R9MFanModCoverLink>, 
-                a custom 3d printed backplate with room for a fan and extra cooling to allow 
-                for maximum power (1-2W depending on the mod).</p>"
                 components={{
                   R9MFanModCoverLink: (
                     <DocumentationLink url="https://www.expresslrs.org/hardware/fan-mod/" />
@@ -281,19 +231,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
         case UserDefineKey.USE_R9MM_R9MINI_SBUS:
           return (
             <div>
-              <Trans i18nKey="UserDefineDescription.UseR9MMR9MiniSBUS">
-                <p>
-                  <strong>THIS DOES NOT ENABLE SBUS PROTOCOL.</strong>
-                </p>
-                <p>
-                  This is useful for F4 FCs which do not have an uninverted UART
-                  option. This is only one way, so you lose the telemetry
-                  downlink to your radio as well as passthrough flashing. This
-                  will output out of the default S.BUS pin on your R9MM/R9Mini.
-                  Set serialrx_inverted = ON may also be needed within
-                  Betaflight for compatibility
-                </p>
-              </Trans>
+              <Trans i18nKey="UserDefineDescription.UseR9MMR9MiniSBUS" />
               <p>
                 <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#compatibility-options">
                   {t('UserDefineDescription.Wiki')}
