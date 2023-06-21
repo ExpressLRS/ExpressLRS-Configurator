@@ -9,10 +9,13 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
-    debug: true,
     backend: {
       loadPath: './i18n/{{lng}}/translation.json',
     },
+    debug: !!(
+      process.env.NODE_ENV === 'development' ||
+      process.env.DEBUG_PROD === 'true'
+    ),
   });
 
 // i18n.changeLanguage('en')
