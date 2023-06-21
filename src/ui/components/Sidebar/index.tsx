@@ -12,7 +12,7 @@ import {
 import BuildIcon from '@mui/icons-material/Build';
 import HelpIcon from '@mui/icons-material/Help';
 import DvrIcon from '@mui/icons-material/Dvr';
-// import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from '@mui/icons-material/Settings';
 import ListIcon from '@mui/icons-material/List';
 import { matchPath, useLocation, Link } from 'react-router-dom';
 import BackpackIcon from '@mui/icons-material/Backpack';
@@ -49,6 +49,7 @@ const Sidebar: FunctionComponent = () => {
   const logsActive = matchPath(location.pathname, '/logs') !== null;
   const serialMonitorActive =
     matchPath(location.pathname, '/serial-monitor') !== null;
+  const settingsActive = matchPath(location.pathname, '/settings') !== null;
   const supportActive = matchPath(location.pathname, '/support') !== null;
   const { appStatus } = useAppState();
 
@@ -89,19 +90,6 @@ const Sidebar: FunctionComponent = () => {
             <ListItemText primary={t('Sidebar.Backpack')} />
           </ListItem>
 
-          {/* <ListItem */}
-          {/*  component={Link} */}
-          {/*  to="/settings" */}
-          {/*  selected={settingsActive} */}
-          {/*  sx={styles.menuItem} */}
-          {/*  button */}
-          {/* > */}
-          {/*  <ListItemIcon> */}
-          {/*    <SettingsIcon /> */}
-          {/*  </ListItemIcon> */}
-          {/*  <ListItemText primary="Settings" /> */}
-          {/* </ListItem> */}
-
           <ListItem
             component={Link}
             to="/logs"
@@ -128,6 +116,20 @@ const Sidebar: FunctionComponent = () => {
               <DvrIcon />
             </ListItemIcon>
             <ListItemText primary={t('Sidebar.SerialMonitor')} />
+          </ListItem>
+
+          <ListItem
+            component={Link}
+            to="/settings"
+            selected={settingsActive}
+            sx={styles.menuItem}
+            button
+            disabled={!navigationEnabled}
+          >
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary={t('Sidebar.Settings')} />
           </ListItem>
 
           <ListItem

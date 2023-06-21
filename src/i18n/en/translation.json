@@ -99,6 +99,7 @@
     "Backpack": "Backpack",
     "Logs": "Logs",
     "SerialMonitor": "Serial Monitor",
+    "Settings": "Settings",
     "Support": "Support"
   },
   "UserDefineDescription": {
@@ -189,7 +190,8 @@
     "Disconnect": "Disconnect"
   },
   "SettingsView": {
-    "DisplayConfiguratorVersion": "Display configurator version",
+    "Settings": "Settings",
+    "ConfiguratorVersion": "Configurator version",
     "LanguageSelector": "Language selector"
   },
   "SupportView": {

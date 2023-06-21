@@ -99,6 +99,7 @@
     "Backpack": "背包",
     "Logs": "日志",
     "SerialMonitor": "串口监视器",
+    "Settings": "设置",
     "Support": "支持"
   },
   "UserDefineDescription": {
@@ -189,7 +190,8 @@
     "Disconnect": "断开连接"
   },
   "SettingsView": {
-    "DisplayConfiguratorVersion": "显示配置器版本",
+    "Settings": "设置",
+    "ConfiguratorVersion": "配置器版本",
     "LanguageSelector": "语言选择"
   },
   "SupportView": {
