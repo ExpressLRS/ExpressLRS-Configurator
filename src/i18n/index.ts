@@ -12,10 +12,7 @@ i18n
     backend: {
       loadPath: './i18n/{{lng}}/translation.json',
     },
-    debug: !!(
-      process.env.NODE_ENV === 'development' ||
-      process.env.DEBUG_PROD === 'true'
-    ),
+    debug: process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true',
   });
 
 // i18n.changeLanguage('en')
