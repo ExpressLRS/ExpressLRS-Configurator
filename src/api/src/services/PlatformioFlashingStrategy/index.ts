@@ -362,26 +362,15 @@ export default class PlatformioFlashingStrategyService
         );
       }
 
-      if (
-        params.type === BuildJobType.BuildAndFlash ||
-        params.type === BuildJobType.ForceFlash
-      ) {
+      if (params.type === BuildJobType.Flash) {
         await this.updateProgress(
           BuildProgressNotificationType.Info,
           BuildFirmwareStep.FLASHING_FIRMWARE
         );
 
-        let uploadType: UploadType;
-        switch (params.type) {
-          case BuildJobType.BuildAndFlash:
-            uploadType = UploadType.Normal;
-            break;
-          case BuildJobType.ForceFlash:
-            uploadType = UploadType.Force;
-            break;
-          default:
-            throw new Error(`Unknown build job type ${params.type}`);
-        }
+        const uploadType = params.forceFlash
+          ? UploadType.Force
+          : UploadType.Normal;
 
         const flashResult = await this.builder.flash(
           params.target,

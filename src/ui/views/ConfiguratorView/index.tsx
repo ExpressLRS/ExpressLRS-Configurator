@@ -543,7 +543,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const [currentJobType, setCurrentJobType] = useState<BuildJobType>(
     BuildJobType.Build
   );
-  const sendJob = (type: BuildJobType) => {
+  const sendJob = (type: BuildJobType, force: boolean) => {
     reset();
     setCurrentJobType(type);
 
@@ -621,6 +621,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       userDefines,
       serialDevice: uploadPort,
       erase,
+      forceFlash: force,
     };
     buildFlashFirmwareMutation({
       variables: {
@@ -647,16 +648,12 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     }
   }, [buildInProgress, response]);
 
-  const onBuild = () => sendJob(BuildJobType.Build);
-  const onBuildAndFlash = () => {
-    if (forceFlash) {
-      sendJob(BuildJobType.ForceFlash);
-    } else {
-      sendJob(BuildJobType.BuildAndFlash);
-    }
+  const onBuild = () => sendJob(BuildJobType.Build, false);
+  const onFlash = () => {
+    sendJob(BuildJobType.Flash, forceFlash);
   };
 
-  const onForceFlash = () => sendJob(BuildJobType.ForceFlash);
+  const onForceFlash = () => sendJob(BuildJobType.Flash, true);
 
   const deviceTargetRef = useRef<HTMLDivElement | null>(null);
   const deviceOptionsRef = useRef<HTMLDivElement | null>(null);
@@ -1011,9 +1008,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     sx={styles.button}
                     size="large"
                     variant="contained"
-                    onClick={onBuildAndFlash}
+                    onClick={onFlash}
                   >
-                    Build & Flash
+                    Flash
                   </Button>
                 )}
               </div>
@@ -1129,7 +1126,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
               <Divider />
               <CardContent>
                 {response?.buildFlashFirmware?.success &&
-                  currentJobType === BuildJobType.BuildAndFlash &&
+                  currentJobType === BuildJobType.Flash &&
                   deviceTarget?.flashingMethod === FlashingMethod.WIFI && (
                     <Alert sx={styles.buildNotification} severity="warning">
                       <AlertTitle>Warning</AlertTitle>
@@ -1140,7 +1137,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <ShowAfterTimeout
                   timeout={
                     response?.buildFlashFirmware?.success &&
-                    currentJobType === BuildJobType.BuildAndFlash &&
+                    currentJobType === BuildJobType.Flash &&
                     deviceTarget?.flashingMethod === FlashingMethod.WIFI
                       ? 15000
                       : 1000
@@ -1192,7 +1189,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     size="large"
                     variant="contained"
                     onClick={() => {
-                      sendJob(currentJobType);
+                      sendJob(currentJobType, forceFlash);
                     }}
                   >
                     Retry

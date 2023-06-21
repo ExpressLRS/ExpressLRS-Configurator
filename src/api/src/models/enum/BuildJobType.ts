@@ -2,8 +2,7 @@ import { registerEnumType } from 'type-graphql';
 
 enum BuildJobType {
   Build = 'Build',
-  BuildAndFlash = 'BuildAndFlash',
-  ForceFlash = 'ForceFlash',
+  Flash = 'Flash',
 }
 
 registerEnumType(BuildJobType, {

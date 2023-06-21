@@ -12,4 +12,5 @@ export interface BuildFlashFirmwareParams {
   userDefines: UserDefine[];
   userDefinesTxt: string;
   erase: boolean;
+  forceFlash: boolean;
 }

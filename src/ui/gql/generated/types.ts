@@ -43,6 +43,7 @@ export enum BuildFirmwareStep {
 export type BuildFlashFirmwareInput = {
   readonly erase?: Scalars['Boolean'];
   readonly firmware?: FirmwareVersionDataInput;
+  readonly forceFlash?: Scalars['Boolean'];
   readonly serialDevice?: InputMaybe<Scalars['String']>;
   readonly target?: Scalars['String'];
   readonly type?: BuildJobType;
@@ -61,8 +62,7 @@ export type BuildFlashFirmwareResult = {
 
 export enum BuildJobType {
   Build = 'Build',
-  BuildAndFlash = 'BuildAndFlash',
-  ForceFlash = 'ForceFlash',
+  Flash = 'Flash',
 }
 
 export type BuildLogUpdate = {

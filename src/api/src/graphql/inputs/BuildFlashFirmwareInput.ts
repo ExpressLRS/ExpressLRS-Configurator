@@ -30,6 +30,9 @@ export default class BuildFlashFirmwareInput {
   @Field()
   erase: boolean;
 
+  @Field()
+  forceFlash: boolean;
+
   constructor() {
     this.type = BuildJobType.Build;
     this.firmware = new FirmwareVersionDataInput();
@@ -38,5 +41,6 @@ export default class BuildFlashFirmwareInput {
     this.userDefines = [];
     this.userDefinesTxt = '';
     this.erase = false;
+    this.forceFlash = false;
   }
 }
