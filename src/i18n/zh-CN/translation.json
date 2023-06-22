@@ -207,12 +207,7 @@
   "SettingsView": {
     "Settings": "设置",
     "LanguageSelector": "语言选择",
-    "CurrentLanguage": "当前语言",
-    "SystemInfo": "系统信息",
-    "ELRSConfiguratorVersion": "ExpressLRS 配置器版本",
-    "Platform": "平台",
-    "CPU": "处理器",
-    "RAM": "内存"
+    "CurrentLanguage": "当前语言"
   },
   "SupportView": {
     "Support": "支持",

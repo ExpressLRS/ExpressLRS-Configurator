@@ -808,7 +808,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       {viewState === ViewState.Configuration && (
         <>
           <Card>
-            <CardTitle icon={<SettingsIcon />} title={t('ConfiguratorView.FirmwareVersion')} />
+            <CardTitle
+              icon={<SettingsIcon />}
+              title={t('ConfiguratorView.FirmwareVersion')}
+            />
             <Divider />
             <CardContent>
               <FirmwareVersionForm
@@ -820,7 +823,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             </CardContent>
             <Divider />
 
-            <CardTitle icon={<SettingsIcon />} title={t('ConfiguratorView.Target')} />
+            <CardTitle
+              icon={<SettingsIcon />}
+              title={t('ConfiguratorView.Target')}
+            />
             <Divider />
             <CardContent ref={deviceTargetRef}>
               {firmwareVersionData === null ||
@@ -863,9 +869,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       <Tooltip
                         placement="top"
                         arrow
-                        title={
-                          <div>{t('ConfiguratorView.ResetDevice')}</div>
-                        }
+                        title={<div>{t('ConfiguratorView.ResetDevice')}</div>}
                       >
                         <Button onClick={onResetToDefaults} size="small">
                           {t('ConfiguratorView.Reset')}
@@ -906,7 +910,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             </CardContent>
             <Divider />
 
-            <CardTitle icon={<SettingsIcon />} title={t('ConfiguratorView.Actions')} />
+            <CardTitle
+              icon={<SettingsIcon />}
+              title={t('ConfiguratorView.Actions')}
+            />
             <Divider />
             <CardContent>
               <UserDefinesAdvisor
@@ -962,7 +969,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                           disableRipple
                         />
                       </ListItemIcon>
-                      <ListItemText>{t('ConfiguratorView.EraseBeforeFlash')}</ListItemText>
+                      <ListItemText>
+                        {t('ConfiguratorView.EraseBeforeFlash')}
+                      </ListItemText>
                     </ListItem>
                   )}
                   <ListItem
@@ -981,7 +990,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                         disableRipple
                       />
                     </ListItemIcon>
-                    <ListItemText>{t('ConfiguratorView.ForceFlash')}</ListItemText>
+                    <ListItemText>
+                      {t('ConfiguratorView.ForceFlash')}
+                    </ListItemText>
                   </ListItem>
                 </List>
                 {deviceTarget?.flashingMethod !== FlashingMethod.UART &&
@@ -1018,7 +1029,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             {networkDevices.size > 0 && (
               <Box>
                 <Divider />
-                <CardTitle icon={<NetworkWifi />} title={t('ConfiguratorView.NetworkDevices')} />
+                <CardTitle
+                  icon={<NetworkWifi />}
+                  title={t('ConfiguratorView.NetworkDevices')}
+                />
                 <Divider />
                 <CardContent>
                   <div>
@@ -1059,7 +1073,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
       {viewState === ViewState.Compiling && (
         <Card>
-          <CardTitle icon={<SettingsIcon />} title={t('ConfiguratorView.Build')} />
+          <CardTitle
+            icon={<SettingsIcon />}
+            title={t('ConfiguratorView.Build')}
+          />
           <Divider />
           <CardContent>
             <BuildProgressBar
@@ -1119,7 +1136,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           )}
           {response !== undefined && (
             <>
-              <CardTitle icon={<SettingsIcon />} title={t('ConfiguratorView.Result')} />
+              <CardTitle
+                icon={<SettingsIcon />}
+                title={t('ConfiguratorView.Result')}
+              />
               <Divider />
               <CardContent>
                 {response?.buildFlashFirmware?.success &&
@@ -1170,7 +1190,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           )}
           {!buildInProgress && (
             <>
-              <CardTitle icon={<SettingsIcon />} title={t('ConfiguratorView.Actions')} />
+              <CardTitle
+                icon={<SettingsIcon />}
+                title={t('ConfiguratorView.Actions')}
+              />
               <Divider />
               <CardContent>
                 <Button

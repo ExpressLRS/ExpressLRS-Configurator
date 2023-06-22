@@ -9,8 +9,8 @@ import {
 } from '@mui/material';
 import React, { FunctionComponent, useMemo } from 'react';
 import { SxProps, Theme } from '@mui/system';
-import { MulticastDnsInformation } from '../../gql/generated/types';
 import { useTranslation } from 'react-i18next';
+import { MulticastDnsInformation } from '../../gql/generated/types';
 
 const styles: Record<string, SxProps<Theme>> = {
   root: {

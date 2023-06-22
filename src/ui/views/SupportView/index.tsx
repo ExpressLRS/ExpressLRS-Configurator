@@ -67,14 +67,20 @@ const SupportView: FunctionComponent = () => {
           </ul>
         </CardContent>
         <Divider />
-        <CardTitle icon={<SettingsIcon />} title={t('SupportView.Troubleshooting')} />
+        <CardTitle
+          icon={<SettingsIcon />}
+          title={t('SupportView.Troubleshooting')}
+        />
         <Divider />
         <CardContent>
           <ClearPlatformioDependencies />
           <ClearFirmwareFiles />
         </CardContent>
         <Divider />
-        <CardTitle icon={<SettingsIcon />} title={t('SupportView.LegalDisclaimer')} />
+        <CardTitle
+          icon={<SettingsIcon />}
+          title={t('SupportView.LegalDisclaimer')}
+        />
         <Divider />
         <CardContent>
           <p>{t('SupportView.UseAtYourOwnRisk')}</p>

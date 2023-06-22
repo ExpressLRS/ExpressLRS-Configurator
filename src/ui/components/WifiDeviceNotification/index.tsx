@@ -1,9 +1,9 @@
 import { Alert, Button, Snackbar } from '@mui/material';
 import React, { FunctionComponent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
-import { useTranslation } from 'react-i18next';
 
 interface WifiDeviceNotificationProps {
   newNetworkDevices: MulticastDnsInformation[];
@@ -32,7 +32,8 @@ const WifiDeviceNotification: FunctionComponent<WifiDeviceNotificationProps> = (
             onClose={handleClose}
           >
             <Alert onClose={handleClose} severity="info">
-              {t('WifiDeviceNotification.NewDevice')} {dnsDevice.name} ({dnsDevice.ip})
+              {t('WifiDeviceNotification.NewDevice')} {dnsDevice.name} (
+              {dnsDevice.ip})
               <Button
                 size="small"
                 onClick={() => {
