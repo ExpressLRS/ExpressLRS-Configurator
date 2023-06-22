@@ -10,7 +10,7 @@ i18n
   .init({
     fallbackLng: 'en',
     backend: {
-      loadPath: './i18n/{{lng}}/translation.json',
+      loadPath: './i18n/locales/{{lng}}/messages.json',
     },
     debug:
       process.env.NODE_ENV === 'development' ||
