@@ -3,6 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
+import { useTranslation } from 'react-i18next';
 
 interface WifiDeviceNotificationProps {
   newNetworkDevices: MulticastDnsInformation[];
@@ -15,6 +16,7 @@ const WifiDeviceNotification: FunctionComponent<WifiDeviceNotificationProps> = (
 ) => {
   const { newNetworkDevices, removeDeviceFromNewList, onDeviceChange } = props;
   const { appStatus } = useAppState();
+  const { t } = useTranslation();
 
   return appStatus === AppStatus.Interactive
     ? newNetworkDevices.map((dnsDevice) => {
@@ -30,7 +32,7 @@ const WifiDeviceNotification: FunctionComponent<WifiDeviceNotificationProps> = (
             onClose={handleClose}
           >
             <Alert onClose={handleClose} severity="info">
-              New Device {dnsDevice.name} ({dnsDevice.ip})
+              {t('WifiDeviceNotification.NewDevice')} {dnsDevice.name} ({dnsDevice.ip})
               <Button
                 size="small"
                 onClick={() => {
@@ -38,7 +40,7 @@ const WifiDeviceNotification: FunctionComponent<WifiDeviceNotificationProps> = (
                   removeDeviceFromNewList(dnsDevice.name);
                 }}
               >
-                Select
+                {t('WifiDeviceNotification.Select')}
               </Button>
             </Alert>
           </Snackbar>

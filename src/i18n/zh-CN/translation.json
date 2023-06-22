@@ -58,9 +58,9 @@
     "GitPullRequests": "Git 提交"
   },
   "FlashingMethodDescription": {
-    "BetaflightPassthroughP1": "这种方法允许你在接收机与飞控连接时，通过使用飞控的直通功能进行刷写。",
-    "BetaflightPassthroughP2": "将飞控插到电脑上，但不要连接到 betaflight 配置器。",
-    "BetaflightPassthroughP3": "在下面选择你想要的设备选项和你的飞控串行设备。",
+    "BetaflightPassthroughDescription": "这种方法允许你在接收机与飞控连接时，通过使用飞控的直通功能进行刷写。",
+    "PlugInFCToComputer": "将飞控插到电脑上，但不要连接到 betaflight 配置器。",
+    "SelectDesiredDevice": "在下面选择你想要的设备选项和你的飞控串行设备。",
     "RunBuild&Flash": "运行 编译 & 刷写.",
     "BetaflightPassthroughWiki": "请查看我们的 Wiki 页面了解最新定义。",
     "DFU": "这种方法允许你通过 DFU 模式对你的接收机或高频头进行刷写。",
@@ -130,6 +130,19 @@
     "CustomBindingPhrase": "自定义对频短语",
     "MyStartupMelody": "我的启动旋律",
     "Value": "值"
+  },
+  "WifiDeviceList": {
+    "Name": "名称",
+    "Target": "目标",
+    "Version": "版本",
+    "Type": "类型",
+    "DNS": "DNS",
+    "IP": "IP",
+    "Select": "选择"
+  },
+  "WifiDeviceNotification": {
+    "NewDevice": "新设备",
+    "Select": "选择"
   },
   "WifiDeviceSelect": {
     "DefaultWifiIp": "默认 (10.0.0.1)",

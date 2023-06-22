@@ -131,6 +131,19 @@
     "MyStartupMelody": "My startup melody",
     "Value": "Value"
   },
+  "WifiDeviceList": {
+    "Name": "Name",
+    "Target": "Target",
+    "Version": "Version",
+    "Type": "Type",
+    "DNS": "DNS",
+    "IP": "IP",
+    "Select": "Select"
+  },
+  "WifiDeviceNotification": {
+    "NewDevice": "New Device",
+    "Select": "Select"
+  },
   "WifiDeviceSelect": {
     "DefaultWifiIp": "Default (10.0.0.1)",
     "WifiDevices": "WiFi Devices",
