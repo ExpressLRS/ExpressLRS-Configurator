@@ -34,5 +34,8 @@
     "src/renderer.prod.js",
     "src/dist",
     ".erb/dll"
+  ],
+  "include": [
+    "src",
   ]
 }
