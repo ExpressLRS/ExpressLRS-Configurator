@@ -27,6 +27,12 @@ export default class BuildFlashFirmwareInput {
   @Field()
   userDefinesTxt: string;
 
+  @Field()
+  erase: boolean;
+
+  @Field()
+  forceFlash: boolean;
+
   constructor() {
     this.type = BuildJobType.Build;
     this.firmware = new FirmwareVersionDataInput();
@@ -34,5 +40,7 @@ export default class BuildFlashFirmwareInput {
     this.userDefinesMode = UserDefinesMode.UserInterface;
     this.userDefines = [];
     this.userDefinesTxt = '';
+    this.erase = false;
+    this.forceFlash = false;
   }
 }

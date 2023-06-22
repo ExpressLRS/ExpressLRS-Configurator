@@ -97,7 +97,8 @@ export default class DeviceDescriptionsLoader {
       undefined,
       undefined,
       config.lua_name,
-      config.prior_target_name
+      config.prior_target_name,
+      config.platform
     );
   }
 

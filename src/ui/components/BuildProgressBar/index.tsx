@@ -46,8 +46,7 @@ const BuildProgressBar: FunctionComponent<BuildProgressBarProps> = memo(
             default:
           }
           break;
-        case BuildJobType.BuildAndFlash:
-        case BuildJobType.ForceFlash:
+        case BuildJobType.Flash:
           switch (notification.step) {
             case BuildFirmwareStep.VERIFYING_BUILD_SYSTEM:
               return 5;

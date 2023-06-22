@@ -51,7 +51,7 @@ export default class BinaryConfigurator {
     }
     flags.push(...this.userDefinesToFlags(params.userDefines));
 
-    if (params.type === BuildJobType.ForceFlash) {
+    if (params.forceFlash) {
       flags.push(['--force']);
     }
 
@@ -62,10 +62,7 @@ export default class BinaryConfigurator {
     } else if (params.type === BuildJobType.Build) {
       flags.push(['--flash', 'dir']);
       flags.push(['--out', outputDirectory]);
-    } else if (
-      params.type === BuildJobType.BuildAndFlash ||
-      params.type === BuildJobType.ForceFlash
-    ) {
+    } else if (params.type === BuildJobType.Flash) {
       flags.push(['--flash', this.mapUploadMethod(uploadMethod)]);
     }
 
@@ -79,6 +76,10 @@ export default class BinaryConfigurator {
     // must be the last one, since it a positional arg
     if (firmwareBinaryPath !== '') {
       flags.push([firmwareBinaryPath]);
+    }
+
+    if (params.erase) {
+      flags.push(['--erase']);
     }
 
     return flags;

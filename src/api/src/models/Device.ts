@@ -41,6 +41,9 @@ export default class Device {
   @Field({ nullable: true })
   priorTargetName?: string | null;
 
+  @Field({ nullable: true })
+  platform?: string | null;
+
   constructor(
     id: string,
     name: string,
@@ -53,7 +56,8 @@ export default class Device {
     parent?: string | null,
     abbreviatedName?: string | null,
     luaName?: string | null,
-    priorTargetName?: string | null
+    priorTargetName?: string | null,
+    platform?: string | null
   ) {
     this.id = id;
     this.name = name;
@@ -67,5 +71,6 @@ export default class Device {
     this.abbreviatedName = abbreviatedName;
     this.luaName = luaName;
     this.priorTargetName = priorTargetName;
+    this.platform = platform;
   }
 }

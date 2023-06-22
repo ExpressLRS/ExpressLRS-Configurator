@@ -121,6 +121,22 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "erase",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "defaultValue": "false",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "firmware",
             "description": null,
             "type": {
@@ -133,6 +149,22 @@
               }
             },
             "defaultValue": "{gitBranch: \"\", gitCommit: \"\", gitPullRequest: null, gitTag: \"\", localPath: \"\", source: GitBranch}",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "forceFlash",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "defaultValue": "false",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -319,13 +351,7 @@
             "deprecationReason": null
           },
           {
-            "name": "BuildAndFlash",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ForceFlash",
+            "name": "Flash",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -671,6 +697,18 @@
           },
           {
             "name": "parent",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "platform",
             "description": null,
             "args": [],
             "type": {
