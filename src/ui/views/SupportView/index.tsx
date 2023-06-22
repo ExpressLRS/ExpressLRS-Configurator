@@ -2,6 +2,7 @@ import { Button, Card, CardContent, Divider } from '@mui/material';
 import React, { FunctionComponent } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import CardTitle from '../../components/CardTitle';
 import ClearPlatformioDependencies from './Troubleshooting/ClearPlatformioDependencies';
 import ClearFirmwareFiles from './Troubleshooting/ClearFirmwareFiles';
@@ -23,13 +24,15 @@ const styles: Record<string, SxProps<Theme>> = {
 };
 
 const SupportView: FunctionComponent = () => {
+  const { t } = useTranslation();
+
   return (
     <MainLayout>
       <Card>
-        <CardTitle icon={<SettingsIcon />} title="Support" />
+        <CardTitle icon={<SettingsIcon />} title={t('SupportView.Support')} />
         <Divider />
         <CardContent sx={styles.listContainer}>
-          <p>Need help? Confused? Join the Community!</p>
+          <p>{t('SupportView.JoinTheCommunity')}</p>
           <ul className="linksList">
             <li>
               <Button
@@ -38,7 +41,7 @@ const SupportView: FunctionComponent = () => {
                 rel="noreferrer noreferrer"
                 href="https://www.expresslrs.org/"
               >
-                ExpressLRS Documentation
+                {t('SupportView.ExpressLRSDocumentation')}
               </Button>
             </li>
             <li>
@@ -48,7 +51,7 @@ const SupportView: FunctionComponent = () => {
                 rel="noreferrer noreferrer"
                 href="https://discord.gg/dS6ReFY"
               >
-                Discord Chat
+                {t('SupportView.DiscordChat')}
               </Button>
             </li>
             <li>
@@ -58,29 +61,23 @@ const SupportView: FunctionComponent = () => {
                 rel="noreferrer noreferrer"
                 href="https://www.facebook.com/groups/636441730280366"
               >
-                Facebook Group
+                {t('SupportView.FacebookGroup')}
               </Button>
             </li>
           </ul>
         </CardContent>
         <Divider />
-        <CardTitle icon={<SettingsIcon />} title="Troubleshooting" />
+        <CardTitle icon={<SettingsIcon />} title={t('SupportView.Troubleshooting')} />
         <Divider />
         <CardContent>
           <ClearPlatformioDependencies />
           <ClearFirmwareFiles />
         </CardContent>
         <Divider />
-        <CardTitle icon={<SettingsIcon />} title="Legal disclaimer" />
+        <CardTitle icon={<SettingsIcon />} title={t('SupportView.LegalDisclaimer')} />
         <Divider />
         <CardContent>
-          <p>
-            The use and operation of this type of device may require a license,
-            and some countries may forbid its use. It is entirely up to the end
-            user to ensure compliance with local regulations. This is
-            experimental software / hardware and there is no guarantee of
-            stability or reliability. USE AT YOUR OWN RISK.
-          </p>
+          <p>{t('SupportView.UseAtYourOwnRisk')}</p>
         </CardContent>
       </Card>
     </MainLayout>

@@ -14,6 +14,7 @@ import { ipcRenderer } from 'electron';
 import debounce from 'lodash.debounce';
 import semver from 'semver';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 import Omnibox from '../Omnibox';
@@ -69,6 +70,8 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   props
 ) => {
   const { onChange, data, gitRepository } = props;
+
+  const { t } = useTranslation();
 
   const [firmwareSource, setFirmwareSource] = useState<FirmwareSource>(
     data?.source || FirmwareSource.GitTag
@@ -410,11 +413,26 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         value={firmwareSource}
         onChange={handleFirmwareSourceChange}
       >
-        <Tab label="Official releases" value={FirmwareSource.GitTag} />
-        <Tab label="Git branch" value={FirmwareSource.GitBranch} />
-        <Tab label="Git commit" value={FirmwareSource.GitCommit} />
-        <Tab label="Local" value={FirmwareSource.Local} />
-        <Tab label="Git Pull Request" value={FirmwareSource.GitPullRequest} />
+        <Tab
+          label={t('FirmwareVersionForm.OfficialReleases')}
+          value={FirmwareSource.GitTag}
+        />
+        <Tab
+          label={t('FirmwareVersionForm.GitBranch')}
+          value={FirmwareSource.GitBranch}
+        />
+        <Tab
+          label={t('FirmwareVersionForm.GitCommit')}
+          value={FirmwareSource.GitCommit}
+        />
+        <Tab
+          label={t('FirmwareVersionForm.Local')}
+          value={FirmwareSource.Local}
+        />
+        <Tab
+          label={t('FirmwareVersionForm.GitPullRequest')}
+          value={FirmwareSource.GitPullRequest}
+        />
       </Tabs>
       {firmwareSource === FirmwareSource.GitTag && gitTags !== undefined && (
         <Box sx={styles.tabContents}>
@@ -428,10 +446,10 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
                     onChange={onShowPreReleases}
                   />
                 }
-                label="Show pre-releases"
+                label={t('FirmwareVersionForm.ShowPreRreleases')}
               />
               <Omnibox
-                title="Releases"
+                title={t('FirmwareVersionForm.Releases')}
                 options={gitTagOptions}
                 currentValue={
                   gitTagOptions.find((item) => item.value === currentGitTag) ??
@@ -446,20 +464,19 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
                 rel="noreferrer noreferrer"
                 href={`${gitRepository.url}/releases/tag/${currentGitTag}`}
               >
-                Release notes
+                {t('FirmwareVersionForm.ReleaseNotes')}
               </Button>
               {currentGitTag &&
                 gitTagOptions.length > 0 &&
                 gitTagOptions[0]?.value !== currentGitTag && (
                   <Alert sx={styles.firmwareVersionAlert} severity="info">
-                    There is a newer version of the firmware available
+                    {t('FirmwareVersionForm.NewerVersionAvailable')}
                   </Alert>
                 )}
               {(currentGitTag === '2.5.0' || currentGitTag === '2.5.1') &&
                 gitRepository.repositoryName === 'ExpressLRS' && (
                   <Alert sx={styles.firmwareVersionAlert} severity="warning">
-                    ExpressLRS 2.X is no longer supported. Please upgrade to
-                    ExpressLRS 3.X.
+                    {t('FirmwareVersionForm.UpgradeToV3')}
                   </Alert>
                 )}
             </>
@@ -470,14 +487,15 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         gitBranches !== undefined && (
           <>
             <Alert severity="warning" sx={styles.dangerZone}>
-              <AlertTitle>DANGER ZONE</AlertTitle>
-              Use these sources only if you know what you are doing or was
-              instructed by project developers
+              <AlertTitle>
+                {t('FirmwareVersionForm.DangerZoneTitle')}
+              </AlertTitle>
+              {t('FirmwareVersionForm.DangerZoneContent')}
             </Alert>
             <Box sx={styles.tabContents}>
               {!loading && (
                 <Omnibox
-                  title="Git branches"
+                  title={t('FirmwareVersionForm.GitBranches')}
                   options={gitBranchOptions}
                   currentValue={
                     gitBranchOptions.find(
@@ -493,14 +511,13 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       {firmwareSource === FirmwareSource.GitCommit && (
         <>
           <Alert severity="warning" sx={styles.dangerZone}>
-            <AlertTitle>DANGER ZONE</AlertTitle>
-            Use these sources only if you know what you are doing or was
-            instructed by project developers
+            <AlertTitle>{t('FirmwareVersionForm.DangerZoneTitle')}</AlertTitle>
+            {t('FirmwareVersionForm.DangerZoneContent')}
           </Alert>
           <Box sx={styles.tabContents}>
             <TextField
               id="git-commit-hash"
-              label="Git commit hash"
+              label={t('FirmwareVersionForm.GitCommitHash')}
               fullWidth
               value={currentGitCommit}
               onChange={onGitCommit}
@@ -511,14 +528,13 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       {firmwareSource === FirmwareSource.Local && (
         <>
           <Alert severity="warning" sx={styles.dangerZone}>
-            <AlertTitle>DANGER ZONE</AlertTitle>
-            Use these sources only if you know what you are doing or was
-            instructed by project developers
+            <AlertTitle>{t('FirmwareVersionForm.DangerZoneTitle')}</AlertTitle>
+            {t('FirmwareVersionForm.DangerZoneContent')}
           </Alert>
           <Box sx={styles.tabContents}>
             <TextField
               id="local-path"
-              label="Local path"
+              label={t('FirmwareVersionForm.LocalPath')}
               fullWidth
               value={localPath}
               onChange={onLocalPath}
@@ -526,11 +542,10 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
 
             {showBetaFpvAlert && (
               <Alert severity="error" sx={styles.betaFpvAlert}>
-                <AlertTitle>ATTENTION</AlertTitle>
-                You are trying to flash an outdated BetaFPV custom ExpressLRS
-                fork. BetaFPV hardware is fully supported in recent official
-                ExpressLRS releases. We recommend using official firmware to
-                have the best ExpressLRS experience.
+                <AlertTitle>
+                  {t('FirmwareVersionForm.AttentionTitle')}
+                </AlertTitle>
+                {t('FirmwareVersionForm.AttentionContent')}
               </Alert>
             )}
 
@@ -541,7 +556,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
               sx={styles.chooseFolderButton}
               onClick={onChooseFolder}
             >
-              Choose folder
+              {t('FirmwareVersionForm.ChooseFolder')}
             </Button>
           </Box>
         </>
@@ -550,14 +565,15 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
         gitPullRequests !== undefined && (
           <>
             <Alert severity="warning" sx={styles.dangerZone}>
-              <AlertTitle>DANGER ZONE</AlertTitle>
-              Use these sources only if you know what you are doing or was
-              instructed by project developers
+              <AlertTitle>
+                {t('FirmwareVersionForm.DangerZoneTitle')}
+              </AlertTitle>
+              {t('FirmwareVersionForm.DangerZoneContent')}
             </Alert>
             <Box sx={styles.tabContents}>
               {!loading && (
                 <Omnibox
-                  title="Git pull Requests"
+                  title={t('FirmwareVersionForm.GitPullRequests')}
                   options={gitPullRequestOptions ?? []}
                   currentValue={
                     gitPullRequestOptions?.find(

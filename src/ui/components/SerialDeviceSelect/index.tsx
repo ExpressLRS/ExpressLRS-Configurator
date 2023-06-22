@@ -2,6 +2,7 @@ import { Box, Tooltip } from '@mui/material';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import QuestionIcon from '@mui/icons-material/Help';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import Omnibox, { Option } from '../Omnibox';
 import {
   SerialPortInformation,
@@ -41,6 +42,7 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
   props
 ) => {
   const { serialDevice, onChange } = props;
+  const { t } = useTranslation();
 
   const { loading, data, error, previousData, startPolling, stopPolling } =
     useAvailableDevicesListQuery();
@@ -104,7 +106,7 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
     <Box sx={styles.root}>
       <Box sx={styles.inner}>
         <Omnibox
-          title="Manual serial device selection"
+          title={t('SerialDeviceSelect.ManualSelectionTitle')}
           currentValue={currentValue}
           onChange={onSerialDeviceChange}
           options={options}
@@ -115,11 +117,7 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
           arrow
           title={
             <div>
-              <p>
-                Use manual serial port selection if automatic selection fails to
-                select a correct port. In the vast majority of cases there is no
-                need to use this option.
-              </p>
+              <p>{t('SerialDeviceSelect.ManualSelectionTitleTooltip')}</p>
             </div>
           }
         >

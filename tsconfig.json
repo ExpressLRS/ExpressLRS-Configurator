@@ -27,6 +27,10 @@
     "resolveJsonModule": true,
     "allowJs": true
   },
+  "typeRoots": [
+    "node_modules/@types",
+    "src/@types"
+  ],
   "exclude": [
     "test",
     "release",

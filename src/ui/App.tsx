@@ -7,9 +7,9 @@ import { ApolloProvider } from '@apollo/client';
 import theme from './theme';
 import client from './gql';
 import ConfiguratorView from './views/ConfiguratorView';
-import SettingsView from './views/SettingsView';
 import LogsView from './views/LogsView';
 import SerialMonitorView from './views/SerialMonitorView';
+import SettingsView from './views/SettingsView';
 import SupportView from './views/SupportView';
 import { Config } from './config';
 import { DeviceType, MulticastDnsInformation } from './gql/generated/types';
@@ -105,9 +105,9 @@ const App = () => {
                     />
                   }
                 />
-                <Route path="/settings" element={<SettingsView />} />
                 <Route path="/logs" element={<LogsView />} />
                 <Route path="/serial-monitor" element={<SerialMonitorView />} />
+                <Route path="/settings" element={<SettingsView />} />
                 <Route path="/support" element={<SupportView />} />
               </Routes>
             </HashRouter>

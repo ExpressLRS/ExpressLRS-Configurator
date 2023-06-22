@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Alert, Box } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import { DeviceOptionsFormData } from '../DeviceOptionsForm';
 import { UserDefineKey, UserDefinesMode } from '../../gql/generated/types';
 
@@ -17,6 +18,7 @@ interface UserDefinesAdvisorProps {
 const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
   deviceOptionsFormData,
 }) => {
+  const { t } = useTranslation();
   const messages: string[] = [];
   if (deviceOptionsFormData.userDefinesMode === UserDefinesMode.UserInterface) {
     const isUserDefine = (
@@ -33,9 +35,7 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
     };
 
     if (isUserDefine(UserDefineKey.UART_INVERTED, false)) {
-      messages.push(
-        'Disabling UART_INVERTED is uncommon. Please make sure that your transmitter supports that.'
-      );
+      messages.push(t('UserDefinesAdvisor.DisableUARTInvertedWarning'));
     }
   }
   return messages.length > 0 ? (

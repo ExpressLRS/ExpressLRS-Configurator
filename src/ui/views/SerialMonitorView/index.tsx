@@ -2,6 +2,7 @@ import { Button, Card, CardContent, Divider } from '@mui/material';
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
 import DvrIcon from '@mui/icons-material/Dvr';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import CardTitle from '../../components/CardTitle';
 import SerialConnectionForm from '../../components/SerialConnectionForm';
 import EventsBatcher from '../../library/EventsBatcher';
@@ -32,6 +33,8 @@ const SerialMonitorView: FunctionComponent = () => {
   const [viewState, setViewState] = useState<ViewState>(
     ViewState.ConnectionConfig
   );
+
+  const { t } = useTranslation();
 
   /*
   We batch log events in order to save React.js state updates and rendering performance.
@@ -113,7 +116,10 @@ const SerialMonitorView: FunctionComponent = () => {
   return (
     <MainLayout>
       <Card>
-        <CardTitle icon={<DvrIcon />} title="Serial Monitor" />
+        <CardTitle
+          icon={<DvrIcon />}
+          title={t('SerialMonitorView.SerialMonitor')}
+        />
         <Divider />
         <CardContent>
           {viewState === ViewState.ConnectionConfig && (
@@ -143,7 +149,7 @@ const SerialMonitorView: FunctionComponent = () => {
                 variant="contained"
                 sx={styles.disconnectButton}
               >
-                Disconnect
+                {t('SerialMonitorView.Disconnect')}
               </Button>
               <Loader loading={disconnectInProgress} />
               <Logs data={logs} />

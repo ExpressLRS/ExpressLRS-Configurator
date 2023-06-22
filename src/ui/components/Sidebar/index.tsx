@@ -12,11 +12,12 @@ import {
 import BuildIcon from '@mui/icons-material/Build';
 import HelpIcon from '@mui/icons-material/Help';
 import DvrIcon from '@mui/icons-material/Dvr';
-// import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from '@mui/icons-material/Settings';
 import ListIcon from '@mui/icons-material/List';
 import { matchPath, useLocation, Link } from 'react-router-dom';
 import BackpackIcon from '@mui/icons-material/Backpack';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
 
@@ -48,10 +49,13 @@ const Sidebar: FunctionComponent = () => {
   const logsActive = matchPath(location.pathname, '/logs') !== null;
   const serialMonitorActive =
     matchPath(location.pathname, '/serial-monitor') !== null;
+  const settingsActive = matchPath(location.pathname, '/settings') !== null;
   const supportActive = matchPath(location.pathname, '/support') !== null;
   const { appStatus } = useAppState();
 
   const navigationEnabled = appStatus !== AppStatus.Busy;
+
+  const { t } = useTranslation();
 
   return (
     <Drawer sx={styles.drawer} variant="permanent">
@@ -70,7 +74,7 @@ const Sidebar: FunctionComponent = () => {
             <ListItemIcon>
               <BuildIcon />
             </ListItemIcon>
-            <ListItemText primary="Configurator" />
+            <ListItemText primary={t('Sidebar.Configurator')} />
           </ListItem>
           <ListItem
             component={Link}
@@ -83,21 +87,8 @@ const Sidebar: FunctionComponent = () => {
             <ListItemIcon>
               <BackpackIcon />
             </ListItemIcon>
-            <ListItemText primary="Backpack" />
+            <ListItemText primary={t('Sidebar.Backpack')} />
           </ListItem>
-
-          {/* <ListItem */}
-          {/*  component={Link} */}
-          {/*  to="/settings" */}
-          {/*  selected={settingsActive} */}
-          {/*  sx={styles.menuItem} */}
-          {/*  button */}
-          {/* > */}
-          {/*  <ListItemIcon> */}
-          {/*    <SettingsIcon /> */}
-          {/*  </ListItemIcon> */}
-          {/*  <ListItemText primary="Settings" /> */}
-          {/* </ListItem> */}
 
           <ListItem
             component={Link}
@@ -110,7 +101,7 @@ const Sidebar: FunctionComponent = () => {
             <ListItemIcon>
               <ListIcon />
             </ListItemIcon>
-            <ListItemText primary="Logs" />
+            <ListItemText primary={t('Sidebar.Logs')} />
           </ListItem>
 
           <ListItem
@@ -124,7 +115,21 @@ const Sidebar: FunctionComponent = () => {
             <ListItemIcon>
               <DvrIcon />
             </ListItemIcon>
-            <ListItemText primary="Serial Monitor" />
+            <ListItemText primary={t('Sidebar.SerialMonitor')} />
+          </ListItem>
+
+          <ListItem
+            component={Link}
+            to="/settings"
+            selected={settingsActive}
+            sx={styles.menuItem}
+            button
+            disabled={!navigationEnabled}
+          >
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary={t('Sidebar.Settings')} />
           </ListItem>
 
           <ListItem
@@ -138,7 +143,7 @@ const Sidebar: FunctionComponent = () => {
             <ListItemIcon>
               <HelpIcon />
             </ListItemIcon>
-            <ListItemText primary="Support" />
+            <ListItemText primary={t('Sidebar.Support')} />
           </ListItem>
         </List>
       </Box>

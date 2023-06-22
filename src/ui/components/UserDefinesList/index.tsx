@@ -10,6 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import {
   UserDefine,
   UserDefineKey,
@@ -38,6 +39,8 @@ interface UserDefinesListProps {
 
 const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
   const { options, onChange } = props;
+  const { t } = useTranslation();
+
   const onChecked = (data: UserDefineKey) => {
     const opt = options.find(({ key }) => key === data);
     if (opt !== undefined) {
@@ -81,11 +84,11 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
   const inputLabel = (key: UserDefineKey): string => {
     switch (key) {
       case UserDefineKey.BINDING_PHRASE:
-        return 'Custom binding phrase';
+        return t('UserDefinesList.CustomBindingPhrase');
       case UserDefineKey.MY_STARTUP_MELODY:
-        return 'My startup melody';
+        return t('UserDefinesList.MyStartupMelody');
       default:
-        return 'Value';
+        return t('UserDefinesList.Value');
     }
   };
 

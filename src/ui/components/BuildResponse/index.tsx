@@ -1,6 +1,7 @@
 import React, { FunctionComponent, memo } from 'react';
 import { Alert, AlertTitle } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation, Trans } from 'react-i18next';
 import {
   BuildFirmwareErrorType,
   BuildFlashFirmwareResult,
@@ -23,26 +24,27 @@ interface BuildResponseProps {
 
 const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
   ({ response, firmwareVersionData }) => {
-    // TODO: translations
+    const { t } = useTranslation();
+
     const toTitle = (errorType: BuildFirmwareErrorType | undefined): string => {
       if (errorType === null || errorType === undefined) {
-        return 'Error';
+        return t('BuildResponse.Error');
       }
       switch (errorType) {
         case BuildFirmwareErrorType.GenericError:
-          return 'Error';
+          return t('BuildResponse.Error');
         case BuildFirmwareErrorType.GitDependencyError:
-          return 'Git dependency error';
+          return t('BuildResponse.GitDependencyError');
         case BuildFirmwareErrorType.PythonDependencyError:
-          return 'Python dependency error';
+          return t('BuildResponse.PythonDependencyError');
         case BuildFirmwareErrorType.PlatformioDependencyError:
-          return 'Platformio dependency error';
+          return t('BuildResponse.PlatformioDependencyError');
         case BuildFirmwareErrorType.BuildError:
-          return 'Build error';
+          return t('BuildResponse.BuildError');
         case BuildFirmwareErrorType.FlashError:
-          return 'Flash error';
+          return t('BuildResponse.FlashError');
         case BuildFirmwareErrorType.TargetMismatch:
-          return 'The target you are trying to flash does not match the devices current target, if you are sure you want to do this, click Force Flash below';
+          return t('BuildResponse.TargetMismatch');
         default:
           return '';
       }
@@ -50,7 +52,7 @@ const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
     return (
       <>
         {response !== undefined && response.success && (
-          <Alert severity="success">Success!</Alert>
+          <Alert severity="success">{t('BuildResponse.Success')}</Alert>
         )}
         {response !== undefined && !response.success && (
           <Alert sx={styles.errorMessage} severity="error">
@@ -60,40 +62,23 @@ const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
               )}
             </AlertTitle>
             <p>
-              An error has occured, see the above log for the exact error
-              message. If you have not already done so, visit{' '}
-              <DocumentationLink
-                firmwareVersion={firmwareVersionData}
-                url="https://www.expresslrs.org/"
-              >
-                Expresslrs.org
-              </DocumentationLink>{' '}
-              and read the{' '}
-              <DocumentationLink
-                firmwareVersion={firmwareVersionData}
-                url="https://www.expresslrs.org/quick-start/getting-started/"
-              >
-                Flashing Guide
-              </DocumentationLink>{' '}
-              for your particular device as well as the{' '}
-              <DocumentationLink
-                firmwareVersion={firmwareVersionData}
-                url="https://www.expresslrs.org/quick-start/troubleshooting/#flashingupdating"
-              >
-                Troubleshooting Guide
-              </DocumentationLink>
-              . If you are still having issues after reviewing the
-              documentation, please copy the build logs above to an online paste
-              site and post in the #help-and-support channel on the{' '}
-              <DocumentationLink
-                firmwareVersion={firmwareVersionData}
-                url="https://discord.gg/dS6ReFY"
-              >
-                ExpressLRS Discord
-              </DocumentationLink>{' '}
-              with a link to the logs and other relevant information like your
-              device, which flashing method you were using, and what steps you
-              have already taken to resolve the issue.
+              <Trans
+                i18nKey="BuildResponse.ErrorDetails"
+                components={{
+                  ExpresslrsLink: (
+                    <DocumentationLink url="https://www.expresslrs.org/" />
+                  ),
+                  FlashingGuideLink: (
+                    <DocumentationLink url="https://www.expresslrs.org/quick-start/getting-started/" />
+                  ),
+                  TroubleshootingGuideLink: (
+                    <DocumentationLink url="https://www.expresslrs.org/quick-start/troubleshooting/#flashingupdating" />
+                  ),
+                  ExpressLRSDiscordLink: (
+                    <DocumentationLink url="https://discord.gg/dS6ReFY" />
+                  ),
+                }}
+              />
             </p>
           </Alert>
         )}

@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import { useClearPlatformioCoreDirMutation } from '../../../../gql/generated/types';
 import Loader from '../../../../components/Loader';
 import ShowAlerts from '../../../../components/ShowAlerts';
@@ -12,6 +13,8 @@ const styles: Record<string, SxProps<Theme>> = {
 };
 
 const ClearPlatformioDependencies: FunctionComponent = () => {
+  const { t } = useTranslation();
+
   const [clearPlatformioCoreDirMutation, { loading, data, error }] =
     useClearPlatformioCoreDirMutation();
   const onClearPlatformioDependencies = () => {
@@ -21,15 +24,13 @@ const ClearPlatformioDependencies: FunctionComponent = () => {
   };
   return (
     <>
-      <Typography variant="h6">Corrupted platformio dependencies</Typography>
-      <p>
-        If you close the Configurator while platformio installs the required
-        dependencies their state might get corrupted. You can manually clear all
-        dependencies and start the build process again.
-      </p>
+      <Typography variant="h6">
+        {t('SupportView.CorruptedPlatformioDependencies')}
+      </Typography>
+      <p>{t('SupportView.YouCanManuallyClearAllDependencies')}</p>
       <Box sx={styles.actions}>
         <Button variant="contained" onClick={onClearPlatformioDependencies}>
-          Clear platformio dependencies
+          {t('SupportView.ClearPlatformioDependencies')}
         </Button>
       </Box>
       <Loader loading={loading} />
@@ -37,7 +38,7 @@ const ClearPlatformioDependencies: FunctionComponent = () => {
       {data?.clearPlatformioCoreDir?.success === true && (
         <ShowAlerts
           severity="success"
-          messages="Corrupted platformio dependencies were deleted. Try building again."
+          messages={t('SupportView.CorruptedPlatformioDependenciesDeleted')}
         />
       )}
       {data?.clearPlatformioCoreDir?.success === false && (

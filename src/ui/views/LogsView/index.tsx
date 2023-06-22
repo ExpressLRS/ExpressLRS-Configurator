@@ -2,18 +2,20 @@ import { Button, Card, CardContent, Divider } from '@mui/material';
 import React, { FunctionComponent } from 'react';
 import ListIcon from '@mui/icons-material/List';
 import { ipcRenderer } from 'electron';
+import { useTranslation } from 'react-i18next';
 import CardTitle from '../../components/CardTitle';
 import { IpcRequest } from '../../../ipc';
 import MainLayout from '../../layouts/MainLayout';
 
 const LogsView: FunctionComponent = () => {
+  const { t } = useTranslation();
   const onLogs = () => {
     ipcRenderer.send(IpcRequest.OpenLogsFolder);
   };
   return (
     <MainLayout>
       <Card>
-        <CardTitle icon={<ListIcon />} title="Logs" />
+        <CardTitle icon={<ListIcon />} title={t('LogsView.Logs')} />
         <Divider />
         <CardContent>
           <Button
@@ -22,7 +24,7 @@ const LogsView: FunctionComponent = () => {
             variant="contained"
             onClick={onLogs}
           >
-            Open logs folder
+            {t('LogsView.OpenLogsFolder')}
           </Button>
         </CardContent>
       </Card>

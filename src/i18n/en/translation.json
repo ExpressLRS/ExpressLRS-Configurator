@@ -1,0 +1,235 @@
+{
+  "BuildNotificationsList": {
+    "VerifyingBuildSystem": "Verifying build system",
+    "DownloadingFirmware": "Downloading firmware",
+    "BuildingUserDefinesTXT": "Building user_defines.txt",
+    "CompilingFirmware": "Compiling firmware",
+    "FlashingDevice": "Flashing device"
+  },
+  "BuildResponse": {
+    "Error": "Error",
+    "GitDependencyError": "Git dependency error",
+    "PythonDependencyError": "Python dependency error",
+    "PlatformioDependencyError": "Platformio dependency error",
+    "BuildError": "Build error",
+    "FlashError": "Flash error",
+    "TargetMismatch": "The target you are trying to flash does not match the devices current target, if you are sure you want to do this, click Force Flash below",
+    "Success": "Success!",
+    "ErrorDetails": "An error has occured, see the above log for the exact error message. If you have not already done so, visit <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> and read the <FlashingGuideLink>Flashing Guide</FlashingGuideLink> for your particular device as well as the <TroubleshootingGuideLink>Troubleshooting Guide</TroubleshootingGuideLink>. If you are still having issues after reviewing the documentation, please copy the build logs above to an online paste site and post in the #help-and-support channel on the <ExpressLRSDiscordLink>ExpressLRS Discord</ExpressLRSDiscordLink> with a link to the logs and other relevant information like your device, which flashing method you were using, and what steps you have already taken to resolve the issue."
+  },
+  "DeviceOptionsForm": {
+    "StandardMode": "Standard mode",
+    "ManualMode": "Manual mode",
+    "CopyFromStandardMode": "Copy from Standard mode",
+    "LongerBuildTimeWarning": "When using the manual user-defined mode, the cloud binaries cache is disabled, resulting in much longer build times.",
+    "RegulatoryDomains": "Regulatory domains",
+    "BindingPhraseSetup": "Binding phrase setup",
+    "CompatibilityOptions": "Compatibility options",
+    "PerformanceOptions": "Performance options",
+    "ExtraData": "Extra data",
+    "Network": "Network",
+    "OtherOptions": "Other options"
+  },
+  "DeviceTargetForm": {
+    "UnverifiedHardwareTitle": "UNVERIFIED HARDWARE",
+    "UnverifiedHardwareContent": "The manufacturer of this hardware has not provided samples to the developers for evaluation and verification, contact them for support or proceed at your own risk. Not all features may work.",
+    "DeviceCategory": "Device category",
+    "Device": "Device"
+  },
+  "FirmwareVersionForm": {
+    "OfficialReleases": "Official releases",
+    "GitBranch": "Git branch",
+    "GitCommit": "Git commit",
+    "Local": "Local",
+    "GitPullRequest": "Git Pull Request",
+    "ShowPreRreleases": "Show pre-releases",
+    "Releases": "Releases",
+    "ReleaseNotes": "Release notes",
+    "NewerVersionAvailable": "There is a newer version of the firmware available",
+    "UpgradeToV3": "ExpressLRS 2.X is no longer supported. Please upgrade to ExpressLRS 3.X.",
+    "DangerZoneTitle": "DANGER ZONE",
+    "DangerZoneContent": "Use these sources only if you know what you are doing or was instructed by project developers",
+    "GitBranches": "Git branches",
+    "GitCommitHash": "Git commit hash",
+    "LocalPath": "Local path",
+    "AttentionTitle": "ATTENTION",
+    "AttentionContent": "You are trying to flash an outdated BetaFPV custom ExpressLRS fork. BetaFPV hardware is fully supported in recent official ExpressLRS releases. We recommend using official firmware to have the best ExpressLRS experience.",
+    "ChooseFolder": "Choose folder",
+    "GitPullRequests": "Git pull requests"
+  },
+  "FlashingMethodDescription": {
+    "BetaflightPassthroughDescription": "This method allows you to flash your receiver while it is connected to your flight controller by using the passthrough feature of the flight controller.",
+    "PlugInFCToComputer": "Plug in your FC to your computer, but do NOT connect to betaflight configurator.",
+    "SelectDesiredDevice": "Select your desired Device Options and your flight controllers serial device below.",
+    "RunBuild&Flash": "Run Build & Flash.",
+    "BetaflightPassthroughWiki": "Check our Wiki page for latest definition.",
+    "DFU": "This method allows you to flash your receiver or transmitter via the Devices Firmware Upgrade mode.",
+    "GeneralWiki": "Check the Wiki page for your particular device for more information.",
+    "STLink": "This method allows you to flash your receiver or transmitter using an STLink programmer connected to the device.",
+    "StockBL": "This method allows you to flash your receiver or transmitter using the bootloader on the device.",
+    "UART": "This method allows you to flash your receiver or transmitter via its USB port or wiring up an FTDI device.",
+    "WIFI": "This method creates a firmware file you can upload to your receiver or transmitter by connecting to its built in wifi.",
+    "EdgeTxPassthrough": "This method allows you to flash your transmitter module while it is connected to your transmitter by using the passthrough feature of the EdgeTX firmware.",
+    "Passthrough": "This method allows you to flash your module while it is connected to your transmitter by using the passthrough feature."
+  },
+  "FlashingMethodOptions": {
+    "FlashingMethod": "Flashing Method"
+  },
+  "Header": {
+    "ExpressLRSConfigurator": "ExpressLRS Configurator",
+    "DownloadNewestRelease": "Click to download a newest release",
+    "UpdateAvailable": "Update is available!",
+    "Documentation": "Documentation",
+    "Discord": "Discord",
+    "FacebookGroup": "Facebook group",
+    "Github": "Github",
+    "OpenCollective": "OpenCollective"
+  },
+  "SerialConnectionForm": {
+    "SerialDevice": "Serial device",
+    "BaudRate": "Baud rate",
+    "Connect": "Connect"
+  },
+  "SerialDeviceSelect": {
+    "ManualSelectionTitle": "Manual serial device selection",
+    "ManualSelectionTitleTooltip": "Use manual serial port selection if automatic selection fails to select a correct port. In the vast majority of cases there is no need to use this option."
+  },
+  "Sidebar": {
+    "Configurator": "Configurator",
+    "Backpack": "Backpack",
+    "Logs": "Logs",
+    "SerialMonitor": "Serial Monitor",
+    "Settings": "Settings",
+    "Support": "Support"
+  },
+  "UserDefineDescription": {
+    "RegulatoryDomain915": "Consult <LoRaWANLink>LoRaWAN Frequency Plans and Regulations</LoRaWANLink> for a regulatory domain to use in your location.",
+    "Wiki": "Check our Wiki page for latest definition.",
+    "RegulatoryDomainISM2400": "The ISM radio bands are portions of the radio spectrum reserved internationally. You can use this regulatory domain safely in any country.",
+    "RegulatoryDomainEUCE2400": "For firmware versions earlier than v3.x, the EU CE 2.4 GHz regulatory domain limits the maximum power to 10mW, which does not require LBT (Listen Before Talk). For firmware versions later than v3.x, the EU CE 2.4 GHz regulatory domain limits the maximum power to 100mW, and enables LBT (Listen Before Talk).",
+    "BindingPhrase": "Binding phrase pairs receivers to transmitters without requiring you to bind manually. Receivers flashed without a binding phrase will require the traditional binding method. Both the TX and RX need to have the same binding phrase to connect. Set something memorable, and limit to alphanumeric phrases conforming to the Latin alphabet. This is not a password, and does not provide any security, it simply reduces RF collisions with other pilots.",
+    "AutoWifiOnInterval": "<p>This will automatically turn the wifi on for any module that has an ESP8285 on it if no connection is found after set amount of seconds from boot. This enables pushing firmware updates to the RX by connecting to its wifi network and visiting 10.0.0.1</p><p>Auto on interval is defined in <strong>seconds</strong>. Default is 60 seconds.</p>",
+    "TLMReportIntervalMs": "<p>Make the TX module send telemetry data to the handset at a fixed interval. This reduces the 「Telemetry Lost」warnings when running at a high telemetry ratio, or low rates like 50hz.</p><p>Default value is <strong>240LU</strong>. If you want to change that you have to suffix your milliseconds value with <strong>LU</strong>. For example, in order to specify 100 ms telemetry update rate you have to enter it like this: <strong>100LU</strong>.</p><p>Typically, you want to keep <strong>240LU</strong> value for EdgeTX/OpenTX based radios, and <strong>100LU</strong> for ErskyTx ones.</p>",
+    "LockOnFirstConnection": "RF Mode Locking - Default mode is for the RX to cycle through the available RF modes with 5s pauses going from highest to lowest mode and finding which mode the Tx transmitting. This allows the RX to cycle, but once a connection has been established, the Rx will no longer cycle through the RF modes (until it receives a power reset).",
+    "JustBeepOnce": "This sets if the TX only beeps one-time versus playing a startup song.",
+    "DisableStartupBeep": "This sets if the TX shall stay quiet on startup.",
+    "DisableAllBeeps": "Disable all beeps.",
+    "MyStartupMelody": "<p>Use this to define your own startup melody using the BlHeli32 syntax. The parameters music string and bpm are required, whereas semitone offset is optional to transpose the entire melody up or down by the defined amount of semitones. Example BlHeli32 melodies are available on <RoxWolfsYoutubeChannelLink>Rox Wolfs Youtube channel</RoxWolfsYoutubeChannelLink>, some experimentation may be required though.</p><p>To write your own melody, <SheetMusic101lLink>Sheet Music 101</SheetMusic101lLink> and this <BLHeliPianoLink>BLHeli Piano</BLHeliPianoLink> are useful resources.</p><p>This option also supports melodies in RTTTL format now. <EscTunesLink>EscTunes.com</EscTunesLink> is great resource for discovering new melodies.</p>",
+    "UnlockHigherPower": "<p>There has been some reports of the R9M modules showing instability at >250mw with stock cooling. This in part because the ELRS uses a higher duty cycle for transmission compared to stock firmware. By default the power is limited to 250mw. You can unlock up to 1000mw by enabling the following option. Do this at your own risk if you make no cooling modifications.</p><p>We published <R9MFanModCoverLink>R9M Fan Mod Cover</R9MFanModCoverLink>, a custom 3d printed backplate with room for a fan and extra cooling to allow for maximum power (1-2W depending on the mod).</p>",
+    "UARTInverted": "Enables compatibility with radios that output inverted CRSF, such as the FrSky QX7, TBS Tango 2, RadioMaster TX16S. You want to keep this enabled in most of the cases. If your radio is T8SG V2 or you use Deviation firmware turn this setting off.",
+    "RCVRUARTBaud": "Receiver UART baud rate. Defaults to 420000. Set this option to 400000 and your receiver will work with Kiss v1 flight controllers.",
+    "RCVRInvertTX": "If using an a flight controller that only has an RXI / SBUS (RX inverted) pad, turn on this option to invert the CRSF output from the receiver to be able to use that pad. This does not convert the output to SBUS, it is inverted CRSF, so CRSF should still be the receiver protocol selected in the flight controller software. ESP-based receivers only.",
+    "UseR9MMR9MiniSBUS": "<p><strong>THIS DOES NOT ENABLE SBUS PROTOCOL.</strong></p><p>This is useful for F4 FCs which do not have an uninverted UART option. This is only one way, so you lose the telemetry downlink to your radio as well as passthrough flashing. This will output out of the default S.BUS pin on your R9MM/R9Mini. Set serialrx_inverted = ON may also be needed within Betaflight for compatibility</p>",
+    "HomeWifiSSID": "Set home Wi-Fi network name (SSID). It will allow Wi-Fi enabled hardware to connect to the home network automatically.",
+    "HomeWifiPassword": "Set home Wi-Fi network password. It will allow Wi-Fi enabled hardware to connect to the home network automatically."
+  },
+  "UserDefinesAdvisor": {
+    "DisableUARTInvertedWarning": "Disabling UART_INVERTED is uncommon. Please make sure that your transmitter supports that."
+  },
+  "UserDefinesList": {
+    "CustomBindingPhrase": "Custom binding phrase",
+    "MyStartupMelody": "My startup melody",
+    "Value": "Value"
+  },
+  "WifiDeviceList": {
+    "Name": "Name",
+    "Target": "Target",
+    "Version": "Version",
+    "Type": "Type",
+    "DNS": "DNS",
+    "IP": "IP",
+    "Select": "Select"
+  },
+  "WifiDeviceNotification": {
+    "NewDevice": "New Device",
+    "Select": "Select"
+  },
+  "WifiDeviceSelect": {
+    "DefaultWifiIp": "Default (10.0.0.1)",
+    "WifiDevices": "WiFi Devices",
+    "Manual": "Manual",
+    "WifiDeviceSelection": "WiFi Device Selection",
+    "IPAddress": "IP Address"
+  },
+  "Updater": {
+    "FoundUpdates": "Found updates",
+    "UpdateNow": "Found updates, do you want update now?",
+    "Sure": "Sure",
+    "Later": "Later",
+    "UpdateDownloading": "Update Downloading",
+    "NotifiedWhenReadyToInstall.": "Update is being downloaded, you will be notified when it is ready to install.",
+    "Restart": "Restart",
+    "ApplicationUpdate": "Application Update",
+    "Update": "Update",
+    "ApplyUpdates.": "A new version has been downloaded. Restart the application to apply the updates."
+  },
+  "ConfiguratorView": {
+    "DownloadLUAScript": "Download LUA script",
+    "FirmwareVersion": "Firmware version",
+    "Target": "Target",
+    "Notice": "Notice",
+    "SelectFirmwareVersionFirst": "Please select a firmware version first.",
+    "DeviceOptions": "Device options",
+    "ResetDevice": "Reset device options to the recommended defaults on this device target. Except for your custom binding phrase.",
+    "Reset": "Reset",
+    "Actions": "Actions",
+    "FlashingOptions": "Flashing Options",
+    "EraseBeforeFlash": "Erase before flash",
+    "ForceFlash": "Force Flash",
+    "Build": "Build",
+    "Flash": "Flash",
+    "NetworkDevices": "Network Devices",
+    "DeviceSelectError": "Device Select Error",
+    "DeviceCouldNotBeAutomaticallySelected": "The target device could not be automatically selected, it must be done manually.",
+    "Close": "Close",
+    "Logs": "Logs",
+    "CopyLogToClipboard": "Copy log to clipboard",
+    "SaveLogToFile": "Save log to file",
+    "BuildsTakeMinutesFirstTime": "Sometimes builds take at least a few minutes. It is normal, especially for the first time builds.",
+    "Result": "Result",
+    "Warning": "Warning",
+    "WaitForLEDBeforeDisconnectingPower": "Please wait for LED to resume blinking before disconnecting power",
+    "UpdateLuaScript": "Update Lua Script",
+    "UpdateLuaScriptOnRadio": "Make sure to update the Lua script on your radio",
+    "BuildNotice": "Build notice",
+    "FirmwareOpenedInFileExplorer": "Firmware binary file was opened in the file explorer",
+    "Back": "Back",
+    "Retry": "Retry"
+  },
+  "LogsView": {
+    "Logs": "Logs",
+    "OpenLogsFolder": "Open logs folder"
+  },
+  "SerialMonitorView": {
+    "SerialMonitor": "Serial Monitor",
+    "Disconnect": "Disconnect"
+  },
+  "SettingsView": {
+    "Settings": "Settings",
+    "LanguageSelector": "Language selector",
+    "CurrentLanguage": "Current language",
+    "SystemInfo": "System Info",
+    "ELRSConfiguratorVersion": "ExpressLRS Configurator version",
+    "Platform": "Platform",
+    "CPU": "CPU",
+    "RAM": "RAM"
+  },
+  "SupportView": {
+    "Support": "Support",
+    "JoinTheCommunity": "Need help? Confused? Join the Community!",
+    "ExpressLRSDocumentation": "ExpressLRS Documentation",
+    "DiscordChat": "Discord Chat",
+    "FacebookGroup": "Facebook Group",
+    "Troubleshooting": "Troubleshooting",
+    "LegalDisclaimer": "Legal disclaimer",
+    "UseAtYourOwnRisk": "The use and operation of this type of device may require a license, and some countries may forbid its use. It is entirely up to the end user to ensure compliance with local regulations. This is experimental software / hardware and there is no guarantee of stability or reliability. USE AT YOUR OWN RISK.",
+    "CorruptedFirmwareFiles": "Corrupted firmware files",
+    "YouCanManuallyClearAllFiles": "If you close the Configurator while git downloads firmware files git repository state can get corrupted. You can manually clear all files and start the build process again.",
+    "ClearFirmwareFiles": "Clear firmware files",
+    "CorruptedFirmwareFilesDeleted": "Corrupted firmware files were deleted and git repository was cleaned. Try building again.",
+    "CorruptedPlatformioDependencies": "Corrupted platformio dependencies",
+    "YouCanManuallyClearAllDependencies": "If you close the Configurator while platformio downloads dependencies git repository state can get corrupted. You can manually clear all dependencies and start the build process again.",
+    "ClearPlatformioDependencies": "Clear platformio dependencies",
+    "CorruptedPlatformioDependenciesDeleted": "Corrupted platformio dependencies were deleted and git repository was cleaned. Try building again."
+  }
+}
