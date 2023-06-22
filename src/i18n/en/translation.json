@@ -206,8 +206,13 @@
   },
   "SettingsView": {
     "Settings": "Settings",
-    "ConfiguratorVersion": "Configurator version",
-    "LanguageSelector": "Language selector"
+    "LanguageSelector": "Language selector",
+    "CurrentLanguage": "Current language",
+    "SystemInfo": "System Info",
+    "ELRSConfiguratorVersion": "ExpressLRS Configurator version",
+    "Platform": "Platform",
+    "CPU": "CPU",
+    "RAM": "RAM"
   },
   "SupportView": {
     "Support": "Support",
