@@ -87,7 +87,6 @@ import ShowAfterTimeout from '../../components/ShowAfterTimeout';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
 import MainLayout from '../../layouts/MainLayout';
-import SplitButton from '../../components/SplitButton';
 
 const styles: Record<string, SxProps<Theme>> = {
   button: {
