@@ -41,7 +41,9 @@ export enum BuildFirmwareStep {
 }
 
 export type BuildFlashFirmwareInput = {
+  readonly erase?: Scalars['Boolean'];
   readonly firmware?: FirmwareVersionDataInput;
+  readonly forceFlash?: Scalars['Boolean'];
   readonly serialDevice?: InputMaybe<Scalars['String']>;
   readonly target?: Scalars['String'];
   readonly type?: BuildJobType;
@@ -60,8 +62,7 @@ export type BuildFlashFirmwareResult = {
 
 export enum BuildJobType {
   Build = 'Build',
-  BuildAndFlash = 'BuildAndFlash',
-  ForceFlash = 'ForceFlash',
+  Flash = 'Flash',
 }
 
 export type BuildLogUpdate = {
@@ -112,6 +113,7 @@ export type Device = {
   readonly luaName?: Maybe<Scalars['String']>;
   readonly name: Scalars['String'];
   readonly parent?: Maybe<Scalars['String']>;
+  readonly platform?: Maybe<Scalars['String']>;
   readonly priorTargetName?: Maybe<Scalars['String']>;
   readonly targets: ReadonlyArray<Target>;
   readonly userDefines: ReadonlyArray<UserDefine>;
@@ -466,6 +468,7 @@ export type AvailableFirmwareTargetsQuery = {
     readonly verifiedHardware: boolean;
     readonly luaName?: string | null;
     readonly priorTargetName?: string | null;
+    readonly platform?: string | null;
     readonly targets: ReadonlyArray<{
       readonly __typename?: 'Target';
       readonly id: string;
@@ -866,6 +869,7 @@ export const AvailableFirmwareTargetsDocument = gql`
       verifiedHardware
       luaName
       priorTargetName
+      platform
     }
   }
 `;
