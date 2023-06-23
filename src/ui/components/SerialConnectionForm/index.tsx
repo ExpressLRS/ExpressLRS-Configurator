@@ -1,6 +1,7 @@
 import { Box, Button, Grid, TextField } from '@mui/material';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import Omnibox, { Option } from '../Omnibox';
 import {
   SerialPortInformation,
@@ -31,6 +32,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
   props
 ) => {
   const { onConnect, serialDevice, baudRate } = props;
+  const { t } = useTranslation();
 
   const { loading, data, error, previousData, startPolling, stopPolling } =
     useAvailableDevicesListQuery();
@@ -129,7 +131,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
       <Grid container spacing={2}>
         <Grid item xs={3}>
           <Omnibox
-            title="Serial device"
+            title={t('SerialConnectionForm.SerialDevice')}
             currentValue={currentValue}
             onChange={onSerialDeviceChange}
             options={options}
@@ -149,7 +151,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
               type: 'number',
               step: '1',
             }}
-            label="Baud rate"
+            label={t('SerialConnectionForm.BaudRate')}
           />
         </Grid>
         <Grid item>
@@ -159,7 +161,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
             variant="contained"
             sx={styles.button}
           >
-            Connect
+            {t('SerialConnectionForm.Connect')}
           </Button>
         </Grid>
       </Grid>

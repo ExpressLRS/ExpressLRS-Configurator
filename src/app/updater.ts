@@ -1,5 +1,6 @@
 import { autoUpdater } from 'electron-updater';
 import { BrowserWindow, dialog } from 'electron';
+import { useTranslation } from 'react-i18next';
 import { LoggerService } from '../api/src/logger';
 
 export default class Updater {
@@ -14,11 +15,12 @@ export default class Updater {
     });
 
     autoUpdater.on('update-available', async () => {
+      const { t } = useTranslation();
       const response = await dialog.showMessageBox(this.mainWindow, {
         type: 'info',
-        title: 'Found Updates',
-        message: 'Found updates, do you want update now?',
-        buttons: ['Sure', 'Later'],
+        title: t('Updater.FoundUpdates'),
+        message: t('Updater.UpdateNow'),
+        buttons: [t('Updater.Sure'), t('Updater.Later')],
       });
 
       if (response.response === 0) {
@@ -26,22 +28,21 @@ export default class Updater {
         autoUpdater.downloadUpdate();
         await dialog.showMessageBox(this.mainWindow, {
           type: 'info',
-          title: 'Update Downloading',
-          message:
-            'Update is being downloaded, you will be notified when it is ready to install',
+          title: t('Updater.UpdateDownloading'),
+          message: t('Updater.NotifiedWhenReadyToInstall'),
           buttons: [],
         });
       }
     });
 
     autoUpdater.on('update-downloaded', async () => {
+      const { t } = useTranslation();
       const response = await dialog.showMessageBox(this.mainWindow, {
         type: 'info',
-        buttons: ['Restart', 'Later'],
-        title: 'Application Update',
-        message: 'Update',
-        detail:
-          'A new version has been downloaded. Restart the application to apply the updates.',
+        buttons: [t('Updater.Restart'), t('Updater.Later')],
+        title: t('Updater.ApplicationUpdate'),
+        message: t('Updater.Update'),
+        detail: t('Updater.ApplyUpdates'),
       });
       if (response.response === 0) {
         setImmediate(() => autoUpdater.quitAndInstall());

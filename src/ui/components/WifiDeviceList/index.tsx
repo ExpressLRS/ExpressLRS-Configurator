@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import React, { FunctionComponent, useMemo } from 'react';
 import { SxProps, Theme } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 
 const styles: Record<string, SxProps<Theme>> = {
@@ -27,6 +28,7 @@ interface WifiDeviceSelectProps {
 
 const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
   const { wifiDevices, onChange } = props;
+  const { t } = useTranslation();
 
   const wifiDevicesSorted = useMemo(() => {
     return wifiDevices.sort((a, b) => {
@@ -42,12 +44,12 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Target</TableCell>
-            <TableCell>Version</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell>DNS</TableCell>
-            <TableCell>IP</TableCell>
+            <TableCell>{t('WifiDeviceList.Name')}</TableCell>
+            <TableCell>{t('WifiDeviceList.Target')}</TableCell>
+            <TableCell>{t('WifiDeviceList.Version')}</TableCell>
+            <TableCell>{t('WifiDeviceList.Type')}</TableCell>
+            <TableCell>{t('WifiDeviceList.DNS')}</TableCell>
+            <TableCell>{t('WifiDeviceList.IP')}</TableCell>
             <TableCell />
           </TableRow>
         </TableHead>
@@ -76,7 +78,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
                     onChange(row);
                   }}
                 >
-                  Select
+                  {t('WifiDeviceList.Select')}
                 </Button>
               </TableCell>
             </TableRow>

@@ -9,6 +9,7 @@ import {
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import ListIcon from '@mui/icons-material/List';
 import { ipcRenderer } from 'electron';
+import { useTranslation } from 'react-i18next';
 import Loader from '../../components/Loader';
 import CardTitle from '../../components/CardTitle';
 import { IpcRequest } from '../../../ipc';
@@ -82,6 +83,7 @@ const LogsView: FunctionComponent = () => {
   const [logs, setLogs] = useState<Log[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const { t } = useTranslation();
   const onLogs = () => {
     ipcRenderer.send(IpcRequest.OpenLogsFolder);
   };
@@ -111,7 +113,7 @@ const LogsView: FunctionComponent = () => {
   return (
     <MainLayout>
       <Card>
-        <CardTitle icon={<ListIcon />} title="Logs" />
+        <CardTitle icon={<ListIcon />} title={t('LogsView.Logs')} />
         <Divider />
         <CardContent>
           <Box mb={1} display="flex" justifyContent="end">
@@ -121,7 +123,7 @@ const LogsView: FunctionComponent = () => {
               variant="contained"
               onClick={onLogs}
             >
-              Open logs folder
+              {t('LogsView.OpenLogsFolder')}
             </Button>
           </Box>
           <Loader loading={loading} />
