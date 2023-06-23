@@ -3,6 +3,11 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector'; // For auto-detecting language
 import Backend from 'i18next-http-backend'; // For loading translations from backend
 
+const searchParams = new URLSearchParams(window.location.search.slice(1));
+const loadPath = `${
+  searchParams.get('base_url') ?? 'http://localhost:3500/'
+}/locales/{{lng}}/translation.json`;
+
 i18n
   .use(Backend)
   .use(LanguageDetector)
@@ -10,7 +15,7 @@ i18n
   .init({
     fallbackLng: 'en',
     backend: {
-      loadPath: './i18n/{{lng}}/translation.json',
+      loadPath,
     },
     debug:
       process.env.NODE_ENV === 'development' ||
