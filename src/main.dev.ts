@@ -15,6 +15,7 @@ import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import mkdirp from 'mkdirp';
 import winston from 'winston';
 import fs from 'fs';
+import readLastLines from 'read-last-lines';
 import MenuBuilder from './menu';
 import ApiServer from './api';
 import {
@@ -39,8 +40,8 @@ const winstonLogger = winston.createLogger({
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(
-        winston.format.prettyPrint(),
-        winston.format.timestamp()
+        winston.format.timestamp(),
+        winston.format.prettyPrint()
       ),
     }),
     new winston.transports.File({
@@ -49,8 +50,9 @@ const winstonLogger = winston.createLogger({
       maxFiles: 10,
       maxsize: 5_000_000, // in bytes
       format: winston.format.combine(
+        winston.format.timestamp(),
         winston.format.prettyPrint(),
-        winston.format.timestamp()
+        winston.format.json()
       ),
     }),
   ],
@@ -450,6 +452,14 @@ ipcMain.on(
       path: arg.path,
     });
     shell.showItemInFolder(arg.path);
+  }
+);
+
+ipcMain.handle(
+  IpcRequest.LoadLogFile,
+  async (_event, numberOfLines): Promise<string> => {
+    const logsLocation = path.join(logsPath, logsFilename);
+    return readLastLines.read(logsLocation, numberOfLines);
   }
 );
 

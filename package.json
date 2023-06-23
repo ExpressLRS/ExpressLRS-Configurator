@@ -333,6 +333,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
+    "read-last-lines": "^1.8.0",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "^0.13.5",
     "sanitize-filename": "^1.6.3",
