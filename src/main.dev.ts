@@ -308,6 +308,12 @@ const createWindow = async () => {
     ? path.join(process.resourcesPath, 'devices')
     : path.join(__dirname, '../devices');
 
+  const localesPath = app.isPackaged
+    ? path.join(process.resourcesPath, 'i18n')
+    : path.join(__dirname, 'i18n');
+
+  logger.log('localesPath', { localesPath });
+
   logger.log('local api server PATH', {
     PATH,
   });
@@ -332,6 +338,7 @@ const createWindow = async () => {
       targetsStoragePath,
       userDefinesStoragePath,
       userDataPath: app.getPath('userData'),
+      localesPath,
     },
     logger,
     port
@@ -364,10 +371,11 @@ const createWindow = async () => {
     }
   });
 
-  const apiUrl = `http://localhost:${port}/graphql`;
+  const baseUrl = `http://localhost:${port}`;
+  const apiUrl = `${baseUrl}/graphql`;
   const subscriptionsUrl = `ws://localhost:${port}/graphql`;
   mainWindow.loadURL(
-    `file://${__dirname}/index.html?api_url=${apiUrl}&subscriptions_url=${subscriptionsUrl}`
+    `file://${__dirname}/index.html?base_url=${baseUrl}&api_url=${apiUrl}&subscriptions_url=${subscriptionsUrl}`
   );
 
   // TODO: Use 'ready-to-show' event
