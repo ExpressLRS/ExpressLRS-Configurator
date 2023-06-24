@@ -38,10 +38,10 @@
   },
   "FirmwareVersionForm": {
     "OfficialReleases": "공식 릴리즈",
-    "GitBranch": "Git branch",
-    "GitCommit": "Git commit",
+    "GitBranch": "Git 브랜치",
+    "GitCommit": "Git 커밋",
     "Local": "로컬 파일",
-    "GitPullRequest": "Git Pull Request",
+    "GitPullRequest": "Git 풀 리퀘스트",
     "ShowPreRreleases": "실험 버전 보이기",
     "Releases": "배포 버전",
     "ReleaseNotes": "업데이트 내용",
@@ -49,13 +49,13 @@
     "UpgradeToV3": "ExpressLRS 2.X는 더 이상 지원되지 않습니다. ExpressLRS 3.X로 업그레이드하세요.",
     "DangerZoneTitle": "위험 구역",
     "DangerZoneContent": "이 기능은 지금 하고 계신 일이 무엇인지 정확히 알고 있거나, 프로젝트 개발자의 지시를 받은 경우에만 사용하세요.",
-    "GitBranches": "Git branches",
-    "GitCommitHash": "Git commit hash",
+    "GitBranches": "Git 브랜치",
+    "GitCommitHash": "Git 커밋 해쉬",
     "LocalPath": "파일 경로",
     "AttentionTitle": "주의",
     "AttentionContent": "이미 지원이 끊긴 BETAFPV의 커스텀 ExpressLRS 버전을 플래시하고 계십니다. 이제 BETAFPV하드웨어는 공식 ExpressLRS 버전들에서 완벽하게 지원됩니다. 최상의 ExpressLRS 경험을 위해 공식 펌웨어를 사용하실 것을 권장합니다.",
     "ChooseFolder": "폴더 선택하기",
-    "GitPullRequests": "Git pull requests"
+    "GitPullRequests": "Git 풀 리퀘스트"
   },
   "FlashingMethodDescription": {
     "BetaflightPassthroughDescription": "이 방법을 사용하면 FC(비행 컨트롤러)의 패스스루 기능을 사용하여 FC에 연결된 수신기를 플래시할 수 있습니다.",
@@ -96,7 +96,7 @@
   },
   "Sidebar": {
     "Configurator": "컨피규레이터",
-    "Backpack": "Backpack",
+    "Backpack": "백팩",
     "Logs": "로그 기록",
     "SerialMonitor": "시리얼 모니터",
     "Settings": "설정",
