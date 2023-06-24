@@ -29,7 +29,7 @@ jobs:
           upload_translations: false
 
           download_translations: true
-          download_translations_args: '-l zh-CN'
+          download_translations_args: '-l zh-CN -l it -l ko'
           localization_branch_name: update-translations-crowdin
           push_translations: true
           commit_message: 'Update translations'

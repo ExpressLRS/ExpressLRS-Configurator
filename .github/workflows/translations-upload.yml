@@ -8,7 +8,7 @@ on:
     branches:
       - master
     paths:
-      - 'locales/en/**'
+      - 'src/i18n/locales/en/**'
 
 jobs:
   upload-message-keys-to-crowdin:

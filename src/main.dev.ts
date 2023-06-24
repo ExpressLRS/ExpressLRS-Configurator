@@ -309,8 +309,8 @@ const createWindow = async () => {
     : path.join(__dirname, '../devices');
 
   const localesPath = app.isPackaged
-    ? path.join(process.resourcesPath, 'i18n')
-    : path.join(__dirname, 'i18n');
+    ? path.join(process.resourcesPath, 'i18n', 'locales')
+    : path.join(__dirname, 'i18n', 'locales');
 
   logger.log('localesPath', { localesPath });
 
