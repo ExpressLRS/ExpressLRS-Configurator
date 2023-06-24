@@ -64,20 +64,20 @@ export class TargetsJSONLoader {
           const id = `${categoryKey}.${subTypeKey}.${deviceDescriptionKey}`;
           const config = configs[deviceDescriptionKey];
 
-          const [type, frequency] = subTypeKey.split('_');
-          config.type = type.toUpperCase();
-          const frequencyNumber = parseInt(frequency, 10);
-
-          let category = categoryName;
-
-          if (frequencyNumber) {
-            config.frequency = frequencyNumber;
-            category = `${categoryName} ${this.frequencyFormatter(
-              config.frequency
-            )}`;
-          }
-
           if (this.validConfig(id, config)) {
+            const [type, frequency] = subTypeKey.split('_');
+            config.type = type.toUpperCase();
+            const frequencyNumber = parseInt(frequency, 10);
+
+            let category = categoryName;
+
+            if (frequencyNumber) {
+              config.frequency = frequencyNumber;
+              category = `${categoryName} ${this.frequencyFormatter(
+                config.frequency
+              )}`;
+            }
+
             result[id] = {
               category,
               config,
