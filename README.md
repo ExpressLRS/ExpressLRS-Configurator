@@ -16,14 +16,21 @@ ExpressLRS Configurator is a cross-platform build & configuration tool for the
 
 ## Support ExpressLRS
 
-Supporting ExpressLRS is as easy as contributing a feature, either code or just a fleshed out idea. Coding not your thing? Testing a Pull Request using the convenient Configurator tab and providing feedback is essential as well. We're all working together.
+Supporting ExpressLRS is as easy as contributing a feature, either code or just a fleshed out idea. Coding not your
+thing? Testing a Pull Request using the convenient Configurator tab and providing feedback is essential as well. We're
+all working together.
 
-If you don't have the time to contribute in that way, consider making a small donation. Donations are used to buy test equipment, software licenses, and certificates needed to further the project and make it securely accessible. ExpressLRS accepts donations through [Open Collective](https://opencollective.com/expresslrs), which provides recognition of donors and transparency on how that support is utilized.
+If you don't have the time to contribute in that way, consider making a small donation. Donations are used to buy test
+equipment, software licenses, and certificates needed to further the project and make it securely accessible. ExpressLRS
+accepts donations through [Open Collective](https://opencollective.com/expresslrs), which provides recognition of donors
+and transparency on how that support is utilized.
 
 [![Open Collective backers](https://img.shields.io/opencollective/backers/expresslrs?label=Open%20Collective%20backers)](https://opencollective.com/expresslrs)
 
 ## Quick Start Guide
-If you have hardware that you want to flash, please refer to our guides on the [website](https://www.expresslrs.org/), and our [FAQ](https://www.expresslrs.org/3.0/faq/)
+
+If you have hardware that you want to flash, please refer to our guides on the [website](https://www.expresslrs.org/),
+and our [FAQ](https://www.expresslrs.org/3.0/faq/)
 
 ## Installation
 
@@ -40,9 +47,11 @@ The minimum required version of windows is Windows 8.
 #### macOS
 
 Changes to the security model used in the latest versions of MacOS X 10.14 (Mojave) and 10.15 (Catalina)
-mean that the operating system will show an error message ('"ExpressLRS Configurator.app" cannot be openend because the developer cannot be verified') when trying to install the application.
+mean that the operating system will show an error message ('"ExpressLRS Configurator.app" cannot be openend because the
+developer cannot be verified') when trying to install the application.
 
-To work around this, click `ExpressLRS Configurator.app` while pressing `control` key, and click `Open`. In the popup, you'll be able to forcefully open the application. (you may need to try this twice.)
+To work around this, click `ExpressLRS Configurator.app` while pressing `control` key, and click `Open`. In the popup,
+you'll be able to forcefully open the application. (you may need to try this twice.)
 
 Alternatively, run the following command in a terminal after installing:
 
@@ -110,6 +119,38 @@ sudo apt update
 sudo apt install git
 ```
 
+## Localisation
+
+**Please do not submit pull requests for translation changes, but read and follow the instructions below!**
+
+ExpressLRS Configurator has been translated into several languages. The application will try to detect and use your
+system language if a translation into this language is available.
+
+If you prefer to have the application in English or any other language, you can select your desired language in the
+"Settings" menu.
+
+We want to make ExpressLRS accessible for pilots who are not fluent in English. We have got a team of volunteer
+translators who do this work, but additional translators are always welcome to share the workload, and we are keen to
+add additional languages. If you would like to help us with translations, you have got the following options:
+
+- if you help by suggesting some updates or improvements to translations in a language you are familiar with, head
+  to [crowdin.com](https://crowdin.com/project/expresslrs-configurator) and add your suggested translations there.
+- if you would like to start working on the translation for a new language, or take on responsibility for proof-reading
+  the translation for a language you are very familiar with, please head to the ExpressLRS Discord chat
+  (registration [here](https://discord.gg/dS6ReFY)), and join the
+  [#configurator-translation](https://discord.com/channels/596350022191415318/1121712995505021059) channel - the people
+  in there can help you to get a new language added, or set you up as a proof reader.
+
+Our localisation progress:
+
+![Translations progress](https://badges.awesome-crowdin.com/translation-15884405-596659-update.png)
+
+## Screenshots
+
+![Main screen](docs/readme/screenshots/main_screen.jpg)
+
+![Compile result](docs/readme/screenshots/compile_result.jpg)
+
 ## Architecture
 
 ```
@@ -150,7 +191,7 @@ yarn install --frozen-lockfile
 yarn start
 ```
 
-In order to simulate WI-FI devices on your local network you can start application with 
+In order to simulate WI-FI devices on your local network you can start application with
 `MULTICAST_DNS_SIMULATOR_ENABLED` environment variable:
 
 ```
@@ -164,16 +205,6 @@ Generate TypeScript types from Graphql schema and Queries located in [src/ui/gql
 ```bash
 yarn run gql-codegen
 ```
-
-## Screenshots
-
-![Main screen](docs/readme/screenshots/main_screen.jpg)
-
-![Compile result](docs/readme/screenshots/compile_result.jpg)
-
-## Credits
-
-- [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate)
 
 ## Legal disclaimer
 

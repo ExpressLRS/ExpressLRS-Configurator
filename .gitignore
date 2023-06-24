@@ -55,3 +55,4 @@ npm-debug.log.*
 /src/api/src/services/BinaryFlashingStrategy/firmware
 __pycache__
 r2
+crowdin_env.sh
