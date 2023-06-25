@@ -144,7 +144,11 @@
     },
     "extraResources": [
       "./assets/**",
-      "./devices/**"
+      "./devices/**",
+      {
+        "from": "./src/i18n",
+        "to": "i18n"
+      }
     ],
     "publish": {
       "provider": "github",

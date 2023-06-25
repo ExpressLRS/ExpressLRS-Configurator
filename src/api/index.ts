@@ -186,6 +186,8 @@ export default class ApiServer {
     await this.buildContainer(config, logger);
     this.app = express();
 
+    this.app.use('/locales', express.static(config.localesPath));
+
     this.httpServer = createServer(this.app);
     /*
           I know, crazy. It is 45 minutes, but on slower network connection it might take a while to download
