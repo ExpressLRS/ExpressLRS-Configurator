@@ -1,7 +1,7 @@
 // import the original type declarations
 import 'i18next';
 // import all namespaces (for the default language, only)
-import defaultNamespace from '../i18n/en/translation.json';
+import defaultNamespace from '../i18n/locales/en/messages.json';
 
 declare module 'i18next' {
   // Extend CustomTypeOptions
