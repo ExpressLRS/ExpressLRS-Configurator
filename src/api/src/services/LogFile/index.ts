@@ -1,19 +1,37 @@
 import { Service } from 'typedi';
-import readLastLines from 'read-last-lines';
-
-import LogFileArgs from '../../graphql/args/LogFile';
 import { LoggerService } from '../../logger';
 
+export interface ILogFileArgs {
+  numberOfLines: number;
+}
+
 export interface ILogFile {
-  loadLogFile(args: LogFileArgs): Promise<string>;
+  loadLogFile(args: ILogFileArgs): Promise<string>;
 }
 
 @Service()
 export default class LogFileService implements ILogFile {
-  constructor(private logFilePath: string, private logger: LoggerService) {}
+  constructor(private logger: LoggerService) {}
 
-  async loadLogFile(args: LogFileArgs): Promise<string> {
-    this.logger.log('Requested log content');
-    return readLastLines.read(this.logFilePath, args.numberOfLines);
+  async loadLogFile(args: ILogFileArgs): Promise<string> {
+    const contentPromise = new Promise<string>((resolve) => {
+      this.logger.log('Requested log content');
+      this.logger.query(
+        {
+          start: 0,
+          limit: args.numberOfLines,
+          order: 'desc',
+          fields: ['timestamp', 'level', 'message', 'context'],
+        },
+        (err, result) => {
+          if (err) {
+            resolve(JSON.stringify({ error: err }));
+          } else {
+            resolve(JSON.stringify(result.file));
+          }
+        }
+      );
+    });
+    return contentPromise;
   }
 }

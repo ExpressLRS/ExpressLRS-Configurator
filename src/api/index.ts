@@ -172,10 +172,7 @@ export default class ApiServer {
     );
 
     Container.set(LuaService, new LuaService(logger));
-    Container.set(
-      LogFileService,
-      new LogFileService(config.logFilePath, logger)
-    );
+    Container.set(LogFileService, new LogFileService(logger));
   }
 
   async start(

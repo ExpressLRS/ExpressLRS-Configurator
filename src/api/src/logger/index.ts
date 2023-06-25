@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { QueryOptions } from 'winston';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface LoggerService {
   log(message: any, context?: Record<string, unknown>): void;
 
@@ -10,4 +11,9 @@ export interface LoggerService {
   debug?(message: any, context?: Record<string, unknown>): void;
 
   verbose?(message: any, context?: Record<string, unknown>): void;
+
+  query(
+    options?: QueryOptions,
+    callback?: { (err: Error, result: any): void }
+  ): void;
 }

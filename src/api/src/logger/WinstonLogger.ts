@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/static-property-placement */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Logger } from 'winston';
+import { Logger, QueryOptions } from 'winston';
 import { Service } from 'typedi';
 import { LoggerService } from './index';
 
@@ -92,5 +92,12 @@ export default class WinstonLoggerService implements LoggerService {
     }
 
     return this.logger.verbose(message, { context });
+  }
+
+  public query(
+    options?: QueryOptions | undefined,
+    callback?: { (err: Error, result: any): void }
+  ): any {
+    return this.logger.query(options, callback);
   }
 }

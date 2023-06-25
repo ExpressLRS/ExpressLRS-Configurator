@@ -339,7 +339,6 @@ const createWindow = async () => {
       targetsStoragePath,
       userDefinesStoragePath,
       userDataPath: app.getPath('userData'),
-      logFilePath: path.join(logsPath, logsFilename),
       localesPath,
     },
     logger,
