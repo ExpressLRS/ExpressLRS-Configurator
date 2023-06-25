@@ -33,6 +33,8 @@ import MulticastDnsService from './src/services/MulticastDns';
 import MulticastDnsMonitorResolver from './src/graphql/resolvers/MulticastDnsMonitor.resolver';
 import LuaService from './src/services/Lua';
 import LuaResolver from './src/graphql/resolvers/Lua.resolver';
+import LogFileService from './src/services/LogFile';
+import LogFileResolver from './src/graphql/resolvers/LogFile.resolver';
 import MulticastDnsSimulatorService from './src/services/MulticastDns/MulticastDnsSimulator';
 import MulticastDnsNotificationsService from './src/services/MulticastDnsNotificationsService';
 import TargetsLoader from './src/services/TargetsLoader';
@@ -170,6 +172,10 @@ export default class ApiServer {
     );
 
     Container.set(LuaService, new LuaService(logger));
+    Container.set(
+      LogFileService,
+      new LogFileService(config.logFilePath, logger)
+    );
   }
 
   async start(
@@ -200,6 +206,7 @@ export default class ApiServer {
         SerialMonitorResolver,
         MulticastDnsMonitorResolver,
         LuaResolver,
+        LogFileResolver,
       ],
       container: Container,
       pubSub: Container.get<PubSub>(PubSubToken),

@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import Loader from '../../components/Loader';
 import CardTitle from '../../components/CardTitle';
 import { IpcRequest } from '../../../ipc';
+import { useLogFileLazyQuery } from '../../gql/generated/types';
 import MainLayout from '../../layouts/MainLayout';
 import theme from '../../theme';
 
@@ -80,35 +81,44 @@ const LogEntry: FunctionComponent<Log> = ({
 };
 
 const LogsView: FunctionComponent = () => {
-  const [logs, setLogs] = useState<Log[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
   const { t } = useTranslation();
+  const [logs, setLogs] = useState<Log[]>([]);
+  const [
+    fetchLogs,
+    {
+      data: fetchLogsData,
+      loading: fetchLogsDataLoading,
+      error: fetchLogsDataError,
+    },
+  ] = useLogFileLazyQuery({ fetchPolicy: 'network-only' });
+
   const onLogs = () => {
     ipcRenderer.send(IpcRequest.OpenLogsFolder);
   };
 
   useEffect(() => {
-    ipcRenderer
-      .invoke(IpcRequest.LoadLogFile, 20)
-      .then((lines) => {
-        const linesList = lines
-          .split(/\r?\n/)
-          .filter((line: string) => line !== '')
-          .flatMap((line: string) => {
-            let logEntry: Log;
-            try {
-              logEntry = JSON.parse(line) as Log;
-            } catch (e) {
-              return [];
-            }
-            return logEntry;
-          });
-        setLoading(false);
-        setLogs(linesList);
-      })
-      .catch((e) => console.error('failed to read log file', e));
-  }, []);
+    fetchLogs({ variables: { numberOfLines: 20 } });
+  }, [fetchLogs]);
+
+  useEffect(() => {
+    if (fetchLogsData?.logFile?.content) {
+      const linesList = fetchLogsData.logFile.content
+        ?.split(/\r?\n/)
+        .filter((line: string) => line !== '')
+        .flatMap((line: string) => {
+          let logEntry: Log;
+          try {
+            logEntry = JSON.parse(line) as Log;
+          } catch (e) {
+            return [];
+          }
+          return logEntry;
+        });
+      setLogs(linesList);
+    } else {
+      setLogs([]);
+    }
+  }, [fetchLogsData]);
 
   return (
     <MainLayout>
@@ -116,6 +126,7 @@ const LogsView: FunctionComponent = () => {
         <CardTitle icon={<ListIcon />} title={t('LogsView.Logs')} />
         <Divider />
         <CardContent>
+          <Loader loading={fetchLogsDataLoading} />
           <Box mb={1} display="flex" justifyContent="end">
             <Button
               color="primary"
@@ -126,10 +137,11 @@ const LogsView: FunctionComponent = () => {
               {t('LogsView.OpenLogsFolder')}
             </Button>
           </Box>
-          <Loader loading={loading} />
-          {logs.map((log: Log, idx: number) => (
-            <LogEntry key={idx} {...log} />
-          ))}
+          {!fetchLogsDataLoading &&
+            !fetchLogsDataError &&
+            logs.map((log: Log, idx: number) => (
+              <LogEntry key={idx} {...log} />
+            ))}
         </CardContent>
       </Card>
     </MainLayout>

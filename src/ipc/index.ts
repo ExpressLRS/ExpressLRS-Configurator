@@ -4,7 +4,6 @@ export enum IpcRequest {
   UpdateBuildStatus = 'UPDATE_BUILD_STATUS',
   ChooseFolder = 'CHOOSE_FOLDER',
   SaveFile = 'SAVE_FILE',
-  LoadLogFile = 'LOAD_LOG_FILE',
 }
 
 export interface OpenFileLocationRequestBody {

@@ -18,6 +18,7 @@ export interface IConfig {
   targetsStoragePath: string;
   userDefinesStoragePath: string;
   userDataPath: string;
+  logFilePath: string;
 }
 
 export const ConfigToken = new Token<IConfig>('CONFIG_TOKEN');

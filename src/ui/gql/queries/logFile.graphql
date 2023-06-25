@@ -1,0 +1,5 @@
+query logFile($numberOfLines: Float!) {
+  logFile(numberOfLines: $numberOfLines) {
+    content
+  }
+}
