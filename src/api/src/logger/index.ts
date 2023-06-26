@@ -1,4 +1,8 @@
-import { QueryOptions } from 'winston';
+export type QueryOptions = {
+  rows?: number;
+  order?: 'asc' | 'desc';
+  fields: string[];
+};
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface LoggerService {

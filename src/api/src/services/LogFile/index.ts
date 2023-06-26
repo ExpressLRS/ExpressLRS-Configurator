@@ -18,8 +18,7 @@ export default class LogFileService implements ILogFile {
       this.logger.log('Requested log content');
       this.logger.query(
         {
-          start: 0,
-          limit: args.numberOfLines,
+          rows: args.numberOfLines,
           order: 'desc',
           fields: ['timestamp', 'level', 'message', 'context'],
         },

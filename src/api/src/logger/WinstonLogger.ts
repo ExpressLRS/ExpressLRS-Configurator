@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/static-property-placement */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Logger, QueryOptions } from 'winston';
+import { Logger } from 'winston';
 import { Service } from 'typedi';
-import { LoggerService } from './index';
+import { LoggerService, QueryOptions } from './index';
 
 @Service()
 export default class WinstonLoggerService implements LoggerService {
@@ -95,7 +95,7 @@ export default class WinstonLoggerService implements LoggerService {
   }
 
   public query(
-    options?: QueryOptions | undefined,
+    options?: QueryOptions,
     callback?: { (err: Error, result: any): void }
   ): any {
     return this.logger.query(options, callback);
