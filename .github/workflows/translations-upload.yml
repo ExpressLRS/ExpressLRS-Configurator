@@ -1,4 +1,4 @@
-name: Upload translation keys to Crowdin
+name: Upload translation keys
 
 concurrency: upload-crowdin
 

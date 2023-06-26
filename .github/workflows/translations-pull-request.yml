@@ -1,4 +1,4 @@
-name: Translations download and PR
+name: Translations download
 
 on:
   workflow_dispatch:
