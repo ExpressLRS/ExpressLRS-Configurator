@@ -6,13 +6,13 @@ import { useTranslation } from 'react-i18next';
 import Loader from '../../components/Loader';
 import CardTitle from '../../components/CardTitle';
 import { IpcRequest } from '../../../ipc';
-import { useLogFileLazyQuery } from '../../gql/generated/types';
+import { useLogFileLazyQuery, LogEntry } from '../../gql/generated/types';
 import MainLayout from '../../layouts/MainLayout';
-import LogEntry, { Log } from './logEntry';
+import LogEntryComponent from './logEntry';
 
-const LogsView: FunctionComponent = () => {
+const LogsViewComponent: FunctionComponent = () => {
   const { t } = useTranslation();
-  const [logs, setLogs] = useState<Log[]>([]);
+  const [logs, setLogs] = useState<LogEntry[]>([]);
   const [
     fetchLogs,
     {
@@ -31,17 +31,7 @@ const LogsView: FunctionComponent = () => {
   }, [fetchLogs]);
 
   useEffect(() => {
-    if (fetchLogsData?.logFile?.content) {
-      const content = JSON.parse(fetchLogsData.logFile.content);
-      if (content.error) {
-        // TODO: display error ?
-        setLogs([]);
-      } else {
-        setLogs(content);
-      }
-    } else {
-      setLogs([]);
-    }
+    setLogs((fetchLogsData?.logFile?.content as LogEntry[]) || []);
   }, [fetchLogsData]);
 
   return (
@@ -63,8 +53,8 @@ const LogsView: FunctionComponent = () => {
           </Box>
           {!fetchLogsDataLoading &&
             !fetchLogsDataError &&
-            logs.map((log: Log, idx: number) => (
-              <LogEntry key={idx} {...log} />
+            logs.map((log: LogEntry, idx: number) => (
+              <LogEntryComponent key={idx} {...log} />
             ))}
         </CardContent>
       </Card>
@@ -72,4 +62,4 @@ const LogsView: FunctionComponent = () => {
   );
 };
 
-export default LogsView;
+export default LogsViewComponent;

@@ -1,21 +1,15 @@
 import { Box, Typography } from '@mui/material';
 import React, { FunctionComponent } from 'react';
 import theme from '../../theme';
-import LogEntryContext from './logEntryContext';
+import { LogEntry } from '../../gql/generated/types';
+import LogEntryContextComponent from './logEntryContext';
 
-export type Log = {
-  level: string;
-  message: string;
-  timestamp: string;
-  context?: object;
-};
-
-const LogEntry: FunctionComponent<Log> = ({
+const LogEntryComponent: FunctionComponent<LogEntry> = ({
   level,
   message,
   timestamp,
   context,
-}: Log) => {
+}: LogEntry) => {
   const levelLabelColor = (lvl: string): string => {
     switch (lvl) {
       case 'error':
@@ -40,9 +34,9 @@ const LogEntry: FunctionComponent<Log> = ({
         </Typography>
         <Typography>{message}</Typography>
       </Box>
-      {context && <LogEntryContext {...context} />}
+      {context && <LogEntryContextComponent {...context} />}
     </Box>
   );
 };
 
-export default LogEntry;
+export default LogEntryComponent;

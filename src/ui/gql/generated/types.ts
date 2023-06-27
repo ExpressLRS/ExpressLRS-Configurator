@@ -20,6 +20,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  JSONObject: any;
 };
 
 export enum BuildFirmwareErrorType {
@@ -162,9 +163,17 @@ export type GitRepositoryInput = {
   readonly url: Scalars['String'];
 };
 
+export type LogEntry = {
+  readonly __typename?: 'LogEntry';
+  readonly context?: Maybe<Scalars['JSONObject']>;
+  readonly level: Scalars['String'];
+  readonly message: Scalars['String'];
+  readonly timestamp: Scalars['String'];
+};
+
 export type LogFile = {
   readonly __typename?: 'LogFile';
-  readonly content?: Maybe<Scalars['String']>;
+  readonly content?: Maybe<ReadonlyArray<LogEntry>>;
 };
 
 export type LuaScript = {
@@ -710,7 +719,13 @@ export type LogFileQuery = {
   readonly __typename?: 'Query';
   readonly logFile: {
     readonly __typename?: 'LogFile';
-    readonly content?: string | null;
+    readonly content?: ReadonlyArray<{
+      readonly __typename?: 'LogEntry';
+      readonly timestamp: string;
+      readonly level: string;
+      readonly message: string;
+      readonly context?: any | null;
+    }> | null;
   };
 };
 
@@ -1743,7 +1758,12 @@ export type GetReleasesQueryResult = Apollo.QueryResult<
 export const LogFileDocument = gql`
   query logFile($numberOfLines: Float!) {
     logFile(numberOfLines: $numberOfLines) {
-      content
+      content {
+        timestamp
+        level
+        message
+        context
+      }
     }
   }
 `;

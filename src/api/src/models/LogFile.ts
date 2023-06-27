@@ -1,11 +1,12 @@
 import { Field, ObjectType } from 'type-graphql';
+import LogEntry from './LogEntry';
 
 @ObjectType('LogFile')
 export default class LogFile {
-  @Field({ nullable: true })
-  content: string | null;
+  @Field(() => [LogEntry], { nullable: true })
+  content: LogEntry[];
 
-  constructor(content: string | null) {
+  constructor(content: LogEntry[]) {
     this.content = content;
   }
 }

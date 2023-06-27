@@ -1,5 +1,10 @@
 query logFile($numberOfLines: Float!) {
   logFile(numberOfLines: $numberOfLines) {
-    content
+    content {
+      timestamp
+      level
+      message
+      context
+    }
   }
 }

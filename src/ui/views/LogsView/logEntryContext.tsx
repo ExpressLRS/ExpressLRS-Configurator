@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import React, { FunctionComponent } from 'react';
 
-const LogEntryContext: FunctionComponent<object> = (context) => {
+const LogEntryContextComponent: FunctionComponent<object> = (context) => {
   const contextContent: { key: string; value: string | object }[] = [];
   Object.entries(context).map(([key, value]) =>
     contextContent.push({ key, value })
@@ -22,4 +22,4 @@ const LogEntryContext: FunctionComponent<object> = (context) => {
   );
 };
 
-export default LogEntryContext;
+export default LogEntryContextComponent;
