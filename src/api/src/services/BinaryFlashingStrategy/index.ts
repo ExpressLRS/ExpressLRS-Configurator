@@ -605,10 +605,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         );
       }
 
-      if (
-        params.type === BuildJobType.BuildAndFlash ||
-        params.type === BuildJobType.ForceFlash
-      ) {
+      if (params.type === BuildJobType.Flash) {
         return new BuildFlashFirmwareResult(true, '');
       }
 

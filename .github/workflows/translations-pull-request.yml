@@ -1,4 +1,4 @@
-name: Translations download and PR
+name: Translations download
 
 on:
   workflow_dispatch:
@@ -17,17 +17,16 @@ jobs:
         uses: crowdin/github-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         with:
-          project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
-          token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-          config: 'crowdin.yml'
           crowdin_branch_name: ${{ github.ref_name }}
 
           upload_sources: false
           upload_translations: false
 
           download_translations: true
-          download_translations_args: '-l zh-CN -l it -l ko'
+          download_translations_args: '--language=it --language=es-ES --language=ko --language=zh-CN'
           localization_branch_name: update-translations-crowdin
           push_translations: true
           commit_message: 'Update translations'
