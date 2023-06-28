@@ -1,11 +1,11 @@
-import { ArgsType, Field } from 'type-graphql';
+import { ArgsType, Field, Int } from 'type-graphql';
 
 @ArgsType()
 export default class LogFileArgs {
-  @Field()
+  @Field(() => Int)
   numberOfLines: number;
 
   constructor() {
-    this.numberOfLines = 20;
+    this.numberOfLines = 500;
   }
 }

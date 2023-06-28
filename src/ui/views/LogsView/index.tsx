@@ -8,9 +8,9 @@ import CardTitle from '../../components/CardTitle';
 import { IpcRequest } from '../../../ipc';
 import { useLogFileLazyQuery, LogEntry } from '../../gql/generated/types';
 import MainLayout from '../../layouts/MainLayout';
-import LogEntryComponent from './logEntry';
+import LogsViewEntry from './logsViewEntry';
 
-const LogsViewComponent: FunctionComponent = () => {
+const LogsView: FunctionComponent = () => {
   const { t } = useTranslation();
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [
@@ -27,7 +27,7 @@ const LogsViewComponent: FunctionComponent = () => {
   };
 
   useEffect(() => {
-    fetchLogs({ variables: { numberOfLines: 20 } });
+    fetchLogs({ variables: { numberOfLines: 500 } });
   }, [fetchLogs]);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const LogsViewComponent: FunctionComponent = () => {
           {!fetchLogsDataLoading &&
             !fetchLogsDataError &&
             logs.map((log: LogEntry, idx: number) => (
-              <LogEntryComponent key={idx} {...log} />
+              <LogsViewEntry key={idx} logEntry={log} />
             ))}
         </CardContent>
       </Card>
@@ -62,4 +62,4 @@ const LogsViewComponent: FunctionComponent = () => {
   );
 };
 
-export default LogsViewComponent;
+export default LogsView;

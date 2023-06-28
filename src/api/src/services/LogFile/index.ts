@@ -7,7 +7,7 @@ export interface ILogFileArgs {
 }
 
 export interface ILogFile {
-  loadLogFile(args: ILogFileArgs): Promise<LogEntry[] | null>;
+  loadLogFile(args: ILogFileArgs): Promise<LogEntry[]>;
 }
 
 @Service()
@@ -15,17 +15,12 @@ export default class LogFileService implements ILogFile {
   constructor(private logger: LoggerService) {}
 
   async loadLogFile(args: ILogFileArgs) {
-    const contentPromise = new Promise<LogEntry[] | null>((resolve) => {
-      this.logger.log('Requested log content');
-      this.logger.query(
-        {
-          rows: args.numberOfLines,
-          order: 'desc',
-          fields: ['timestamp', 'level', 'message', 'context'],
-        },
-        (err, result) => resolve(err ? null : result.file) // Maybe pass error insttead of null?
-      );
+    this.logger.log('Requested log content');
+    const logFileContent = await this.logger.query({
+      rows: args.numberOfLines,
+      order: 'desc',
+      fields: ['timestamp', 'level', 'message', 'context'],
     });
-    return contentPromise;
+    return logFileContent as LogEntry[];
   }
 }

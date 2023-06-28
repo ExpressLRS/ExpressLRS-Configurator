@@ -1,4 +1,4 @@
-query logFile($numberOfLines: Float!) {
+query logFile($numberOfLines: Int!) {
   logFile(numberOfLines: $numberOfLines) {
     content {
       timestamp

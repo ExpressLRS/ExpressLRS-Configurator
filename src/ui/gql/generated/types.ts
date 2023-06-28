@@ -285,7 +285,7 @@ export type QueryGitTagsArgs = {
 };
 
 export type QueryLogFileArgs = {
-  numberOfLines?: Scalars['Float'];
+  numberOfLines?: Scalars['Int'];
 };
 
 export type QueryLuaScriptArgs = {
@@ -712,7 +712,7 @@ export type GetReleasesQuery = {
 };
 
 export type LogFileQueryVariables = Exact<{
-  numberOfLines: Scalars['Float'];
+  numberOfLines: Scalars['Int'];
 }>;
 
 export type LogFileQuery = {
@@ -1756,7 +1756,7 @@ export type GetReleasesQueryResult = Apollo.QueryResult<
   GetReleasesQueryVariables
 >;
 export const LogFileDocument = gql`
-  query logFile($numberOfLines: Float!) {
+  query logFile($numberOfLines: Int!) {
     logFile(numberOfLines: $numberOfLines) {
       content {
         timestamp

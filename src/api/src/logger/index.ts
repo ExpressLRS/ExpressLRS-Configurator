@@ -16,8 +16,5 @@ export interface LoggerService {
 
   verbose?(message: any, context?: Record<string, unknown>): void;
 
-  query(
-    options?: QueryOptions,
-    callback?: { (err: Error, result: any): void }
-  ): void;
+  query(options?: QueryOptions): Promise<any>;
 }

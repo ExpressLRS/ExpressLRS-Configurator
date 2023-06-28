@@ -94,10 +94,15 @@ export default class WinstonLoggerService implements LoggerService {
     return this.logger.verbose(message, { context });
   }
 
-  public query(
-    options?: QueryOptions,
-    callback?: { (err: Error, result: any): void }
-  ): any {
-    return this.logger.query(options, callback);
+  public query(options?: QueryOptions): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.logger.query(options, (err: Error, result: any) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result.file);
+        }
+      });
+    });
   }
 }
