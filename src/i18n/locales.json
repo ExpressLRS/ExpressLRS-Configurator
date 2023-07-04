@@ -18,5 +18,9 @@
   {
     "value": "ko",
     "label": "한국어 (Korean)"
+  },
+  {
+    "value": "ru",
+    "label": "Русский (Russian)"
   }
 ]
