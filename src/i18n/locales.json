@@ -22,5 +22,17 @@
   {
     "value": "ru",
     "label": "Русский (Russian)"
+  },
+  {
+    "value": "el",
+    "label": "Ελληνικά (Greek)"
+  },
+  {
+    "value": "uk",
+    "label": "Yкраїнська (Ukrainian)"
+  },
+  {
+    "value": "fr",
+    "label": "Française (French)"
   }
 ]

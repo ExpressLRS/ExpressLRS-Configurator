@@ -1,0 +1,230 @@
+{
+  "BuildNotificationsList": {
+    "VerifyingBuildSystem": "Επαλήθευση συστήματος",
+    "DownloadingFirmware": "Λήψη firmware",
+    "BuildingUserDefinesTXT": "Δημιουργία user_defines.txt",
+    "CompilingFirmware": "Δημιουργία firmware",
+    "FlashingDevice": "Εγγραφή στη συσκευή"
+  },
+  "BuildResponse": {
+    "Error": "Σφάλμα",
+    "GitDependencyError": "Σφάλμα σε εξάρτηση του Git",
+    "PythonDependencyError": "Σφάλμα σε εξάρτηση της Python",
+    "PlatformioDependencyError": "Σφάλμα σε εξάρτηση του Platformio",
+    "BuildError": "Σφάλμα στο χτίσιμο",
+    "FlashError": "Σφάλμα στην εγγραφή",
+    "TargetMismatch": "Ο στόχος που προσπαθείτε να κάνετε flash, δεν ταιριάζει με τον στόχο που έχει αυτή τη στιγμή η συσκευή. Αν είστε σίγουρος για αυτή την ενέργεια, πατήστε Force Flash παρακάτω",
+    "Success": "Επιτυχία!",
+    "ErrorDetails": "Υπήρξε ένα σφάλμα, δείτε το παραπάνω ιστορικό για περισσότερες λεπτομέρειες. Αν δεν το έχετε κάνει ακόμα, επισκεφτείτε το <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> και διαβάστε το <FlashingGuideLink>Flashing Guide</FlashingGuideLink> για τη συσκευή που έχετε και το <TroubleshootingGuideLink>Troubleshooting Guide</TroubleshootingGuideLink>. Αν εξακολουθείτε να έχετε προβλήματα αφού διαβάσατε όλα τα άρθρα, παρακαλώ αντιγράψτε τα logs χτισίματος παραπάνω σε ένα copy&paste site και στείλτε στο #help-and-support κανάλι στο <ExpressLRSDiscordLink>ExpressLRS Discord</ExpressLRSDiscordLink> το link για τα logs και οποιαδήποτε άλλη σχετική πληροφορία όπως τη συσκεή σας, ποια μέθοδο φλασαρίσματος χρησιμοποιήσατε και τι ενέργειες έχετε πραγματοποιήσει μέχρι στιγμής για την επίλυση του προβλήματος."
+  },
+  "DeviceOptionsForm": {
+    "StandardMode": "Κανονική λειτουργία",
+    "ManualMode": "Χειροκίνητη λειτουργία",
+    "CopyFromStandardMode": "Αντιγραφή από την κανονική λειτουργία",
+    "LongerBuildTimeWarning": "Όταν χρησιμοποιείτε τη χειροκίνητη λειτουργία που έχει οριστεί από το χρήστη, η λειτουργία αρχείων cloud είναι απενεργοποιημένη, με αποτέλεσμα μεγαλύτερους χρόνους χτισίματος.",
+    "RegulatoryDomains": "Νομοθετικές πράξεις",
+    "BindingPhraseSetup": "Ρύθμιση φράσης binding",
+    "CompatibilityOptions": "Επιλογές συμβατότητας",
+    "PerformanceOptions": "Επιλογές επιδόσεων",
+    "ExtraData": "Επιπλέον Δεδομένα",
+    "Network": "Δίκτυο",
+    "OtherOptions": "Άλλες επιλογές"
+  },
+  "DeviceTargetForm": {
+    "UnverifiedHardwareTitle": "ΑΓΝΩΣΤΟ/ΜΗ-ΕΠΑΛΗΘΕΥΜΕΝΟ ΥΛΙΚΟ",
+    "UnverifiedHardwareContent": "Ο κατασκευαστής αυτού του υλικού δεν έχει δώσει δείγματα στους προγραμματιστές για αξιολόγηση και επαλήθευση, επικοινωνήστε μαζί τους για υποστήριξη ή προχωρήστε με δική σας ευθύνη. Μπορεί να μην λειτουργούν όλες οι λειτουργίες.",
+    "DeviceCategory": "Κατηγορίες συσκευών",
+    "Device": "Συσκευή"
+  },
+  "FirmwareVersionForm": {
+    "OfficialReleases": "Επίσημες εκδόσεις",
+    "GitBranch": "Κλάδος Git",
+    "GitCommit": "Git commit",
+    "Local": "Τοπικό",
+    "GitPullRequest": "Git Pull Request",
+    "ShowPreRreleases": "Εμφάνιση προ-κυκλοφοριών",
+    "Releases": "Εκδόσεις",
+    "ReleaseNotes": "Σημειώσεις έκδοσης",
+    "NewerVersionAvailable": "Υπάρχει μια νεότερη έκδοση του διαθέσιμου firmware",
+    "UpgradeToV3": "Το ExpressLRS 2.X δεν υποστηρίζεται πλέον. Παρακαλώ αναβαθμίστε σε ExpressLRS 3.X.",
+    "DangerZoneTitle": "ΖΩΝΗ ΚΙΝΔΥΝΟΥ",
+    "DangerZoneContent": "Χρησιμοποιήστε αυτές τις πηγές μόνο αν γνωρίζετε τι κάνετε ή σας δόθηκε εντολή από τους προγραμματιστές",
+    "GitBranches": "Κλάδοι Git",
+    "GitCommitHash": "Hash υποβολής Git",
+    "LocalPath": "Τοπικός φάκελος",
+    "AttentionTitle": "ΠΡΟΣΟΧΗ",
+    "AttentionContent": "Προσπαθείτε να αναβαθμίσετε ένα παλιό BetaFPV custom ExpressLRS fork. Οι συσκευές BetaFPV υποστηρίζονται πλήρως στις πρόσφατες επίσημες εκδόσεις ExpressLRS. Σας συνιστούμε να χρησιμοποιείτε το επίσημο firmware για να έχετε την καλύτερη εμπειρία ExpressLRS.",
+    "ChooseFolder": "Επιλέξτε φάκελο",
+    "GitPullRequests": "Git pull requests"
+  },
+  "FlashingMethodDescription": {
+    "BetaflightPassthroughDescription": "Αυτή η μέθοδος σας επιτρέπει να αναβαθμίσετε τον δέκτη ενώ είναι συνδεδεμένος με τον flight controller σας, χρησιμοποιώντας το χαρακτηριστικό passthrough του flight controller.",
+    "PlugInFCToComputer": "Συνδέστε τον FC σας στον υπολογιστή, αλλά ΜΗΝ συνδεθείτε στο betaflight configurator.",
+    "SelectDesiredDevice": "Επιλέξτε τις επιθυμητές Επιλογές Συσκευής σας και τη serial συσκευή του flight controller σας, παρακάτω.",
+    "RunBuild&Flash": "Χτίσιμο & Φλασάρισμα.",
+    "BetaflightPassthroughWiki": "Ελέγξτε τη σελίδα Wiki για τον πιο πρόσφατο ορισμό.",
+    "DFU": "Αυτή η μέθοδος σας επιτρέπει να αναβαθμίσετε τον δέκτη ή τον πομπό σας μέσω της λειτουργίας Αναβάθμισης Συσκευών Firmware.",
+    "GeneralWiki": "Ελέγξτε τη σελίδα Wiki για τη συγκεκριμένη συσκευή σας για περισσότερες πληροφορίες.",
+    "STLink": "Αυτή η μέθοδος σας επιτρέπει να αναβαθμίσετε τον δέκτη ή πομπό σας χρησιμοποιώντας μία STLink συσκευή συνδεδεμένη με το υλικό σας.",
+    "StockBL": "Αυτή η μέθοδος σας επιτρέπει να αναβαθμίσετε τον δέκτη ή πομπό σας χρησιμοποιώντας τον bootloader στη συσκευή.",
+    "UART": "Αυτή η μέθοδος σας επιτρέπει να αναβαθμίσετε τον δέκτη ή πομπό σας χρησιμοποιώντας την θύρα USB ή με συσκευή FTDI.",
+    "WIFI": "Αυτή η μέθοδος δημιουργεί ένα αρχείο firmware που μπορείτε να ανεβάσετε στον δέκτη ή τον πομπό σας συνδέοντας με το ενσωματωμένο wifi.",
+    "EdgeTxPassthrough": "Αυτή η μέθοδος σας επιτρέπει να αναβαθμίσετε τον δέκτη ενώ είναι συνδεδεμένος με το χειριστήριο, χρησιμοποιώντας τη λειτουργία passthrough στο EdgeTX.",
+    "Passthrough": "Αυτή η μέθοδος σας επιτρέπει να αναβαθμίσετε τη μονάδα σας, ενώ είναι συνδεδεμένη με τον πομπό σας, χρησιμοποιώντας τη λειτουργία passthrough."
+  },
+  "FlashingMethodOptions": {
+    "FlashingMethod": "Μέθοδος Φλασαρίσματος"
+  },
+  "Header": {
+    "ExpressLRSConfigurator": "ExpressLRS Configurator",
+    "DownloadNewestRelease": "Κάντε κλικ για να κατεβάσετε μια νέα έκδοση",
+    "UpdateAvailable": "Διαθέσιμη ενημέρωση!",
+    "Documentation": "Οδηγίες",
+    "Discord": "Discord",
+    "FacebookGroup": "Facebook group",
+    "Github": "Github",
+    "OpenCollective": "OpenCollective"
+  },
+  "SerialConnectionForm": {
+    "SerialDevice": "Συσκευή serial",
+    "BaudRate": "Ρυθμός Baud",
+    "Connect": "Σύνδεση"
+  },
+  "SerialDeviceSelect": {
+    "ManualSelectionTitle": "Χειροκίνητη επιλογή serial συσκευής",
+    "ManualSelectionTitleTooltip": "Χρήση χειροκίνητης επιλογής σειριακής θύρας αν η αυτόματη επιλογή αποτύχει να επιλέξει μια σωστή θύρα. Συνήθως δεν υπάρχει ανάγκη να χρησιμοποιηθεί αυτή η επιλογή."
+  },
+  "Sidebar": {
+    "Configurator": "Configurator",
+    "Backpack": "Backpack",
+    "Logs": "Logs",
+    "SerialMonitor": "Serial Monitor",
+    "Settings": "Ρυθμίσεις",
+    "Support": "Υποστήριξη"
+  },
+  "UserDefineDescription": {
+    "RegulatoryDomain915": "Συμβουλευτείτε το <LoRaWANLink>Σχέδια και Κανονισμοί Συχνότητας LoRaWAN</LoRaWANLink> για να διαλέξετε έναν ρυθμιστικό τομέα για τη χώρα σας.",
+    "Wiki": "Ελέγξτε τη σελίδα Wiki για τον πιο πρόσφατο ορισμό.",
+    "RegulatoryDomainISM2400": "Οι ραδιοφωνικές ζώνες ISM είναι τμήματα του φάσματος που έχουν κατοχυρωθεί από διαφορετικές χώρες. Μπορείτε να χρησιμοποιήσετε αυτόν τον ρυθμιστικό τομέα με ασφάλεια σε κάποιες χώρες.",
+    "RegulatoryDomainEUCE2400": "Για εκδόσεις firmware παλιότερες από την έκδοση v3.x, ο ρυθμιστικός τομέας της Ευρωπαϊκής Ένωσης CE 2.4GHz περιορίζει τη μέγιστη ισχύ στα 10mW, η οποία δεν απαιτεί LBT (Listen Before Talk). Για εκδόσεις firmware μετά από τη v3.x, ο ρυθμιστικός τομέας της Ε.Ε. CE 2.4 GHz περιορίζει τη μέγιστη ισχύ στα 100mW και επιτρέπει LBT (Listen Before Talk).",
+    "BindingPhrase": "Η binding φράση συνδέει δέκτες σε πομπούς χωρίς να απαιτείται από εσάς να πατήσετε κάτι χειροκίνητα. Οι δέκτες που αναβοσβήνουν χωρίς binding φράση θα απαιτήσουν την παραδοσιακή μέθοδο σύνδεσης. Τόσο το TX όσο και το RX πρέπει να έχουν την ίδια binding φράση για να συνδεθούν. Ορίστε κάτι δε θα ξεχάσετε με λατινικά γράμματα και αριθμούς. Αυτό δεν είναι κωδικός πρόσβασης, και δεν παρέχει καμία ασφάλεια, απλά μειώνει τις συγκρούσεις RF με άλλους πιλότους.",
+    "AutoWifiOnInterval": "<p>Αυτό θα ενεργοποιήσει αυτόματα το wifi για οποιαδήποτε συσκευή που έχει ESP8285 αν δεν βρεθεί σύνδεση μετά από συγκεκριμένο χρόνο από την εκκίνηση. Αυτό δίνει τη δυνατότητα ώθησης ενημερώσεων firmware στο RX συνδέοντας με το δίκτυο wifi και επισκέπτωντας το 10.0.0.1</p><p>Αυτόματο χρονικό διάστημα σε <strong>δευτερόλεπτα</strong>. Η προεπιλογή είναι 60 δευτερόλεπτα.</p>",
+    "TLMReportIntervalMs": "<p>Κάνει το TX module να στέλνει δεδομένα τηλεμετρίας στο χειριστήριο ανά χρονικό διάστημα. Αυτό μειώνει τις \"Telemetry Lost\" προειδοποιήσεις όταν τρέχει σε υψηλή αναλογία τηλεμετρίας, ή χαμηλά ποσοστά όπως 50hz.</p><p>Η προεπιλεγμένη τιμή είναι <strong>240LU</strong>. Αν θέλετε να το αλλάξετε πρέπει να προσθέσετε το επίθεμα <strong>LU</strong> μετά τον αριθμό των milliseconds. Για παράδειγμα, για να καθορίσετε ρυθμό ενημέρωσης τηλεμετρίας 100 ms θα πρέπει να εισαγάγετε ως εξής: <strong>100LU</strong>.</p><p>Συνήθως, θέλετε να χρησιμοποιείτε <strong>240LU</strong> για τηλεκατευθύνσεις EdgeTX/OpenTX, και <strong>100LU</strong> για το ErskyTx.</p>",
+    "LockOnFirstConnection": "RF Κατάσταση Κλειδώματος - Η προεπιλεγμένη λειτουργία είναι για το RX να ψάχνει τις διαθέσιμες λειτουργίες RF με παύσεις 5 δευτερολέπτων από την υψηλότερη στη χαμηλότερη λειτουργία και να βρίσκει τον τρόπο μετάδοσης. Αυτό επιτρέπει στο RX να ψάχνει, αλλά μόλις βρεί σύνδεση, το Rx θα σταματήσει να ψάχνει τις λειτουργίες RF (μέχρι το επόμενο power reset).",
+    "JustBeepOnce": "Αυτό ορίζει αν το TX χτυπάει μόνο μια φορά ή παίζει μία μελωδία εκκίνησης.",
+    "DisableStartupBeep": "Αυτό ορίζει αν το TX παραμένει αθόρυβο κατά την εκκίνηση.",
+    "DisableAllBeeps": "Απενεργοποίηση όλων των beeps.",
+    "MyStartupMelody": "<p>Χρησιμοποιήστε αυτό για να ορίσετε τη δική σας μελωδία εκκίνησης χρησιμοποιώντας τη μέθοδο του BlHeli32. Οι παράμετροι μουσικής και bpm απαιτούνται, λαμβάνοντας υπόψη ότι η αντιστάθμιση ημιτόνου είναι προαιρετική για τη μεταφορά ολόκληρης της μελωδίας προς τα πάνω ή προς τα κάτω από την καθορισμένη ποσότητα ημιτονοειδών. Για παράδειγμα, μερικές BlHeli32 μελωδίες είναι διαθέσιμες στο κανάλι <RoxWolfsYoutubeChannelLink>Rox Wolfs Youtube</RoxWolfsYoutubeChannelLink>, αν και μπορεί να χρειαστεί μερικές δοκιμές.</p><p>Για να γράψετε τη δική σας μελωδία, το <SheetMusic101lLink>SheetMusic 101</SheetMusic101lLink> και το <BLHeliPianoLink>BLHeli Piano</BLHeliPianoLink> είναι χρήσιμοι πόροι.</p><p>Αυτή η επιλογή υποστηρίζει επίσης μελωδίες σε μορφή RTTTL. Στο <EscTunesLink>EscTunes.com</EscTunesLink> θα βρείτε αρκετές μελωδίες.</p>",
+    "UnlockHigherPower": "<p>Έχουν υπάρξει κάποιες αναφορές για τις συσκευές R9M που δείχνουν αστάθεια σε >250mw με stock ψύξη. Αυτό γίνεται εν μέρει επειδή το ELRS χρησιμοποιεί μεγαλύτερο κύκλο λειτουργίας για μετάδοση σε σύγκριση με τις κλασσικές τεχνολογίες. Από προεπιλογή η ισχύς περιορίζεται σε 250mw. Μπορείτε να ξεκλειδώσετε μέχρι και 1000mw ενεργοποιώντας την ακόλουθη επιλογή. Αυτό το κάνετε με δική σας ευθύνη εάν δεν κάνετε αλλαγές στις μεθόδους ψύξης.</p><p>Έχουμε δημοσιεύσει <R9MFanModCoverLink>R9M Fan Mod Cover</R9MFanModCoverLink>, μια προσαρμοσμένη 3d τυπωμένη πλάτη με χώρο για ανεμιστήρα και επιπλέον ψύξη για μέγιστη ισχύ (1-2W ανάλογα με τη λειτουργία).</p>",
+    "UARTInverted": "Επιτρέπει τη συμβατότητα με τηλεκατευθύνσεις που έχουν ανεστραμμένη έξοδο CRSF, όπως το FrSky QX7, TBS Tango 2, RadioMaster TX16S. Το κρατάτε ενεργοποιημένο στις περισσότερες περιπτώσεις. Αν η τ/κ σας είναι T8SG V2 ή χρησιμοποιείτε Deviation firmware, απενεργοποιήστε αυτή τη ρύθμιση.",
+    "RCVRUARTBaud": "Ρυθμός δέκτη, baud στα UART. Προκαθορισμένη επιλογή στα 420000. Ορίστε το σε 400000 και ο δέκτης σας θα λειτουργεί με Kiss v1 flight controllers.",
+    "RCVRInvertTX": "Εάν χρησιμοποιείτε flight controller που έχει μόνο RXI / SBUS (RX ανεστραμμένο) pad, Ενεργοποιήστε αυτήν την επιλογή για να αντιστρέψετε την έξοδο CRSF από τον δέκτη για να μπορέσετε να χρησιμοποιήσετε αυτό το pad. Αυτό δεν μετατρέπει την έξοδο σε SBUS - είναι ανεστραμμένο CRSF οπότε το CRSF θα πρέπει να εξακολουθεί να είναι το πρωτόκολλο δέκτη που έχει επιλεχθεί στο λογισμικό του flight controller. Μόνο δέκτες με βάση ESP.",
+    "UseR9MMR9MiniSBUS": "<p><strong>ΑΥΤΟ ΔΕΝ ΕΝΕΡΓΟΠΟΙΕΙ ΤΟ ΠΡΩΤΟΚΟΛΛΟ SBUS.</strong></p><p>Χρήσιμη επιλογή για μερικούς F4 FCs που δεν έχουν επιλογή για μη αντεστραμμένο UART. Πρωτόκολλο μιας διαδρομής οπότε χάνεται η τηλεμετρία στην τ/κ όπως και το passthrough flashing. Θα κάνει τα R9MM/R9Mini να βγάζουν το σήμα από το προκαθορισμένο S.BUS σημείο πάνω στο receiver. Ίσως χρειαστεί η ρύθμιση Set serialrx_inverted = ON για υποστήριξη με το Betaflight</p>",
+    "HomeWifiSSID": "Ορισμός ονόματος οικιακού δικτύου Wi-Fi (SSID). Θα επιτρέψει αυτόματα τη σύνδεση Wi-Fi με το οικιακό δίκτυο.",
+    "HomeWifiPassword": "Ορισμός κωδικού πρόσβασης οικιακού δικτύου Wi-Fi. Θα επιτρέψει στο υλικό με δυνατότητα Wi-Fi να συνδέεται αυτόματα με το οικιακό δίκτυο."
+  },
+  "UserDefinesAdvisor": {
+    "DisableUARTInvertedWarning": "Η απενεργοποίηση της επιλογής UART_INVERTED είναι κάτι ασυνήθιστο. Βεβαιωθείτε ότι η Τ/Κ σας το υποστηρίζει."
+  },
+  "UserDefinesList": {
+    "CustomBindingPhrase": "Προσαρμοσμένη φράση binding",
+    "MyStartupMelody": "Μελωδία εκκίνησης",
+    "Value": "Τιμή"
+  },
+  "WifiDeviceList": {
+    "Name": "Όνομα",
+    "Target": "Προορισμός",
+    "Version": "Έκδοση",
+    "Type": "Τύπος",
+    "DNS": "DNS",
+    "IP": "IP",
+    "Select": "Επιλέξτε"
+  },
+  "WifiDeviceNotification": {
+    "NewDevice": "Νέα συσκευή",
+    "Select": "Επιλέξτε"
+  },
+  "WifiDeviceSelect": {
+    "DefaultWifiIp": "Προεπιλογή (10.0.0.1)",
+    "WifiDevices": "Συσκευές WiFi",
+    "Manual": "Μη αυτόμ.",
+    "WifiDeviceSelection": "Επιλογή Συσκευής Wi-Fi",
+    "IPAddress": "Διεύθυνση IP"
+  },
+  "Updater": {
+    "FoundUpdates": "Βρέθηκαν ενημερώσεις",
+    "UpdateNow": "Βρέθηκαν ενημερώσεις, θέλετε να ενημερώσετε τώρα?",
+    "Sure": "Εντάξει",
+    "Later": "Αργότερα",
+    "UpdateDownloading": "Λήψη Ενημέρωσης",
+    "NotifiedWhenReadyToInstall.": "Γίνεται λήψη της ενημέρωσης, θα ειδοποιηθείτε όταν είναι έτοιμη για εγκατάσταση.",
+    "Restart": "Επανεκκίνηση",
+    "ApplicationUpdate": "Ενημέρωση Εφαρμογής",
+    "Update": "Ενημέρωση",
+    "ApplyUpdates.": "Μια νέα έκδοση έχει ληφθεί. Επανεκκινήστε την εφαρμογή για να εφαρμόσετε τις ενημερώσεις."
+  },
+  "ConfiguratorView": {
+    "DownloadLUAScript": "Λήψη LUA script",
+    "FirmwareVersion": "Έκδοση firmware",
+    "Target": "Προορισμός",
+    "Notice": "Σημείωση",
+    "SelectFirmwareVersionFirst": "Παρακαλώ επιλέξτε πρώτα μια έκδοση firmware.",
+    "DeviceOptions": "Επιλογές συσκευής",
+    "ResetDevice": "Επαναφέρετε τις επιλογές συσκευής στις συνιστώμενες προεπιλογές σε αυτόν τον προορισμό συσκευής. Εκτός από την προσαρμοσμένη binding φράση σας.",
+    "Reset": "Reset",
+    "Actions": "Ενέργειες",
+    "FlashingOptions": "Επιλογές φλασαρίσματος",
+    "EraseBeforeFlash": "Διαγραφή πριν το φλασάρισμα",
+    "ForceFlash": "Αναγκαστικό φλασάρισμα",
+    "Build": "Χτίσιμο",
+    "Flash": "Φλασάρισμα",
+    "NetworkDevices": "Συσκευές Δικτύου",
+    "DeviceSelectError": "Σφάλμα Επιλογής Συσκευής",
+    "DeviceCouldNotBeAutomaticallySelected": "Η συσκευή προορισμού δεν μπορεί να επιλεγεί αυτόματα, πρέπει να γίνει χειροκίνητα.",
+    "Close": "Κλείσιμο",
+    "Logs": "Logs",
+    "CopyLogToClipboard": "Αντιγραφή αρχείου καταγραφής στο πρόχειρο",
+    "SaveLogToFile": "Αποθήκευση αρχείου καταγραφής σε αρχείο",
+    "BuildsTakeMinutesFirstTime": "Μερικές φορές το χτίσιμο διαρκεί μερικά λεπτά. Είναι φυσιολογικό, ειδικά αν είναι η πρώτη φορά.",
+    "Result": "Αποτέλεσμα",
+    "Warning": "Προσοχή",
+    "WaitForLEDBeforeDisconnectingPower": "Παρακαλώ περιμένετε το LED να συνεχίσει να αναβοσβήνει πριν αποσυνδέσετε το ρεύμα.",
+    "UpdateLuaScript": "Ενημέρωση του LUA script",
+    "UpdateLuaScriptOnRadio": "Βεβαιωθείτε ότι ενημερώσατε το LUA script στη Τ/Κ σας",
+    "BuildNotice": "Ειδοποίηση έκδοσης",
+    "FirmwareOpenedInFileExplorer": "Το binary αρχείο firmware ανοίχθηκε στον περιηγητή αρχείων",
+    "Back": "Πίσω",
+    "Retry": "Επανάληψη"
+  },
+  "LogsView": {
+    "Logs": "Logs",
+    "OpenLogsFolder": "Άνοιγμα φακέλου αρχείων καταγραφής"
+  },
+  "SerialMonitorView": {
+    "SerialMonitor": "Serial Monitor",
+    "Disconnect": "Αποσύνδεση"
+  },
+  "SettingsView": {
+    "Settings": "Ρυθμίσεις",
+    "LanguageSelector": "Επιλογή γλώσσας",
+    "CurrentLanguage": "Τρέχουσα γλώσσα"
+  },
+  "SupportView": {
+    "Support": "Υποστήριξη",
+    "JoinTheCommunity": "Χρειάζεστε βοήθεια? Γίνετε μέλος της Κοινότητας!",
+    "ExpressLRSDocumentation": "Έγγραφα ExpressLRS",
+    "DiscordChat": "Discord chat",
+    "FacebookGroup": "Facebook group",
+    "Troubleshooting": "Αντιμετώπιση προβλημάτων",
+    "LegalDisclaimer": "Αποποίηση νομικής ευθύνης",
+    "UseAtYourOwnRisk": "Η χρήση και η λειτουργία αυτού του τύπου συσκευής μπορεί να απαιτούν άδεια και ορισμένες χώρες ενδέχεται να απαγορεύουν τη χρήση της. Εναπόκειται αποκλειστικά στον τελικό χρήστη να διασφαλίσει τη συμμόρφωση με τους τοπικούς κανονισμούς. Αυτό είναι πειραματικό λογισμικό / υλικό και δεν υπάρχει καμία εγγύηση σταθερότητας ή αξιοπιστίας.",
+    "CorruptedFirmwareFiles": "Κατεστραμμένα αρχεία firmware",
+    "YouCanManuallyClearAllFiles": "Αν κλείσετε το Configurator ενώ το git κατεβάζει αρχεία firmware το repository μπορεί να καταστραφεί. Μπορείτε να καθαρίσετε χειροκίνητα όλα τα αρχεία και να ξεκινήσετε ξανά τη διαδικασία κατασκευής-χτισίματος.",
+    "ClearFirmwareFiles": "Εκκαθάριση αρχείων firmware",
+    "CorruptedFirmwareFilesDeleted": "Τα κατεστραμμένα αρχεία firmware διαγράφηκαν και το git repository καθαρίστηκε. Δοκιμάστε ξανά τη διαδικασία.",
+    "CorruptedPlatformioDependencies": "Κατεστραμμένες εξαρτήσεις platformio",
+    "YouCanManuallyClearAllDependencies": "Αν κλείσετε το Configurator ενώ το platformio κατεβάζει αρχεία firmware το repository μπορεί να καταστραφεί. Μπορείτε να καθαρίσετε χειροκίνητα όλα τα αρχεία και να ξεκινήσετε ξανά τη διαδικασία κατασκευής-χτισίματος.",
+    "ClearPlatformioDependencies": "Καθαρισμός εξαρτήσεων platformio",
+    "CorruptedPlatformioDependenciesDeleted": "Οι κατεστραμμένες εξαρτήσεις platformio διαγράφηκαν και το git repository καθαρίστηκε. Δοκιμάστε ξανά να κατασκευάσετε."
+  }
+}

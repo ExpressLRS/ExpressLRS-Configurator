@@ -1,0 +1,230 @@
+{
+  "BuildNotificationsList": {
+    "VerifyingBuildSystem": "Vérification du système de compilation",
+    "DownloadingFirmware": "Téléchargement du micrologiciel",
+    "BuildingUserDefinesTXT": "Génération de user_defines.txt",
+    "CompilingFirmware": "Compilation du micrologiciel",
+    "FlashingDevice": "Mise à jour de l'appareil"
+  },
+  "BuildResponse": {
+    "Error": "Erreur",
+    "GitDependencyError": "Erreur de dépendance Git",
+    "PythonDependencyError": "Erreur de dépendance Python",
+    "PlatformioDependencyError": "Erreur de dépendance Platformio",
+    "BuildError": "Erreur de compilation",
+    "FlashError": "Erreur lors de la mise à jour",
+    "TargetMismatch": "La cible que vous tentez de mettre à jour ne correspond pas à la cible actuelle de l'appareil. Si vous êtes sûr de vouloir faire cela, cliquez sur Forcer la mise à jour ci-dessous",
+    "Success": "Succès !",
+    "ErrorDetails": "Une erreur est survenue, consultez le log ci-dessus pour le message d'erreur exact. Si vous ne l'avez pas déjà fait, visitez <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> et lisez le <FlashingGuideLink>Guide de Mise à Jour</FlashingGuideLink> pour votre périphérique particulier ainsi que le <TroubleshootingGuideLink>Guide de dépannage</TroubleshootingGuideLink>. Si vous rencontrez toujours des problèmes après avoir examiné la documentation, copiez les logs mise à jour ci-dessus sur un site de copier-coller en ligne et publiez dans le canal #help-and-support sur le <ExpressLRSDiscordLink>Discord ExpressLRS</ExpressLRSDiscordLink> avec un lien vers les logs et d'autres informations pertinentes comme votre appareil, quelle méthode de mise à jour vous utilisiez et quelles mesures vous avez déjà prises pour résoudre le problème."
+  },
+  "DeviceOptionsForm": {
+    "StandardMode": "Mode standard",
+    "ManualMode": "Mode manuel",
+    "CopyFromStandardMode": "Copier depuis le mode Standard",
+    "LongerBuildTimeWarning": "Lorsque vous utilisez le mode manuel, le cache des micrologiciels sur le cloud est désactivé, ce qui entraîne des temps de compilation beaucoup plus longs.",
+    "RegulatoryDomains": "Domaines réglementaires",
+    "BindingPhraseSetup": "Configuration de la phrase d'appairage",
+    "CompatibilityOptions": "Options de compatibilité",
+    "PerformanceOptions": "Options de performance",
+    "ExtraData": "Données supplémentaires",
+    "Network": "Réseau",
+    "OtherOptions": "Autres options"
+  },
+  "DeviceTargetForm": {
+    "UnverifiedHardwareTitle": "MATÉRIEL NON VERIFIÉ",
+    "UnverifiedHardwareContent": "Le constructeur de ce matériel n'a pas fourni d'échantillons aux développeurs pour évaluation et vérification, communiquez avec eux pour obtenir de l’assistance ou procédez à vos propres risques. Certaines fonctionnalités peuvent ne pas fonctionner.",
+    "DeviceCategory": "Catégorie de l'appareil",
+    "Device": "Appareil"
+  },
+  "FirmwareVersionForm": {
+    "OfficialReleases": "Versions officielles",
+    "GitBranch": "Branche Git",
+    "GitCommit": "Commit Git",
+    "Local": "Local",
+    "GitPullRequest": "Demande de tirage Git",
+    "ShowPreRreleases": "Afficher les versions bêta",
+    "Releases": "Versions",
+    "ReleaseNotes": "Notes des versions",
+    "NewerVersionAvailable": "Une version plus récente est disponible",
+    "UpgradeToV3": "ExpressLRS 2.X n'est plus pris en charge. Veuillez passer à ExpressLRS 3.X.",
+    "DangerZoneTitle": "ZONE À RISQUE",
+    "DangerZoneContent": "N'utilisez ces sources que si vous savez ce que vous faites ou si vous avez obtenus des instructions de la part des développeurs du projet",
+    "GitBranches": "Branches git",
+    "GitCommitHash": "Hash du commit Git",
+    "LocalPath": "Chemin d'accès local",
+    "AttentionTitle": "ATTENTION",
+    "AttentionContent": "Vous essayez d'installer une version obsolète du fork BetaFPV d'ExpressLRS. Le matériel BetaFPV est entièrement pris en charge dans les dernières versions officielles d'ExpressLRS. Nous vous recommandons d'utiliser le micrologiciel officiel pour avoir la meilleure expérience avec ExpressLRS.",
+    "ChooseFolder": "Sélectionner un dossier",
+    "GitPullRequests": "Demandes de tirage Git"
+  },
+  "FlashingMethodDescription": {
+    "BetaflightPassthroughDescription": "Cette méthode vous permet de mettre à jour votre récepteur pendant qu'il est connecté à votre contrôleur de vol en utilisant la fonction \"passthrough\" du contrôleur de vol.",
+    "PlugInFCToComputer": "Branchez votre FC sur votre ordinateur, mais ne vous connectez PAS au configurateur betaflight.",
+    "SelectDesiredDevice": "Sélectionnez ci-dessous les options désirées et le port série du contrôleur de vol.",
+    "RunBuild&Flash": "Exécuter la compilation et la mise à jour.",
+    "BetaflightPassthroughWiki": "Consultez notre page Wiki pour la dernière définition.",
+    "DFU": "Cette méthode vous permet de mettre à jour votre récepteur ou transmetteur à l'aide du mode de récupération (DFU).",
+    "GeneralWiki": "Consulter le page concernant votre appareil sur le Wiki pour plus d'informations.",
+    "STLink": "Cette méthode vous permet de mettre à jour votre récepteur ou transmetteur à l'aide d'un programmateur STLink relié à votre appareil.",
+    "StockBL": "Cette méthode vous permet de mettre à jour votre récepteur ou transmetteur à l'aide du chargeur d'amorçage (bootloader) de votre appareil.",
+    "UART": "Cette méthode vous permet de mettre à jour votre récepteur ou transmetteur via son port USB ou en reliant un adaptateur FTDI.",
+    "WIFI": "Cette méthode créée le fichier du firmware que vous pouvez ensuite envoyer sur votre récepteur ou transmetteur en vous y connectant en Wifi.",
+    "EdgeTxPassthrough": "Cette méthode vous permet de mettre à jour votre transmetteur relié à votre radio commande en utilisant la fonction de passerelle d'EdgeTX.",
+    "Passthrough": "Cette méthode vous permet de mettre à jour votre module relié à votre radio commande en utilisant la fonction de passerelle."
+  },
+  "FlashingMethodOptions": {
+    "FlashingMethod": "Méthode de mise à jour"
+  },
+  "Header": {
+    "ExpressLRSConfigurator": "Configurateur ExpressLRS",
+    "DownloadNewestRelease": "Cliquez ici pour télécharger la dernière version",
+    "UpdateAvailable": "Mise à jour disponible !",
+    "Documentation": "Documentation",
+    "Discord": "Discord",
+    "FacebookGroup": "Groupe Facebook",
+    "Github": "Github",
+    "OpenCollective": "OpenCollective"
+  },
+  "SerialConnectionForm": {
+    "SerialDevice": "Périphérique série",
+    "BaudRate": "Vitesse de transmission",
+    "Connect": "Connexion"
+  },
+  "SerialDeviceSelect": {
+    "ManualSelectionTitle": "Sélection manuelle du périphérique série",
+    "ManualSelectionTitleTooltip": "Sélectionnez manuellement le port série si la sélection automatique ne parvient pas à sélectionner un port correct. Dans la grande majorité des cas, il n'est pas nécessaire d'utiliser cette option."
+  },
+  "Sidebar": {
+    "Configurator": "Configurateur",
+    "Backpack": "Backpack",
+    "Logs": "Logs",
+    "SerialMonitor": "Moniteur de port série",
+    "Settings": "Paramètres",
+    "Support": "Support"
+  },
+  "UserDefineDescription": {
+    "RegulatoryDomain915": "Consultez <LoRaWANLink>Bandes de fréquences et réglementation LoRaWAN</LoRaWANLink> pour le domaine réglementaire à utiliser à votre emplacement.",
+    "Wiki": "Consultez notre page Wiki pour la dernière définition.",
+    "RegulatoryDomainISM2400": "Les bandes radio ISM sont des portions du spectre radio réservé au niveau international. Vous pouvez utiliser ce domaine réglementaire en toute sécurité dans n'importe quel pays.",
+    "RegulatoryDomainEUCE2400": "Pour les versions antérieures à v3.x, le domaine réglementaire EU CE 2.4 GHz limite la puissance maximale à 10 mW, ce qui ne nécessite pas LBT (Listen Before Talk). Pour les versions supérieures à v3.x, le domaine de régulation EU CE 2.4 GHz limite la puissance maximale à 100mW, et active LBT (Listen Before Talk).",
+    "BindingPhrase": "La phrase d'appairage appaire les récepteurs et transmetteurs automatiquement. Les récepteurs sans phrases d'appairage devront être appairés manuellement. Le TX et le RX doivent avoir la même phrase d'appairage afin de se connecter. Utilisez quelque chose de facile a retenir, utilisant uniquement des caractères alphanumériques de l'alphabet Latin. Ceci n'est pas un mot de passe et ne sécurise en rien la connexion, elle permet juste d'éviter des collisions RF entre les pilotes.",
+    "AutoWifiOnInterval": "<p>Active automatiquement le Wifi sur les modules intégrant un ESP8285 si aucune connexion n'est détectée après un certain délai. Cela permet de mettre a jour le micrologiciel en se connectant au point d'accès du module à l'adresse 10.0.0.1</p><p>Le délai est défini en <strong>secondes</strong>. 60 secondes par défaut.</p>",
+    "TLMReportIntervalMs": "<p>Configure le TX afin qu'il transmette les données de télémétrie à la radio commande à un intervalle fixe. Cela réduit les avertissements「Télémétrie Perdue」lors de l'utilisation d'un gros ratio de télémétrie et d'une vitesse de transmission basse comme 50Hz.</p><p>La valeur par défaut est <strong>240LU</strong>. Si vous souhaitez modifier cette valeur, vous devez ajouter le suffixe <strong>LU</strong> à votre valeur en millisecondes. Par exemple, pour définir un taux de mise à jour de la télémétrie à 100ms, vous devez saisir <strong>100LU</strong>.</p><p><strong>240LU</strong> est recommandée pour les radios basées sur EdgeTX/OpenTX et <strong>100LU</strong> pour celles sur ErskyTx.</p>",
+    "LockOnFirstConnection": "Verrouillage du mode RF - Par défaut, le RX parcours tous les modes RF disponibles espacés de 5 s du mode le plus élevé au plus faible afin de trouver celui utilisé par le TX. Une fois la connexion établie, le RX ne parcours plus les modes jusqu'à son prochain redémarrage.",
+    "JustBeepOnce": "Définit si le TX ne bip qu'une seule fois ou s'il joue la tonalité de démarrage.",
+    "DisableStartupBeep": "Définit si le TX n'émet pas de son au démarrage.",
+    "DisableAllBeeps": "Désactive tous les bips.",
+    "MyStartupMelody": "<p>Permet de définir une mélodie de démarrage avec la syntaxe BlHeli32. Les paramètres \"musique\" et \"bpm\" sont requis, tandis que \"décalage demi-ton\" est facultatif. Des exemples sont disponibles sur la <RoxWolfsYoutubeChannelLink>chaîne Youtube de Rox Wolfs</RoxWolfsYoutubeChannelLink>, il vous faudra peut être adapter certaines choses.</p><p>Pour écrire votre propre mélodie, les ressources <SheetMusic101lLink>Sheet Music 101</SheetMusic101lLink> and this <BLHeliPianoLink>BLHeli Piano</BLHeliPianoLink> peuvent vous être utiles.</p><p>Les mélodies au format RTTTL sont aussi prises en charge. Des mélodies sont également disponibles sur <EscTunesLink>EscTunes.com</EscTunesLink>.</p>",
+    "UnlockHigherPower": "<p>Certains utilisateurs ont signalé des instabilités lors que les modules R9M utilisent une puissance supérieure à 250mW avec le système de refroidissement d'origine. Cela est dû au fait que ELRS utilise une fréquence de transmission plus élevé que le micrologiciel d'origine. Par défaut, la puissance est limitée à 250mW. Vous pouvez la débrider jusqu'a 1000mW en activant cette option. Soyez conscient que cela est risqué si vous ne modifier pas le système de refroidissement.</p><p>Nous fournissons un modèle de boitier imprimé en 3D <R9MFanModCoverLink>R9M Fan Mod Cover</R9MFanModCoverLink> permettant d'installer un ventilateur, nécessaire pour la puissance maximale (1 à 2W).</p>",
+    "UARTInverted": "Active le mode de compatibilité pour les radios envoyant du CRSF inversé, telle que FrSky QX7, TBS Tango 2 et RadioMaster TX16S. Dans la plupart des cas, nous recommandons de laisser cette option activée. Si vous utilisez une T8SG V2 ou le micrologiciel Deviation, désactivez ce réglage.",
+    "RCVRUARTBaud": "Vitesse de transmission du port série du récepteur. 420000 par défaut. Pour les contrôleurs de vol Kiss v1, utilisez 400000.",
+    "RCVRInvertTX": "Si votre contrôleur de vol ne gère que du RXI / SBUS (RX inversé), activez ce réglage afin d'inverser la sortie CRSF du récepteur. Cela ne convertie pas la sortie en SBUS, mais inverse le CRSF, donc utilisez toujours CRSF comme protocole dans le micrologiciel de votre contrôleur de vol. S'applique uniquement aux récepteurs basés sur un ESP.",
+    "UseR9MMR9MiniSBUS": "<p><strong>N'ACTIVE PAS LE PROTOCOLE SBUS.</strong></p><p>Utile pour les contrôleurs de vol F4 qui n'ont pas d'UART non inversé. La communication est unidirectionnelle, donc la télémétrie ainsi que la mise à jour de votre récepteur à travers le contrôleur de vol ne seront pas disponible. Les signaux seront envoyés depuis la broche S.BUS de votre R9MM/R9Mini. Définir serialrx_inverted = ON peut aussi être nécessaire dans Betaflight</p>",
+    "HomeWifiSSID": "Définit le nom de votre point d'accès Wi-Fi (SSID). Cela permet de connecter votre appareil à votre réseau local automatiquement.",
+    "HomeWifiPassword": "Définit le mot de passe de votre point d'accès Wi-Fi. Cela permet de connecter votre appareil à votre réseau local automatiquement."
+  },
+  "UserDefinesAdvisor": {
+    "DisableUARTInvertedWarning": "Désactiver UART_INVERTED est rare. Veuillez vous assurer que votre transmetteur le supporte."
+  },
+  "UserDefinesList": {
+    "CustomBindingPhrase": "Phrase d'appairage personnalisée",
+    "MyStartupMelody": "Ma mélodie de démarrage",
+    "Value": "Valeur"
+  },
+  "WifiDeviceList": {
+    "Name": "Nom",
+    "Target": "Cible",
+    "Version": "Version",
+    "Type": "Type",
+    "DNS": "DNS",
+    "IP": "IP",
+    "Select": "Sélectionner"
+  },
+  "WifiDeviceNotification": {
+    "NewDevice": "Nouvel Appareil",
+    "Select": "Sélectionner"
+  },
+  "WifiDeviceSelect": {
+    "DefaultWifiIp": "Valeur par défaut (10.0.0.1)",
+    "WifiDevices": "Appareils WiFi",
+    "Manual": "Saisie manuelle",
+    "WifiDeviceSelection": "Sélection de l’appareil WiFi",
+    "IPAddress": "Adresse IP"
+  },
+  "Updater": {
+    "FoundUpdates": "Mises à jour trouvées",
+    "UpdateNow": "Mises à jour trouvées, voulez-vous mettre à jour maintenant?",
+    "Sure": "Allons-y",
+    "Later": "Plus tard",
+    "UpdateDownloading": "Téléchargement de la mise à jour",
+    "NotifiedWhenReadyToInstall.": "La mise à jour est en cours de téléchargement, vous serez notifié quand elle sera prête à être installée.",
+    "Restart": "Redémarrer",
+    "ApplicationUpdate": "Mise à jour de l'application",
+    "Update": "Mise à jour",
+    "ApplyUpdates.": "Une nouvelle version a été téléchargée. Redémarrer l'application pour appliquer les mises à jour."
+  },
+  "ConfiguratorView": {
+    "DownloadLUAScript": "Télécharger le script LUA",
+    "FirmwareVersion": "Version du micrologiciel",
+    "Target": "Cible",
+    "Notice": "Note",
+    "SelectFirmwareVersionFirst": "Veuillez d'abord sélectionner une version du micrologiciel.",
+    "DeviceOptions": "Options du périphérique",
+    "ResetDevice": "Réinitialiser les valeurs par défaut recommandées de cet appareil. Sauf pour votre phrase d'appairage.",
+    "Reset": "Réinitialiser",
+    "Actions": "Actions",
+    "FlashingOptions": "Options de mise à jour",
+    "EraseBeforeFlash": "Effacer avant de mettre à jour",
+    "ForceFlash": "Forcer la mise à jour",
+    "Build": "Compilation",
+    "Flash": "Mettre à jour",
+    "NetworkDevices": "Périphériques réseau",
+    "DeviceSelectError": "Erreur lors de la sélection de l'appareil",
+    "DeviceCouldNotBeAutomaticallySelected": "La détection automatique de la cible a échoué, veuillez la sélectionner manuellement.",
+    "Close": "Fermer",
+    "Logs": "Journaux",
+    "CopyLogToClipboard": "Copier les journaux dans le presse-papiers",
+    "SaveLogToFile": "Sauvegarder le journal dans un fichier",
+    "BuildsTakeMinutesFirstTime": "La compilation peut prendre plusieurs minutes. C'est tout à fait normal, en particulier lors de la première compilation d'une version.",
+    "Result": "Résultat",
+    "Warning": "Avertissement",
+    "WaitForLEDBeforeDisconnectingPower": "Attendez que les LED clignotent avant de débrancher l'alimentation",
+    "UpdateLuaScript": "Mise à jour du script Lua",
+    "UpdateLuaScriptOnRadio": "Assurez-vous de mettre à jour le script Lua sur votre radio",
+    "BuildNotice": "Note de compilation",
+    "FirmwareOpenedInFileExplorer": "Le binaire du micrologiciel a été ouvert dans votre explorateur de fichiers",
+    "Back": "Retour",
+    "Retry": "Réessayer"
+  },
+  "LogsView": {
+    "Logs": "Journaux",
+    "OpenLogsFolder": "Ouvrir le dossier des journaux"
+  },
+  "SerialMonitorView": {
+    "SerialMonitor": "Moniteur de port série",
+    "Disconnect": "Déconnexion"
+  },
+  "SettingsView": {
+    "Settings": "Paramètres",
+    "LanguageSelector": "Sélection de la langue",
+    "CurrentLanguage": "Langue actuelle"
+  },
+  "SupportView": {
+    "Support": "Support",
+    "JoinTheCommunity": "Besoin d'aide ? Perdu. Rejoignez la communauté !",
+    "ExpressLRSDocumentation": "Documentation d'ExpressLRS",
+    "DiscordChat": "Serveur Discord",
+    "FacebookGroup": "Groupe Facebook",
+    "Troubleshooting": "Dépannage",
+    "LegalDisclaimer": "Avertissement légal",
+    "UseAtYourOwnRisk": "L'utilisation de ce type d'appareil peut nécessiter un permis et certains pays interdisent son utilisation. Il est de votre ressort de vérifier les conditions légales locales. Ceci est expérimental et nous ne pouvons être tenu responsables en cas de problème. UTILISEZ A VOS PROPRES RISQUES.",
+    "CorruptedFirmwareFiles": "Micrologiciels corrompus",
+    "YouCanManuallyClearAllFiles": "Si vous fermez le Configurateur pendant le téléchargement des micrologiciels, l'état du dépôt git peut être corrompu. Vous pourrez nettoyer les fichiers manuellement et recommencer la compilation.",
+    "ClearFirmwareFiles": "Nettoyer les micrologiciels compilés",
+    "CorruptedFirmwareFilesDeleted": "Les micrologiciels corrompus ont été supprimés et le dépôt git a été nettoyé. Veuillez recommencer la compilation.",
+    "CorruptedPlatformioDependencies": "Dépendances platformio corrompues",
+    "YouCanManuallyClearAllDependencies": "Si vous fermez le Configurateur pendant le téléchargement des dépendances platformio, l'état du dépôt git peut être corrompu. Vous pourrez nettoyer les dépendances manuellement et recommencer la compilation.",
+    "ClearPlatformioDependencies": "Nettoyer les dépendances platformio",
+    "CorruptedPlatformioDependenciesDeleted": "Des dépendances platformio corrompues ont été supprimées et le dépôt git a été nettoyé. Veuillez recommencer la compilation."
+  }
+}
