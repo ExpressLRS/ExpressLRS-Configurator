@@ -1,13 +1,39 @@
 import { autoUpdater } from 'electron-updater';
 import { BrowserWindow, dialog } from 'electron';
-import { useTranslation } from 'react-i18next';
+import { initReactI18next } from 'react-i18next';
+import i18n from 'i18next';
+import Backend from 'i18next-http-backend'; // For loading translations from backend
 import { LoggerService } from '../api/src/logger';
 
 export default class Updater {
   constructor(
     private logger: LoggerService,
-    private mainWindow: BrowserWindow
+    private mainWindow: BrowserWindow,
+    private baseUrl: string
   ) {
+    const systemLocale = Intl.DateTimeFormat().resolvedOptions().locale;
+
+    const loadPath = `${
+      this.baseUrl ?? 'http://localhost:3500/'
+    }/locales/{{lng}}/messages.json`;
+
+    i18n
+      .use(Backend)
+      .use(initReactI18next)
+      .init({
+        initImmediate: false,
+        fallbackLng: 'en',
+        backend: {
+          loadPath,
+        },
+        debug:
+          process.env.NODE_ENV === 'development' ||
+          process.env.DEBUG_PROD === 'true',
+      });
+
+    i18n.loadLanguages(systemLocale);
+    const t = i18n.getFixedT(systemLocale);
+
     autoUpdater.autoDownload = false;
 
     autoUpdater.on('error', (error) => {
@@ -15,7 +41,6 @@ export default class Updater {
     });
 
     autoUpdater.on('update-available', async () => {
-      const { t } = useTranslation();
       const response = await dialog.showMessageBox(this.mainWindow, {
         type: 'info',
         title: t('Updater.FoundUpdates'),
@@ -36,7 +61,6 @@ export default class Updater {
     });
 
     autoUpdater.on('update-downloaded', async () => {
-      const { t } = useTranslation();
       const response = await dialog.showMessageBox(this.mainWindow, {
         type: 'info',
         buttons: [t('Updater.Restart'), t('Updater.Later')],
