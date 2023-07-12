@@ -157,11 +157,11 @@
     "Sure": "Sicuro",
     "Later": "Più tardi",
     "UpdateDownloading": "Aggiornamento in Download",
-    "NotifiedWhenReadyToInstall.": "L'aggiornamento è in fase di download, riceverai una notifica quando sarà pronto per l'installazione.",
+    "NotifiedWhenReadyToInstall": "L'aggiornamento è in fase di download, riceverai una notifica quando sarà pronto per l'installazione.",
     "Restart": "Riavvia",
     "ApplicationUpdate": "Aggiornamento Applicazione",
     "Update": "Aggiorna",
-    "ApplyUpdates.": "Una nuova versione è stata scaricata. Riavvia l'applicazione per applicare gli aggiornamenti."
+    "ApplyUpdates": "Una nuova versione è stata scaricata. Riavvia l'applicazione per applicare gli aggiornamenti."
   },
   "ConfiguratorView": {
     "DownloadLUAScript": "Scarica LUA Script",

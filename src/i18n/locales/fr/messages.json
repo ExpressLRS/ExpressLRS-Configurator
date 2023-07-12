@@ -157,11 +157,11 @@
     "Sure": "Allons-y",
     "Later": "Plus tard",
     "UpdateDownloading": "Téléchargement de la mise à jour",
-    "NotifiedWhenReadyToInstall.": "La mise à jour est en cours de téléchargement, vous serez notifié quand elle sera prête à être installée.",
+    "NotifiedWhenReadyToInstall": "La mise à jour est en cours de téléchargement, vous serez notifié quand elle sera prête à être installée.",
     "Restart": "Redémarrer",
     "ApplicationUpdate": "Mise à jour de l'application",
     "Update": "Mise à jour",
-    "ApplyUpdates.": "Une nouvelle version a été téléchargée. Redémarrer l'application pour appliquer les mises à jour."
+    "ApplyUpdates": "Une nouvelle version a été téléchargée. Redémarrer l'application pour appliquer les mises à jour."
   },
   "ConfiguratorView": {
     "DownloadLUAScript": "Télécharger le script LUA",
