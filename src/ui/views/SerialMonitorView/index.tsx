@@ -77,7 +77,7 @@ const SerialMonitorView: FunctionComponent = () => {
     connectToSerialDeviceMutation,
     { loading: connectInProgress, data: response, error: connectError },
   ] = useConnectToSerialDeviceMutation();
-  const onConnect = (newSerialDevice: string | null, newBaudRate: number) => {
+  const onConnect = (newSerialDevice: string, newBaudRate: number) => {
     setSerialDevice(newSerialDevice);
     setBaudRate(newBaudRate);
     setLogs('');
