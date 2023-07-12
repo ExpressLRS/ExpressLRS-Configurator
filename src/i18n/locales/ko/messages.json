@@ -157,11 +157,11 @@
     "Sure": "네",
     "Later": "다음에 할게요",
     "UpdateDownloading": "업데이트 다운로드 중",
-    "NotifiedWhenReadyToInstall.": "업데이트를 다운로드 중이며, 설치 준비가 완료되면 알려드리겠습니다.",
+    "NotifiedWhenReadyToInstall": "업데이트를 다운로드 중이며, 설치 준비가 완료되면 알려드리겠습니다.",
     "Restart": "다시 시작",
     "ApplicationUpdate": "프로그램 업데이트",
     "Update": "업데이트",
-    "ApplyUpdates.": "새로운 버전이 다운로드되었습니다. 프로그램을 다시 시작하여 업데이트를 적용하세요."
+    "ApplyUpdates": "새로운 버전이 다운로드되었습니다. 프로그램을 다시 시작하여 업데이트를 적용하세요."
   },
   "ConfiguratorView": {
     "DownloadLUAScript": "루아 스크립트 다운로드",

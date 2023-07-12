@@ -157,11 +157,11 @@
     "Sure": "是的",
     "Later": "稍后",
     "UpdateDownloading": "正在下载更新",
-    "NotifiedWhenReadyToInstall.": "更新正在下载中，当它准备好安装时，你会得到通知。",
+    "NotifiedWhenReadyToInstall": "更新正在下载中，当它准备好安装时，你会得到通知。",
     "Restart": "重启",
     "ApplicationUpdate": "应用程序更新",
     "Update": "更新",
-    "ApplyUpdates.": "已经下载好新版本，重启应用程序以应用更新。"
+    "ApplyUpdates": "已经下载好新版本，重启应用程序以应用更新。"
   },
   "ConfiguratorView": {
     "DownloadLUAScript": "下载 LUA 脚本",
