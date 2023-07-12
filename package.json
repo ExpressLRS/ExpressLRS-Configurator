@@ -17,7 +17,8 @@
     "start:renderer": "cross-env NODE_ENV=development webpack serve --config ./.erb/configs/webpack.config.renderer.dev.babel.js",
     "test": "jest --passWithNoTests",
     "gql-codegen": "graphql-codegen --config codegen.yml && yarn lint:fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "typecheck": "tsc --project tsconfig.json --noEmit --skipLibCheck"
   },
   "author": {
     "name": "ExpressLRS Configurator Contributors",

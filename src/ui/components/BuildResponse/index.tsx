@@ -23,7 +23,7 @@ interface BuildResponseProps {
 }
 
 const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
-  ({ response, firmwareVersionData }) => {
+  ({ response }) => {
     const { t } = useTranslation();
 
     const toTitle = (errorType: BuildFirmwareErrorType | undefined): string => {

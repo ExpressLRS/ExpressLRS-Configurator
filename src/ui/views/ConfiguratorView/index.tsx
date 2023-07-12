@@ -1160,20 +1160,22 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   }
                   active={!buildInProgress}
                 >
-                  <Box sx={styles.buildNotification}>
-                    <BuildResponse
-                      response={response?.buildFlashFirmware}
-                      firmwareVersionData={firmwareVersionData}
-                    />
-                  </Box>
-                  {response?.buildFlashFirmware?.success && hasLuaScript && (
-                    <Alert sx={styles.buildNotification} severity="info">
-                      <AlertTitle>
-                        {t('ConfiguratorView.UpdateLuaScript')}
-                      </AlertTitle>
-                      {t('ConfiguratorView.UpdateLuaScriptOnRadio')}
-                    </Alert>
-                  )}
+                  <>
+                    <Box sx={styles.buildNotification}>
+                      <BuildResponse
+                        response={response?.buildFlashFirmware}
+                        firmwareVersionData={firmwareVersionData}
+                      />
+                    </Box>
+                    {response?.buildFlashFirmware?.success && hasLuaScript && (
+                      <Alert sx={styles.buildNotification} severity="info">
+                        <AlertTitle>
+                          {t('ConfiguratorView.UpdateLuaScript')}
+                        </AlertTitle>
+                        {t('ConfiguratorView.UpdateLuaScriptOnRadio')}
+                      </Alert>
+                    )}
+                  </>
                 </ShowAfterTimeout>
                 {response?.buildFlashFirmware?.success &&
                   currentJobType === BuildJobType.Build && (

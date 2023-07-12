@@ -18,36 +18,40 @@ const WifiDeviceNotification: FunctionComponent<WifiDeviceNotificationProps> = (
   const { appStatus } = useAppState();
   const { t } = useTranslation();
 
-  return appStatus === AppStatus.Interactive
-    ? newNetworkDevices.map((dnsDevice) => {
-        const handleClose = () => {
-          removeDeviceFromNewList(dnsDevice.name);
-        };
+  const result =
+    appStatus === AppStatus.Interactive
+      ? newNetworkDevices.map((dnsDevice) => {
+          const handleClose = () => {
+            removeDeviceFromNewList(dnsDevice.name);
+          };
 
-        return (
-          <Snackbar
-            key={dnsDevice.name}
-            open
-            autoHideDuration={6000}
-            onClose={handleClose}
-          >
-            <Alert onClose={handleClose} severity="info">
-              {t('WifiDeviceNotification.NewDevice')} {dnsDevice.name} (
-              {dnsDevice.ip})
-              <Button
-                size="small"
-                onClick={() => {
-                  onDeviceChange(dnsDevice);
-                  removeDeviceFromNewList(dnsDevice.name);
-                }}
-              >
-                {t('WifiDeviceNotification.Select')}
-              </Button>
-            </Alert>
-          </Snackbar>
-        );
-      })
-    : null;
+          return (
+            <Snackbar
+              key={dnsDevice.name}
+              open
+              autoHideDuration={6000}
+              onClose={handleClose}
+            >
+              <Alert onClose={handleClose} severity="info">
+                {t('WifiDeviceNotification.NewDevice')} {dnsDevice.name} (
+                {dnsDevice.ip})
+                <Button
+                  size="small"
+                  onClick={() => {
+                    onDeviceChange(dnsDevice);
+                    removeDeviceFromNewList(dnsDevice.name);
+                  }}
+                >
+                  {t('WifiDeviceNotification.Select')}
+                </Button>
+              </Alert>
+            </Snackbar>
+          );
+        })
+      : null;
+
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  return <>{result}</>;
 };
 
 export default WifiDeviceNotification;
