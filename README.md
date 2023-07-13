@@ -47,7 +47,7 @@ The minimum required version of windows is Windows 8.
 #### macOS
 
 Changes to the security model used in the latest versions of MacOS X 10.14 (Mojave) and 10.15 (Catalina)
-mean that the operating system will show an error message ('"ExpressLRS Configurator.app" cannot be openend because the
+mean that the operating system will show an error message ('"ExpressLRS Configurator.app" cannot be opened because the
 developer cannot be verified') when trying to install the application.
 
 To work around this, click `ExpressLRS Configurator.app` while pressing `control` key, and click `Open`. In the popup,
