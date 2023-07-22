@@ -25,7 +25,7 @@ const styles: Record<string, SxProps<Theme>> = {
 interface SerialConnectionFormProps {
   serialDevice: string | null;
   baudRate: number;
-  onConnect: (serialDevice: string | null, baudRate: number) => void;
+  onConnect: (serialDevice: string, baudRate: number) => void;
 }
 
 const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (

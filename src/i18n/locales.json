@@ -9,7 +9,7 @@
   },
   {
     "value": "es",
-    "label": "Española (Spanish)"
+    "label": "Español (Spanish)"
   },
   {
     "value": "zh-CN",
@@ -18,5 +18,21 @@
   {
     "value": "ko",
     "label": "한국어 (Korean)"
+  },
+  {
+    "value": "ru",
+    "label": "Русский (Russian)"
+  },
+  {
+    "value": "el",
+    "label": "Ελληνικά (Greek)"
+  },
+  {
+    "value": "uk",
+    "label": "Українська (Ukrainian)"
+  },
+  {
+    "value": "fr",
+    "label": "Français (French)"
   }
 ]

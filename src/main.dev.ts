@@ -412,7 +412,7 @@ const createWindow = async () => {
     shell.openExternal(url);
   });
 
-  updater = new Updater(logger, mainWindow);
+  updater = new Updater(logger, mainWindow, baseUrl);
 };
 /**
  * Add event listeners...
