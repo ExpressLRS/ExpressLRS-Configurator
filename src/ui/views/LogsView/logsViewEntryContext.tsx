@@ -12,7 +12,7 @@ const LogsViewEntryContext: FunctionComponent<{
           <Typography variant="body2" component="span" pr={1}>
             {key}:
           </Typography>
-          {typeof value === 'object' ? (
+          {typeof value === 'object' && value !== null ? (
             <LogsViewEntryContext
               entryContext={value}
               paddings={paddings + 1}
@@ -23,7 +23,7 @@ const LogsViewEntryContext: FunctionComponent<{
               component="span"
               style={{ wordBreak: 'break-all' }}
             >
-              {value.toString()}
+              {String(value)}
             </Typography>
           )}
         </Box>
