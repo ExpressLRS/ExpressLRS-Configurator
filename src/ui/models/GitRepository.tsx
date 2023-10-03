@@ -12,4 +12,8 @@ export default interface GitRepository {
   srcFolder: string;
 
   tagExcludes: string[];
+
+  targetsRepoUrl: string;
+
+  targetsRepoSrcFolder: string;
 }

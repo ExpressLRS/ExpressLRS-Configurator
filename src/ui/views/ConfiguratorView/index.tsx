@@ -250,6 +250,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             repositoryName: gitRepository.repositoryName,
             rawRepoUrl: gitRepository.rawRepoUrl,
             srcFolder: gitRepository.srcFolder,
+            targetsRepoUrl: gitRepository.targetsRepoUrl,
+            targetsRepoSrcFolder: gitRepository.targetsRepoSrcFolder,
           },
         },
       });
@@ -351,6 +353,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             repositoryName: gitRepository.repositoryName,
             rawRepoUrl: gitRepository.rawRepoUrl,
             srcFolder: gitRepository.srcFolder,
+            targetsRepoUrl: gitRepository.targetsRepoUrl,
+            targetsRepoSrcFolder: gitRepository.targetsRepoSrcFolder,
           },
         },
       });
@@ -467,6 +471,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             repositoryName: gitRepository.repositoryName,
             rawRepoUrl: gitRepository.rawRepoUrl,
             srcFolder: gitRepository.srcFolder,
+            targetsRepoUrl: gitRepository.targetsRepoUrl,
+            targetsRepoSrcFolder: gitRepository.targetsRepoSrcFolder,
           },
         },
       });
@@ -634,6 +640,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           repositoryName: gitRepository.repositoryName,
           rawRepoUrl: gitRepository.rawRepoUrl,
           srcFolder: gitRepository.srcFolder,
+          targetsRepoUrl: gitRepository.targetsRepoUrl,
+          targetsRepoSrcFolder: gitRepository.targetsRepoSrcFolder,
         },
       },
     });

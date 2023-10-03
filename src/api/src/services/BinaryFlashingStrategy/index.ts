@@ -473,6 +473,8 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         {
           url: gitRepositoryUrl,
           srcFolder: gitRepositorySrcFolder,
+          targetsRepoUrl: gitRepository.targetsRepoUrl,
+          targetsRepoSrcFolder: gitRepository.targetsRepoSrcFolder,
         }
       );
 

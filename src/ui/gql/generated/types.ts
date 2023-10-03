@@ -159,6 +159,8 @@ export type GitRepositoryInput = {
   readonly rawRepoUrl: Scalars['String'];
   readonly repositoryName: Scalars['String'];
   readonly srcFolder: Scalars['String'];
+  readonly targetsRepoSrcFolder: Scalars['String'];
+  readonly targetsRepoUrl: Scalars['String'];
   readonly url: Scalars['String'];
 };
 

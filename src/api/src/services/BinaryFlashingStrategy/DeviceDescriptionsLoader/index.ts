@@ -23,6 +23,8 @@ import { removeDirectoryContents } from '../../FlashingStrategyLocator/artefacts
 export interface GitRepository {
   url: string;
   srcFolder: string;
+  targetsRepoUrl: string;
+  targetsRepoSrcFolder: string;
 }
 
 export interface FirmwareVersion {
@@ -158,26 +160,41 @@ export default class DeviceDescriptionsLoader {
     );
 
     const srcFolder =
-      gitRepository.srcFolder === '/' ? '' : `${gitRepository.srcFolder}/`;
+      gitRepository.targetsRepoSrcFolder === '/'
+        ? ''
+        : `${gitRepository.targetsRepoSrcFolder}/`;
+
+    if (
+      gitRepository.targetsRepoUrl.toLowerCase() ===
+      'https://github.com/ExpressLRS/targets'.toLowerCase()
+    ) {
+      const branchResult = await firmwareDownload.checkoutBranch(
+        gitRepository.targetsRepoUrl,
+        srcFolder,
+        'master'
+      );
+      return branchResult.path;
+    }
+
     switch (args.source) {
       case FirmwareSource.GitBranch:
         const branchResult = await firmwareDownload.checkoutBranch(
-          gitRepository.url,
-          `${srcFolder}hardware`,
+          gitRepository.targetsRepoUrl,
+          srcFolder,
           args.gitBranch
         );
         return branchResult.path;
       case FirmwareSource.GitCommit:
         const commitResult = await firmwareDownload.checkoutCommit(
-          gitRepository.url,
-          `${srcFolder}hardware`,
+          gitRepository.targetsRepoUrl,
+          srcFolder,
           args.gitCommit
         );
         return commitResult.path;
       case FirmwareSource.GitTag:
         const tagResult = await firmwareDownload.checkoutTag(
-          gitRepository.url,
-          `${srcFolder}hardware`,
+          gitRepository.targetsRepoUrl,
+          srcFolder,
           args.gitTag
         );
         return tagResult.path;
@@ -186,8 +203,8 @@ export default class DeviceDescriptionsLoader {
           throw new Error('empty GitPullRequest head commit hash');
         }
         const prResult = await firmwareDownload.checkoutCommit(
-          gitRepository.url,
-          `${srcFolder}hardware`,
+          gitRepository.targetsRepoUrl,
+          srcFolder,
           args.gitPullRequest.headCommitHash
         );
         return prResult.path;
