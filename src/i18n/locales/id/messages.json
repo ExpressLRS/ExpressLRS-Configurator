@@ -1,0 +1,230 @@
+{
+  "BuildNotificationsList": {
+    "VerifyingBuildSystem": "Memverifikasi system pembangunan",
+    "DownloadingFirmware": "Mengunduh firmware",
+    "BuildingUserDefinesTXT": "Membangun user_defines.txt",
+    "CompilingFirmware": "Mengkompilasi firmware",
+    "FlashingDevice": "Menulis pada perangkat"
+  },
+  "BuildResponse": {
+    "Error": "Gagal",
+    "GitDependencyError": "Error ketergantungan Git",
+    "PythonDependencyError": "Error ketergantungan Python",
+    "PlatformioDependencyError": "Error ketergantungan PlatformIO",
+    "BuildError": "Error membangun firmware",
+    "FlashError": "Error menulis firmware pada perangkat",
+    "TargetMismatch": "Target yang anda akan tulis tidak sesuai dengan perangkat, jika anda yakin, klik Force Flash/paksa tulis firmware",
+    "Success": "Sukses!",
+    "ErrorDetails": "Terjadi kesalahan, periksa log di atas untuk melihat pesan error. Jika anda belum melakukannya, cek tautan <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> dan baca <FlashingGuideLink>Flashing Guide</FlashingGuideLink> dan <TroubleshootingGuideLink>Troubleshooting Guide</TroubleshootingGuideLink> untuk perangkat anda. Jika anda masih mengalami kesulitan setelah membaca dokumentasi, mohon salin log pembangunan (build log) di atas ke situs tempel/salin online dan unggah di channel discord <ExpressLRSDiscordLink>ExpressLRS Discord</ExpressLRSDiscordLink> beserta informasi terkait masalah yang anda alami, cara tulis apa yang anda gunakan dan langkah apa yang telah anda lakukan."
+  },
+  "DeviceOptionsForm": {
+    "StandardMode": "Mode standar",
+    "ManualMode": "Mode Manual",
+    "CopyFromStandardMode": "Salin dari mode Standard",
+    "LongerBuildTimeWarning": "Ketika menggunakan mode user-defined manual, cache binaries dari cloud disembunyikan, mengakibatkan proses pembangunan firmware yang lebih lama.",
+    "RegulatoryDomains": "Regulasi wilayah",
+    "BindingPhraseSetup": "Setelan Frasa penghubung",
+    "CompatibilityOptions": "Opsi kompabilitas",
+    "PerformanceOptions": "Opsi performa",
+    "ExtraData": "Data extra",
+    "Network": "Jaringan",
+    "OtherOptions": "Pilihan lain"
+  },
+  "DeviceTargetForm": {
+    "UnverifiedHardwareTitle": "PERANGKAT TIDAK TERVERIFIKASI",
+    "UnverifiedHardwareContent": "Manufaktur produk ini belum menyediakan sampel kepada tim pengembang untuk evaluasi dan verifikasi, hubungi manufaktur produk ini untuk dukungan atau lanjutkan dengan resiko tanggung sendiri. tidak semua fitur akan bekerja.",
+    "DeviceCategory": "Kategori perangkat",
+    "Device": "Perangkat"
+  },
+  "FirmwareVersionForm": {
+    "OfficialReleases": "Terbitan resmi",
+    "GitBranch": "Cabang Git",
+    "GitCommit": "Commit Git",
+    "Local": "Lokal",
+    "GitPullRequest": "Pull Request Git",
+    "ShowPreRreleases": "Tampilkan calon rilisan",
+    "Releases": "Rilis",
+    "ReleaseNotes": "Catatan rilis",
+    "NewerVersionAvailable": "Ada firmware versi terbaru tersedia.",
+    "UpgradeToV3": "ExpressLRS 2.X tidak lagi didukung. Silahkan meningkat ke ExpressLRS 3.X.",
+    "DangerZoneTitle": "ZONA BAHAYA",
+    "DangerZoneContent": "Gunakan sumber ini hanya jika anda tahu apa yang anda lakukan atau diinstruksikan oleh para pengembang proyek.",
+    "GitBranches": "Cabang Git",
+    "GitCommitHash": "Commit hash Git",
+    "LocalPath": "Lokasi lokal",
+    "AttentionTitle": "PERHATIAN",
+    "AttentionContent": "Anda berusaha mengunggah cabang ExpressLRS dari BetaFPV yang tertinggal lama. Produk BetaFPV didukung penuh oleh ExpressLRS pada rilis yang baru. Kami rekomendasi untuk menggunakan firmware resmi dari ExpresLRS untuk mendapatkan pengalaman ExpressLRS terbaik.",
+    "ChooseFolder": "Pilih folder",
+    "GitPullRequests": "Pull Request Git"
+  },
+  "FlashingMethodDescription": {
+    "BetaflightPassthroughDescription": "Metode ini membolehkan anda untuk menulis receiver selagi terhubung dengan flight controller (pengendali terbang) melalui \"passthrough\" (fitur tembusan).",
+    "PlugInFCToComputer": "Hubungkan FC anda pada komputer, tetapi JANGAN hubungkan kepada betaflight configurator (pengkonfigurasi betaflight).",
+    "SelectDesiredDevice": "Pilih opsi perangkat dan Serial Pengendali Terbang (flight controller) dibawah ini.",
+    "RunBuild&Flash": "Jalankan Build dan Flash.",
+    "BetaflightPassthroughWiki": "Cek halaman wiki untuk definisi terkini.",
+    "DFU": "Cara ini membantu anda untuk menulis (Flash) receiver atau transmitter melalui mode Devices Firmware Upgrade.",
+    "GeneralWiki": "Cek halaman wiki untuk info lebih mengenai perangkat anda.",
+    "STLink": "Cara ini membantu anda untuk menulis (Flash) receiver atau transmitter anda melalui STLink programmer yang terhubung pada perangkat.",
+    "StockBL": "Cara ini membantu anda untuk menulis (Flash) receiver atau transmitter anda menggunakan bootloader pada perangkat.",
+    "UART": "Cara ini membantu anda untuk menulis (Flash) receiver atau transmitter anda melalui kabel dari perangkat FTDI atau port USB.",
+    "WIFI": "Cara ini menciptakan file firmware untuk anda unggah (upload) kepada receiver atau transmitter anda melalui wifi yang sudah tertanam.",
+    "EdgeTxPassthrough": "Cara ini membantu anda untuk menulis (Flash) transmitter anda selagi terhubung melalui fitur passthrough dari firmware EdgeTX.",
+    "Passthrough": "Cara ini membantu anda untuk menulis (Flash) pada module anda selagi terhubung melalui fitur passthrough."
+  },
+  "FlashingMethodOptions": {
+    "FlashingMethod": "Cara tulis (Flash)"
+  },
+  "Header": {
+    "ExpressLRSConfigurator": "Pengkonfigurasi ExpressLRS",
+    "DownloadNewestRelease": "Klik untuk mengunduh (Download) rilis terbaru",
+    "UpdateAvailable": "Pembaruan tersedia!",
+    "Documentation": "Dokumentasi",
+    "Discord": "Discord",
+    "FacebookGroup": "Grup Facebook",
+    "Github": "Github",
+    "OpenCollective": "OpenCollective"
+  },
+  "SerialConnectionForm": {
+    "SerialDevice": "Alat serial",
+    "BaudRate": "Baud rate",
+    "Connect": "Hubungkan"
+  },
+  "SerialDeviceSelect": {
+    "ManualSelectionTitle": "Pilihan manual alat serial",
+    "ManualSelectionTitleTooltip": "Gunakan pilihan serial port manual jika pilihan otomatis gagal memilih port yang benar. Kebanyakan kasus tidak memerlukan untuk menggunakan opsi ini."
+  },
+  "Sidebar": {
+    "Configurator": "Pengkonfigurasi",
+    "Backpack": "Backpack",
+    "Logs": "Log",
+    "SerialMonitor": "Serial Monitor",
+    "Settings": "Pengaturan",
+    "Support": "Dukungan"
+  },
+  "UserDefineDescription": {
+    "RegulatoryDomain915": "Konsultasi <LoRaWANLink>LoRaWAN Frequency Plans and Regulations</LoRaWANLink> untuk regulasi memilih regulasi yang tepat di lokasi anda.",
+    "Wiki": "Cek halaman wiki untuk definisi terkini.",
+    "RegulatoryDomainISM2400": "Band ISM adalah porsi spektrum radio yang disiapkan secara international. Anda dapat menggunakan regulasi ini dengan aman di negara manapun.",
+    "RegulatoryDomainEUCE2400": "Untuk firmware versi sebelum v3.x, regulasi khusus EU CE 2.4 Ghz mambatasi power hingga 10mW, sehingga tidak memerlukan LBT (Listen Before Talk). Untuk firmware versi 3.x dan setelahnya, EU CE 2.4 GHz membatasi daya hingga 100mW dan menggunakan LBT (Listen Before Talk).",
+    "BindingPhrase": "Binding phrase menghubungkan receiver ke transmitter tanpa mengharuskan Anda untuk binding secara manual. Receiver yang di-flash tanpa binding phrase akan memerlukan metode pengikatan(binding) tradisional. Baik TX dan RX harus memiliki binding phrase yang sama untuk terhubung. Tetapkan sesuatu yang mudah diingat, dan batasi frasa alfanumerik yang sesuai dengan alfabet Latin. Ini bukan kata sandi, dan tidak memberikan keamanan apa pun, ini hanya mengurangi tabrakan RF dengan pilot lain.",
+    "AutoWifiOnInterval": "<p>Ini akan secara otomatis mengaktifkan wifi untuk setiap modul yang memiliki ESP8285 di dalamnya jika tidak ada koneksi yang ditemukan setelah beberapa detik sejak boot. Hal ini memungkinkan mendorong pembaruan firmware ke RX dengan menghubungkan ke jaringan wifi-nya dan mengunjungi 10.0.0.1</p><p>Interval aktif otomatis ditentukan dalam <strong>detik</strong>. Standarnya adalah 60 detik.</p>",
+    "TLMReportIntervalMs": "<p>Membuat modul TX mengirimkan data telemetri ke handset pada interval tetap. Ini mengurangi peringatan 「Telemetri Hilang」 saat berjalan pada rasio telemetri tinggi, atau kecepatan rendah seperti 50 hz.</p><p>Nilai defaultnya adalah <strong>240LU</strong>. Jika Anda ingin mengubahnya, Anda harus mengakhiri nilai milidetik Anda dengan <strong>LU</strong>. Misalnya, untuk menentukan kecepatan pembaruan telemetri 100 ms, Anda harus memasukkannya seperti ini: <strong>100LU</strong>.</p><p>umumnya, Anda ingin mempertahankan <strong>240LU</strong> nilai untuk radio berbasis EdgeTX/OpenTX, dan <strong>100LU</strong> untuk radio ErskyTx.</p>",
+    "LockOnFirstConnection": "RF Mode Locking - Mode default adalah untuk RX untuk menggilir mode RF yang tersedia dengan jeda 5 detik dari mode tertinggi ke terendah dan menemukan mode mana yang ditransmisikan Tx. Hal ini memungkinkan RX untuk berputar, tetapi setelah koneksi dibuat, Rx tidak akan lagi berputar melalui mode RF (sampai menerima reset daya).",
+    "JustBeepOnce": "Fitur ini membuat TX hanya bersuara sekali melainkan memainkan dering start up.",
+    "DisableStartupBeep": "Ini untuk mengaktifkan mode diam saat start-up.",
+    "DisableAllBeeps": "Matikan semua bunyi.",
+    "MyStartupMelody": "<p>Gunakan ini untuk menentukan melodi startup Anda sendiri menggunakan sintaks BlHeli32. Parameter string musik dan bpm diperlukan, sedangkan offset seminada adalah opsional untuk mentransposisi seluruh melodi ke atas atau ke bawah dengan jumlah seminada yang ditentukan. Contoh melodi BlHeli32 tersedia di <RoxWolfsYoutubeChannelLink>saluran Youtube Rox Wolfs</RoxWolfsYoutubeChannelLink>, beberapa eksperimen mungkin diperlukan.</p><p>Untuk menulis melodi Anda sendiri, <SheetMusic101lLink>Sheet Music 101</SheetMusic101lLink> dan ini <BLHeliPianoLink>BLHeli Piano</BLHeliPianoLink> adalah sumber yang berguna.</p><p>Opsi ini sekarang juga mendukung melodi dalam format RTTTL. <EscTunesLink>EscTunes.com</EscTunesLink> adalah sumber yang bagus untuk menemukan melodi baru.</p>",
+    "UnlockHigherPower": "<p>Ada beberapa laporan tentang modul R9M yang menunjukkan ketidakstabilan pada >250mw dengan pendinginan stok. Ini sebagian karena ELRS menggunakan duty cycle yang lebih tinggi untuk transmisi dibandingkan dengan firmware bawaan. Secara default daya dibatasi hingga 250mw. Anda dapat membuka hingga 1000mw dengan mengaktifkan opsi berikut. Lakukan ini dengan risiko Anda sendiri jika Anda tidak melakukan modifikasi pendinginan.</p><p>Kami menerbitkan <R9MFanModCoverLink>R9M Fan Mod Cover</R9MFanModCoverLink>, cover belakang cetak 3d khusus dengan ruang untuk kipas dan pendinginan ekstra untuk memungkinkan daya maksimum (1-2W tergantung mod).</p>",
+    "UARTInverted": "<p>Ada beberapa laporan tentang modul R9M yang menunjukkan ketidakstabilan pada >250mw dengan pendinginan stok. Ini sebagian karena ELRS menggunakan duty cycle yang lebih tinggi untuk transmisi dibandingkan dengan firmware bawaan. Secara default daya dibatasi hingga 250mw. Anda dapat membuka hingga 1000mw dengan mengaktifkan opsi berikut. Lakukan ini dengan risiko Anda sendiri jika Anda tidak melakukan modifikasi pendinginan.</p><p>Kami menerbitkan <R9MFanModCoverLink>R9M Fan Mod Cover</R9MFanModCoverLink>, cover belakang cetak 3d khusus dengan ruang untuk kipas dan pendinginan ekstra untuk memungkinkan daya maksimum (1-2W tergantung mod).</p>",
+    "RCVRUARTBaud": "<p>Ada beberapa laporan tentang modul R9M yang menunjukkan ketidakstabilan pada >250mw dengan pendinginan stok. Ini sebagian karena ELRS menggunakan duty cycle yang lebih tinggi untuk transmisi dibandingkan dengan firmware bawaan. Secara default daya dibatasi hingga 250mw. Anda dapat membuka hingga 1000mw dengan mengaktifkan opsi berikut. Lakukan ini dengan risiko Anda sendiri jika Anda tidak melakukan modifikasi pendinginan.</p><p>Kami menerbitkan <R9MFanModCoverLink>R9M Fan Mod Cover</R9MFanModCoverLink>, cover belakang cetak 3d khusus dengan ruang untuk kipas dan pendinginan ekstra untuk memungkinkan daya maksimum (1-2W tergantung mod).</p>",
+    "RCVRInvertTX": "<p>Ada beberapa laporan tentang modul R9M yang menunjukkan ketidakstabilan pada >250mw dengan pendinginan stok. Ini sebagian karena ELRS menggunakan duty cycle yang lebih tinggi untuk transmisi dibandingkan dengan firmware bawaan. Secara default daya dibatasi hingga 250mw. Anda dapat membuka hingga 1000mw dengan mengaktifkan opsi berikut. Lakukan ini dengan risiko Anda sendiri jika Anda tidak melakukan modifikasi pendinginan.</p><p>Kami menerbitkan <R9MFanModCoverLink>R9M Fan Mod Cover</R9MFanModCoverLink>, cover belakang cetak 3d khusus dengan ruang untuk kipas dan pendinginan ekstra untuk memungkinkan daya maksimum (1-2W tergantung mod).</p>.",
+    "UseR9MMR9MiniSBUS": "<p><strong>INI BUKAN UNTUK MENGAKTIFKAN PROTOKOL SBUS.</strong></p><p>Ini berguna untuk FC F4 yang tidak memiliki opsi UART tidak terbalik. Ini hanya satu cara, jadi Anda kehilangan downlink telemetri ke radio Anda serta flashing passthrough. Ini akan keluar dari pin S.BUS default pada R9MM/R9Mini Anda. Atur serialrx_inverted = ON mungkin juga diperlukan dalam Betaflight untuk kompatibilitas</p>",
+    "HomeWifiSSID": "Setel nama jaringan WiFi rumah (SSID). Ini akan membuat perangkat anda terhubung di jaringan rumah anda secara otomatis.",
+    "HomeWifiPassword": "Setel nama jaringan WiFi rumah (SSID). Ini akan membuat perangkat anda terhubung di jaringan rumah anda secara otomatis."
+  },
+  "UserDefinesAdvisor": {
+    "DisableUARTInvertedWarning": "Menonaktif UART_INVERTED adalah hal yang tidak umum. Mohon pastikan transmitter anda mendukungnya."
+  },
+  "UserDefinesList": {
+    "CustomBindingPhrase": "Frase penghubung custom",
+    "MyStartupMelody": "Nada start-up saya",
+    "Value": "Nilai"
+  },
+  "WifiDeviceList": {
+    "Name": "Nama",
+    "Target": "Target",
+    "Version": "Versi",
+    "Type": "Tipe",
+    "DNS": "DNS",
+    "IP": "IP",
+    "Select": "Pilih"
+  },
+  "WifiDeviceNotification": {
+    "NewDevice": "Perangkat Baru",
+    "Select": "Pilih"
+  },
+  "WifiDeviceSelect": {
+    "DefaultWifiIp": "Default (10.0.0.1)",
+    "WifiDevices": "Perangkat WiFi",
+    "Manual": "Manual",
+    "WifiDeviceSelection": "Pilihan perangkat WiFi",
+    "IPAddress": "Alamat IP"
+  },
+  "Updater": {
+    "FoundUpdates": "Update ditemukan",
+    "UpdateNow": "Update ditemukan, apakah anda mau update sekarang?",
+    "Sure": "Tentu",
+    "Later": "Nanti",
+    "UpdateDownloading": "Memuat pembaharuan",
+    "NotifiedWhenReadyToInstall": "Pembaruan sedang diunduh, Anda akan diberi tahu bila sudah siap untuk dipasang.",
+    "Restart": "Restart",
+    "ApplicationUpdate": "Update aplikasi",
+    "Update": "Update",
+    "ApplyUpdates": "Versi baru telah diunduh. Mulai ulang aplikasi untuk menerapkan pembaruan."
+  },
+  "ConfiguratorView": {
+    "DownloadLUAScript": "Download LUA script",
+    "FirmwareVersion": "Versi firmware",
+    "Target": "Target",
+    "Notice": "Catatan",
+    "SelectFirmwareVersionFirst": "Silahkan pilih versi firmware terlebih dahulu.",
+    "DeviceOptions": "Pilihan perangkat",
+    "ResetDevice": "Reset opsi perangkat kembali ke opsi yang telah direkomendasikan untuk perangkat ini. Kecuali frase penghubung anda.",
+    "Reset": "Reset",
+    "Actions": "Tindakan",
+    "FlashingOptions": "Opsi flash (penulisan pada perangkat)",
+    "EraseBeforeFlash": "Hapus sebelum memflash",
+    "ForceFlash": "Flash paksa",
+    "Build": "Cetak",
+    "Flash": "Flash",
+    "NetworkDevices": "Perangkat Jaringan",
+    "DeviceSelectError": "Pilihan perangkat error",
+    "DeviceCouldNotBeAutomaticallySelected": "Perangkat yang dituju tidak bisa terpilih otomatis, harus dilakukan secara manual.",
+    "Close": "Tutup",
+    "Logs": "Log",
+    "CopyLogToClipboard": "Salin ke clipboard",
+    "SaveLogToFile": "Simpan file log",
+    "BuildsTakeMinutesFirstTime": "Terkadang pembangunan bisa paling tidak memakan waktu beberapa menit. Ini normal, terutama pada pembangunan firmware pertama kali.",
+    "Result": "Hasil",
+    "Warning": "Peringatan",
+    "WaitForLEDBeforeDisconnectingPower": "Mohon tunggu tanda dari LED untuk berkedip sebelum memutuskan sumber power",
+    "UpdateLuaScript": "Update Lua Script",
+    "UpdateLuaScriptOnRadio": "Pastikan untuk update script Lua pada pengendali anda",
+    "BuildNotice": "Catatan Build",
+    "FirmwareOpenedInFileExplorer": "Binary firmware telah dibuka di file explorer",
+    "Back": "Kembali",
+    "Retry": "Coba Lagi"
+  },
+  "LogsView": {
+    "Logs": "Log",
+    "OpenLogsFolder": "Buka folder log"
+  },
+  "SerialMonitorView": {
+    "SerialMonitor": "Serial Monitor",
+    "Disconnect": "Putuskan sambungan"
+  },
+  "SettingsView": {
+    "Settings": "Pengaturan",
+    "LanguageSelector": "Pemilihan bahasa",
+    "CurrentLanguage": "Bahasa saat ini"
+  },
+  "SupportView": {
+    "Support": "Dukungan",
+    "JoinTheCommunity": "Butuh bantuan? Bingung? Join komunitasnya!",
+    "ExpressLRSDocumentation": "Dokumentasi ExpressLRS",
+    "DiscordChat": "Obrolan Discord",
+    "FacebookGroup": "Grup Facebook",
+    "Troubleshooting": "Penyelesaian masalah",
+    "LegalDisclaimer": "Legal disclaimer",
+    "UseAtYourOwnRisk": "Penggunaan dan pengoperasian perangkat jenis ini mungkin memerlukan lisensi, dan beberapa negara mungkin melarang penggunaannya. Ini sepenuhnya tergantung pada pengguna akhir untuk memastikan kepatuhan terhadap peraturan setempat. Ini adalah perangkat eksperimental dan tidak ada jaminan stabilitas atau keandalan. GUNAKAN RISIKO ANDA SENDIRI.",
+    "CorruptedFirmwareFiles": "File firmware terkorupsi",
+    "YouCanManuallyClearAllFiles": "Menutup configurator selagi mengunduh berkas-berkas yang diperlukan akan mengakibatkan berkas - berkas rusak. Anda dapat secara manual membersihkan sisa - sisa berkas dan mengulangi lagi.",
+    "ClearFirmwareFiles": "Bersihkan file firmware",
+    "CorruptedFirmwareFilesDeleted": "File firmware rusak sudah dihapus dan repository git sudah dibersihkan. Silahkan coba build ulang.",
+    "CorruptedPlatformioDependencies": "Ketergantungan platformio terkorupsi",
+    "YouCanManuallyClearAllDependencies": "Menutup configurator selagi mengunduh berkas-berkas yang diperlukan akan mengakibatkan berkas - berkas rusak. Anda dapat secara manual membersihkan sisa - sisa berkas dan mengulangi lagi.",
+    "ClearPlatformioDependencies": "Bersihkan ketergantungan platformio",
+    "CorruptedPlatformioDependenciesDeleted": "File platformio rusak sudah dihapus dan repository git sudah dibersihkan. Silahkan coba build ulang."
+  }
+}
