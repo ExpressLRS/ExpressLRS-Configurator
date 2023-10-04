@@ -38,5 +38,13 @@
   {
     "value": "fr",
     "label": "Français (French)"
+  },
+  {
+    "value": "de",
+    "label": "Deutsche (German)"
+  },
+  {
+    "value": "id",
+    "label": "Bahasa Indonesia (Indonesian)"
   }
 ]
