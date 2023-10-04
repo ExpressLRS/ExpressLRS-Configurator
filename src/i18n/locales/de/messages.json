@@ -1,0 +1,230 @@
+{
+  "BuildNotificationsList": {
+    "VerifyingBuildSystem": "Buildsystem wird überprüft",
+    "DownloadingFirmware": "Firmware wird heruntergeladen",
+    "BuildingUserDefinesTXT": "user_defines.txt wird verarbeitet",
+    "CompilingFirmware": "Firmware wird kompiliert",
+    "FlashingDevice": "Firmware wird auf dem Gerät installiert"
+  },
+  "BuildResponse": {
+    "Error": "Fehler",
+    "GitDependencyError": "Git-Abhängigkeitsfehler",
+    "PythonDependencyError": "Python-Abhängigkeitsfehler",
+    "PlatformioDependencyError": "Platformio-Abhängigkeitsfehler",
+    "BuildError": "Fehler beim Kompilieren",
+    "FlashError": "Fehler bei der Installation",
+    "TargetMismatch": "Der Gerätetyp, den Sie verwenden möchten, entspricht nicht dem aktuellen Typ des Geräts. Wenn Sie sicher sind, dass Sie dies tun möchten, klicken Sie unten auf Installation erzwingen",
+    "Success": "Operation erfolgreich abgeschlossen!",
+    "ErrorDetails": "Ein Fehler ist aufgetreten. Die exakte Fehlermeldung finden sie im obigen Log. Wenn Sie dies noch nicht getan haben, besuchen Sie <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> und lesen Sie den <FlashingGuideLink>Flashing Guide</FlashingGuideLink> für Ihr bestimmtes Gerät sowie den <TroubleshootingGuideLink>Fehlerbehebungsanleitfaden</TroubleshootingGuideLink>. Wenn Sie nach dem Lesen der Dokumentation immer noch Probleme haben, kopieren Sie bitte die obigen Build-Logs auf eine online paste Seite und posten Sie im #help-and-support Channel auf dem <ExpressLRSDiscordLink>ExpressLRS Discord Server</ExpressLRSDiscordLink> mit einem Link zu den Logs und anderen relevanten Informationen wie deinem Gerät, welche Installationsmethode Sie verwendet haben und welche Schritte Sie bereits zur Problemlösung unternommen haben."
+  },
+  "DeviceOptionsForm": {
+    "StandardMode": "Standardmodus",
+    "ManualMode": "Manueller Modus",
+    "CopyFromStandardMode": "Vom Standardmodus übernehmen",
+    "LongerBuildTimeWarning": "Wenn Sie den manuellen benutzerdefinierten Modus verwenden, wird der Cache für Cloud-Binärdateien deaktiviert, was zu wesentlich längeren Bauzeiten führt.",
+    "RegulatoryDomains": "Regulatorische Region",
+    "BindingPhraseSetup": "Bindphraseneinstellungen",
+    "CompatibilityOptions": "Kompatibilitätsoptionen",
+    "PerformanceOptions": "Performance-Optionen",
+    "ExtraData": "Zusatzoptionen",
+    "Network": "Netzwerkeinstellungen",
+    "OtherOptions": "Weitere Optionen"
+  },
+  "DeviceTargetForm": {
+    "UnverifiedHardwareTitle": "UNVERIFIZIERTE HARDWARE",
+    "UnverifiedHardwareContent": "Der Hersteller dieses Gerätes hat den Entwicklern keine Beispielgeräte für die Bewertung und Überprüfung zur Verfügung gestellt. Kontaktieren Sie den Hersteller für Unterstützung oder fahren Sie auf eigene Gefahr fort. Es kann sein dass, nicht alle Funktionen zur Verfügung stehen oder funktionieren werden.",
+    "DeviceCategory": "Gerätekategorie",
+    "Device": "Gerät"
+  },
+  "FirmwareVersionForm": {
+    "OfficialReleases": "Offizielle Versionen",
+    "GitBranch": "Git branch",
+    "GitCommit": "Git commit",
+    "Local": "Lokal",
+    "GitPullRequest": "Git Pull Request",
+    "ShowPreRreleases": "Vorab-Versionen anzeigen",
+    "Releases": "Version",
+    "ReleaseNotes": "Änderungen in dieser Version",
+    "NewerVersionAvailable": "Eine neuere Version der Firmware ist verfügbar",
+    "UpgradeToV3": "ExpressLRS 2.X wird nicht länger unterstützt. Bitte updaten Sie auf ExpressLRS 3.X.",
+    "DangerZoneTitle": "GEFAHR VORAUS",
+    "DangerZoneContent": "Verwenden Sie diese Quellen nur wenn Sie genau wissen was Sie tun, oder wenn Sie von ExpressLRS Entwicklern dazu aufgefordert wurden",
+    "GitBranches": "Git branches",
+    "GitCommitHash": "Git commit hash",
+    "LocalPath": "Lokaler Pfad",
+    "AttentionTitle": "ACHTUNG",
+    "AttentionContent": "Sie versuchen ein veraltetes ExpressLRS-Derivat von BetaFPV zu installieren. BetaFPV Geräte werden jedoch von neueren ExpressLRS Versionen voll unterstützt. Für eine optimale ExpressLRS Erfahrung empfehlen wir daher die offizielle Firmware zu verwenden.",
+    "ChooseFolder": "Ordner auswählen",
+    "GitPullRequests": "Git pull requests"
+  },
+  "FlashingMethodDescription": {
+    "BetaflightPassthroughDescription": "Diese Methode ermöglicht es, Firmware auf dem Empfänger zu installieren während dieser mit Ihrem Flight Controller verbunden ist, indem sie dessen passthrough-Funktion nutzt.",
+    "PlugInFCToComputer": "Schließen Sie Ihren Flight Controller an Ihren Computer an, verbinden Sie ihn aber NICHT mit dem Betaflight-Konfigurator.",
+    "SelectDesiredDevice": "Wählen Sie unten die gewünschten Geräteoptionen und den seriellen Port ihres Flight Controllers aus.",
+    "RunBuild&Flash": "Firmware bauen und installieren.",
+    "BetaflightPassthroughWiki": "Auf unserer Wiki-Seite finden Sie die aktuellste Definition.",
+    "DFU": "Mit dieser Methode können Sie Firmware auf Ihrem Empfänger oder Sender über den DFU Modus installieren.",
+    "GeneralWiki": "Weitere Informationen zu Ihrem spezifischen Gerät finden Sie auf der Wiki-Seite.",
+    "STLink": "Mit dieser Methode können Sie Firmware auf Ihren Empfänger oder Sender mithilfe eines an das Gerät angeschlossenen STLink-Programmiergeräts installieren.",
+    "StockBL": "Mit dieser Methode können Sie Firmware auf Ihrem Empfänger oder Sender über dessen Bootloader installieren.",
+    "UART": "Mit dieser Methode können Sie Firmware auf Ihrem Empfänger oder Sender über dessen USB-Anschluss oder ein an diesen angeschlossenes FTDI-Gerät installieren.",
+    "WIFI": "Diese Methode erzeugt eine Firmware-Datei, die Sie auf Ihren Empfänger übertragen können, indem Sie sich mit dessen WLAN Netzwerk verbinden.",
+    "EdgeTxPassthrough": "Diese Methode ermöglicht es, Firmware auf dem Sendermodul zu installieren während es mit dem Sender verbunden ist, indem sie die passthrough-Funktion von EdgeTX nutzt.",
+    "Passthrough": "Diese Methode ermöglicht es, Firmware auf dem Sendermodul zu installieren während es mit dem Sender verbunden ist, indem sie die passthrough-Funktion von EdgeTX nutzt."
+  },
+  "FlashingMethodOptions": {
+    "FlashingMethod": "Installationsmethode"
+  },
+  "Header": {
+    "ExpressLRSConfigurator": "ExpressLRS Konfigurator",
+    "DownloadNewestRelease": "Hier klicken, um die neueste Version herunterzuladen",
+    "UpdateAvailable": "Eine Aktualisierung ist verfügbar!",
+    "Documentation": "Dokumentation",
+    "Discord": "Discord",
+    "FacebookGroup": "Facebook-Gruppe",
+    "Github": "Github",
+    "OpenCollective": "OpenCollective"
+  },
+  "SerialConnectionForm": {
+    "SerialDevice": "Serieller Port",
+    "BaudRate": "Baudrate",
+    "Connect": "Verbinden"
+  },
+  "SerialDeviceSelect": {
+    "ManualSelectionTitle": "Manuelle auswahl des seriellen Ports",
+    "ManualSelectionTitleTooltip": "Verwenden Sie die manuelle serielle Portauswahl, wenn die automatische Auswahl keinen korrekten Port auswählt. In den meisten Fällen besteht keine Notwendigkeit, diese Option zu nutzen."
+  },
+  "Sidebar": {
+    "Configurator": "Konfigurator",
+    "Backpack": "Backpack",
+    "Logs": "Logs",
+    "SerialMonitor": "Serielles Terminal",
+    "Settings": "Einstellungen",
+    "Support": "Hilfe"
+  },
+  "UserDefineDescription": {
+    "RegulatoryDomain915": "Konsultieren Sie <LoRaWANLink>LoRaWAN Frequenzpläne und Verordnungen</LoRaWANLink> für die Auswahl Ihrer regulatorischen Region.",
+    "Wiki": "Auf unserer Wiki-Seite finden Sie die aktuellste Definition.",
+    "RegulatoryDomainISM2400": "Die ISM Frequenzbänder sind Teile des international verfügbaren Funkspektrums. Sie können diese Frequenzbänder überall auf der Welt verwenden. Es kann jedoch Einschränkungen der maximalen Sendeleistung geben.",
+    "RegulatoryDomainEUCE2400": "Für Firmware-Versionen älter als v3.x limitiert die regulatorische Region EU CE 2.4 GHz die maximale Sendeleistung auf 10mW, was kein LBT (Listen Before Talk) benötigt. Bei Firmware-Versionen ab v3.x begrenzt die EU CE 2.4 GHz regulatorische Region die maximale Sendeleistung auf 100mW und verwendet LBT (Listen Before Talk) bei mehr als 10mw Sendeleistung.",
+    "BindingPhrase": "Eine Bindungsphrase verbindet Empfänger und Sender, ohne dass ein manuelles Binden nötig ist. Empfänger auf denen keine Bindungsphrase eingerichtet ist, müssen über den traditionellen Weg gebunden werden. Sender und Empfänger müssen dieselbe Bindungsphrase haben, damit sie sich verbinden können. Verwenden Sie etwas, was Sie sich gut merken können und beschränken Sie sich auf Buchstaben und Zahlen aus dem lateinischen Alphabet (keine Umlaute und Sonderzeichen). Dies ist kein Passwort und ist nicht sicherheitsrelevant, sondern dient lediglich der Vermeidung von Interferenz mit anderen Piloten.",
+    "AutoWifiOnInterval": "<p>Dies schaltet das WLAN automatisch für jedes Modul ein, wenn dieses einen ESP8285 besitzt und nach der eingestellten Anzahl Sekunden nach Start keine Verbindung zum Sender instande gekommen ist. Dies ermöglicht es Firmware-Aktualisierungen auf den Empfänger zu installieren, indem Sie sich mit seinem WLAN-Netzwerk verbinden und die Addresse 10.0.0.1 im Browser aufrufen.</p><p>Das Intervall ist in <strong>Sekunden</strong>definiert. Standard ist 60 Sekunden.</p>",
+    "TLMReportIntervalMs": "<p>Lässt das Sendermodul Telemetrie-Daten in einem festen Intervall an die Fernsteuerung senden. Dies reduziert die <unk> Telemetrie Verloren<unk> Warnungen bei einem geringen Telemetrieverhältnis oder niedrigen Raten wie 50hz.</p><p>Standardwert ist <strong>240LU</strong>. Wenn Sie diesen Wert ändern möchten, müssen Sie Ihren Millisekundenwert mit <strong>LU</strong>enden lassen. Um zum Beispiel 100 ms Telemetrie-Aktualisierungsrate einzustellen, müssen Sie diese wie folgt eingeben: <strong>100LU</strong>.</p><p>Normalerweise sollten Sie <strong>240LU</strong> für EdgeTX/OpenTX basierte Fernsteuerungen verwenden, und <strong>100LU</strong> für ErskyTx.</p>",
+    "LockOnFirstConnection": "RF Modus Sperre - Standardmäßig wechselt der Empfänger mit 5s Pausen durch die verfügbaren RF-Modi, vom höchsten zum niedrigsten Modus, um herauszufinden in welchem Modus der Sender sendet. Diese Einstellung erlaubt es dem Empfänger durch die RF-Modi zu wechseln, aber sobald einmal eine Verbindung hergestellt wurde, wird der Empfänger auch nach Signalverlust nicht mehr durch die RF-Modi wechseln (bis er neu gestartet wird). Hierdurch kann die Wiederaufnahme einer abgebrochenen Verbindung schneller erfolgen.",
+    "JustBeepOnce": "Dies legt fest, ob der Sender nur einmalig piept oder ein Start-Lied abspielt.",
+    "DisableStartupBeep": "Dies legt fest, ob der Sender beim Start still bleiben soll.",
+    "DisableAllBeeps": "Alle Töne deaktivieren.",
+    "MyStartupMelody": "<p>Verwende Sie dies, um Ihre eigene Start-Melodie mit der BlHeli32 Syntax zu definieren. Die Parameter music string und bpm werden zwingend benötigt, während der Halbton Offset optional ist, um die gesamte Melodie um die definierte Anzahl der Halbtöne nach oben oder unten zu transponieren. Beispiel BlHeli32 Melodien gibt es auf <RoxWolfsYoutubeChannelLink>Rox Wolfs Youtube Kanal</RoxWolfsYoutubeChannelLink>, einiges Experimentieren kann jedoch erforderlich sein.</p><p>Um deine eigene Melodie zu schreiben sind <SheetMusic101lLink>Plattenmusik 101</SheetMusic101lLink> und <BLHeliPianoLink>BLHeli Klavier</BLHeliPianoLink> nützliche Ressourcen.</p><p>Diese Option unterstützt jetzt auch Melodien im RTTTL-Format. <EscTunesLink>EscTunes.com</EscTunesLink> ist eine großartige Ressource zum Entdecken neuer Melodien.</p>",
+    "UnlockHigherPower": "<p>Es gab einige Berichte über R9M-Module, die Instabilität bei >250mw mit Standardkühlung zeigen. Dies ist zum Teil dadurch zu erklären, dass ELRS länger im Sendemodus ist als die Hersteller-Firmware. Standardmäßig ist die Sendeleistung deshalb auf 250mw begrenzt. Sie können bis zu 1000mw freischalten, indem Sie die folgende Option aktivieren. Sie tun dies auf eigenes Risiko, wenn Sie keine Kühlungsmodifikationen vornehmen.</p><p>Wir haben <R9MFanModCoverLink>R9M Fan Mod Cover</R9MFanModCoverLink>veröffentlicht, ein modifiziertes Gehäuse mit Platz für einen Lüfter und extra Kühlung, um eine maximale Leistung (1-2W je nach Mod) zu ermöglichen.</p>",
+    "UARTInverted": "Ermöglicht Kompatibilität mit Sendern welche invertiertes CRSF ausgeben, wie FrSky QX7, TBS Tango 2, RadioMaster TX16S etc. Dies sollte in den meisten Fällen aktiviert bleiben. Wenn Ihr Sender eine T8SG V2 ist oder Sie Deviation Firmware verwenden, schalten Sie diese Option ab.",
+    "RCVRUARTBaud": "Baudrate der UART-Schnittstelle des Empfängers. Standard ist 420000. Damit Ihr Empfänger mit Kiss v1 Flight Controllern funktioniert setzen Sie diese Option auf 400000.",
+    "RCVRInvertTX": "Bei Verwendung eines Flight Controllers der nur ein RXI / SBUS (RX invertiert) Pad hat, aktivieren Sie diese Option um den CRSF-Ausgang des Empfängers zu invertieren und dieses Pad trotzdem verwenden zu können. Dies konvertiert die Ausgabe nicht in SBUS, es ist lediglich invertiertes CRSF, sodass trotzdem CRSF als Empfängerprotokoll in der Flight Controller Software ausgewählt werden sollte. Dies gilt nur für ESP-basierte Empfänger.",
+    "UseR9MMR9MiniSBUS": "<p><strong>AKTIVIERT NICHT DAS SBUS PROTOKOLL.</strong></p><p> Diese Option ist für F4 Flight Controller gedacht welche keine Option für eine uninvertierte serielle Schnittstelle haben. S.BUS dient nur für Steuersignale, weshalb Sie dadurch die Telemetrie und passthrough Funktionalität verlieren. Das Signal wird aus dem standard S.BUS Pin des R9MM/R9Mini kommen. Die Einstellung von serialrx_inverted = ON könnte für die Kompatibilität in Betaflight nötig sein</p>",
+    "HomeWifiSSID": "Geben Sie den Namen Ihres Heimnetzwerks (SSID) ein. Es ermöglicht WLAN-fähiger Hardware sich automatisch mit dem Heimnetzwerk zu verbinden, was zukünftige Änderungen und Aktualisierungen erleichtert.",
+    "HomeWifiPassword": "Geben Sie das Passwort Ihres Heimnetzwerks ein. Es ermöglicht WLAN-fähiger Hardware sich automatisch mit dem Heimnetzwerk zu verbinden, was zukünftige Änderungen und Aktualisierungen erleichtert."
+  },
+  "UserDefinesAdvisor": {
+    "DisableUARTInvertedWarning": "Das Deaktivieren von UART_INVERTED ist ungewöhnlich. Bitte stellen Sie sicher, dass Ihr Sender dies unterstützt."
+  },
+  "UserDefinesList": {
+    "CustomBindingPhrase": "Benutzerdefinierte Bindungsphrase",
+    "MyStartupMelody": "Meine Startmelodie",
+    "Value": "Wert"
+  },
+  "WifiDeviceList": {
+    "Name": "Name",
+    "Target": "Gerätetyp",
+    "Version": "Version",
+    "Type": "Typ",
+    "DNS": "DNS",
+    "IP": "IP",
+    "Select": "Auswählen"
+  },
+  "WifiDeviceNotification": {
+    "NewDevice": "Neues Gerät",
+    "Select": "Auswählen"
+  },
+  "WifiDeviceSelect": {
+    "DefaultWifiIp": "Standard (10.0.0.1)",
+    "WifiDevices": "WLAN Geräte",
+    "Manual": "Manuelle Auswahl",
+    "WifiDeviceSelection": "WLAN Geräteauswahl",
+    "IPAddress": "IP Adresse"
+  },
+  "Updater": {
+    "FoundUpdates": "Aktualisierungen gefunden",
+    "UpdateNow": "Aktualisierungen gefunden, möchten Sie jetzt aktualisieren?",
+    "Sure": "Ja, ich bin mir sicher",
+    "Later": "Später",
+    "UpdateDownloading": "Update wird heruntergeladen",
+    "NotifiedWhenReadyToInstall": "Update wird heruntergeladen, Sie werden benachrichtigt, wenn es installiert werden kann.",
+    "Restart": "Neu starten",
+    "ApplicationUpdate": "Anwendungsaktualisierung",
+    "Update": "Aktualisieren",
+    "ApplyUpdates": "Es wurde eine neue Version heruntergeladen. Starten Sie die Anwendung neu, um die Updates anzuwenden."
+  },
+  "ConfiguratorView": {
+    "DownloadLUAScript": "Lua-Skript herunterladen",
+    "FirmwareVersion": "Firmware Version",
+    "Target": "Gerätetyp",
+    "Notice": "Hinweis",
+    "SelectFirmwareVersionFirst": "Bitte wählen Sie zuerst eine Firmware-Version aus.",
+    "DeviceOptions": "Geräteoptionen",
+    "ResetDevice": "Geräteoptionen auf die empfohlenen Standardwerte dieses Gerätetyps zurücksetzen (Außer Ihrer benutzerdefinierten Bindungsphrase).",
+    "Reset": "Zurücksetzen",
+    "Actions": "Aktionen",
+    "FlashingOptions": "Installationsoptionen",
+    "EraseBeforeFlash": "Speicher vor Installation löschen",
+    "ForceFlash": "Installation erzwingen",
+    "Build": "Firmware erstellen",
+    "Flash": "Auf Gerät installieren",
+    "NetworkDevices": "Netzwerkgeräte",
+    "DeviceSelectError": "Fehler bei Geräteauswahl",
+    "DeviceCouldNotBeAutomaticallySelected": "Das Zielgerät konnte nicht automatisch ausgewählt werden, es muss manuell ausgewählt werden.",
+    "Close": "Schließen",
+    "Logs": "Logs",
+    "CopyLogToClipboard": "Logs in die Zwischenablage kopieren",
+    "SaveLogToFile": "Logs in Datei speichern",
+    "BuildsTakeMinutesFirstTime": "Manchmal braucht das Bauen der Firmware ein paar Minuten. Das ist normal, besonders wenn das erste Mal Firmware erstellt wird.",
+    "Result": "Ergebnis",
+    "Warning": "Warnung",
+    "WaitForLEDBeforeDisconnectingPower": "Bitte warten Sie bis die LED am Gerät wieder blinkt, bevor sie die Stromversorgung trennen",
+    "UpdateLuaScript": "Lua-Skript aktualisieren",
+    "UpdateLuaScriptOnRadio": "Stellen Sie sicher, dass Sie das Lua-Skript auf Ihrem Sender aktualisieren",
+    "BuildNotice": "Hinweis zur Firmware",
+    "FirmwareOpenedInFileExplorer": "Die Firmware-Datei wurde im Dateimanager geöffnet",
+    "Back": "Zurück",
+    "Retry": "Erneut versuchen"
+  },
+  "LogsView": {
+    "Logs": "Logs",
+    "OpenLogsFolder": "Log-Ordner öffnen"
+  },
+  "SerialMonitorView": {
+    "SerialMonitor": "Serielles Terminal",
+    "Disconnect": "Verbindung trennen"
+  },
+  "SettingsView": {
+    "Settings": "Einstellungen",
+    "LanguageSelector": "Sprachauswahl",
+    "CurrentLanguage": "Aktuelle Sprache"
+  },
+  "SupportView": {
+    "Support": "Hilfe",
+    "JoinTheCommunity": "Brauchen Sie Hilfe? Verwirrt? Treten Sie der Community bei!",
+    "ExpressLRSDocumentation": "ExpressLRS Dokumentation",
+    "DiscordChat": "Discord Chat",
+    "FacebookGroup": "Facebook-Gruppe",
+    "Troubleshooting": "Problemlösungen",
+    "LegalDisclaimer": "Haftungsausschluss",
+    "UseAtYourOwnRisk": "Die Verwendung und der Betrieb dieser Art von Geräten kann eine Lizenz erfordern, und einige Länder können ihre Verwendung verbieten. Es ist voll und ganz Aufgabe des Endverbrauchers, die Einhaltung der lokalen Vorschriften sicherzustellen. Es handelt sich um experimentelle Software / Hardware und es gibt keine Garantie für Stabilität oder Zuverlässigkeit. VERWENDUNG AUF EIGENE GEFAHR.",
+    "CorruptedFirmwareFiles": "Fehlerhafte Firmware-Dateien",
+    "YouCanManuallyClearAllFiles": "Wenn Sie den Konfigurator schließen während die git Firmware-Dateien herunterladen, kann der git repository-Status beschädigt werden. Sie können alle Dateien manuell löschen und den Prozess erneut starten.",
+    "ClearFirmwareFiles": "Firmware-Dateien löschen",
+    "CorruptedFirmwareFilesDeleted": "Fehlerhafte Fimrware-Dateien wurden gelöscht und das git repository bereinigt. Versuchen Sie es erneut.",
+    "CorruptedPlatformioDependencies": "Fehlerhafte platformio Abhängigkeiten",
+    "YouCanManuallyClearAllDependencies": "Wenn Sie den Konfigurator schließen während die platformio Abhängigkeiten herunterladen, kann der git repository-Status beschädigt werden. Sie können alle Abhängigkeiten manuell löschen und den Prozess erneut starten.",
+    "ClearPlatformioDependencies": "Platformio Abhängigkeiten löschen",
+    "CorruptedPlatformioDependenciesDeleted": "Fehlerhafte platformio-Abhängigkeiten wurden gelöscht und das git repository bereinigt. Versuchen Sie es erneut."
+  }
+}
