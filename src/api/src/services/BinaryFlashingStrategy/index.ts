@@ -62,6 +62,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     private builder: FirmwareBuilder,
     private deviceDescriptionsLoader: DeviceDescriptionsLoader,
     private cloudBinariesCache: CloudBinariesCache,
+    private targetStorageGitPath: string,
     private logger: LoggerService
   ) {
     this.mutex = new Mutex();
@@ -473,8 +474,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         {
           url: gitRepositoryUrl,
           srcFolder: gitRepositorySrcFolder,
-          targetsRepoUrl: gitRepository.targetsRepoUrl,
-          targetsRepoSrcFolder: gitRepository.targetsRepoSrcFolder,
+          hardwareArtifactUrl: gitRepository.hardwareArtifactUrl,
         }
       );
 
@@ -483,7 +483,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       const workingDirectory = await this.createWorkingDirectory(params.target);
       const outputDirectory = await this.createWorkingDirectory(params.target);
       let firmwareBinFile = '';
-      let hardwareDescriptionsPath = firmwareSourcePath;
+      let firmwareDescriptionsPath = firmwareSourcePath;
       let flasherPath = path.join(
         firmwareSourcePath,
         'python',
@@ -512,13 +512,13 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           if (fs.existsSync(flasherPyzPath)) {
             flasherPath = flasherPyzPath;
           }
-          hardwareDescriptionsPath = cacheLocation;
+          firmwareDescriptionsPath = cacheLocation;
           this.logger.log('paths', {
             cacheLocation,
             cachedBinaryPath,
             flasherPyzPath,
             sourceFirmwareBinaryPath: sourceFirmwareBinPath,
-            hardwareDescriptionsPath,
+            hardwareDescriptionsPath: firmwareDescriptionsPath,
           });
         } catch (e) {
           this.logger.log(
@@ -532,7 +532,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       }
 
       // we were not able to find cloud binaries, so we will build them on the spot
-      if (hardwareDescriptionsPath === firmwareSourcePath) {
+      if (firmwareDescriptionsPath === firmwareSourcePath) {
         const target = this.getCompileTarget(config);
         sourceFirmwareBinPath = await this.compileBinary(
           target,
@@ -559,13 +559,24 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         BuildFirmwareStep.BUILDING_FIRMWARE
       );
 
-      const flasherArgs: string[][] =
-        this.binaryConfigurator.buildBinaryConfigFlags(
+      let flasherArgs: string[][];
+      if (gitRepository.hardwareArtifactUrl) {
+        flasherArgs = this.binaryConfigurator.buildBinaryConfigFlags(
           outputDirectory,
           firmwareBinFile,
-          hardwareDescriptionsPath,
+          this.targetStorageGitPath,
+          firmwareDescriptionsPath,
           params
         );
+      } else {
+        flasherArgs = this.binaryConfigurator.buildBinaryConfigFlags(
+          outputDirectory,
+          firmwareBinFile,
+          null,
+          firmwareDescriptionsPath,
+          params
+        );
+      }
       const binaryConfiguratorResult = await this.binaryConfigurator.run(
         flasherPath,
         flasherArgs,

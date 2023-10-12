@@ -138,10 +138,16 @@ export default class ApiServer {
         targetsLoader
       );
 
+    const targetStorageGitPath = path.join(
+      config.userDataPath,
+      'firmwares',
+      'binary-targets'
+    );
+
     const deviceDescriptionsLoader = new DeviceDescriptionsLoader(
       logger,
       config.PATH,
-      path.join(config.userDataPath, 'firmwares', 'binary-targets'),
+      targetStorageGitPath,
       path.join(config.userDataPath, 'firmwares', 'device-options')
     );
     const cloudBinariesCache = new CloudBinariesCache(
@@ -158,6 +164,7 @@ export default class ApiServer {
       firmwareBuilder,
       deviceDescriptionsLoader,
       cloudBinariesCache,
+      targetStorageGitPath,
       logger
     );
 

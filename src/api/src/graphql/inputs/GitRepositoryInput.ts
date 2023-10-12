@@ -17,11 +17,8 @@ export default class GitRepository {
   @Field()
   srcFolder: string;
 
-  @Field()
-  targetsRepoUrl: string;
-
-  @Field()
-  targetsRepoSrcFolder: string;
+  @Field({ nullable: true })
+  hardwareArtifactUrl: string | null;
 
   constructor(
     url: string,
@@ -29,15 +26,13 @@ export default class GitRepository {
     repositoryName: string,
     rawRepoUrl: string,
     srcFolder: string,
-    targetsRepoUrl: string,
-    targetsRepoSrcFolder: string
+    hardwareArtifactUrl: string | null
   ) {
     this.url = url;
     this.owner = owner;
     this.repositoryName = repositoryName;
     this.rawRepoUrl = rawRepoUrl;
     this.srcFolder = srcFolder;
-    this.targetsRepoUrl = targetsRepoUrl;
-    this.targetsRepoSrcFolder = targetsRepoSrcFolder;
+    this.hardwareArtifactUrl = hardwareArtifactUrl;
   }
 }

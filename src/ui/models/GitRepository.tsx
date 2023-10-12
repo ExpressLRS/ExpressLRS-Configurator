@@ -13,7 +13,5 @@ export default interface GitRepository {
 
   tagExcludes: string[];
 
-  targetsRepoUrl: string;
-
-  targetsRepoSrcFolder: string;
+  hardwareArtifactUrl: string | null;
 }

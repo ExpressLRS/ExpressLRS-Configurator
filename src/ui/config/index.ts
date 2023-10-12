@@ -24,8 +24,8 @@ export const Config: IConfig = {
     rawRepoUrl: 'https://raw.githubusercontent.com/ExpressLRS/ExpressLRS',
     srcFolder: 'src',
     tagExcludes: ['<2.5.0'],
-    targetsRepoUrl: 'https://github.com/ExpressLRS/targets',
-    targetsRepoSrcFolder: '/',
+    hardwareArtifactUrl:
+      'https://artifactory.expresslrs.org/ExpressLRS/hardware.zip',
   },
   backpackGit: {
     cloneUrl: 'https://github.com/ExpressLRS/Backpack',
@@ -35,8 +35,7 @@ export const Config: IConfig = {
     rawRepoUrl: 'https://raw.githubusercontent.com/ExpressLRS/Backpack',
     srcFolder: '/',
     tagExcludes: [],
-    targetsRepoUrl: 'https://github.com/ExpressLRS/Backpack',
-    targetsRepoSrcFolder: 'hardware',
+    hardwareArtifactUrl: null,
   },
 };
 

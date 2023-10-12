@@ -155,12 +155,11 @@ export enum FlashingMethod {
 }
 
 export type GitRepositoryInput = {
+  readonly hardwareArtifactUrl?: InputMaybe<Scalars['String']>;
   readonly owner: Scalars['String'];
   readonly rawRepoUrl: Scalars['String'];
   readonly repositoryName: Scalars['String'];
   readonly srcFolder: Scalars['String'];
-  readonly targetsRepoSrcFolder: Scalars['String'];
-  readonly targetsRepoUrl: Scalars['String'];
   readonly url: Scalars['String'];
 };
 

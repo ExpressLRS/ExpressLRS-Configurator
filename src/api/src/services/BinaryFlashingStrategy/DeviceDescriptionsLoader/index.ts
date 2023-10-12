@@ -1,5 +1,9 @@
+import fetch from 'node-fetch';
+import { writeFile } from 'fs/promises';
+import extractZip from 'extract-zip';
 import { Service } from 'typedi';
 import path from 'path';
+import mkdirp from 'mkdirp';
 import FirmwareSource from '../../../models/enum/FirmwareSource';
 import TargetArgs from '../../../graphql/args/Target';
 import { LoggerService } from '../../../logger';
@@ -23,8 +27,7 @@ import { removeDirectoryContents } from '../../FlashingStrategyLocator/artefacts
 export interface GitRepository {
   url: string;
   srcFolder: string;
-  targetsRepoUrl: string;
-  targetsRepoSrcFolder: string;
+  hardwareArtifactUrl: string | null;
 }
 
 export interface FirmwareVersion {
@@ -151,6 +154,21 @@ export default class DeviceDescriptionsLoader {
       gitPath,
     });
 
+    if (gitRepository.hardwareArtifactUrl) {
+      const response = await fetch(gitRepository.hardwareArtifactUrl);
+      const buffer = await response.buffer();
+      const workingDir = path.join(gitRepositoryPath, 'hardware');
+      await mkdirp(workingDir);
+      const outputZipFile = path.join(workingDir, 'hardware.zip');
+      await writeFile(outputZipFile, buffer);
+
+      await extractZip(outputZipFile, {
+        dir: workingDir,
+      });
+
+      return workingDir;
+    }
+
     const firmwareDownload = new GitFirmwareDownloader(
       {
         baseDirectory: gitRepositoryPath,
@@ -160,41 +178,26 @@ export default class DeviceDescriptionsLoader {
     );
 
     const srcFolder =
-      gitRepository.targetsRepoSrcFolder === '/'
-        ? ''
-        : `${gitRepository.targetsRepoSrcFolder}/`;
-
-    if (
-      gitRepository.targetsRepoUrl.toLowerCase() ===
-      'https://github.com/ExpressLRS/targets'.toLowerCase()
-    ) {
-      const branchResult = await firmwareDownload.checkoutBranch(
-        gitRepository.targetsRepoUrl,
-        srcFolder,
-        'master'
-      );
-      return branchResult.path;
-    }
-
+      gitRepository.srcFolder === '/' ? '' : `${gitRepository.srcFolder}/`;
     switch (args.source) {
       case FirmwareSource.GitBranch:
         const branchResult = await firmwareDownload.checkoutBranch(
-          gitRepository.targetsRepoUrl,
-          srcFolder,
+          gitRepository.url,
+          `${srcFolder}hardware`,
           args.gitBranch
         );
         return branchResult.path;
       case FirmwareSource.GitCommit:
         const commitResult = await firmwareDownload.checkoutCommit(
-          gitRepository.targetsRepoUrl,
-          srcFolder,
+          gitRepository.url,
+          `${srcFolder}hardware`,
           args.gitCommit
         );
         return commitResult.path;
       case FirmwareSource.GitTag:
         const tagResult = await firmwareDownload.checkoutTag(
-          gitRepository.targetsRepoUrl,
-          srcFolder,
+          gitRepository.url,
+          `${srcFolder}hardware`,
           args.gitTag
         );
         return tagResult.path;
@@ -203,8 +206,8 @@ export default class DeviceDescriptionsLoader {
           throw new Error('empty GitPullRequest head commit hash');
         }
         const prResult = await firmwareDownload.checkoutCommit(
-          gitRepository.targetsRepoUrl,
-          srcFolder,
+          gitRepository.url,
+          `${srcFolder}hardware`,
           args.gitPullRequest.headCommitHash
         );
         return prResult.path;
