@@ -359,14 +359,14 @@ export default class DeviceDescriptionsLoader {
   async clearCache() {
     await this.targetsMutex.tryLockWithTimeout(60000);
     try {
-      return await removeDirectoryContents(this.targetStorageGitPath);
+      await removeDirectoryContents(this.targetStorageGitPath);
     } finally {
       this.targetsMutex.unlock();
     }
 
     await this.deviceOptionsMutex.tryLockWithTimeout(60000);
     try {
-      return await removeDirectoryContents(this.deviceOptionsGitPath);
+      await removeDirectoryContents(this.deviceOptionsGitPath);
     } finally {
       this.deviceOptionsMutex.unlock();
     }

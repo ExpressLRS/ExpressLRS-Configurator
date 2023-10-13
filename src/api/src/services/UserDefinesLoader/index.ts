@@ -23,4 +23,6 @@ export default abstract class UserDefinesLoader {
     userDefineFilters: UserDefineFilters,
     gitRepository: GitRepository
   ): Promise<UserDefineKey[]>;
+
+  abstract clearFiles(): void;
 }

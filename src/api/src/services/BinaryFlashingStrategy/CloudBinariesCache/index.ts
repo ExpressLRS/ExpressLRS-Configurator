@@ -4,6 +4,7 @@ import extractZip from 'extract-zip';
 import path from 'path';
 import mkdirp from 'mkdirp';
 import fs from 'fs';
+import { removeDirectoryContents } from '../../FlashingStrategyLocator/artefacts';
 
 export default class CloudBinariesCache {
   constructor(private baseURL: string, private firmwareCachePath: string) {}
@@ -40,5 +41,9 @@ export default class CloudBinariesCache {
     });
 
     return firmwareCacheDir;
+  }
+
+  async clearCache() {
+    await removeDirectoryContents(this.firmwareCachePath);
   }
 }

@@ -11,6 +11,7 @@ import {
   GitFirmwareDownloader,
 } from '../../library/FirmwareDownloader';
 import Mutex from '../../library/Mutex';
+import { removeDirectoryContents } from '../FlashingStrategyLocator/artefacts';
 
 @Service()
 export default class GitUserDefinesLoader implements UserDefinesLoader {
@@ -111,6 +112,15 @@ export default class GitUserDefinesLoader implements UserDefinesLoader {
             `unsupported firmware source: ${userDefineFilters.source}`
           );
       }
+    } finally {
+      this.mutex.unlock();
+    }
+  }
+
+  async clearFiles() {
+    await this.mutex.tryLockWithTimeout(60000);
+    try {
+      await removeDirectoryContents(this.userDefinesStoragePath);
     } finally {
       this.mutex.unlock();
     }

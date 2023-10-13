@@ -642,10 +642,11 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
   async clearFirmwareFiles(): Promise<void> {
     await this.deviceDescriptionsLoader.clearCache();
+    await this.cloudBinariesCache.clearCache();
 
     this.logger.log('BinaryConfigurator - clearFirmwareFiles', {
       firmwaresPath: this.firmwaresPath,
     });
-    return removeDirectoryContents(this.firmwaresPath);
+    await removeDirectoryContents(this.firmwaresPath);
   }
 }
