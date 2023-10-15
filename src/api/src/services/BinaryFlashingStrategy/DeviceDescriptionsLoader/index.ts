@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-import { writeFile } from 'fs/promises';
 import extractZip from 'extract-zip';
 import { Service } from 'typedi';
 import path from 'path';
@@ -23,6 +21,7 @@ import TargetUserDefinesFactory from '../../../factories/TargetUserDefinesFactor
 import UserDefineKey from '../../../library/FirmwareBuilder/Enum/UserDefineKey';
 import PullRequest from '../../../models/PullRequest';
 import { removeDirectoryContents } from '../../FlashingStrategyLocator/artefacts';
+import { downloadIfModified } from '../AmazonS3';
 
 export interface GitRepository {
   url: string;
@@ -155,16 +154,20 @@ export default class DeviceDescriptionsLoader {
     });
 
     if (gitRepository.hardwareArtifactUrl) {
-      const response = await fetch(gitRepository.hardwareArtifactUrl);
-      const buffer = await response.buffer();
       const workingDir = path.join(gitRepositoryPath, 'hardware');
       await mkdirp(workingDir);
       const outputZipFile = path.join(workingDir, 'hardware.zip');
-      await writeFile(outputZipFile, buffer);
 
-      await extractZip(outputZipFile, {
-        dir: workingDir,
-      });
+      if (
+        await downloadIfModified(
+          gitRepository.hardwareArtifactUrl,
+          outputZipFile
+        )
+      ) {
+        await extractZip(outputZipFile, {
+          dir: workingDir,
+        });
+      }
 
       return workingDir;
     }
