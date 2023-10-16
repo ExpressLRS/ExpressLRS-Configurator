@@ -15,6 +15,7 @@ export interface DeviceDescription {
   overlay?: { [key: string]: string };
   frequency?: number;
   type?: string;
+  min_version?: string;
 }
 
 export type TargetsJSONRaw = {

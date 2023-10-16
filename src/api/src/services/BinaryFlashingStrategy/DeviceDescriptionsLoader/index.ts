@@ -2,6 +2,7 @@ import extractZip from 'extract-zip';
 import { Service } from 'typedi';
 import path from 'path';
 import mkdirp from 'mkdirp';
+import semver from 'semver';
 import FirmwareSource from '../../../models/enum/FirmwareSource';
 import TargetArgs from '../../../graphql/args/Target';
 import { LoggerService } from '../../../logger';
@@ -129,7 +130,17 @@ export default class DeviceDescriptionsLoader {
     );
     const devices: Device[] = [];
     Object.keys(data).forEach((id) => {
-      devices.push(this.configToDevice(id, data[id].category, data[id].config));
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      const { min_version } = data[id].config;
+      if (
+        !min_version ||
+        args.source !== FirmwareSource.GitTag ||
+        semver.gte(args.gitTag, min_version)
+      ) {
+        devices.push(
+          this.configToDevice(id, data[id].category, data[id].config)
+        );
+      }
     });
     return devices;
   }
