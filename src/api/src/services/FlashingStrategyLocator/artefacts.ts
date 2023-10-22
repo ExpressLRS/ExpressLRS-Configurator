@@ -110,7 +110,7 @@ export const removeDirectoryContents = async (firmwaresPath: string) => {
     return;
   }
   const files = await listFiles(firmwaresPath);
-  if (files.length > 7) {
+  if (files.length > 20) {
     throw new Error(`unexpected number of files to remove: ${files}`);
   }
   await Promise.all(files.map((item) => rmrf(item)));
