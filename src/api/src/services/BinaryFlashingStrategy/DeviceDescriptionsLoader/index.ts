@@ -22,7 +22,7 @@ import TargetUserDefinesFactory from '../../../factories/TargetUserDefinesFactor
 import UserDefineKey from '../../../library/FirmwareBuilder/Enum/UserDefineKey';
 import PullRequest from '../../../models/PullRequest';
 import { removeDirectoryContents } from '../../FlashingStrategyLocator/artefacts';
-import { downloadIfModified } from '../AmazonS3';
+import AmazonS3 from '../../../library/AmazonS3';
 
 export interface GitRepository {
   url: string;
@@ -170,7 +170,7 @@ export default class DeviceDescriptionsLoader {
       const outputZipFile = path.join(workingDir, 'hardware.zip');
 
       if (
-        await downloadIfModified(
+        await new AmazonS3().downloadIfModified(
           gitRepository.hardwareArtifactUrl,
           outputZipFile
         )
