@@ -1,5 +1,8 @@
+import extractZip from 'extract-zip';
 import { Service } from 'typedi';
 import path from 'path';
+import mkdirp from 'mkdirp';
+import semver from 'semver';
 import FirmwareSource from '../../../models/enum/FirmwareSource';
 import TargetArgs from '../../../graphql/args/Target';
 import { LoggerService } from '../../../logger';
@@ -19,10 +22,12 @@ import TargetUserDefinesFactory from '../../../factories/TargetUserDefinesFactor
 import UserDefineKey from '../../../library/FirmwareBuilder/Enum/UserDefineKey';
 import PullRequest from '../../../models/PullRequest';
 import { removeDirectoryContents } from '../../FlashingStrategyLocator/artefacts';
+import AmazonS3 from '../../../library/AmazonS3';
 
 export interface GitRepository {
   url: string;
   srcFolder: string;
+  hardwareArtifactUrl: string | null;
 }
 
 export interface FirmwareVersion {
@@ -125,7 +130,17 @@ export default class DeviceDescriptionsLoader {
     );
     const devices: Device[] = [];
     Object.keys(data).forEach((id) => {
-      devices.push(this.configToDevice(id, data[id].category, data[id].config));
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      const { min_version } = data[id].config;
+      if (
+        !min_version ||
+        args.source !== FirmwareSource.GitTag ||
+        semver.gte(args.gitTag, min_version)
+      ) {
+        devices.push(
+          this.configToDevice(id, data[id].category, data[id].config)
+        );
+      }
     });
     return devices;
   }
@@ -148,6 +163,25 @@ export default class DeviceDescriptionsLoader {
     this.logger?.log('git path', {
       gitPath,
     });
+
+    if (gitRepository.hardwareArtifactUrl) {
+      const workingDir = path.join(gitRepositoryPath, 'hardware');
+      await mkdirp(workingDir);
+      const outputZipFile = path.join(workingDir, 'hardware.zip');
+
+      if (
+        await new AmazonS3().downloadIfModified(
+          gitRepository.hardwareArtifactUrl,
+          outputZipFile
+        )
+      ) {
+        await extractZip(outputZipFile, {
+          dir: workingDir,
+        });
+      }
+
+      return workingDir;
+    }
 
     const firmwareDownload = new GitFirmwareDownloader(
       {
@@ -339,14 +373,14 @@ export default class DeviceDescriptionsLoader {
   async clearCache() {
     await this.targetsMutex.tryLockWithTimeout(60000);
     try {
-      return await removeDirectoryContents(this.targetStorageGitPath);
+      await removeDirectoryContents(this.targetStorageGitPath);
     } finally {
       this.targetsMutex.unlock();
     }
 
     await this.deviceOptionsMutex.tryLockWithTimeout(60000);
     try {
-      return await removeDirectoryContents(this.deviceOptionsGitPath);
+      await removeDirectoryContents(this.deviceOptionsGitPath);
     } finally {
       this.deviceOptionsMutex.unlock();
     }

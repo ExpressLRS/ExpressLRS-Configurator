@@ -36,12 +36,18 @@ export default class BinaryConfigurator {
   buildBinaryConfigFlags(
     outputDirectory: string,
     firmwareBinaryPath: string,
-    hardwareDefinitionsPath: string,
+    hardwareDefinitionsPath: string | null,
+    firmwareArtifactsDirPath: string,
     params: BuildFlashFirmwareParams
   ): string[][] {
     const flags: string[][] = [];
 
-    flags.push(['--dir', hardwareDefinitionsPath]);
+    if (hardwareDefinitionsPath && firmwareArtifactsDirPath) {
+      flags.push(['--dir', hardwareDefinitionsPath]);
+      flags.push(['--fdir', firmwareArtifactsDirPath]);
+    } else {
+      flags.push(['--dir', firmwareArtifactsDirPath]);
+    }
 
     const [manufacturer, subType, device, uploadMethod] =
       params.target.split('.');

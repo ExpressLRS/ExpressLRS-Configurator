@@ -58,4 +58,8 @@ export default class UserDefinesBuilder {
       return compatibleKeys.indexOf(userDefine.key) > -1;
     });
   }
+
+  async clearFiles() {
+    await this.userDefinesLoader.clearFiles();
+  }
 }

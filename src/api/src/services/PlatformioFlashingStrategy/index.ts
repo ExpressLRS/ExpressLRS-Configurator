@@ -424,6 +424,7 @@ export default class PlatformioFlashingStrategyService
     this.logger.log('PlatformioConfigurator - clearFirmwareFiles', {
       firmwaresPath: this.firmwaresPath,
     });
+    await this.userDefinesBuilder.clearFiles();
     return removeDirectoryContents(this.firmwaresPath);
   }
 }
