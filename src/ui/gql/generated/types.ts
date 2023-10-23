@@ -20,6 +20,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  JSONObject: any;
 };
 
 export enum BuildFirmwareErrorType {
@@ -163,6 +164,19 @@ export type GitRepositoryInput = {
   readonly url: Scalars['String'];
 };
 
+export type LogEntry = {
+  readonly __typename?: 'LogEntry';
+  readonly context?: Maybe<Scalars['JSONObject']>;
+  readonly level: Scalars['String'];
+  readonly message: Scalars['String'];
+  readonly timestamp: Scalars['String'];
+};
+
+export type LogFile = {
+  readonly __typename?: 'LogFile';
+  readonly content?: Maybe<ReadonlyArray<LogEntry>>;
+};
+
 export type LuaScript = {
   readonly __typename?: 'LuaScript';
   readonly fileLocation?: Maybe<Scalars['String']>;
@@ -240,6 +254,7 @@ export type Query = {
   readonly checkForUpdates: UpdatesAvailability;
   readonly gitBranches: ReadonlyArray<Scalars['String']>;
   readonly gitTags: ReadonlyArray<Scalars['String']>;
+  readonly logFile: LogFile;
   readonly luaScript: LuaScript;
   readonly pullRequests: ReadonlyArray<PullRequestType>;
   readonly releases: ReadonlyArray<Release>;
@@ -268,6 +283,10 @@ export type QueryGitBranchesArgs = {
 export type QueryGitTagsArgs = {
   owner: Scalars['String'];
   repository: Scalars['String'];
+};
+
+export type QueryLogFileArgs = {
+  numberOfLines?: Scalars['Int'];
 };
 
 export type QueryLuaScriptArgs = {
@@ -691,6 +710,24 @@ export type GetReleasesQuery = {
     readonly tagName: string;
     readonly preRelease: boolean;
   }>;
+};
+
+export type LogFileQueryVariables = Exact<{
+  numberOfLines: Scalars['Int'];
+}>;
+
+export type LogFileQuery = {
+  readonly __typename?: 'Query';
+  readonly logFile: {
+    readonly __typename?: 'LogFile';
+    readonly content?: ReadonlyArray<{
+      readonly __typename?: 'LogEntry';
+      readonly timestamp: string;
+      readonly level: string;
+      readonly message: string;
+      readonly context?: any | null;
+    }> | null;
+  };
 };
 
 export type LuaScriptQueryVariables = Exact<{
@@ -1718,6 +1755,59 @@ export type GetReleasesLazyQueryHookResult = ReturnType<
 export type GetReleasesQueryResult = Apollo.QueryResult<
   GetReleasesQuery,
   GetReleasesQueryVariables
+>;
+export const LogFileDocument = gql`
+  query logFile($numberOfLines: Int!) {
+    logFile(numberOfLines: $numberOfLines) {
+      content {
+        timestamp
+        level
+        message
+        context
+      }
+    }
+  }
+`;
+
+/**
+ * __useLogFileQuery__
+ *
+ * To run a query within a React component, call `useLogFileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLogFileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLogFileQuery({
+ *   variables: {
+ *      numberOfLines: // value for 'numberOfLines'
+ *   },
+ * });
+ */
+export function useLogFileQuery(
+  baseOptions: Apollo.QueryHookOptions<LogFileQuery, LogFileQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<LogFileQuery, LogFileQueryVariables>(
+    LogFileDocument,
+    options
+  );
+}
+export function useLogFileLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<LogFileQuery, LogFileQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<LogFileQuery, LogFileQueryVariables>(
+    LogFileDocument,
+    options
+  );
+}
+export type LogFileQueryHookResult = ReturnType<typeof useLogFileQuery>;
+export type LogFileLazyQueryHookResult = ReturnType<typeof useLogFileLazyQuery>;
+export type LogFileQueryResult = Apollo.QueryResult<
+  LogFileQuery,
+  LogFileQueryVariables
 >;
 export const LuaScriptDocument = gql`
   query luaScript(

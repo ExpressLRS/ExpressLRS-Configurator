@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Logger } from 'winston';
 import { Service } from 'typedi';
-import { LoggerService } from './index';
+import { LoggerService, QueryOptions } from './index';
 
 @Service()
 export default class WinstonLoggerService implements LoggerService {
@@ -92,5 +92,17 @@ export default class WinstonLoggerService implements LoggerService {
     }
 
     return this.logger.verbose(message, { context });
+  }
+
+  public query(options?: QueryOptions): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.logger.query(options, (err: Error, result: any) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result.file);
+        }
+      });
+    });
   }
 }

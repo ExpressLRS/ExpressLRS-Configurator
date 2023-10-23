@@ -1,0 +1,10 @@
+query logFile($numberOfLines: Int!) {
+  logFile(numberOfLines: $numberOfLines) {
+    content {
+      timestamp
+      level
+      message
+      context
+    }
+  }
+}

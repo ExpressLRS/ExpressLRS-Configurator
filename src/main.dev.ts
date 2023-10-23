@@ -39,8 +39,8 @@ const winstonLogger = winston.createLogger({
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(
-        winston.format.prettyPrint(),
-        winston.format.timestamp()
+        winston.format.timestamp(),
+        winston.format.prettyPrint()
       ),
     }),
     new winston.transports.File({
@@ -49,8 +49,9 @@ const winstonLogger = winston.createLogger({
       maxFiles: 10,
       maxsize: 5_000_000, // in bytes
       format: winston.format.combine(
+        winston.format.timestamp(),
         winston.format.prettyPrint(),
-        winston.format.timestamp()
+        winston.format.json()
       ),
     }),
   ],
