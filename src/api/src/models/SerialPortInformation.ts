@@ -2,10 +2,10 @@ import { Field, ObjectType } from 'type-graphql';
 
 @ObjectType('SerialPortInformation')
 export default class SerialPortInformation {
-  @Field()
+  @Field(() => String)
   path: string;
 
-  @Field()
+  @Field(() => String)
   manufacturer: string;
 
   constructor(path: string, manufacturer: string) {

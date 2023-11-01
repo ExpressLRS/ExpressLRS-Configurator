@@ -1,6 +1,6 @@
 import extractZip from 'extract-zip';
 import path from 'path';
-import mkdirp from 'mkdirp';
+import { mkdirp } from 'mkdirp';
 import { removeDirectoryContents } from '../../FlashingStrategyLocator/artefacts';
 import AmazonS3 from '../../../library/AmazonS3';
 

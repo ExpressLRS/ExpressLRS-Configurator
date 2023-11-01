@@ -3,16 +3,16 @@ import { Field, InputType, ObjectType } from 'type-graphql';
 @InputType('PullRequestInput')
 @ObjectType('PullRequestType')
 export default class PullRequest {
-  @Field()
+  @Field(() => String)
   title: string;
 
-  @Field()
+  @Field(() => Number)
   id: number;
 
-  @Field()
+  @Field(() => Number)
   number: number;
 
-  @Field()
+  @Field(() => String)
   headCommitHash: string;
 
   constructor(

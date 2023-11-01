@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 /* eslint global-require: off, no-console: off */
 /**
  * This module executes inside of electron's main process. You can start
@@ -8,15 +7,17 @@ import 'reflect-metadata';
  * When running `yarn build` or `yarn build-main`, this file is compiled to
  * `./src/main.prod.js` using webpack. This gives us some performance wins.
  */
+import 'reflect-metadata';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
-import mkdirp from 'mkdirp';
+import { app, BrowserWindow, dialog, ipcMain, shell, session } from 'electron';
+import { mkdirp } from 'mkdirp';
 import winston from 'winston';
 import fs from 'fs';
+import { URL } from 'url';
 import MenuBuilder from './menu';
-import ApiServer from './api';
+import ApiServer from '../api';
 import {
   ChooseFolderResponseBody,
   IpcRequest,
@@ -24,11 +25,11 @@ import {
   SaveFileRequestBody,
   SaveFileResponseBody,
   UpdateBuildStatusRequestBody,
-} from './ipc';
-import Updater from './app/updater';
-import WinstonLoggerService from './api/src/logger/WinstonLogger';
+} from '../ipc';
+import Updater from '../app/updater';
+import WinstonLoggerService from '../api/src/logger/WinstonLogger';
 
-import packageJson from '../package.json';
+import packageJson from '../../package.json';
 
 const logsPath = path.join(app.getPath('userData'), 'logs');
 const logsFilename = 'expressslrs-configurator.log';
@@ -61,6 +62,16 @@ const logger = new WinstonLoggerService(winstonLogger);
 logger.log('path', {
   PATH: process.env.PATH,
 });
+
+function resolveHtmlPath(htmlFileName: string, qs?: string) {
+  if (process.env.NODE_ENV === 'development') {
+    const port = process.env.PORT || 1212;
+    const url = new URL(`http://localhost:${port}?${qs}`);
+    url.pathname = htmlFileName;
+    return url.href;
+  }
+  return `file://${path.resolve(__dirname, '../', `${htmlFileName}?${qs}`)}`;
+}
 
 const isWindows = process.platform.startsWith('win');
 const isMacOS = process.platform.startsWith('darwin');
@@ -104,7 +115,7 @@ if (isWindows) {
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-const handleFatalError = (err: Error | object | null | undefined) => {
+const handleFatalError = (err: Error | object | null | undefined | unknown) => {
   logger.error(`handling fatal error: ${err}`);
   try {
     // eslint-disable-next-line promise/no-promise-in-callback
@@ -193,7 +204,7 @@ const createWindow = async () => {
 
   const RESOURCES_PATH = app.isPackaged
     ? path.join(process.resourcesPath, 'assets')
-    : path.join(__dirname, '../assets');
+    : path.join(__dirname, '../../assets');
 
   const getAssetPath = (...paths: string[]): string => {
     return path.join(RESOURCES_PATH, ...paths);
@@ -225,7 +236,7 @@ const createWindow = async () => {
 
   const dependenciesPath = app.isPackaged
     ? path.join(process.resourcesPath, '../dependencies')
-    : path.join(__dirname, '../dependencies');
+    : path.join(__dirname, '../../dependencies');
 
   const getPlatformioPath = path.join(dependenciesPath, 'get-platformio.py');
   const platformioStateTempStoragePath = path.join(
@@ -314,16 +325,27 @@ const createWindow = async () => {
 
   const devicesPath = app.isPackaged
     ? path.join(process.resourcesPath, 'devices')
-    : path.join(__dirname, '../devices');
+    : path.join(__dirname, '../../devices');
 
   const localesPath = app.isPackaged
     ? path.join(process.resourcesPath, 'i18n', 'locales')
-    : path.join(__dirname, 'i18n', 'locales');
+    : path.join(__dirname, '../', 'i18n', 'locales');
 
   logger.log('localesPath', { localesPath });
 
   logger.log('local api server PATH', {
     PATH,
+  });
+
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Content-Security-Policy': [
+          `script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:1212 http://localhost:${port}`,
+        ],
+      },
+    });
   });
 
   await localServer.start(
@@ -360,8 +382,12 @@ const createWindow = async () => {
     icon: getAssetPath('icon.png'),
     // TODO: improve electron.js security
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      // nodeIntegration: true,
+      // sandbox: false,
+      // contextIsolation: false,
+      preload: app.isPackaged
+        ? path.join(__dirname, 'preload.js')
+        : path.join(__dirname, '../../.erb/dll/preload.js'),
     },
   });
   mainWindow.on('close', (e) => {
@@ -383,7 +409,10 @@ const createWindow = async () => {
   const apiUrl = `${baseUrl}/graphql`;
   const subscriptionsUrl = `ws://localhost:${port}/graphql`;
   mainWindow.loadURL(
-    `file://${__dirname}/index.html?base_url=${baseUrl}&api_url=${apiUrl}&subscriptions_url=${subscriptionsUrl}`
+    resolveHtmlPath(
+      'index.html',
+      `base_url=${baseUrl}&api_url=${apiUrl}&subscriptions_url=${subscriptionsUrl}`
+    )
   );
 
   // TODO: Use 'ready-to-show' event
@@ -401,7 +430,7 @@ const createWindow = async () => {
     }
 
     // set the window title based on package.json
-    const windowTitle = require('./package.json').productName;
+    const windowTitle = require('../package.json').productName;
     mainWindow.setTitle(windowTitle);
   });
 
@@ -414,9 +443,9 @@ const createWindow = async () => {
   menuBuilder.buildMenu();
 
   // Open urls in the user's browser
-  mainWindow.webContents.on('new-window', (event, url) => {
-    event.preventDefault();
-    shell.openExternal(url);
+  mainWindow.webContents.setWindowOpenHandler((edata) => {
+    shell.openExternal(edata.url);
+    return { action: 'deny' };
   });
 
   updater = new Updater(logger, mainWindow, baseUrl);

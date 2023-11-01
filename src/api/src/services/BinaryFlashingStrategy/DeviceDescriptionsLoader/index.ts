@@ -1,7 +1,7 @@
 import extractZip from 'extract-zip';
 import { Service } from 'typedi';
 import path from 'path';
-import mkdirp from 'mkdirp';
+import { mkdirp } from 'mkdirp';
 import semver from 'semver';
 import FirmwareSource from '../../../models/enum/FirmwareSource';
 import TargetArgs from '../../../graphql/args/Target';

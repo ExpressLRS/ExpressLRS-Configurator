@@ -31,7 +31,8 @@ export default class SerialMonitorResolver {
 
   @Mutation(() => SerialPortConnectResult)
   async connectToSerialDevice(
-    @Arg('input') input: SerialConnectionConfigInput
+    @Arg('input', () => SerialConnectionConfigInput)
+    input: SerialConnectionConfigInput
   ): Promise<SerialPortConnectResult> {
     try {
       await this.serialMonitorService.connect(input.port, input.baudRate);

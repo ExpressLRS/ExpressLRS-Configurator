@@ -10,11 +10,11 @@
     "url": "https://github.com/ExpressLRS/ExpressLRS-Configurator/graphs/contributors"
   },
   "scripts": {
-    "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
+    "electron-rebuild": "ts-node ../.erb/scripts/electron-rebuild.js",
     "postinstall": "yarn electron-rebuild"
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "serialport": "^10.5.0"
+    "serialport": "^12.0.0"
   }
 }

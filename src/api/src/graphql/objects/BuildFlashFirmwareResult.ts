@@ -3,16 +3,16 @@ import BuildFirmwareErrorType from '../../models/enum/BuildFirmwareErrorType';
 
 @ObjectType('BuildFlashFirmwareResult')
 export default class BuildFlashFirmwareResult {
-  @Field()
+  @Field(() => Boolean)
   success: boolean;
 
   @Field(() => BuildFirmwareErrorType, { nullable: true })
   errorType?: BuildFirmwareErrorType;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   message?: string;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   firmwareBinPath?: string;
 
   constructor(

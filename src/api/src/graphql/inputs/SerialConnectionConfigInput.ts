@@ -2,10 +2,10 @@ import { Field, InputType } from 'type-graphql';
 
 @InputType('SerialConnectionConfigInput')
 export default class SerialConnectionConfigInput {
-  @Field()
+  @Field(() => String)
   port: string;
 
-  @Field()
+  @Field(() => String)
   baudRate: number;
 
   constructor() {

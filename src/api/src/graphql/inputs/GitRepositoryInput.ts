@@ -2,22 +2,22 @@ import { Field, InputType } from 'type-graphql';
 
 @InputType('GitRepositoryInput')
 export default class GitRepository {
-  @Field()
+  @Field(() => String)
   url: string;
 
-  @Field()
+  @Field(() => String)
   owner: string;
 
-  @Field()
+  @Field(() => String)
   repositoryName: string;
 
-  @Field()
+  @Field(() => String)
   rawRepoUrl: string;
 
-  @Field()
+  @Field(() => String)
   srcFolder: string;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   hardwareArtifactUrl: string | null;
 
   constructor(

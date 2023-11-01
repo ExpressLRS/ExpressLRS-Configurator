@@ -29,7 +29,6 @@ import {
   Typography,
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { ipcRenderer } from 'electron';
 import { ContentCopy, NetworkWifi, Save } from '@mui/icons-material';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
@@ -418,7 +417,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       const body: OpenFileLocationRequestBody = {
         path: arg,
       };
-      ipcRenderer.send(IpcRequest.OpenFileLocation, body);
+      window.electron.ipcRenderer.sendMessage(
+        IpcRequest.OpenFileLocation,
+        body
+      );
     }
   }, [response]);
 
@@ -484,7 +486,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     const body: UpdateBuildStatusRequestBody = {
       buildInProgress,
     };
-    ipcRenderer.send(IpcRequest.UpdateBuildStatus, body);
+    window.electron.ipcRenderer.sendMessage(IpcRequest.UpdateBuildStatus, body);
   }, [buildInProgress]);
 
   const [serialDevice, setSerialDevice] = useState<string | null>(null);
@@ -791,16 +793,17 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         .replace(/[^0-9]/gi, '')}.txt`,
     };
 
-    const result: SaveFileResponseBody = await ipcRenderer.invoke(
-      IpcRequest.SaveFile,
-      saveFileRequestBody
-    );
+    const result: SaveFileResponseBody =
+      await window.electron.ipcRenderer.invoke(
+        IpcRequest.SaveFile,
+        saveFileRequestBody
+      );
 
     if (result.success) {
       const openFileLocationRequestBody: OpenFileLocationRequestBody = {
         path: result.path,
       };
-      ipcRenderer.send(
+      window.electron.ipcRenderer.sendMessage(
         IpcRequest.OpenFileLocation,
         openFileLocationRequestBody
       );

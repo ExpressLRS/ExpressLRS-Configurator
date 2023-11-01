@@ -13,7 +13,7 @@ export default class BuildProgressNotification
   @Field(() => BuildFirmwareStep, { nullable: true })
   step?: BuildFirmwareStep;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   message?: string;
 
   constructor(

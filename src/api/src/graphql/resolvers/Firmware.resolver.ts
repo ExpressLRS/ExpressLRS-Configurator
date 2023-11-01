@@ -38,8 +38,8 @@ export default class FirmwareResolver {
 
   @Query(() => [Device])
   async availableFirmwareTargets(
-    @Args() args: TargetArgs,
-    @Arg('gitRepository') gitRepository: GitRepository
+    @Args(() => TargetArgs) args: TargetArgs,
+    @Arg('gitRepository', () => GitRepository) gitRepository: GitRepository
   ): Promise<Device[]> {
     const strategy = await this.flashingStrategyLocatorService.locate(
       args,
@@ -50,8 +50,8 @@ export default class FirmwareResolver {
 
   @Query(() => [UserDefine])
   async targetDeviceOptions(
-    @Args() args: TargetDeviceOptionsArgs,
-    @Arg('gitRepository') gitRepository: GitRepository
+    @Args(() => TargetDeviceOptionsArgs) args: TargetDeviceOptionsArgs,
+    @Arg('gitRepository', () => GitRepository) gitRepository: GitRepository
   ): Promise<UserDefine[]> {
     const strategy = await this.flashingStrategyLocatorService.locate(
       args,
@@ -62,8 +62,8 @@ export default class FirmwareResolver {
 
   @Mutation(() => BuildFlashFirmwareResult)
   async buildFlashFirmware(
-    @Arg('input') input: BuildFlashFirmwareInput,
-    @Arg('gitRepository') gitRepository: GitRepository
+    @Arg('input', () => BuildFlashFirmwareInput) input: BuildFlashFirmwareInput,
+    @Arg('gitRepository', () => GitRepository) gitRepository: GitRepository
   ): Promise<BuildFlashFirmwareResult> {
     const strategy = await this.flashingStrategyLocatorService.locate(
       input.firmware,
@@ -74,7 +74,8 @@ export default class FirmwareResolver {
 
   @Mutation(() => BuildUserDefinesTxtResult)
   async buildUserDefinesTxt(
-    @Arg('input') input: BuildUserDefinesTxtInput
+    @Arg('input', () => BuildUserDefinesTxtInput)
+    input: BuildUserDefinesTxtInput
   ): Promise<BuildUserDefinesTxtResult> {
     const userDefinesTxt = new UserDefinesTxtFactory().build(input.userDefines);
     return new BuildUserDefinesTxtResult(userDefinesTxt);
