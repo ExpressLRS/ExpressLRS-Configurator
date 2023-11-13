@@ -59,7 +59,7 @@
   },
   "FlashingMethodDescription": {
     "BetaflightPassthroughDescription": "这种方法允许你在接收机与飞控连接时，通过使用飞控的直通功能进行刷写。",
-    "PlugInFCToComputer": "将飞控插到电脑上，但不要连接到 betaflight 配置器。",
+    "PlugInFCToComputer": "将飞控插到电脑上，但不要连接到 betaflight 地面站。",
     "SelectDesiredDevice": "在下面选择你想要的设备选项和你的飞控串行设备。",
     "RunBuild&Flash": "运行 编译 & 刷写.",
     "BetaflightPassthroughWiki": "请查看我们的 Wiki 页面了解最新定义。",
@@ -76,7 +76,7 @@
     "FlashingMethod": "刷写方式"
   },
   "Header": {
-    "ExpressLRSConfigurator": "ExpressLRS 配置器",
+    "ExpressLRSConfigurator": "ExpressLRS 地面站",
     "DownloadNewestRelease": "点击下载最新版本",
     "UpdateAvailable": "更新可用！",
     "Documentation": "文档",
@@ -95,7 +95,7 @@
     "ManualSelectionTitleTooltip": "如果自动选择不能选择一个正确的端口，请手动选择端口。在绝大多数情况下，没有必要使用这个选项。"
   },
   "Sidebar": {
-    "Configurator": "配置器",
+    "Configurator": "地面站",
     "Backpack": "背包",
     "Logs": "日志",
     "SerialMonitor": "串口监视器",
@@ -219,11 +219,11 @@
     "LegalDisclaimer": "法律免责声明",
     "UseAtYourOwnRisk": "使用和操作这种类型的设备可能需要许可证，一些国家可能禁止使用。确保遵守当地法规完全取决于终端用户。这是实验性的软件/硬件，不保证其稳定性或可靠性。使用风险自负。",
     "CorruptedFirmwareFiles": "损坏的固件文件",
-    "YouCanManuallyClearAllFiles": "如果您在 Git 下载固件文件时关闭配置器，Git 仓库状态可能会被破坏。你可以手动清除所有文件，并重新开始编译过程。",
+    "YouCanManuallyClearAllFiles": "如果您在 Git 下载固件文件时关闭地面站，Git 仓库状态可能会被破坏。你可以手动清除所有文件，并重新开始编译过程。",
     "ClearFirmwareFiles": "清除固件文件",
     "CorruptedFirmwareFilesDeleted": "损坏的固件文件已被删除，Git 仓库已被清理。请尝试重新编译。",
     "CorruptedPlatformioDependencies": "损坏的 PlatformIO 依赖文件",
-    "YouCanManuallyClearAllDependencies": "如果你在 PlatformIO 下载依赖文件时关闭配置器，Git 仓库的状态会被破坏。你可以手动清除所有的依赖项，然后重新开始编译过程。",
+    "YouCanManuallyClearAllDependencies": "如果你在 PlatformIO 下载依赖文件时关闭地面站，Git 仓库的状态会被破坏。你可以手动清除所有的依赖项，然后重新开始编译过程。",
     "ClearPlatformioDependencies": "清除 PlatformIO 依赖文件",
     "CorruptedPlatformioDependenciesDeleted": "损坏的 PlatformIO 依赖关系已被删除，Git 存储库已被清理。试着重新编译。"
   }
