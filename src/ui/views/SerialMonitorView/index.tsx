@@ -86,7 +86,7 @@ const SerialMonitorView: FunctionComponent = () => {
       variables: {
         input: {
           port: newSerialDevice,
-          baudRate: newBaudRate,
+          baudRate: newBaudRate.toString(),
         },
       },
     })
