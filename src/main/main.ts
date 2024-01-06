@@ -5,7 +5,7 @@
  * through IPC.
  *
  * When running `yarn build` or `yarn build-main`, this file is compiled to
- * `./src/main.prod.js` using webpack. This gives us some performance wins.
+ * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import 'reflect-metadata';
 import 'core-js/stable';

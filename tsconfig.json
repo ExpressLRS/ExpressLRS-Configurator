@@ -30,7 +30,7 @@
   "exclude": [
     "test",
     "release",
-    "src/main.prod.js",
+    "src/main.js",
     "src/renderer.prod.js",
     "src/dist",
     ".erb/dll"
