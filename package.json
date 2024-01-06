@@ -40,6 +40,7 @@
       "prettier --ignore-path .eslintignore --single-quote --write"
     ]
   },
+  "main": "./src/main/main.ts",
   "build": {
     "productName": "ExpressLRS Configurator",
     "appId": "org.expresslrs.configurator",
