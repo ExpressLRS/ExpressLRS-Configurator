@@ -478,9 +478,11 @@ if (!isOSSupported) {
           detail: 'Unsupported OS Version Detected',
           message: ``,
         })
+        // eslint-disable-next-line promise/no-nesting
         .then(() => {
           process.exit(1);
         })
+        // eslint-disable-next-line promise/no-nesting
         .catch((dialogErr) => {
           logger.error('failed to show error dialog', dialogErr.stack);
           process.exit(1);

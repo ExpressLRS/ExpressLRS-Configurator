@@ -45,6 +45,7 @@ export default class DeviceService implements IDevices {
     this.devices = this.processDeviceConfigs(configs);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   processDeviceConfigs(input: any[]): Device[] {
     const devices: Device[] = [];
 

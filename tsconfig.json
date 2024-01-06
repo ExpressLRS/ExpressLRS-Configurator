@@ -2,13 +2,10 @@
   "compilerOptions": {
     "incremental": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": false,
+    "emitDecoratorMetadata": true,
     "target": "es2022",
     "module": "CommonJS",
-    "lib": [
-      "dom",
-      "es2022"
-    ],
+    "lib": ["dom", "es2022"],
     "declaration": true,
     "declarationMap": true,
     "noEmit": true,
@@ -28,13 +25,8 @@
     "allowJs": true,
     "outDir": ".erb/dll"
   },
-  "typeRoots": [
-    "node_modules/@types",
-    "src/@types"
-  ],
-  "include": [
-    "src/**/*"
-  ],
+  "typeRoots": ["node_modules/@types", "src/@types"],
+  "include": ["src/**/*"],
   "exclude": [
     "test",
     "release",

@@ -3,7 +3,12 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { IpcRequest } from '../ipc';
 
-export type Channels = IpcRequest.ChooseFolder | IpcRequest.OpenFileLocation | IpcRequest.OpenLogsFolder | IpcRequest.SaveFile | IpcRequest.UpdateBuildStatus;
+export type Channels =
+  | IpcRequest.ChooseFolder
+  | IpcRequest.OpenFileLocation
+  | IpcRequest.OpenLogsFolder
+  | IpcRequest.SaveFile
+  | IpcRequest.UpdateBuildStatus;
 
 const electronHandler = {
   ipcRenderer: {
@@ -22,6 +27,7 @@ const electronHandler = {
     once(channel: Channels, func: (...args: unknown[]) => void) {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     invoke(channel: Channels, ...args: any[]) {
       return ipcRenderer.invoke(channel, args);
     },
