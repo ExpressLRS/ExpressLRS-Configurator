@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ 'ubuntu-20.04', 'windows-2019', 'macos-latest' ]
+        os: ['ubuntu-20.04', 'windows-2019', 'macos-latest']
     steps:
       - name: Setup apt dependencies
         if: matrix.os == 'ubuntu-20.04'
@@ -21,9 +21,9 @@ jobs:
       - name: Install Node, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16.16.0
+          node-version: 18.17.1
           cache: 'yarn'
-          
+
       - name: Install dependencies
         run: |
           yarn install --prefer-offline --network-timeout 180000
