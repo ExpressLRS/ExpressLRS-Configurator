@@ -68,7 +68,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
       .map((item) => {
         return {
           label: item.name,
-          value: item.name,
+          value: item.id,
         };
       })
       .sort((a, b) => {
@@ -87,7 +87,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
       if (currentCategory !== device.category) {
         setCurrentCategory(device.category);
       }
-      if (currentDevice?.name !== device.name) {
+      if (currentDevice?.id !== device.id) {
         setCurrentDevice(device);
       }
     }
@@ -115,9 +115,8 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
       if (value === null) {
         setCurrentDevice(null);
         onChange(null);
-      } else if (value !== currentDevice?.name) {
-        const device =
-          deviceOptions?.find((item) => item.name === value) ?? null;
+      } else if (value !== currentDevice?.id) {
+        const device = deviceOptions?.find((item) => item.id === value) ?? null;
         setCurrentDevice(device);
         const targets = sortDeviceTargets(device?.targets ?? []);
         onChange(targets[0] ?? null);
@@ -184,7 +183,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
               title={t('DeviceTargetForm.Device')}
               currentValue={
                 deviceSelectOptions.find(
-                  (item) => item.value === currentDevice?.name
+                  (item) => item.value === currentDevice?.id
                 ) ?? null
               }
               onChange={onDeviceChange}
