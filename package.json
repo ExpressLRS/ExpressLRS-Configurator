@@ -48,8 +48,8 @@
       "dist/",
       "node_modules/",
       "index.html",
-      "main.prod.js",
-      "main.prod.js.map",
+      "main.js",
+      "main.js.map",
       "package.json",
       "devices/"
     ],
