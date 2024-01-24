@@ -23,7 +23,10 @@ jobs:
         with:
           node-version: 16.16.0
           cache: 'yarn'
-          
+
+      # required for node gyp / serialport module
+      - run: pip install setuptools
+
       - name: Install dependencies
         run: |
           yarn install --prefer-offline --network-timeout 180000
