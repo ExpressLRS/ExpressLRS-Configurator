@@ -46,5 +46,9 @@
   {
     "value": "id",
     "label": "Bahasa Indonesia (Indonesian)"
+  },
+  {
+    "value": "da",
+    "label": "Dansk (Danish)"
   }
 ]

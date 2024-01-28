@@ -1,0 +1,230 @@
+{
+  "BuildNotificationsList": {
+    "VerifyingBuildSystem": "Verificerer system til byg",
+    "DownloadingFirmware": "Henter firmware",
+    "BuildingUserDefinesTXT": "Byg af user_defines.txt",
+    "CompilingFirmware": "Bygger firmware",
+    "FlashingDevice": "Brænding af enhed"
+  },
+  "BuildResponse": {
+    "Error": "Fejl",
+    "GitDependencyError": "Fejl i afhængighed til git",
+    "PythonDependencyError": "Fejl i afhængighed til Python",
+    "PlatformioDependencyError": "Fejl i afhængighed til Platformio",
+    "BuildError": "Fejl ved byg firmware",
+    "FlashError": "Fejl ved brænding",
+    "TargetMismatch": "Målet du forsøger at brænde stemmer ikke overens med enhedens specifikation, hvis du alligevel er sikker på at fortsætte, skal du klikke på Gennemtving brænding",
+    "Success": "Fuldført !",
+    "ErrorDetails": "Der er sket en fejl, se log ovenfor for at finde fejl meddelelse. Besøg <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> og læs \n <FlashingGuideLink>Flashing Guide</FlashingGuideLink> for din specifikke enhed, og <TroubleshootingGuideLink>Troubleshooting Guide</TroubleshootingGuideLink>. Hvis du fortsat har problemer efter at have læst dokumentation, kopier venligst ovenstående log for byg og klip ud/sæt ind i meddelelse i #help-and-support kanal i <ExpressLRSDiscordLink>ExpressLRS Discord</ExpressLRSDiscordLink> med et link til loggen og anden relevant information, som din enhed, din valgte brænde metode, og hvad du du allerede har gjort for at løse problemet. Dokumentation er på engelsk og din besked skal også være på engelsk."
+  },
+  "DeviceOptionsForm": {
+    "StandardMode": "Standard tilstand",
+    "ManualMode": "Manuel tilstand",
+    "CopyFromStandardMode": "Kopier fra standard tilstand",
+    "LongerBuildTimeWarning": "Når du bruger den manuelle brugerdefinerede tilstand, er cloud binære cachen deaktiveret, hvilket resulterer i meget længere tidsforbrug til et byg.",
+    "RegulatoryDomains": "Lovpligtige domæner",
+    "BindingPhraseSetup": "Valg af tilslutnings kode",
+    "CompatibilityOptions": "Kompatibilitet indstillinger",
+    "PerformanceOptions": "Ydelses indstillinger",
+    "ExtraData": "Extra data",
+    "Network": "Netværk",
+    "OtherOptions": "Andre valg"
+  },
+  "DeviceTargetForm": {
+    "UnverifiedHardwareTitle": "UVERIFICERET HARDWARE",
+    "UnverifiedHardwareContent": "Producenten af denne hardware har ikke leveret enheder til evaluering og verifikation, kontakt producent for support eller fortsæt for egen risiko. Ikke sikkert, at alle funktioner virker.",
+    "DeviceCategory": "Enhed kategori",
+    "Device": "Enhed"
+  },
+  "FirmwareVersionForm": {
+    "OfficialReleases": "Officiel version",
+    "GitBranch": "Git branch",
+    "GitCommit": "Git commit",
+    "Local": "Lokal",
+    "GitPullRequest": "Git pull anmodning",
+    "ShowPreRreleases": "Vis udviklings release",
+    "Releases": "Release",
+    "ReleaseNotes": "Release noter",
+    "NewerVersionAvailable": "Der findes en nyere version",
+    "UpgradeToV3": "ExpressLRS 2.X understøttes ikke længere. Opgrader venligst til ExpressLRS 3.X.",
+    "DangerZoneTitle": "FARE ZONE",
+    "DangerZoneContent": "Brug kun disse kilder, hvis du ved hvad du gør eller er instrueret af udviklere",
+    "GitBranches": "Git branch",
+    "GitCommitHash": "Git commit hash",
+    "LocalPath": "Lokal sti",
+    "AttentionTitle": "BEMÆRK",
+    "AttentionContent": "Du forsøger at brænde en forældet BetaFPV brugerdefineret branch. BetaFPV hardware er fuldt understøttet i de nyeste officielle ExpressLRS release. Vi anbefaler at bruge officiel firmware, for den bedste ExpressLRS oplevelse.",
+    "ChooseFolder": "Vælg mappe",
+    "GitPullRequests": "Git pull anmodning"
+  },
+  "FlashingMethodDescription": {
+    "BetaflightPassthroughDescription": "Denne metode giver dig mulighed for at brænde din modtager, mens den er tilsluttet din FC ved hjælp af passthrough funktion i FC.",
+    "PlugInFCToComputer": "Tilslut din FC til din computer, men forbind IKKE Betaflight Configurator.",
+    "SelectDesiredDevice": "Vælg dine ønskede enhedsindstillinger og din serielle port til FC.",
+    "RunBuild&Flash": "Kør byg & brænd",
+    "BetaflightPassthroughWiki": "Se vores wiki side for seneste definition.",
+    "DFU": "Denne metode giver dig mulighed for at brænde din modtager eller sender via enhedens firmware tilstand for opgradering.",
+    "GeneralWiki": "Kontroller wiki vedrørende din enhed for mere information.",
+    "STLink": "Denne metode giver dig mulighed for at brænde din modtager eller sender ved hjælp af en STLink program forbundet til enhed.",
+    "StockBL": "Denne metode giver dig mulighed for at brænde din modtager eller sender ved hjælp af bootloader på enhed.",
+    "UART": "Denne metode giver dig mulighed for at brænde din modtager eller sender via USB port eller lednings forbinde en FTDI enhed.",
+    "WIFI": "Denne metode opretter en firmware fil, du kan indlæse i din modtager eller sender, ved at forbinde til indbygget WiFi.",
+    "EdgeTxPassthrough": "Denne metode giver dig mulighed for at brænde dit sende modul, mens det er forbundet til din sender ved hjælp af passthrough funktion i EdgeTX.",
+    "Passthrough": "Denne metode giver dig mulighed for at brænde dit modul, mens det er forbundet til din sender ved hjælp af passthrough funktionen."
+  },
+  "FlashingMethodOptions": {
+    "FlashingMethod": "Brændings metode"
+  },
+  "Header": {
+    "ExpressLRSConfigurator": "ExpressLRS Configurator",
+    "DownloadNewestRelease": "Klik for at hente den nyeste version",
+    "UpdateAvailable": "En ny version er fundet !",
+    "Documentation": "Dokumentation",
+    "Discord": "Discord",
+    "FacebookGroup": "Facebook gruppe",
+    "Github": "GitHub",
+    "OpenCollective": "OpenCollective"
+  },
+  "SerialConnectionForm": {
+    "SerialDevice": "Seriel enhed",
+    "BaudRate": "Baud hastighed",
+    "Connect": "Forbind"
+  },
+  "SerialDeviceSelect": {
+    "ManualSelectionTitle": "Manuel valg af seriel enhed",
+    "ManualSelectionTitleTooltip": "Brug manuelt valg af seriel port valg, hvis det automatiske valg ikke vælger en korrekt port. I langt de fleste tilfælde er det ikke nødvendigt at bruge denne mulighed."
+  },
+  "Sidebar": {
+    "Configurator": "Configurator",
+    "Backpack": "Backpack",
+    "Logs": "Logfiler",
+    "SerialMonitor": "Seriel monitor",
+    "Settings": "Indstillinger",
+    "Support": "Support"
+  },
+  "UserDefineDescription": {
+    "RegulatoryDomain915": "Læs i <LoRaWANLink>LoRaWAN Frequency Plans and Regulations</LoRaWANLink> for et reguleret område der dækker din lokation.",
+    "Wiki": "Se vores wiki side for seneste definition.",
+    "RegulatoryDomainISM2400": "ISM radiobånd er del af det radiospektrum, der er reserveret internationalt. Du kan bruge dette regulerende område sikkert i alle lande.",
+    "RegulatoryDomainEUCE2400": "For firmware version tidligere end v3.x, begrænser EU CE 2. GHz regulering den maksimale effekt til 10mW, som ikke kræver LBT (Listen Before Talk). For firmware version senere end v3.x, begrænser EU CE 2,4 GHz regulering den maksimale effekt til 100 mW og muliggør LBT.",
+    "BindingPhrase": "Tilslutningskoder parrer modtager og sender, uden at kræve at du tilslutter manuelt. Modtagere brændt uden en tilslutnings kode vil kræve den traditionelle tilslutnings metode. Både TX og RX skal have den samme tilslutnings kode for at tilslutte. Sæt noget mindeværdigt, og begræns til alfanumeriske sætninger i overensstemmelse med det latinske alfabet. Dette er ikke en adgangskode, og giver ikke nogen sikkerhed, det reducerer helt enkelt RF kollisioner med andre piloter.",
+    "AutoWifiOnInterval": "<p>Dette vil automatisk slå WiFi til for ethvert modul, der har en ESP8285 chip, hvis der ikke etableres forbindelse efter et antal sekunder fra boot. Dette gør det muligt at skubbe firmwareopdateringer til RX ved at forbinde til dens WiFi netværk og besøge 10.0.0.</p><p>Auto på interval er defineret i <strong>sekunder</strong>. Standard valg er 60 sekunder.</p>",
+    "TLMReportIntervalMs": "<p>Får TX-modulet til at sende telemetri data til håndsæt med et fast interval. Dette reducerer de - Telemetri Lost- advarsler, når der anvendes høje telemeteri hastigheder eller lave hastigheder som 50 hz.</p><p>Standard værdi er <strong>240LU</strong>. Hvis du ønsker at ændre det skal du bagvedstille din millisekunderværdi med <strong>LU</strong>. For eksempel, for at specificere 100 ms telemetri opdateringshastighed skal du indtaste det som dette: <strong>100LU</strong>.</p><p>Typisk ønsker du at beholde <strong>240LU</strong> værdien for EdgeTX/OpenTX baserede radioer, <strong>100LU</strong> for ErskyTx.</p>",
+    "LockOnFirstConnection": "Låsning af RF-tilstand - Standardtilstand er for RX at rulle gennem de tilgængelige RF tilstande med 5s pause, gående fra højeste til laveste tilstand og finde hvilken tilstand TX sender i. Dette gør det muligt for RX at rulle indtil en forbindelse er etableret (indtil den modtager en nulstilling af strøm).",
+    "JustBeepOnce": "Indstilling om TX kun bipper en gang versus spiller en melodi ved start.",
+    "DisableStartupBeep": "Indstilling om TX skal være stille ved start.",
+    "DisableAllBeeps": "Deaktiver alle bip.",
+    "MyStartupMelody": "<p>Brug dette til at definere din egen opstart melodi ved hjælp af BlHeli32 syntaks. Parametrene melodistreng og bpm er påkrævet. der henviser til, at semitone offset er valgfri for at skrue hele melodien op eller ned ved de definerede antal semitoner. Eksempel på BlHeli32 melodier er tilgængelige på <RoxWolfsYoutubeChannelLink>Rox Wolfs Youtube kanal</RoxWolfsYoutubeChannelLink>, det kan være nødvendigt at eksperimentere selv.</p><p>For at skrive din egen melodi, er <SheetMusic101lLink>Noter 101</SheetMusic101lLink> og <BLHeliPianoLink>BLHeli Piano</BLHeliPianoLink> er nyttige kilder.</p><p>Denne indstilling understøtter også melodier i RTTTL format. <EscTunesLink>EscTunes.com</EscTunesLink> er en stor kilde til at opdage nye melodier.</p>",
+    "UnlockHigherPower": "<p>Der har været nogle rapporter om R9M-moduler, der viser ustabilitet på >250mw med standard køling. Dette til dels fordi ELRS bruger en højere arbejds cycle i transmission i forhold til standard firmware. Som standard er strømmen begrænset til 250mw. Du kan låse op for, op til 1000mw, ved at aktivere følgende indstilling. Gør dette på egen risiko, hvis du ikke har ekstra køleing.</p><p>Vi har beskrevet <R9MFanModCoverLink>R9M Fan Mod Cover</R9MFanModCoverLink>, en brugerdefineret 3D trykt bagplade med plads til en ventilator og ekstra køling for at give mulighed for maksimal effekt (1-2W afhængigt af mod).</p>",
+    "UARTInverted": "Aktiverer kompatibilitet med radioer, der output inverteret CRSF, såsom FrSky QX7, TBS Tango 2, RadioMaster TX16S. Dette valg er anbefalet i de fleste tilfælde. Hvis din radio er T8SG V2, eller du bruger anden firmware, så fravælg denne indstilling.",
+    "RCVRUARTBaud": "Modtager UART baud hastighed. Standard valg er 420000. Indstil til 400000 og din modtager vil arbejde med Kiss v1 FC.",
+    "RCVRInvertTX": "Hvis du bruger en FC, der kun har RXI/SBUS (RX inverteret), skal du vælge denne indstilling for at invertere CRSF-output fra modtageren. Dette konverterer ikke output til SBUS, det er inverteret CRSF. CRSF skal derfor stadig være modtagerprotokol, som er valgt i din FC. Gælder kun ESP-baserede modtagere.",
+    "UseR9MMR9MiniSBUS": "<p><strong>DETTE ÅBNER IKKE SBUS PROTOKOL.</strong></p><p>Dette er nyttigt for F4 FCs som ikke har en uninverteret UART indstilling. Dette gælder kun een retning, så du mister radio telemetri og passthrough brænding. Dette vil give output fra standard SBUS pin på din R9MM/R9Mini. Valg af serialrx_inverteret = ON, kan også være nødvendigt for Betaflight kompatibilitet</p>",
+    "HomeWifiSSID": "Angiv adgangskode til WiFi netværk. Det vil tillade hardware med WiFi automatisk at oprette forbindelse.",
+    "HomeWifiPassword": "Angiv adgangskode til WiFi netværk. Det vil tillade hardware med WiFi automatisk at oprette forbindelse."
+  },
+  "UserDefinesAdvisor": {
+    "DisableUARTInvertedWarning": "Deaktivering af UART_INVERTED er ikke et typisk valg. Kontroller, at din sender understøtter dette."
+  },
+  "UserDefinesList": {
+    "CustomBindingPhrase": "Brugervalgt tilslutnings kode",
+    "MyStartupMelody": "Min start melodi",
+    "Value": "Værdi"
+  },
+  "WifiDeviceList": {
+    "Name": "Navn",
+    "Target": "Destination",
+    "Version": "Version",
+    "Type": "Type",
+    "DNS": "DNS",
+    "IP": "IP",
+    "Select": "Vælg"
+  },
+  "WifiDeviceNotification": {
+    "NewDevice": "Ny enhed",
+    "Select": "Vælg"
+  },
+  "WifiDeviceSelect": {
+    "DefaultWifiIp": "Standard valg (10.0.0.1)",
+    "WifiDevices": "WiFi enhed",
+    "Manual": "Manuel",
+    "WifiDeviceSelection": "Valg af WiFi enhed",
+    "IPAddress": "IP adresse"
+  },
+  "Updater": {
+    "FoundUpdates": "Fundet opdateringer",
+    "UpdateNow": "Fundet opdateringer, vil du opdatere nu ?",
+    "Sure": "Ja selvfølgelig",
+    "Later": "Senere",
+    "UpdateDownloading": "Henter opdatering",
+    "NotifiedWhenReadyToInstall": "Opdatering hentes, du får besked, når den er klar til at installere.",
+    "Restart": "Genstart",
+    "ApplicationUpdate": "Applikation opdateret",
+    "Update": "Opdater",
+    "ApplyUpdates": "En ny version er hentet. Genstart programmet for at bruge opdateringen."
+  },
+  "ConfiguratorView": {
+    "DownloadLUAScript": "Hent LUA script",
+    "FirmwareVersion": "Firmware version",
+    "Target": "Destination",
+    "Notice": "Bemærk",
+    "SelectFirmwareVersionFirst": "Vælg først firmware version.",
+    "DeviceOptions": "Enhed indstillinger",
+    "ResetDevice": "Nulstil enhedsindstillinger til anbefalede standard valg. Undtaget en brugervalgt tilslutnings kode.",
+    "Reset": "Nulstil",
+    "Actions": "Handlinger",
+    "FlashingOptions": "Tilvalg brændning",
+    "EraseBeforeFlash": "Slet før brænding",
+    "ForceFlash": "Gennemtving brænding",
+    "Build": "Byg",
+    "Flash": "Brænd",
+    "NetworkDevices": "Netværks enhed",
+    "DeviceSelectError": "Fejl ved valg af enhed",
+    "DeviceCouldNotBeAutomaticallySelected": "Destination kunne ikke vælges automatisk, det skal gøres manuelt.",
+    "Close": "Luk",
+    "Logs": "Logfiler",
+    "CopyLogToClipboard": "Kopier log til udklipsholder",
+    "SaveLogToFile": "Gem log i fil",
+    "BuildsTakeMinutesFirstTime": "Nogle gange tager et byg mindst et par minutter. Det er normalt, særligt ved første byg.",
+    "Result": "Resultat",
+    "Warning": "Advarsel",
+    "WaitForLEDBeforeDisconnectingPower": "Vent venligst på at LED igen begynder at blinke, før du frakobler strømmen",
+    "UpdateLuaScript": "Opdater LUA script",
+    "UpdateLuaScriptOnRadio": "Vær sikker på at opdatere LUA script i din radio",
+    "BuildNotice": "Bemærkning til byg",
+    "FirmwareOpenedInFileExplorer": "Firmware image fil blev åbnet i fil browser",
+    "Back": "Tilbage",
+    "Retry": "Prøv igen"
+  },
+  "LogsView": {
+    "Logs": "Logfiler",
+    "OpenLogsFolder": "Åbn logfil mappe"
+  },
+  "SerialMonitorView": {
+    "SerialMonitor": "Seriel monitor",
+    "Disconnect": "Afbryd"
+  },
+  "SettingsView": {
+    "Settings": "Indstillinger",
+    "LanguageSelector": "Vælg sprog",
+    "CurrentLanguage": "Nuværende sprog"
+  },
+  "SupportView": {
+    "Support": "Support",
+    "JoinTheCommunity": "Har du brug for hjælp? Forvirret? Deltag i fællesskabet !",
+    "ExpressLRSDocumentation": "ExpressLRS dokumentation",
+    "DiscordChat": "Discord chat",
+    "FacebookGroup": "Facebook gruppe",
+    "Troubleshooting": "Fejlfinding",
+    "LegalDisclaimer": "Juridisk ansvarsfraskrivelse",
+    "UseAtYourOwnRisk": "Anvendelse af denne type udstyr kan kræve en licens, og nogle lande forbyder brugen af det. Det er helt op til slutbrugeren at sikre overholdelse af lokale bestemmelser. Dette er eksperimentel software / hardware og der er ingen garanti for stabilitet eller pålidelighed. ANVENDELSE ER PÅ DIN EGEN RISIKO.",
+    "CorruptedFirmwareFiles": "Beskadiget firmware fil",
+    "YouCanManuallyClearAllFiles": "Hvis du lukker Configurator, mens git henter filer fra git repository,  kan noget gå galt. Du kan manuelt rydde op og starte et nyt byg.",
+    "ClearFirmwareFiles": "Slet firmware filer",
+    "CorruptedFirmwareFilesDeleted": "Ødelagte firmware filer er slettet og git repository er nulstillet. Forsøg et byg igen.",
+    "CorruptedPlatformioDependencies": "Ødelagt afhænighed til platformio",
+    "YouCanManuallyClearAllDependencies": "Hvis du lukker Configurator, mens platformio henter filer fra git repository,  kan noget gå galt. Du kan manuelt rydde op og starte et nyt byg.",
+    "ClearPlatformioDependencies": "Slet afhænighed til platformio",
+    "CorruptedPlatformioDependenciesDeleted": "Ødelagt platformio afhænighed er slettet og git repository er nulstillet. Forsøg et byg igen."
+  }
+}
