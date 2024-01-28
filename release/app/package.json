@@ -1,0 +1,21 @@
+{
+  "name": "expresslrs-configurator",
+  "productName": "ExpressLRS Configurator",
+  "version": "1.6.1",
+  "description": "Cross platform configuration tool for the ExpressLRS firmware",
+  "main": "./dist/main/main.js",
+  "author": {
+    "name": "ExpressLRS Configurator Contributors",
+    "email": "info@expresslrs.org",
+    "url": "https://github.com/ExpressLRS/ExpressLRS-Configurator/graphs/contributors"
+  },
+  "scripts": {
+    "rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",
+    "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.ts",
+    "postinstall": "yarn run rebuild && yarn run link-modules"
+  },
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "serialport": "^12.0.0"
+  }
+}
