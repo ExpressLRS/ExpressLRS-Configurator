@@ -4,7 +4,7 @@
 
 import webpack from 'webpack';
 import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
-import { dependencies as externals, version, productName } from '../../src/package.json';
+import { dependencies as externals, version, productName } from '../../release/app/package.json';
 import webpackPaths from './webpack.paths';
 
 const configuration: webpack.Configuration = {

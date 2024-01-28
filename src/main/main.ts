@@ -70,7 +70,11 @@ function resolveHtmlPath(htmlFileName: string, qs?: string) {
     url.pathname = htmlFileName;
     return url.href;
   }
-  return `file://${path.resolve(__dirname, '../', `${htmlFileName}?${qs}`)}`;
+  return `file://${path.resolve(
+    __dirname,
+    '../renderer/',
+    `${htmlFileName}?${qs}`
+  )}`;
 }
 
 const isWindows = process.platform.startsWith('win');
@@ -430,7 +434,7 @@ const createWindow = async () => {
     }
 
     // set the window title based on package.json
-    const windowTitle = require('../package.json').productName;
+    const windowTitle = require('../../release/app/package.json').productName;
     mainWindow.setTitle(windowTitle);
   });
 

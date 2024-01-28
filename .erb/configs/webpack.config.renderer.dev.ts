@@ -32,7 +32,7 @@ if (
 ) {
   console.log(
     chalk.black.bgYellow.bold(
-      'The DLL files are missing. Sit back while we build them for you with "npm run build-dll"',
+      'The DLL files are missing. Sit back while we build them for you with "yarn run build-dll"',
     ),
   );
   execSync('yarn run build-dll');

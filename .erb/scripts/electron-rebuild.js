@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 import fs from 'fs';
-import { dependencies } from '../../src/package.json';
+import { dependencies } from '../../release/app/package.json';
 import webpackPaths from '../configs/webpack.paths';
 
 if (
@@ -8,7 +8,7 @@ if (
   fs.existsSync(webpackPaths.appNodeModulesPath)
 ) {
   const electronRebuildCmd =
-    '../../node_modules/.bin/electron-rebuild --force --types prod,dev,optional --module-dir .';
+    '../../node_modules/.bin/electron-rebuild --force --types prod,dev,optional --module-dir ';
   const cmd =
     process.platform === 'win32'
       ? electronRebuildCmd.replace(/\//g, '\\')
