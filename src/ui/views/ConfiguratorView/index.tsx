@@ -1211,15 +1211,18 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 >
                   {t('ConfiguratorView.Back')}
                 </Button>
-                <Button
-                  sx={styles.button}
-                  color="primary"
-                  size="large"
-                  variant="contained"
-                  onClick={onFlash}
-                >
-                  {t('ConfiguratorView.FlashAgain')}
-                </Button>
+
+                {response?.buildFlashFirmware.success && (
+                  <Button
+                    sx={styles.button}
+                    color="primary"
+                    size="large"
+                    variant="contained"
+                    onClick={onFlash}
+                  >
+                    {t('ConfiguratorView.FlashAgain')}
+                  </Button>
+                )}
 
                 {!response?.buildFlashFirmware.success && (
                   <Button
