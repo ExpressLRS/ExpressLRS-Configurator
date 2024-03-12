@@ -207,7 +207,9 @@
   "SettingsView": {
     "Settings": "Settings",
     "LanguageSelector": "Language selector",
-    "CurrentLanguage": "Current language"
+    "CurrentLanguage": "Current language",
+    "DeveloperMode": "Developer Mode",
+    "DeveloperOptions": "Developer Options"
   },
   "SupportView": {
     "Support": "Support",

@@ -1,12 +1,20 @@
-import { Card, CardContent, Divider } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  Checkbox,
+  Divider,
+  FormControlLabel,
+} from '@mui/material';
 import React, { FunctionComponent } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LanguageIcon from '@mui/icons-material/Language';
+import DeveloperModeIcon from '@mui/icons-material/DeveloperMode';
 import { useTranslation } from 'react-i18next';
 import CardTitle from '../../components/CardTitle';
 import MainLayout from '../../layouts/MainLayout';
 import Omnibox, { Option } from '../../components/Omnibox';
 import locales from '../../../i18n/locales.json';
+import useDeveloperMode from '../../hooks/useDeveloperMode';
 
 const SettingsView: FunctionComponent = () => {
   const { t, i18n } = useTranslation();
@@ -28,6 +36,9 @@ const SettingsView: FunctionComponent = () => {
           ?.label ?? '',
     };
   }
+
+  const { isDeveloperModeEnabled, setDeveloperMode } = useDeveloperMode();
+
   return (
     <MainLayout>
       <Card>
@@ -43,6 +54,24 @@ const SettingsView: FunctionComponent = () => {
             currentValue={currentLanguage}
             onChange={onLocaleChange}
             options={languages}
+          />
+        </CardContent>
+        <Divider />
+        <CardTitle
+          icon={<DeveloperModeIcon />}
+          title={t('SettingsView.DeveloperOptions')}
+        />
+        <CardContent style={{ paddingLeft: 26, marginTop: -18 }}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isDeveloperModeEnabled}
+                onChange={() => {
+                  setDeveloperMode();
+                }}
+              />
+            }
+            label={t('SettingsView.DeveloperMode')}
           />
         </CardContent>
       </Card>
