@@ -58,6 +58,10 @@ export interface IApplicationStorage {
   setShowSensitiveFieldData(field: string, value: boolean): Promise<void>;
 
   getShowSensitiveFieldData(field: string): Promise<boolean | null>;
+
+  setDeveloperModeEnabled(value: boolean): Promise<void>;
+
+  getDeveloperModeEnabled(): Promise<boolean | null>;
 }
 
 const DEVICE_OPTIONS_BY_TARGET_KEYSPACE = 'device_options';
@@ -68,6 +72,7 @@ const WIFI_SSID_KEY = 'wifi_ssid';
 const WIFI_PASSWORD_KEY = 'wifi_password';
 const REGULATORY_DOMAIN_900_KEY = 'regulatory_domain_900';
 const REGULATORY_DOMAIN_2400_KEY = 'regulatory_domain_2400';
+const DEVELOPER_MODE = 'developer_mode';
 
 export default class ApplicationStorage implements IApplicationStorage {
   async saveDeviceOptions(
@@ -212,6 +217,24 @@ export default class ApplicationStorage implements IApplicationStorage {
         return JSON.parse(value);
       } catch (e) {
         console.error('failed to parse state for', field, e);
+        return null;
+      }
+    }
+    return null;
+  }
+
+  async setDeveloperModeEnabled(value: boolean): Promise<void> {
+    localStorage.setItem(DEVELOPER_MODE, JSON.stringify(value));
+  }
+
+  async getDeveloperModeEnabled(): Promise<boolean | null> {
+    const value = localStorage.getItem(DEVELOPER_MODE);
+
+    if (value) {
+      try {
+        return JSON.parse(value);
+      } catch (e) {
+        console.error(`failed to parse state for ${DEVELOPER_MODE}`, e);
         return null;
       }
     }
