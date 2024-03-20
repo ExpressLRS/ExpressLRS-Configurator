@@ -2,13 +2,13 @@ import { Field, ObjectType } from 'type-graphql';
 
 @ObjectType('UpdatesAvailability')
 export default class UpdatesAvailability {
-  @Field()
+  @Field(() => Boolean)
   updateAvailable: boolean;
 
-  @Field()
+  @Field(() => String)
   newestVersion: string;
 
-  @Field()
+  @Field(() => String)
   releaseUrl: string;
 
   constructor(updateAvailable: boolean, newestVersion = '', releaseUrl = '') {

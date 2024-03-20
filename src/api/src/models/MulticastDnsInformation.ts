@@ -3,34 +3,34 @@ import UserDefine from './UserDefine';
 
 @ObjectType('MulticastDnsInformation')
 export default class MulticastDnsInformation {
-  @Field()
+  @Field(() => String)
   name: string;
 
   @Field(() => [UserDefine])
   options: UserDefine[];
 
-  @Field()
+  @Field(() => String)
   version: string;
 
-  @Field()
+  @Field(() => String)
   target: string;
 
-  @Field()
+  @Field(() => String)
   type: string;
 
-  @Field()
+  @Field(() => String)
   vendor: string;
 
-  @Field()
+  @Field(() => String)
   ip: string;
 
-  @Field()
+  @Field(() => String)
   dns: string;
 
-  @Field()
+  @Field(() => Number)
   port: number;
 
-  @Field()
+  @Field(() => String)
   deviceName: string;
 
   constructor(

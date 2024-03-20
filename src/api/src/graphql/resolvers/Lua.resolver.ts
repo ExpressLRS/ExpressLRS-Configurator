@@ -12,8 +12,8 @@ export default class LuaResolver {
 
   @Query(() => LuaScript)
   async luaScript(
-    @Args() args: LuaArgs,
-    @Arg('gitRepository') gitRepository: GitRepository
+    @Args(() => LuaArgs) args: LuaArgs,
+    @Arg('gitRepository', () => GitRepository) gitRepository: GitRepository
   ): Promise<LuaScript> {
     const fileLocation = await this.luaService.loadLuaScript(
       args,

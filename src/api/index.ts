@@ -1,9 +1,12 @@
 import { createServer } from 'http';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { PubSub } from 'graphql-subscriptions';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import express, { Express } from 'express';
+import cors from 'cors';
 import * as http from 'http';
 import getPort from 'get-port';
 import { buildSchema } from 'type-graphql';
@@ -189,7 +192,14 @@ export default class ApiServer {
   ): Promise<http.Server> {
     await this.buildContainer(config, logger);
     this.app = express();
-
+    this.app.use(
+      '/',
+      express.json(),
+      cors<cors.CorsRequest>({
+        credentials: true,
+        origin: true,
+      })
+    );
     this.app.use('/locales', express.static(config.localesPath));
 
     this.httpServer = createServer(this.app);
@@ -203,6 +213,8 @@ export default class ApiServer {
       server: this.httpServer,
       path: '/graphql',
     });
+
+    console.log(Container);
 
     const schema = await buildSchema({
       resolvers: [
@@ -222,7 +234,7 @@ export default class ApiServer {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const serverCleanup = useServer({ schema }, wsServer);
 
-    const server = new ApolloServer({
+    const apolloServer = new ApolloServer({
       schema,
       introspection: true,
       plugins: [
@@ -235,15 +247,16 @@ export default class ApiServer {
             };
           },
         },
+        ApolloServerPluginDrainHttpServer({
+          httpServer: this.httpServer,
+        }),
       ],
     });
 
     // You must `await server.start()` before calling `server.applyMiddleware()
-    await server.start();
+    await apolloServer.start();
 
-    server.applyMiddleware({
-      app: this.app,
-    });
+    this.app.use('/graphql', expressMiddleware(apolloServer));
 
     this.httpServer = this.httpServer.listen({ port });
 

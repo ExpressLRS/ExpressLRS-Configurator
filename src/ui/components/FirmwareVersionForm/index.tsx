@@ -10,7 +10,6 @@ import {
   TextField,
 } from '@mui/material';
 import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
-import { ipcRenderer } from 'electron';
 import debounce from 'lodash.debounce';
 import semver from 'semver';
 import { SxProps, Theme } from '@mui/system';
@@ -296,7 +295,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   }, []);
 
   const onChooseFolder = () => {
-    ipcRenderer
+    window.electron.ipcRenderer
       .invoke(IpcRequest.ChooseFolder)
       .then((result: ChooseFolderResponseBody) => {
         if (result.success) {

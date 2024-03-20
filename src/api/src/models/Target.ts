@@ -3,13 +3,13 @@ import FlashingMethod from './enum/FlashingMethod';
 
 @ObjectType('Target')
 export default class Target {
-  @Field()
+  @Field(() => String)
   id: string;
 
-  @Field()
+  @Field(() => String)
   name: string;
 
-  @Field()
+  @Field(() => FlashingMethod)
   flashingMethod: FlashingMethod;
 
   constructor(id: string, name: string, flashingMethod: FlashingMethod) {

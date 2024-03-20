@@ -4,22 +4,22 @@ import PullRequest from '../../models/PullRequest';
 
 @ArgsType()
 export default class TargetDeviceOptionsArgs {
-  @Field()
+  @Field(() => String)
   target: string;
 
   @Field(() => FirmwareSource)
   source: FirmwareSource;
 
-  @Field()
+  @Field(() => String)
   gitTag: string;
 
-  @Field()
+  @Field(() => String)
   gitBranch: string;
 
-  @Field()
+  @Field(() => String)
   gitCommit: string;
 
-  @Field()
+  @Field(() => String)
   localPath: string;
 
   @Field(() => PullRequest, { nullable: true })

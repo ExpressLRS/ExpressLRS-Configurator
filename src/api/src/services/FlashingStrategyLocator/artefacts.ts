@@ -2,7 +2,7 @@ import sanitize from 'sanitize-filename';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import rimraf from 'rimraf';
+import { rimraf } from 'rimraf';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import { BuildFlashFirmwareParams } from './BuildFlashFirmwareParams';
@@ -81,18 +81,6 @@ export const createBinaryCopyWithCanonicalName = async (
   return firmwareBinPath;
 };
 
-const rmrf = async (file: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    rimraf(file, (err) => {
-      if (err) {
-        reject();
-      } else {
-        resolve();
-      }
-    });
-  });
-};
-
 const listFiles = async (directory: string): Promise<string[]> => {
   return new Promise((resolve, reject) => {
     fs.readdir(directory, (err, files) => {
@@ -113,5 +101,5 @@ export const removeDirectoryContents = async (firmwaresPath: string) => {
   if (files.length > 20) {
     throw new Error(`unexpected number of files to remove: ${files}`);
   }
-  await Promise.all(files.map((item) => rmrf(item)));
+  await Promise.all(files.map((item) => rimraf(item)));
 };

@@ -2,10 +2,10 @@ import { Field, ObjectType } from 'type-graphql';
 
 @ObjectType('ClearPlatformioCoreDirResult')
 export default class ClearPlatformioCoreDirResult {
-  @Field()
+  @Field(() => Boolean)
   success: boolean;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   message?: string;
 
   constructor(success: boolean, message?: string) {

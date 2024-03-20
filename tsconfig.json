@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
+    "incremental": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "target": "ES2018",
+    "target": "es2022",
     "module": "CommonJS",
-    "lib": ["dom", "esnext"],
+    "lib": ["dom", "es2022"],
     "declaration": true,
     "declarationMap": true,
     "noEmit": true,
     "jsx": "react",
     "strict": true,
-    "pretty": true,
     "sourceMap": true,
     /* Additional Checks */
     "noUnusedLocals": true,
@@ -22,14 +22,15 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "allowJs": true
+    "allowJs": true,
+    "outDir": ".erb/dll"
   },
   "typeRoots": ["node_modules/@types", "src/@types"],
   "include": ["src/**/*"],
   "exclude": [
     "test",
     "release",
-    "src/main.prod.js",
+    "src/main.js",
     "src/renderer.prod.js",
     "src/dist",
     ".erb/dll"

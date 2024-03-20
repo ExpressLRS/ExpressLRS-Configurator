@@ -5,7 +5,7 @@ import { SerialMonitorLogUpdatePayload } from '../services/SerialMonitor';
 export default class SerialMonitorLogUpdate
   implements SerialMonitorLogUpdatePayload
 {
-  @Field()
+  @Field(() => String)
   data: string;
 
   constructor(data: string) {

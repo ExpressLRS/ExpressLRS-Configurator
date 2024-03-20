@@ -1,4 +1,4 @@
-const { notarize } = require('electron-notarize');
+const { notarize } = require('@electron/notarize');
 const { build } = require('../../package.json');
 
 exports.default = async function notarizeMacos(context) {
@@ -7,13 +7,17 @@ exports.default = async function notarizeMacos(context) {
     return;
   }
 
-  if (!process.env.CI) {
+  if (process.env.CI !== 'true') {
     console.warn('Skipping notarizing step. Packaging is not running in CI');
     return;
   }
 
-  if (!('APPLE_ID' in process.env && 'APPLE_ID_PASS' in process.env)) {
-    console.warn('Skipping notarizing step. APPLE_ID and APPLE_ID_PASS env variables must be set');
+  if (
+    !('APPLE_ID' in process.env && 'APPLE_APP_SPECIFIC_PASSWORD' in process.env)
+  ) {
+    console.warn(
+      'Skipping notarizing step. APPLE_ID and APPLE_APP_SPECIFIC_PASSWORD env variables must be set',
+    );
     return;
   }
 
@@ -23,6 +27,6 @@ exports.default = async function notarizeMacos(context) {
     appBundleId: build.appId,
     appPath: `${appOutDir}/${appName}.app`,
     appleId: process.env.APPLE_ID,
-    appleIdPassword: process.env.APPLE_ID_PASS,
+    appleIdPassword: process.env.APPLE_APP_SPECIFIC_PASSWORD,
   });
 };

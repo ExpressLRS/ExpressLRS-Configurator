@@ -3,7 +3,7 @@ import { BuildLogUpdatePayload } from '../services/FlashingStrategyLocator/Build
 
 @ObjectType('BuildLogUpdate')
 export default class BuildLogUpdate implements BuildLogUpdatePayload {
-  @Field()
+  @Field(() => String)
   data: string;
 
   constructor(data: string) {

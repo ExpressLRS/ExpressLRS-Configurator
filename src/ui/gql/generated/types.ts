@@ -12,15 +12,24 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
   [SubKey in K]: Maybe<T[SubKey]>;
 };
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
+    };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  JSONObject: any;
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  JSONObject: { input: any; output: any };
 };
 
 export enum BuildFirmwareErrorType {
@@ -42,23 +51,23 @@ export enum BuildFirmwareStep {
 }
 
 export type BuildFlashFirmwareInput = {
-  readonly erase?: Scalars['Boolean'];
+  readonly erase?: Scalars['Boolean']['input'];
   readonly firmware?: FirmwareVersionDataInput;
-  readonly forceFlash?: Scalars['Boolean'];
-  readonly serialDevice?: InputMaybe<Scalars['String']>;
-  readonly target?: Scalars['String'];
+  readonly forceFlash?: Scalars['Boolean']['input'];
+  readonly serialDevice?: InputMaybe<Scalars['String']['input']>;
+  readonly target?: Scalars['String']['input'];
   readonly type?: BuildJobType;
   readonly userDefines?: ReadonlyArray<UserDefineInput>;
   readonly userDefinesMode?: UserDefinesMode;
-  readonly userDefinesTxt?: Scalars['String'];
+  readonly userDefinesTxt?: Scalars['String']['input'];
 };
 
 export type BuildFlashFirmwareResult = {
   readonly __typename?: 'BuildFlashFirmwareResult';
   readonly errorType?: Maybe<BuildFirmwareErrorType>;
-  readonly firmwareBinPath?: Maybe<Scalars['String']>;
-  readonly message?: Maybe<Scalars['String']>;
-  readonly success: Scalars['Boolean'];
+  readonly firmwareBinPath?: Maybe<Scalars['String']['output']>;
+  readonly message?: Maybe<Scalars['String']['output']>;
+  readonly success: Scalars['Boolean']['output'];
 };
 
 export enum BuildJobType {
@@ -68,12 +77,12 @@ export enum BuildJobType {
 
 export type BuildLogUpdate = {
   readonly __typename?: 'BuildLogUpdate';
-  readonly data: Scalars['String'];
+  readonly data: Scalars['String']['output'];
 };
 
 export type BuildProgressNotification = {
   readonly __typename?: 'BuildProgressNotification';
-  readonly message?: Maybe<Scalars['String']>;
+  readonly message?: Maybe<Scalars['String']['output']>;
   readonly step?: Maybe<BuildFirmwareStep>;
   readonly type: BuildProgressNotificationType;
 };
@@ -90,36 +99,36 @@ export type BuildUserDefinesTxtInput = {
 
 export type BuildUserDefinesTxtResult = {
   readonly __typename?: 'BuildUserDefinesTxtResult';
-  readonly userDefinesTxt?: Maybe<Scalars['String']>;
+  readonly userDefinesTxt?: Maybe<Scalars['String']['output']>;
 };
 
 export type ClearFirmwareFilesResult = {
   readonly __typename?: 'ClearFirmwareFilesResult';
-  readonly message?: Maybe<Scalars['String']>;
-  readonly success: Scalars['Boolean'];
+  readonly message?: Maybe<Scalars['String']['output']>;
+  readonly success: Scalars['Boolean']['output'];
 };
 
 export type ClearPlatformioCoreDirResult = {
   readonly __typename?: 'ClearPlatformioCoreDirResult';
-  readonly message?: Maybe<Scalars['String']>;
-  readonly success: Scalars['Boolean'];
+  readonly message?: Maybe<Scalars['String']['output']>;
+  readonly success: Scalars['Boolean']['output'];
 };
 
 export type Device = {
   readonly __typename?: 'Device';
-  readonly abbreviatedName?: Maybe<Scalars['String']>;
-  readonly category: Scalars['String'];
+  readonly abbreviatedName?: Maybe<Scalars['String']['output']>;
+  readonly category: Scalars['String']['output'];
   readonly deviceType: DeviceType;
-  readonly id: Scalars['String'];
-  readonly luaName?: Maybe<Scalars['String']>;
-  readonly name: Scalars['String'];
-  readonly parent?: Maybe<Scalars['String']>;
-  readonly platform?: Maybe<Scalars['String']>;
-  readonly priorTargetName?: Maybe<Scalars['String']>;
+  readonly id: Scalars['String']['output'];
+  readonly luaName?: Maybe<Scalars['String']['output']>;
+  readonly name: Scalars['String']['output'];
+  readonly parent?: Maybe<Scalars['String']['output']>;
+  readonly platform?: Maybe<Scalars['String']['output']>;
+  readonly priorTargetName?: Maybe<Scalars['String']['output']>;
   readonly targets: ReadonlyArray<Target>;
   readonly userDefines: ReadonlyArray<UserDefine>;
-  readonly verifiedHardware: Scalars['Boolean'];
-  readonly wikiUrl?: Maybe<Scalars['String']>;
+  readonly verifiedHardware: Scalars['Boolean']['output'];
+  readonly wikiUrl?: Maybe<Scalars['String']['output']>;
 };
 
 export enum DeviceType {
@@ -136,11 +145,11 @@ export enum FirmwareSource {
 }
 
 export type FirmwareVersionDataInput = {
-  readonly gitBranch?: Scalars['String'];
-  readonly gitCommit?: Scalars['String'];
+  readonly gitBranch?: Scalars['String']['input'];
+  readonly gitCommit?: Scalars['String']['input'];
   readonly gitPullRequest?: InputMaybe<PullRequestInput>;
-  readonly gitTag?: Scalars['String'];
-  readonly localPath?: Scalars['String'];
+  readonly gitTag?: Scalars['String']['input'];
+  readonly localPath?: Scalars['String']['input'];
   readonly source?: FirmwareSource;
 };
 
@@ -156,20 +165,20 @@ export enum FlashingMethod {
 }
 
 export type GitRepositoryInput = {
-  readonly hardwareArtifactUrl?: InputMaybe<Scalars['String']>;
-  readonly owner: Scalars['String'];
-  readonly rawRepoUrl: Scalars['String'];
-  readonly repositoryName: Scalars['String'];
-  readonly srcFolder: Scalars['String'];
-  readonly url: Scalars['String'];
+  readonly hardwareArtifactUrl?: InputMaybe<Scalars['String']['input']>;
+  readonly owner: Scalars['String']['input'];
+  readonly rawRepoUrl: Scalars['String']['input'];
+  readonly repositoryName: Scalars['String']['input'];
+  readonly srcFolder: Scalars['String']['input'];
+  readonly url: Scalars['String']['input'];
 };
 
 export type LogEntry = {
   readonly __typename?: 'LogEntry';
-  readonly context?: Maybe<Scalars['JSONObject']>;
-  readonly level: Scalars['String'];
-  readonly message: Scalars['String'];
-  readonly timestamp: Scalars['String'];
+  readonly context?: Maybe<Scalars['JSONObject']['output']>;
+  readonly level: Scalars['String']['output'];
+  readonly message: Scalars['String']['output'];
+  readonly timestamp: Scalars['String']['output'];
 };
 
 export type LogFile = {
@@ -179,7 +188,7 @@ export type LogFile = {
 
 export type LuaScript = {
   readonly __typename?: 'LuaScript';
-  readonly fileLocation?: Maybe<Scalars['String']>;
+  readonly fileLocation?: Maybe<Scalars['String']['output']>;
 };
 
 export enum MulticastDnsEventType {
@@ -190,16 +199,16 @@ export enum MulticastDnsEventType {
 
 export type MulticastDnsInformation = {
   readonly __typename?: 'MulticastDnsInformation';
-  readonly deviceName: Scalars['String'];
-  readonly dns: Scalars['String'];
-  readonly ip: Scalars['String'];
-  readonly name: Scalars['String'];
+  readonly deviceName: Scalars['String']['output'];
+  readonly dns: Scalars['String']['output'];
+  readonly ip: Scalars['String']['output'];
+  readonly name: Scalars['String']['output'];
   readonly options: ReadonlyArray<UserDefine>;
-  readonly port: Scalars['Float'];
-  readonly target: Scalars['String'];
-  readonly type: Scalars['String'];
-  readonly vendor: Scalars['String'];
-  readonly version: Scalars['String'];
+  readonly port: Scalars['Float']['output'];
+  readonly target: Scalars['String']['output'];
+  readonly type: Scalars['String']['output'];
+  readonly vendor: Scalars['String']['output'];
+  readonly version: Scalars['String']['output'];
 };
 
 export type MulticastDnsMonitorUpdate = {
@@ -232,18 +241,18 @@ export type MutationConnectToSerialDeviceArgs = {
 };
 
 export type PullRequestInput = {
-  readonly headCommitHash: Scalars['String'];
-  readonly id: Scalars['Float'];
-  readonly number: Scalars['Float'];
-  readonly title: Scalars['String'];
+  readonly headCommitHash: Scalars['String']['input'];
+  readonly id: Scalars['Float']['input'];
+  readonly number: Scalars['Float']['input'];
+  readonly title: Scalars['String']['input'];
 };
 
 export type PullRequestType = {
   readonly __typename?: 'PullRequestType';
-  readonly headCommitHash: Scalars['String'];
-  readonly id: Scalars['Float'];
-  readonly number: Scalars['Float'];
-  readonly title: Scalars['String'];
+  readonly headCommitHash: Scalars['String']['output'];
+  readonly id: Scalars['Float']['output'];
+  readonly number: Scalars['Float']['output'];
+  readonly title: Scalars['String']['output'];
 };
 
 export type Query = {
@@ -252,8 +261,8 @@ export type Query = {
   readonly availableFirmwareTargets: ReadonlyArray<Device>;
   readonly availableMulticastDnsDevicesList: ReadonlyArray<MulticastDnsInformation>;
   readonly checkForUpdates: UpdatesAvailability;
-  readonly gitBranches: ReadonlyArray<Scalars['String']>;
-  readonly gitTags: ReadonlyArray<Scalars['String']>;
+  readonly gitBranches: ReadonlyArray<Scalars['String']['output']>;
+  readonly gitTags: ReadonlyArray<Scalars['String']['output']>;
   readonly logFile: LogFile;
   readonly luaScript: LuaScript;
   readonly pullRequests: ReadonlyArray<PullRequestType>;
@@ -262,73 +271,73 @@ export type Query = {
 };
 
 export type QueryAvailableFirmwareTargetsArgs = {
-  gitBranch?: Scalars['String'];
-  gitCommit?: Scalars['String'];
+  gitBranch?: Scalars['String']['input'];
+  gitCommit?: Scalars['String']['input'];
   gitPullRequest?: InputMaybe<PullRequestInput>;
   gitRepository: GitRepositoryInput;
-  gitTag?: Scalars['String'];
-  localPath?: Scalars['String'];
+  gitTag?: Scalars['String']['input'];
+  localPath?: Scalars['String']['input'];
   source?: FirmwareSource;
 };
 
 export type QueryCheckForUpdatesArgs = {
-  currentVersion: Scalars['String'];
+  currentVersion: Scalars['String']['input'];
 };
 
 export type QueryGitBranchesArgs = {
-  owner: Scalars['String'];
-  repository: Scalars['String'];
+  owner: Scalars['String']['input'];
+  repository: Scalars['String']['input'];
 };
 
 export type QueryGitTagsArgs = {
-  owner: Scalars['String'];
-  repository: Scalars['String'];
+  owner: Scalars['String']['input'];
+  repository: Scalars['String']['input'];
 };
 
 export type QueryLogFileArgs = {
-  numberOfLines?: Scalars['Int'];
+  numberOfLines?: Scalars['Int']['input'];
 };
 
 export type QueryLuaScriptArgs = {
-  gitBranch?: Scalars['String'];
-  gitCommit?: Scalars['String'];
+  gitBranch?: Scalars['String']['input'];
+  gitCommit?: Scalars['String']['input'];
   gitPullRequest?: InputMaybe<PullRequestInput>;
   gitRepository: GitRepositoryInput;
-  gitTag?: Scalars['String'];
-  localPath?: Scalars['String'];
+  gitTag?: Scalars['String']['input'];
+  localPath?: Scalars['String']['input'];
   source?: FirmwareSource;
 };
 
 export type QueryPullRequestsArgs = {
-  owner: Scalars['String'];
-  repository: Scalars['String'];
+  owner: Scalars['String']['input'];
+  repository: Scalars['String']['input'];
 };
 
 export type QueryReleasesArgs = {
-  owner: Scalars['String'];
-  repository: Scalars['String'];
+  owner: Scalars['String']['input'];
+  repository: Scalars['String']['input'];
 };
 
 export type QueryTargetDeviceOptionsArgs = {
-  gitBranch?: Scalars['String'];
-  gitCommit?: Scalars['String'];
+  gitBranch?: Scalars['String']['input'];
+  gitCommit?: Scalars['String']['input'];
   gitPullRequest?: InputMaybe<PullRequestInput>;
   gitRepository: GitRepositoryInput;
-  gitTag?: Scalars['String'];
-  localPath?: Scalars['String'];
+  gitTag?: Scalars['String']['input'];
+  localPath?: Scalars['String']['input'];
   source?: FirmwareSource;
-  target?: Scalars['String'];
+  target?: Scalars['String']['input'];
 };
 
 export type Release = {
   readonly __typename?: 'Release';
-  readonly preRelease: Scalars['Boolean'];
-  readonly tagName: Scalars['String'];
+  readonly preRelease: Scalars['Boolean']['output'];
+  readonly tagName: Scalars['String']['output'];
 };
 
 export type SerialConnectionConfigInput = {
-  readonly baudRate?: Scalars['Float'];
-  readonly port?: Scalars['String'];
+  readonly baudRate?: Scalars['String']['input'];
+  readonly port?: Scalars['String']['input'];
 };
 
 export type SerialMonitorEvent = {
@@ -345,25 +354,25 @@ export enum SerialMonitorEventType {
 
 export type SerialMonitorLogUpdate = {
   readonly __typename?: 'SerialMonitorLogUpdate';
-  readonly data: Scalars['String'];
+  readonly data: Scalars['String']['output'];
 };
 
 export type SerialPortConnectResult = {
   readonly __typename?: 'SerialPortConnectResult';
-  readonly message?: Maybe<Scalars['String']>;
-  readonly success: Scalars['Boolean'];
+  readonly message?: Maybe<Scalars['String']['output']>;
+  readonly success: Scalars['Boolean']['output'];
 };
 
 export type SerialPortDisconnectResult = {
   readonly __typename?: 'SerialPortDisconnectResult';
-  readonly message?: Maybe<Scalars['String']>;
-  readonly success: Scalars['Boolean'];
+  readonly message?: Maybe<Scalars['String']['output']>;
+  readonly success: Scalars['Boolean']['output'];
 };
 
 export type SerialPortInformation = {
   readonly __typename?: 'SerialPortInformation';
-  readonly manufacturer: Scalars['String'];
-  readonly path: Scalars['String'];
+  readonly manufacturer: Scalars['String']['output'];
+  readonly path: Scalars['String']['output'];
 };
 
 export type Subscription = {
@@ -378,34 +387,34 @@ export type Subscription = {
 export type Target = {
   readonly __typename?: 'Target';
   readonly flashingMethod: FlashingMethod;
-  readonly id: Scalars['String'];
-  readonly name: Scalars['String'];
+  readonly id: Scalars['String']['output'];
+  readonly name: Scalars['String']['output'];
 };
 
 export type UpdatesAvailability = {
   readonly __typename?: 'UpdatesAvailability';
-  readonly newestVersion: Scalars['String'];
-  readonly releaseUrl: Scalars['String'];
-  readonly updateAvailable: Scalars['Boolean'];
+  readonly newestVersion: Scalars['String']['output'];
+  readonly releaseUrl: Scalars['String']['output'];
+  readonly updateAvailable: Scalars['Boolean']['output'];
 };
 
 export type UserDefine = {
   readonly __typename?: 'UserDefine';
-  readonly enabled: Scalars['Boolean'];
-  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']>>;
+  readonly enabled: Scalars['Boolean']['output'];
+  readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']['output']>>;
   readonly key: UserDefineKey;
   readonly optionGroup?: Maybe<UserDefineOptionGroup>;
-  readonly sensitive?: Maybe<Scalars['Boolean']>;
+  readonly sensitive?: Maybe<Scalars['Boolean']['output']>;
   readonly type: UserDefineKind;
-  readonly value?: Maybe<Scalars['String']>;
+  readonly value?: Maybe<Scalars['String']['output']>;
 };
 
 export type UserDefineInput = {
-  readonly enabled?: Scalars['Boolean'];
-  readonly enumValues?: InputMaybe<ReadonlyArray<Scalars['String']>>;
+  readonly enabled?: Scalars['Boolean']['input'];
+  readonly enumValues?: InputMaybe<ReadonlyArray<Scalars['String']['input']>>;
   readonly key?: UserDefineKey;
   readonly type?: UserDefineKind;
-  readonly value?: InputMaybe<Scalars['String']>;
+  readonly value?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum UserDefineKey {
@@ -466,10 +475,10 @@ export type AvailableDevicesListQuery = {
 
 export type AvailableFirmwareTargetsQueryVariables = Exact<{
   source: FirmwareSource;
-  gitTag: Scalars['String'];
-  gitBranch: Scalars['String'];
-  gitCommit: Scalars['String'];
-  localPath: Scalars['String'];
+  gitTag: Scalars['String']['input'];
+  gitBranch: Scalars['String']['input'];
+  gitCommit: Scalars['String']['input'];
+  localPath: Scalars['String']['input'];
   gitPullRequest?: InputMaybe<PullRequestInput>;
   gitRepository: GitRepositoryInput;
 }>;
@@ -582,7 +591,7 @@ export type BuildUserDefinesTxtMutation = {
 };
 
 export type CheckForUpdatesQueryVariables = Exact<{
-  currentVersion: Scalars['String'];
+  currentVersion: Scalars['String']['input'];
 }>;
 
 export type CheckForUpdatesQuery = {
@@ -635,12 +644,12 @@ export type ConnectToSerialDeviceMutation = {
 };
 
 export type TargetDeviceOptionsQueryVariables = Exact<{
-  target: Scalars['String'];
+  target: Scalars['String']['input'];
   source: FirmwareSource;
-  gitTag: Scalars['String'];
-  gitBranch: Scalars['String'];
-  gitCommit: Scalars['String'];
-  localPath: Scalars['String'];
+  gitTag: Scalars['String']['input'];
+  gitBranch: Scalars['String']['input'];
+  gitCommit: Scalars['String']['input'];
+  localPath: Scalars['String']['input'];
   gitPullRequest?: InputMaybe<PullRequestInput>;
   gitRepository: GitRepositoryInput;
 }>;
@@ -673,8 +682,8 @@ export type DisconnectFromSerialDeviceMutation = {
 };
 
 export type GetBranchesQueryVariables = Exact<{
-  owner: Scalars['String'];
-  repository: Scalars['String'];
+  owner: Scalars['String']['input'];
+  repository: Scalars['String']['input'];
 }>;
 
 export type GetBranchesQuery = {
@@ -683,8 +692,8 @@ export type GetBranchesQuery = {
 };
 
 export type GetPullRequestsQueryVariables = Exact<{
-  owner: Scalars['String'];
-  repository: Scalars['String'];
+  owner: Scalars['String']['input'];
+  repository: Scalars['String']['input'];
 }>;
 
 export type GetPullRequestsQuery = {
@@ -699,8 +708,8 @@ export type GetPullRequestsQuery = {
 };
 
 export type GetReleasesQueryVariables = Exact<{
-  owner: Scalars['String'];
-  repository: Scalars['String'];
+  owner: Scalars['String']['input'];
+  repository: Scalars['String']['input'];
 }>;
 
 export type GetReleasesQuery = {
@@ -713,7 +722,7 @@ export type GetReleasesQuery = {
 };
 
 export type LogFileQueryVariables = Exact<{
-  numberOfLines: Scalars['Int'];
+  numberOfLines: Scalars['Int']['input'];
 }>;
 
 export type LogFileQuery = {
@@ -732,10 +741,10 @@ export type LogFileQuery = {
 
 export type LuaScriptQueryVariables = Exact<{
   source: FirmwareSource;
-  gitTag: Scalars['String'];
-  gitBranch: Scalars['String'];
-  gitCommit: Scalars['String'];
-  localPath: Scalars['String'];
+  gitTag: Scalars['String']['input'];
+  gitBranch: Scalars['String']['input'];
+  gitCommit: Scalars['String']['input'];
+  localPath: Scalars['String']['input'];
   gitPullRequest?: InputMaybe<PullRequestInput>;
   gitRepository: GitRepositoryInput;
 }>;
@@ -782,8 +791,8 @@ export type MulticastDnsMonitorUpdatesSubscription = {
 };
 
 export type GetTagsQueryVariables = Exact<{
-  owner: Scalars['String'];
-  repository: Scalars['String'];
+  owner: Scalars['String']['input'];
+  repository: Scalars['String']['input'];
 }>;
 
 export type GetTagsQuery = {
@@ -863,11 +872,26 @@ export function useAvailableDevicesListLazyQuery(
     AvailableDevicesListQueryVariables
   >(AvailableDevicesListDocument, options);
 }
+export function useAvailableDevicesListSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    AvailableDevicesListQuery,
+    AvailableDevicesListQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    AvailableDevicesListQuery,
+    AvailableDevicesListQueryVariables
+  >(AvailableDevicesListDocument, options);
+}
 export type AvailableDevicesListQueryHookResult = ReturnType<
   typeof useAvailableDevicesListQuery
 >;
 export type AvailableDevicesListLazyQueryHookResult = ReturnType<
   typeof useAvailableDevicesListLazyQuery
+>;
+export type AvailableDevicesListSuspenseQueryHookResult = ReturnType<
+  typeof useAvailableDevicesListSuspenseQuery
 >;
 export type AvailableDevicesListQueryResult = Apollo.QueryResult<
   AvailableDevicesListQuery,
@@ -958,11 +982,26 @@ export function useAvailableFirmwareTargetsLazyQuery(
     AvailableFirmwareTargetsQueryVariables
   >(AvailableFirmwareTargetsDocument, options);
 }
+export function useAvailableFirmwareTargetsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    AvailableFirmwareTargetsQuery,
+    AvailableFirmwareTargetsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    AvailableFirmwareTargetsQuery,
+    AvailableFirmwareTargetsQueryVariables
+  >(AvailableFirmwareTargetsDocument, options);
+}
 export type AvailableFirmwareTargetsQueryHookResult = ReturnType<
   typeof useAvailableFirmwareTargetsQuery
 >;
 export type AvailableFirmwareTargetsLazyQueryHookResult = ReturnType<
   typeof useAvailableFirmwareTargetsLazyQuery
+>;
+export type AvailableFirmwareTargetsSuspenseQueryHookResult = ReturnType<
+  typeof useAvailableFirmwareTargetsSuspenseQuery
 >;
 export type AvailableFirmwareTargetsQueryResult = Apollo.QueryResult<
   AvailableFirmwareTargetsQuery,
@@ -1031,12 +1070,26 @@ export function useAvailableMulticastDnsDevicesListLazyQuery(
     AvailableMulticastDnsDevicesListQueryVariables
   >(AvailableMulticastDnsDevicesListDocument, options);
 }
+export function useAvailableMulticastDnsDevicesListSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    AvailableMulticastDnsDevicesListQuery,
+    AvailableMulticastDnsDevicesListQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    AvailableMulticastDnsDevicesListQuery,
+    AvailableMulticastDnsDevicesListQueryVariables
+  >(AvailableMulticastDnsDevicesListDocument, options);
+}
 export type AvailableMulticastDnsDevicesListQueryHookResult = ReturnType<
   typeof useAvailableMulticastDnsDevicesListQuery
 >;
 export type AvailableMulticastDnsDevicesListLazyQueryHookResult = ReturnType<
   typeof useAvailableMulticastDnsDevicesListLazyQuery
 >;
+export type AvailableMulticastDnsDevicesListSuspenseQueryHookResult =
+  ReturnType<typeof useAvailableMulticastDnsDevicesListSuspenseQuery>;
 export type AvailableMulticastDnsDevicesListQueryResult = Apollo.QueryResult<
   AvailableMulticastDnsDevicesListQuery,
   AvailableMulticastDnsDevicesListQueryVariables
@@ -1280,11 +1333,26 @@ export function useCheckForUpdatesLazyQuery(
     CheckForUpdatesQueryVariables
   >(CheckForUpdatesDocument, options);
 }
+export function useCheckForUpdatesSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    CheckForUpdatesQuery,
+    CheckForUpdatesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    CheckForUpdatesQuery,
+    CheckForUpdatesQueryVariables
+  >(CheckForUpdatesDocument, options);
+}
 export type CheckForUpdatesQueryHookResult = ReturnType<
   typeof useCheckForUpdatesQuery
 >;
 export type CheckForUpdatesLazyQueryHookResult = ReturnType<
   typeof useCheckForUpdatesLazyQuery
+>;
+export type CheckForUpdatesSuspenseQueryHookResult = ReturnType<
+  typeof useCheckForUpdatesSuspenseQuery
 >;
 export type CheckForUpdatesQueryResult = Apollo.QueryResult<
   CheckForUpdatesQuery,
@@ -1520,11 +1588,26 @@ export function useTargetDeviceOptionsLazyQuery(
     TargetDeviceOptionsQueryVariables
   >(TargetDeviceOptionsDocument, options);
 }
+export function useTargetDeviceOptionsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    TargetDeviceOptionsQuery,
+    TargetDeviceOptionsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    TargetDeviceOptionsQuery,
+    TargetDeviceOptionsQueryVariables
+  >(TargetDeviceOptionsDocument, options);
+}
 export type TargetDeviceOptionsQueryHookResult = ReturnType<
   typeof useTargetDeviceOptionsQuery
 >;
 export type TargetDeviceOptionsLazyQueryHookResult = ReturnType<
   typeof useTargetDeviceOptionsLazyQuery
+>;
+export type TargetDeviceOptionsSuspenseQueryHookResult = ReturnType<
+  typeof useTargetDeviceOptionsSuspenseQuery
 >;
 export type TargetDeviceOptionsQueryResult = Apollo.QueryResult<
   TargetDeviceOptionsQuery,
@@ -1628,9 +1711,24 @@ export function useGetBranchesLazyQuery(
     options
   );
 }
+export function useGetBranchesSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetBranchesQuery,
+    GetBranchesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<GetBranchesQuery, GetBranchesQueryVariables>(
+    GetBranchesDocument,
+    options
+  );
+}
 export type GetBranchesQueryHookResult = ReturnType<typeof useGetBranchesQuery>;
 export type GetBranchesLazyQueryHookResult = ReturnType<
   typeof useGetBranchesLazyQuery
+>;
+export type GetBranchesSuspenseQueryHookResult = ReturnType<
+  typeof useGetBranchesSuspenseQuery
 >;
 export type GetBranchesQueryResult = Apollo.QueryResult<
   GetBranchesQuery,
@@ -1688,11 +1786,26 @@ export function useGetPullRequestsLazyQuery(
     GetPullRequestsQueryVariables
   >(GetPullRequestsDocument, options);
 }
+export function useGetPullRequestsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetPullRequestsQuery,
+    GetPullRequestsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    GetPullRequestsQuery,
+    GetPullRequestsQueryVariables
+  >(GetPullRequestsDocument, options);
+}
 export type GetPullRequestsQueryHookResult = ReturnType<
   typeof useGetPullRequestsQuery
 >;
 export type GetPullRequestsLazyQueryHookResult = ReturnType<
   typeof useGetPullRequestsLazyQuery
+>;
+export type GetPullRequestsSuspenseQueryHookResult = ReturnType<
+  typeof useGetPullRequestsSuspenseQuery
 >;
 export type GetPullRequestsQueryResult = Apollo.QueryResult<
   GetPullRequestsQuery,
@@ -1748,9 +1861,24 @@ export function useGetReleasesLazyQuery(
     options
   );
 }
+export function useGetReleasesSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetReleasesQuery,
+    GetReleasesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<GetReleasesQuery, GetReleasesQueryVariables>(
+    GetReleasesDocument,
+    options
+  );
+}
 export type GetReleasesQueryHookResult = ReturnType<typeof useGetReleasesQuery>;
 export type GetReleasesLazyQueryHookResult = ReturnType<
   typeof useGetReleasesLazyQuery
+>;
+export type GetReleasesSuspenseQueryHookResult = ReturnType<
+  typeof useGetReleasesSuspenseQuery
 >;
 export type GetReleasesQueryResult = Apollo.QueryResult<
   GetReleasesQuery,
@@ -1803,8 +1931,23 @@ export function useLogFileLazyQuery(
     options
   );
 }
+export function useLogFileSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    LogFileQuery,
+    LogFileQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<LogFileQuery, LogFileQueryVariables>(
+    LogFileDocument,
+    options
+  );
+}
 export type LogFileQueryHookResult = ReturnType<typeof useLogFileQuery>;
 export type LogFileLazyQueryHookResult = ReturnType<typeof useLogFileLazyQuery>;
+export type LogFileSuspenseQueryHookResult = ReturnType<
+  typeof useLogFileSuspenseQuery
+>;
 export type LogFileQueryResult = Apollo.QueryResult<
   LogFileQuery,
   LogFileQueryVariables
@@ -1876,9 +2019,24 @@ export function useLuaScriptLazyQuery(
     options
   );
 }
+export function useLuaScriptSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    LuaScriptQuery,
+    LuaScriptQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<LuaScriptQuery, LuaScriptQueryVariables>(
+    LuaScriptDocument,
+    options
+  );
+}
 export type LuaScriptQueryHookResult = ReturnType<typeof useLuaScriptQuery>;
 export type LuaScriptLazyQueryHookResult = ReturnType<
   typeof useLuaScriptLazyQuery
+>;
+export type LuaScriptSuspenseQueryHookResult = ReturnType<
+  typeof useLuaScriptSuspenseQuery
 >;
 export type LuaScriptQueryResult = Apollo.QueryResult<
   LuaScriptQuery,
@@ -1984,8 +2142,23 @@ export function useGetTagsLazyQuery(
     options
   );
 }
+export function useGetTagsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetTagsQuery,
+    GetTagsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<GetTagsQuery, GetTagsQueryVariables>(
+    GetTagsDocument,
+    options
+  );
+}
 export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>;
 export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>;
+export type GetTagsSuspenseQueryHookResult = ReturnType<
+  typeof useGetTagsSuspenseQuery
+>;
 export type GetTagsQueryResult = Apollo.QueryResult<
   GetTagsQuery,
   GetTagsQueryVariables
