@@ -3,13 +3,13 @@ import JSONObjectScalar from '../graphql/scalars/JSONObjectScalar';
 
 @ObjectType('LogEntry')
 export default class LogEntry {
-  @Field()
+  @Field(() => String)
   level: string;
 
-  @Field()
+  @Field(() => String)
   message: string;
 
-  @Field()
+  @Field(() => String)
   timestamp: string;
 
   @Field(() => JSONObjectScalar, { nullable: true })

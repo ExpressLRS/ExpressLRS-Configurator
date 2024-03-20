@@ -5,13 +5,13 @@ import UserDefine from './UserDefine';
 
 @ObjectType('Device')
 export default class Device {
-  @Field()
+  @Field(() => String)
   id: string;
 
-  @Field()
+  @Field(() => String)
   name: string;
 
-  @Field()
+  @Field(() => String)
   category: string;
 
   @Field(() => [Target])
@@ -20,28 +20,28 @@ export default class Device {
   @Field(() => [UserDefine])
   userDefines: UserDefine[];
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   wikiUrl?: string;
 
-  @Field()
+  @Field(() => DeviceType)
   deviceType: DeviceType;
 
-  @Field()
+  @Field(() => Boolean)
   verifiedHardware: boolean;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   parent?: string | null;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   abbreviatedName?: string | null;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   luaName?: string | null;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   priorTargetName?: string | null;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   platform?: string | null;
 
   constructor(

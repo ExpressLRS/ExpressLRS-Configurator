@@ -10,13 +10,13 @@ export default class UserDefineInput {
   @Field(() => UserDefineKey)
   key: UserDefineKey;
 
-  @Field()
+  @Field(() => Boolean)
   enabled: boolean;
 
   @Field(() => [String], { nullable: true })
   enumValues?: string[];
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   value?: string;
 
   constructor() {

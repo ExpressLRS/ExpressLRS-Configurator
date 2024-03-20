@@ -11,34 +11,32 @@ export default class SourcesResolver {
 
   @Query(() => [String])
   async gitBranches(
-    @Arg('owner') owner: string,
-    @Arg('repository') repository: string
+    @Arg('owner', () => String) owner: string,
+    @Arg('repository', () => String) repository: string
   ) {
     return this.gitClient.loadBranches(owner, repository);
   }
 
   @Query(() => [String])
   async gitTags(
-    @Arg('owner') owner: string,
-    @Arg('repository') repository: string
+    @Arg('owner', () => String) owner: string,
+    @Arg('repository', () => String) repository: string
   ) {
-    const tags = await this.gitClient.loadTags(owner, repository);
-    return tags;
+    return this.gitClient.loadTags(owner, repository);
   }
 
   @Query(() => [Release])
   async releases(
-    @Arg('owner') owner: string,
-    @Arg('repository') repository: string
+    @Arg('owner', () => String) owner: string,
+    @Arg('repository', () => String) repository: string
   ) {
-    const releases = await this.gitClient.loadReleases(owner, repository);
-    return releases;
+    return this.gitClient.loadReleases(owner, repository);
   }
 
   @Query(() => [PullRequest])
   async pullRequests(
-    @Arg('owner') owner: string,
-    @Arg('repository') repository: string
+    @Arg('owner', () => String) owner: string,
+    @Arg('repository', () => String) repository: string
   ) {
     return this.gitClient.loadPullRequests(owner, repository);
   }

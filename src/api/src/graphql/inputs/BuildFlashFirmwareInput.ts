@@ -9,13 +9,13 @@ export default class BuildFlashFirmwareInput {
   @Field(() => BuildJobType)
   type: BuildJobType;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   serialDevice?: string;
 
   @Field(() => FirmwareVersionDataInput)
   firmware: FirmwareVersionDataInput;
 
-  @Field()
+  @Field(() => String)
   target: string;
 
   @Field(() => UserDefinesMode)
@@ -24,13 +24,13 @@ export default class BuildFlashFirmwareInput {
   @Field(() => [UserDefineInput])
   userDefines: UserDefineInput[];
 
-  @Field()
+  @Field(() => String)
   userDefinesTxt: string;
 
-  @Field()
+  @Field(() => Boolean)
   erase: boolean;
 
-  @Field()
+  @Field(() => Boolean)
   forceFlash: boolean;
 
   constructor() {

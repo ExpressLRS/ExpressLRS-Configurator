@@ -11,16 +11,16 @@ export default class UserDefine {
   @Field(() => UserDefineKey)
   key: UserDefineKey;
 
-  @Field()
+  @Field(() => Boolean)
   enabled: boolean;
 
-  @Field({ nullable: true })
+  @Field(() => Boolean, { nullable: true })
   sensitive?: boolean;
 
   @Field(() => [String], { nullable: true })
   enumValues?: string[];
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   value?: string;
 
   @Field(() => UserDefineOptionGroup, { nullable: true })

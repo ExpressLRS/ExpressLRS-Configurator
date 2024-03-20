@@ -2,22 +2,29 @@
  * Base webpack config used across other specific configs
  */
 
-import path from 'path';
 import webpack from 'webpack';
-import { dependencies as externals, version, productName } from '../../src/package.json';
+import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
+import { dependencies as externals, version, productName } from '../../release/app/package.json';
+import webpackPaths from './webpack.paths';
 
-export default {
+const configuration: webpack.Configuration = {
   externals: [...Object.keys(externals || {})],
+
+  stats: 'errors-only',
 
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.[jt]sx?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: 'ts-loader',
           options: {
-            cacheDirectory: true,
+            // Remove this line to enable type checking in webpack builds
+            transpileOnly: true,
+            compilerOptions: {
+              module: 'esnext',
+            },
           },
         },
       },
@@ -25,9 +32,11 @@ export default {
   },
 
   output: {
-    path: path.join(__dirname, '../../src'),
+    path: webpackPaths.srcPath,
     // https://github.com/webpack/webpack/issues/1114
-    libraryTarget: 'commonjs2',
+    library: {
+      type: 'commonjs2',
+    },
   },
 
   /**
@@ -35,13 +44,9 @@ export default {
    */
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
-    modules: [path.join(__dirname, '../src'), 'node_modules'],
-    /*
-      Workaround for https://github.com/apollographql/apollo-server/issues/4637#issuecomment-706813287
-     */
-    alias: {
-      graphql$: path.resolve(__dirname, '../../node_modules/graphql/index.js'),
-    },
+    modules: [webpackPaths.srcPath, 'node_modules'],
+    // There is no need to add aliases here, the paths in tsconfig get mirrored
+    plugins: [new TsconfigPathsPlugins()],
   },
 
   plugins: [
@@ -54,3 +59,5 @@ export default {
     }),
   ],
 };
+
+export default configuration;

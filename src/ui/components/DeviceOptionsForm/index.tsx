@@ -20,6 +20,7 @@ import {
 } from '../../gql/generated/types';
 import ShowAlerts from '../ShowAlerts';
 import Loader from '../Loader';
+import useDeveloperMode from '../../hooks/useDeveloperMode';
 
 const styles: Record<string, SxProps<Theme>> = {
   categoryTitle: {
@@ -242,29 +243,33 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
       });
   };
 
+  const { isDeveloperModeEnabled } = useDeveloperMode();
+
   return (
     <>
-      <FormControl component="fieldset" sx={styles.userDefinesMode}>
-        <RadioGroup
-          row
-          value={deviceOptions.userDefinesMode}
-          onChange={onUserDefinesMode}
-          defaultValue="top"
-        >
-          <FormControlLabel
-            value={UserDefinesMode.UserInterface}
-            sx={styles.radioControl}
-            control={<Radio sx={styles.radio} color="primary" />}
-            label={t('DeviceOptionsForm.StandardMode')}
-          />
-          <FormControlLabel
-            value={UserDefinesMode.Manual}
-            sx={styles.radioControl}
-            control={<Radio sx={styles.radio} color="primary" />}
-            label={t('DeviceOptionsForm.ManualMode')}
-          />
-        </RadioGroup>
-      </FormControl>
+      {isDeveloperModeEnabled && (
+        <FormControl component="fieldset" sx={styles.userDefinesMode}>
+          <RadioGroup
+            row
+            value={deviceOptions.userDefinesMode}
+            onChange={onUserDefinesMode}
+            defaultValue="top"
+          >
+            <FormControlLabel
+              value={UserDefinesMode.UserInterface}
+              sx={styles.radioControl}
+              control={<Radio sx={styles.radio} color="primary" />}
+              label={t('DeviceOptionsForm.StandardMode')}
+            />
+            <FormControlLabel
+              value={UserDefinesMode.Manual}
+              sx={styles.radioControl}
+              control={<Radio sx={styles.radio} color="primary" />}
+              label={t('DeviceOptionsForm.ManualMode')}
+            />
+          </RadioGroup>
+        </FormControl>
+      )}
       {deviceOptions.userDefinesMode === UserDefinesMode.Manual && (
         <Grid container spacing={3}>
           <Grid item xs>

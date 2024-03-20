@@ -10,7 +10,7 @@ export default class LogFileResolver {
   constructor(private logFileService: LogFileService) {}
 
   @Query(() => LogFile)
-  async logFile(@Args() args: LogFileArgs): Promise<LogFile> {
+  async logFile(@Args(() => LogFileArgs) args: LogFileArgs): Promise<LogFile> {
     const content = await this.logFileService.loadLogFile(args);
     return { content };
   }

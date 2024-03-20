@@ -1,7 +1,6 @@
 import { Box, Button, Card, CardContent, Divider } from '@mui/material';
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import ListIcon from '@mui/icons-material/List';
-import { ipcRenderer } from 'electron';
 import { useTranslation } from 'react-i18next';
 import Loader from '../../components/Loader';
 import CardTitle from '../../components/CardTitle';
@@ -23,7 +22,7 @@ const LogsView: FunctionComponent = () => {
   ] = useLogFileLazyQuery({ fetchPolicy: 'network-only' });
 
   const onLogs = () => {
-    ipcRenderer.send(IpcRequest.OpenLogsFolder);
+    window.electron.ipcRenderer.sendMessage(IpcRequest.OpenLogsFolder);
   };
 
   useEffect(() => {

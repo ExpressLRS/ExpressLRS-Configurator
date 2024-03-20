@@ -10,7 +10,6 @@ import {
   TextField,
 } from '@mui/material';
 import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
-import { ipcRenderer } from 'electron';
 import debounce from 'lodash.debounce';
 import semver from 'semver';
 import { SxProps, Theme } from '@mui/system';
@@ -29,6 +28,7 @@ import {
 import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
 import ApplicationStorage from '../../storage';
 import GitRepository from '../../models/GitRepository';
+import useDeveloperMode from '../../hooks/useDeveloperMode';
 
 const styles: Record<string, SxProps<Theme>> = {
   tabs: {
@@ -296,7 +296,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   }, []);
 
   const onChooseFolder = () => {
-    ipcRenderer
+    window.electron.ipcRenderer
       .invoke(IpcRequest.ChooseFolder)
       .then((result: ChooseFolderResponseBody) => {
         if (result.success) {
@@ -405,6 +405,8 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   const showBetaFpvAlert =
     localPath?.toLocaleLowerCase()?.indexOf('betafpv') > -1;
 
+  const { isDeveloperModeEnabled } = useDeveloperMode();
+
   return (
     <>
       <Tabs
@@ -417,22 +419,30 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
           label={t('FirmwareVersionForm.OfficialReleases')}
           value={FirmwareSource.GitTag}
         />
-        <Tab
-          label={t('FirmwareVersionForm.GitBranch')}
-          value={FirmwareSource.GitBranch}
-        />
-        <Tab
-          label={t('FirmwareVersionForm.GitCommit')}
-          value={FirmwareSource.GitCommit}
-        />
-        <Tab
-          label={t('FirmwareVersionForm.Local')}
-          value={FirmwareSource.Local}
-        />
-        <Tab
-          label={t('FirmwareVersionForm.GitPullRequest')}
-          value={FirmwareSource.GitPullRequest}
-        />
+        {isDeveloperModeEnabled && (
+          <Tab
+            label={t('FirmwareVersionForm.GitBranch')}
+            value={FirmwareSource.GitBranch}
+          />
+        )}
+        {isDeveloperModeEnabled && (
+          <Tab
+            label={t('FirmwareVersionForm.GitCommit')}
+            value={FirmwareSource.GitCommit}
+          />
+        )}
+        {isDeveloperModeEnabled && (
+          <Tab
+            label={t('FirmwareVersionForm.Local')}
+            value={FirmwareSource.Local}
+          />
+        )}
+        {isDeveloperModeEnabled && (
+          <Tab
+            label={t('FirmwareVersionForm.GitPullRequest')}
+            value={FirmwareSource.GitPullRequest}
+          />
+        )}
       </Tabs>
       {firmwareSource === FirmwareSource.GitTag && gitTags !== undefined && (
         <Box sx={styles.tabContents}>

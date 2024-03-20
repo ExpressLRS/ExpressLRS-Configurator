@@ -2,7 +2,7 @@ import { Field, ObjectType } from 'type-graphql';
 
 @ObjectType('LuaScript')
 export default class LuaScript {
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   fileLocation: string | null;
 
   constructor(fileLocation: string | null) {

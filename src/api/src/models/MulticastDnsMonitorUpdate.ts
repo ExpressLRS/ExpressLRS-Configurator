@@ -10,7 +10,7 @@ export default class MulticastDnsMonitorUpdate
   @Field(() => MulticastDnsEventType)
   type: MulticastDnsEventType;
 
-  @Field()
+  @Field(() => MulticastDnsInformation)
   data: MulticastDnsInformation;
 
   constructor(type: MulticastDnsEventType, data: MulticastDnsInformation) {

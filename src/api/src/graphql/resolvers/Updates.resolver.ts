@@ -9,7 +9,9 @@ export default class UpdatesResolver {
   constructor(private updatesService: UpdatesService) {}
 
   @Query(() => UpdatesAvailability)
-  async checkForUpdates(@Arg('currentVersion') currentVersion: string) {
+  async checkForUpdates(
+    @Arg('currentVersion', () => String) currentVersion: string
+  ) {
     return this.updatesService.checkForNewerReleases(currentVersion);
   }
 }

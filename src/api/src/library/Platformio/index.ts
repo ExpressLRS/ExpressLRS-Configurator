@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import child_process from 'child_process';
-import rimraf from 'rimraf';
+import { rimraf } from 'rimraf';
 import * as os from 'os';
 import Commander, { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 import { LoggerService } from '../../logger';
@@ -208,15 +208,8 @@ export default class Platformio {
     if (!statResult.isDirectory()) {
       return Promise.resolve();
     }
-    return new Promise((resolve, reject) => {
-      rimraf(dotPlatformio, (err) => {
-        if (err) {
-          reject();
-        } else {
-          resolve();
-        }
-      });
-    });
+    await rimraf(dotPlatformio);
+    return Promise.resolve();
   }
 
   async clearPlatformioUsingCoreState(): Promise<void> {
@@ -234,15 +227,7 @@ export default class Platformio {
       throw new Error(`core_dir is invalid: ${platformioStateJson.core_dir}`);
     }
 
-    return new Promise((resolve, reject) => {
-      rimraf(platformioStateJson.core_dir, (err) => {
-        if (err) {
-          reject();
-        } else {
-          resolve();
-        }
-      });
-    });
+    await rimraf(platformioStateJson.core_dir);
   }
 
   async clearPlatformioCoreDir(): Promise<void> {

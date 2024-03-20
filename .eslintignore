@@ -48,6 +48,12 @@ main.js.map
 npm-debug.log.*
 __snapshots__
 
+# Generated files
+src/ui/gql/generated/types.ts
+
+# Non project files
+assets/assets.d.ts
+
 # Package.json
 package.json
 .travis.yml
@@ -56,3 +62,4 @@ package.json
 *.scss.d.ts
 
 dependencies
+.eslintrc.js

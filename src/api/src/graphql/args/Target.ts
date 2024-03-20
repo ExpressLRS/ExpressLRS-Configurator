@@ -7,16 +7,16 @@ export default class TargetArgs {
   @Field(() => FirmwareSource)
   source: FirmwareSource;
 
-  @Field()
+  @Field(() => String)
   gitTag: string;
 
-  @Field()
+  @Field(() => String)
   gitBranch: string;
 
-  @Field()
+  @Field(() => String)
   gitCommit: string;
 
-  @Field()
+  @Field(() => String)
   localPath: string;
 
   @Field(() => PullRequest, { nullable: true })

@@ -7,9 +7,9 @@ const searchParams = new URLSearchParams(window.location.search.slice(1));
 const httpLink = new HttpLink({
   uri: searchParams.get('api_url') ?? 'http://localhost:3500/graphql',
   credentials: 'include',
-  headers: () => ({
+  headers: {
     'Accept-Language': 'en',
-  }),
+  },
 });
 
 const wsLink = new GraphQLWsLink(
