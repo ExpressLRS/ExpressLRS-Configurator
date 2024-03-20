@@ -4,7 +4,7 @@ import {
   Divider,
   Drawer,
   List,
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Toolbar,
@@ -20,6 +20,7 @@ import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
+import useDeveloperMode from '../../hooks/useDeveloperMode';
 
 const drawerWidth = 215;
 
@@ -42,6 +43,7 @@ const styles: Record<string, SxProps<Theme>> = {
 
 const Sidebar: FunctionComponent = () => {
   const location = useLocation();
+  const { isDeveloperModeEnabled } = useDeveloperMode();
   const configuratorActive =
     matchPath(location.pathname, '/configurator') !== null;
   const backpackActive = matchPath(location.pathname, '/backpack') !== null;
@@ -63,88 +65,84 @@ const Sidebar: FunctionComponent = () => {
       <Divider />
       <Box sx={styles.drawerContainer}>
         <List>
-          <ListItem
+          <ListItemButton
             component={Link}
             to="/configurator"
             selected={configuratorActive}
             sx={styles.menuItem}
-            button
             disabled={!navigationEnabled}
           >
             <ListItemIcon>
               <BuildIcon />
             </ListItemIcon>
             <ListItemText primary={t('Sidebar.Configurator')} />
-          </ListItem>
-          <ListItem
+          </ListItemButton>
+          <ListItemButton
             component={Link}
             to="/backpack"
             selected={backpackActive}
             sx={styles.menuItem}
-            button
             disabled={!navigationEnabled}
           >
             <ListItemIcon>
               <BackpackIcon />
             </ListItemIcon>
             <ListItemText primary={t('Sidebar.Backpack')} />
-          </ListItem>
+          </ListItemButton>
 
-          <ListItem
+          <ListItemButton
             component={Link}
             to="/logs"
             selected={logsActive}
             sx={styles.menuItem}
-            button
             disabled={!navigationEnabled}
           >
             <ListItemIcon>
               <ListIcon />
             </ListItemIcon>
             <ListItemText primary={t('Sidebar.Logs')} />
-          </ListItem>
+          </ListItemButton>
 
-          <ListItem
-            component={Link}
-            to="/serial-monitor"
-            selected={serialMonitorActive}
-            sx={styles.menuItem}
-            button
-            disabled={!navigationEnabled}
-          >
-            <ListItemIcon>
-              <DvrIcon />
-            </ListItemIcon>
-            <ListItemText primary={t('Sidebar.SerialMonitor')} />
-          </ListItem>
+          {isDeveloperModeEnabled && (
+            <ListItemButton
+              component={Link}
+              to="/serial-monitor"
+              selected={serialMonitorActive}
+              sx={styles.menuItem}
+              disabled={!navigationEnabled}
+            >
+              <ListItemIcon>
+                <DvrIcon />
+              </ListItemIcon>
+              <ListItemText primary={t('Sidebar.SerialMonitor')} />
+            </ListItemButton>
+          )}
 
-          <ListItem
+          <ListItemButton
             component={Link}
             to="/settings"
             selected={settingsActive}
             sx={styles.menuItem}
-            button
             disabled={!navigationEnabled}
           >
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>
             <ListItemText primary={t('Sidebar.Settings')} />
-          </ListItem>
+          </ListItemButton>
 
-          <ListItem
+          <ListItemButton
             component={Link}
             to="/support"
             selected={supportActive}
             sx={styles.menuItem}
-            button
             disabled={!navigationEnabled}
           >
             <ListItemIcon>
               <HelpIcon />
             </ListItemIcon>
             <ListItemText primary={t('Sidebar.Support')} />
-          </ListItem>
+          </ListItemButton>
         </List>
       </Box>
     </Drawer>
