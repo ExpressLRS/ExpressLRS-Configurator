@@ -207,7 +207,9 @@
   "SettingsView": {
     "Settings": "Indstillinger",
     "LanguageSelector": "Vælg sprog",
-    "CurrentLanguage": "Nuværende sprog"
+    "CurrentLanguage": "Nuværende sprog",
+    "DeveloperMode": "Udviklings tilstand",
+    "DeveloperOptions": "Udviklings indstillinger"
   },
   "SupportView": {
     "Support": "Support",

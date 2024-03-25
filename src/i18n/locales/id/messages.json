@@ -207,7 +207,9 @@
   "SettingsView": {
     "Settings": "Pengaturan",
     "LanguageSelector": "Pemilihan bahasa",
-    "CurrentLanguage": "Bahasa saat ini"
+    "CurrentLanguage": "Bahasa saat ini",
+    "DeveloperMode": "Developer Mode",
+    "DeveloperOptions": "Developer Options"
   },
   "SupportView": {
     "Support": "Dukungan",

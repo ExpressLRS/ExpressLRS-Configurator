@@ -207,7 +207,9 @@
   "SettingsView": {
     "Settings": "设置",
     "LanguageSelector": "语言选择",
-    "CurrentLanguage": "当前语言"
+    "CurrentLanguage": "当前语言",
+    "DeveloperMode": "Developer Mode",
+    "DeveloperOptions": "Developer Options"
   },
   "SupportView": {
     "Support": "支持",

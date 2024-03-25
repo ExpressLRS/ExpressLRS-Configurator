@@ -207,7 +207,9 @@
   "SettingsView": {
     "Settings": "Ρυθμίσεις",
     "LanguageSelector": "Επιλογή γλώσσας",
-    "CurrentLanguage": "Τρέχουσα γλώσσα"
+    "CurrentLanguage": "Τρέχουσα γλώσσα",
+    "DeveloperMode": "Λειτουργία για προγραμματιστές",
+    "DeveloperOptions": "Επιλογές για προγραμματιστές"
   },
   "SupportView": {
     "Support": "Υποστήριξη",
