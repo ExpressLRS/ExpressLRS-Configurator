@@ -36,9 +36,9 @@ node_modules
 /release/linux-*
 /release/win-*
 /release/mac-*
-/release/expresslrs-configurator*
+/release/expresslrs[ -]configurator*
 /release/builder-*
-/release/latest-*
+/release/latest[/.-]*
 /src/dist
 /.erb/dll
 
