@@ -207,7 +207,9 @@
   "SettingsView": {
     "Settings": "설정",
     "LanguageSelector": "언어 선택",
-    "CurrentLanguage": "현재 언어"
+    "CurrentLanguage": "현재 언어",
+    "DeveloperMode": "Developer Mode",
+    "DeveloperOptions": "Developer Options"
   },
   "SupportView": {
     "Support": "사용자 지원",

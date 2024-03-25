@@ -207,7 +207,9 @@
   "SettingsView": {
     "Settings": "Налаштування",
     "LanguageSelector": "Вибір мови",
-    "CurrentLanguage": "Поточна мова"
+    "CurrentLanguage": "Поточна мова",
+    "DeveloperMode": "Режим розробника",
+    "DeveloperOptions": "Параметри для розробників"
   },
   "SupportView": {
     "Support": "Підтримка",
