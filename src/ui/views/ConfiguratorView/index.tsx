@@ -1220,7 +1220,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     variant="contained"
                     onClick={onFlash}
                   >
-                    {t('ConfiguratorView.FlashAgain')}
+                    {t('ConfiguratorView.FlashAnother')}
                   </Button>
                 )}
 

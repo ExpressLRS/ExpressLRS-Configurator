@@ -194,7 +194,7 @@
     "BuildNotice": "编译通知",
     "FirmwareOpenedInFileExplorer": "固件二进制文件已在文件资源管理器中打开",
     "Back": "返回",
-    "FlashAgain": "再次刷写",
+    "FlashAnother": "刷写另一个",
     "Retry": "重试"
   },
   "LogsView": {
