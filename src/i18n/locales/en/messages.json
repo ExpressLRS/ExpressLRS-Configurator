@@ -194,6 +194,7 @@
     "BuildNotice": "Build notice",
     "FirmwareOpenedInFileExplorer": "Firmware binary file was opened in the file explorer",
     "Back": "Back",
+    "FlashAnother": "Flash another",
     "Retry": "Retry"
   },
   "LogsView": {
