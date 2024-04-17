@@ -7,7 +7,7 @@ preserve_hierarchy: true
 files:
   [
     {
-      'source': '/src/i18n/locales/en/messages.json',
-      'translation': '/src/i18n/locales/%two_letters_code%/%original_file_name%',
+      'source': '/src/i18n/locales/en-US/messages.json',
+      'translation': '/src/i18n/locales/%locale%/%original_file_name%',
     },
   ]

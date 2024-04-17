@@ -1,14 +1,14 @@
 [
   {
-    "value": "en",
+    "value": "en-US",
     "label": "English"
   },
   {
-    "value": "it",
+    "value": "it-IT",
     "label": "Italiano (Italian)"
   },
   {
-    "value": "es",
+    "value": "es-ES",
     "label": "Español (Spanish)"
   },
   {
@@ -16,39 +16,39 @@
     "label": "简体中文 (Simplified Chinese)"
   },
   {
-    "value": "ja",
+    "value": "ja-JP",
     "label": "日本語 (Japanese)"
   },
   {
-    "value": "ko",
+    "value": "ko-KR",
     "label": "한국어 (Korean)"
   },
   {
-    "value": "ru",
+    "value": "ru-RU",
     "label": "Русский (Russian)"
   },
   {
-    "value": "el",
+    "value": "el-GR",
     "label": "Ελληνικά (Greek)"
   },
   {
-    "value": "uk",
+    "value": "uk-UA",
     "label": "Українська (Ukrainian)"
   },
   {
-    "value": "fr",
+    "value": "fr-FR",
     "label": "Français (French)"
   },
   {
-    "value": "de",
+    "value": "de-DE",
     "label": "Deutsche (German)"
   },
   {
-    "value": "id",
+    "value": "id-ID",
     "label": "Bahasa Indonesia (Indonesian)"
   },
   {
-    "value": "da",
+    "value": "da-DK",
     "label": "Dansk (Danish)"
   }
 ]

@@ -13,7 +13,7 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: 'en',
+    fallbackLng: 'en-US',
     backend: {
       loadPath,
     },
@@ -22,6 +22,6 @@ i18n
       process.env.DEBUG_PROD === 'true',
   });
 
-// i18n.changeLanguage('en')
+// i18n.changeLanguage('en-US')
 
 export default i18n;
