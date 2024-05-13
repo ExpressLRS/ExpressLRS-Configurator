@@ -194,6 +194,7 @@
     "BuildNotice": "Ειδοποίηση έκδοσης",
     "FirmwareOpenedInFileExplorer": "Το binary αρχείο firmware ανοίχθηκε στον περιηγητή αρχείων",
     "Back": "Πίσω",
+    "FlashAnother": "Flash another",
     "Retry": "Επανάληψη"
   },
   "LogsView": {

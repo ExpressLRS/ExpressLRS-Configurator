@@ -194,6 +194,7 @@
     "BuildNotice": "Примечания к сборке",
     "FirmwareOpenedInFileExplorer": "Бинарный файл прошивки был открыт в файловом обозревателе",
     "Back": "Назад",
+    "FlashAnother": "Прошить ещё один",
     "Retry": "Повторить"
   },
   "LogsView": {

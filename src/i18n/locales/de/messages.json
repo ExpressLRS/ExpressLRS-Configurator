@@ -194,6 +194,7 @@
     "BuildNotice": "Hinweis zur Firmware",
     "FirmwareOpenedInFileExplorer": "Die Firmware-Datei wurde im Dateimanager geöffnet",
     "Back": "Zurück",
+    "FlashAnother": "Auf weiterem Gerät installieren",
     "Retry": "Erneut versuchen"
   },
   "LogsView": {

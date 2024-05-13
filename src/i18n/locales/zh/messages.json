@@ -194,7 +194,7 @@
     "BuildNotice": "编译通知",
     "FirmwareOpenedInFileExplorer": "固件二进制文件已在文件资源管理器中打开",
     "Back": "返回",
-    "FlashAnother": "刷写另一个",
+    "FlashAnother": "刷入另一个",
     "Retry": "重试"
   },
   "LogsView": {
@@ -209,8 +209,8 @@
     "Settings": "设置",
     "LanguageSelector": "语言选择",
     "CurrentLanguage": "当前语言",
-    "DeveloperMode": "Developer Mode",
-    "DeveloperOptions": "Developer Options"
+    "DeveloperMode": "开发者模式",
+    "DeveloperOptions": "开发者选项"
   },
   "SupportView": {
     "Support": "支持",

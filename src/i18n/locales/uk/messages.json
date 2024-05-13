@@ -194,6 +194,7 @@
     "BuildNotice": "Повідомлення про збірку",
     "FirmwareOpenedInFileExplorer": "Бінарний файл з прошивкою був відкритий у файловому провіднику",
     "Back": "Назад",
+    "FlashAnother": "Прошити інший",
     "Retry": "Повторити"
   },
   "LogsView": {

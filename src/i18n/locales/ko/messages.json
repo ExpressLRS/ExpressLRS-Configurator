@@ -194,6 +194,7 @@
     "BuildNotice": "빌드 알림사항",
     "FirmwareOpenedInFileExplorer": "펌웨어 바이너리 파일이 파일 탐색기에 나타납니다.",
     "Back": "뒤로",
+    "FlashAnother": "다시 플래시하기",
     "Retry": "재시도"
   },
   "LogsView": {
@@ -208,8 +209,8 @@
     "Settings": "설정",
     "LanguageSelector": "언어 선택",
     "CurrentLanguage": "현재 언어",
-    "DeveloperMode": "Developer Mode",
-    "DeveloperOptions": "Developer Options"
+    "DeveloperMode": "개발자 모드",
+    "DeveloperOptions": "개발자 옵션"
   },
   "SupportView": {
     "Support": "사용자 지원",
