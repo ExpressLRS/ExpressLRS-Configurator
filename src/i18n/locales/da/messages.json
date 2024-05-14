@@ -194,6 +194,7 @@
     "BuildNotice": "Bemærkning til byg",
     "FirmwareOpenedInFileExplorer": "Firmware image fil blev åbnet i fil browser",
     "Back": "Tilbage",
+    "FlashAnother": "Brænd igen",
     "Retry": "Prøv igen"
   },
   "LogsView": {

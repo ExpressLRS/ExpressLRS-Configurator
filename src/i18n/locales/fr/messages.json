@@ -194,6 +194,7 @@
     "BuildNotice": "Note de compilation",
     "FirmwareOpenedInFileExplorer": "Le binaire du micrologiciel a été ouvert dans votre explorateur de fichiers",
     "Back": "Retour",
+    "FlashAnother": "Configurer un autre",
     "Retry": "Réessayer"
   },
   "LogsView": {

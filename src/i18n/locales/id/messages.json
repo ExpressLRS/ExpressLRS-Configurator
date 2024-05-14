@@ -194,6 +194,7 @@
     "BuildNotice": "Catatan Build",
     "FirmwareOpenedInFileExplorer": "Binary firmware telah dibuka di file explorer",
     "Back": "Kembali",
+    "FlashAnother": "Flash another",
     "Retry": "Coba Lagi"
   },
   "LogsView": {

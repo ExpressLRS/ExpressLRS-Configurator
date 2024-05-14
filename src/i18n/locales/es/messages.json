@@ -194,6 +194,7 @@
     "BuildNotice": "Aviso de compilación",
     "FirmwareOpenedInFileExplorer": "El archivo binario de firmware ha sido abierto en el explorador de archivos",
     "Back": "Volver",
+    "FlashAnother": "Flash another",
     "Retry": "Reintentar"
   },
   "LogsView": {
