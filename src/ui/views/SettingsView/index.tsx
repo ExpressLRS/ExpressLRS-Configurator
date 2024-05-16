@@ -19,8 +19,8 @@ import useDeveloperMode from '../../hooks/useDeveloperMode';
 const SettingsView: FunctionComponent = () => {
   const { t, i18n } = useTranslation();
 
-  // Sort language labels in "()" alphabetically except English, becaunse English has no "()".
-  const languages = [...locales].sort((a, b) => {
+  // Sort language labels in "()" alphabetically except English, because English has no "()".
+  const languages: Option[] = [...locales].sort((a, b) => {
     const labelA =
       a.label.match(/\(([^)]+)\)/)?.[1].toLowerCase() || a.label.toLowerCase();
     const labelB =
