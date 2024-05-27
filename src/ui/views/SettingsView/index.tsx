@@ -18,8 +18,18 @@ import useDeveloperMode from '../../hooks/useDeveloperMode';
 
 const SettingsView: FunctionComponent = () => {
   const { t, i18n } = useTranslation();
-  const languages: Option[] = locales;
-  const defaultLanguage = locales[0];
+
+  // Sort language labels in "()" alphabetically except English, because English has no "()".
+  const languages: Option[] = [...locales].sort((a, b) => {
+    const labelA =
+      a.label.match(/\(([^)]+)\)/)?.[1].toLowerCase() || a.label.toLowerCase();
+    const labelB =
+      b.label.match(/\(([^)]+)\)/)?.[1].toLowerCase() || b.label.toLowerCase();
+    return labelA.localeCompare(labelB);
+  });
+
+  const defaultLanguage = languages[0];
+
   const onLocaleChange = (locale: string | null) => {
     if (locale === null) {
       i18n.changeLanguage(defaultLanguage.value);
