@@ -202,7 +202,8 @@
   },
   "resolutions": {
     "watchpack": "2.4.0",
-    "node-abi": "3.54.0"
+    "node-abi": "3.62.0",
+    "node-gyp": "9.4.1"
   },
   "devDependencies": {
     "@electron/notarize": "^2.3.2",
