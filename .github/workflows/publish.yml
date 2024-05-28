@@ -24,6 +24,10 @@ jobs:
           node-version: 18.17.1
           cache: 'yarn'
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
       # required for node gyp / serialport module
       - name: Install setuptools
         run: pip install setuptools
