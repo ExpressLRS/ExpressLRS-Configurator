@@ -54,7 +54,6 @@
       "devices/"
     ],
     "afterSign": ".erb/scripts/notarize.js",
-    "afterPack": ".erb/scripts/linux-sandbox-fix.js",
     "mac": {
       "target": [
         "dmg"
@@ -110,18 +109,27 @@
       ]
     },
     "rpm": {
+      "executableArgs": [
+        "--no-sandbox"
+      ],
       "depends": [
         "git",
         "python3"
       ]
     },
     "pacman": {
+      "executableArgs": [
+        "--no-sandbox"
+      ],
       "depends": [
         "git",
         "python3"
       ]
     },
     "snap": {
+      "executableArgs": [
+        "--no-sandbox"
+      ],
       "stagePackages": [
         "default",
         "git",
@@ -129,6 +137,9 @@
       ]
     },
     "deb": {
+      "executableArgs": [
+        "--no-sandbox"
+      ],
       "depends": [
         "git",
         "python3",
