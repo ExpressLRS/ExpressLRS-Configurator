@@ -11,7 +11,7 @@ async function afterPack({ appOutDir, electronPlatformName, packager }) {
     return;
   }
 
-  const appName = packager.appInfo.productFilename;
+  const appName = packager.appInfo.linuxPackageName;
   const script = `#!/bin/bash\n"\${BASH_SOURCE%/*}"/${appName}.bin --no-sandbox "$@"`;
   const scriptPath = path.join(appOutDir, appName);
 
