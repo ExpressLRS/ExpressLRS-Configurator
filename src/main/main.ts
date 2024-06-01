@@ -165,10 +165,6 @@ if (app.commandLine.hasSwitch('disable-gpu')) {
   app.commandLine.appendSwitch('disable-software-rasterizer');
 }
 
-if (process.platform === 'linux') {
-  app.commandLine.appendSwitch('--no-sandbox');
-}
-
 let mainWindow: BrowserWindow | null = null;
 let updater: Updater | null = null;
 const localServer: ApiServer = new ApiServer();

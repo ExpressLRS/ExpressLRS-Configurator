@@ -54,6 +54,7 @@
       "devices/"
     ],
     "afterSign": ".erb/scripts/notarize.js",
+    "afterPack": ".erb/scripts/linux-sandbox-fix.js",
     "mac": {
       "target": [
         "dmg"
