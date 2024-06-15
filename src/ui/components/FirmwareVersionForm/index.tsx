@@ -28,7 +28,7 @@ import {
 import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
 import ApplicationStorage from '../../storage';
 import GitRepository from '../../models/GitRepository';
-import useDeveloperMode from '../../hooks/useDeveloperMode';
+import useAppState from '../../hooks/useAppState';
 
 const styles: Record<string, SxProps<Theme>> = {
   tabs: {
@@ -405,7 +405,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   const showBetaFpvAlert =
     localPath?.toLocaleLowerCase()?.indexOf('betafpv') > -1;
 
-  const { isDeveloperModeEnabled } = useDeveloperMode();
+  const { isExpertModeEnabled } = useAppState();
 
   return (
     <>
@@ -419,25 +419,25 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
           label={t('FirmwareVersionForm.OfficialReleases')}
           value={FirmwareSource.GitTag}
         />
-        {isDeveloperModeEnabled && (
+        {isExpertModeEnabled && (
           <Tab
             label={t('FirmwareVersionForm.GitBranch')}
             value={FirmwareSource.GitBranch}
           />
         )}
-        {isDeveloperModeEnabled && (
+        {isExpertModeEnabled && (
           <Tab
             label={t('FirmwareVersionForm.GitCommit')}
             value={FirmwareSource.GitCommit}
           />
         )}
-        {isDeveloperModeEnabled && (
+        {isExpertModeEnabled && (
           <Tab
             label={t('FirmwareVersionForm.Local')}
             value={FirmwareSource.Local}
           />
         )}
-        {isDeveloperModeEnabled && (
+        {isExpertModeEnabled && (
           <Tab
             label={t('FirmwareVersionForm.GitPullRequest')}
             value={FirmwareSource.GitPullRequest}

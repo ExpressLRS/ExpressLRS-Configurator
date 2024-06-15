@@ -20,7 +20,7 @@ import {
 } from '../../gql/generated/types';
 import ShowAlerts from '../ShowAlerts';
 import Loader from '../Loader';
-import useDeveloperMode from '../../hooks/useDeveloperMode';
+import useAppState from '../../hooks/useAppState';
 
 const styles: Record<string, SxProps<Theme>> = {
   categoryTitle: {
@@ -243,11 +243,11 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
       });
   };
 
-  const { isDeveloperModeEnabled } = useDeveloperMode();
+  const { isExpertModeEnabled } = useAppState();
 
   return (
     <>
-      {isDeveloperModeEnabled && (
+      {isExpertModeEnabled && (
         <FormControl component="fieldset" sx={styles.userDefinesMode}>
           <RadioGroup
             row

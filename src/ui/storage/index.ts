@@ -59,9 +59,9 @@ export interface IApplicationStorage {
 
   getShowSensitiveFieldData(field: string): Promise<boolean | null>;
 
-  setDeveloperModeEnabled(value: boolean): Promise<void>;
+  setExpertModeEnabled(value: boolean): void;
 
-  getDeveloperModeEnabled(): Promise<boolean | null>;
+  getExpertModeEnabled(): boolean | null;
 }
 
 const DEVICE_OPTIONS_BY_TARGET_KEYSPACE = 'device_options';
@@ -72,7 +72,7 @@ const WIFI_SSID_KEY = 'wifi_ssid';
 const WIFI_PASSWORD_KEY = 'wifi_password';
 const REGULATORY_DOMAIN_900_KEY = 'regulatory_domain_900';
 const REGULATORY_DOMAIN_2400_KEY = 'regulatory_domain_2400';
-const DEVELOPER_MODE = 'developer_mode';
+const EXPERT_MODE = 'expert_mode';
 
 export default class ApplicationStorage implements IApplicationStorage {
   async saveDeviceOptions(
@@ -223,18 +223,18 @@ export default class ApplicationStorage implements IApplicationStorage {
     return null;
   }
 
-  async setDeveloperModeEnabled(value: boolean): Promise<void> {
-    localStorage.setItem(DEVELOPER_MODE, JSON.stringify(value));
+  setExpertModeEnabled(value: boolean): void {
+    localStorage.setItem(EXPERT_MODE, JSON.stringify(value));
   }
 
-  async getDeveloperModeEnabled(): Promise<boolean | null> {
-    const value = localStorage.getItem(DEVELOPER_MODE);
+  getExpertModeEnabled(): boolean | null {
+    const value = localStorage.getItem(EXPERT_MODE);
 
     if (value) {
       try {
         return JSON.parse(value);
       } catch (e) {
-        console.error(`failed to parse state for ${DEVELOPER_MODE}`, e);
+        console.error(`failed to parse state for ${EXPERT_MODE}`, e);
         return null;
       }
     }

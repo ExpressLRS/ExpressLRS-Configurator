@@ -13,5 +13,5 @@ export default function useAppState() {
     setAppState({ ...appState, appStatus: mode });
   };
 
-  return { ...appState, setAppStatus };
+  return { ...appState, appState, setAppStatus, setAppState };
 }
