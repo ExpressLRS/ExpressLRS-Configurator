@@ -574,7 +574,8 @@ ipcMain.on(
 
 ipcMain.handle(
   IpcRequest.SaveFile,
-  async (_, arg: SaveFileRequestBody): Promise<SaveFileResponseBody> => {
+  async (_, args: [SaveFileRequestBody]): Promise<SaveFileResponseBody> => {
+    const arg = args[0];
     const result = await dialog.showSaveDialog({
       title: 'Save File',
       defaultPath: arg.defaultPath,

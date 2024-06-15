@@ -20,7 +20,6 @@ import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
-import useDeveloperMode from '../../hooks/useDeveloperMode';
 
 const drawerWidth = 215;
 
@@ -43,7 +42,6 @@ const styles: Record<string, SxProps<Theme>> = {
 
 const Sidebar: FunctionComponent = () => {
   const location = useLocation();
-  const { isDeveloperModeEnabled } = useDeveloperMode();
   const configuratorActive =
     matchPath(location.pathname, '/configurator') !== null;
   const backpackActive = matchPath(location.pathname, '/backpack') !== null;
@@ -53,7 +51,7 @@ const Sidebar: FunctionComponent = () => {
     matchPath(location.pathname, '/serial-monitor') !== null;
   const settingsActive = matchPath(location.pathname, '/settings') !== null;
   const supportActive = matchPath(location.pathname, '/support') !== null;
-  const { appStatus } = useAppState();
+  const { appStatus, isExpertModeEnabled } = useAppState();
 
   const navigationEnabled = appStatus !== AppStatus.Busy;
 
@@ -103,7 +101,7 @@ const Sidebar: FunctionComponent = () => {
             <ListItemText primary={t('Sidebar.Logs')} />
           </ListItemButton>
 
-          {isDeveloperModeEnabled && (
+          {isExpertModeEnabled && (
             <ListItemButton
               component={Link}
               to="/serial-monitor"

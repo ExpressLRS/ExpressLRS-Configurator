@@ -14,7 +14,7 @@ import CardTitle from '../../components/CardTitle';
 import MainLayout from '../../layouts/MainLayout';
 import Omnibox, { Option } from '../../components/Omnibox';
 import locales from '../../../i18n/locales.json';
-import useDeveloperMode from '../../hooks/useDeveloperMode';
+import useAppState from '../../hooks/useAppState';
 
 const SettingsView: FunctionComponent = () => {
   const { t, i18n } = useTranslation();
@@ -47,8 +47,13 @@ const SettingsView: FunctionComponent = () => {
     };
   }
 
-  const { isDeveloperModeEnabled, setDeveloperMode } = useDeveloperMode();
-
+  const { appState, setAppState } = useAppState();
+  const setExpertMode = () => {
+    setAppState({
+      ...appState,
+      isExpertModeEnabled: !appState.isExpertModeEnabled,
+    });
+  };
   return (
     <MainLayout>
       <Card>
@@ -69,20 +74,21 @@ const SettingsView: FunctionComponent = () => {
         <Divider />
         <CardTitle
           icon={<DeveloperModeIcon />}
-          title={t('SettingsView.DeveloperOptions')}
+          title={t('SettingsView.ApplicationOptions')}
         />
         <CardContent style={{ paddingLeft: 26, marginTop: -18 }}>
           <FormControlLabel
             control={
               <Checkbox
-                checked={isDeveloperModeEnabled}
+                checked={appState.isExpertModeEnabled}
                 onChange={() => {
-                  setDeveloperMode();
+                  setExpertMode();
                 }}
               />
             }
-            label={t('SettingsView.DeveloperMode')}
+            label={<>{t('SettingsView.ExpertMode')}</>}
           />
+          <p>{t('SettingsView.ExpertModeDescription')}</p>
         </CardContent>
       </Card>
     </MainLayout>
