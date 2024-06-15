@@ -140,7 +140,11 @@ export default class BinaryConfigurator {
             flags.push(['--lbt']);
             break;
           case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
-            flags.push(['--auto-wifi', userDefine.value!]);
+            if (userDefine.enabled) {
+              flags.push(['--auto-wifi', userDefine.value!]);
+            } else {
+              flags.push(['--no-auto-wifi']);
+            }
             break;
           case UserDefineKey.HOME_WIFI_SSID:
             flags.push(['--ssid', userDefine.value!]);
