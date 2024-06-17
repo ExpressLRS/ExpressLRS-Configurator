@@ -209,8 +209,9 @@
     "Settings": "设置",
     "LanguageSelector": "语言选择",
     "CurrentLanguage": "当前语言",
-    "DeveloperMode": "开发者模式",
-    "DeveloperOptions": "开发者选项"
+    "ExpertMode": "Expert Mode",
+    "ApplicationOptions": "Application Options",
+    "ExpertModeDescription": "Enable Expert Mode to unlock advanced features including additional firmware sources, the ability to build firmware with manual user-defined parameters, and access to serial monitor screen for detailed diagnostics."
   },
   "SupportView": {
     "Support": "支持",

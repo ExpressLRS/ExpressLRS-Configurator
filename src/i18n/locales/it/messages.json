@@ -1,6 +1,6 @@
 {
   "BuildNotificationsList": {
-    "VerifyingBuildSystem": "Verifica della compilazione",
+    "VerifyingBuildSystem": "Verifica compilazione",
     "DownloadingFirmware": "Scarico il firmware",
     "BuildingUserDefinesTXT": "Creazione user_defines.txt",
     "CompilingFirmware": "Compilazione firmware",
@@ -209,8 +209,9 @@
     "Settings": "Impostazioni",
     "LanguageSelector": "Selezione Lingua",
     "CurrentLanguage": "Lingua attuale",
-    "DeveloperMode": "Modalità Sviluppatore",
-    "DeveloperOptions": "Opzioni sviluppatore"
+    "ExpertMode": "Modalità esperto",
+    "ApplicationOptions": "Opzioni applicazione",
+    "ExpertModeDescription": "Abilita la Modalità Esperto per sbloccare funzionalità avanzate tra cui sorgenti firmware aggiuntive, la capacità di creare un firmware con parametri manuali definiti dall'utente e l'accesso allo schermo del monitor seriale per la diagnostica dettagliata."
   },
   "SupportView": {
     "Support": "Supporto",
