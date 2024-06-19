@@ -209,9 +209,9 @@
     "Settings": "Налаштування",
     "LanguageSelector": "Вибір мови",
     "CurrentLanguage": "Поточна мова",
-    "ExpertMode": "Expert Mode",
-    "ApplicationOptions": "Application Options",
-    "ExpertModeDescription": "Enable Expert Mode to unlock advanced features including additional firmware sources, the ability to build firmware with manual user-defined parameters, and access to serial monitor screen for detailed diagnostics."
+    "ExpertMode": "Режим експерта",
+    "ApplicationOptions": "Параметри додатку",
+    "ExpertModeDescription": "Увімкніть режим експерта, щоб розблокувати розширені функції, включаючи додаткові джерела прошивки, можливість збирати прошивку з власними параметрами конфігурації збірки(user defines) та доступ до монітора послідовного порту для детальної діагностики."
   },
   "SupportView": {
     "Support": "Підтримка",
