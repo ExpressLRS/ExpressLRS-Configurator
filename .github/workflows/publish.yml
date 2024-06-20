@@ -52,7 +52,7 @@ jobs:
           yarn electron-builder --publish always --x64 --win
 
       - name: Publish macOS releases
-        if: matrix.os == 'macos-latest'
+        if: matrix.os == 'macos-13'
         env:
           # These values are used for auto updates signing
           # APPLE_ID: ${{ secrets.APPLE_ID }}
