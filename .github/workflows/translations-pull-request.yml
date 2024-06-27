@@ -26,7 +26,7 @@ jobs:
           upload_translations: false
 
           download_translations: true
-          download_translations_args: '--language=it --language=es-ES --language=ko --language=zh-CN --language=ru --language=el --language=fr --language=uk  --language=id  --language=de --language=da'
+          download_translations_args: '--language=it --language=es-ES --language=ko --language=zh-CN --language=ru --language=el --language=fr --language=uk  --language=id  --language=de --language=da --language=pt-PT'
           localization_branch_name: update-translations-crowdin
           push_translations: true
           commit_message: 'Update translations'

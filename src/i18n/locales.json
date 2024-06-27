@@ -50,5 +50,9 @@
   {
     "value": "da",
     "label": "Dansk (Danish)"
+  },
+  {
+    "value": "pt",
+    "label": "Português (Portuguese)"
   }
 ]
