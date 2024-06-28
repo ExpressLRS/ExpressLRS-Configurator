@@ -7,8 +7,9 @@ import path from 'path';
 import { merge } from 'webpack-merge';
 import baseConfig from './webpack.config.base';
 import webpackPaths from './webpack.paths';
-import {dependencies} from '../../package.json';
+import packageJson from '../../package.json' with { type: "json" };
 import CheckNodeEnv from '../scripts/check-node-env';
+import webpackConfigRendererDev from './webpack.config.renderer.dev';
 
 CheckNodeEnv('development');
 
@@ -28,10 +29,10 @@ const configuration: webpack.Configuration = {
   /**
    * Use `module` from `webpack.config.renderer.dev.js`
    */
-  module: require('./webpack.config.renderer.dev').default.module,
+  module: webpackConfigRendererDev.module,
 
   entry: {
-    renderer: Object.keys(dependencies || {}).filter((dep) => dep !== 'autosuggest-highlight'),
+    renderer: Object.keys(packageJson.dependencies || {}).filter((dep) => dep !== 'autosuggest-highlight'),
   },
 
   output: {

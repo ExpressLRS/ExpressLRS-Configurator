@@ -4,11 +4,11 @@
 
 import webpack from 'webpack';
 import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
-import { dependencies as externals, version, productName } from '../../release/app/package.json';
+import * as packageJson from '../../release/app/package.json' with { type: "json" };
 import webpackPaths from './webpack.paths';
 
 const configuration: webpack.Configuration = {
-  externals: [...Object.keys(externals || {})],
+  externals: [...Object.keys(packageJson.dependencies || {})],
 
   stats: 'errors-only',
 
@@ -54,8 +54,8 @@ const configuration: webpack.Configuration = {
       NODE_ENV: 'production',
     }),
     new webpack.DefinePlugin({
-      'process.env.EXPRESSLRS_CONFIGURATOR_VERSION': JSON.stringify(version),
-      'process.env.EXPRESSLRS_CONFIGURATOR_TITLE': JSON.stringify(productName),
+      'process.env.EXPRESSLRS_CONFIGURATOR_VERSION': JSON.stringify(packageJson.version),
+      'process.env.EXPRESSLRS_CONFIGURATOR_TITLE': JSON.stringify(packageJson.productName),
     }),
   ],
 };

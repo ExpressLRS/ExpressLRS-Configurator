@@ -18,17 +18,19 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const port = process.env.PORT || 1212;
-const manifest = path.resolve(webpackPaths.dllPath, 'renderer.json');
-const skipDLLs =
-  module.parent?.filename.includes('webpack.config.renderer.dev.dll') ||
-  module.parent?.filename.includes('webpack.config.eslint');
+const manifestPath = path.resolve(webpackPaths.dllPath, 'renderer.json');
+const manifest = JSON.parse(fs.readFileSync(manifestPath).toString());
+// const skipDLLs =
+//   module.parent?.filename.includes('webpack.config.renderer.dev.dll') ||
+//   module.parent?.filename.includes('webpack.config.eslint');
+const skipDLLs = false;
 
 /**
  * Warn if the DLL is not built
  */
 if (
   !skipDLLs &&
-  !(fs.existsSync(webpackPaths.dllPath) && fs.existsSync(manifest))
+  !(fs.existsSync(webpackPaths.dllPath) && fs.existsSync(manifestPath))
 ) {
   console.log(
     chalk.black.bgYellow.bold(
@@ -159,7 +161,7 @@ const configuration: webpack.Configuration = {
       : [
           new webpack.DllReferencePlugin({
             context: webpackPaths.dllPath,
-            manifest: require(manifest),
+            manifest: manifest,
             sourceType: 'var',
           }),
         ]),

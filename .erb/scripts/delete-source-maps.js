@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { rimrafSync } from 'rimraf';
-import webpackPaths from '../configs/webpack.paths';
+import webpackPaths from '../configs/webpack.paths.js';
 
 export default function deleteSourceMaps() {
   if (fs.existsSync(webpackPaths.distMainPath))

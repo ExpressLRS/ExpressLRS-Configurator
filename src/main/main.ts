@@ -170,7 +170,7 @@ let updater: Updater | null = null;
 const localServer: ApiServer = new ApiServer();
 
 if (process.env.NODE_ENV === 'production') {
-  const sourceMapSupport = require('source-map-support');
+  const sourceMapSupport = await import('source-map-support');
   sourceMapSupport.install();
 }
 
@@ -178,7 +178,8 @@ if (
   process.env.NODE_ENV === 'development' ||
   process.env.DEBUG_PROD === 'true'
 ) {
-  require('electron-debug')({
+  const electronDebug = await import("electron-debug");
+  electronDebug.default({
     showDevTools: false,
   });
 }

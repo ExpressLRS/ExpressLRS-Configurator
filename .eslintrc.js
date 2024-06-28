@@ -7,7 +7,7 @@ module.exports = {
     'plugin:jest/recommended',
     'plugin:promise/recommended',
     'plugin:compat/recommended',
-    'plugin:prettier/recommended',
+    'plugin:prettier/recommended'
   ],
   rules: {
     // A temporary hack related to IDE not resolving correct package.json
@@ -27,12 +27,12 @@ module.exports = {
     'react/function-component-definition': [
       'error',
       {
-        namedComponents: 'arrow-function',
-      },
+        namedComponents: 'arrow-function'
+      }
     ],
     'react/require-default-props': [
       'error',
-      { ignoreFunctionalComponents: true },
+      { ignoreFunctionalComponents: true }
     ],
     'no-console': ['warn', { allow: ['error'] }],
     // No need to enforce linebreak styles since "* text=auto" in .gitattributes will ensure LF is committed to the repo
@@ -44,9 +44,9 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
-        endOfLine: 'auto',
-      },
-    ],
+        endOfLine: 'auto'
+      }
+    ]
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -54,23 +54,23 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
-    createDefaultProgram: true,
+    createDefaultProgram: true
   },
   env: {
     browser: true,
-    node: true,
+    node: true
   },
   settings: {
     'import/resolver': {
       // See https://github.com/benmosher/eslint-plugin-import/issues/1396#issuecomment-575727774 for line below
       node: {},
       webpack: {
-        config: require.resolve('./.erb/configs/webpack.config.eslint.ts'),
-      },
+        config: require.resolve('./.erb/configs/webpack.config.eslint.ts')
+      }
     },
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
-    },
+      '@typescript-eslint/parser': ['.ts', '.tsx']
+    }
   },
-  plugins: ['import'],
+  plugins: ['import']
 };

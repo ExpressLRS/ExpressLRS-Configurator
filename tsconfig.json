@@ -4,8 +4,11 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "target": "es2022",
-    "module": "CommonJS",
-    "lib": ["dom", "es2022"],
+    "module": "esnext",
+    "lib": [
+      "dom",
+      "es2022"
+    ],
     "declaration": true,
     "declarationMap": true,
     "noEmit": true,
@@ -25,8 +28,13 @@
     "allowJs": true,
     "outDir": ".erb/dll"
   },
-  "typeRoots": ["node_modules/@types", "src/@types"],
-  "include": ["src/**/*"],
+  "typeRoots": [
+    "node_modules/@types",
+    "src/@types"
+  ],
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
     "test",
     "release",
@@ -34,5 +42,9 @@
     "src/renderer.prod.js",
     "src/dist",
     ".erb/dll"
-  ]
+  ],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
 }

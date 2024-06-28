@@ -1,10 +1,10 @@
 import fs from 'fs';
 import chalk from 'chalk';
 import { execSync } from 'child_process';
-import { dependencies } from '../../package.json';
+import packageJson from '../../package.json' with {type: 'json'};
 
-if (dependencies) {
-  const dependenciesKeys = Object.keys(dependencies);
+if (packageJson.dependencies) {
+  const dependenciesKeys = Object.keys(packageJson.dependencies);
   const nativeDeps = fs
     .readdirSync('node_modules')
     .filter((folder) => fs.existsSync(`node_modules/${folder}/binding.gyp`));
