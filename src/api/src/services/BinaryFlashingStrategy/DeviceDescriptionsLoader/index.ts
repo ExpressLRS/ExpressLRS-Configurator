@@ -1,6 +1,7 @@
 import extractZip from 'extract-zip';
 import { Service } from 'typedi';
 import path from 'path';
+import { existsSync } from 'fs';
 import { mkdirp } from 'mkdirp';
 import semver from 'semver';
 import FirmwareSource from '../../../models/enum/FirmwareSource';
@@ -163,6 +164,13 @@ export default class DeviceDescriptionsLoader {
     this.logger?.log('git path', {
       gitPath,
     });
+
+    if (
+      args.source === FirmwareSource.Local &&
+      existsSync(path.join(args.localPath, 'hardware'))
+    ) {
+      return path.join(args.localPath, 'hardware');
+    }
 
     if (gitRepository.hardwareArtifactUrl) {
       const workingDir = path.join(gitRepositoryPath, 'hardware');
