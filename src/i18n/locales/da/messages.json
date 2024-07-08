@@ -209,9 +209,9 @@
     "Settings": "Indstillinger",
     "LanguageSelector": "Vælg sprog",
     "CurrentLanguage": "Nuværende sprog",
-    "ExpertMode": "Expert Mode",
-    "ApplicationOptions": "Application Options",
-    "ExpertModeDescription": "Enable Expert Mode to unlock advanced features including additional firmware sources, the ability to build firmware with manual user-defined parameters, and access to serial monitor screen for detailed diagnostics."
+    "ExpertMode": "Ekspert tilstand",
+    "ApplicationOptions": "Program indstillinger",
+    "ExpertModeDescription": "Aktiver Ekspert tilstand for at få adgang til avancerede funktioner, flere kilder med firmware-kilder, mulighed for at bygge firmware med manuelt angivet brugerdefinerede parametre og mulighed for detaljeret diagnosticering med seriel monitor."
   },
   "SupportView": {
     "Support": "Support",
