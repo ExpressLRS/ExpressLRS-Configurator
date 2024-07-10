@@ -113,89 +113,125 @@ export default class BinaryConfigurator {
 
   userDefinesToFlags(userDefines: UserDefine[]): string[][] {
     const flags: string[][] = [];
-    userDefines
-      .filter(({ enabled }) => enabled)
-      .forEach((userDefine) => {
-        switch (userDefine.key) {
-          case UserDefineKey.BINDING_PHRASE:
+    userDefines.forEach((userDefine) => {
+      switch (userDefine.key) {
+        case UserDefineKey.BINDING_PHRASE:
+          if (userDefine.enabled) {
             flags.push(['--phrase', userDefine.value!]);
-            break;
-          case UserDefineKey.REGULATORY_DOMAIN_AU_433:
+          }
+          break;
+        case UserDefineKey.REGULATORY_DOMAIN_AU_433:
+          if (userDefine.enabled) {
             flags.push(['--domain', 'au_433']);
-            break;
-          case UserDefineKey.REGULATORY_DOMAIN_EU_433:
+          }
+          break;
+        case UserDefineKey.REGULATORY_DOMAIN_EU_433:
+          if (userDefine.enabled) {
             flags.push(['--domain', 'eu_433']);
-            break;
-          case UserDefineKey.REGULATORY_DOMAIN_AU_915:
+          }
+          break;
+        case UserDefineKey.REGULATORY_DOMAIN_AU_915:
+          if (userDefine.enabled) {
             flags.push(['--domain', 'au_915']);
-            break;
-          case UserDefineKey.REGULATORY_DOMAIN_FCC_915:
+          }
+          break;
+        case UserDefineKey.REGULATORY_DOMAIN_FCC_915:
+          if (userDefine.enabled) {
             flags.push(['--domain', 'fcc_915']);
-            break;
-          case UserDefineKey.REGULATORY_DOMAIN_EU_868:
+          }
+          break;
+        case UserDefineKey.REGULATORY_DOMAIN_EU_868:
+          if (userDefine.enabled) {
             flags.push(['--domain', 'eu_868']);
-            break;
-          case UserDefineKey.REGULATORY_DOMAIN_IN_866:
+          }
+          break;
+        case UserDefineKey.REGULATORY_DOMAIN_IN_866:
+          if (userDefine.enabled) {
             flags.push(['--domain', 'in_866']);
-            break;
-          case UserDefineKey.REGULATORY_DOMAIN_ISM_2400:
-            break;
-          case UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400:
+          }
+          break;
+        case UserDefineKey.REGULATORY_DOMAIN_ISM_2400:
+          break;
+        case UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400:
+          if (userDefine.enabled) {
             flags.push(['--lbt']);
-            break;
-          case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
-            if (userDefine.enabled) {
-              flags.push(['--auto-wifi', userDefine.value!]);
-            } else {
-              flags.push(['--no-auto-wifi']);
-            }
-            break;
-          case UserDefineKey.HOME_WIFI_SSID:
+          }
+          break;
+        case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
+          if (userDefine.enabled) {
+            flags.push(['--auto-wifi', userDefine.value!]);
+          } else {
+            flags.push(['--no-auto-wifi']);
+          }
+          break;
+        case UserDefineKey.HOME_WIFI_SSID:
+          if (userDefine.enabled) {
             flags.push(['--ssid', userDefine.value!]);
-            break;
-          case UserDefineKey.HOME_WIFI_PASSWORD:
+          }
+          break;
+        case UserDefineKey.HOME_WIFI_PASSWORD:
+          if (userDefine.enabled) {
             flags.push(['--password', userDefine.value!]);
-            break;
-          case UserDefineKey.LOCK_ON_FIRST_CONNECTION:
-            break;
-          case UserDefineKey.JUST_BEEP_ONCE:
+          }
+          break;
+        case UserDefineKey.LOCK_ON_FIRST_CONNECTION:
+          break;
+        case UserDefineKey.JUST_BEEP_ONCE:
+          if (userDefine.enabled) {
             flags.push(['--buzzer-mode', 'one-beep']);
-            break;
-          case UserDefineKey.DISABLE_ALL_BEEPS:
+          }
+          break;
+        case UserDefineKey.DISABLE_ALL_BEEPS:
+          if (userDefine.enabled) {
             flags.push(['--buzzer-mode', 'quiet']);
-            break;
-          case UserDefineKey.DISABLE_STARTUP_BEEP:
+          }
+          break;
+        case UserDefineKey.DISABLE_STARTUP_BEEP:
+          if (userDefine.enabled) {
             flags.push(['--buzzer-mode', 'quiet']);
-            break;
-          case UserDefineKey.MY_STARTUP_MELODY:
+          }
+          break;
+        case UserDefineKey.MY_STARTUP_MELODY:
+          if (userDefine.enabled) {
             flags.push(['--buzzer-mode', 'custom-tune']);
             flags.push(['--buzzer-melody', userDefine.value || '']);
-            break;
-          case UserDefineKey.RCVR_UART_BAUD:
+          }
+          break;
+        case UserDefineKey.RCVR_UART_BAUD:
+          if (userDefine.enabled) {
             flags.push(['--rx-baud', userDefine.value!]);
-            break;
-          case UserDefineKey.TLM_REPORT_INTERVAL_MS:
+          }
+          break;
+        case UserDefineKey.TLM_REPORT_INTERVAL_MS:
+          if (userDefine.enabled) {
             const tlmReportIntervalMs = userDefine.value!.replaceAll('LU', '');
             flags.push(['--tlm-report', tlmReportIntervalMs]);
-            break;
-          case UserDefineKey.UART_INVERTED:
+          }
+          break;
+        case UserDefineKey.UART_INVERTED:
+          if (userDefine.enabled) {
             flags.push(['--uart-inverted']);
-            break;
-          case UserDefineKey.UNLOCK_HIGHER_POWER:
+          }
+          break;
+        case UserDefineKey.UNLOCK_HIGHER_POWER:
+          if (userDefine.enabled) {
             flags.push(['--unlock-higher-power']);
-            break;
-          case UserDefineKey.USE_R9MM_R9MINI_SBUS:
+          }
+          break;
+        case UserDefineKey.USE_R9MM_R9MINI_SBUS:
+          if (userDefine.enabled) {
             flags.push(['--r9mm-mini-sbus']);
-            break;
-          // not supported
-          case UserDefineKey.RCVR_INVERT_TX:
-          case UserDefineKey.DEVICE_NAME:
-            break;
-          default:
-            const exhaustiveCheck: never = userDefine.key;
-            throw new Error(`Unhandled color case: ${exhaustiveCheck}`);
-        }
-      });
+          }
+          break;
+        // not supported
+        case UserDefineKey.RCVR_INVERT_TX:
+        case UserDefineKey.DEVICE_NAME:
+          break;
+        default:
+          const exhaustiveCheck: never = userDefine.key;
+          throw new Error(`Unhandled color case: ${exhaustiveCheck}`);
+      }
+    });
     return flags;
   }
 
