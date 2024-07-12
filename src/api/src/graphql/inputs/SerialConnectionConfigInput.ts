@@ -6,7 +6,7 @@ export default class SerialConnectionConfigInput {
   port: string;
 
   @Field(() => String)
-  baudRate: number;
+  baudRate: string | number;
 
   constructor() {
     this.port = '';

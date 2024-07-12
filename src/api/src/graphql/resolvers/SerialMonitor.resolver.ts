@@ -7,17 +7,17 @@ import {
   Subscription,
 } from 'type-graphql';
 import { Service } from 'typedi';
+import SerialMonitorEvent from '../../models/SerialMonitorEvent';
+import SerialMonitorLogUpdate from '../../models/SerialMonitorLogUpdate';
+import SerialPortInformation from '../../models/SerialPortInformation';
+import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import SerialMonitorService, {
   SerialMonitorEventPayload,
   SerialMonitorLogUpdatePayload,
 } from '../../services/SerialMonitor';
-import SerialPortInformation from '../../models/SerialPortInformation';
-import SerialPortConnectResult from '../objects/SerialPortConnectResult';
 import SerialConnectionConfigInput from '../inputs/SerialConnectionConfigInput';
+import SerialPortConnectResult from '../objects/SerialPortConnectResult';
 import SerialPortDisconnectResult from '../objects/SerialPortDisconnectResult';
-import PubSubTopic from '../../pubsub/enum/PubSubTopic';
-import SerialMonitorLogUpdate from '../../models/SerialMonitorLogUpdate';
-import SerialMonitorEvent from '../../models/SerialMonitorEvent';
 
 @Service()
 @Resolver()
@@ -35,7 +35,10 @@ export default class SerialMonitorResolver {
     input: SerialConnectionConfigInput
   ): Promise<SerialPortConnectResult> {
     try {
-      await this.serialMonitorService.connect(input.port, input.baudRate);
+      await this.serialMonitorService.connect(
+        input.port,
+        parseInt(`${input.baudRate}`, 10)
+      );
       return new SerialPortConnectResult(true);
     } catch (e) {
       return new SerialPortConnectResult(false, `Error occurred: ${e}`);
