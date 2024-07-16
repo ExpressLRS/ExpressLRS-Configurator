@@ -330,7 +330,7 @@ export default class DeviceDescriptionsLoader {
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_IN_866)
       );
     }
-    if (['esp32', 'esp8285'].includes(config.platform)) {
+    if (config.upload_methods.includes('wifi')) {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.HOME_WIFI_SSID)
       );
