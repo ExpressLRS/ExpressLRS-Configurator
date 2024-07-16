@@ -23,7 +23,7 @@
     "CopyFromStandardMode": "从标准模式复制",
     "LongerBuildTimeWarning": "当使用手动用户定义模式时，云二进制缓存被禁用，导致编译时间大大延长。",
     "RegulatoryDomains": "监管领域",
-    "BindingPhraseSetup": "对频短语的设置",
+    "BindingPhraseSetup": "对频密码设置",
     "CompatibilityOptions": "兼容性选项",
     "PerformanceOptions": "性能选项",
     "ExtraData": "额外参数",
@@ -52,7 +52,7 @@
     "GitBranches": "Git 分支",
     "GitCommitHash": "Git 提交 hash",
     "LocalPath": "本地路径",
-    "AttentionTitle": "！！！主要！！！",
+    "AttentionTitle": "！！！注意！！！",
     "AttentionContent": "你正试图刷写一个过时的 BetaFPV 定制 ExpressLRS 分叉。BetaFPV 硬件在最近的官方 ExpressLRS 版本中被完全支持。我们建议使用官方固件以获得最佳的 ExpressLRS 体验。",
     "ChooseFolder": "选择文件夹",
     "GitPullRequests": "Git 提交"
@@ -107,7 +107,7 @@
     "Wiki": "请查看我们的 Wiki 页面了解最新定义。",
     "RegulatoryDomainISM2400": "ISM 无线电波段是国际上保留的无线电频谱的一部分。你可以在任何国家安全地使用这一监管领域。",
     "RegulatoryDomainEUCE2400": "对于早于 v3.x 的固件版本，EU CE 2.4 GHz 监管域将最大功率限制在 10mW，不需要 LBT（Listen Before Talk）。对于晚于 v3.x 的固件版本，EU CE 2.4 GHz 监管域将最大功率限制在 100mW，并启用 LBT（Listen Before Talk）。",
-    "BindingPhrase": "对频短语将接收机与高频头对频，不需要你手动对频。没有对频短语的接收机将需要传统的对频方法。高频头和接收机都需要有相同的对频短语来连接。设置一些令人难忘的东西，并限制在符合拉丁字母的字母数字短语上。这不是一个密码，也不提供任何安全保障，它只是减少与其他飞行员的射频碰撞。",
+    "BindingPhrase": "对频密码将接收机与高频头对频，不需要你手动对频。没有对频密码的接收机将需要传统的对频方法。高频头和接收机都需要有相同的对频密码来连接。设置一些令人难忘的东西，并限制在符合拉丁字母的字母数密码上。这不是一个密令或密钥，也不提供任何安全保障，它只是减少与其他飞行员的射频碰撞。",
     "AutoWifiOnInterval": "<p>如果在启动后的几秒钟内没有找到连接，这将自动为任何有 ESP8285 的模块打开 WiFi。这使得通过连接到 RX 的 WiFi 网络和访问 10.0.0.1 来推送固件更新。</p><p>自动开启的时间间隔是以 <strong>秒</strong> 为单位。默认是 60 秒。</p>",
     "TLMReportIntervalMs": "<p>使 TX 模块以一个固定的时间间隔向遥控器发送回传数据。这可以减少在高回传率下运行时的「回传丢失」警告，或者像 50hz 这样的低速率。</p><p>默认值是 <strong>240LU</strong>。如果你想更改它，必须在毫秒值后加上 <strong>LU</strong>。 例如，为了指定 100 毫秒的回传率，你必须这样输入：<strong>100LU</strong>。</p><p>通常，对于基于 EdgeTX/OpenTX 的遥控器，要设置为 <strong>240LU</strong>。对于 ErskyTx 的遥控器，则要设置为 <strong>100LU</strong>。</p>",
     "LockOnFirstConnection": "RF 模式锁定 - 默认模式是 RX 在可用的 RF 模式之间循环，从最高模式到最低模式暂停 5 秒，并找到 TX 传输的模式。这允许 RX 循环，但一旦建立连接，RX 将不再通过 RF 模式循环（直到它收到电源重置）。",
@@ -127,7 +127,7 @@
     "DisableUARTInvertedWarning": "禁用 UART_INVERTED 是不常见的。请确保你的遥控器支持这一点。"
   },
   "UserDefinesList": {
-    "CustomBindingPhrase": "自定义对频短语",
+    "CustomBindingPhrase": "自定义对频密码",
     "MyStartupMelody": "我的启动旋律",
     "Value": "值"
   },
@@ -170,7 +170,7 @@
     "Notice": "注意",
     "SelectFirmwareVersionFirst": "请先选择一个固件版本。",
     "DeviceOptions": "设备选项",
-    "ResetDevice": "将设备选项重置为该设备目标上的推荐默认值。除了你的自定义对频短语。",
+    "ResetDevice": "将设备选项重置为该设备目标上的推荐默认值。除了你的自定义对频密码。",
     "Reset": "重置",
     "Actions": "动作",
     "FlashingOptions": "刷写选项",
@@ -194,7 +194,7 @@
     "BuildNotice": "编译通知",
     "FirmwareOpenedInFileExplorer": "固件二进制文件已在文件资源管理器中打开",
     "Back": "返回",
-    "FlashAnother": "刷入另一个",
+    "FlashAnother": "再次刷写另一个设备",
     "Retry": "重试"
   },
   "LogsView": {
@@ -209,9 +209,9 @@
     "Settings": "设置",
     "LanguageSelector": "语言选择",
     "CurrentLanguage": "当前语言",
-    "ExpertMode": "Expert Mode",
-    "ApplicationOptions": "Application Options",
-    "ExpertModeDescription": "Enable Expert Mode to unlock advanced features including additional firmware sources, the ability to build firmware with manual user-defined parameters, and access to serial monitor screen for detailed diagnostics."
+    "ExpertMode": "专家模式",
+    "ApplicationOptions": "应用程序选项",
+    "ExpertModeDescription": "启用专家模式来解锁高级功能，包括额外的固件源，能够构建用户手动定义参数的固件，并访问串口监视器以获得详细诊断信息。"
   },
   "SupportView": {
     "Support": "支持",
