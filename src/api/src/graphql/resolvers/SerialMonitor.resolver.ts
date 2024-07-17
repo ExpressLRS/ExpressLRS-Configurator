@@ -35,10 +35,7 @@ export default class SerialMonitorResolver {
     input: SerialConnectionConfigInput
   ): Promise<SerialPortConnectResult> {
     try {
-      await this.serialMonitorService.connect(
-        input.port,
-        parseInt(`${input.baudRate}`, 10)
-      );
+      await this.serialMonitorService.connect(input.port, input.baudRate);
       return new SerialPortConnectResult(true);
     } catch (e) {
       return new SerialPortConnectResult(false, `Error occurred: ${e}`);

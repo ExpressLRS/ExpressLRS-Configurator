@@ -2689,11 +2689,11 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "Float",
                 "ofType": null
               }
             },
-            "defaultValue": "\"420000\"",
+            "defaultValue": "420000",
             "isDeprecated": false,
             "deprecationReason": null
           },

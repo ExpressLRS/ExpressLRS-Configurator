@@ -394,7 +394,6 @@ const createWindow = async () => {
         : path.join(__dirname, '../../.erb/dll/preload.js'),
     },
   });
-  // mainWindow.webContents.openDevTools();
   mainWindow.on('close', (e) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     if (buildInProgress) {

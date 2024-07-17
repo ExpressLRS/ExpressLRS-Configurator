@@ -1,50 +1,50 @@
 /* eslint-disable no-bitwise */
-import fs from 'fs';
+import { Service } from 'typedi';
 import { PubSubEngine } from 'graphql-subscriptions';
 import * as os from 'os';
-import path from 'path';
 import semver from 'semver';
-import { Service } from 'typedi';
-import UserDefinesTxtFactory from '../../factories/UserDefinesTxtFactory';
-import TargetArgs from '../../graphql/args/Target';
-import GitRepository from '../../graphql/inputs/GitRepositoryInput';
-import BuildFlashFirmwareResult from '../../graphql/objects/BuildFlashFirmwareResult';
-import FirmwareBuilder from '../../library/FirmwareBuilder';
-import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
-import {
-  GitFirmwareDownloader,
-  findGitExecutable,
-} from '../../library/FirmwareDownloader';
-import Mutex from '../../library/Mutex';
-import Platformio from '../../library/Platformio';
-import { LoggerService } from '../../logger';
-import Device from '../../models/Device';
+import path from 'path';
+import fs from 'fs';
 import UserDefine from '../../models/UserDefine';
+import FirmwareSource from '../../models/enum/FirmwareSource';
+import Mutex from '../../library/Mutex';
 import BuildFirmwareErrorType from '../../models/enum/BuildFirmwareErrorType';
-import BuildJobType from '../../models/enum/BuildJobType';
+import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildProgressNotificationType from '../../models/enum/BuildProgressNotificationType';
 import BuildFirmwareStep from '../../models/enum/FirmwareBuildStep';
-import FirmwareSource from '../../models/enum/FirmwareSource';
-import UserDefinesMode from '../../models/enum/UserDefinesMode';
-import PubSubTopic from '../../pubsub/enum/PubSubTopic';
+import { LoggerService } from '../../logger';
+import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import { BuildFlashFirmwareParams } from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
-import { FirmwareVersionData } from '../FlashingStrategyLocator/FirmwareVersionData';
-import {
-  FlashingStrategy,
-  IsCompatibleArgs,
-} from '../FlashingStrategyLocator/FlashingStrategy';
 import {
   createBinaryCopyWithCanonicalName,
   removeDirectoryContents,
 } from '../FlashingStrategyLocator/artefacts';
 import {
+  FlashingStrategy,
+  IsCompatibleArgs,
+} from '../FlashingStrategyLocator/FlashingStrategy';
+import TargetArgs from '../../graphql/args/Target';
+import GitRepository from '../../graphql/inputs/GitRepositoryInput';
+import Device from '../../models/Device';
+import { UserDefineFilters } from '../UserDefinesLoader';
+import BuildJobType from '../../models/enum/BuildJobType';
+import BuildFlashFirmwareResult from '../../graphql/objects/BuildFlashFirmwareResult';
+import {
+  findGitExecutable,
+  GitFirmwareDownloader,
+} from '../../library/FirmwareDownloader';
+import DeviceDescriptionsLoader from './DeviceDescriptionsLoader';
+import { FirmwareVersionData } from '../FlashingStrategyLocator/FirmwareVersionData';
+import Platformio from '../../library/Platformio';
+import FirmwareBuilder from '../../library/FirmwareBuilder';
+import UserDefinesMode from '../../models/enum/UserDefinesMode';
+import UserDefinesTxtFactory from '../../factories/UserDefinesTxtFactory';
+import BinaryConfigurator from './BinaryConfigurator';
+import {
   maskBuildFlashFirmwareParams,
   maskSensitiveData,
 } from '../FlashingStrategyLocator/masks';
-import { UserDefineFilters } from '../UserDefinesLoader';
-import BinaryConfigurator from './BinaryConfigurator';
 import CloudBinariesCache from './CloudBinariesCache';
-import DeviceDescriptionsLoader from './DeviceDescriptionsLoader';
 import { DeviceDescription } from './TargetsJSONLoader';
 
 @Service()
@@ -577,7 +577,6 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           params
         );
       }
-      console.log({ flasherArgs });
       const binaryConfiguratorResult = await this.binaryConfigurator.run(
         flasherPath,
         flasherArgs,
