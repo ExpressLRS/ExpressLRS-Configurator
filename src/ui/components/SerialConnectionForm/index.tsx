@@ -1,13 +1,13 @@
 import { Box, Button, Grid, TextField } from '@mui/material';
-import { SxProps, Theme } from '@mui/system';
 import React, { FunctionComponent, useEffect, useState } from 'react';
+import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
+import Omnibox, { Option } from '../Omnibox';
 import {
   SerialPortInformation,
   useAvailableDevicesListQuery,
 } from '../../gql/generated/types';
 import Loader from '../Loader';
-import Omnibox, { Option } from '../Omnibox';
 import ShowAlerts from '../ShowAlerts';
 
 const styles: Record<string, SxProps<Theme>> = {

@@ -7,18 +7,17 @@
  * When running `yarn build` or `yarn build-main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-import 'core-js/stable';
-import { BrowserWindow, app, dialog, ipcMain, session, shell } from 'electron';
-import fs from 'fs';
-import { mkdirp } from 'mkdirp';
-import path from 'path';
 import 'reflect-metadata';
+import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import { URL } from 'url';
+import path from 'path';
+import { app, BrowserWindow, dialog, ipcMain, shell, session } from 'electron';
+import { mkdirp } from 'mkdirp';
 import winston from 'winston';
+import fs from 'fs';
+import { URL } from 'url';
+import MenuBuilder from './menu';
 import ApiServer from '../api';
-import WinstonLoggerService from '../api/src/logger/WinstonLogger';
-import Updater from '../app/updater';
 import {
   ChooseFolderResponseBody,
   IpcRequest,
@@ -27,7 +26,8 @@ import {
   SaveFileResponseBody,
   UpdateBuildStatusRequestBody,
 } from '../ipc';
-import MenuBuilder from './menu';
+import Updater from '../app/updater';
+import WinstonLoggerService from '../api/src/logger/WinstonLogger';
 
 import packageJson from '../../package.json';
 

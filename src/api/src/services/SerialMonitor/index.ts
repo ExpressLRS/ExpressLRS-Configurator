@@ -1,10 +1,10 @@
-import { PubSubEngine } from 'graphql-subscriptions';
-import { SerialPort } from 'serialport';
 import { Service } from 'typedi';
-import { LoggerService } from '../../logger';
+import { SerialPort } from 'serialport';
+import { PubSubEngine } from 'graphql-subscriptions';
 import SerialPortInformation from '../../models/SerialPortInformation';
-import SerialMonitorEventType from '../../models/enum/SerialMonitorEventType';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
+import { LoggerService } from '../../logger';
+import SerialMonitorEventType from '../../models/enum/SerialMonitorEventType';
 import { insideFlatpak, listPorts } from './flatpak';
 
 export interface SerialMonitorLogUpdatePayload {
@@ -61,7 +61,6 @@ export default class SerialMonitorService {
       await this.disconnect();
     }
 
-    console.log({ message: 'Connecting to serial device', device, baudRate });
     this.port = new SerialPort({
       path: device,
       baudRate,

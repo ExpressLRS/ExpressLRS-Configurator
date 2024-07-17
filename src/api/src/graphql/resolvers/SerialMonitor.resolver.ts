@@ -7,17 +7,17 @@ import {
   Subscription,
 } from 'type-graphql';
 import { Service } from 'typedi';
-import SerialMonitorEvent from '../../models/SerialMonitorEvent';
-import SerialMonitorLogUpdate from '../../models/SerialMonitorLogUpdate';
-import SerialPortInformation from '../../models/SerialPortInformation';
-import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import SerialMonitorService, {
   SerialMonitorEventPayload,
   SerialMonitorLogUpdatePayload,
 } from '../../services/SerialMonitor';
-import SerialConnectionConfigInput from '../inputs/SerialConnectionConfigInput';
+import SerialPortInformation from '../../models/SerialPortInformation';
 import SerialPortConnectResult from '../objects/SerialPortConnectResult';
+import SerialConnectionConfigInput from '../inputs/SerialConnectionConfigInput';
 import SerialPortDisconnectResult from '../objects/SerialPortDisconnectResult';
+import PubSubTopic from '../../pubsub/enum/PubSubTopic';
+import SerialMonitorLogUpdate from '../../models/SerialMonitorLogUpdate';
+import SerialMonitorEvent from '../../models/SerialMonitorEvent';
 
 @Service()
 @Resolver()
