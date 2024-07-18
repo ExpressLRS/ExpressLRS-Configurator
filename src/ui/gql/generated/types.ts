@@ -336,7 +336,7 @@ export type Release = {
 };
 
 export type SerialConnectionConfigInput = {
-  readonly baudRate?: Scalars['String']['input'];
+  readonly baudRate?: Scalars['Float']['input'];
   readonly port?: Scalars['String']['input'];
 };
 
