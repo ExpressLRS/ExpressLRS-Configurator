@@ -133,7 +133,7 @@
   },
   "WifiDeviceList": {
     "Name": "Nome",
-    "Target": "Selezione",
+    "Target": "Seleziona",
     "Version": "Versione",
     "Type": "Tipo",
     "DNS": "DNS",
