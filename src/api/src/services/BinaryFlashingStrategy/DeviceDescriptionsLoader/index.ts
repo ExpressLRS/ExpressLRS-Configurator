@@ -56,7 +56,9 @@ export default class DeviceDescriptionsLoader {
     this.deviceOptionsMutex = new Mutex();
   }
 
-  private uploadMethodToFlashingMethod(uploadMethod: string): FlashingMethod {
+  private uploadMethodToFlashingMethod(
+    uploadMethod: string
+  ): FlashingMethod | null {
     switch (uploadMethod.toLowerCase()) {
       case 'betaflight':
         return FlashingMethod.BetaflightPassthrough;
@@ -74,8 +76,11 @@ export default class DeviceDescriptionsLoader {
         return FlashingMethod.WIFI;
       case 'stock':
         return FlashingMethod.Stock_BL;
+      case 'zip':
+        return FlashingMethod.Zip;
       default:
-        throw new Error(`Upload Method ${uploadMethod} Not Recognized!`);
+        this.logger.warn(`Upload Method ${uploadMethod} Not Recognized!`);
+        return null;
     }
   }
 
@@ -84,18 +89,22 @@ export default class DeviceDescriptionsLoader {
     category: string,
     config: DeviceDescription
   ): Device {
+    const uploadMethods: Target[] = config.upload_methods
+      .filter(
+        (uploadMethod) =>
+          this.uploadMethodToFlashingMethod(uploadMethod) !== null
+      )
+      .map((uploadMethod) => {
+        const targetName = `${id}.${uploadMethod}`;
+        const mappedUploadMethod =
+          this.uploadMethodToFlashingMethod(uploadMethod);
+        return new Target(targetName, targetName, mappedUploadMethod!);
+      });
     return new Device(
       id,
       config.product_name,
       category,
-      config.upload_methods.map((uploadMethod) => {
-        const targetName = `${id}.${uploadMethod}`;
-        return new Target(
-          targetName,
-          targetName,
-          this.uploadMethodToFlashingMethod(uploadMethod)
-        );
-      }),
+      uploadMethods,
       [],
       DeviceType.ExpressLRS,
       true,

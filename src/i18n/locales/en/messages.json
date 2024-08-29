@@ -70,7 +70,8 @@
     "UART": "This method allows you to flash your receiver or transmitter via its USB port or wiring up an FTDI device.",
     "WIFI": "This method creates a firmware file you can upload to your receiver or transmitter by connecting to its built in wifi.",
     "EdgeTxPassthrough": "This method allows you to flash your transmitter module while it is connected to your transmitter by using the passthrough feature of the EdgeTX firmware.",
-    "Passthrough": "This method allows you to flash your module while it is connected to your transmitter by using the passthrough feature."
+    "Passthrough": "This method allows you to flash your module while it is connected to your transmitter by using the passthrough feature.",
+    "Zip": "This method creates an archive of all files required for your device."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "Flashing Method"

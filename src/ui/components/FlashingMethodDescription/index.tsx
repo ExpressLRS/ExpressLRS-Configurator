@@ -165,6 +165,22 @@ const FlashingMethodDescription: FunctionComponent<
             </p>
           </div>
         );
+      case FlashingMethod.Zip:
+        return (
+          <div>
+            <p>{t('FlashingMethodDescription.Zip')}</p>
+            <p>
+              <DocumentationLink
+                url={
+                  wikiUrl ??
+                  'https://www.expresslrs.org/quick-start/getting-started/'
+                }
+              >
+                {t('FlashingMethodDescription.GeneralWiki')}
+              </DocumentationLink>
+            </p>
+          </div>
+        );
       default:
         return '';
     }
