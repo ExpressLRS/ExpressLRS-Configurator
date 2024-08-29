@@ -1019,16 +1019,17 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       {t('ConfiguratorView.Build')}
                     </Button>
                   )}
-                {deviceTarget?.flashingMethod !== FlashingMethod.Stock_BL && (
-                  <Button
-                    sx={styles.button}
-                    size="large"
-                    variant="contained"
-                    onClick={onFlash}
-                  >
-                    {t('ConfiguratorView.Flash')}
-                  </Button>
-                )}
+                {deviceTarget?.flashingMethod !== FlashingMethod.Stock_BL &&
+                  deviceTarget?.flashingMethod !== FlashingMethod.Zip && (
+                    <Button
+                      sx={styles.button}
+                      size="large"
+                      variant="contained"
+                      onClick={onFlash}
+                    >
+                      {t('ConfiguratorView.Flash')}
+                    </Button>
+                  )}
               </div>
             </CardContent>
           </Card>
