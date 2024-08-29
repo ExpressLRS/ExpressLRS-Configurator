@@ -310,7 +310,9 @@ export default class DeviceDescriptionsLoader {
     const config = await this.getDeviceConfig(args, gitRepository);
 
     const userDefines: UserDefine[] = [];
-    const targetUserDefinesFactory = new TargetUserDefinesFactory();
+    const targetUserDefinesFactory = new TargetUserDefinesFactory(
+      config.platform
+    );
     userDefines.push(
       targetUserDefinesFactory.build(UserDefineKey.BINDING_PHRASE)
     );
@@ -383,6 +385,7 @@ export default class DeviceDescriptionsLoader {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.LOCK_ON_FIRST_CONNECTION)
       );
+      userDefines.push(targetUserDefinesFactory.build(UserDefineKey.RX_AS_TX));
     }
     return userDefines;
   }

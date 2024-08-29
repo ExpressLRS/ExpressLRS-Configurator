@@ -239,6 +239,17 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
               </p>
             </div>
           );
+        case UserDefineKey.RX_AS_TX:
+          return (
+            <div>
+              <Trans i18nKey="UserDefineDescription.RxAsTx" />
+              <p>
+                <DocumentationLink url="https://www.expresslrs.org/software/user-defines/#compatibility-options">
+                  {t('UserDefineDescription.Wiki')}
+                </DocumentationLink>
+              </p>
+            </div>
+          );
         case UserDefineKey.HOME_WIFI_SSID:
           return (
             <div>

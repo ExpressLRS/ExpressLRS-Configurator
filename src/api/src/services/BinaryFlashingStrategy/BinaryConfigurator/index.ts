@@ -202,6 +202,11 @@ export default class BinaryConfigurator {
             flags.push(['--rx-baud', userDefine.value!]);
           }
           break;
+        case UserDefineKey.RX_AS_TX:
+          if (userDefine.enabled) {
+            flags.push(['--rx-as-tx', userDefine.value!]);
+          }
+          break;
         case UserDefineKey.TLM_REPORT_INTERVAL_MS:
           if (userDefine.enabled) {
             const tlmReportIntervalMs = userDefine.value!.replaceAll('LU', '');

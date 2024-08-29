@@ -19,6 +19,7 @@ import {
 import Omnibox from '../Omnibox';
 import UserDefineDescription from '../UserDefineDescription';
 import SensitiveTextField from '../SensitiveTextField';
+import useAppState from '../../hooks/useAppState';
 
 const styles: Record<string, SxProps<Theme>> = {
   icon: {
@@ -92,9 +93,14 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
     }
   };
 
+  const { isExpertModeEnabled } = useAppState();
+
   return (
     <List>
       {options.map((item) => {
+        if (!isExpertModeEnabled && item.key === UserDefineKey.RX_AS_TX) {
+          return null;
+        }
         return (
           <React.Fragment key={item.key}>
             <ListItem

@@ -107,6 +107,7 @@ const userDefinesToCategories = (
       UserDefineKey.USE_R9MM_R9MINI_SBUS,
       UserDefineKey.RCVR_UART_BAUD,
       UserDefineKey.RCVR_INVERT_TX,
+      UserDefineKey.RX_AS_TX,
     ],
     [UserDefineCategory.NetworkOptions]: [
       UserDefineKey.AUTO_WIFI_ON_INTERVAL,

@@ -122,7 +122,8 @@
     "RCVRInvertTX": "If using an a flight controller that only has an RXI / SBUS (RX inverted) pad, turn on this option to invert the CRSF output from the receiver to be able to use that pad. This does not convert the output to SBUS, it is inverted CRSF, so CRSF should still be the receiver protocol selected in the flight controller software. ESP-based receivers only.",
     "UseR9MMR9MiniSBUS": "<p><strong>THIS DOES NOT ENABLE SBUS PROTOCOL.</strong></p><p>This is useful for F4 FCs which do not have an uninverted UART option. This is only one way, so you lose the telemetry downlink to your radio as well as passthrough flashing. This will output out of the default S.BUS pin on your R9MM/R9Mini. Set serialrx_inverted = ON may also be needed within Betaflight for compatibility</p>",
     "HomeWifiSSID": "Set home Wi-Fi network name (SSID). It will allow Wi-Fi enabled hardware to connect to the home network automatically.",
-    "HomeWifiPassword": "Set home Wi-Fi network password. It will allow Wi-Fi enabled hardware to connect to the home network automatically."
+    "HomeWifiPassword": "Set home Wi-Fi network password. It will allow Wi-Fi enabled hardware to connect to the home network automatically.",
+    "RxAsTx": "Flash your receiver with this option enabled and use it instead of your TX module."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Disabling UART_INVERTED is uncommon. Please make sure that your transmitter supports that."

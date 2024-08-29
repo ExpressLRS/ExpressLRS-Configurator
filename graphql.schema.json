@@ -3488,6 +3488,12 @@
             "deprecationReason": null
           },
           {
+            "name": "RX_AS_TX",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "TLM_REPORT_INTERVAL_MS",
             "description": null,
             "isDeprecated": false,
