@@ -3,6 +3,8 @@ import UserDefineOptionGroup from '../models/enum/UserDefineOptionGroup';
 import UserDefine from '../models/UserDefine';
 
 export default class TargetUserDefinesFactory {
+  constructor(private readonly platform: string | null) {}
+
   build(userDefineKey: UserDefineKey): UserDefine {
     switch (userDefineKey) {
       // BINDING PHRASE
@@ -85,9 +87,17 @@ export default class TargetUserDefinesFactory {
           false,
           true
         );
-        break;
       case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
         return UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '60', true);
+      case UserDefineKey.RX_AS_TX:
+        let rxAxTxTypes: string[] = [];
+        if (this.platform === 'esp32') {
+          rxAxTxTypes = ['internal', 'external'];
+        }
+        if (this.platform === 'esp8285') {
+          rxAxTxTypes = ['internal'];
+        }
+        return UserDefine.Enum(UserDefineKey.RX_AS_TX, rxAxTxTypes, 'internal');
       default:
         throw new Error(`User Define ${userDefineKey} is not known`);
     }

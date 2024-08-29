@@ -91,7 +91,7 @@ export default class DeviceService implements IDevices {
           }
         );
 
-        const targetUserDefinesFactory = new TargetUserDefinesFactory();
+        const targetUserDefinesFactory = new TargetUserDefinesFactory(null);
         const userDefines: UserDefine[] = value.userDefines.map(
           (item: string | UserDefineOverride) => {
             if (typeof item === 'string') {
