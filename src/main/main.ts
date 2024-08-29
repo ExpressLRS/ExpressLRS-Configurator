@@ -160,6 +160,11 @@ process.on('unhandledRejection', (err) => {
   handleFatalError(err);
 });
 
+// Improve application compatibility with ISPs who fake IPv6 compatibility.
+// More about this issue: https://github.com/ExpressLRS/ExpressLRS-Configurator/issues/638
+// cli switch docs: https://www.electronjs.org/docs/latest/api/command-line-switches#--dns-result-orderorder
+app.commandLine.appendSwitch('dns-result-order', 'ipv4first');
+
 if (app.commandLine.hasSwitch('disable-gpu')) {
   app.disableHardwareAcceleration();
   app.commandLine.appendSwitch('disable-software-rasterizer');
