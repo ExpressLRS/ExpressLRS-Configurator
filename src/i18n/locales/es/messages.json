@@ -70,7 +70,8 @@
     "UART": "Este método te permite instalar el software en tu receptor o transmisor usando su puerto USB o conectado un dispositivo FTDI.",
     "WIFI": "Este método crea un archivo de firmware que puedes subir a tu receptor o transmisor conectándote a su wifi integrado.",
     "EdgeTxPassthrough": "Este método te permite instalar el software en tu receptor mientras está conectado a tu transmisor utilizando la característica passthrough del firmware EdgeTX.",
-    "Passthrough": "Este método te permite instalar el software en tu receptor mientras está conectado a tu transmisor utilizando la característica passthrough."
+    "Passthrough": "Este método te permite instalar el software en tu receptor mientras está conectado a tu transmisor utilizando la característica passthrough.",
+    "Zip": "This method creates an archive of all files required for your device."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "Método de instalación"
@@ -121,7 +122,8 @@
     "RCVRInvertTX": "Si usas un controlador de vuelo que sólo tiene un pad RXI / SBUS (RX invertido), activa esta opción para invertir la salida CRSF desde el receptor para poder usar ese pad. Esto no convierte la salida a SBUS, sino que se invierte CRSF, por lo que CRSF debe seguir siendo el protocolo receptor seleccionado en el software del controlador de vuelo. Sólo para receptores basados en ESP.",
     "UseR9MMR9MiniSBUS": "<p><strong>ESTO NO ACTIVA EL PROTOCOLO SBUS.</strong></p><p>Esto es útil para FCs F4 que no tienen una opción UART no invertida. Esta es sólo en una dirección, por lo que perderás el enlace de telemetría hacia tu radio así como la instalación por passthrough. Esto sacará los datos por el pin de salida por defecto de S.BUS en tu R9MM/R9Mini. Establecer serialrx_inverted = ON también puede ser necesario dentro de Betaflight para compatibilidad</p>",
     "HomeWifiSSID": "Indica el nombre de la red Wi-Fi doméstica (SSID). Permite que el hardware Wi-Fi activado se conecte a la red doméstica automáticamente.",
-    "HomeWifiPassword": "Establece la contraseña de la red Wifi doméstica. Permite que el hardware Wifi activado se conecte a la red doméstica automáticamente."
+    "HomeWifiPassword": "Establece la contraseña de la red Wifi doméstica. Permite que el hardware Wifi activado se conecte a la red doméstica automáticamente.",
+    "RxAsTx": "Flash your receiver with this option enabled and use it instead of your TX module."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Deshabilitar UART_INVERTED es poco habitual. Por favor, asegúrate de que tu transmisor lo admite."

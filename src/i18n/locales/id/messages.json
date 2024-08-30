@@ -70,7 +70,8 @@
     "UART": "Cara ini membantu anda untuk menulis (Flash) receiver atau transmitter anda melalui kabel dari perangkat FTDI atau port USB.",
     "WIFI": "Cara ini menciptakan file firmware untuk anda unggah (upload) kepada receiver atau transmitter anda melalui wifi yang sudah tertanam.",
     "EdgeTxPassthrough": "Cara ini membantu anda untuk menulis (Flash) transmitter anda selagi terhubung melalui fitur passthrough dari firmware EdgeTX.",
-    "Passthrough": "Cara ini membantu anda untuk menulis (Flash) pada module anda selagi terhubung melalui fitur passthrough."
+    "Passthrough": "Cara ini membantu anda untuk menulis (Flash) pada module anda selagi terhubung melalui fitur passthrough.",
+    "Zip": "This method creates an archive of all files required for your device."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "Cara tulis (Flash)"
@@ -121,7 +122,8 @@
     "RCVRInvertTX": "<p>Ada beberapa laporan tentang modul R9M yang menunjukkan ketidakstabilan pada >250mw dengan pendinginan stok. Ini sebagian karena ELRS menggunakan duty cycle yang lebih tinggi untuk transmisi dibandingkan dengan firmware bawaan. Secara default daya dibatasi hingga 250mw. Anda dapat membuka hingga 1000mw dengan mengaktifkan opsi berikut. Lakukan ini dengan risiko Anda sendiri jika Anda tidak melakukan modifikasi pendinginan.</p><p>Kami menerbitkan <R9MFanModCoverLink>R9M Fan Mod Cover</R9MFanModCoverLink>, cover belakang cetak 3d khusus dengan ruang untuk kipas dan pendinginan ekstra untuk memungkinkan daya maksimum (1-2W tergantung mod).</p>.",
     "UseR9MMR9MiniSBUS": "<p><strong>INI BUKAN UNTUK MENGAKTIFKAN PROTOKOL SBUS.</strong></p><p>Ini berguna untuk FC F4 yang tidak memiliki opsi UART tidak terbalik. Ini hanya satu cara, jadi Anda kehilangan downlink telemetri ke radio Anda serta flashing passthrough. Ini akan keluar dari pin S.BUS default pada R9MM/R9Mini Anda. Atur serialrx_inverted = ON mungkin juga diperlukan dalam Betaflight untuk kompatibilitas</p>",
     "HomeWifiSSID": "Setel nama jaringan WiFi rumah (SSID). Ini akan membuat perangkat anda terhubung di jaringan rumah anda secara otomatis.",
-    "HomeWifiPassword": "Setel nama jaringan WiFi rumah (SSID). Ini akan membuat perangkat anda terhubung di jaringan rumah anda secara otomatis."
+    "HomeWifiPassword": "Setel nama jaringan WiFi rumah (SSID). Ini akan membuat perangkat anda terhubung di jaringan rumah anda secara otomatis.",
+    "RxAsTx": "Flash your receiver with this option enabled and use it instead of your TX module."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Menonaktif UART_INVERTED adalah hal yang tidak umum. Mohon pastikan transmitter anda mendukungnya."

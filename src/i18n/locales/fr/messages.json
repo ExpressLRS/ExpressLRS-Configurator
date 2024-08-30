@@ -44,7 +44,7 @@
     "GitPullRequest": "Demande de tirage Git",
     "ShowPreRreleases": "Afficher les versions bêta",
     "Releases": "Versions",
-    "ReleaseNotes": "Notes des versions",
+    "ReleaseNotes": "Notes de mise à jour",
     "NewerVersionAvailable": "Une version plus récente est disponible",
     "UpgradeToV3": "ExpressLRS 2.X n'est plus pris en charge. Veuillez passer à ExpressLRS 3.X.",
     "DangerZoneTitle": "ZONE À RISQUE",
@@ -70,7 +70,8 @@
     "UART": "Cette méthode vous permet de mettre à jour votre récepteur ou transmetteur via son port USB ou en reliant un adaptateur FTDI.",
     "WIFI": "Cette méthode créée le fichier du firmware que vous pouvez ensuite envoyer sur votre récepteur ou transmetteur en vous y connectant en Wifi.",
     "EdgeTxPassthrough": "Cette méthode vous permet de mettre à jour votre transmetteur relié à votre radio commande en utilisant la fonction de passerelle d'EdgeTX.",
-    "Passthrough": "Cette méthode vous permet de mettre à jour votre module relié à votre radio commande en utilisant la fonction de passerelle."
+    "Passthrough": "Cette méthode vous permet de mettre à jour votre module relié à votre radio commande en utilisant la fonction de passerelle.",
+    "Zip": "Cette méthode crée une archive contenant tous les fichiers requis pour votre appareil."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "Méthode de mise à jour"
@@ -121,7 +122,8 @@
     "RCVRInvertTX": "Si votre contrôleur de vol ne gère que du RXI / SBUS (RX inversé), activez ce réglage afin d'inverser la sortie CRSF du récepteur. Cela ne convertie pas la sortie en SBUS, mais inverse le CRSF, donc utilisez toujours CRSF comme protocole dans le micrologiciel de votre contrôleur de vol. S'applique uniquement aux récepteurs basés sur un ESP.",
     "UseR9MMR9MiniSBUS": "<p><strong>N'ACTIVE PAS LE PROTOCOLE SBUS.</strong></p><p>Utile pour les contrôleurs de vol F4 qui n'ont pas d'UART non inversé. La communication est unidirectionnelle, donc la télémétrie ainsi que la mise à jour de votre récepteur à travers le contrôleur de vol ne seront pas disponible. Les signaux seront envoyés depuis la broche S.BUS de votre R9MM/R9Mini. Définir serialrx_inverted = ON peut aussi être nécessaire dans Betaflight</p>",
     "HomeWifiSSID": "Définit le nom de votre point d'accès Wi-Fi (SSID). Cela permet de connecter votre appareil à votre réseau local automatiquement.",
-    "HomeWifiPassword": "Définit le mot de passe de votre point d'accès Wi-Fi. Cela permet de connecter votre appareil à votre réseau local automatiquement."
+    "HomeWifiPassword": "Définit le mot de passe de votre point d'accès Wi-Fi. Cela permet de connecter votre appareil à votre réseau local automatiquement.",
+    "RxAsTx": "Installez le micrologiciel sur votre récepteur avec cette option activée pour l'utiliser en tant que module TX."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Désactiver UART_INVERTED est rare. Veuillez vous assurer que votre transmetteur le supporte."
