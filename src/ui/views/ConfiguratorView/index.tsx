@@ -208,19 +208,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   const [
     fetchDeviceTargets,
-    {
-      loading: loadingTargets,
-      data: targetsResponse,
-      error: targetsResponseError,
-    },
+    { loading: loadingTargets, error: targetsResponseError },
   ] = useAvailableFirmwareTargetsLazyQuery({
     fetchPolicy: 'network-only',
   });
-
-  const [
-    fetchLuaScript,
-    { data: luaScriptResponse, error: luaScriptResponseError },
-  ] = useLuaScriptLazyQuery();
 
   const device = useMemo(() => {
     return deviceTargets?.find((d) => {
@@ -252,19 +243,24 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             hardwareArtifactUrl: gitRepository.hardwareArtifactUrl,
           },
         },
-      });
+      })
+        .then((response) => {
+          if (response.data?.availableFirmwareTargets) {
+            setDeviceTargets([
+              ...(response.data.availableFirmwareTargets as Device[]),
+            ]);
+          } else {
+            setDeviceTargets(null);
+          }
+        })
+        .catch((err) => {
+          console.error(
+            'failed to fetch device targets for the firmware source',
+            err
+          );
+        });
     }
   }, [gitRepository, firmwareVersionData, fetchDeviceTargets]);
-
-  useEffect(() => {
-    if (targetsResponse?.availableFirmwareTargets) {
-      setDeviceTargets([
-        ...(targetsResponse.availableFirmwareTargets as Device[]),
-      ]);
-    } else {
-      setDeviceTargets(null);
-    }
-  }, [targetsResponse]);
 
   const [deviceOptionsFormData, setDeviceOptionsFormData] =
     useState<DeviceOptionsFormData>({
@@ -424,17 +420,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     }
   }, [response]);
 
-  const isTX = useMemo(() => {
-    if (deviceTarget) {
-      return deviceTarget.name?.toLocaleLowerCase().indexOf('tx_') > -1;
-    }
-    return false;
-  }, [deviceTarget]);
-
-  const hasLuaScript = useMemo(() => {
-    return deviceType === DeviceType.ExpressLRS && isTX;
-  }, [deviceType, isTX]);
-
   const eraseSupported = useMemo(() => {
     if (!deviceTarget || !device) {
       return false;
@@ -454,6 +439,22 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
     return false;
   }, [deviceTarget, device]);
+
+  const isTX = useMemo(() => {
+    if (deviceTarget) {
+      return deviceTarget.name?.toLocaleLowerCase().indexOf('tx_') > -1;
+    }
+    return false;
+  }, [deviceTarget]);
+
+  const hasLuaScript = useMemo(() => {
+    return deviceType === DeviceType.ExpressLRS && isTX;
+  }, [deviceType, isTX]);
+
+  const [
+    fetchLuaScript,
+    { data: luaScriptResponse, error: luaScriptResponseError },
+  ] = useLuaScriptLazyQuery();
 
   useEffect(() => {
     if (firmwareVersionData && isTX && hasLuaScript) {
@@ -848,7 +849,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <DeviceTargetForm
                   currentTarget={deviceTarget}
                   onChange={onDeviceTarget}
-                  deviceOptions={deviceTargets}
+                  deviceTargets={deviceTargets}
                 />
               )}
               <Loader loading={loadingTargets} />
