@@ -1135,7 +1135,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     severity="warning"
                     messages={t('ConfiguratorView.BuildsTakeMinutesFirstTime')}
                     active={buildInProgress}
-                    timeout={14 * 1000}
+                    timeout={60 * 1000}
                   />
                 </Box>
                 <Logs data={buildLogs} />
