@@ -70,7 +70,8 @@
     "UART": "Mit dieser Methode können Sie Firmware auf Ihrem Empfänger oder Sender über dessen USB-Anschluss oder ein an diesen angeschlossenes FTDI-Gerät installieren.",
     "WIFI": "Diese Methode erzeugt eine Firmware-Datei, die Sie auf Ihren Empfänger übertragen können, indem Sie sich mit dessen WLAN Netzwerk verbinden.",
     "EdgeTxPassthrough": "Diese Methode ermöglicht es, Firmware auf dem Sendermodul zu installieren während es mit dem Sender verbunden ist, indem sie die passthrough-Funktion von EdgeTX nutzt.",
-    "Passthrough": "Diese Methode ermöglicht es, Firmware auf dem Sendermodul zu installieren während es mit dem Sender verbunden ist, indem sie die passthrough-Funktion von EdgeTX nutzt."
+    "Passthrough": "Diese Methode ermöglicht es, Firmware auf dem Sendermodul zu installieren während es mit dem Sender verbunden ist, indem sie die passthrough-Funktion von EdgeTX nutzt.",
+    "Zip": "This method creates an archive of all files required for your device."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "Installationsmethode"
@@ -121,7 +122,8 @@
     "RCVRInvertTX": "Bei Verwendung eines Flight Controllers der nur ein RXI / SBUS (RX invertiert) Pad hat, aktivieren Sie diese Option um den CRSF-Ausgang des Empfängers zu invertieren und dieses Pad trotzdem verwenden zu können. Dies konvertiert die Ausgabe nicht in SBUS, es ist lediglich invertiertes CRSF, sodass trotzdem CRSF als Empfängerprotokoll in der Flight Controller Software ausgewählt werden sollte. Dies gilt nur für ESP-basierte Empfänger.",
     "UseR9MMR9MiniSBUS": "<p><strong>AKTIVIERT NICHT DAS SBUS PROTOKOLL.</strong></p><p> Diese Option ist für F4 Flight Controller gedacht welche keine Option für eine uninvertierte serielle Schnittstelle haben. S.BUS dient nur für Steuersignale, weshalb Sie dadurch die Telemetrie und passthrough Funktionalität verlieren. Das Signal wird aus dem standard S.BUS Pin des R9MM/R9Mini kommen. Die Einstellung von serialrx_inverted = ON könnte für die Kompatibilität in Betaflight nötig sein</p>",
     "HomeWifiSSID": "Geben Sie den Namen Ihres Heimnetzwerks (SSID) ein. Es ermöglicht WLAN-fähiger Hardware sich automatisch mit dem Heimnetzwerk zu verbinden, was zukünftige Änderungen und Aktualisierungen erleichtert.",
-    "HomeWifiPassword": "Geben Sie das Passwort Ihres Heimnetzwerks ein. Es ermöglicht WLAN-fähiger Hardware sich automatisch mit dem Heimnetzwerk zu verbinden, was zukünftige Änderungen und Aktualisierungen erleichtert."
+    "HomeWifiPassword": "Geben Sie das Passwort Ihres Heimnetzwerks ein. Es ermöglicht WLAN-fähiger Hardware sich automatisch mit dem Heimnetzwerk zu verbinden, was zukünftige Änderungen und Aktualisierungen erleichtert.",
+    "RxAsTx": "Flash your receiver with this option enabled and use it instead of your TX module."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Das Deaktivieren von UART_INVERTED ist ungewöhnlich. Bitte stellen Sie sicher, dass Ihr Sender dies unterstützt."

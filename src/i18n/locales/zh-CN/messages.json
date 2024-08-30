@@ -70,7 +70,8 @@
     "UART": "这种方法允许你通过其 USB 端口或连接 FTDI 设备来刷写你的接收器或高频头。",
     "WIFI": "这种方法可以创建一个固件文件，你可以通过连接到接收器或高频头的内置 WiFi 上传。",
     "EdgeTxPassthrough": "这种方法允许你在遥控器与高频头连接时，利用 EdgeTX 固件的直通功能对其进行刷写。",
-    "Passthrough": "这种方法允许你在你的模块与发射器连接时，通过使用直通功能进行刷写。"
+    "Passthrough": "这种方法允许你在你的模块与发射器连接时，通过使用直通功能进行刷写。",
+    "Zip": "This method creates an archive of all files required for your device."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "刷写方式"
@@ -121,7 +122,8 @@
     "RCVRInvertTX": "如果使用一个只有 RXI/SBUS（RX反向）焊盘的飞控，打开这个选项，将接收器的 CRSF 输出反向，以便能够使用该焊盘。这不会将输出转换为 SBUS，它是反向的 CRSF，所以 CRSF 仍应是飞控软件中选择的接收机协议。仅限基于 ESP 的接收机。",
     "UseR9MMR9MiniSBUS": "<p><strong>！！！这不会启用 SBUS 协议！！！</strong></p><p>这对没有非反向 UART 选项的 F4 飞控很有用。这只是一种方式，所以你会失去对无线电的回传下行链路以及直通刷写。这将从你的 R9MM/R9Mini 的默认 S.BUS 引脚中输出。</p>",
     "HomeWifiSSID": "设置家庭 WiFi 网络名称（SSID）。它将允许支持 WiFi 的硬件自动连接到家庭网络。",
-    "HomeWifiPassword": "设置家庭 WiFi 网络密码。它将允许支持 WiFi 的硬件自动连接到家庭网络。"
+    "HomeWifiPassword": "设置家庭 WiFi 网络密码。它将允许支持 WiFi 的硬件自动连接到家庭网络。",
+    "RxAsTx": "Flash your receiver with this option enabled and use it instead of your TX module."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "禁用 UART_INVERTED 是不常见的。请确保你的遥控器支持这一点。"
