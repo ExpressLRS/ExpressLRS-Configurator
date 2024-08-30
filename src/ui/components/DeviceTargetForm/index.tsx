@@ -26,13 +26,13 @@ const styles: Record<string, SxProps<Theme>> = {
 interface FirmwareVersionCardProps {
   currentTarget: Target | null;
   onChange: (data: Target | null) => void;
-  deviceOptions: Device[] | null;
+  deviceTargets: Device[] | null;
 }
 
 const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
   onChange,
   currentTarget,
-  deviceOptions,
+  deviceTargets,
 }) => {
   const [currentDevice, setCurrentDevice] = useState<Device | null>(null);
 
@@ -41,10 +41,10 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
   const { t } = useTranslation();
 
   const categorySelectOptions = useMemo(() => {
-    if (deviceOptions === null) {
+    if (deviceTargets === null) {
       return [];
     }
-    return deviceOptions
+    return deviceTargets
       .map((item) => item.category)
       .filter((value, index, array) => array.indexOf(value) === index) // unique values
       .map((category) => {
@@ -56,14 +56,14 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
       .sort((a, b) => {
         return a.label.toLowerCase() > b.label.toLowerCase() ? 1 : -1;
       });
-  }, [deviceOptions]);
+  }, [deviceTargets]);
 
   const deviceSelectOptions = useMemo(() => {
-    if (deviceOptions === null || currentCategory === null) {
+    if (deviceTargets === null || currentCategory === null) {
       return [];
     }
 
-    return deviceOptions
+    return deviceTargets
       .filter((item) => item.category === currentCategory)
       .map((item) => {
         return {
@@ -74,11 +74,11 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
       .sort((a, b) => {
         return a.label.toLowerCase() > b.label.toLowerCase() ? 1 : -1;
       });
-  }, [deviceOptions, currentCategory]);
+  }, [deviceTargets, currentCategory]);
 
   // Used when currentTarget is changed from Network devices popup
   useEffect(() => {
-    const device = deviceOptions?.find((item) =>
+    const device = deviceTargets?.find((item) =>
       item.targets.find((target) => target.id === currentTarget?.id)
     );
 
@@ -91,7 +91,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
         setCurrentDevice(device);
       }
     }
-  }, [currentTarget, currentCategory, currentDevice, deviceOptions]);
+  }, [currentTarget, currentCategory, currentDevice, deviceTargets]);
 
   const onCategoryChange = useCallback(
     (value: string | null) => {
@@ -116,13 +116,13 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
         setCurrentDevice(null);
         onChange(null);
       } else if (value !== currentDevice?.id) {
-        const device = deviceOptions?.find((item) => item.id === value) ?? null;
+        const device = deviceTargets?.find((item) => item.id === value) ?? null;
         setCurrentDevice(device);
         const targets = sortDeviceTargets(device?.targets ?? []);
         onChange(targets[0] ?? null);
       }
     },
-    [onChange, currentDevice, deviceOptions]
+    [onChange, currentDevice, deviceTargets]
   );
 
   /*
@@ -130,16 +130,16 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
    */
   useEffect(() => {
     if (
-      deviceOptions === null ||
+      deviceTargets === null ||
       currentDevice === null ||
       currentCategory === null
     ) {
       return;
     }
-    const category = deviceOptions?.find(
+    const category = deviceTargets?.find(
       (item) => item.category === currentCategory
     );
-    const device = deviceOptions?.find(
+    const device = deviceTargets?.find(
       (item) => item.name === currentDevice?.name
     );
     if (!category && !device) {
@@ -164,7 +164,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
           {t('DeviceTargetForm.UnverifiedHardwareContent')}
         </Alert>
       )}
-      {deviceOptions && deviceOptions?.length > 0 && (
+      {deviceTargets && deviceTargets?.length > 0 && (
         <>
           <Box sx={styles.root}>
             <Omnibox
@@ -195,7 +195,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
         </>
       )}
 
-      {currentCategory && currentDevice && deviceOptions && (
+      {currentCategory && currentDevice && deviceTargets && (
         <FlashingMethodOptions
           onChange={onFlashingMethodChange}
           currentTarget={currentTarget}
