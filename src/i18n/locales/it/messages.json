@@ -71,7 +71,7 @@
     "WIFI": "Questo metodo crea un file firmware che è possibile caricare sul ricevitore o trasmettitore collegandosi al wifi integrato.",
     "EdgeTxPassthrough": "Questo metodo consente di flashare il modulo del trasmettitore mentre è collegato alla radio utilizzando la funzione di passaggio del firmware EdgeTX.",
     "Passthrough": "Questo metodo consente di flashare il modulo del trasmettitore mentre è collegato alla radio utilizzando la funzione di passaggio.",
-    "Zip": "This method creates an archive of all files required for your device."
+    "Zip": "Questo metodo crea un archivio di tutti i file richiesti per il dispositivo."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "Modalità di Flash"
@@ -123,7 +123,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>QUESTO NON ABILITA IL PROTOCOLLO SBUS.</strong></p><p>Questo è utile per FC F4 che non hanno un'opzione UART non invertita. Questo è solo unidirezionale, percio' si perde il collegamento della telemetria alla radio così come il flash a passaggio. L'uscita del segnale sara' sul pin S.BUS predefinito sul tuo R9MM/R9Mini. Impostare serialrx_inverted = ON potrebbe essere necessario anche in Betaflight per compatibilità</p>",
     "HomeWifiSSID": "Imposta il nome della rete Wi-Fi (SSID). Consentirà all'hardware abilitato al Wi-Fi di connettersi automaticamente alla rete.",
     "HomeWifiPassword": "Imposta la password per la rete Wi-Fi. Consentirà all'hardware abilitato per connettersi automaticamente alla rete.",
-    "RxAsTx": "Flash your receiver with this option enabled and use it instead of your TX module."
+    "RxAsTx": "Flasha il ricevitore con questa opzione abilitata e usala invece del modulo TX."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Disabilitare UART_INVERTED non è comune. Assicurati che il tuo trasmettitore lo supporti."

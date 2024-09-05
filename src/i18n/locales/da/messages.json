@@ -71,7 +71,7 @@
     "WIFI": "Denne metode opretter en firmware fil, du kan indlæse i din modtager eller sender, ved at forbinde til indbygget WiFi.",
     "EdgeTxPassthrough": "Denne metode giver dig mulighed for at brænde dit sende modul, mens det er forbundet til din sender ved hjælp af passthrough funktion i EdgeTX.",
     "Passthrough": "Denne metode giver dig mulighed for at brænde dit modul, mens det er forbundet til din sender ved hjælp af passthrough funktionen.",
-    "Zip": "This method creates an archive of all files required for your device."
+    "Zip": "Denne konfiguration opretter et arkiv med alle de filer, der er nødvendige for din enhed."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "Brændings metode"
@@ -123,7 +123,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>DETTE ÅBNER IKKE SBUS PROTOKOL.</strong></p><p>Dette er nyttigt for F4 FCs som ikke har en uninverteret UART indstilling. Dette gælder kun een retning, så du mister radio telemetri og passthrough brænding. Dette vil give output fra standard SBUS pin på din R9MM/R9Mini. Valg af serialrx_inverteret = ON, kan også være nødvendigt for Betaflight kompatibilitet</p>",
     "HomeWifiSSID": "Angiv adgangskode til WiFi netværk. Det vil tillade hardware med WiFi automatisk at oprette forbindelse.",
     "HomeWifiPassword": "Angiv adgangskode til WiFi netværk. Det vil tillade hardware med WiFi automatisk at oprette forbindelse.",
-    "RxAsTx": "Flash your receiver with this option enabled and use it instead of your TX module."
+    "RxAsTx": "Brænd modtager med denne indstilling, istedet for med dit TX-modul."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Deaktivering af UART_INVERTED er ikke et typisk valg. Kontroller, at din sender understøtter dette."
