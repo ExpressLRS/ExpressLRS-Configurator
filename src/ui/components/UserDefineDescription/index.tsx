@@ -39,7 +39,7 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
                   i18nKey="UserDefineDescription.RegulatoryDomain915"
                   components={{
                     LoRaWANLink: (
-                      <DocumentationLink url="https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country.html" />
+                      <DocumentationLink url="https://www.thethingsnetwork.org/docs/lorawan/frequencies-by-country/" />
                     ),
                   }}
                 />
