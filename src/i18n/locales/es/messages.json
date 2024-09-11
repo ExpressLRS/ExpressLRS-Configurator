@@ -71,7 +71,7 @@
     "WIFI": "Este método crea un archivo de firmware que puedes subir a tu receptor o transmisor conectándote a su wifi integrado.",
     "EdgeTxPassthrough": "Este método te permite instalar el software en tu receptor mientras está conectado a tu transmisor utilizando la característica passthrough del firmware EdgeTX.",
     "Passthrough": "Este método te permite instalar el software en tu receptor mientras está conectado a tu transmisor utilizando la característica passthrough.",
-    "Zip": "This method creates an archive of all files required for your device."
+    "Zip": "Este método crea un archivo con todos los ficheros necesarios para tu dispositivo."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "Método de instalación"

@@ -13,7 +13,7 @@
     "PlatformioDependencyError": "Errore di dipendenza PlatformIO",
     "BuildError": "Errore di compilazione",
     "FlashError": "Errore di flash",
-    "TargetMismatch": "La selezione che stai cercando di flashare non corrisponde al dispositivo corrente, se sei sicuro di procedere, fai clic su Forza Flash qui sotto",
+    "TargetMismatch": "Il dispositivo che stai cercando di flashare non corrisponde al dispositivo selezionato, se sei sicuro di procedere, fai clic su Forza Flash qui sotto",
     "Success": "Successo!",
     "ErrorDetails": "Si è verificato un errore, controlla il log per il messaggio di errore. Se non l'hai già fatto, visita <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> e leggi la <FlashingGuideLink>Guida Flash</FlashingGuideLink> per il tuo particolare dispositivo e la <TroubleshootingGuideLink>Guida alla risoluzione dei problemi</TroubleshootingGuideLink>. Se hai ancora problemi dopo aver letto la documentazione, copia il log di compilazione su un sito online tipo pastebin, justpaste e sul canale #help-and-support del <ExpressLRSDiscordLink>ExpressLRS Discord</ExpressLRSDiscordLink> posta il link al log e altre informazioni rilevanti sul tuo dispositivo, quale metodo di flash hai usato e quali passaggi hai già fatto per risolvere il problema."
   },
@@ -59,7 +59,7 @@
   },
   "FlashingMethodDescription": {
     "BetaflightPassthroughDescription": "Questo metodo consente di flashare il ricevitore mentre è collegato al controllore di volo utilizzando la funzione di passaggio dal controllore di volo.",
-    "PlugInFCToComputer": "Collega il tuo FC al computer, ma NON connettere il configuratore Betaflight.",
+    "PlugInFCToComputer": "Collega il tuo FC al computer, ma NON connetterlo al configuratore Betaflight.",
     "SelectDesiredDevice": "Seleziona le opzioni del dispositivo desiderate e la porta seriale dei controllori di volo qui sotto.",
     "RunBuild&Flash": "Esegui Compila & Flash.",
     "BetaflightPassthroughWiki": "Controlla la nostra pagina Wiki per l'ultima definizione.",
@@ -71,7 +71,7 @@
     "WIFI": "Questo metodo crea un file firmware che è possibile caricare sul ricevitore o trasmettitore collegandosi al wifi integrato.",
     "EdgeTxPassthrough": "Questo metodo consente di flashare il modulo del trasmettitore mentre è collegato alla radio utilizzando la funzione di passaggio del firmware EdgeTX.",
     "Passthrough": "Questo metodo consente di flashare il modulo del trasmettitore mentre è collegato alla radio utilizzando la funzione di passaggio.",
-    "Zip": "This method creates an archive of all files required for your device."
+    "Zip": "Questo metodo crea un archivio di tutti i file richiesti per il dispositivo."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "Modalità di Flash"
@@ -123,7 +123,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>QUESTO NON ABILITA IL PROTOCOLLO SBUS.</strong></p><p>Questo è utile per FC F4 che non hanno un'opzione UART non invertita. Questo è solo unidirezionale, percio' si perde il collegamento della telemetria alla radio così come il flash a passaggio. L'uscita del segnale sara' sul pin S.BUS predefinito sul tuo R9MM/R9Mini. Impostare serialrx_inverted = ON potrebbe essere necessario anche in Betaflight per compatibilità</p>",
     "HomeWifiSSID": "Imposta il nome della rete Wi-Fi (SSID). Consentirà all'hardware abilitato al Wi-Fi di connettersi automaticamente alla rete.",
     "HomeWifiPassword": "Imposta la password per la rete Wi-Fi. Consentirà all'hardware abilitato per connettersi automaticamente alla rete.",
-    "RxAsTx": "Flash your receiver with this option enabled and use it instead of your TX module."
+    "RxAsTx": "Flasha il ricevitore con questa opzione abilitata e usala invece del modulo TX."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Disabilitare UART_INVERTED non è comune. Assicurati che il tuo trasmettitore lo supporti."

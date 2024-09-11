@@ -4,24 +4,34 @@ export default class UserDefinesValidator {
   validateRegulatoryDomains(data: UserDefine[]): Error[] {
     const results: Error[] = [];
 
-    const regulatoryDomainKeys: UserDefineKey[] = [
-      UserDefineKey.REGULATORY_DOMAIN_AU_915,
-      UserDefineKey.REGULATORY_DOMAIN_EU_868,
-      UserDefineKey.REGULATORY_DOMAIN_AU_433,
-      UserDefineKey.REGULATORY_DOMAIN_EU_433,
-      UserDefineKey.REGULATORY_DOMAIN_FCC_915,
-      UserDefineKey.REGULATORY_DOMAIN_IN_866,
-      UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
-      UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
-    ];
+    const regulatoryDomains: Map<string, UserDefineKey[]> = new Map([
+      [
+        '400 Mhz',
+        [
+          UserDefineKey.REGULATORY_DOMAIN_EU_433,
+          UserDefineKey.REGULATORY_DOMAIN_AU_433,
+        ],
+      ],
+      [
+        '900 MHz',
+        [
+          UserDefineKey.REGULATORY_DOMAIN_AU_915,
+          UserDefineKey.REGULATORY_DOMAIN_EU_868,
+          UserDefineKey.REGULATORY_DOMAIN_FCC_915,
+          UserDefineKey.REGULATORY_DOMAIN_IN_866,
+        ],
+      ],
+      [
+        '2.4 GHz',
+        [
+          UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
+          UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
+        ],
+      ],
+    ]);
 
-    // Support case when there are no Regulatory Domain user defines at all. All 2.4 Ghz hardware
-    const regulatoryDomainsValidationRequired =
-      data.filter(({ key }) => regulatoryDomainKeys.includes(key)).length > 0;
-    if (!regulatoryDomainsValidationRequired) {
-      return results;
-    }
-
+    const regulatoryDomainKeys = Array.from(regulatoryDomains.values()).flat();
+    console.log('regulatoryDomainKeys', regulatoryDomainKeys);
     const regulatoryDefines = data.filter(
       ({ key, enabled }) => regulatoryDomainKeys.includes(key) && enabled
     );
@@ -30,11 +40,22 @@ export default class UserDefinesValidator {
         new Error('You must choose a regulatory domain for your device')
       );
     }
-    if (regulatoryDefines.length > 1) {
-      results.push(
-        new Error('You must choose single regulatory domain for your device')
-      );
-    }
+
+    regulatoryDomains.forEach(
+      (categoryUserDefines: UserDefineKey[], categoryName: string) => {
+        console.log('categoryUserDefines', categoryUserDefines);
+        const enabledDefines = data.filter(
+          ({ key, enabled }) => categoryUserDefines.includes(key) && enabled
+        );
+        if (enabledDefines.length > 1) {
+          results.push(
+            new Error(
+              `You must choose single regulatory domain for your device in ${categoryName} band`
+            )
+          );
+        }
+      }
+    );
 
     return results;
   }
