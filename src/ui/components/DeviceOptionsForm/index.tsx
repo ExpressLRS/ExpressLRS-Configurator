@@ -57,7 +57,9 @@ interface DeviceOptionsFormProps {
 }
 
 enum UserDefineCategory {
-  RegulatoryDomains = 'REGULATORY_DOMAINS',
+  RegulatoryDomainsISM = 'REGULATORY_DOMAINS_ISM',
+  RegulatoryDomains900 = 'REGULATORY_DOMAINS_900',
+  RegulatoryDomains433 = 'REGULATORY_DOMAINS_433',
   BindingPhrase = 'BINDING_PHRASE',
   ExtraData = 'EXTRA_DATA',
   PerformanceOptions = 'PERFORMANCE_OPTIONS',
@@ -78,7 +80,9 @@ const userDefinesToCategories = (
   userDefines: UserDefine[]
 ): UserDefinesByCategory => {
   const result: UserDefinesByCategory = {
-    [UserDefineCategory.RegulatoryDomains]: [],
+    [UserDefineCategory.RegulatoryDomainsISM]: [],
+    [UserDefineCategory.RegulatoryDomains900]: [],
+    [UserDefineCategory.RegulatoryDomains433]: [],
     [UserDefineCategory.BindingPhrase]: [],
     [UserDefineCategory.ExtraData]: [],
     [UserDefineCategory.PerformanceOptions]: [],
@@ -88,13 +92,19 @@ const userDefinesToCategories = (
   };
 
   const keysToCategories: UserDefinesKeysByCategory = {
-    [UserDefineCategory.RegulatoryDomains]: [
+    [UserDefineCategory.RegulatoryDomainsISM]: [
+      UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
+      UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
+    ],
+    [UserDefineCategory.RegulatoryDomains900]: [
       UserDefineKey.REGULATORY_DOMAIN_AU_915,
       UserDefineKey.REGULATORY_DOMAIN_EU_868,
       UserDefineKey.REGULATORY_DOMAIN_FCC_915,
       UserDefineKey.REGULATORY_DOMAIN_IN_866,
-      UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
-      UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
+    ],
+    [UserDefineCategory.RegulatoryDomains433]: [
+      UserDefineKey.REGULATORY_DOMAIN_EU_433,
+      UserDefineKey.REGULATORY_DOMAIN_AU_433,
     ],
     [UserDefineCategory.BindingPhrase]: [UserDefineKey.BINDING_PHRASE],
     [UserDefineCategory.ExtraData]: [UserDefineKey.TLM_REPORT_INTERVAL_MS],
@@ -303,13 +313,44 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
         deviceOptions.userDefinesMode === UserDefinesMode.UserInterface && (
           <Grid container spacing={3}>
             <Grid item xs>
-              {categories[UserDefineCategory.RegulatoryDomains]?.length > 0 && (
+              {categories[UserDefineCategory.RegulatoryDomainsISM]?.length >
+                0 && (
                 <>
                   <Typography variant="h6" sx={styles.categoryTitle}>
-                    {t('DeviceOptionsForm.RegulatoryDomains')}
+                    {t('DeviceOptionsForm.RegulatoryDomainsISM')}
                   </Typography>
                   <UserDefinesList
-                    options={categories[UserDefineCategory.RegulatoryDomains]}
+                    options={
+                      categories[UserDefineCategory.RegulatoryDomainsISM]
+                    }
+                    onChange={onOptionUpdate}
+                  />
+                </>
+              )}
+              {categories[UserDefineCategory.RegulatoryDomains900]?.length >
+                0 && (
+                <>
+                  <Typography variant="h6" sx={styles.categoryTitle}>
+                    {t('DeviceOptionsForm.RegulatoryDomains900')}
+                  </Typography>
+                  <UserDefinesList
+                    options={
+                      categories[UserDefineCategory.RegulatoryDomains900]
+                    }
+                    onChange={onOptionUpdate}
+                  />
+                </>
+              )}
+              {categories[UserDefineCategory.RegulatoryDomains433]?.length >
+                0 && (
+                <>
+                  <Typography variant="h6" sx={styles.categoryTitle}>
+                    {t('DeviceOptionsForm.RegulatoryDomains433')}
+                  </Typography>
+                  <UserDefinesList
+                    options={
+                      categories[UserDefineCategory.RegulatoryDomains433]
+                    }
                     onChange={onOptionUpdate}
                   />
                 </>
