@@ -390,7 +390,11 @@ export default class DeviceDescriptionsLoader {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.LOCK_ON_FIRST_CONNECTION)
       );
-      userDefines.push(targetUserDefinesFactory.build(UserDefineKey.RX_AS_TX));
+      if (config.platform !== 'stm32') {
+        userDefines.push(
+          targetUserDefinesFactory.build(UserDefineKey.RX_AS_TX)
+        );
+      }
     }
     return userDefines;
   }
