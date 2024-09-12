@@ -22,7 +22,9 @@
     "ManualMode": "Modo manual",
     "CopyFromStandardMode": "Copiar do modo padrão",
     "LongerBuildTimeWarning": "Enquanto usar o modo manual com definições de usuário, o cache binário em nuvem fica desabilitado, resultando em tempos de operação muito maiores.",
-    "RegulatoryDomains": "Domínios regulatórios",
+    "RegulatoryDomainsISM": "Regulatory domains 2.4 GHz band",
+    "RegulatoryDomains900": "Regulatory domains 900 MHz band",
+    "RegulatoryDomains433": "Regulatory domains 433 MHz band",
     "BindingPhraseSetup": "Escolha da frase de conexão",
     "CompatibilityOptions": "Opções de compatibilidade",
     "PerformanceOptions": "Opções de performance",
@@ -123,7 +125,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>ISSO NÃO HABILITA O PROTOCOLO SBUS.</strong></p><p>Isso é útil para F4 CF que não possuem uma opção UART não-invertida. Funciona apenas em uma via, então você perderá o link de telemetria para o seu rádio e também a instalação por passagem. Isto irá emitir do pin SBUS padrão do seu R9MM/R9Mini. A definição serialrx_inverted = ON também pode ser necessária dentro do Betaflight para compatibilidade</p>",
     "HomeWifiSSID": "Defina o nome da rede Wi-Fi doméstica (SSID). Isso permitirá que o Wi-Fi ativado por hardware se conecte à rede doméstica automaticamente.",
     "HomeWifiPassword": "Defina a senha da rede Wi-Fi doméstica. Isso permitirá que o hardware Wi-Fi se conecte à rede doméstica automaticamente.",
-    "RxAsTx": "Flash your receiver with this option enabled and use it instead of your TX module."
+    "RxAsTx": "Flash your receiver with this option enabled and use it as a TX module."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Desabilitar UART_INVERTED é incomum. Por favor, certifique-se de que seu transmissor suporta isso."

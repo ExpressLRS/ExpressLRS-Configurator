@@ -22,7 +22,9 @@
     "ManualMode": "手动模式",
     "CopyFromStandardMode": "从标准模式复制",
     "LongerBuildTimeWarning": "当使用手动用户定义模式时，云二进制缓存被禁用，导致编译时间大大延长。",
-    "RegulatoryDomains": "监管领域",
+    "RegulatoryDomainsISM": "2.4 GHz 波段监管域",
+    "RegulatoryDomains900": "900 MHz 波段监管域",
+    "RegulatoryDomains433": "433 MHz 波段监管域",
     "BindingPhraseSetup": "对频密码设置",
     "CompatibilityOptions": "兼容性选项",
     "PerformanceOptions": "性能选项",
@@ -123,7 +125,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>！！！这不会启用 SBUS 协议！！！</strong></p><p>这对没有非反向 UART 选项的 F4 飞控很有用。这只是一种方式，所以你会失去对无线电的回传下行链路以及直通刷写。这将从你的 R9MM/R9Mini 的默认 S.BUS 引脚中输出。</p>",
     "HomeWifiSSID": "设置家庭 WiFi 网络名称（SSID）。它将允许支持 WiFi 的硬件自动连接到家庭网络。",
     "HomeWifiPassword": "设置家庭 WiFi 网络密码。它将允许支持 WiFi 的硬件自动连接到家庭网络。",
-    "RxAsTx": "启用此选项后刷写您的接收器的固件，并把它当作 TX(高频头) 来使用。"
+    "RxAsTx": "启用此选项后刷写接收器固件，并把它当作 TX(高频头) 来使用。"
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "禁用 UART_INVERTED 是不常见的。请确保你的遥控器支持这一点。"
