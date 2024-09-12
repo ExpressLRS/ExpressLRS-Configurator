@@ -22,7 +22,9 @@
     "ManualMode": "Ручний режим",
     "CopyFromStandardMode": "Копіювати зі стандартного режиму",
     "LongerBuildTimeWarning": "При використанні встановленого користувачем ручного режиму, кеш хмарних бінарних файлів вимкнено, що призводить до набагато довшого часу на збірку.",
-    "RegulatoryDomains": "Правові юрисдикції",
+    "RegulatoryDomainsISM": "Regulatory domains 2.4 GHz band",
+    "RegulatoryDomains900": "Regulatory domains 900 MHz band",
+    "RegulatoryDomains433": "Regulatory domains 433 MHz band",
     "BindingPhraseSetup": "Встановлення кодової фрази для з'єднання",
     "CompatibilityOptions": "Параметри сумісності",
     "PerformanceOptions": "Параметри продуктивності",
@@ -123,7 +125,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>ЦЕ НЕ УВІМКНЕ ПРОТОКОЛ SBUS.</strong></p><p>Це корисно для F4 польотних контролерів, які не мають опції неінвертованого UART. Зв'язок однонаправлений, тому ви втратите передачу телеметрії з дрону на пульт, а також можливість прошивки в наскрізному режимі passthrough. Сигнал буде виходити з контакту S.BUS за замовчуванням на вашому R9MM/R9Mini. Також може знадобитись поставити serialrx_inverted = ON в Betaflight для сумісності</p>",
     "HomeWifiSSID": "Встановлення назви домашньої Wi-Fi мережі (SSID). Це дозволить Wi-Fi під'єднуватись до домашньої мережі автоматично.",
     "HomeWifiPassword": "Пароль домашньої Wi-Fi мережі. Це дозволить Wi-Fi під'єднуватись до домашньої мережі автоматично.",
-    "RxAsTx": "Flash your receiver with this option enabled and use it instead of your TX module."
+    "RxAsTx": "Flash your receiver with this option enabled and use it as a TX module."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Вимкнення UART_INVERTED є нетиповим. Будь ласка, переконайтеся, що ваш передавач підтримує це."

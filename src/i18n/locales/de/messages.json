@@ -22,7 +22,9 @@
     "ManualMode": "Manueller Modus",
     "CopyFromStandardMode": "Vom Standardmodus übernehmen",
     "LongerBuildTimeWarning": "Wenn Sie den manuellen benutzerdefinierten Modus verwenden, wird der Cache für Cloud-Binärdateien deaktiviert, was zu wesentlich längeren Bauzeiten führt.",
-    "RegulatoryDomains": "Regulatorische Region",
+    "RegulatoryDomainsISM": "Regulatory domains 2.4 GHz band",
+    "RegulatoryDomains900": "Regulatory domains 900 MHz band",
+    "RegulatoryDomains433": "Regulatory domains 433 MHz band",
     "BindingPhraseSetup": "Bindphraseneinstellungen",
     "CompatibilityOptions": "Kompatibilitätsoptionen",
     "PerformanceOptions": "Performance-Optionen",
@@ -123,7 +125,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>AKTIVIERT NICHT DAS SBUS PROTOKOLL.</strong></p><p> Diese Option ist für F4 Flight Controller gedacht welche keine Option für eine uninvertierte serielle Schnittstelle haben. S.BUS dient nur für Steuersignale, weshalb Sie dadurch die Telemetrie und passthrough Funktionalität verlieren. Das Signal wird aus dem standard S.BUS Pin des R9MM/R9Mini kommen. Die Einstellung von serialrx_inverted = ON könnte für die Kompatibilität in Betaflight nötig sein</p>",
     "HomeWifiSSID": "Geben Sie den Namen Ihres Heimnetzwerks (SSID) ein. Es ermöglicht WLAN-fähiger Hardware sich automatisch mit dem Heimnetzwerk zu verbinden, was zukünftige Änderungen und Aktualisierungen erleichtert.",
     "HomeWifiPassword": "Geben Sie das Passwort Ihres Heimnetzwerks ein. Es ermöglicht WLAN-fähiger Hardware sich automatisch mit dem Heimnetzwerk zu verbinden, was zukünftige Änderungen und Aktualisierungen erleichtert.",
-    "RxAsTx": "Wenn Sie eine Firmware mit dieser Option aktiviert auf Ihrem Empfänger installieren, können Sie ihn als Sendemodul verwenden."
+    "RxAsTx": "Flash your receiver with this option enabled and use it as a TX module."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Das Deaktivieren von UART_INVERTED ist ungewöhnlich. Bitte stellen Sie sicher, dass Ihr Sender dies unterstützt."

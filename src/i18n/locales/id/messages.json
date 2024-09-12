@@ -22,7 +22,9 @@
     "ManualMode": "Mode Manual",
     "CopyFromStandardMode": "Salin dari mode Standard",
     "LongerBuildTimeWarning": "Ketika menggunakan mode user-defined manual, cache binaries dari cloud disembunyikan, mengakibatkan proses pembangunan firmware yang lebih lama.",
-    "RegulatoryDomains": "Regulasi wilayah",
+    "RegulatoryDomainsISM": "Regulatory domains 2.4 GHz band",
+    "RegulatoryDomains900": "Regulatory domains 900 MHz band",
+    "RegulatoryDomains433": "Regulatory domains 433 MHz band",
     "BindingPhraseSetup": "Setelan Frasa penghubung",
     "CompatibilityOptions": "Opsi kompabilitas",
     "PerformanceOptions": "Opsi performa",
@@ -123,7 +125,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>INI BUKAN UNTUK MENGAKTIFKAN PROTOKOL SBUS.</strong></p><p>Ini berguna untuk FC F4 yang tidak memiliki opsi UART tidak terbalik. Ini hanya satu cara, jadi Anda kehilangan downlink telemetri ke radio Anda serta flashing passthrough. Ini akan keluar dari pin S.BUS default pada R9MM/R9Mini Anda. Atur serialrx_inverted = ON mungkin juga diperlukan dalam Betaflight untuk kompatibilitas</p>",
     "HomeWifiSSID": "Setel nama jaringan WiFi rumah (SSID). Ini akan membuat perangkat anda terhubung di jaringan rumah anda secara otomatis.",
     "HomeWifiPassword": "Setel nama jaringan WiFi rumah (SSID). Ini akan membuat perangkat anda terhubung di jaringan rumah anda secara otomatis.",
-    "RxAsTx": "Flash your receiver with this option enabled and use it instead of your TX module."
+    "RxAsTx": "Flash your receiver with this option enabled and use it as a TX module."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Menonaktif UART_INVERTED adalah hal yang tidak umum. Mohon pastikan transmitter anda mendukungnya."

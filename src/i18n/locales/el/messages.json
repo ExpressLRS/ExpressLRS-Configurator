@@ -22,7 +22,9 @@
     "ManualMode": "Χειροκίνητη λειτουργία",
     "CopyFromStandardMode": "Αντιγραφή από την κανονική λειτουργία",
     "LongerBuildTimeWarning": "Όταν χρησιμοποιείτε τη χειροκίνητη λειτουργία που έχει οριστεί από το χρήστη, η λειτουργία αρχείων cloud είναι απενεργοποιημένη, με αποτέλεσμα μεγαλύτερους χρόνους χτισίματος.",
-    "RegulatoryDomains": "Νομοθετικές πράξεις",
+    "RegulatoryDomainsISM": "Regulatory domains 2.4 GHz band",
+    "RegulatoryDomains900": "Regulatory domains 900 MHz band",
+    "RegulatoryDomains433": "Regulatory domains 433 MHz band",
     "BindingPhraseSetup": "Ρύθμιση φράσης binding",
     "CompatibilityOptions": "Επιλογές συμβατότητας",
     "PerformanceOptions": "Επιλογές επιδόσεων",
@@ -123,7 +125,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>ΑΥΤΟ ΔΕΝ ΕΝΕΡΓΟΠΟΙΕΙ ΤΟ ΠΡΩΤΟΚΟΛΛΟ SBUS.</strong></p><p>Χρήσιμη επιλογή για μερικούς F4 FCs που δεν έχουν επιλογή για μη αντεστραμμένο UART. Πρωτόκολλο μιας διαδρομής οπότε χάνεται η τηλεμετρία στην τ/κ όπως και το passthrough flashing. Θα κάνει τα R9MM/R9Mini να βγάζουν το σήμα από το προκαθορισμένο S.BUS σημείο πάνω στο receiver. Ίσως χρειαστεί η ρύθμιση Set serialrx_inverted = ON για υποστήριξη με το Betaflight</p>",
     "HomeWifiSSID": "Ορισμός ονόματος οικιακού δικτύου Wi-Fi (SSID). Θα επιτρέψει αυτόματα τη σύνδεση Wi-Fi με το οικιακό δίκτυο.",
     "HomeWifiPassword": "Ορισμός κωδικού πρόσβασης οικιακού δικτύου Wi-Fi. Θα επιτρέψει στο υλικό με δυνατότητα Wi-Fi να συνδέεται αυτόματα με το οικιακό δίκτυο.",
-    "RxAsTx": "Flash your receiver with this option enabled and use it instead of your TX module."
+    "RxAsTx": "Flash your receiver with this option enabled and use it as a TX module."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Η απενεργοποίηση της επιλογής UART_INVERTED είναι κάτι ασυνήθιστο. Βεβαιωθείτε ότι η Τ/Κ σας το υποστηρίζει."

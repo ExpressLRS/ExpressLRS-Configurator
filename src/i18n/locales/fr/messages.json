@@ -22,7 +22,9 @@
     "ManualMode": "Mode manuel",
     "CopyFromStandardMode": "Copier depuis le mode Standard",
     "LongerBuildTimeWarning": "Lorsque vous utilisez le mode manuel, le cache des micrologiciels sur le cloud est désactivé, ce qui entraîne des temps de compilation beaucoup plus longs.",
-    "RegulatoryDomains": "Domaines réglementaires",
+    "RegulatoryDomainsISM": "Regulatory domains 2.4 GHz band",
+    "RegulatoryDomains900": "Regulatory domains 900 MHz band",
+    "RegulatoryDomains433": "Regulatory domains 433 MHz band",
     "BindingPhraseSetup": "Configuration de la phrase d'appairage",
     "CompatibilityOptions": "Options de compatibilité",
     "PerformanceOptions": "Options de performance",
@@ -123,7 +125,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>N'ACTIVE PAS LE PROTOCOLE SBUS.</strong></p><p>Utile pour les contrôleurs de vol F4 qui n'ont pas d'UART non inversé. La communication est unidirectionnelle, donc la télémétrie ainsi que la mise à jour de votre récepteur à travers le contrôleur de vol ne seront pas disponible. Les signaux seront envoyés depuis la broche S.BUS de votre R9MM/R9Mini. Définir serialrx_inverted = ON peut aussi être nécessaire dans Betaflight</p>",
     "HomeWifiSSID": "Définit le nom de votre point d'accès Wi-Fi (SSID). Cela permet de connecter votre appareil à votre réseau local automatiquement.",
     "HomeWifiPassword": "Définit le mot de passe de votre point d'accès Wi-Fi. Cela permet de connecter votre appareil à votre réseau local automatiquement.",
-    "RxAsTx": "Installez le micrologiciel sur votre récepteur avec cette option activée pour l'utiliser en tant que module TX."
+    "RxAsTx": "Flash your receiver with this option enabled and use it as a TX module."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Désactiver UART_INVERTED est rare. Veuillez vous assurer que votre transmetteur le supporte."
