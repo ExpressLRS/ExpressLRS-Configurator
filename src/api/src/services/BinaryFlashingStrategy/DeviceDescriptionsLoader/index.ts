@@ -327,12 +327,12 @@ export default class DeviceDescriptionsLoader {
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400)
       );
     }
-    if (args.target.includes('tx_dual')) {
+    if (args.target.includes('dual')) {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400)
       );
     }
-    if (args.target.includes('_900.') || args.target.includes('tx_dual')) {
+    if (args.target.includes('_900.') || args.target.includes('dual')) {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_AU_915)
       );
