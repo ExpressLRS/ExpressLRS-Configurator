@@ -22,9 +22,9 @@
     "ManualMode": "Modo manual",
     "CopyFromStandardMode": "Copiar desde el modo estándar",
     "LongerBuildTimeWarning": "Cuando se utiliza el modo manual definido por el usuario, la caché de binarios en la nube está desactivada, y produce como resultado tiempos de compilación mucho más largos.",
-    "RegulatoryDomainsISM": "Regulatory domains 2.4 GHz band",
-    "RegulatoryDomains900": "Regulatory domains 900 MHz band",
-    "RegulatoryDomains433": "Regulatory domains 433 MHz band",
+    "RegulatoryDomainsISM": "Dominios regulatorios para banda de 2.4 GHz",
+    "RegulatoryDomains900": "Dominios regulatorios para banda de 900 MHz",
+    "RegulatoryDomains433": "Dominios regulatorios para banda de 433 MHz",
     "BindingPhraseSetup": "Configuración de frase de enlace",
     "CompatibilityOptions": "Opciones de compatibilidad",
     "PerformanceOptions": "Opciones de rendimiento",
@@ -125,7 +125,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>ESTO NO ACTIVA EL PROTOCOLO SBUS.</strong></p><p>Esto es útil para FCs F4 que no tienen una opción UART no invertida. Esta es sólo en una dirección, por lo que perderás el enlace de telemetría hacia tu radio así como la instalación por passthrough. Esto sacará los datos por el pin de salida por defecto de S.BUS en tu R9MM/R9Mini. Establecer serialrx_inverted = ON también puede ser necesario dentro de Betaflight para compatibilidad</p>",
     "HomeWifiSSID": "Indica el nombre de la red Wi-Fi doméstica (SSID). Permite que el hardware Wi-Fi activado se conecte a la red doméstica automáticamente.",
     "HomeWifiPassword": "Establece la contraseña de la red Wifi doméstica. Permite que el hardware Wifi activado se conecte a la red doméstica automáticamente.",
-    "RxAsTx": "Flash your receiver with this option enabled and use it as a TX module."
+    "RxAsTx": "Instala tu receptor con esta opción habilitada y úsalo como módulo TX."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Deshabilitar UART_INVERTED es poco habitual. Por favor, asegúrate de que tu transmisor lo admite."
@@ -198,7 +198,7 @@
     "BuildNotice": "Aviso de compilación",
     "FirmwareOpenedInFileExplorer": "El archivo binario de firmware ha sido abierto en el explorador de archivos",
     "Back": "Volver",
-    "FlashAnother": "Flash another",
+    "FlashAnother": "Instalar otro",
     "Retry": "Reintentar"
   },
   "LogsView": {
@@ -213,8 +213,8 @@
     "Settings": "Ajustes",
     "LanguageSelector": "Selector de idioma",
     "CurrentLanguage": "Idioma actual",
-    "ExpertMode": "Expert Mode",
-    "ApplicationOptions": "Application Options",
+    "ExpertMode": "Módo experto",
+    "ApplicationOptions": "Opciones de la aplicación",
     "ExpertModeDescription": "Enable Expert Mode to unlock advanced features including additional firmware sources, the ability to build firmware with manual user-defined parameters, and access to serial monitor screen for detailed diagnostics."
   },
   "SupportView": {

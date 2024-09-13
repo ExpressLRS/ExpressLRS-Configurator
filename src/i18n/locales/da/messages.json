@@ -22,9 +22,9 @@
     "ManualMode": "Manuel tilstand",
     "CopyFromStandardMode": "Kopier fra standard tilstand",
     "LongerBuildTimeWarning": "Når du bruger den manuelle brugerdefinerede tilstand, er cloud binære cachen deaktiveret, hvilket resulterer i meget længere tidsforbrug til et byg.",
-    "RegulatoryDomainsISM": "Regulatory domains 2.4 GHz band",
-    "RegulatoryDomains900": "Regulatory domains 900 MHz band",
-    "RegulatoryDomains433": "Regulatory domains 433 MHz band",
+    "RegulatoryDomainsISM": "Reguleret 2,4 GHz frekvensbånd",
+    "RegulatoryDomains900": "Reguleret 900 MHz frekvensbånd",
+    "RegulatoryDomains433": "Reguleret 433 MHz frekvensbånd",
     "BindingPhraseSetup": "Valg af tilslutnings kode",
     "CompatibilityOptions": "Kompatibilitet indstillinger",
     "PerformanceOptions": "Ydelses indstillinger",
@@ -125,7 +125,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>DETTE ÅBNER IKKE SBUS PROTOKOL.</strong></p><p>Dette er nyttigt for F4 FCs som ikke har en uninverteret UART indstilling. Dette gælder kun een retning, så du mister radio telemetri og passthrough brænding. Dette vil give output fra standard SBUS pin på din R9MM/R9Mini. Valg af serialrx_inverteret = ON, kan også være nødvendigt for Betaflight kompatibilitet</p>",
     "HomeWifiSSID": "Angiv adgangskode til WiFi netværk. Det vil tillade hardware med WiFi automatisk at oprette forbindelse.",
     "HomeWifiPassword": "Angiv adgangskode til WiFi netværk. Det vil tillade hardware med WiFi automatisk at oprette forbindelse.",
-    "RxAsTx": "Flash your receiver with this option enabled and use it as a TX module."
+    "RxAsTx": "Brænd modtager med denne indstilling aktiv, istedet for med dit TX-modul."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Deaktivering af UART_INVERTED er ikke et typisk valg. Kontroller, at din sender understøtter dette."
