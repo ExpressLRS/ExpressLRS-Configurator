@@ -327,12 +327,17 @@ export default class DeviceDescriptionsLoader {
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400)
       );
     }
-    if (args.target.includes('dual')) {
+    // no support for LR1121 LBT yet. SPI commands are too slow
+    if (args.target.includes('tx_dual') || args.target.includes('rx_dual')) {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400)
       );
     }
-    if (args.target.includes('_900.') || args.target.includes('dual')) {
+    if (
+      args.target.includes('_900.') ||
+      args.target.includes('tx_dual') ||
+      args.target.includes('rx_dual')
+    ) {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_AU_915)
       );
