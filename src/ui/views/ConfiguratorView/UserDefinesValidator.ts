@@ -30,12 +30,14 @@ export default class UserDefinesValidator {
       ],
     ]);
 
+    // if any regulatory domain options were present to the user it means that
+    // at least one of them has to be enabled
     const regulatoryDomainKeys = Array.from(regulatoryDomains.values()).flat();
-    console.log('regulatoryDomainKeys', regulatoryDomainKeys);
-    const regulatoryDefines = data.filter(
-      ({ key, enabled }) => regulatoryDomainKeys.includes(key) && enabled
+    const regulatoryDefines = data.filter(({ key }) =>
+      regulatoryDomainKeys.includes(key)
     );
-    if (regulatoryDefines.length === 0) {
+    const enabledRegulatoryDefines = data.filter(({ enabled }) => enabled);
+    if (regulatoryDefines.length > 0 && enabledRegulatoryDefines.length === 0) {
       results.push(
         new Error('You must choose a regulatory domain for your device')
       );
