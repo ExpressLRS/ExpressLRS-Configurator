@@ -117,7 +117,7 @@
     "LOCK_ON_FIRST_CONNECTION": "Lock on first connection",
     "MY_STARTUP_MELODY": "My startup melody",
     "RCVR_INVERT_TX": "Invert receiver TX pin",
-    "RCVR_UART_BAUD": "Receiver BAUD rate",
+    "RCVR_UART_BAUD": "Receiver baud rate",
     "REGULATORY_DOMAIN_AU_433": "433 MHz Australia",
     "REGULATORY_DOMAIN_AU_915": "915 MHz Australia",
     "REGULATORY_DOMAIN_EU_433": "433 MHz Europe",
