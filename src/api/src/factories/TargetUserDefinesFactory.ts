@@ -91,10 +91,10 @@ export default class TargetUserDefinesFactory {
         return UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '60', true);
       case UserDefineKey.RX_AS_TX:
         let rxAxTxTypes: string[] = [];
-        if (this.platform === 'esp32') {
+        if (this.platform?.startsWith('esp32')) {
           rxAxTxTypes = ['internal', 'external'];
         }
-        if (this.platform === 'esp8285') {
+        if (this.platform?.startsWith('esp8285')) {
           rxAxTxTypes = ['internal'];
         }
         return UserDefine.Enum(UserDefineKey.RX_AS_TX, rxAxTxTypes, 'internal');
