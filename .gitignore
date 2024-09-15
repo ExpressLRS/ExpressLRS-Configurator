@@ -53,3 +53,4 @@ npm-debug.log.*
 __pycache__
 r2
 crowdin_env.sh
+purge.sh

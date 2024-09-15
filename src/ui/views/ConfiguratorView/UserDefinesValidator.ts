@@ -32,27 +32,22 @@ export default class UserDefinesValidator {
 
     // if any regulatory domain options were present to the user it means that
     // at least one of them has to be enabled
-    const regulatoryDomainKeys = Array.from(regulatoryDomains.values()).flat();
-    const regulatoryDefines = data.filter(({ key }) =>
-      regulatoryDomainKeys.includes(key)
-    );
-    const enabledRegulatoryDefines = data.filter(({ enabled }) => enabled);
-    if (regulatoryDefines.length > 0 && enabledRegulatoryDefines.length === 0) {
-      results.push(
-        new Error('You must choose a regulatory domain for your device')
-      );
-    }
-
     regulatoryDomains.forEach(
       (categoryUserDefines: UserDefineKey[], categoryName: string) => {
-        console.log('categoryUserDefines', categoryUserDefines);
-        const enabledDefines = data.filter(
-          ({ key, enabled }) => categoryUserDefines.includes(key) && enabled
+        // check if we have any options present from the category
+        const userDefinesFilterByCategory = data.filter(({ key }) =>
+          categoryUserDefines.includes(key)
         );
-        if (enabledDefines.length > 1) {
+        const enabledUserDefines = userDefinesFilterByCategory.filter(
+          ({ enabled }) => enabled
+        );
+        if (
+          userDefinesFilterByCategory.length > 0 &&
+          enabledUserDefines.length === 0
+        ) {
           results.push(
             new Error(
-              `You must choose single regulatory domain for your device in ${categoryName} band`
+              `You must choose regulatory domain for your device in ${categoryName} band`
             )
           );
         }
