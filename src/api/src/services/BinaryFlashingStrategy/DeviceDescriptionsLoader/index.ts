@@ -395,7 +395,10 @@ export default class DeviceDescriptionsLoader {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.LOCK_ON_FIRST_CONNECTION)
       );
-      if (config.platform !== 'stm32') {
+      if (
+        config.platform.startsWith('esp32') ||
+        config.platform.startsWith('esp8285')
+      ) {
         userDefines.push(
           targetUserDefinesFactory.build(UserDefineKey.RX_AS_TX)
         );
