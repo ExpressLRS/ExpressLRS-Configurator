@@ -175,6 +175,9 @@ export default class BinaryConfigurator {
           }
           break;
         case UserDefineKey.LOCK_ON_FIRST_CONNECTION:
+          if (userDefine.enabled) {
+            flags.push(['--lock-on-first-connection']);
+          }
           break;
         case UserDefineKey.JUST_BEEP_ONCE:
           if (userDefine.enabled) {
