@@ -317,27 +317,20 @@ export default class DeviceDescriptionsLoader {
       targetUserDefinesFactory.build(UserDefineKey.BINDING_PHRASE)
     );
 
+    // no support for LR1121 LBT yet. SPI commands are too slow -- 
+    // so -- only show EU domain if no dual-band TX/RX defined
+    // otherwise, show ISM 
     if (args.target.includes('_2400.')) {
-      userDefines.push(
-        targetUserDefinesFactory.build(
-          UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400
-        )
-      );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400)
-      );
-    }
-    // no support for LR1121 LBT yet. SPI commands are too slow
-    if (args.target.includes('tx_dual') || args.target.includes('rx_dual')) {
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400)
-      );
-    }
-    if (
-      args.target.includes('_900.') ||
-      args.target.includes('tx_dual') ||
-      args.target.includes('rx_dual')
-    ) {
+      if (!args.target.includes('tx_dual') || !args.target.includes('rx_dual')) {
+        userDefines.push(
+          targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400)
+        );
+      }
+        userDefines.push(
+          targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400)
+        );
+      }
+      if (args.target.includes('_900.') || args.target.includes('tx_dual') || args.target.includes('rx_dual')) {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_AU_915)
       );
