@@ -170,7 +170,7 @@
   "ConfiguratorView": {
     "DownloadLUAScript": "Scarica LUA Script",
     "FirmwareVersion": "Versione firmware",
-    "Target": "Destinazione",
+    "Target": "Selezione",
     "Notice": "Avviso",
     "SelectFirmwareVersionFirst": "Selezionare prima una versione del firmware.",
     "DeviceOptions": "Opzioni dispositivo",
