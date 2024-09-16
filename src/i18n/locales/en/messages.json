@@ -105,6 +105,17 @@
     "Settings": "Settings",
     "Support": "Support"
   },
+  "FlashingMethod": {
+    "BetaflightPassthrough": "Betaflight Passthrough",
+    "DFU": "DFU (Device Firmware Upgrade)",
+    "EdgeTxPassthrough": "EdgeTX Passthrough",
+    "Passthrough": "Passthrough",
+    "STLink": "STLink",
+    "Stock_BL": "Stock Bootloader",
+    "UART": "UART (Serial)",
+    "WIFI": "Wi-Fi",
+    "Zip": "Zip"
+  },
   "UserDefineKey": {
     "AUTO_WIFI_ON_INTERVAL": "Wi-Fi startup delay (in seconds)",
     "BINDING_PHRASE": "Binding phrase",

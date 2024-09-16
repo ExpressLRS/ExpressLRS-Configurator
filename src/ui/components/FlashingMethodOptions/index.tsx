@@ -80,7 +80,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
         <>
           {!targetMapping.flashingMethod
             ? targetMapping.name
-            : targetMapping.flashingMethod}
+            : t(`FlashingMethod.${targetMapping.flashingMethod}`)}
           {targetMapping.flashingMethod !== null && (
             <FlashingMethodDescription
               flashingMethod={targetMapping.flashingMethod}
