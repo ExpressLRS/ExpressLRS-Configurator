@@ -117,7 +117,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                   disableRipple
                 />
               </ListItemIcon>
-              <ListItemText>{item.key}</ListItemText>
+              <ListItemText>{t(`UserDefineKey.${item.key}`)}</ListItemText>
               <ListItemSecondaryAction>
                 <UserDefineDescription userDefine={item.key} />
               </ListItemSecondaryAction>
