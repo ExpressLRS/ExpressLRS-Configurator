@@ -1,0 +1,238 @@
+{
+  "BuildNotificationsList": {
+    "VerifyingBuildSystem": "Weryfikacja systemu kompilacji",
+    "DownloadingFirmware": "Pobieranie firmware",
+    "BuildingUserDefinesTXT": "Tworzenie user_defines.txt",
+    "CompilingFirmware": "Kompilowanie firmware",
+    "FlashingDevice": "Wgrywanie oprogramowania na urządzenie"
+  },
+  "BuildResponse": {
+    "Error": "Błąd",
+    "GitDependencyError": "Błąd zależności Git",
+    "PythonDependencyError": "Błąd zależności Python",
+    "PlatformioDependencyError": "Błąd zależności Platformio",
+    "BuildError": "Błąd kompilacji",
+    "FlashError": "Błąd wgrywania",
+    "TargetMismatch": "Cel, dla którego próbujesz wgrać oprogramowanie, nie zgadza się z domyślnym celem urządzenia, do którego jesteś podłączony. Jeśli jesteś pewien, że chcesz to zrobić, kliknij przycisk \"Wymuś Wgranie\"",
+    "Success": "Sukces!",
+    "ErrorDetails": "Wystąpił błąd, zobacz powyższy log, aby uzyskać dokładny komunikat błędu. Jeśli jeszcze tego nie zrobiłeś, odwiedź <ExpresslrsLink>Expresslrs.org</ExpresslrsLink> i przeczytaj <FlashingGuideLink>Instrukcję Flashowania</FlashingGuideLink> dla Twojego konkretnego urządzenia, a także przewodnik <TroubleshootingGuideLink>Instrukcja Rozwiązywania Problemów</TroubleshootingGuideLink>. Jeśli nadal występują problemy po sprawdzeniu dokumentacji, proszę skopiować logi kompilacji widoczne powyżej do strony internetowej pozwalającej na udostępnianie skopiowanych rzecz i opublikować je na kanale #help-and-support na <ExpressLRSDiscordLink>ExpressLRS Discord</ExpressLRSDiscordLink> z linkiem do logow oraz innymi istotnymi informacjami, takimi jak model twojego urządzenia, metoda flashowania którą wybrałeś i jakie kroki zostały podjęte już w celu rozwiązania problemu."
+  },
+  "DeviceOptionsForm": {
+    "StandardMode": "Tryb standardowy",
+    "ManualMode": "Tryb manualny",
+    "CopyFromStandardMode": "Kopiuj z trybu standardowego",
+    "LongerBuildTimeWarning": "Gdy używasz manualnego, zdefiniowanego przez użytkownika trybu, pamięć podręczna kodu w chmurze jest wyłączona, co skutkuje znacznie dłuższym czasem kompilowania.",
+    "RegulatoryDomainsISM": "Domeny regulacyjne pasma 2.4 GHz",
+    "RegulatoryDomains900": "Domeny regulacyjne pasma 900 MHz",
+    "RegulatoryDomains433": "Domeny regulacyjne pasma 433 MHz",
+    "BindingPhraseSetup": "Konfiguracja frazy powiązania",
+    "CompatibilityOptions": "Opcje zgodności",
+    "PerformanceOptions": "Opcje wydajności",
+    "ExtraData": "Dodatkowe dane",
+    "Network": "Sieć",
+    "OtherOptions": "Pozostałe opcje"
+  },
+  "DeviceTargetForm": {
+    "UnverifiedHardwareTitle": "NIEZATWIERDZONE URZĄDZENIE",
+    "UnverifiedHardwareContent": "Producent tego sprzętu nie dostarczył deweloperom próbek do testów i weryfikacji, skontaktuj się z producentem urządzenia w celu wsparcia lub kontynuuj na własne ryzyko. Nie wszystkie funkcje mogą działać.",
+    "DeviceCategory": "Rodzaj urządzenia",
+    "Device": "Urządzenie"
+  },
+  "FirmwareVersionForm": {
+    "OfficialReleases": "Oficjalne wersje oprogramowania",
+    "GitBranch": "Git Branch",
+    "GitCommit": "Git Commit",
+    "Local": "Lokalnie",
+    "GitPullRequest": "Git pull request",
+    "ShowPreRreleases": "Pokaż wersje testowe",
+    "Releases": "Wersje",
+    "ReleaseNotes": "Lista zmian",
+    "NewerVersionAvailable": "Dostępna jest nowsza wersja oprogramowania",
+    "UpgradeToV3": "ExpressLRS 2.X nie jest już obsługiwany. Proszę zaktualizować do ExpressLRS 3.X.",
+    "DangerZoneTitle": "NIEBEZPIECZNA STREFA",
+    "DangerZoneContent": "Użyj tych źródeł tylko wtedy, gdy wiesz co robisz lub gdy zostaniesz poinstruowany przez deweloperów projektu",
+    "GitBranches": "Git branches",
+    "GitCommitHash": "Git commit hash",
+    "LocalPath": "Ścieżka lokalna",
+    "AttentionTitle": "UWAGA",
+    "AttentionContent": "Próbujesz wgrać przestarzałą, niestandardową wersję ExpressLRS dla BetaFPV. Urządzenia BetaFPV są w pełni obsługiwane w ostatnich oficjalnych wersjach ExpressLRS. Zalecamy korzystanie z najnowszego stabilnego oprogramowania, by uniknąć dalszych problemów.",
+    "ChooseFolder": "Wybierz folder",
+    "GitPullRequests": "Git pull requests"
+  },
+  "FlashingMethodDescription": {
+    "BetaflightPassthroughDescription": "Ta metoda pozwala na flashowanie odbiornika, gdy jest on podłączony do kontrolera lotu za pomocą funkcji passthrough.",
+    "PlugInFCToComputer": "Podłącz FC do komputera, ale NIE łącz się w konfiguratorze Betaflight.",
+    "SelectDesiredDevice": "Wybierz poniżej swoje opcje urządzenia oraz łącze seryjne połączone z twoim kontrollerem lotu poniżej.",
+    "RunBuild&Flash": "Zbuduj firmware i wgraj.",
+    "BetaflightPassthroughWiki": "Sprawdź naszą stronę Wiki, aby uzyskać najnowszą definicję.",
+    "DFU": "Ta metoda pozwala na flashowanie odbiornika lub nadajnika przez tryb aktualizacji firmware urządzeń (DFU).",
+    "GeneralWiki": "Ta metoda pozwala na flashowanie odbiornika lub nadajnika przez tryb aktualizacji firmware urządzeń (Dfu).",
+    "STLink": "Ta metoda pozwala na flashowanie odbiornika lub nadajnika przy użyciu programera STLink podłączonego do urządzenia.",
+    "StockBL": "Ta metoda pozwala na flashowanie odbiornika lub nadajnika za pomocą bootloadera na urządzeniu.",
+    "UART": "Ta metoda pozwala na flashowanie odbiornika lub nadajnika przez port USB lub przez podłączone urządzenie FTDI.",
+    "WIFI": "Ta metoda tworzy plik oprogramowania, który można przesłać do odbiornika lub nadajnika poprzez połączenie ze wbudowaną siecią WiFi.",
+    "EdgeTxPassthrough": "Ta metoda pozwala na flashowanie modułu nadawczego, gdy jest on podłączony do twojego transmitera za pomocą funkcji passthrough oprogramowania EdgeTX.",
+    "Passthrough": "Ta metoda pozwala na flashowanie modułu, gdy jest on podłączony do twojego nadajnika za pomocą funkcji passthrough.",
+    "Zip": "Ta metoda tworzy archiwum ze wszystkich plików wymaganych dla Twojego urządzenia."
+  },
+  "FlashingMethodOptions": {
+    "FlashingMethod": "Metoda flashowania"
+  },
+  "Header": {
+    "ExpressLRSConfigurator": "ExpressLRS Konfigurator",
+    "DownloadNewestRelease": "Kliknij, aby pobrać najnowszą wersję",
+    "UpdateAvailable": "Aktualizacja jest dostępna!",
+    "Documentation": "Dokumentacja",
+    "Discord": "Discord",
+    "FacebookGroup": "Grupa na Facebooku",
+    "Github": "Github",
+    "OpenCollective": "OpenCollective"
+  },
+  "SerialConnectionForm": {
+    "SerialDevice": "Urządzenie szeregowe",
+    "BaudRate": "Baud rate",
+    "Connect": "Połącz"
+  },
+  "SerialDeviceSelect": {
+    "ManualSelectionTitle": "Ręczny wybór urządzenia szeregowego",
+    "ManualSelectionTitleTooltip": "Użyj ręcznego wyboru portu szeregowego, jeśli automatyczny wybór nie wykryje poprawnego portu. W większości przypadków nie ma potrzeby korzystania z tej opcji."
+  },
+  "Sidebar": {
+    "Configurator": "Konfigurator",
+    "Backpack": "Backpack",
+    "Logs": "Logi",
+    "SerialMonitor": "Monitor szeregowy",
+    "Settings": "Ustawienia",
+    "Support": "Wsparcie"
+  },
+  "UserDefineDescription": {
+    "RegulatoryDomain915": "Skonsultuj <LoRaWANLink> wytyczne oraz regulacje dotyczące pasm LoRaWAN </LoRaWANLink> w celu ustalenia domeny regulacyjnej odpowiadające twojej lokalizacji.",
+    "Wiki": "Sprawdź naszą stronę Wiki, aby uzyskać najnowszą definicję.",
+    "RegulatoryDomainISM2400": "Pasma radiowe ISM stanowią część widma radiowego zarezerwowanego na szczeblu międzynarodowym. Możesz bezpiecznie korzystać z tej domeny regulacyjnej oprogramowania w dowolnym kraju.",
+    "RegulatoryDomainEUCE2400": "W przypadku wersji oprogramowania niższych niż v3.x, domena regulacyjna EU CE 2.4 Ghz ogranicza moc maksymalną do 10 mW, która nie wymaga LBT (Listen Before Talk). W przypadku wersji oprogramowania późniejszych niż v3.x, domena regulacyjna UE CE 2,4 GHz ogranicza moc maksymalną do 100 mW i aktywuje LBT (Listen Before Talk).",
+    "BindingPhrase": "Parowanie odbiornika z nadajnikiem za pomocą frazy parującej nie wymaga ingerencji użytkownika. Odbiorniki zflashowane bez frazy parującej będą wymagały tradycyjnej, manualnej metody parowania. Zarówno transmiter, jak i odbiornik muszą mieć tę samą fraze parującą, aby się połączyć. Fraza może zawierać tylko litery, cyfry, spacje oraz powinna być łatwa do zapamiętania. Nie jest ona hasłem i nie zapewnia żadnych zabezpieczeń więc nie musi być trudna do zgadnięcia, ogranicza ona tylko interferencje z innymi pilotami.",
+    "AutoWifiOnInterval": "<p>Ta opcja automatycznie włączy wifi dla każdego modułu z ESP8285 w przypadku braku połączenia z transmiterem i upłynięciu ustalonej liczby sekund od uruchomienia. Umożliwia to wgrywanie aktualizacji firmware do odbiornika poprzez połączenie się z jego siecią Wifi i odwiedzanie witryny 10.0.0.1</p><p>Automatyczny interwał jest zdefiniowany w <strong>sekundach</strong>. Domyślnie jest to 60 sekund.</p>",
+    "TLMReportIntervalMs": "<p>Sprawia, że moduł nadawczy wysyła dane telemetryczne do twojej aparatury (pilota) w ustalonym interwale czasowym. Zmniejsza to ostrzeżenia o utracie telemetrii (Telemetry Lost) podczas pracy przy wysokim współczynniku telemetrii lub niskich częstotliwościach nadawania jak np. 50 hz.</p><p>wartość domyślna to <strong>240LU</strong>. Jeśli chcesz zmienić, to musisz dodać  <strong>LU</strong> po wybranym interwale wyrażonym w milisekundach. Na przykład, w celu ustawienia interwału wysyłania danych telemetrycznych na 100 ms, wartość ta musi być wpisana w następujący sposób: <strong>100LU</strong>.</p><p>Rekomendowane ustawienia to <strong>240LU</strong> dla aparatur EdgeTX/OpenTX, i <strong>100LU</strong> dla Aparatur ErskyTx.</p>",
+    "LockOnFirstConnection": "Blokowanie trybu RF – W trybie domyślnym odbiornik (RX) będzie zmieniał tryby nadwania od najwyższego do najniższego zatrzymując się na każdym 5 s do momentu aż znajdzie tryb w którym nadaje transmiter (TX). Ta opcja pozwala odbiornikowi na początkowe skakanie po trybach nadawania ale jednocześnie w momencie gdy połączenie z transmitterem zostanie nawiązane, zmusza ona odbiornik do zostania w jednym trybie (do czasu aż zostanie w pełni zresetowany przez odłączenie zasilania).",
+    "JustBeepOnce": "Ta opcja decyduje czy transmiter ma zapikać podczas jego uruchamiania zamiast zagrania piosenki.",
+    "DisableStartupBeep": "Ta opcja decyduje czy transmiter będzie cicho podczas uruchamiania.",
+    "DisableAllBeeps": "Wyłącz wszystkie dźwięki.",
+    "MyStartupMelody": "<p>Użyj tego, aby zdefiniować własną melodię startową za pomocą składni BlHeli32. Parametry ciągu muzycznego i bpm są wymagane, podczas gdy parametr przesunięcia semitonu jest opcjonalny w celu dokonania transpozycji całej melodii w górę lub w dół przez określoną ilość semitonów. Przykłady melodii BlHeli32 są dostępne na <RoxWolfsYoutubeChannelLink>Rox Wolfs YouTube</RoxWolfsYoutubeChannelLink>, jednak wymagane może być doza eksperymentacji.</p><p>Napisz swoją własną melodię, <SheetMusic101lLink>Sheet Music 101</SheetMusic101lLink> oraz <BLHeliPianoLink>BLHeli Piano</BLHeliPianoLink> są użytecznymi zasobami.</p><p>Ta opcja obsługuje również melodię w formacie RTTTL. <EscTunesLink>EscTunes.com</EscTunesLink> to świetny zasób do odkrywania nowych melodii.</p>",
+    "UnlockHigherPower": "<p>Pojawiły się doniesienia o niestabilności modułów R9M przy nadawniu >250mw z fabrycznym chłodzeniem. Częściowo jest to spowodowane tym, że ELRS stosuje wyższy cykl nadawczy nadajnika w porównaniu z fabrycznym firmware R9M. Domyślnie moc nadawania jest ograniczona do 250 mW. Możesz odblokować moc nadawania do 1000 mw poprzez włączenie tej opcji. Robisz to na własne ryzyko, jeśli nie zmodyfikowałeś fabrycznego chłodzenia.</p><p>udostępniliśmy <R9MFanModCoverLink> obudowe z miejscem na ulepszone chłodzenie dla R9M </R9MFanModCoverLink>, zaprojektowaną przez członków społeczności z miejscem na wiatraczek oraz  dodatkowe chłodzenie co pozwala na nadawanie przy maksymalnej mocy (1–2 W w zależności wprowadzonych modyfikacji).</p>",
+    "UARTInverted": "Umożliwia kompatybilność z radiami, z których sygnał wychodzi w postaci odwróconego CRSF, takimi jak FrSky QX7, TBS Tango 2, RadioMaster TX16S. W większości przypadków zachowaj to włączone. Jeśli masz radio T8SG V2 lub używasz oprogramowania Deviation wyłącz to ustawienie.",
+    "RCVRUARTBaud": "Szybkość nadawania po połączeniu UART przez odbiornik, domyślnie ustawiona jako 420000. Zmień to ustawienie na 400000 a twój odbiornik będzie współpracować z komputerami pokładowymi Kiss v1.",
+    "RCVRInvertTX": "W przypadku korzystania z komputera pokładowego (FC), który ma tylko złącze RXI (odwrócone RX) / SBUS, włącz tę opcję, aby odwrócić sygnał CRSF wychodzący z odbiornika, aby móc korzystać z tego złącza. Opcja ta nie konwertuje sygnału wyjściowego na SBUS, lecz na odwrócony CRSF, więc CRSF powinien być nadal wybrany jako protokół odbiornika w ustawieniach FC. To ustawienie działą wyłącznie dla odbiorników opartych na ESP.",
+    "UseR9MMR9MiniSBUS": "<p><strong>TA OPCJA NIE WŁĄCZA PROTOKOŁU SBUS.</strong></p><p>Jest ona przydatna dla komputerów pokładowych (FC) z procesorami F4, które nie mają opcji odwróconego UART. Komunikacja będzie odbywać się tylko jednostronnie, więc stracisz łącze telemetryczne do swojego radia, oraz możliwość wgrywania oprogramowania za pomocą passthrough. Sygnał będzie wychodzić z domyślnego wyjścia SBUS jeżeli używasz R9MM/R9Mini. Ustawienie serialrx_inverted = ON może być również wymagane w Betaflight w celu zachowania kompatybilności</p>",
+    "HomeWifiSSID": "Ustaw nazwę domowej sieci Wi-Fi. Pozwoli to urządzeniom wyposażonym w Wi-Fi na automatyczne łączenie się z siecią domową.",
+    "HomeWifiPassword": "Ustaw hasło domowej sieci Wi-Fi. Pozwoli to urządzeniom wyposażonym w Wi-Fi na automatyczne łączenie się z siecią domową.",
+    "RxAsTx": "Po zaznaczeniu tej opcji oraz wgraniu oprogramowania na twój odbiornik będziesz mógł go używać jako moduł transmitera."
+  },
+  "UserDefinesAdvisor": {
+    "DisableUARTInvertedWarning": "Wyłączanie opcji UART_INVERTED jest rzadkie. Upewnij się, że twój transmiter tego wymaga."
+  },
+  "UserDefinesList": {
+    "CustomBindingPhrase": "Własna fraza parująca.",
+    "MyStartupMelody": "Mój dźwięk uruchamiania.",
+    "Value": "Wartość"
+  },
+  "WifiDeviceList": {
+    "Name": "Nazwa",
+    "Target": "Cel",
+    "Version": "Wersja",
+    "Type": "Rodzaj",
+    "DNS": "DNS",
+    "IP": "IP",
+    "Select": "Wybierz"
+  },
+  "WifiDeviceNotification": {
+    "NewDevice": "Nowe urządzenie",
+    "Select": "Wybierz"
+  },
+  "WifiDeviceSelect": {
+    "DefaultWifiIp": "Domyślne (10.0.0.1)",
+    "WifiDevices": "Urządzenia WiFi",
+    "Manual": "Ręcznie",
+    "WifiDeviceSelection": "Wybór urządzenia WiFi",
+    "IPAddress": "Adres IP"
+  },
+  "Updater": {
+    "FoundUpdates": "Znalezione aktualizacje",
+    "UpdateNow": "Znaleziono aktualizacje, czy chcesz zaktualizować?",
+    "Sure": "Na pewno",
+    "Later": "Później",
+    "UpdateDownloading": "Pobieranie aktualizacji",
+    "NotifiedWhenReadyToInstall": "Aktualizacja jest pobierana, otrzymasz powiadomienie, gdy będzie gotowa do instalacji.",
+    "Restart": "Zrestartuj",
+    "ApplicationUpdate": "Aktualizacja aplikacji",
+    "Update": "Aktualizacja",
+    "ApplyUpdates": "Pobrano nową wersję. Uruchom aplikację ponownie, aby zastosować aktualizacje."
+  },
+  "ConfiguratorView": {
+    "DownloadLUAScript": "Pobierz skrypt LUA",
+    "FirmwareVersion": "Wersja oprogramowania",
+    "Target": "Cel",
+    "Notice": "Powiadomienie",
+    "SelectFirmwareVersionFirst": "Proszę najpierw wybrać wersję oprogramowania.",
+    "DeviceOptions": "Opcje urządzenia",
+    "ResetDevice": "Zresetuj opcje urządzenia do zalecanych ustawień domyślnych dla tego urządzenia docelowego. Z wyjątkiem niestandardowej frazy parującej.",
+    "Reset": "Zresetuj",
+    "Actions": "Działania",
+    "FlashingOptions": "Opcje flashowania",
+    "EraseBeforeFlash": "Wyczyść przed wgraniem oprogramowania",
+    "ForceFlash": "Wymuś wgranie",
+    "Build": "Kompiluj",
+    "Flash": "Wgraj oprogramowanie",
+    "NetworkDevices": "Urządzenia sieciowe",
+    "DeviceSelectError": "Błąd wyboru urządzenia",
+    "DeviceCouldNotBeAutomaticallySelected": "Urządzenie docelowe nie mogło być automatycznie wybrane, wybierz je manualnie.",
+    "Close": "Zamknij",
+    "Logs": "Logi",
+    "CopyLogToClipboard": "Skopiuj komunikaty do schowka",
+    "SaveLogToFile": "Zapisz komunikaty jako plik",
+    "BuildsTakeMinutesFirstTime": "Czasami kompilacje trwają co najmniej kilka minut. Jest to normalne, zwłaszcza po raz pierwszy.",
+    "Result": "Wynik",
+    "Warning": "Uwaga",
+    "WaitForLEDBeforeDisconnectingPower": "Poczekaj aż dioda LED wznowi miganie przed odłączeniem zasilania",
+    "UpdateLuaScript": "Zaktualizuj skrypt Lua",
+    "UpdateLuaScriptOnRadio": "Upewnij się, że zaktualizowałeś skrypt Lua na swoim radiu",
+    "BuildNotice": "Informacja związana z budowaniem oprogramowania",
+    "FirmwareOpenedInFileExplorer": "Plik binarny oprogramowania został otwarty w eksploratorze plików",
+    "Back": "Cofnij",
+    "FlashAnother": "Wgraj kolejny",
+    "Retry": "Spróbuj ponownie"
+  },
+  "LogsView": {
+    "Logs": "Komunikaty",
+    "OpenLogsFolder": "Otwórz folder z komunikatami"
+  },
+  "SerialMonitorView": {
+    "SerialMonitor": "Monitor szeregowy",
+    "Disconnect": "Rozłącz"
+  },
+  "SettingsView": {
+    "Settings": "Ustawienia",
+    "LanguageSelector": "Wybierz język",
+    "CurrentLanguage": "Bieżący język",
+    "ExpertMode": "Tryb Eksperta",
+    "ApplicationOptions": "Ustawienia aplikacji",
+    "ExpertModeDescription": "Włącz tryb eksperta, aby odblokować zaawansowane funkcje, w tym dodatkowe źródła oprogramowania, umiejętność tworzenia oprogramowania z ręcznymi parametrami określonymi przez użytkownika oraz dostęp do ekranu monitora szeregowego dla szczegółowej diagnostyki."
+  },
+  "SupportView": {
+    "Support": "Wsparcie",
+    "JoinTheCommunity": "Potrzebujesz pomocy? Siada ci psycha? Dołącz do społeczności!",
+    "ExpressLRSDocumentation": "Dokumentacja ExpressLRS",
+    "DiscordChat": "Czat Discord",
+    "FacebookGroup": "Grupa na Facebooku",
+    "Troubleshooting": "Rozwiązywanie problemów",
+    "LegalDisclaimer": "Wyłączenie odpowiedzialności prawnej",
+    "UseAtYourOwnRisk": "Używanie i operowanie tego typu urządzeniami może wymagać licencji, a niektóre kraje mogą zabronić jego używania. Zapewnienie zgodności z lokalnymi przepisami należy całkowicie do użytkownika końcowego. To urządzenie/oprogramowanie jest natury eksperymentalnej i nie ma gwarancji stabilności ani niezawodności. UŻYWAJ GO NA WŁASNE RYZYKO.",
+    "CorruptedFirmwareFiles": "Uszkodzone pliki oprogramowania firmware",
+    "YouCanManuallyClearAllFiles": "Jeśli zamkniesz konfigurator podczas pobierania plików firmware, stan repozytorium git może ulec uszkodzeniu. Możesz ręcznie wyczyścić wszystkie pliki i ponownie rozpocząć proces budowy.",
+    "ClearFirmwareFiles": "Wyczyść pliki firmware",
+    "CorruptedFirmwareFilesDeleted": "Uszkodzone pliki firmware zostały usunięte, a repozytorium git zostało wyczyszczone. Spróbuj skompilować ponownie.",
+    "CorruptedPlatformioDependencies": "Uszkodzone zależności platformio",
+    "YouCanManuallyClearAllDependencies": "Jeśli zamkniesz konfigurator podczas pobierania plików platformio, stan repozytorium git może ulec uszkodzeniu. Możesz ręcznie wyczyścić wszystkie zależności i ponownie rozpocząć proces budowania.",
+    "ClearPlatformioDependencies": "Wyczyść zależności platformio",
+    "CorruptedPlatformioDependenciesDeleted": "Uszkodzone zależności platformio zostały usunięte, a repozytorium git zostało wyczyszczone. Spróbuj skompilować ponownie."
+  }
+}
