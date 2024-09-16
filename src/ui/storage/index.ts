@@ -84,7 +84,11 @@ export default class ApplicationStorage implements IApplicationStorage {
   }
 
   async getDeviceOptions(device: string): Promise<DeviceOptions | null> {
-    const key = `${DEVICE_OPTIONS_BY_TARGET_KEYSPACE}.${device}`;
+    const isExpertModeEnabled = this.getExpertModeEnabled();
+    // in order to preserve backwards compatibility of device options we add a
+    // keyspace modifier to separate non experd mode device options
+    const expertStr = isExpertModeEnabled ? '' : '.non_expert_mode';
+    const key = `${DEVICE_OPTIONS_BY_TARGET_KEYSPACE}.${device}${expertStr}`;
     const value = localStorage.getItem(key);
     if (value === null) {
       return null;

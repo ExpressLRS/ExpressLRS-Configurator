@@ -76,8 +76,26 @@ export type UserDefinesKeysByCategory = {
   [key in UserDefineCategory]: UserDefineKey[];
 };
 
+const EXPERT_MODE_USER_DEFINES: UserDefineKey[] = [
+  UserDefineKey.RX_AS_TX,
+  UserDefineKey.LOCK_ON_FIRST_CONNECTION,
+  UserDefineKey.MY_STARTUP_MELODY,
+  UserDefineKey.AUTO_WIFI_ON_INTERVAL,
+  UserDefineKey.DISABLE_ALL_BEEPS,
+  UserDefineKey.DISABLE_STARTUP_BEEP,
+  UserDefineKey.DEVICE_NAME,
+  UserDefineKey.RCVR_INVERT_TX,
+  UserDefineKey.RCVR_UART_BAUD,
+  UserDefineKey.RX_AS_TX,
+  UserDefineKey.TLM_REPORT_INTERVAL_MS,
+  UserDefineKey.UART_INVERTED,
+  UserDefineKey.UNLOCK_HIGHER_POWER,
+  UserDefineKey.USE_R9MM_R9MINI_SBUS,
+];
+
 const userDefinesToCategories = (
-  userDefines: UserDefine[]
+  userDefines: UserDefine[],
+  isExpertModeEnabled: boolean
 ): UserDefinesByCategory => {
   const result: UserDefinesByCategory = {
     [UserDefineCategory.RegulatoryDomainsISM]: [],
@@ -146,7 +164,13 @@ const userDefinesToCategories = (
   };
 
   userDefines.forEach((userDefine) => {
-    result[defineToCategory(userDefine.key)].push(userDefine);
+    if (
+      isExpertModeEnabled ||
+      (!isExpertModeEnabled &&
+        !EXPERT_MODE_USER_DEFINES.includes(userDefine.key))
+    ) {
+      result[defineToCategory(userDefine.key)].push(userDefine);
+    }
   });
 
   return result;
@@ -166,7 +190,11 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
   props
 ) => {
   const { target, deviceOptions, onChange } = props;
-  const categories = userDefinesToCategories(deviceOptions.userDefineOptions);
+  const { isExpertModeEnabled } = useAppState();
+  const categories = userDefinesToCategories(
+    deviceOptions.userDefineOptions,
+    isExpertModeEnabled
+  );
   const { t } = useTranslation();
 
   const onOptionUpdate = (data: UserDefine) => {
@@ -253,8 +281,6 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
         console.error(err);
       });
   };
-
-  const { isExpertModeEnabled } = useAppState();
 
   return (
     <>

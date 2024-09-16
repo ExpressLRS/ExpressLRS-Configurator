@@ -19,7 +19,6 @@ import {
 import Omnibox from '../Omnibox';
 import UserDefineDescription from '../UserDefineDescription';
 import SensitiveTextField from '../SensitiveTextField';
-import useAppState from '../../hooks/useAppState';
 
 const styles: Record<string, SxProps<Theme>> = {
   icon: {
@@ -93,30 +92,9 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
     }
   };
 
-  const { isExpertModeEnabled } = useAppState();
-
   return (
     <List>
       {options.map((item) => {
-        const expertDefines: UserDefineKey[] = [
-          UserDefineKey.RX_AS_TX,
-          UserDefineKey.LOCK_ON_FIRST_CONNECTION,
-          UserDefineKey.MY_STARTUP_MELODY,
-          UserDefineKey.AUTO_WIFI_ON_INTERVAL,
-          UserDefineKey.DISABLE_ALL_BEEPS,
-          UserDefineKey.DISABLE_STARTUP_BEEP,
-          UserDefineKey.DEVICE_NAME,
-          UserDefineKey.RCVR_INVERT_TX,
-          UserDefineKey.RCVR_UART_BAUD,
-          UserDefineKey.RX_AS_TX,
-          UserDefineKey.TLM_REPORT_INTERVAL_MS,
-          UserDefineKey.UART_INVERTED,
-          UserDefineKey.UNLOCK_HIGHER_POWER,
-          UserDefineKey.USE_R9MM_R9MINI_SBUS,
-        ];
-        if (!isExpertModeEnabled && expertDefines.includes(item.key)) {
-          return null;
-        }
         return (
           <React.Fragment key={item.key}>
             <ListItem
