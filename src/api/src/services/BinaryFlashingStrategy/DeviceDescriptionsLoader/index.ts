@@ -384,9 +384,12 @@ export default class DeviceDescriptionsLoader {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.TLM_REPORT_INTERVAL_MS)
       );
-      userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.UART_INVERTED)
-      );
+      // https://github.com/ExpressLRS/ExpressLRS-Configurator/issues/684
+      if (!config.platform.startsWith('esp32')) {
+        userDefines.push(
+          targetUserDefinesFactory.build(UserDefineKey.UART_INVERTED)
+        );
+      }
     }
     if (args.target.includes('.rx_')) {
       userDefines.push(
