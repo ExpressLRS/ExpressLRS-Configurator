@@ -106,7 +106,7 @@
     "Support": "Support"
   },
   "UserDefineKey": {
-    "AUTO_WIFI_ON_INTERVAL": "Wi-Fi start timeout",
+    "AUTO_WIFI_ON_INTERVAL": "Wi-Fi start timeout (seconds)",
     "BINDING_PHRASE": "Binding phrase",
     "DEVICE_NAME": "Device name",
     "DISABLE_ALL_BEEPS": "Disable all beeps",
