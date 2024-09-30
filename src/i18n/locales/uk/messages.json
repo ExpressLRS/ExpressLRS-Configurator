@@ -22,9 +22,9 @@
     "ManualMode": "Ручний режим",
     "CopyFromStandardMode": "Копіювати зі стандартного режиму",
     "LongerBuildTimeWarning": "При використанні встановленого користувачем ручного режиму, кеш хмарних бінарних файлів вимкнено, що призводить до набагато довшого часу на збірку.",
-    "RegulatoryDomainsISM": "Regulatory domains 2.4 GHz band",
-    "RegulatoryDomains900": "Regulatory domains 900 MHz band",
-    "RegulatoryDomains433": "Regulatory domains 433 MHz band",
+    "RegulatoryDomainsISM": "Правові юрисдикції діапазону 2.4 ГГц",
+    "RegulatoryDomains900": "Правові юрисдикції діапазону 900 МГц",
+    "RegulatoryDomains433": "Правові юрисдикції діапазону 433 МГц",
     "BindingPhraseSetup": "Встановлення кодової фрази для з'єднання",
     "CompatibilityOptions": "Параметри сумісності",
     "PerformanceOptions": "Параметри продуктивності",
@@ -73,7 +73,7 @@
     "WIFI": "Цей метод створює файл прошивки, який можна завантажити на ваш приймач або передавач, підключившись до його вбудованого WiFi.",
     "EdgeTxPassthrough": "Цей спосіб дозволяє прошити ваш модуль передавача, доки він підключений до передавача за допомогою функції наскрізної прошивки passthrough від EdgeTX.",
     "Passthrough": "Цей спосіб дозволяє прошити ваш модуль, доки він підключений до передавача за допомогою функції наскрізної прошивки passthrough.",
-    "Zip": "This method creates an archive of all files required for your device."
+    "Zip": "Цей метод створює архів усіх файлів, необхідних для вашого пристрою."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "Метод прошивки"
@@ -105,6 +105,44 @@
     "Settings": "Налаштування",
     "Support": "Підтримка"
   },
+  "FlashingMethod": {
+    "BetaflightPassthrough": "Режим Passthrough у Betaflight",
+    "DFU": "DFU (Оновлення прошивки пристрою)",
+    "EdgeTxPassthrough": "Режим Passthrough в EdgeTX",
+    "Passthrough": "Passthrough",
+    "STLink": "STLink",
+    "Stock_BL": "Стандартний завантажувач",
+    "UART": "UART (Послідовний)",
+    "WIFI": "Wi-Fi",
+    "Zip": "Zip"
+  },
+  "UserDefineKey": {
+    "AUTO_WIFI_ON_INTERVAL": "Затримка запуску Wi-Fi (у секундах)",
+    "BINDING_PHRASE": "Кодова фраза для з'єднання",
+    "DEVICE_NAME": "Ім'я пристрою",
+    "DISABLE_ALL_BEEPS": "Вимкнути всі сигнали",
+    "DISABLE_STARTUP_BEEP": "Вимкнути сигнал при запуску",
+    "HOME_WIFI_PASSWORD": "Пароль Wi-Fi",
+    "HOME_WIFI_SSID": "Назва Wi-Fi-мережі (SSID)",
+    "JUST_BEEP_ONCE": "Тільки один сигнал",
+    "LOCK_ON_FIRST_CONNECTION": "Заблокувати після першого з'єднання",
+    "MY_STARTUP_MELODY": "Особиста мелодія при запуску",
+    "RCVR_INVERT_TX": "Інвертувати пін TX приймача",
+    "RCVR_UART_BAUD": "Швидкість передачі даних приймача",
+    "REGULATORY_DOMAIN_AU_433": "433 МГц Австралія",
+    "REGULATORY_DOMAIN_AU_915": "915 МГц Австралія",
+    "REGULATORY_DOMAIN_EU_433": "433 МГц Європа",
+    "REGULATORY_DOMAIN_EU_868": "868 МГц Європа",
+    "REGULATORY_DOMAIN_FCC_915": "915 МГц FCC",
+    "REGULATORY_DOMAIN_IN_866": "868 МГц Індія",
+    "REGULATORY_DOMAIN_EU_CE_2400": "2.4 ГГц LBT (прослуховування перед передачею)",
+    "REGULATORY_DOMAIN_ISM_2400": "2.4 ГГц ISM (Стандартний)",
+    "RX_AS_TX": "Використовувати приймач як модуль передавача (TX)",
+    "TLM_REPORT_INTERVAL_MS": "Інтервал звітування телеметрії (мс)",
+    "UART_INVERTED": "Інвертувати UART",
+    "UNLOCK_HIGHER_POWER": "Розблокувати вищу вихідну потужність",
+    "USE_R9MM_R9MINI_SBUS": "Увімкнути R9MM/R9Mini SBUS"
+  },
   "UserDefineDescription": {
     "RegulatoryDomain915": "Зверніться до <LoRaWANLink>частотних планів та правил LoRaWAN</LoRaWANLink> та законодавчої бази вашого регіону.",
     "Wiki": "Перегляньте нашу вікі-сторінку з останніми визначеннями.",
@@ -125,7 +163,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>ЦЕ НЕ УВІМКНЕ ПРОТОКОЛ SBUS.</strong></p><p>Це корисно для F4 польотних контролерів, які не мають опції неінвертованого UART. Зв'язок однонаправлений, тому ви втратите передачу телеметрії з дрону на пульт, а також можливість прошивки в наскрізному режимі passthrough. Сигнал буде виходити з контакту S.BUS за замовчуванням на вашому R9MM/R9Mini. Також може знадобитись поставити serialrx_inverted = ON в Betaflight для сумісності</p>",
     "HomeWifiSSID": "Встановлення назви домашньої Wi-Fi мережі (SSID). Це дозволить Wi-Fi під'єднуватись до домашньої мережі автоматично.",
     "HomeWifiPassword": "Пароль домашньої Wi-Fi мережі. Це дозволить Wi-Fi під'єднуватись до домашньої мережі автоматично.",
-    "RxAsTx": "Flash your receiver with this option enabled and use it as a TX module."
+    "RxAsTx": "Прошийте свій приймач увімкнувши цю опцією та використовуйте його як модуль передавача."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Вимкнення UART_INVERTED є нетиповим. Будь ласка, переконайтеся, що ваш передавач підтримує це."

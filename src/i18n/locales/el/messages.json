@@ -22,9 +22,9 @@
     "ManualMode": "Χειροκίνητη λειτουργία",
     "CopyFromStandardMode": "Αντιγραφή από την κανονική λειτουργία",
     "LongerBuildTimeWarning": "Όταν χρησιμοποιείτε τη χειροκίνητη λειτουργία που έχει οριστεί από το χρήστη, η λειτουργία αρχείων cloud είναι απενεργοποιημένη, με αποτέλεσμα μεγαλύτερους χρόνους χτισίματος.",
-    "RegulatoryDomainsISM": "Regulatory domains 2.4 GHz band",
-    "RegulatoryDomains900": "Regulatory domains 900 MHz band",
-    "RegulatoryDomains433": "Regulatory domains 433 MHz band",
+    "RegulatoryDomainsISM": "Ρυθμιστικοί τομείς 2.4 GHz",
+    "RegulatoryDomains900": "Ρυθμιστικοί τομείς 900 MHz",
+    "RegulatoryDomains433": "Ρυθμιστικοί τομείς ζώνης 433 MHz",
     "BindingPhraseSetup": "Ρύθμιση φράσης binding",
     "CompatibilityOptions": "Επιλογές συμβατότητας",
     "PerformanceOptions": "Επιλογές επιδόσεων",
@@ -73,7 +73,7 @@
     "WIFI": "Αυτή η μέθοδος δημιουργεί ένα αρχείο firmware που μπορείτε να ανεβάσετε στον δέκτη ή τον πομπό σας συνδέοντας με το ενσωματωμένο wifi.",
     "EdgeTxPassthrough": "Αυτή η μέθοδος σας επιτρέπει να αναβαθμίσετε τον δέκτη ενώ είναι συνδεδεμένος με το χειριστήριο, χρησιμοποιώντας τη λειτουργία passthrough στο EdgeTX.",
     "Passthrough": "Αυτή η μέθοδος σας επιτρέπει να αναβαθμίσετε τη μονάδα σας, ενώ είναι συνδεδεμένη με τον πομπό σας, χρησιμοποιώντας τη λειτουργία passthrough.",
-    "Zip": "This method creates an archive of all files required for your device."
+    "Zip": "Αυτή η μέθοδος δημιουργεί ένα συμπιεσμένο αρχείο με τα περιεχόμενα που απαιτούνται για τη συσκευή σας."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "Μέθοδος Φλασαρίσματος"
@@ -105,6 +105,44 @@
     "Settings": "Ρυθμίσεις",
     "Support": "Υποστήριξη"
   },
+  "FlashingMethod": {
+    "BetaflightPassthrough": "Betaflight Passthrough",
+    "DFU": "DFU (Αναβάθμιση Λογισμικού Συσκευών)",
+    "EdgeTxPassthrough": "EdgeTX Passthrough",
+    "Passthrough": "Passthrough",
+    "STLink": "STLink",
+    "Stock_BL": "Προεπιλεγμένος Bootloader",
+    "UART": "UART (Σειριακό)",
+    "WIFI": "Wi-Fi",
+    "Zip": "Zip"
+  },
+  "UserDefineKey": {
+    "AUTO_WIFI_ON_INTERVAL": "Καθυστέρηση έναρξης Wi-Fi (σε δευτερόλεπτα)",
+    "BINDING_PHRASE": "Ρύθμιση φράσης binding",
+    "DEVICE_NAME": "Όνομα συσκευής",
+    "DISABLE_ALL_BEEPS": "Σίγαση όλων των beeps",
+    "DISABLE_STARTUP_BEEP": "Απενεργοποίηση ηχητικού σήματος εκκίνησης",
+    "HOME_WIFI_PASSWORD": "Κωδικός πρόσβασης Wi-Fi",
+    "HOME_WIFI_SSID": "Wi-Fi όνομα (SSID)",
+    "JUST_BEEP_ONCE": "Μόνο ένα ηχητικό σήμα",
+    "LOCK_ON_FIRST_CONNECTION": "Κλείδωμα μετά την πρώτη σύνδεση",
+    "MY_STARTUP_MELODY": "Μελωδία εκκίνησης",
+    "RCVR_INVERT_TX": "Αντιστροφή δέκτη TX pin",
+    "RCVR_UART_BAUD": "Ρυθμός baud παραλήπτη",
+    "REGULATORY_DOMAIN_AU_433": "433 MHz Αυστραλία",
+    "REGULATORY_DOMAIN_AU_915": "915 MHz Αυστραλία",
+    "REGULATORY_DOMAIN_EU_433": "433 MHz Ευρώπη",
+    "REGULATORY_DOMAIN_EU_868": "868 MHz Ευρώπη",
+    "REGULATORY_DOMAIN_FCC_915": "915 MHz FCC",
+    "REGULATORY_DOMAIN_IN_866": "868 MHz Ινδία",
+    "REGULATORY_DOMAIN_EU_CE_2400": "2.4 GHz LBT (Listen Before Talk)",
+    "REGULATORY_DOMAIN_ISM_2400": "2.4 GHz ISM (Standard)",
+    "RX_AS_TX": "Χρήση δέκτη ως μονάδα πομπού (TX)",
+    "TLM_REPORT_INTERVAL_MS": "Διάστημα αναφορών τηλεμετρίας (ms)",
+    "UART_INVERTED": "Αντιστροφή UART",
+    "UNLOCK_HIGHER_POWER": "Ξεκλείδωμα υψηλής ισχύος εξόδου",
+    "USE_R9MM_R9MINI_SBUS": "Ενεργοποίηση R9MM/R9Mini SBUS"
+  },
   "UserDefineDescription": {
     "RegulatoryDomain915": "Συμβουλευτείτε το <LoRaWANLink>Σχέδια και Κανονισμοί Συχνότητας LoRaWAN</LoRaWANLink> για να διαλέξετε έναν ρυθμιστικό τομέα για τη χώρα σας.",
     "Wiki": "Ελέγξτε τη σελίδα Wiki για τον πιο πρόσφατο ορισμό.",
@@ -125,7 +163,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>ΑΥΤΟ ΔΕΝ ΕΝΕΡΓΟΠΟΙΕΙ ΤΟ ΠΡΩΤΟΚΟΛΛΟ SBUS.</strong></p><p>Χρήσιμη επιλογή για μερικούς F4 FCs που δεν έχουν επιλογή για μη αντεστραμμένο UART. Πρωτόκολλο μιας διαδρομής οπότε χάνεται η τηλεμετρία στην τ/κ όπως και το passthrough flashing. Θα κάνει τα R9MM/R9Mini να βγάζουν το σήμα από το προκαθορισμένο S.BUS σημείο πάνω στο receiver. Ίσως χρειαστεί η ρύθμιση Set serialrx_inverted = ON για υποστήριξη με το Betaflight</p>",
     "HomeWifiSSID": "Ορισμός ονόματος οικιακού δικτύου Wi-Fi (SSID). Θα επιτρέψει αυτόματα τη σύνδεση Wi-Fi με το οικιακό δίκτυο.",
     "HomeWifiPassword": "Ορισμός κωδικού πρόσβασης οικιακού δικτύου Wi-Fi. Θα επιτρέψει στο υλικό με δυνατότητα Wi-Fi να συνδέεται αυτόματα με το οικιακό δίκτυο.",
-    "RxAsTx": "Flash your receiver with this option enabled and use it as a TX module."
+    "RxAsTx": "Φλασάρετε τον δέκτη σας με αυτή την επιλογή και χρησιμοποιήστε τον ως TX module."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Η απενεργοποίηση της επιλογής UART_INVERTED είναι κάτι ασυνήθιστο. Βεβαιωθείτε ότι η Τ/Κ σας το υποστηρίζει."
@@ -198,7 +236,7 @@
     "BuildNotice": "Ειδοποίηση έκδοσης",
     "FirmwareOpenedInFileExplorer": "Το binary αρχείο firmware ανοίχθηκε στον περιηγητή αρχείων",
     "Back": "Πίσω",
-    "FlashAnother": "Flash another",
+    "FlashAnother": "Φλασάρισμα άλλου",
     "Retry": "Επανάληψη"
   },
   "LogsView": {
@@ -213,9 +251,9 @@
     "Settings": "Ρυθμίσεις",
     "LanguageSelector": "Επιλογή γλώσσας",
     "CurrentLanguage": "Τρέχουσα γλώσσα",
-    "ExpertMode": "Expert Mode",
-    "ApplicationOptions": "Application Options",
-    "ExpertModeDescription": "Enable Expert Mode to unlock advanced features including additional firmware sources, the ability to build firmware with manual user-defined parameters, and access to serial monitor screen for detailed diagnostics."
+    "ExpertMode": "Για προχωρημένους",
+    "ApplicationOptions": "Επιλογές εφαρμογής",
+    "ExpertModeDescription": "Ενεργοποίηση της λειτουργίας για προχωρημένους για να ξεκλειδώσετε προηγμένες λειτουργίες, συμπεριλαμβανομένων πρόσθετων πηγών υλικολογισμικού, τη δυνατότητα κατασκευής υλικολογισμικού με χειροκίνητες παραμέτρους που ορίζονται από τον χρήστη και την πρόσβαση σε σειριακή παρακολούθηση για λεπτομερή διάγνωση."
   },
   "SupportView": {
     "Support": "Υποστήριξη",

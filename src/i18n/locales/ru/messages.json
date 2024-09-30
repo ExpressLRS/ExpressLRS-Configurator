@@ -105,6 +105,44 @@
     "Settings": "Настройки",
     "Support": "Поддержка"
   },
+  "FlashingMethod": {
+    "BetaflightPassthrough": "Betaflight Passthrough",
+    "DFU": "DFU (Device Firmware Upgrade)",
+    "EdgeTxPassthrough": "EdgeTX Passthrough",
+    "Passthrough": "Passthrough",
+    "STLink": "STLink",
+    "Stock_BL": "Исходный загрузчик",
+    "UART": "UART (Последовательный порт)",
+    "WIFI": "Wi-Fi",
+    "Zip": "Zip"
+  },
+  "UserDefineKey": {
+    "AUTO_WIFI_ON_INTERVAL": "Задержка включения Wi-Fi (в секундах)",
+    "BINDING_PHRASE": "Выбор бинд фразы",
+    "DEVICE_NAME": "Название устройства",
+    "DISABLE_ALL_BEEPS": "Отключить все звуки",
+    "DISABLE_STARTUP_BEEP": "Отключить звук при включении",
+    "HOME_WIFI_PASSWORD": "Пароль Wi-Fi сети",
+    "HOME_WIFI_SSID": "Имя Wi-Fi сети (SSID)",
+    "JUST_BEEP_ONCE": "Издавать звук только один раз",
+    "LOCK_ON_FIRST_CONNECTION": "Заблокировать после первого подключения",
+    "MY_STARTUP_MELODY": "Мелодия при включении",
+    "RCVR_INVERT_TX": "Инвертировать TX контакт приемника",
+    "RCVR_UART_BAUD": "Скорость порта приемника",
+    "REGULATORY_DOMAIN_AU_433": "433 МГц Австралия",
+    "REGULATORY_DOMAIN_AU_915": "915 МГц Австралия",
+    "REGULATORY_DOMAIN_EU_433": "433 МГц Европа",
+    "REGULATORY_DOMAIN_EU_868": "868 МГц Европа",
+    "REGULATORY_DOMAIN_FCC_915": "915 МГц FCC",
+    "REGULATORY_DOMAIN_IN_866": "868 МГц Индия",
+    "REGULATORY_DOMAIN_EU_CE_2400": "2.4 ГГц LBT (Listen Before Talk)",
+    "REGULATORY_DOMAIN_ISM_2400": "2.4 ГГц ISM (Стандарт)",
+    "RX_AS_TX": "Использовать приёмник в качестве модуля передатчика",
+    "TLM_REPORT_INTERVAL_MS": "Интервал передачи данных телеметрии (мс)",
+    "UART_INVERTED": "Инвертировать UART",
+    "UNLOCK_HIGHER_POWER": "Разблокировать повышенную мощность передачи",
+    "USE_R9MM_R9MINI_SBUS": "Включить R9MM/R9Mini SBUS"
+  },
   "UserDefineDescription": {
     "RegulatoryDomain915": "Обратитесь к <LoRaWANLink>LoRaWAN Frequency Plans and Regulations</LoRaWANLink> для выбора регуляторного домена в вашем местоположении.",
     "Wiki": "Самые свежие инструкции на нашей вики-странице.",
@@ -125,7 +163,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>ЭТО НЕ ВКЛЮЧАЕТ ПРОТОКОЛ SBUS.</strong></p><p>Это полезно для полётных контроллеров F4, которые не имеют опции инверсии UART. Передача данных будет однонаправленнной, так что вы потеряете отправку телеметрии на ваш передатчик, а также возможность прошивки в режиме passthrough. Выход приёмника будет на контакте S.BUS на вашем R9MM/R9Mini. Возможно, также потребуется установка serialrx_inverted = ON в Betaflight конфигураторе для совместимости</p>",
     "HomeWifiSSID": "Задайте имя домашней сети Wi-Fi (SSID). Это позволит оборудованию при включении Wi-Fi автоматически подключаться к домашней сети.",
     "HomeWifiPassword": "Задайте пароль домашней сети Wi-Fi. Это позволит оборудованию при включении Wi-Fi автоматически подключаться к домашней сети.",
-    "RxAsTx": "Прошейте приемник, включив эту опцию, и используйте его, как модуль передатчика."
+    "RxAsTx": "Прошейте приемник, включив эту опцию, и используйте его в качестве модуля передатчика."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Отключение UART_INVERTED используется редко. Пожалуйста, убедитесь, что передатчик поддерживает это."
