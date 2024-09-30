@@ -22,9 +22,9 @@
     "ManualMode": "Modo manual",
     "CopyFromStandardMode": "Copiar do modo padrão",
     "LongerBuildTimeWarning": "Enquanto usar o modo manual com definições de usuário, o cache binário em nuvem fica desabilitado, resultando em tempos de operação muito maiores.",
-    "RegulatoryDomainsISM": "Regulatory domains 2.4 GHz band",
-    "RegulatoryDomains900": "Regulatory domains 900 MHz band",
-    "RegulatoryDomains433": "Regulatory domains 433 MHz band",
+    "RegulatoryDomainsISM": "Domínios regulatórios de banda de 2.4 GHz",
+    "RegulatoryDomains900": "Domínios regulatórios de banda de 900 MHz",
+    "RegulatoryDomains433": "Domínios regulatórios de banda de 433 MHz",
     "BindingPhraseSetup": "Escolha da frase de conexão",
     "CompatibilityOptions": "Opções de compatibilidade",
     "PerformanceOptions": "Opções de performance",
@@ -73,7 +73,7 @@
     "WIFI": "Esse método cria um arquivo de firmware que você pode transmitir para seu receptor ou transmissor por meio de WiFi interna.",
     "EdgeTxPassthrough": "Esse método permite você instalar seu receptor enquanto ele estiver conectado ao controlador de voo usando a funcionalidade de passagem do firmware EdgeTX.",
     "Passthrough": "Esse método permite você instalar seu receptor enquanto ele estiver conectado ao controlador de voo usando a funcionalidade de passagem.",
-    "Zip": "This method creates an archive of all files required for your device."
+    "Zip": "Este método cria um diretório de todos os arquivos necessários para o seu dispositivo."
   },
   "FlashingMethodOptions": {
     "FlashingMethod": "Método de instalação"
@@ -105,6 +105,44 @@
     "Settings": "Configurações",
     "Support": "Suporte"
   },
+  "FlashingMethod": {
+    "BetaflightPassthrough": "Modo de passagem Betaflight",
+    "DFU": "DFU (upgrade do firmware do dispositivo)",
+    "EdgeTxPassthrough": "Modo de Passagem EdgeTX",
+    "Passthrough": "Modo de passagem",
+    "STLink": "STLink",
+    "Stock_BL": "Inicializador padrão",
+    "UART": "UART (Serial)",
+    "WIFI": "Wi-Fi",
+    "Zip": "Zip"
+  },
+  "UserDefineKey": {
+    "AUTO_WIFI_ON_INTERVAL": "Atraso na inicialização do Wi-Fi (em segundos)",
+    "BINDING_PHRASE": "Escolha da frase de conexão",
+    "DEVICE_NAME": "Nome de Dispositivo",
+    "DISABLE_ALL_BEEPS": "Silenciar todos os bipes",
+    "DISABLE_STARTUP_BEEP": "Desativar bipe de inicialização",
+    "HOME_WIFI_PASSWORD": "Senha do Wi-Fi",
+    "HOME_WIFI_SSID": "Nome da Wi-Fi (SSID)",
+    "JUST_BEEP_ONCE": "Apenas bipe único",
+    "LOCK_ON_FIRST_CONNECTION": "Travar após a primeira conexão",
+    "MY_STARTUP_MELODY": "Minha melodia de inicialização",
+    "RCVR_INVERT_TX": "Inverter Pino TX do receptor",
+    "RCVR_UART_BAUD": "Taxa de transmissão do receptor",
+    "REGULATORY_DOMAIN_AU_433": "433 MHz Austrália",
+    "REGULATORY_DOMAIN_AU_915": "915 MHz Austrália",
+    "REGULATORY_DOMAIN_EU_433": "433 MHz Europa",
+    "REGULATORY_DOMAIN_EU_868": "868 MHz Europa",
+    "REGULATORY_DOMAIN_FCC_915": "915 MHz FCC",
+    "REGULATORY_DOMAIN_IN_866": "868 MHz Índia",
+    "REGULATORY_DOMAIN_EU_CE_2400": "2,4 GHz LBT (Escutar Antes de falar)",
+    "REGULATORY_DOMAIN_ISM_2400": "2,4 GHz ISM (Padrão)",
+    "RX_AS_TX": "Usar o receptor como um módulo transmissor (TX)",
+    "TLM_REPORT_INTERVAL_MS": "Intervalo de relatórios de telemetria (ms)",
+    "UART_INVERTED": "Inverter UART",
+    "UNLOCK_HIGHER_POWER": "Desbloquear maior potência de saída",
+    "USE_R9MM_R9MINI_SBUS": "Habilitar R9MM/R9Mini SBUS"
+  },
   "UserDefineDescription": {
     "RegulatoryDomain915": "Consulte <LoRaWANLink>Planos e Regulações de Frequência LoRaWAN</LoRaWANLink> para escolher o domínio regulatório a ser usado no seu local.",
     "Wiki": "Confira nossa página Wiki para obter a última definição.",
@@ -125,7 +163,7 @@
     "UseR9MMR9MiniSBUS": "<p><strong>ISSO NÃO HABILITA O PROTOCOLO SBUS.</strong></p><p>Isso é útil para F4 CF que não possuem uma opção UART não-invertida. Funciona apenas em uma via, então você perderá o link de telemetria para o seu rádio e também a instalação por passagem. Isto irá emitir do pin SBUS padrão do seu R9MM/R9Mini. A definição serialrx_inverted = ON também pode ser necessária dentro do Betaflight para compatibilidade</p>",
     "HomeWifiSSID": "Defina o nome da rede Wi-Fi doméstica (SSID). Isso permitirá que o Wi-Fi ativado por hardware se conecte à rede doméstica automaticamente.",
     "HomeWifiPassword": "Defina a senha da rede Wi-Fi doméstica. Isso permitirá que o hardware Wi-Fi se conecte à rede doméstica automaticamente.",
-    "RxAsTx": "Flash your receiver with this option enabled and use it as a TX module."
+    "RxAsTx": "Atualizar seu receptor com esta opção ativada e usá-lo como um módulo TX."
   },
   "UserDefinesAdvisor": {
     "DisableUARTInvertedWarning": "Desabilitar UART_INVERTED é incomum. Por favor, certifique-se de que seu transmissor suporta isso."
