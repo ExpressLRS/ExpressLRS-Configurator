@@ -1,7 +1,7 @@
 {
   "name": "expresslrs-configurator",
   "productName": "ExpressLRS Configurator",
-  "version": "1.7.6",
+  "version": "1.7.7",
   "description": "Cross platform configuration tool for the ExpressLRS firmware",
   "main": "./dist/main/main.js",
   "author": {
