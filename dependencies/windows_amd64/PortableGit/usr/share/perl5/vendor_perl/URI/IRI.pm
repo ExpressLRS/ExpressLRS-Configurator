@@ -8,7 +8,7 @@ use URI ();
 
 use overload '""' => sub { shift->as_string };
 
-our $VERSION = '5.07';
+our $VERSION = '5.29';
 
 sub new {
     my($class, $uri, $scheme) = @_;

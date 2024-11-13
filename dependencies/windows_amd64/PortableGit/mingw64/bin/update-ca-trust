@@ -11,8 +11,8 @@ DEST=/mingw64/etc/pki/ca-trust/extracted
 
 # OpenSSL PEM bundle that includes trust flags
 # (BEGIN TRUSTED CERTIFICATE)
-/mingw64/bin/p11-kit extract --format=openssl-bundle --filter=certificates --overwrite --comment $DEST/openssl/ca-bundle.trust.crt
-/mingw64/bin/p11-kit extract --format=pem-bundle --filter=ca-anchors --overwrite --comment --purpose server-auth $DEST/pem/tls-ca-bundle.pem
-/mingw64/bin/p11-kit extract --format=pem-bundle --filter=ca-anchors --overwrite --comment --purpose email $DEST/pem/email-ca-bundle.pem
-/mingw64/bin/p11-kit extract --format=pem-bundle --filter=ca-anchors --overwrite --comment --purpose code-signing $DEST/pem/objsign-ca-bundle.pem
-/mingw64/bin/p11-kit extract --format=java-cacerts --filter=ca-anchors --overwrite --purpose server-auth $DEST/java/cacerts
+/mingw64/bin/p11-kit.exe extract --format=openssl-bundle --filter=certificates --overwrite --comment $DEST/openssl/ca-bundle.trust.crt
+/mingw64/bin/p11-kit.exe extract --format=pem-bundle --filter=ca-anchors --overwrite --comment --purpose server-auth $DEST/pem/tls-ca-bundle.pem
+/mingw64/bin/p11-kit.exe extract --format=pem-bundle --filter=ca-anchors --overwrite --comment --purpose email $DEST/pem/email-ca-bundle.pem
+/mingw64/bin/p11-kit.exe extract --format=pem-bundle --filter=ca-anchors --overwrite --comment --purpose code-signing $DEST/pem/objsign-ca-bundle.pem
+/mingw64/bin/p11-kit.exe extract --format=java-cacerts --filter=ca-anchors --overwrite --purpose server-auth $DEST/java/cacerts

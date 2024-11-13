@@ -1,4 +1,4 @@
-README - Net::SSLeay Perl module for using OpenSSL
+Net-SSLeay - Perl bindings for OpenSSL and LibreSSL
 
 By popular demand...
 --------------------
@@ -19,30 +19,40 @@ Prerequisites
 
 Perl 5.8.1 or higher.
 
-OpenSSL-0.9.6j through to at least OpenSSL-1.1 and probably later
-	       http://www.openssl.org/ - On Linux, you can either build and
-	       install OpenSSL from scratch (its very portable) or you can
-	       install the appropriate OpenSSL 'devel' package for your Linux
-	       distribution: (rpm openssl-devel, deb libssl-dev).
+One of the following libssl implementations:
 
+* Any stable release of OpenSSL (https://www.openssl.org) in the
+  0.9.8 - 3.0 branches, except for OpenSSL 0.9.8 - 0.9.8b.
+* Any stable release of LibreSSL (https://www.libressl.org) in the
+  2.0 - 3.4 series, except for LibreSSL 3.2.2 and 3.2.3.
 
-Note: SSLeay is no longer supported. If you want to use Net::SSLeay with
-      SSLeay or early versions of OpenSSL, use version 1.03. The support
-      for SSLeay was dropped due to nobody maintaining it (all active
-      work goes on with OpenSSL) and due to incompatible API changes
-      in OpenSSL-0.9.2b. OpenSSL-0.9.1c support has also been dropped,
-      version 1.03 was the last one to support that.
+Net-SSLeay may not compile or pass its tests against releases other
+than the ones listed above due to libssl API incompatibilities, or, in
+the case of LibreSSL, because of deviations from the libssl API.
 
-LibreSSL is also supported.
+If you are using a version of OpenSSL or LibreSSL distributed by your
+operating system vendor, you may also need to install a "development"
+package containing the header files that correspond to the OpenSSL or
+LibreSSL library package. Examples include:
 
-You should use the same C compiler and options to compile OpenSSL,
-perl, and Net::SSLeay. This is the only supported configuration.
-If you insist on using different compilers (perhaps because you
-obtained either OpenSSL or perl as binaries from a vendor and they
-used a compiler that you do not have) then all requests for support
-will be ignored. If the only way for you to use the same compiler
-for all three components is to recompile your openssl or perl, then
-that is exactly what I expect you to do before asking for support.
+* libssl-dev for OpenSSL on Debian and Ubuntu;
+* openssl-devel for OpenSSL on Red Hat Enterprise Linux and Fedora.
+
+On Linux, zlib is also required, even when libssl is built without
+support for TLS compression. zlib is probably also available via your
+Linux distribution's package manager, e.g.:
+
+* zlib1g-dev on Debian and Ubuntu;
+* zlib-devel on Red Hat Enterprise Linux and Fedora.
+
+A future version of Net-SSLeay will remove this requirement when
+building against a libssl without support for TLS compression.
+
+The same C compiler and options should be used to compile all of Perl,
+OpenSSL/LibreSSL, and Net-SSLeay. Mixing compilers and options often
+leads to build errors or run-time malfunctions that are difficult to
+debug.
+
 
 Installing
 ----------
@@ -92,25 +102,7 @@ OS X:
 ---------------------------------	
 You should also be able to use CPAN.pm to install this module if you like.
 
-Linking with RSAref is no longer supported (the patent issue is moot
-due to patent expiring). If you want to try it, you are on your own,
-but here's how it used to work...
-
-  For linking against RSAref the the OPENSSL_RSAREF environment variable like this:
-
-	OPENSSL_RSAREF=1 ./Makefile.PL -t  # builds and tests it, link against RSAref
-
-  You must previously have built OpenSSL with RSAref support (which
-  implies first building rsaref itself), I use the RSAglue method. File
-  librsaref.a must be found in one of the locations searched by linker
-  (-L switches). Usually this means that you have to rename rsaref.a to
-  librsaref.a and copy it to suitable directory, e.g. /usr/local/ssl/lib.
-
-  N.B. AFAIK the patent that made using RSAref necessary has expired, so
-  this should be nonissue by now.
-
-
-Problems (read this before sending mail)
+Problems (read this before filing a bug)
 ----------------------------------------
 
 Please, do not send bug report before you have
@@ -146,9 +138,6 @@ If build fails,
     but as I have not yet sorted it out, you'll simply have to ignore it
   - if you installed OpenSSL from some distribution, try getting a fresh
     copy from www.openssl.org and recompiling and installing it yourself
-  - make sure you are not being confused by the fact that OpenSSL-0.9.3
-    changed the location of include files to /usr/local/ssl/include/openssl/*
-    Consider deleting all old bogus headers
   - if using newer than supported OpenSSL, please downgrade to supported
     version to see if it makes difference
   - you must compile the module, perl, and openssl with the same C compiler

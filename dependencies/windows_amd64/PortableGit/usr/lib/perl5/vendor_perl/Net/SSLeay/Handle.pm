@@ -57,7 +57,7 @@ you need to add to your program is the tie function as in:
 use vars qw(@ISA @EXPORT_OK $VERSION);
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(shutdown);
-$VERSION = '1.88';
+$VERSION = '1.92';
 
 my $Initialized;       #-- only _initialize() once
 my $Debug = 0;         #-- pretty hokey
@@ -350,31 +350,10 @@ Please see Net-SSLeay-Handle-0.50/Changes file.
 
 =head1 BUGS
 
-If you encounter a problem with this module that you believe is a bug,
-please report it in one of the following ways:
-
-=over
-
-=item *
-
+If you encounter a problem with this module that you believe is a bug, please
 L<create a new issue|https://github.com/radiator-software/p5-net-ssleay/issues/new>
-under the Net-SSLeay GitHub project at
-L<https://github.com/radiator-software/p5-net-ssleay>;
-
-=item *
-
-L<open a ticket|https://rt.cpan.org/Ticket/Create.html?Queue=Net-SSLeay> using
-the CPAN RT bug tracker's web interface at
-L<https://rt.cpan.org/Dist/Display.html?Queue=Net-SSLeay>;
-
-=item *
-
-send an email to the CPAN RT bug tracker at
-L<bug-Net-SSLeay@rt.cpan.org|mailto:bug-Net-SSLeay@rt.cpan.org>.
-
-=back
-
-Please make sure your bug report includes the following information:
+in the Net-SSLeay GitHub repository. Please make sure your bug report includes
+the following information:
 
 =over
 

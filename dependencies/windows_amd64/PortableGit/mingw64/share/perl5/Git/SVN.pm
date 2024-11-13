@@ -6,7 +6,7 @@ use constant rev_map_fmt => 'NH*';
 use vars qw/$_no_metadata
             $_repack $_repack_flags $_use_svm_props $_head
             $_use_svnsync_props $no_reuse_existing
-	    $_use_log_author $_add_author_from $_localtime/;
+	    $_use_log_author $_add_author_from $_localtime $_use_fsync/;
 use Carp qw/croak/;
 use File::Path qw/mkpath/;
 use IPC::Open3;
@@ -763,7 +763,7 @@ sub prop_walk {
 		# this needs to be updated.
 		++$interesting_props if /^svn:(?:ignore|keywords|executable
 		                                 |eol-style|mime-type
-						 |externals|needs-lock)$/x;
+						 |externals|needs-lock|global-ignores)$/x;
 	}
 	&$sub($self, $p, $props) if $interesting_props;
 
@@ -1636,7 +1636,7 @@ sub has_no_changes {
 	my $commit = shift;
 
 	my @revs = split / /, command_oneline(
-		qw(rev-list --parents -1 -m), $commit);
+		qw(rev-list --parents -1), $commit);
 
 	# Commits with no parents, e.g. the start of a partial branch,
 	# have changes by definition.
@@ -1752,7 +1752,7 @@ sub tie_for_persistent_memoization {
 END {
 	# Force cache writeout explicitly instead of waiting for
 	# global destruction to avoid segfault in Storable:
-	# http://rt.cpan.org/Public/Bug/Display.html?id=36087
+	# https://rt.cpan.org/Public/Bug/Display.html?id=36087
 	unmemoize_svn_mergeinfo_functions();
 }
 
@@ -2269,6 +2269,19 @@ sub mkfile {
 	}
 }
 
+# TODO: move this to Git.pm?
+sub use_fsync {
+	if (!defined($_use_fsync)) {
+		my $x = $ENV{GIT_TEST_FSYNC};
+		if (defined $x) {
+			my $v = command_oneline('-c', "test.fsync=$x",
+					qw(config --type=bool test.fsync));
+			$_use_fsync = defined($v) ? ($v eq "true\n") : 1;
+		}
+	}
+	$_use_fsync;
+}
+
 sub rev_map_set {
 	my ($self, $rev, $commit, $update_ref, $uuid) = @_;
 	defined $commit or die "missing arg3\n";
@@ -2290,7 +2303,7 @@ sub rev_map_set {
 	my $sync;
 	# both of these options make our .rev_db file very, very important
 	# and we can't afford to lose it because rebuild() won't work
-	if ($self->use_svm_props || $self->no_metadata) {
+	if (($self->use_svm_props || $self->no_metadata) && use_fsync()) {
 		require File::Copy;
 		$sync = 1;
 		File::Copy::copy($db, $db_lock) or die "rev_map_set(@_): ",

@@ -3,7 +3,8 @@ git-am.exe
 git-annotate.exe
 git-apply.exe
 git-archive.exe
-git-bisect--helper.exe
+git-backfill.exe
+git-bisect.exe
 git-blame.exe
 git-branch.exe
 git-bugreport.exe
@@ -13,6 +14,7 @@ git-check-attr.exe
 git-check-ignore.exe
 git-check-mailmap.exe
 git-check-ref-format.exe
+git-checkout--worker.exe
 git-checkout-index.exe
 git-checkout.exe
 git-clean.exe
@@ -28,12 +30,12 @@ git-credential-cache.exe
 git-credential-store.exe
 git-credential.exe
 git-describe.exe
+git-diagnose.exe
 git-diff-files.exe
 git-diff-index.exe
 git-diff-tree.exe
 git-diff.exe
 git-difftool.exe
-git-env--helper.exe
 git-fast-export.exe
 git-fast-import.exe
 git-fetch-pack.exe
@@ -42,11 +44,13 @@ git-fmt-merge-msg.exe
 git-for-each-ref.exe
 git-for-each-repo.exe
 git-fsck.exe
+git-fsmonitor--daemon.exe
 git-gc.exe
 git-get-tar-commit-id.exe
 git-grep.exe
 git-hash-object.exe
 git-help.exe
+git-hook.exe
 git-index-pack.exe
 git-init-db.exe
 git-interpret-trailers.exe
@@ -82,11 +86,13 @@ git-read-tree.exe
 git-rebase.exe
 git-receive-pack.exe
 git-reflog.exe
+git-refs.exe
 git-remote-ext.exe
 git-remote-fd.exe
 git-remote.exe
 git-repack.exe
 git-replace.exe
+git-replay.exe
 git-rerere.exe
 git-reset.exe
 git-rev-list.exe
@@ -102,6 +108,7 @@ git-sparse-checkout.exe
 git-stash.exe
 git-stripspace.exe
 git-submodule--helper.exe
+git-survey.exe
 git-symbolic-ref.exe
 git-tag.exe
 git-unpack-file.exe
@@ -129,4 +136,5 @@ git-show.exe
 git-stage.exe
 git-status.exe
 git-switch.exe
+git-version.exe
 git-whatchanged.exe

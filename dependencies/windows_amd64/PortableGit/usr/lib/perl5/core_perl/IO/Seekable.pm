@@ -83,7 +83,7 @@ Returns the IO::File's current position, or -1 on error.
 
 =head1 SEE ALSO
 
-L<perlfunc>,
+L<perlfunc>, 
 L<perlop/"I/O Operators">,
 L<IO::Handle>
 L<IO::File>
@@ -106,7 +106,7 @@ require Exporter;
 our @EXPORT = qw(SEEK_SET SEEK_CUR SEEK_END);
 our @ISA = qw(Exporter);
 
-our $VERSION = "1.41";
+our $VERSION = "1.52";
 
 sub seek {
     @_ == 3 or croak 'usage: $io->seek(POS, WHENCE)';

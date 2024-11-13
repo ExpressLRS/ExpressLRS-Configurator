@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 584 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/ssl_read_all.al)"
+#line 996 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/ssl_read_all.al)"
 sub ssl_read_all {
     my ($ssl,$how_much) = @_;
     $how_much = 2000000000 unless $how_much;

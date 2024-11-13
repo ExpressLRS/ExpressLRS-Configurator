@@ -1,10 +1,11 @@
 #!/usr/bin/perl
     eval 'exec /usr/bin/perl -S $0 ${1+"$@"}'
-	if $running_under_some_shell;
+	if 0; # ^ Run only under a shell
 #!/usr/bin/perl
 
 BEGIN { pop @INC if $INC[-1] eq '.' }
 use strict;
+use warnings;
 use Archive::Tar;
 use Getopt::Std;
 

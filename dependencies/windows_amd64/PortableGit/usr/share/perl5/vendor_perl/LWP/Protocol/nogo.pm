@@ -7,11 +7,11 @@ package LWP::Protocol::nogo;
 
 use strict;
 
-our $VERSION = '6.52';
+our $VERSION = '6.77';
 
 require HTTP::Response;
 require HTTP::Status;
-use base qw(LWP::Protocol);
+use parent qw(LWP::Protocol);
 
 sub request {
     my($self, $request) = @_;

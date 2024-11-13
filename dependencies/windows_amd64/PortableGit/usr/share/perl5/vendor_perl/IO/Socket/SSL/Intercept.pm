@@ -105,7 +105,8 @@ sub clone_cert {
 	    } @$ext;
 	}
 	my ($clone,$key) = CERT_create(
-	    %$hash,
+	    %$hash, 
+	    ignore_invalid_args => 1,
 	    issuer_cert => $self->{cacert},
 	    issuer_key => $self->{cakey},
 	    key => $self->{certkey},
@@ -345,7 +346,7 @@ This call should return either an existing (cached) C<< (cert,key) >> or
 call C<sub> without arguments to create a new C<< (cert,key) >>, store it
 and return it.
 If called with C<< $cache->('type') >> the function should just return 1 to
-signal that it supports the current type of cache. If it reutrns nothing
+signal that it supports the current type of cache. If it returns nothing
 instead the older cache interface is assumed for compatibility reasons.
 
 =back
@@ -361,7 +362,7 @@ created certificates).
 =item B<< $string = $mitm->serialize >>
 
 This creates a serialized version of the object (e.g. a string) which can then
-be used to persistantly store created certificates over restarts of the
+be used to persistently store created certificates over restarts of the
 application. The cache will only be serialized if it is a HASH.
 To work together with L<Storable> the C<STORABLE_freeze> function is defined to
 call C<serialize>.

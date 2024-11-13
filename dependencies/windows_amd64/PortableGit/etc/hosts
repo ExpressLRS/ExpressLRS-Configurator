@@ -1,4 +1,4 @@
-# Copyright (c) 1993-2009 Microsoft Corp.
+﻿# Copyright (c) 1993-2009 Microsoft Corp.
 #
 # This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
 #
@@ -19,3 +19,18 @@
 # localhost name resolution is handled within DNS itself.
 #	127.0.0.1       localhost
 #	::1             localhost
+
+192.168.50.4  vvv  # VAGRANT: c2008774ba8c3adc5b3f86b4570df6a9 (default) / a03f7b3b-7e48-4a55-adc1-c928e1559d81
+192.168.50.4  vvv.dev  # VAGRANT: c2008774ba8c3adc5b3f86b4570df6a9 (default) / a03f7b3b-7e48-4a55-adc1-c928e1559d81
+192.168.50.4  vvv.test  # VAGRANT: c2008774ba8c3adc5b3f86b4570df6a9 (default) / a03f7b3b-7e48-4a55-adc1-c928e1559d81
+192.168.50.4  vvv.local  # VAGRANT: c2008774ba8c3adc5b3f86b4570df6a9 (default) / a03f7b3b-7e48-4a55-adc1-c928e1559d81
+192.168.50.4  vvv.localhost  # VAGRANT: c2008774ba8c3adc5b3f86b4570df6a9 (default) / a03f7b3b-7e48-4a55-adc1-c928e1559d81
+192.168.50.4  local.wordpress.test  # VAGRANT: c2008774ba8c3adc5b3f86b4570df6a9 (default) / a03f7b3b-7e48-4a55-adc1-c928e1559d81
+192.168.50.4  src.wordpress-develop.test  # VAGRANT: c2008774ba8c3adc5b3f86b4570df6a9 (default) / a03f7b3b-7e48-4a55-adc1-c928e1559d81
+192.168.50.4  build.wordpress-develop.test  # VAGRANT: c2008774ba8c3adc5b3f86b4570df6a9 (default) / a03f7b3b-7e48-4a55-adc1-c928e1559d81
+# Added by Docker Desktop
+192.168.1.59 host.docker.internal
+192.168.1.59 gateway.docker.internal
+# To allow the same kube context to work on the host and the container:
+127.0.0.1 kubernetes.docker.internal
+# End of section

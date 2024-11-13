@@ -1,6 +1,6 @@
 #!/usr/bin/perl
     eval 'exec /usr/bin/perl -S $0 ${1+"$@"}'
-	if $running_under_some_shell;
+	if 0; # ^ Run only under a shell
 #!./perl
 use 5.008001;
 BEGIN { pop @INC if $INC[-1] eq '.' }
@@ -55,7 +55,7 @@ sub list_valid_suspects {
 }
 
 sub HELP_MESSAGE {
-    exec 'pod2usage', $0 or die "pod2usage: $!"
+    exec 'pod2usage', $0 or die "pod2usage: $!" 
 }
 __END__
 =head1 NAME
@@ -64,7 +64,7 @@ encguess - guess character encodings of files
 
 =head1 VERSION
 
-$Id: encguess,v 0.2 2016/08/04 03:15:58 dankogai Exp $
+$Id: encguess,v 0.3 2020/12/02 01:28:17 dankogai Exp $
 
 =head1 SYNOPSIS
 
@@ -80,8 +80,8 @@ show this message and exit.
 
 =item -s
 
-specify a list of "suspect encoding types" to test,
-seperated by either C<:> or C<,>
+specify a list of "suspect encoding types" to test, 
+separated by either C<:> or C<,>
 
 =item -S
 

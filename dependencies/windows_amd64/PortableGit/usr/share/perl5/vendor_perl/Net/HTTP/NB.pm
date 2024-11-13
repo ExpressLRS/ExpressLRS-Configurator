@@ -1,5 +1,5 @@
 package Net::HTTP::NB;
-our $VERSION = '6.20';
+our $VERSION = '6.23';
 use strict;
 use warnings;
 
@@ -60,7 +60,7 @@ Net::HTTP::NB - Non-blocking HTTP client
 
 =head1 VERSION
 
-version 6.20
+version 6.23
 
 =head1 SYNOPSIS
 
@@ -108,7 +108,7 @@ Gisle Aas <gisle@activestate.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2001-2017 by Gisle Aas.
+This software is copyright (c) 2001 by Gisle Aas.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

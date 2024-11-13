@@ -1,15 +1,19 @@
 package utf8;
 
-$utf8::hint_bits = 0x00800000;
+use strict;
+use warnings;
 
-our $VERSION = '1.22';
+our $hint_bits = 0x00800000;
+
+our $VERSION = '1.25';
+our $AUTOLOAD;
 
 sub import {
-    $^H |= $utf8::hint_bits;
+    $^H |= $hint_bits;
 }
 
 sub unimport {
-    $^H &= ~$utf8::hint_bits;
+    $^H &= ~$hint_bits;
 }
 
 sub AUTOLOAD {
@@ -110,6 +114,8 @@ sequence in the native encoding (Latin-1 or EBCDIC) to UTF-8. The
 logical character sequence itself is unchanged.  If I<$string> is already
 upgraded, then this is a no-op. Returns the
 number of octets necessary to represent the string as UTF-8.
+Since Perl v5.38, if C<$string> is C<undef> no action is taken; prior to that,
+it would be converted to be defined and zero-length.
 
 If your code needs to be compatible with versions of perl without
 C<use feature 'unicode_strings';>, you can force Unicode semantics on
@@ -144,7 +150,7 @@ length() function works with the usually faster byte algorithm.
 
 Fails if the original UTF-8 sequence cannot be represented in the
 native 8 bit encoding. On failure dies or, if the value of I<$fail_ok> is
-true, returns false.
+true, returns false. 
 
 Returns true on success.
 
@@ -199,6 +205,11 @@ otherwise returns true.
                      # with ord 0x100.   Since these bytes aren't
                      # legal UTF-EBCDIC, on EBCDIC platforms, $x is
                      # unchanged and the function returns FALSE.
+ my $y = "\xc3\x83\xc2\xab"; This has been encoded twice; this
+                     # example is only for ASCII platforms
+ utf8::decode($y);   # Converts $y to \xc3\xab, returns TRUE;
+ utf8::decode($y);   # Further converts to \xeb, returns TRUE;
+ utf8::decode($y);   # Returns FALSE, leaves $y unchanged
 
 B<Note that this function does not handle arbitrary encodings>;
 use L<Encode> instead.

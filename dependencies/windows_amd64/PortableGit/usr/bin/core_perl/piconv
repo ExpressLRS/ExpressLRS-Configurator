@@ -1,6 +1,6 @@
 #!/usr/bin/perl
     eval 'exec /usr/bin/perl -S $0 ${1+"$@"}'
-	if $running_under_some_shell;
+	if 0; # ^ Run only under a shell
 #!./perl
 # $Id: piconv,v 2.8 2016/08/04 03:15:58 dankogai Exp $
 #
@@ -167,11 +167,11 @@ Common options:
      lists all available encodings
   -r,--resolve encoding_alias
     resolve encoding to its (Encode) canonical name
-  -f,--from from_encoding
+  -f,--from from_encoding  
      when omitted, the current locale will be used
-  -t,--to to_encoding
+  -t,--to to_encoding    
      when omitted, the current locale will be used
-  -s,--string string
+  -s,--string string         
      "string" will be the input instead of STDIN or files
 The following are mainly of interest to Encode hackers:
   -C N | -c           check the validity of the input

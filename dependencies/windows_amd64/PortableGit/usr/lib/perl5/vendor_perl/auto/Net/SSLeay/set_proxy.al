@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 1322 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/set_proxy.al)"
+#line 1735 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/set_proxy.al)"
 sub set_proxy ($$;**) {
     ($proxyhost, $proxyport, $proxyuser, $proxypass) = @_;
     require MIME::Base64 if $proxyuser;

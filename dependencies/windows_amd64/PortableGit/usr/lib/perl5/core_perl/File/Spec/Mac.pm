@@ -4,7 +4,7 @@ use strict;
 use Cwd ();
 require File::Spec::Unix;
 
-our $VERSION = '3.78';
+our $VERSION = '3.88';
 $VERSION =~ tr/_//d;
 
 our @ISA = qw(File::Spec::Unix);
@@ -667,7 +667,7 @@ sub abs2rel {
     # Now, remove all leading components that are the same
     my @pathchunks = $self->splitdir( $path_dirs );
     my @basechunks = $self->splitdir( $base_dirs );
-
+	
     while ( @pathchunks &&
 	    @basechunks &&
 	    lc( $pathchunks[0] ) eq lc( $basechunks[0] ) ) {

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
     eval 'exec /usr/bin/perl -S $0 ${1+"$@"}'
-	if $running_under_some_shell;
+	if 0; # ^ Run only under a shell
 #!/usr/bin/perl -w
 
 BEGIN { pop @INC if $INC[-1] eq '.' }
@@ -210,7 +210,7 @@ new problems have been introduced.
 
 =item C<all>
 
-Run all tests in normal order. Multple options may be specified, so to
+Run all tests in normal order. Multiple options may be specified, so to
 run all tests with the failures from last time first:
 
     $ prove -b --state=failed,all,save

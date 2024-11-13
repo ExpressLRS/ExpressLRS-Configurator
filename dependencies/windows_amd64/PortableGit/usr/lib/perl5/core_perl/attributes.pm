@@ -1,6 +1,6 @@
 package attributes;
 
-our $VERSION = 0.33;
+our $VERSION = 0.35;
 
 @EXPORT_OK = qw(get reftype);
 @EXPORT = ();
@@ -193,8 +193,8 @@ is equivalent to
 
   use attributes __PACKAGE__, \&foo, 'method';
 
-As you might know this calls the C<import> function of C<attributes> at compile
-time with these parameters: 'attributes', the caller's package name, the reference
+As you might know this calls the C<import> function of C<attributes> at compile 
+time with these parameters: 'attributes', the caller's package name, the reference 
 to the code and 'method'.
 
   attributes->import( __PACKAGE__, \&foo, 'method' );

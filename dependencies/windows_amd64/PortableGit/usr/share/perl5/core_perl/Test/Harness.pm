@@ -31,11 +31,11 @@ Test::Harness - Run Perl standard test scripts with statistics
 
 =head1 VERSION
 
-Version 3.42
+Version 3.44
 
 =cut
 
-our $VERSION = '3.42';
+our $VERSION = '3.44';
 
 # Backwards compatibility for exportable variable names.
 *verbose  = *Verbose;
@@ -550,7 +550,7 @@ C<file.tgz>
 =item C<< fPackage-With-Dashes >>
 
 Set the formatter_class of the harness being run. Since the C<HARNESS_OPTIONS>
-is seperated by C<:>, we use C<-> instead.
+is separated by C<:>, we use C<-> instead.
 
 =back
 
@@ -592,8 +592,8 @@ L<TAP::Harness>
 
 Please report any bugs or feature requests to
 C<bug-test-harness at rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Test-Harness>.  I will be
-notified, and then you'll automatically be notified of progress on your bug
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Test-Harness>.  I will be 
+notified, and then you'll automatically be notified of progress on your bug 
 as I make changes.
 
 =head1 AUTHORS

@@ -15,7 +15,7 @@ B<lwp-request> [B<-afPuUsSedvhx>] [B<-m> I<method>] [B<-b> I<base URL>] [B<-t> I
 =head1 DESCRIPTION
 
 This program can be used to send requests to WWW servers and your
-local file system. The request content for POST and PUT
+local file system. The request content for POST, PUT and PATCH
 methods is read from stdin.  The content of the response is printed on
 stdout.  Error messages are printed on stderr.  The program returns a
 status value indicating the number of URLs that failed.
@@ -57,7 +57,7 @@ L<HTTP::Date> for recognized formats.
 =item -c <content-type>
 
 Set the Content-Type for the request.  This option is only allowed for
-requests that take a content, i.e. POST and PUT.  You can
+requests that take a content, i.e. POST, PUT and PATCH.  You can
 force methods to take content by using the C<-f> option together with
 C<-c>.  The default Content-Type for POST is
 C<application/x-www-form-urlencoded>.  The default Content-type for
@@ -210,6 +210,7 @@ my %allowed_methods = (
     HEAD    => "",
     POST    => "C",
     PUT     => "C",
+    PATCH   => "C",
     DELETE  => "",
     TRACE   => "",
     OPTIONS => "",
@@ -226,7 +227,7 @@ my %options;
 
     use strict;
     use warnings;
-    use base qw(LWP::UserAgent);
+    use parent qw(LWP::UserAgent);
 
     sub new {
         my $self = LWP::UserAgent::new(@_);
@@ -270,7 +271,7 @@ my @getopt_args = (
     'b=s',     # base url
     't=s',     # timeout
     'i=s',     # if-modified-since
-    'c=s',     # content type for POST
+    'c=s',     # content type for POST, PUT and PATCH
     'C=s',     # credentials for basic authorization
     'H=s@',    # extra headers, form "Header: value string"
                #
@@ -538,7 +539,7 @@ Usage: $progname [-options] <url>...
     -b <base>     Use the specified URL as base
     -t <timeout>  Set timeout value
     -i <time>     Set the If-Modified-Since header on the request
-    -c <conttype> use this content-type for POST, PUT, CHECKIN
+    -c <conttype> use this content-type for POST, PUT, PATCH
     -a            Use text mode for content I/O
     -p <proxyurl> use this as a proxy
     -P            don't load proxy settings from environment

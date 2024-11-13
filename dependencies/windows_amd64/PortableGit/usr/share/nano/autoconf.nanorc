@@ -7,7 +7,7 @@ syntax autoconf "\.(ac|m4)$"
 comment "#"
 
 # Keywords:
-color yellow "\<(if|test|then|elif|else|fi|for|in|do|done)\>"
+color yellow "\<(if|test|then|elif|else|fi|case|esac|ifelse|for|in|do|done)\>"
 color yellow "=|!=|&&|\|\|"
 
 # Macros:
@@ -17,13 +17,13 @@ color cyan "\<[[:upper:]_[:digit:]]+\>"
 color red "\<[-_.0-9]+\>"
 
 # Strings:
-color red ""[^"]*""  "'[^']*'"
+color red ""[^"]*"|'[^']*'"
 
 # Backticks:
 color green "`[^`]*`"
 
 # Error lines:
-color brightred "^[[:space:]]*\*\*\*.*"
+color brightred "^[[:blank:]]*\*\*\*.*"
 
 # Brackets:
 color magenta "\[|\]|\(|\)"

@@ -1,7 +1,7 @@
 package Test::Builder::Tester;
 
 use strict;
-our $VERSION = '1.302175';
+our $VERSION = '1.302194';
 
 use Test::Builder;
 use Symbol;
@@ -352,7 +352,7 @@ sub test_test {
 
     # check the output we've stashed
     unless( $t->ok( ( $args{skip_out} || $out->check ) &&
-                    ( $args{skip_err} || $err->check ), $mess )
+                    ( $args{skip_err} || $err->check ), $mess ) 
     )
     {
         # print out the diagnostic information about why this

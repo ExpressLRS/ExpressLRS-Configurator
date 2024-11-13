@@ -1,7 +1,7 @@
 package Encode::Alias;
 use strict;
 use warnings;
-our $VERSION = do { my @r = ( q$Revision: 2.24 $ =~ /\d+/g ); sprintf "%d." . "%02d" x $#r, @r };
+our $VERSION = do { my @r = ( q$Revision: 2.25 $ =~ /\d+/g ); sprintf "%d." . "%02d" x $#r, @r };
 use constant DEBUG => !!$ENV{PERL_ENCODE_DEBUG};
 
 use Exporter 'import';
@@ -162,6 +162,10 @@ sub init_aliases {
     # Allow variants of iso-8859-1 etc.
     define_alias( qr/\biso[-_]?(\d+)[-_](\d+)$/i => '"iso-$1-$2"' );
 
+    # ISO-8859-8-I => ISO-8859-8
+    # https://en.wikipedia.org/wiki/ISO-8859-8-I
+    define_alias( qr/\biso[-_]8859[-_]8[-_]I$/i => '"iso-8859-8"' );
+
     # At least HP-UX has these.
     define_alias( qr/\biso8859(\d+)$/i => '"iso-8859-$1"' );
 
@@ -304,7 +308,7 @@ Encode::Alias - alias definitions to encodings
 =head1 DESCRIPTION
 
 Allows newName to be used as an alias for ENCODING. ENCODING may be
-either the name of an encoding or an encoding object (as described
+either the name of an encoding or an encoding object (as described 
 in L<Encode>).
 
 Currently the first argument to define_alias() can be specified in the
@@ -346,7 +350,7 @@ As of Encode 1.87, the older form
 
   define_alias( sub { return  /^iso8859-(\d+)$/i ? "iso-8859-$1" : undef } );
 
-no longer works.
+no longer works. 
 
 Encode up to 1.86 internally used "local $_" to implement this older
 form.  But consider the code below;

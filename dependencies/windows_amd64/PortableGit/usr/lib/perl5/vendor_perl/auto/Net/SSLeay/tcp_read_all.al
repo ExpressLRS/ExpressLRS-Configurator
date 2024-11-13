@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 612 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/tcp_read_all.al)"
+#line 1024 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/tcp_read_all.al)"
 sub tcp_read_all {
     my ($how_much) = @_;
     $how_much = 2000000000 unless $how_much;

@@ -4,12 +4,12 @@ use strict;
 use warnings;
 use bytes;
 
-use IO::Compress::Base::Common  2.093 qw(:Status);
+use IO::Compress::Base::Common  2.204 qw(:Status);
 
-use Compress::Raw::Bzip2  2.093 ;
+use Compress::Raw::Bzip2  2.204 ;
 
 our ($VERSION);
-$VERSION = '2.093';
+$VERSION = '2.204';
 
 sub mkCompObject
 {
@@ -21,7 +21,7 @@ sub mkCompObject
     $WorkFactor    = 0 if ! defined $WorkFactor ;
     $Verbosity     = 0 if ! defined $Verbosity ;
 
-    my ($def, $status) = new Compress::Raw::Bzip2(1, $BlockSize100K,
+    my ($def, $status) = Compress::Raw::Bzip2->new(1, $BlockSize100K,
                                                  $WorkFactor, $Verbosity);
 
     return (undef, "Could not create Deflate object: $status", $status)
@@ -96,7 +96,7 @@ sub reset
 
     my $outer = $self->{Outer};
 
-    my ($def, $status) = new Compress::Raw::Bzip2();
+    my ($def, $status) = Compress::Raw::Bzip2->new();
     $self->{ErrorNo} = ($status == BZ_OK) ? 0 : $status ;
 
     if ($status != BZ_OK)
@@ -151,4 +151,3 @@ sub uncompressedBytes
 1;
 
 __END__
-

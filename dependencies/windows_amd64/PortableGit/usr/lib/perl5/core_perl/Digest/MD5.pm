@@ -1,17 +1,18 @@
 package Digest::MD5;
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT_OK);
+use warnings;
 
-$VERSION = '2.55_01';
+our $VERSION = '2.58_01';
 
 require Exporter;
 *import = \&Exporter::import;
-@EXPORT_OK = qw(md5 md5_hex md5_base64);
+our @EXPORT_OK = qw(md5 md5_hex md5_base64);
 
+our @ISA;
 eval {
     require Digest::base;
-    push(@ISA, 'Digest::base');
+    @ISA = qw/Digest::base/;
 };
 if ($@) {
     my $err = $@;
@@ -231,11 +232,13 @@ md5 digests you might want to append the string "==" to the result.
 
 =item $md5->context(@ctx)
 
-Saves or restores the internal state.  When called with no arguments,
-returns a 3-element list: number of blocks processed, a 16-byte
-internal state buffer, then up to 63 bytes of unprocessed data.  When
-passed those same arguments, restores the state.  This is only useful
-for specialised operations.
+Saves or restores the internal state.
+When called with no arguments, returns a list:
+number of blocks processed,
+a 16-byte internal state buffer,
+then optionally up to 63 bytes of unprocessed data if there are any.
+When passed those same arguments, restores the state.
+This is only useful for specialised operations.
 
 =back
 
@@ -255,12 +258,12 @@ The above example would print out the message:
 The same checksum can also be calculated in OO style:
 
     use Digest::MD5;
-
+    
     $md5 = Digest::MD5->new;
     $md5->add('foo', 'bar');
     $md5->add('baz');
     $digest = $md5->hexdigest;
-
+    
     print "Digest is $digest\n";
 
 With OO style, you can break the message arbitrarily.  This means that we

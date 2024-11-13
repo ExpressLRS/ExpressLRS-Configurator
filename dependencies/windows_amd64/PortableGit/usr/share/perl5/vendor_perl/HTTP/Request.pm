@@ -3,9 +3,9 @@ package HTTP::Request;
 use strict;
 use warnings;
 
-our $VERSION = '6.27';
+our $VERSION = '6.46';
 
-use base 'HTTP::Message';
+use parent 'HTTP::Message';
 
 sub new
 {
@@ -96,9 +96,9 @@ sub uri_canonical
     my $uri = $self->{_uri};
 
     if (defined (my $canon = $self->{_uri_canonical})) {
-        # early bailout if these are the exact same string; try to use
-        # the cheapest comparison method possible
-        return $canon if $$canon eq $$uri;
+        # early bailout if these are the exact same string;
+        # rely on stringification of the URI objects
+        return $canon if $canon eq $uri;
     }
 
     # otherwise we need to refresh the memoized value
@@ -155,7 +155,7 @@ HTTP::Request - HTTP style request message
 
 =head1 VERSION
 
-version 6.27
+version 6.46
 
 =head1 SYNOPSIS
 

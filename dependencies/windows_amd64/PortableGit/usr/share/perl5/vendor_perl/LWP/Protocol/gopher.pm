@@ -9,14 +9,14 @@ package LWP::Protocol::gopher;
 
 use strict;
 
-our $VERSION = '6.52';
+our $VERSION = '6.77';
 
 require HTTP::Response;
 require HTTP::Status;
 require IO::Socket;
 require IO::Select;
 
-use base qw(LWP::Protocol);
+use parent qw(LWP::Protocol);
 
 
 my %gopher2mimetype = (

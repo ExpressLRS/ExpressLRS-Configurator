@@ -14,7 +14,7 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(struct);
 
-$VERSION = '0.66';
+$VERSION = '0.68';
 
 my $print = 0;
 sub printem {
@@ -84,7 +84,7 @@ sub struct {
     }
     else {
         $base_type = 'ARRAY';
-        $class = (caller())[0];
+        $class = caller();
         @decls = @_;
     }
 
@@ -148,9 +148,9 @@ sub struct {
         }
         my $init = "defined(\$init{'$name'}) ? \$init{'$name'} :";
         if( $type eq '@' ){
-            $out .= "    croak 'Initializer for $name must be array reference'\n";
+            $out .= "    croak 'Initializer for $name must be array reference'\n"; 
             $out .= "        if defined(\$init{'$name'}) && ref(\$init{'$name'}) ne 'ARRAY';\n";
-            $out .= "    \$r->$name( $init [] );$cmt\n";
+            $out .= "    \$r->$name( $init [] );$cmt\n"; 
             $arrays{$name}++;
         }
         elsif( $type eq '%' ){
@@ -206,7 +206,7 @@ sub struct {
             }
             if( defined $arrays{$name} ){
                 $out .= "    my \$i;\n";
-                $out .= "    \@_ ? (\$i = shift) : return \$r->$elem;\n";
+                $out .= "    \@_ ? (\$i = shift) : return \$r->$elem;\n"; 
                 $out .= "    if (ref(\$i) eq 'ARRAY' && !\@_) { \$r->$elem = \$i; return \$r }\n";
                 $sel = "->[\$i]";
             }
@@ -275,24 +275,24 @@ Class::Struct - declare struct-like datatypes as Perl classes
             # declare struct with four types of elements:
     struct( s => '$', a => '@', h => '%', c => 'My_Other_Class' );
 
-    $obj = new Myobj;               # constructor
+    my $obj = Myobj->new;               # constructor
 
                                     # scalar type accessor:
-    $element_value = $obj->s;           # element value
+    my $element_value = $obj->s;           # element value
     $obj->s('new value');               # assign to element
 
                                     # array type accessor:
-    $ary_ref = $obj->a;                 # reference to whole array
-    $ary_element_value = $obj->a(2);    # array element value
+    my $ary_ref = $obj->a;                 # reference to whole array
+    my $ary_element_value = $obj->a(2);    # array element value
     $obj->a(2, 'new value');            # assign to array element
 
                                     # hash type accessor:
-    $hash_ref = $obj->h;                # reference to whole hash
-    $hash_element_value = $obj->h('x'); # hash element value
+    my $hash_ref = $obj->h;                # reference to whole hash
+    my $hash_element_value = $obj->h('x'); # hash element value
     $obj->h('x', 'new value');          # assign to hash element
 
                                     # class type accessor:
-    $element_value = $obj->c;           # object reference
+    my $element_value = $obj->c;           # object reference
     $obj->c->method(...);               # call method of object
     $obj->c(new My_Other_Class);        # assign a new object
 
@@ -440,15 +440,15 @@ starts with a C<'*'>, a reference to the element itself is returned.
 
 C<struct> always creates a constructor called C<new>. That constructor
 may take a list of initializers for the various elements of the new
-struct.
+struct. 
 
 Each initializer is a pair of values: I<element name>C< =E<gt> >I<value>.
-The initializer value for a scalar element is just a scalar value. The
+The initializer value for a scalar element is just a scalar value. The 
 initializer for an array element is an array reference. The initializer
 for a hash is a hash reference.
 
 The initializer for a class element is an object of the corresponding class,
-or of one of it's subclasses, or a reference to a hash containing named
+or of one of it's subclasses, or a reference to a hash containing named 
 arguments to be passed to the element's constructor.
 
 See Example 3 below for an example of initialization.

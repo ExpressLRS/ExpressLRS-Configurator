@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 506 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/want_read.al)"
+#line 918 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/want_read.al)"
 sub want_read { want(shift) == 2 }
 # end of Net::SSLeay::want_read
 1;

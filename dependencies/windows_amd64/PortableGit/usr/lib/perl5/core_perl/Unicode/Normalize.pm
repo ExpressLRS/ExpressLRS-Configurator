@@ -1,14 +1,5 @@
 package Unicode::Normalize;
 
-BEGIN {
-    unless ('A' eq pack('U', 0x41)) {
-	die "Unicode::Normalize cannot stringify a Unicode code point\n";
-    }
-    unless (0x41 == unpack('U', 'A')) {
-	die "Unicode::Normalize cannot get Unicode code point\n";
-    }
-}
-
 use 5.006;
 use strict;
 use warnings;
@@ -16,7 +7,7 @@ use Carp;
 
 no warnings 'utf8';
 
-our $VERSION = '1.27';
+our $VERSION = '1.32';
 our $PACKAGE = __PACKAGE__;
 
 our @EXPORT = qw( NFC NFD NFKC NFKD );
@@ -40,16 +31,58 @@ our %EXPORT_TAGS = (
 ## utilities for tests
 ##
 
-sub pack_U {
-    return pack('U*', @_);
+                             # No EBCDIC support on early perls
+*to_native = ($::IS_ASCII || $] < 5.008)
+             ? sub { return shift }
+             : sub { utf8::unicode_to_native(shift) };
+
+*from_native = ($::IS_ASCII || $] < 5.008)
+             ? sub { return shift }
+             : sub { utf8::native_to_unicode(shift) };
+
+# The .t files are all in terms of Unicode, so xlate to/from native
+sub dot_t_pack_U {
+    return pack('U*', map { to_native($_) } @_);
 }
 
-sub unpack_U {
+sub dot_t_unpack_U {
 
     # The empty pack returns an empty UTF-8 string, so the effect is to force
     # the shifted parameter into being UTF-8.  This allows this to work on
     # Perl 5.6, where there is no utf8::upgrade().
-    return unpack('U*', shift(@_).pack('U*'));
+    return map { from_native($_) } unpack('U*', shift(@_).pack('U*'));
+}
+
+sub get_printable_string ($) {
+    use bytes;
+    my $s = shift;
+
+    # DeMorgan's laws cause this to mean ascii printables
+    return $s if $s =~ /[^[:^ascii:][:^print:]]/;
+
+    return join " ", map { sprintf "\\x%02x", ord $_ } split "", $s;
+}
+
+sub ok ($$;$) {
+    my $count_ref = shift;  # Test number in caller
+    my $p = my $r = shift;
+    my $x;
+    if (@_) {
+        $x = shift;
+        $p = !defined $x ? !defined $r : !defined $r ? 0 : $r eq $x;
+    }
+
+    print $p ? "ok" : "not ok", ' ', ++$$count_ref, "\n";
+
+    return if $p;
+
+    my (undef, $file, $line) = caller(1);
+    print STDERR "# Failed test $$count_ref at $file line $line\n";
+
+    return unless defined $x;
+
+    print STDERR "#      got ", get_printable_string($r), "\n";
+    print STDERR "# expected ", get_printable_string($x), "\n";
 }
 
 require Exporter;
@@ -343,7 +376,7 @@ Note that C<$unprocessed> will be modified as a side-effect.
 
 =head2 Quick Check
 
-(see Annex 8, UAX #15; and F<DerivedNormalizationProps.txt>)
+(see Annex 8, UAX #15; and F<lib/unicore/DerivedNormalizationProps.txt>)
 
 The following functions check whether the string is in that normalization form.
 
@@ -571,8 +604,10 @@ so one could cause Unicode 3.2 to be used in any perl version starting with
 
 In older Unicode versions, a small number of characters (all of which are
 CJK compatibility ideographs as far as they have been found) may have
-an erroneous decomposition mapping (see F<NormalizationCorrections.txt>).
-Anyhow, this module will neither refer to F<NormalizationCorrections.txt>
+an erroneous decomposition mapping (see
+F<lib/unicore/NormalizationCorrections.txt>).
+Anyhow, this module will neither refer to
+F<lib/unicore/NormalizationCorrections.txt>
 nor provide any specific version of normalization. Therefore this module
 running on an older perl with an older Unicode database may use
 the erroneous decomposition mapping blindly conforming to the Unicode database.
@@ -593,7 +628,7 @@ lower than 4.1.0.
 
 SADAHIRO Tomoyuki <SADAHIRO@cpan.org>
 
-Currently maintained by <perl5-porters@perl.org>
+Currently maintained by <perl5-porters@perl.org> 
 
 Copyright(C) 2001-2012, SADAHIRO Tomoyuki. Japan. All rights reserved.
 

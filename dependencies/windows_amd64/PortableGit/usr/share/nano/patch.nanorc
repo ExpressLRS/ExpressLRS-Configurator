@@ -1,6 +1,8 @@
 ## Syntax highlighting for patch and diff files.
 
-syntax patch "\.(patch|diff|debdiff)$"
+## Original author:  Mike Frysinger
+
+syntax patch "\.(patch|diff|debdiff|rej)$"
 magic "diff output"
 # There is no official support for comments in patch files.
 comment ""

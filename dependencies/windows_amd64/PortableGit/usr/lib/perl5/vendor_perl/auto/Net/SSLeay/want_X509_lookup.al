@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 508 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/want_X509_lookup.al)"
+#line 920 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/want_X509_lookup.al)"
 sub want_X509_lookup { want(shift) == 4 }
 
 ###

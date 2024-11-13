@@ -1,6 +1,8 @@
 
 # Generated from DynaLoader_pm.PL, this file is unique for every OS
 
+use strict;
+
 package DynaLoader;
 
 #   And Gandalf said: 'Many folk like to know beforehand what is to
@@ -16,8 +18,16 @@ package DynaLoader;
 # Tim.Bunce@ig.co.uk, August 1994
 
 BEGIN {
-    $VERSION = '1.47_01';
+    our $VERSION = '1.54';
 }
+
+# Note: in almost any other piece of code "our" would have been a better
+# option than "use vars", but DynaLoader's bootstrap files need the
+# side effect of the variable being declared in any scope whose current
+# package is DynaLoader, not just the current lexical one.
+use vars qw(@dl_library_path @dl_resolve_using @dl_require_symbols
+            $dl_debug @dl_librefs @dl_modules @dl_shared_objects
+            $dl_dlext $dl_so $dlsrc @args $module @dirs $file $bscode);
 
 use Config;
 
@@ -40,14 +50,17 @@ sub dl_load_flags { 0x00 }
 
 ($dl_dlext, $dl_so, $dlsrc) = @Config::Config{qw(dlext so dlsrc)};
 
-
-$do_expand = 0;
+# Some systems need special handling to expand file specifications
+# (VMS support by Charles Bailey <bailey@HMIVAX.HUMGEN.UPENN.EDU>)
+# See dl_expandspec() for more details. Should be harmless but
+# inefficient to define on systems that don't need it.
+my $do_expand = 0;
 
 @dl_require_symbols = ();       # names of symbols we need
 @dl_library_path    = ();       # path to look for files
 
 #XSLoader.pm may have added elements before we were required
-#@dl_shared_objects  = ();       # shared objects for symbols we have
+#@dl_shared_objects  = ();       # shared objects for symbols we have 
 #@dl_librefs         = ();       # things we have loaded
 #@dl_modules         = ();       # Modules we have loaded
 
@@ -96,6 +109,8 @@ sub croak   { require Carp; Carp::croak(@_)   }
 
 sub bootstrap_inherit {
     my $module = $_[0];
+
+    no strict qw/refs vars/;
     local *isa = *{"$module\::ISA"};
     local @isa = (@isa, 'DynaLoader');
     # Cannot goto due to delocalization.  Will report errors on a wrong line?
@@ -131,8 +146,6 @@ sub bootstrap {
     # It may also edit @modparts if required.
     $modfname = &mod2fname(\@modparts) if defined &mod2fname;
 
-    
-
     my $modpname = join('/',@modparts);
 
     print STDERR "DynaLoader::bootstrap for $module ",
@@ -143,13 +156,13 @@ sub bootstrap {
     foreach (@INC) {
 	
 	    $dir = "$_/auto/$modpname";
-
+	
 	next unless -d $dir; # skip over uninteresting directories
-
+	
 	# check for common cases to avoid autoload of dl_findfile
         my $try = "$dir/$modfname.$dl_dlext";
 	last if $file = ($do_expand) ? dl_expandspec($try) : ((-f $try) && $try);
-
+	
 	# no luck here, save dir for possible later dl_findfile search
 	push @dirs, $dir;
     }
@@ -259,7 +272,6 @@ sub dl_findfile {
             push(@names, $_);
         }
 	my $dirsep = '/';
-	
         foreach $dir (@dirs, @dl_library_path) {
             next unless -d $dir;
 	    
@@ -336,7 +348,7 @@ DynaLoader - Dynamically load C libraries into Perl code
     __PACKAGE__->bootstrap;
 
     # optional method for 'global' loading
-    sub dl_load_flags { 0x01 }
+    sub dl_load_flags { 0x01 }     
 
 
 =head1 DESCRIPTION
@@ -523,7 +535,7 @@ names are treated as filenames to be searched for.
 
 Using arguments of the form C<-Ldir> and C<-lname> is recommended.
 
-Example:
+Example: 
 
     @dl_resolve_using = dl_findfile(qw(-L/usr/5lib -lposix));
 
@@ -551,7 +563,7 @@ Dynamically load $filename, which must be the path to a shared object
 or library.  An opaque 'library reference' is returned as a handle for
 the loaded object.  Returns undef on error.
 
-The $flags argument to alters dl_load_file behaviour.
+The $flags argument to alters dl_load_file behaviour.  
 Assigned bits:
 
  0x01  make symbols available for linking later dl_load_file's.

@@ -1,5 +1,7 @@
 ## Syntax highlighting for Emacs Lisp.
 
+## Original author:  Mark Oteiza
+
 syntax elisp "\.el$"
 magic "Lisp/Scheme program"
 comment ";"
@@ -28,6 +30,6 @@ color brightred "\<(t|nil)\>"
 color blue ":(\w|[?-])+"
 # Strings
 color yellow start="^[[:blank:]]+"" end="[^\]""
-color yellow ""(\\.|[^"])*""
+color yellow ""([^"\]|\\.)*""
 # Comments
-color cyan "(^|[[:space:]]);.*"
+color cyan "(^|[[:blank:]]);.*"

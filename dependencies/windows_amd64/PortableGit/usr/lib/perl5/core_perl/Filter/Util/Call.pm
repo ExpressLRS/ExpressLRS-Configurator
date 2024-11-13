@@ -1,12 +1,12 @@
 # Call.pm
 #
 # Copyright (c) 1995-2011 Paul Marquess. All rights reserved.
-# Copyright (c) 2011-2014 Reini Urban. All rights reserved.
+# Copyright (c) 2011-2014, 2018-2022 Reini Urban. All rights reserved.
 # Copyright (c) 2014-2017 cPanel Inc. All rights reserved.
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
-
+ 
 package Filter::Util::Call ;
 
 require 5.006 ; # our
@@ -18,7 +18,7 @@ use warnings;
 
 our @ISA = qw(Exporter);
 our @EXPORT = qw( filter_add filter_del filter_read filter_read_exact) ;
-our $VERSION = "1.59" ;
+our $VERSION = "1.64" ;
 our $XS_VERSION = $VERSION;
 $VERSION = eval $VERSION;
 
@@ -76,7 +76,7 @@ Filter::Util::Call - Perl Source Filter Utility Module
 =head1 DESCRIPTION
 
 This module provides you with the framework to write I<Source Filters>
-in Perl.
+in Perl. 
 
 An alternate interface to Filter::Util::Call is now available. See
 L<Filter::Simple> for more details.
@@ -120,7 +120,7 @@ and this is the equivalent skeleton for the I<closure filter>:
         my($type, @arguments) = @_ ;
 
         filter_add(
-            sub
+            sub 
             {
                 my($status) ;
                 $status = filter_read() ;
@@ -133,7 +133,7 @@ and this is the equivalent skeleton for the I<closure filter>:
 To make use of either of the two filter modules above, place the line
 below in a Perl source file.
 
-    use MyFilter;
+    use MyFilter; 
 
 In fact, the skeleton modules shown above are fully functional I<Source
 Filters>, albeit fairly useless ones. All they does is filter the
@@ -386,7 +386,7 @@ C<Subst>.
             unless @_ == 3 ;
         my ($self, $from, $to) = @_ ;
         filter_add(
-            sub
+            sub 
             {
                 my ($status) ;
                 s/$from/$to/
@@ -483,8 +483,8 @@ Here is the module.
         croak("usage: use Subst qw(start stop from to)")
             unless @_ == 5 ;
 
-        filter_add(
-            sub
+        filter_add( 
+            sub 
             {
                 my ($status) ;
 
@@ -519,7 +519,7 @@ applications. It's available at
 
 =head1 AUTHOR
 
-Paul Marquess
+Paul Marquess 
 
 =head1 DATE
 
@@ -528,7 +528,7 @@ Paul Marquess
 =head1 LICENSE
 
 Copyright (c) 1995-2011 Paul Marquess. All rights reserved.
-Copyright (c) 2011-2014 Reini Urban. All rights reserved.
+Copyright (c) 2011-2014, 2018-2022 Reini Urban. All rights reserved.
 Copyright (c) 2014-2017 cPanel Inc. All rights reserved.
 
 This program is free software; you can redistribute it and/or

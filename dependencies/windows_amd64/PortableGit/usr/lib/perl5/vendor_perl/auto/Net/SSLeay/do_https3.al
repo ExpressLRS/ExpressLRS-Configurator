@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 1396 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/do_https3.al)"
+#line 1809 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/do_https3.al)"
 sub do_https3 { splice(@_,1,0) = 1; do_httpx3; }  # Legacy undocumented
 
 ### do_https2() is a legacy version in the sense that it is unable

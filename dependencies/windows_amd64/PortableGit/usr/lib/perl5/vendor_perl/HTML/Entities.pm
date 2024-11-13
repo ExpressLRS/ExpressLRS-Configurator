@@ -89,7 +89,7 @@ for example, would encode I<just> the C<< < >>, C<< & >>, C<< > >>, and C<< "
 
   $encoded = encode_entities($input, '<>&"');
 
-and this would only encode non-plain ascii:
+and this would only encode non-plain ASCII:
 
   $encoded = encode_entities($input, '^\n\x20-\x25\x27-\x7e');
 
@@ -136,17 +136,16 @@ modify it under the same terms as Perl itself.
 =cut
 
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK $VERSION);
-use vars qw(%entity2char %char2entity);
+our $VERSION = '3.81';
+our (%entity2char, %char2entity);
 
 require 5.004;
 require Exporter;
-@ISA = qw(Exporter);
+our @ISA = qw(Exporter);
 
-@EXPORT = qw(encode_entities decode_entities _decode_entities);
-@EXPORT_OK = qw(%entity2char %char2entity encode_entities_numeric);
+our @EXPORT = qw(encode_entities decode_entities _decode_entities);
+our @EXPORT_OK = qw(%entity2char %char2entity encode_entities_numeric);
 
-$VERSION = "3.69";
 sub Version { $VERSION; }
 
 require HTML::Parser;  # for fast XS implemented decode_entities
@@ -154,7 +153,7 @@ require HTML::Parser;  # for fast XS implemented decode_entities
 
 %entity2char = (
  # Some normal chars that have special meaning in SGML context
- amp    => '&',  # ampersand 
+ amp    => '&',  # ampersand
 'gt'    => '>',  # greater than
 'lt'    => '<',  # less than
  quot   => '"',  # double quote

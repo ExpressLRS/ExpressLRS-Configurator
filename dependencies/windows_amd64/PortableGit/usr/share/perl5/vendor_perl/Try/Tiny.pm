@@ -1,8 +1,8 @@
-package Try::Tiny; # git description: v0.29-2-g3b23a06
+package Try::Tiny; # git description: v0.31-2-gc8e3a47
 use 5.006;
 # ABSTRACT: Minimal try/catch with proper preservation of $@
 
-our $VERSION = '0.30';
+our $VERSION = '0.32';
 
 use strict;
 use warnings;
@@ -78,7 +78,7 @@ sub try (&;@) {
   # file scope + local but that causes issues with perls < 5.20 due to
   # perl rt#119311
   local $_finally_guards{guards} = [
-    map { Try::Tiny::ScopeGuard->_new($_) }
+    map Try::Tiny::ScopeGuard->_new($_),
     @finally
   ];
 
@@ -205,7 +205,7 @@ Try::Tiny - Minimal try/catch with proper preservation of $@
 
 =head1 VERSION
 
-version 0.30
+version 0.32
 
 =head1 SYNOPSIS
 
@@ -273,7 +273,7 @@ Note that adding a C<finally> block without a preceding C<catch> block
 suppresses any errors. This behaviour is consistent with using a standalone
 C<eval>, but it is not consistent with C<try>/C<finally> patterns found in
 other programming languages, such as Java, Python, Javascript or C#. If you
-learnt the C<try>/C<finally> pattern from one of these languages, watch out for
+learned the C<try>/C<finally> pattern from one of these languages, watch out for
 this.
 
 =head1 EXPORTS
@@ -639,6 +639,13 @@ is unclear whether the new version 18 behavior is final.
 
 =over 4
 
+=item L<Syntax::Keyword::Try>
+
+Only available on perls >= 5.14, with a slightly different syntax (e.g. no trailing C<;> because
+it's actually a keyword, not a sub, but this means you can C<return> and C<next> within it). Use
+L<Feature::Compat::Try> to automatically switch to the native C<try> syntax in newer perls (when
+available). See also L<Try Catch Exception Handling|perlsyn/Try-Catch-Exception-Handling>.
+
 =item L<TryCatch>
 
 Much more feature complete, more convenient semantics, but at the cost of
@@ -700,7 +707,7 @@ Jesse Luehrs <doy@tozt.net>
 
 =head1 CONTRIBUTORS
 
-=for stopwords Karen Etheridge Peter Rabbitson Ricardo Signes Mark Fowler Graham Knop Lukas Mai Aristotle Pagaltzis Dagfinn Ilmari Mannsåker Paul Howarth Rudolf Leermakers anaxagoras awalker chromatic Alex cm-perl Andrew Yates David Lowe Glenn Hans Dieter Pearcey Jens Berthold Jonathan Yu Marc Mims Stosberg Pali
+=for stopwords Karen Etheridge Peter Rabbitson Ricardo Signes Mark Fowler Graham Knop Aristotle Pagaltzis Dagfinn Ilmari Mannsåker Lukas Mai Alex anaxagoras Andrew Yates awalker chromatic cm-perl David Lowe Glenn Hans Dieter Pearcey Jens Berthold Jonathan Yu Marc Mims Stosberg Pali Paul Howarth Rudolf Leermakers
 
 =over 4
 
@@ -726,10 +733,6 @@ Graham Knop <haarg@haarg.org>
 
 =item *
 
-Lukas Mai <l.mai@web.de>
-
-=item *
-
 Aristotle Pagaltzis <pagaltzis@gmx.de>
 
 =item *
@@ -738,15 +741,19 @@ Dagfinn Ilmari Mannsåker <ilmari@ilmari.org>
 
 =item *
 
-Paul Howarth <paul@city-fan.org>
+Lukas Mai <l.mai@web.de>
 
 =item *
 
-Rudolf Leermakers <rudolf@hatsuseno.org>
+Alex <alex@koban.(none)>
 
 =item *
 
 anaxagoras <walkeraj@gmail.com>
+
+=item *
+
+Andrew Yates <ayates@haddock.local>
 
 =item *
 
@@ -758,15 +765,7 @@ chromatic <chromatic@wgz.org>
 
 =item *
 
-Alex <alex@koban.(none)>
-
-=item *
-
 cm-perl <cm-perl@users.noreply.github.com>
-
-=item *
-
-Andrew Yates <ayates@haddock.local>
 
 =item *
 
@@ -799,6 +798,14 @@ Mark Stosberg <mark@stosberg.com>
 =item *
 
 Pali <pali@cpan.org>
+
+=item *
+
+Paul Howarth <paul@city-fan.org>
+
+=item *
+
+Rudolf Leermakers <rudolf@hatsuseno.org>
 
 =back
 

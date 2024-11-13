@@ -8,8 +8,8 @@
 # To enable:
 #
 #    1) Copy this file to somewhere (e.g. ~/.git-prompt.sh).
-#    2) Add the following line to your .bashrc/.zshrc:
-#        source ~/.git-prompt.sh
+#    2) Add the following line to your .bashrc/.zshrc/.profile:
+#        . ~/.git-prompt.sh   # dot path/to/this-file
 #    3a) Change your PS1 to call __git_ps1 as
 #        command-substitution:
 #        Bash: PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
@@ -29,6 +29,8 @@
 #          followed by colon, cwd, dollar and SP, as your prompt.
 #        Optionally, you can supply a third argument with a printf
 #        format string to finetune the output of the branch status
+#
+#    See notes below about compatibility with other shells.
 #
 # The repository status will be displayed only if you are currently in a
 # git repository. The %s token is the placeholder for the shown status.
@@ -66,6 +68,11 @@
 #     git           always compare HEAD to @{upstream}
 #     svn           always compare HEAD to your SVN upstream
 #
+# By default, __git_ps1 will compare HEAD to your SVN upstream if it can
+# find one, or @{upstream} otherwise.  Once you have set
+# GIT_PS1_SHOWUPSTREAM, you can override it on a per-repository basis by
+# setting the bash.showUpstream config variable.
+#
 # You can change the separator between the branch name and the above
 # state symbols by setting GIT_PS1_STATESEPARATOR. The default separator
 # is SP.
@@ -79,10 +86,9 @@
 # single '?' character by setting GIT_PS1_COMPRESSSPARSESTATE, or omitted
 # by setting GIT_PS1_OMITSPARSESTATE.
 #
-# By default, __git_ps1 will compare HEAD to your SVN upstream if it can
-# find one, or @{upstream} otherwise.  Once you have set
-# GIT_PS1_SHOWUPSTREAM, you can override it on a per-repository basis by
-# setting the bash.showUpstream config variable.
+# If you would like to see a notification on the prompt when there are
+# unresolved conflicts, set GIT_PS1_SHOWCONFLICTSTATE to "yes". The
+# prompt will include "|CONFLICT".
 #
 # If you would like to see more information about the identity of
 # commits checked out as a detached HEAD, set GIT_PS1_DESCRIBE_STYLE
@@ -96,102 +102,152 @@
 #
 # If you would like a colored hint about the current dirty state, set
 # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
-# the colored output of "git status -sb" and are available only when
-# using __git_ps1 for PROMPT_COMMAND or precmd in Bash,
-# but always available in Zsh.
+# the colored output of "git status -sb".
 #
 # If you would like __git_ps1 to do nothing in the case when the current
 # directory is set up to be ignored by git, then set
 # GIT_PS1_HIDE_IF_PWD_IGNORED to a nonempty value. Override this on the
 # repository level by setting bash.hideIfPwdIgnored to "false".
+#
+# Compatibility with other shells (beyond bash/zsh):
+#
+#    We require posix-ish shell plus "local" support, which is most
+#    shells (even pdksh), but excluding ksh93 (because no "local").
+#
+#    Prompt integration might differ between shells, but the gist is
+#    to load it once on shell init with '. path/to/git-prompt.sh',
+#    set GIT_PS1* vars once as needed, and either place $(__git_ps1..)
+#    inside PS1 once (0/1 args), or, before each prompt is displayed,
+#    call __git_ps1 (2/3 args) which sets PS1 with the status embedded.
+#
+#    Many shells support the 1st method of command substitution,
+#    though some might need to first enable cmd substitution in PS1.
+#
+#    When using colors, each escape sequence is wrapped between byte
+#    values 1 and 2 (control chars SOH, STX, respectively), which are
+#    invisible at the output, but for bash/readline they mark 0-width
+#    strings (SGR color sequences) when calculating the on-screen
+#    prompt width, to maintain correct input editing at the prompt.
+#
+#    To replace or disable the 0-width markers, set GIT_PS1_COLOR_PRE
+#    and GIT_PS1_COLOR_POST to other markers, or empty (nul) to not
+#    use markers. For instance, some shells support '\[' and '\]' as
+#    start/end markers in PS1 - when invoking __git_ps1 with 3/4 args,
+#    but it may or may not work in command substitution mode. YMMV.
+#
+#    If the shell doesn't support 0-width markers and editing behaves
+#    incorrectly when using colors in __git_ps1, then, other than
+#    disabling color, it might be solved using multi-line prompt,
+#    where the git status is not at the last line, e.g.:
+#      PS1='\n\w \u@\h$(__git_ps1 " (%s)")\n\$ '
 
 # check whether printf supports -v
 __git_printf_supports_v=
 printf -v __git_printf_supports_v -- '%s' yes >/dev/null 2>&1
+
+# like __git_SOH=$'\001' etc but works also in shells without $'...'
+eval "$(printf '
+	__git_SOH="\001" __git_STX="\002" __git_ESC="\033"
+	__git_LF="\n" __git_CRLF="\r\n"
+')"
 
 # stores the divergence from upstream in $p
 # used by GIT_PS1_SHOWUPSTREAM
 __git_ps1_show_upstream ()
 {
 	local key value
-	local svn_remote svn_url_pattern count n
-	local upstream=git legacy="" verbose="" name=""
+	local svn_remotes="" svn_url_pattern="" count n
+	local upstream_type=git legacy="" verbose="" name=""
+	local LF="$__git_LF"
 
-	svn_remote=()
 	# get some config options from git-config
 	local output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
 	while read -r key value; do
 		case "$key" in
 		bash.showupstream)
 			GIT_PS1_SHOWUPSTREAM="$value"
-			if [[ -z "${GIT_PS1_SHOWUPSTREAM}" ]]; then
+			if [ -z "${GIT_PS1_SHOWUPSTREAM}" ]; then
 				p=""
 				return
 			fi
 			;;
 		svn-remote.*.url)
-			svn_remote[$((${#svn_remote[@]} + 1))]="$value"
+			svn_remotes=${svn_remotes}${value}${LF}  # URI\nURI\n...
 			svn_url_pattern="$svn_url_pattern\\|$value"
-			upstream=svn+git # default upstream is SVN if available, else git
+			upstream_type=svn+git # default upstream type is SVN if available, else git
 			;;
 		esac
-	done <<< "$output"
+	done <<-OUTPUT
+		$output
+	OUTPUT
 
 	# parse configuration values
 	local option
-	for option in ${GIT_PS1_SHOWUPSTREAM}; do
+	for option in ${GIT_PS1_SHOWUPSTREAM-}; do
 		case "$option" in
-		git|svn) upstream="$option" ;;
+		git|svn) upstream_type="$option" ;;
 		verbose) verbose=1 ;;
 		legacy)  legacy=1  ;;
 		name)    name=1 ;;
 		esac
 	done
 
-	# Find our upstream
-	case "$upstream" in
-	git)    upstream="@{upstream}" ;;
+	# Find our upstream type
+	case "$upstream_type" in
+	git)    upstream_type="@{upstream}" ;;
 	svn*)
-		# get the upstream from the "git-svn-id: ..." in a commit message
-		# (git-svn uses essentially the same procedure internally)
-		local -a svn_upstream
-		svn_upstream=($(git log --first-parent -1 \
-					--grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null))
-		if [[ 0 -ne ${#svn_upstream[@]} ]]; then
-			svn_upstream=${svn_upstream[${#svn_upstream[@]} - 2]}
-			svn_upstream=${svn_upstream%@*}
-			local n_stop="${#svn_remote[@]}"
-			for ((n=1; n <= n_stop; n++)); do
-				svn_upstream=${svn_upstream#${svn_remote[$n]}}
-			done
+		# successful svn-upstream resolution:
+		# - get the list of configured svn-remotes ($svn_remotes set above)
+		# - get the last commit which seems from one of our svn-remotes
+		# - confirm that it is from one of the svn-remotes
+		# - use $GIT_SVN_ID if set, else "git-svn"
 
-			if [[ -z "$svn_upstream" ]]; then
+		# get upstream from "git-svn-id: UPSTRM@N HASH" in a commit message
+		# (git-svn uses essentially the same procedure internally)
+		local svn_upstream="$(
+			git log --first-parent -1 \
+				--grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null
+		)"
+
+		if [ -n "$svn_upstream" ]; then
+			# extract the URI, assuming --grep matched the last line
+			svn_upstream=${svn_upstream##*$LF}  # last line
+			svn_upstream=${svn_upstream#*: }    # UPSTRM@N HASH
+			svn_upstream=${svn_upstream%@*}     # UPSTRM
+
+			case ${LF}${svn_remotes} in
+			*"${LF}${svn_upstream}${LF}"*)
+				# grep indeed matched the last line - it's our remote
 				# default branch name for checkouts with no layout:
-				upstream=${GIT_SVN_ID:-git-svn}
-			else
-				upstream=${svn_upstream#/}
-			fi
-		elif [[ "svn+git" = "$upstream" ]]; then
-			upstream="@{upstream}"
+				upstream_type=${GIT_SVN_ID:-git-svn}
+				;;
+			*)
+				# the commit message includes one of our remotes, but
+				# it's not at the last line. is $svn_upstream junk?
+				upstream_type=${svn_upstream#/}
+				;;
+			esac
+		elif [ "svn+git" = "$upstream_type" ]; then
+			upstream_type="@{upstream}"
 		fi
 		;;
 	esac
 
 	# Find how many commits we are ahead/behind our upstream
-	if [[ -z "$legacy" ]]; then
+	if [ -z "$legacy" ]; then
 		count="$(git rev-list --count --left-right \
-				"$upstream"...HEAD 2>/dev/null)"
+				"$upstream_type"...HEAD 2>/dev/null)"
 	else
 		# produce equivalent output to --count for older versions of git
 		local commits
-		if commits="$(git rev-list --left-right "$upstream"...HEAD 2>/dev/null)"
+		if commits="$(git rev-list --left-right "$upstream_type"...HEAD 2>/dev/null)"
 		then
 			local commit behind=0 ahead=0
 			for commit in $commits
 			do
 				case "$commit" in
-				"<"*) ((behind++)) ;;
-				*)    ((ahead++))  ;;
+				"<"*) behind=$((behind+1)) ;;
+				*)    ahead=$((ahead+1))   ;;
 				esac
 			done
 			count="$behind	$ahead"
@@ -201,7 +257,7 @@ __git_ps1_show_upstream ()
 	fi
 
 	# calculate the result
-	if [[ -z "$verbose" ]]; then
+	if [ -z "$verbose" ]; then
 		case "$count" in
 		"") # no upstream
 			p="" ;;
@@ -214,26 +270,26 @@ __git_ps1_show_upstream ()
 		*)	    # diverged from upstream
 			p="<>" ;;
 		esac
-	else
+	else # verbose, set upstream instead of p
 		case "$count" in
 		"") # no upstream
-			p="" ;;
+			upstream="" ;;
 		"0	0") # equal to upstream
-			p=" u=" ;;
+			upstream="|u=" ;;
 		"0	"*) # ahead of upstream
-			p=" u+${count#0	}" ;;
+			upstream="|u+${count#0	}" ;;
 		*"	0") # behind upstream
-			p=" u-${count%	0}" ;;
+			upstream="|u-${count%	0}" ;;
 		*)	    # diverged from upstream
-			p=" u+${count#*	}-${count%	*}" ;;
+			upstream="|u+${count#*	}-${count%	*}" ;;
 		esac
-		if [[ -n "$count" && -n "$name" ]]; then
+		if [ -n "$count" ] && [ -n "$name" ]; then
 			__git_ps1_upstream_name=$(git rev-parse \
-				--abbrev-ref "$upstream" 2>/dev/null)
-			if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
-				p="$p \${__git_ps1_upstream_name}"
+				--abbrev-ref "$upstream_type" 2>/dev/null)
+			if [ "$pcmode" = yes ] && [ "$ps1_expanded" = yes ]; then
+				upstream="$upstream \${__git_ps1_upstream_name}"
 			else
-				p="$p ${__git_ps1_upstream_name}"
+				upstream="$upstream ${__git_ps1_upstream_name}"
 				# not needed anymore; keep user's
 				# environment clean
 				unset __git_ps1_upstream_name
@@ -245,48 +301,54 @@ __git_ps1_show_upstream ()
 
 # Helper function that is meant to be called from __git_ps1.  It
 # injects color codes into the appropriate gitstring variables used
-# to build a gitstring.
+# to build a gitstring. Colored variables are responsible for clearing
+# their own color.
 __git_ps1_colorize_gitstring ()
 {
-	if [[ -n ${ZSH_VERSION-} ]]; then
+	if [ -n "${ZSH_VERSION-}" ]; then
 		local c_red='%F{red}'
 		local c_green='%F{green}'
 		local c_lblue='%F{blue}'
 		local c_clear='%f'
 	else
-		# Using \[ and \] around colors is necessary to prevent
-		# issues with command line editing/browsing/completion!
-		local c_red='\[\e[31m\]'
-		local c_green='\[\e[32m\]'
-		local c_lblue='\[\e[1;34m\]'
-		local c_clear='\[\e[0m\]'
+		# \001 (SOH) and \002 (STX) are 0-width substring markers
+		# which bash/readline identify while calculating the prompt
+		# on-screen width - to exclude 0-screen-width esc sequences.
+		local c_pre="${GIT_PS1_COLOR_PRE-$__git_SOH}${__git_ESC}["
+		local c_post="m${GIT_PS1_COLOR_POST-$__git_STX}"
+
+		local c_red="${c_pre}31${c_post}"
+		local c_green="${c_pre}32${c_post}"
+		local c_lblue="${c_pre}1;34${c_post}"
+		local c_clear="${c_pre}0${c_post}"
 	fi
-	local bad_color=$c_red
-	local ok_color=$c_green
+	local bad_color="$c_red"
+	local ok_color="$c_green"
 	local flags_color="$c_lblue"
 
 	local branch_color=""
-	if [ $detached = no ]; then
+	if [ "$detached" = no ]; then
 		branch_color="$ok_color"
 	else
 		branch_color="$bad_color"
 	fi
-	c="$branch_color$c"
+	if [ -n "$c" ]; then
+		c="$branch_color$c$c_clear"
+	fi
+	b="$branch_color$b$c_clear"
 
-	z="$c_clear$z"
-	if [ "$w" = "*" ]; then
-		w="$bad_color$w"
+	if [ -n "$w" ]; then
+		w="$bad_color$w$c_clear"
 	fi
 	if [ -n "$i" ]; then
-		i="$ok_color$i"
+		i="$ok_color$i$c_clear"
 	fi
 	if [ -n "$s" ]; then
-		s="$flags_color$s"
+		s="$flags_color$s$c_clear"
 	fi
 	if [ -n "$u" ]; then
-		u="$bad_color$u"
+		u="$bad_color$u$c_clear"
 	fi
-	r="$c_clear$r"
 }
 
 # Helper function to read the first line of a file into a variable.
@@ -294,7 +356,7 @@ __git_ps1_colorize_gitstring ()
 # variable, in that order.
 __git_eread ()
 {
-	test -r "$1" && IFS=$'\r\n' read "$2" <"$1"
+	test -r "$1" && IFS=$__git_CRLF read -r "$2" <"$1"
 }
 
 # see if a cherry-pick or revert is in progress, if the user has committed a
@@ -342,7 +404,7 @@ __git_sequencer_status ()
 __git_ps1 ()
 {
 	# preserve exit status
-	local exit=$?
+	local exit="$?"
 	local pcmode=no
 	local detached=no
 	local ps1pc_start='\u@\h:\w '
@@ -361,7 +423,7 @@ __git_ps1 ()
 		;;
 		0|1)	printf_format="${1:-$printf_format}"
 		;;
-		*)	return $exit
+		*)	return "$exit"
 		;;
 	esac
 
@@ -399,37 +461,40 @@ __git_ps1 ()
 	# incorrect.)
 	#
 	local ps1_expanded=yes
-	[ -z "${ZSH_VERSION-}" ] || [[ -o PROMPT_SUBST ]] || ps1_expanded=no
+	[ -z "${ZSH_VERSION-}" ] || eval '[[ -o PROMPT_SUBST ]]' || ps1_expanded=no
 	[ -z "${BASH_VERSION-}" ] || shopt -q promptvars || ps1_expanded=no
 
 	local repo_info rev_parse_exit_code
 	repo_info="$(git rev-parse --git-dir --is-inside-git-dir \
-		--is-bare-repository --is-inside-work-tree \
+		--is-bare-repository --is-inside-work-tree --show-ref-format \
 		--short HEAD 2>/dev/null)"
 	rev_parse_exit_code="$?"
 
 	if [ -z "$repo_info" ]; then
-		return $exit
+		return "$exit"
 	fi
 
+	local LF="$__git_LF"
 	local short_sha=""
 	if [ "$rev_parse_exit_code" = "0" ]; then
-		short_sha="${repo_info##*$'\n'}"
-		repo_info="${repo_info%$'\n'*}"
+		short_sha="${repo_info##*$LF}"
+		repo_info="${repo_info%$LF*}"
 	fi
-	local inside_worktree="${repo_info##*$'\n'}"
-	repo_info="${repo_info%$'\n'*}"
-	local bare_repo="${repo_info##*$'\n'}"
-	repo_info="${repo_info%$'\n'*}"
-	local inside_gitdir="${repo_info##*$'\n'}"
-	local g="${repo_info%$'\n'*}"
+	local ref_format="${repo_info##*$LF}"
+	repo_info="${repo_info%$LF*}"
+	local inside_worktree="${repo_info##*$LF}"
+	repo_info="${repo_info%$LF*}"
+	local bare_repo="${repo_info##*$LF}"
+	repo_info="${repo_info%$LF*}"
+	local inside_gitdir="${repo_info##*$LF}"
+	local g="${repo_info%$LF*}"
 
 	if [ "true" = "$inside_worktree" ] &&
 	   [ -n "${GIT_PS1_HIDE_IF_PWD_IGNORED-}" ] &&
 	   [ "$(git config --bool bash.hideIfPwdIgnored)" != "false" ] &&
 	   git check-ignore -q .
 	then
-		return $exit
+		return "$exit"
 	fi
 
 	local sparse=""
@@ -475,12 +540,27 @@ __git_ps1 ()
 			b="$(git symbolic-ref HEAD 2>/dev/null)"
 		else
 			local head=""
-			if ! __git_eread "$g/HEAD" head; then
-				return $exit
-			fi
-			# is it a symbolic ref?
-			b="${head#ref: }"
-			if [ "$head" = "$b" ]; then
+
+			case "$ref_format" in
+			files)
+				if ! __git_eread "$g/HEAD" head; then
+					return "$exit"
+				fi
+
+				case $head in
+				"ref: "*)
+					head="${head#ref: }"
+					;;
+				*)
+					head=""
+				esac
+				;;
+			*)
+				head="$(git symbolic-ref HEAD 2>/dev/null)"
+				;;
+			esac
+
+			if test -z "$head"; then
 				detached=yes
 				b="$(
 				case "${GIT_PS1_DESCRIBE_STYLE-}" in
@@ -498,6 +578,8 @@ __git_ps1 ()
 
 				b="$short_sha..."
 				b="($b)"
+			else
+				b="$head"
 			fi
 		fi
 	fi
@@ -506,13 +588,20 @@ __git_ps1 ()
 		r="$r $step/$total"
 	fi
 
+	local conflict="" # state indicator for unresolved conflicts
+	if [ "${GIT_PS1_SHOWCONFLICTSTATE-}" = "yes" ] &&
+	   [ "$(git ls-files --unmerged 2>/dev/null)" ]; then
+		conflict="|CONFLICT"
+	fi
+
 	local w=""
 	local i=""
 	local s=""
 	local u=""
 	local h=""
 	local c=""
-	local p=""
+	local p="" # short version of upstream state indicator
+	local upstream="" # verbose version of upstream state indicator
 
 	if [ "true" = "$inside_gitdir" ]; then
 		if [ "true" = "$bare_repo" ]; then
@@ -553,25 +642,22 @@ __git_ps1 ()
 		fi
 	fi
 
-	local z="${GIT_PS1_STATESEPARATOR-" "}"
-
-	# NO color option unless in PROMPT_COMMAND mode or it's Zsh
-	if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
-		if [ $pcmode = yes ] || [ -n "${ZSH_VERSION-}" ]; then
-			__git_ps1_colorize_gitstring
-		fi
-	fi
+	local z="${GIT_PS1_STATESEPARATOR- }"
 
 	b=${b##refs/heads/}
-	if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
+	if [ "$pcmode" = yes ] && [ "$ps1_expanded" = yes ]; then
 		__git_ps1_branch_name=$b
 		b="\${__git_ps1_branch_name}"
 	fi
 
-	local f="$h$w$i$s$u"
-	local gitstring="$c$b${f:+$z$f}${sparse}$r$p"
+	if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
+		__git_ps1_colorize_gitstring
+	fi
 
-	if [ $pcmode = yes ]; then
+	local f="$h$w$i$s$u$p"
+	local gitstring="$c$b${f:+$z$f}${sparse}$r${upstream}${conflict}"
+
+	if [ "$pcmode" = yes ]; then
 		if [ "${__git_printf_supports_v-}" != yes ]; then
 			gitstring=$(printf -- "$printf_format" "$gitstring")
 		else
@@ -582,5 +668,5 @@ __git_ps1 ()
 		printf -- "$printf_format" "$gitstring"
 	fi
 
-	return $exit
+	return "$exit"
 }

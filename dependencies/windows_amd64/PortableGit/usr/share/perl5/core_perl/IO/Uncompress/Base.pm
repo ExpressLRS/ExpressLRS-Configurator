@@ -9,12 +9,12 @@ our (@ISA, $VERSION, @EXPORT_OK, %EXPORT_TAGS);
 @ISA    = qw(IO::File Exporter);
 
 
-$VERSION = '2.093';
+$VERSION = '2.204';
 
 use constant G_EOF => 0 ;
 use constant G_ERR => -1 ;
 
-use IO::Compress::Base::Common 2.093 ;
+use IO::Compress::Base::Common 2.204 ;
 
 use IO::File ;
 use Symbol;
@@ -430,7 +430,7 @@ sub _create
             my $mode = '<';
             $mode = '+<' if $got->getValue('scan');
             *$obj->{StdIO} = ($inValue eq '-');
-            *$obj->{FH} = new IO::File "$mode $inValue"
+            *$obj->{FH} = IO::File->new( "$mode $inValue" )
                 or return $obj->saveErrorString(undef, "cannot open file '$inValue': $!", $!) ;
         }
 
@@ -473,8 +473,8 @@ sub _create
     *$obj->{Plain}             = 0;
     *$obj->{PlainBytesRead}    = 0;
     *$obj->{InflatedBytesRead} = 0;
-    *$obj->{UnCompSize}        = new U64;
-    *$obj->{CompSize}          = new U64;
+    *$obj->{UnCompSize}        = U64->new;
+    *$obj->{CompSize}          = U64->new;
     *$obj->{TotalInflatedBytesRead} = 0;
     *$obj->{NewStream}         = 0 ;
     *$obj->{EventEof}          = 0 ;
@@ -573,7 +573,7 @@ sub _inf
     my $output = shift ;
 
 
-    my $x = new IO::Compress::Base::Validator($class, *$obj->{Error}, $name, $input, $output)
+    my $x = IO::Compress::Base::Validator->new($class, *$obj->{Error}, $name, $input, $output)
         or return undef ;
 
     push @_, $output if $haveOut && $x->{Hash};
@@ -693,7 +693,7 @@ sub _singleTarget
         my $mode = '>' ;
         $mode = '>>'
             if $x->{Got}->getValue('append') ;
-        $x->{fh} = new IO::File "$mode $output"
+        $x->{fh} = IO::File->new( "$mode $output" )
             or return retErr($x, "cannot open file '$output': $!") ;
         binmode $x->{fh} ;
 
@@ -1005,6 +1005,11 @@ sub filterUncompressed
 sub nextStream
 {
     my $self = shift ;
+
+    # An uncompressed file cannot have a next stream, so
+    # return immediately.
+    return 0
+        if *$self->{Plain} ;
 
     my $status = $self->gotoNextStream();
     $status == 1
@@ -1485,33 +1490,35 @@ sub input_line_number
     return $last;
 }
 
-
-*BINMODE  = \&binmode;
-*SEEK     = \&seek;
-*READ     = \&read;
-*sysread  = \&read;
-*TELL     = \&tell;
-*EOF      = \&eof;
-
-*FILENO   = \&fileno;
-*CLOSE    = \&close;
-
 sub _notAvailable
 {
     my $name = shift ;
     return sub { croak "$name Not Available: File opened only for intput" ; } ;
 }
 
+{
+    no warnings 'once';
 
-*print    = _notAvailable('print');
-*PRINT    = _notAvailable('print');
-*printf   = _notAvailable('printf');
-*PRINTF   = _notAvailable('printf');
-*write    = _notAvailable('write');
-*WRITE    = _notAvailable('write');
+    *BINMODE  = \&binmode;
+    *SEEK     = \&seek;
+    *READ     = \&read;
+    *sysread  = \&read;
+    *TELL     = \&tell;
+    *EOF      = \&eof;
 
-#*sysread  = \&read;
-#*syswrite = \&_notAvailable;
+    *FILENO   = \&fileno;
+    *CLOSE    = \&close;
+
+    *print    = _notAvailable('print');
+    *PRINT    = _notAvailable('print');
+    *printf   = _notAvailable('printf');
+    *PRINTF   = _notAvailable('printf');
+    *write    = _notAvailable('write');
+    *WRITE    = _notAvailable('write');
+
+    #*sysread  = \&read;
+    #*syswrite = \&_notAvailable;
+}
 
 
 
@@ -1560,8 +1567,7 @@ See the Changes file.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2005-2019 Paul Marquess. All rights reserved.
+Copyright (c) 2005-2023 Paul Marquess. All rights reserved.
 
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
-

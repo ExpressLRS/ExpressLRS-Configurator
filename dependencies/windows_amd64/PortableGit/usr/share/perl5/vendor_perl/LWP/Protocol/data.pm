@@ -4,12 +4,12 @@ package LWP::Protocol::data;
 
 use strict;
 
-our $VERSION = '6.52';
+our $VERSION = '6.77';
 
 require HTTP::Response;
 require HTTP::Status;
 
-use base qw(LWP::Protocol);
+use parent qw(LWP::Protocol);
 
 use HTTP::Date qw(time2str);
 require LWP;  # needs version number

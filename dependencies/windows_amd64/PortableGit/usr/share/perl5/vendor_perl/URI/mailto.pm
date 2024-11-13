@@ -3,7 +3,7 @@ package URI::mailto;  # RFC 2368
 use strict;
 use warnings;
 
-our $VERSION = '5.07';
+our $VERSION = '5.29';
 
 use parent qw(URI URI::_query);
 
@@ -38,7 +38,7 @@ sub to
 }
 
 
-sub headers
+sub headers 
 {
     my $self = shift;
 
@@ -68,6 +68,21 @@ sub headers
 
     # I am lazy today...
     URI->new("mailto:?$opaque")->query_form;
+}
+
+# https://datatracker.ietf.org/doc/html/rfc6068#section-5 requires 
+# plus signs (+) not to be turned into spaces
+sub query_form 
+{
+    my $self   = shift;
+    my @fields = $self->SUPER::query_form(@_);
+    for ( my $i = 0 ; $i < @fields ; $i += 2 ) {
+        if ( $fields[0] eq 'to' ) {
+            $fields[1] =~ s/ /+/g;
+            last;
+        }
+    }
+    return @fields;
 }
 
 1;

@@ -4,7 +4,7 @@ use warnings;
 
 our ($AUTOLOAD, %SIGRT);
 
-our $VERSION = '1.94';
+our $VERSION = '2.13';
 
 require XSLoader;
 
@@ -12,7 +12,7 @@ use Fcntl qw(FD_CLOEXEC F_DUPFD F_GETFD F_GETFL F_GETLK F_RDLCK F_SETFD
 	     F_SETFL F_SETLK F_SETLKW F_UNLCK F_WRLCK O_ACCMODE O_APPEND
 	     O_CREAT O_EXCL O_NOCTTY O_NONBLOCK O_RDONLY O_RDWR O_TRUNC
 	     O_WRONLY SEEK_CUR SEEK_END SEEK_SET
-	     S_ISBLK S_ISCHR S_ISDIR S_ISFIFO S_ISREG
+	     S_ISBLK S_ISCHR S_ISDIR S_ISFIFO S_ISLNK S_ISREG S_ISSOCK
 	     S_IRGRP S_IROTH S_IRUSR S_IRWXG S_IRWXO S_IRWXU S_ISGID S_ISUID
 	     S_IWGRP S_IWOTH S_IWUSR S_IXGRP S_IXOTH S_IXUSR);
 
@@ -176,7 +176,7 @@ sub import {
 
     load_imports() unless $loaded++;
 
-    # Grandfather old foo_h form to new :foo_h form
+    # Rewrite legacy foo_h form to new :foo_h form
     s/^(?=\w+_h$)/:/ for my @list = @_;
 
     my @unimpl = sort grep { exists $replacement{$_} } @list;
@@ -278,7 +278,7 @@ my %default_export_tags = ( # cf. exports policy below
 		creat
 		SEEK_CUR SEEK_END SEEK_SET
 		S_IRGRP S_IROTH S_IRUSR S_IRWXG S_IRWXO S_IRWXU
-		S_ISBLK S_ISCHR S_ISDIR S_ISFIFO S_ISGID S_ISREG S_ISUID
+		S_ISBLK S_ISCHR S_ISDIR S_ISFIFO S_ISGID S_ISLNK S_ISREG S_ISSOCK S_ISUID
 		S_IWGRP S_IWOTH S_IWUSR)],
 
     float_h =>	[qw(DBL_DIG DBL_EPSILON DBL_MANT_DIG
@@ -307,7 +307,8 @@ my %default_export_tags = ( # cf. exports policy below
 
     locale_h =>	[qw(LC_ALL LC_COLLATE LC_CTYPE LC_MESSAGES
 		    LC_MONETARY LC_NUMERIC LC_TIME LC_IDENTIFICATION
-                    LC_MEASUREMENT LC_PAPER LC_TELEPHONE LC_ADDRESS NULL
+                    LC_MEASUREMENT LC_PAPER LC_TELEPHONE LC_ADDRESS LC_NAME
+                    LC_SYNTAX LC_TOD NULL
 		    localeconv setlocale)],
 
     math_h =>   [qw(FP_ILOGB0 FP_ILOGBNAN FP_INFINITE FP_NAN FP_NORMAL
@@ -356,7 +357,7 @@ my %default_export_tags = ( # cf. exports policy below
 		strtok strxfrm)],
 
     sys_stat_h => [qw(S_IRGRP S_IROTH S_IRUSR S_IRWXG S_IRWXO S_IRWXU
-		S_ISBLK S_ISCHR S_ISDIR S_ISFIFO S_ISGID S_ISREG
+		S_ISBLK S_ISCHR S_ISDIR S_ISFIFO S_ISGID S_ISLNK S_ISREG S_ISSOCK
 		S_ISUID S_IWGRP S_IWOTH S_IWUSR S_IXGRP S_IXOTH S_IXUSR
 		fstat mkfifo)],
 
@@ -465,7 +466,7 @@ my %other_export_tags = ( # cf. exports policy below
 # - new SHOUTYCONSTANTS are OK to add to @EXPORT
 
 {
-  # De-duplicate the export list:
+  # De-duplicate the export list: 
   my ( %export, %export_ok );
   @export   {map {@$_} values %default_export_tags} = ();
   @export_ok{map {@$_} values   %other_export_tags} = ();

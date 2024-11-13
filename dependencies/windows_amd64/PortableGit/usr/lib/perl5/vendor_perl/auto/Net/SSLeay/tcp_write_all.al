@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 771 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/tcp_write_all.al)"
+#line 1183 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/tcp_write_all.al)"
 sub tcp_write_all {
     my ($data_ref, $errs);
     if (ref $_[0]) {

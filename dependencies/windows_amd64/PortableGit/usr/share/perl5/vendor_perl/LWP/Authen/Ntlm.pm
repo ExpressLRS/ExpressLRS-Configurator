@@ -2,7 +2,7 @@ package LWP::Authen::Ntlm;
 
 use strict;
 
-our $VERSION = '6.52';
+our $VERSION = '6.77';
 
 use Authen::NTLM "1.02";
 use MIME::Base64 "2.12";
@@ -127,9 +127,9 @@ entirely different interface, it is necessary to ensure that you have the correc
 NTLM module.
 
 In addition, there have been problems with incompatibilities between different
-versions of Mime::Base64, which Bush's Authen::NTLM makes use of.  Therefore, it is
+versions of L<Mime::Base64>, which Bush's L<Authen::NTLM> makes use of.  Therefore, it is
 necessary to ensure that your Mime::Base64 module supports exporting of the
-encode_base64 and decode_base64 functions.
+C<encode_base64> and C<decode_base64> functions.
 
 =head1 USAGE
 
@@ -145,7 +145,7 @@ code prior to attempting to retrieve the URL:
 
 Enable persistent HTTP connections
 
-To do this, pass the "keep_alive=>1" option to the LWP::UserAgent when creating it, like this:
+To do this, pass the C<< "keep_alive=>1" >> option to the L<LWP::UserAgent> when creating it, like this:
 
     my $ua = LWP::UserAgent->new(keep_alive=>1);
 
@@ -157,8 +157,8 @@ The credentials must be set like this:
 
    $ua->credentials('www.company.com:80', '', "MyDomain\\MyUserCode", 'MyPassword');
 
-Note that you cannot use the HTTP::Request object's authorization_basic() method to set
-the credentials.  Note, too, that the 'www.company.com:80' portion only sets credentials
+Note that you cannot use the L<HTTP::Request> object's C<authorization_basic()> method to set
+the credentials.  Note, too, that the C<'www.company.com:80'> portion only sets credentials
 on the specified port AND it is case-sensitive (this is due to the way LWP is coded, and
 has nothing to do with LWP::Authen::Ntlm)
 

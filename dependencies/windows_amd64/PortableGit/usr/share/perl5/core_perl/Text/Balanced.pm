@@ -1,119 +1,138 @@
+# Copyright (C) 1997-2001 Damian Conway.  All rights reserved.
+# Copyright (C) 2009 Adam Kennedy.
+# Copyright (C) 2015, 2022 Steve Hay and other contributors.  All rights
+# reserved.
+
+# This module is free software; you can redistribute it and/or modify it under
+# the same terms as Perl itself, i.e. under the terms of either the GNU General
+# Public License or the Artistic License, as specified in the F<LICENCE> file.
+
 package Text::Balanced;
 
 # EXTRACT VARIOUSLY DELIMITED TEXT SEQUENCES FROM STRINGS.
 # FOR FULL DOCUMENTATION SEE Balanced.pod
 
-use 5.005;
+use 5.008001;
 use strict;
 use Exporter ();
-use SelfLoader;
 
 use vars qw { $VERSION @ISA %EXPORT_TAGS };
 BEGIN {
-	$VERSION     = '2.03';
-	@ISA         = 'Exporter';
-	%EXPORT_TAGS = (
-		ALL => [ qw{
-			&extract_delimited
-			&extract_bracketed
-			&extract_quotelike
-			&extract_codeblock
-			&extract_variable
-			&extract_tagged
-			&extract_multiple
-			&gen_delimited_pat
-			&gen_extract_tagged
-			&delimited_pat
-		} ],
-	);
+    $VERSION     = '2.06';
+    @ISA         = 'Exporter';
+    %EXPORT_TAGS = (
+        ALL => [ qw{
+            &extract_delimited
+            &extract_bracketed
+            &extract_quotelike
+            &extract_codeblock
+            &extract_variable
+            &extract_tagged
+            &extract_multiple
+            &gen_delimited_pat
+            &gen_extract_tagged
+            &delimited_pat
+        } ],
+    );
 }
 
 Exporter::export_ok_tags('ALL');
 
-# PROTOTYPES
+our $RE_PREREGEX_PAT = qr#(
+    [!=]~
+    | split|grep|map
+    | not|and|or|xor
+)#x;
+our $RE_EXPR_PAT = qr#(
+    (?:\*\*|&&|\|\||<<|>>|//|[-+*x%^&|.])=?
+    | /(?:[^/])
+    | =(?!>)
+    | return
+    | [\(\[]
+)#x;
+our $RE_NUM = qr/\s*[+\-.0-9][+\-.0-9e]*/i; # numerical constant
 
-sub _match_bracketed($$$$$$);
-sub _match_variable($$);
-sub _match_codeblock($$$$$$$);
-sub _match_quotelike($$$$);
+our %ref2slashvalid; # is quotelike /.../ pattern valid here for given textref?
+our %ref2qmarkvalid; # is quotelike ?...? pattern valid here for given textref?
 
 # HANDLE RETURN VALUES IN VARIOUS CONTEXTS
 
 sub _failmsg {
-	my ($message, $pos) = @_;
-	$@ = bless {
-		error => $message,
-		pos   => $pos,
-	}, 'Text::Balanced::ErrorMsg';
+    my ($message, $pos) = @_;
+    $@ = bless {
+        error => $message,
+        pos   => $pos,
+    }, 'Text::Balanced::ErrorMsg';
 }
 
 sub _fail {
-	my ($wantarray, $textref, $message, $pos) = @_;
-	_failmsg $message, $pos if $message;
-	return (undef, $$textref, undef) if $wantarray;
-	return undef;
+    my ($wantarray, $textref, $message, $pos) = @_;
+    _failmsg $message, $pos if $message;
+    return (undef, $$textref, undef) if $wantarray;
+    return;
 }
 
 sub _succeed {
-	$@ = undef;
-	my ($wantarray,$textref) = splice @_, 0, 2;
-	my ($extrapos, $extralen) = @_ > 18
-		? splice(@_, -2, 2)
-		: (0, 0);
-	my ($startlen, $oppos) = @_[5,6];
-	my $remainderpos = $_[2];
-	if ( $wantarray ) {
-		my @res;
-		while (my ($from, $len) = splice @_, 0, 2) {
-			push @res, substr($$textref, $from, $len);
-		}
-		if ( $extralen ) { # CORRECT FILLET
-			my $extra = substr($res[0], $extrapos-$oppos, $extralen, "\n");
-			$res[1] = "$extra$res[1]";
-			eval { substr($$textref,$remainderpos,0) = $extra;
-			       substr($$textref,$extrapos,$extralen,"\n")} ;
-				#REARRANGE HERE DOC AND FILLET IF POSSIBLE
-			pos($$textref) = $remainderpos-$extralen+1; # RESET \G
-		} else {
-			pos($$textref) = $remainderpos;		    # RESET \G
-		}
-		return @res;
-	} else {
-		my $match = substr($$textref,$_[0],$_[1]);
-		substr($match,$extrapos-$_[0]-$startlen,$extralen,"") if $extralen;
-		my $extra = $extralen
-			? substr($$textref, $extrapos, $extralen)."\n" : "";
-		eval {substr($$textref,$_[4],$_[1]+$_[5])=$extra} ;	#CHOP OUT PREFIX & MATCH, IF POSSIBLE
-		pos($$textref) = $_[4];				# RESET \G
-		return $match;
-	}
+    $@ = undef;
+    my ($wantarray,$textref) = splice @_, 0, 2;
+    my ($extrapos, $extralen) = @_ > 18
+        ? splice(@_, -2, 2)
+        : (0, 0);
+    my ($startlen, $oppos) = @_[5,6];
+    my $remainderpos = $_[2];
+    if ( $wantarray ) {
+        my @res;
+        while (my ($from, $len) = splice @_, 0, 2) {
+            push @res, substr($$textref, $from, $len);
+        }
+        if ( $extralen ) { # CORRECT FILLET
+            my $extra = substr($res[0], $extrapos-$oppos, $extralen, "\n");
+            $res[1] = "$extra$res[1]";
+            eval { substr($$textref,$remainderpos,0) = $extra;
+                   substr($$textref,$extrapos,$extralen,"\n")} ;
+                    #REARRANGE HERE DOC AND FILLET IF POSSIBLE
+            pos($$textref) = $remainderpos-$extralen+1; # RESET \G
+        } else {
+            pos($$textref) = $remainderpos;             # RESET \G
+        }
+        return @res;
+    } else {
+        my $match = substr($$textref,$_[0],$_[1]);
+        substr($match,$extrapos-$_[0]-$startlen,$extralen,"") if $extralen;
+        my $extra = $extralen
+            ? substr($$textref, $extrapos, $extralen)."\n" : "";
+        eval {substr($$textref,$_[4],$_[1]+$_[5])=$extra} ;     #CHOP OUT PREFIX & MATCH, IF POSSIBLE
+        pos($$textref) = $_[4];                         # RESET \G
+        return $match;
+    }
 }
 
 # BUILD A PATTERN MATCHING A SIMPLE DELIMITED STRING
+## no critic (Subroutines::ProhibitSubroutinePrototypes)
 
 sub gen_delimited_pat($;$)  # ($delimiters;$escapes)
 {
-	my ($dels, $escs) = @_;
-	return "" unless $dels =~ /\S/;
-	$escs = '\\' unless $escs;
-	$escs .= substr($escs,-1) x (length($dels)-length($escs));
-	my @pat = ();
-	my $i;
-	for ($i=0; $i<length $dels; $i++)
-	{
-		my $del = quotemeta substr($dels,$i,1);
-		my $esc = quotemeta substr($escs,$i,1);
-		if ($del eq $esc)
-		{
-			push @pat, "$del(?:[^$del]*(?:(?:$del$del)[^$del]*)*)$del";
-		}
-		else
-		{
-			push @pat, "$del(?:[^$esc$del]*(?:$esc.[^$esc$del]*)*)$del";
-		}
-	}
-	my $pat = join '|', @pat;
-	return "(?:$pat)";
+    my ($dels, $escs) = @_;
+    return "" unless $dels =~ /\S/;
+    $escs = '\\' unless $escs;
+    $escs .= substr($escs,-1) x (length($dels)-length($escs));
+    my @pat = ();
+    my $i;
+    for ($i=0; $i<length $dels; $i++)
+    {
+        my $del = quotemeta substr($dels,$i,1);
+        my $esc = quotemeta substr($escs,$i,1);
+        if ($del eq $esc)
+        {
+            push @pat, "$del(?:[^$del]*(?:(?:$del$del)[^$del]*)*)$del";
+        }
+        else
+        {
+            push @pat, "$del(?:[^$esc$del]*(?:$esc.[^$esc$del]*)*)$del";
+        }
+    }
+    my $pat = join '|', @pat;
+    return "(?:$pat)";
 }
 
 *delimited_pat = \&gen_delimited_pat;
@@ -122,903 +141,940 @@ sub gen_delimited_pat($;$)  # ($delimiters;$escapes)
 
 sub extract_delimited (;$$$$)
 {
-	my $textref = defined $_[0] ? \$_[0] : \$_;
-	my $wantarray = wantarray;
-	my $del  = defined $_[1] ? $_[1] : qq{\'\"\`};
-	my $pre  = defined $_[2] ? $_[2] : '\s*';
-	my $esc  = defined $_[3] ? $_[3] : qq{\\};
-	my $pat = gen_delimited_pat($del, $esc);
-	my $startpos = pos $$textref || 0;
-	return _fail($wantarray, $textref, "Not a delimited pattern", 0)
-		unless $$textref =~ m/\G($pre)($pat)/gc;
-	my $prelen = length($1);
-	my $matchpos = $startpos+$prelen;
-	my $endpos = pos $$textref;
-	return _succeed $wantarray, $textref,
-			$matchpos, $endpos-$matchpos,		# MATCH
-			$endpos,   length($$textref)-$endpos,	# REMAINDER
-			$startpos, $prelen;			# PREFIX
+    my $textref = defined $_[0] ? \$_[0] : \$_;
+    $ref2slashvalid{$textref} = 1, $ref2qmarkvalid{$textref} = 0 if !pos($$textref); # reset
+    my $wantarray = wantarray;
+    my $del  = defined $_[1] ? $_[1] : qq{\'\"\`};
+    my $pre  = defined $_[2] ? $_[2] : '\s*';
+    my $esc  = defined $_[3] ? $_[3] : qq{\\};
+    my $pat = gen_delimited_pat($del, $esc);
+    my $startpos = pos $$textref || 0;
+    return _fail($wantarray, $textref, "Not a delimited pattern", 0)
+        unless $$textref =~ m/\G($pre)($pat)/gc;
+    my $prelen = length($1);
+    my $matchpos = $startpos+$prelen;
+    my $endpos = pos $$textref;
+    return _succeed $wantarray, $textref,
+                    $matchpos, $endpos-$matchpos,               # MATCH
+                    $endpos,   length($$textref)-$endpos,       # REMAINDER
+                    $startpos, $prelen;                         # PREFIX
 }
 
+my %eb_delim_cache;
+sub _eb_delims {
+    my ($ldel_orig) = @_;
+    return @{ $eb_delim_cache{$ldel_orig} } if $eb_delim_cache{$ldel_orig};
+    my $qdel = "";
+    my $quotelike;
+    my $ldel = $ldel_orig;
+    $ldel =~ s/'//g and $qdel .= q{'};
+    $ldel =~ s/"//g and $qdel .= q{"};
+    $ldel =~ s/`//g and $qdel .= q{`};
+    $ldel =~ s/q//g and $quotelike = 1;
+    $ldel =~ tr/[](){}<>\0-\377/[[(({{<</ds;
+    my $rdel = $ldel;
+    return @{ $eb_delim_cache{$ldel_orig} = [] } unless $rdel =~ tr/[({</])}>/;
+    my $posbug = pos;
+    $ldel = join('|', map { quotemeta $_ } split('', $ldel));
+    $rdel = join('|', map { quotemeta $_ } split('', $rdel));
+    pos = $posbug;
+    @{ $eb_delim_cache{$ldel_orig} = [
+        qr/\G($ldel)/, $qdel && qr/\G([$qdel])/, $quotelike, qr/\G($rdel)/
+    ] };
+}
 sub extract_bracketed (;$$$)
 {
-	my $textref = defined $_[0] ? \$_[0] : \$_;
-	my $ldel = defined $_[1] ? $_[1] : '{([<';
-	my $pre  = defined $_[2] ? $_[2] : '\s*';
-	my $wantarray = wantarray;
-	my $qdel = "";
-	my $quotelike;
-	$ldel =~ s/'//g and $qdel .= q{'};
-	$ldel =~ s/"//g and $qdel .= q{"};
-	$ldel =~ s/`//g and $qdel .= q{`};
-	$ldel =~ s/q//g and $quotelike = 1;
-	$ldel =~ tr/[](){}<>\0-\377/[[(({{<</ds;
-	my $rdel = $ldel;
-	unless ($rdel =~ tr/[({</])}>/)
-        {
-		return _fail $wantarray, $textref,
-			     "Did not find a suitable bracket in delimiter: \"$_[1]\"",
-			     0;
-	}
-	my $posbug = pos;
-	$ldel = join('|', map { quotemeta $_ } split('', $ldel));
-	$rdel = join('|', map { quotemeta $_ } split('', $rdel));
-	pos = $posbug;
+    my $textref = defined $_[0] ? \$_[0] : \$_;
+    $ref2slashvalid{$textref} = 1, $ref2qmarkvalid{$textref} = 0 if !pos($$textref); # reset
+    my $ldel = defined $_[1] ? $_[1] : '{([<';
+    my $pre  = defined $_[2] ? qr/\G$_[2]/ : qr/\G\s*/;
+    my $wantarray = wantarray;
+    my @ret = _eb_delims($ldel);
+    unless (@ret)
+    {
+        return _fail $wantarray, $textref,
+                     "Did not find a suitable bracket in delimiter: \"$_[1]\"",
+                     0;
+    }
 
-	my $startpos = pos $$textref || 0;
-	my @match = _match_bracketed($textref,$pre, $ldel, $qdel, $quotelike, $rdel);
+    my $startpos = pos $$textref || 0;
+    my @match = _match_bracketed($textref, $pre, @ret);
 
-	return _fail ($wantarray, $textref) unless @match;
+    return _fail ($wantarray, $textref) unless @match;
 
-	return _succeed ( $wantarray, $textref,
-			  $match[2], $match[5]+2,	# MATCH
-			  @match[8,9],			# REMAINDER
-			  @match[0,1],			# PREFIX
-			);
+    return _succeed ( $wantarray, $textref,
+                      $match[2], $match[5]+2,           # MATCH
+                      @match[8,9],                      # REMAINDER
+                      @match[0,1],                      # PREFIX
+                    );
 }
 
-sub _match_bracketed($$$$$$)	# $textref, $pre, $ldel, $qdel, $quotelike, $rdel
+sub _match_bracketed    # $textref, $pre, $ldel, $qdel, $quotelike, $rdel
 {
-	my ($textref, $pre, $ldel, $qdel, $quotelike, $rdel) = @_;
-	my ($startpos, $ldelpos, $endpos) = (pos $$textref = pos $$textref||0);
-	unless ($$textref =~ m/\G$pre/gc)
-	{
-		_failmsg "Did not find prefix: /$pre/", $startpos;
-		return;
-	}
+    my ($textref, $pre, $ldel, $qdel, $quotelike, $rdel) = @_;
+    my ($startpos, $ldelpos, $endpos) = (pos $$textref = pos $$textref||0);
+    unless ($$textref =~ m/$pre/gc)
+    {
+        _failmsg "Did not find prefix: /$pre/", $startpos;
+        return;
+    }
 
-	$ldelpos = pos $$textref;
+    $ldelpos = pos $$textref;
 
-	unless ($$textref =~ m/\G($ldel)/gc)
-	{
-		_failmsg "Did not find opening bracket after prefix: \"$pre\"",
-		         pos $$textref;
-		pos $$textref = $startpos;
-		return;
-	}
+    unless ($$textref =~ m/$ldel/gc)
+    {
+        _failmsg "Did not find opening bracket after prefix: \"$pre\"",
+                 pos $$textref;
+        pos $$textref = $startpos;
+        return;
+    }
 
-	my @nesting = ( $1 );
-	my $textlen = length $$textref;
-	while (pos $$textref < $textlen)
-	{
-		next if $$textref =~ m/\G\\./gcs;
+    my @nesting = ( $1 );
+    my $textlen = length $$textref;
+    while (pos $$textref < $textlen)
+    {
+        next if $$textref =~ m/\G\\./gcs;
 
-		if ($$textref =~ m/\G($ldel)/gc)
-		{
-			push @nesting, $1;
-		}
-		elsif ($$textref =~ m/\G($rdel)/gc)
-		{
-			my ($found, $brackettype) = ($1, $1);
-			if ($#nesting < 0)
-			{
-				_failmsg "Unmatched closing bracket: \"$found\"",
-					 pos $$textref;
-				pos $$textref = $startpos;
-			        return;
-			}
-			my $expected = pop(@nesting);
-			$expected =~ tr/({[</)}]>/;
-			if ($expected ne $brackettype)
-			{
-				_failmsg qq{Mismatched closing bracket: expected "$expected" but found "$found"},
-					 pos $$textref;
-				pos $$textref = $startpos;
-			        return;
-			}
-			last if $#nesting < 0;
-		}
-		elsif ($qdel && $$textref =~ m/\G([$qdel])/gc)
-		{
-			$$textref =~ m/\G[^\\$1]*(?:\\.[^\\$1]*)*(\Q$1\E)/gsc and next;
-			_failmsg "Unmatched embedded quote ($1)",
-				 pos $$textref;
-			pos $$textref = $startpos;
-			return;
-		}
-		elsif ($quotelike && _match_quotelike($textref,"",1,0))
-		{
-			next;
-		}
+        if ($$textref =~ m/$ldel/gc)
+        {
+            push @nesting, $1;
+        }
+        elsif ($$textref =~ m/$rdel/gc)
+        {
+            my ($found, $brackettype) = ($1, $1);
+            if ($#nesting < 0)
+            {
+                _failmsg "Unmatched closing bracket: \"$found\"",
+                         pos $$textref;
+                pos $$textref = $startpos;
+                return;
+            }
+            my $expected = pop(@nesting);
+            $expected =~ tr/({[</)}]>/;
+            if ($expected ne $brackettype)
+            {
+                _failmsg qq{Mismatched closing bracket: expected "$expected" but found "$found"},
+                         pos $$textref;
+                pos $$textref = $startpos;
+                return;
+            }
+            last if $#nesting < 0;
+        }
+        elsif ($qdel && $$textref =~ m/$qdel/gc)
+        {
+            $$textref =~ m/\G[^\\$1]*(?:\\.[^\\$1]*)*(\Q$1\E)/gsc and next;
+            _failmsg "Unmatched embedded quote ($1)",
+                     pos $$textref;
+            pos $$textref = $startpos;
+            return;
+        }
+        elsif ($quotelike && _match_quotelike($textref,qr/\G()/,$ref2slashvalid{$textref},$ref2qmarkvalid{$textref}))
+        {
+            $ref2slashvalid{$textref} = $ref2qmarkvalid{$textref} = 1; # back-compat
+            next;
+        }
 
-		else { $$textref =~ m/\G(?:[a-zA-Z0-9]+|.)/gcs }
-	}
-	if ($#nesting>=0)
-	{
-		_failmsg "Unmatched opening bracket(s): "
-				. join("..",@nesting)."..",
-		         pos $$textref;
-		pos $$textref = $startpos;
-		return;
-	}
+        else { $$textref =~ m/\G(?:[a-zA-Z0-9]+|.)/gcs }
+    }
+    if ($#nesting>=0)
+    {
+        _failmsg "Unmatched opening bracket(s): "
+                     . join("..",@nesting)."..",
+                 pos $$textref;
+        pos $$textref = $startpos;
+        return;
+    }
 
-	$endpos = pos $$textref;
+    $endpos = pos $$textref;
 
-	return (
-		$startpos,  $ldelpos-$startpos,		# PREFIX
-		$ldelpos,   1,				# OPENING BRACKET
-		$ldelpos+1, $endpos-$ldelpos-2,		# CONTENTS
-		$endpos-1,  1,				# CLOSING BRACKET
-		$endpos,    length($$textref)-$endpos,	# REMAINDER
-	       );
+    return (
+        $startpos,  $ldelpos-$startpos,         # PREFIX
+        $ldelpos,   1,                          # OPENING BRACKET
+        $ldelpos+1, $endpos-$ldelpos-2,         # CONTENTS
+        $endpos-1,  1,                          # CLOSING BRACKET
+        $endpos,    length($$textref)-$endpos,  # REMAINDER
+    );
 }
 
 sub _revbracket($)
 {
-	my $brack = reverse $_[0];
-	$brack =~ tr/[({</])}>/;
-	return $brack;
+    my $brack = reverse $_[0];
+    $brack =~ tr/[({</])}>/;
+    return $brack;
 }
 
 my $XMLNAME = q{[a-zA-Z_:][a-zA-Z0-9_:.-]*};
 
+my $et_default_ldel = '<\w+(?:' . gen_delimited_pat(q{'"}) . '|[^>])*>';
 sub extract_tagged (;$$$$$) # ($text, $opentag, $closetag, $pre, \%options)
 {
-	my $textref = defined $_[0] ? \$_[0] : \$_;
-	my $ldel    = $_[1];
-	my $rdel    = $_[2];
-	my $pre     = defined $_[3] ? $_[3] : '\s*';
-	my %options = defined $_[4] ? %{$_[4]} : ();
-	my $omode   = defined $options{fail} ? $options{fail} : '';
-	my $bad     = ref($options{reject}) eq 'ARRAY' ? join('|', @{$options{reject}})
-		    : defined($options{reject})	       ? $options{reject}
-		    :					 ''
-		    ;
-	my $ignore  = ref($options{ignore}) eq 'ARRAY' ? join('|', @{$options{ignore}})
-		    : defined($options{ignore})	       ? $options{ignore}
-		    :					 ''
-		    ;
+    my $textref = defined $_[0] ? \$_[0] : \$_;
+    $ref2slashvalid{$textref} = 1, $ref2qmarkvalid{$textref} = 0 if !pos($$textref); # reset
+    my $ldel    = $_[1];
+    my $rdel    = $_[2];
+    my $pre     = defined $_[3] ? qr/\G$_[3]/ : qr/\G\s*/;
+    my %options = defined $_[4] ? %{$_[4]} : ();
+    my $omode   = defined $options{fail} ? $options{fail} : '';
+    my $bad     = ref($options{reject}) eq 'ARRAY' ? join('|', @{$options{reject}})
+                : defined($options{reject})        ? $options{reject}
+                :                                    ''
+                ;
+    my $ignore  = ref($options{ignore}) eq 'ARRAY' ? join('|', @{$options{ignore}})
+                : defined($options{ignore})        ? $options{ignore}
+                :                                    ''
+                ;
 
-	if (!defined $ldel) { $ldel = '<\w+(?:' . gen_delimited_pat(q{'"}) . '|[^>])*>'; }
-	$@ = undef;
+    $ldel = $et_default_ldel if !defined $ldel;
+    $@ = undef;
 
-	my @match = _match_tagged($textref, $pre, $ldel, $rdel, $omode, $bad, $ignore);
+    my @match = _match_tagged($textref, $pre, $ldel, $rdel, $omode, $bad, $ignore);
 
-	return _fail(wantarray, $textref) unless @match;
-	return _succeed wantarray, $textref,
-			$match[2], $match[3]+$match[5]+$match[7],	# MATCH
-			@match[8..9,0..1,2..7];				# REM, PRE, BITS
+    return _fail(wantarray, $textref) unless @match;
+    return _succeed wantarray, $textref,
+            $match[2], $match[3]+$match[5]+$match[7],    # MATCH
+            @match[8..9,0..1,2..7];                      # REM, PRE, BITS
 }
 
-sub _match_tagged	# ($$$$$$$)
+sub _match_tagged       # ($$$$$$$)
 {
-	my ($textref, $pre, $ldel, $rdel, $omode, $bad, $ignore) = @_;
-	my $rdelspec;
+    my ($textref, $pre, $ldel, $rdel, $omode, $bad, $ignore) = @_;
+    my $rdelspec;
 
-	my ($startpos, $opentagpos, $textpos, $parapos, $closetagpos, $endpos) = ( pos($$textref) = pos($$textref)||0 );
+    my ($startpos, $opentagpos, $textpos, $parapos, $closetagpos, $endpos) = ( pos($$textref) = pos($$textref)||0 );
 
-	unless ($$textref =~ m/\G($pre)/gc)
-	{
-		_failmsg "Did not find prefix: /$pre/", pos $$textref;
-		goto failed;
-	}
+    unless ($$textref =~ m/$pre/gc)
+    {
+        _failmsg "Did not find prefix: /$pre/", pos $$textref;
+        goto failed;
+    }
 
-	$opentagpos = pos($$textref);
+    $opentagpos = pos($$textref);
 
-	unless ($$textref =~ m/\G$ldel/gc)
-	{
-		_failmsg "Did not find opening tag: /$ldel/", pos $$textref;
-		goto failed;
-	}
+    unless ($$textref =~ m/\G$ldel/gc)
+    {
+        _failmsg "Did not find opening tag: /$ldel/", pos $$textref;
+        goto failed;
+    }
 
-	$textpos = pos($$textref);
+    $textpos = pos($$textref);
 
-	if (!defined $rdel)
-	{
-		$rdelspec = substr($$textref, $-[0], $+[0] - $-[0]);
-		unless ($rdelspec =~ s/\A([[(<{]+)($XMLNAME).*/ quotemeta "$1\/$2". _revbracket($1) /oes)
-		{
-			_failmsg "Unable to construct closing tag to match: $rdel",
-				 pos $$textref;
-			goto failed;
-		}
-	}
-	else
-	{
-		$rdelspec = eval "qq{$rdel}" || do {
-			my $del;
-			for (qw,~ ! ^ & * ) _ + - = } ] : " ; ' > . ? / | ',)
-				{ next if $rdel =~ /\Q$_/; $del = $_; last }
-			unless ($del) {
-				use Carp;
-				croak "Can't interpolate right delimiter $rdel"
-			}
-			eval "qq$del$rdel$del";
-		};
-	}
+    if (!defined $rdel)
+    {
+        $rdelspec = substr($$textref, $-[0], $+[0] - $-[0]);
+        unless ($rdelspec =~ s/\A([[(<{]+)($XMLNAME).*/ quotemeta "$1\/$2". _revbracket($1) /oes)
+        {
+            _failmsg "Unable to construct closing tag to match: $rdel",
+                     pos $$textref;
+            goto failed;
+        }
+    }
+    else
+    {
+        ## no critic (BuiltinFunctions::ProhibitStringyEval)
+        $rdelspec = eval "qq{$rdel}" || do {
+            my $del;
+            for (qw,~ ! ^ & * ) _ + - = } ] : " ; ' > . ? / | ',)
+                { next if $rdel =~ /\Q$_/; $del = $_; last }
+            unless ($del) {
+                use Carp;
+                croak "Can't interpolate right delimiter $rdel"
+            }
+            eval "qq$del$rdel$del";
+        };
+    }
 
-	while (pos($$textref) < length($$textref))
-	{
-		next if $$textref =~ m/\G\\./gc;
+    while (pos($$textref) < length($$textref))
+    {
+        next if $$textref =~ m/\G\\./gc;
 
-		if ($$textref =~ m/\G(\n[ \t]*\n)/gc )
-		{
-			$parapos = pos($$textref) - length($1)
-				unless defined $parapos;
-		}
-		elsif ($$textref =~ m/\G($rdelspec)/gc )
-		{
-			$closetagpos = pos($$textref)-length($1);
-			goto matched;
-		}
-		elsif ($ignore && $$textref =~ m/\G(?:$ignore)/gc)
-		{
-			next;
-		}
-		elsif ($bad && $$textref =~ m/\G($bad)/gcs)
-		{
-			pos($$textref) -= length($1);	# CUT OFF WHATEVER CAUSED THE SHORTNESS
-			goto short if ($omode eq 'PARA' || $omode eq 'MAX');
-			_failmsg "Found invalid nested tag: $1", pos $$textref;
-			goto failed;
-		}
-		elsif ($$textref =~ m/\G($ldel)/gc)
-		{
-			my $tag = $1;
-			pos($$textref) -= length($tag);	# REWIND TO NESTED TAG
-			unless (_match_tagged(@_))	# MATCH NESTED TAG
-			{
-				goto short if $omode eq 'PARA' || $omode eq 'MAX';
-				_failmsg "Found unbalanced nested tag: $tag",
-					 pos $$textref;
-				goto failed;
-			}
-		}
-		else { $$textref =~ m/./gcs }
-	}
+        if ($$textref =~ m/\G(\n[ \t]*\n)/gc )
+        {
+            $parapos = pos($$textref) - length($1)
+                unless defined $parapos;
+        }
+        elsif ($$textref =~ m/\G($rdelspec)/gc )
+        {
+            $closetagpos = pos($$textref)-length($1);
+            goto matched;
+        }
+        elsif ($ignore && $$textref =~ m/\G(?:$ignore)/gc)
+        {
+            next;
+        }
+        elsif ($bad && $$textref =~ m/\G($bad)/gcs)
+        {
+            pos($$textref) -= length($1);       # CUT OFF WHATEVER CAUSED THE SHORTNESS
+            goto short if ($omode eq 'PARA' || $omode eq 'MAX');
+            _failmsg "Found invalid nested tag: $1", pos $$textref;
+            goto failed;
+        }
+        elsif ($$textref =~ m/\G($ldel)/gc)
+        {
+            my $tag = $1;
+            pos($$textref) -= length($tag);     # REWIND TO NESTED TAG
+            unless (_match_tagged(@_))  # MATCH NESTED TAG
+            {
+                goto short if $omode eq 'PARA' || $omode eq 'MAX';
+                _failmsg "Found unbalanced nested tag: $tag",
+                         pos $$textref;
+                goto failed;
+            }
+        }
+        else { $$textref =~ m/./gcs }
+    }
 
 short:
-	$closetagpos = pos($$textref);
-	goto matched if $omode eq 'MAX';
-	goto failed unless $omode eq 'PARA';
+    $closetagpos = pos($$textref);
+    goto matched if $omode eq 'MAX';
+    goto failed unless $omode eq 'PARA';
 
-	if (defined $parapos) { pos($$textref) = $parapos }
-	else		      { $parapos = pos($$textref) }
+    if (defined $parapos) { pos($$textref) = $parapos }
+    else                  { $parapos = pos($$textref) }
 
-	return (
-		$startpos,    $opentagpos-$startpos,		# PREFIX
-		$opentagpos,  $textpos-$opentagpos,		# OPENING TAG
-		$textpos,     $parapos-$textpos,		# TEXT
-		$parapos,     0,				# NO CLOSING TAG
-		$parapos,     length($$textref)-$parapos,	# REMAINDER
-	       );
+    return (
+        $startpos,    $opentagpos-$startpos,            # PREFIX
+        $opentagpos,  $textpos-$opentagpos,             # OPENING TAG
+        $textpos,     $parapos-$textpos,                # TEXT
+        $parapos,     0,                                # NO CLOSING TAG
+        $parapos,     length($$textref)-$parapos,       # REMAINDER
+    );
 
 matched:
-	$endpos = pos($$textref);
-	return (
-		$startpos,    $opentagpos-$startpos,		# PREFIX
-		$opentagpos,  $textpos-$opentagpos,		# OPENING TAG
-		$textpos,     $closetagpos-$textpos,		# TEXT
-		$closetagpos, $endpos-$closetagpos,		# CLOSING TAG
-		$endpos,      length($$textref)-$endpos,	# REMAINDER
-	       );
+    $endpos = pos($$textref);
+    return (
+        $startpos,    $opentagpos-$startpos,            # PREFIX
+        $opentagpos,  $textpos-$opentagpos,             # OPENING TAG
+        $textpos,     $closetagpos-$textpos,            # TEXT
+        $closetagpos, $endpos-$closetagpos,             # CLOSING TAG
+        $endpos,      length($$textref)-$endpos,        # REMAINDER
+    );
 
 failed:
-	_failmsg "Did not find closing tag", pos $$textref unless $@;
-	pos($$textref) = $startpos;
-	return;
+    _failmsg "Did not find closing tag", pos $$textref unless $@;
+    pos($$textref) = $startpos;
+    return;
 }
 
 sub extract_variable (;$$)
 {
-	my $textref = defined $_[0] ? \$_[0] : \$_;
-	return ("","","") unless defined $$textref;
-	my $pre  = defined $_[1] ? $_[1] : '\s*';
+    my $textref = defined $_[0] ? \$_[0] : \$_;
+    return ("","","") unless defined $$textref;
+    $ref2slashvalid{$textref} = 1, $ref2qmarkvalid{$textref} = 0 if !pos($$textref); # reset
+    my $pre  = defined $_[1] ? qr/\G$_[1]/ : qr/\G\s*/;
 
-	my @match = _match_variable($textref,$pre);
+    my @match = _match_variable($textref,$pre);
 
-	return _fail wantarray, $textref unless @match;
+    return _fail wantarray, $textref unless @match;
 
-	return _succeed wantarray, $textref,
-			@match[2..3,4..5,0..1];		# MATCH, REMAINDER, PREFIX
+    return _succeed wantarray, $textref,
+                    @match[2..3,4..5,0..1];        # MATCH, REMAINDER, PREFIX
 }
 
-sub _match_variable($$)
+sub _match_variable
 {
 #  $#
 #  $^
 #  $$
-	my ($textref, $pre) = @_;
-	my $startpos = pos($$textref) = pos($$textref)||0;
-	unless ($$textref =~ m/\G($pre)/gc)
-	{
-		_failmsg "Did not find prefix: /$pre/", pos $$textref;
-		return;
-	}
-	my $varpos = pos($$textref);
-        unless ($$textref =~ m{\G\$\s*(?!::)(\d+|[][&`'+*./|,";%=~:?!\@<>()-]|\^[a-z]?)}gci)
-	{
-	    unless ($$textref =~ m/\G((\$#?|[*\@\%]|\\&)+)/gc)
-	    {
-		_failmsg "Did not find leading dereferencer", pos $$textref;
-		pos $$textref = $startpos;
-		return;
-	    }
-	    my $deref = $1;
+    my ($textref, $pre) = @_;
+    my $startpos = pos($$textref) = pos($$textref)||0;
+    unless ($$textref =~ m/$pre/gc)
+    {
+        _failmsg "Did not find prefix: /$pre/", pos $$textref;
+        return;
+    }
+    my $varpos = pos($$textref);
+    unless ($$textref =~ m{\G\$\s*(?!::)(\d+|[][&`'+*./|,";%=~:?!\@<>()-]|\^[a-z]?)}gci)
+    {
+        unless ($$textref =~ m/\G((\$#?|[*\@\%]|\\&)+)/gc)
+        {
+            _failmsg "Did not find leading dereferencer", pos $$textref;
+            pos $$textref = $startpos;
+            return;
+        }
+        my $deref = $1;
 
-	    unless ($$textref =~ m/\G\s*(?:::|')?(?:[_a-z]\w*(?:::|'))*[_a-z]\w*/gci
-	    	or _match_codeblock($textref, "", '\{', '\}', '\{', '\}', 0)
-		or $deref eq '$#' or $deref eq '$$' )
-	    {
-		_failmsg "Bad identifier after dereferencer", pos $$textref;
-		pos $$textref = $startpos;
-		return;
-	    }
-	}
+        unless ($$textref =~ m/\G\s*(?:::|')?(?:[_a-z]\w*(?:::|'))*[_a-z]\w*/gci
+            or _match_codeblock($textref, qr/\G()/, '\{', qr/\G\s*(\})/, '\{', '\}', 0, 1)
+            or $deref eq '$#' or $deref eq '$$'
+            or pos($$textref) == length $$textref )
+        {
+            _failmsg "Bad identifier after dereferencer", pos $$textref;
+            pos $$textref = $startpos;
+            return;
+        }
+    }
 
-	while (1)
-	{
-		next if $$textref =~ m/\G\s*(?:->)?\s*[{]\w+[}]/gc;
-		next if _match_codeblock($textref,
-					 qr/\s*->\s*(?:[_a-zA-Z]\w+\s*)?/,
-					 qr/[({[]/, qr/[)}\]]/,
-					 qr/[({[]/, qr/[)}\]]/, 0);
-		next if _match_codeblock($textref,
-					 qr/\s*/, qr/[{[]/, qr/[}\]]/,
-					 qr/[{[]/, qr/[}\]]/, 0);
-		next if _match_variable($textref,'\s*->\s*');
-		next if $$textref =~ m/\G\s*->\s*\w+(?![{([])/gc;
-		last;
-	}
+    while (1)
+    {
+        next if $$textref =~ m/\G\s*(?:->)?\s*[{]\w+[}]/gc;
+        next if _match_codeblock($textref,
+                                 qr/\G\s*->\s*(?:[_a-zA-Z]\w+\s*)?/,
+                                 qr/[({[]/, qr/\G\s*([)}\]])/,
+                                 qr/[({[]/, qr/[)}\]]/, 0, 1);
+        next if _match_codeblock($textref,
+                                 qr/\G\s*/, qr/[{[]/, qr/\G\s*([}\]])/,
+                                 qr/[{[]/, qr/[}\]]/, 0, 1);
+        next if _match_variable($textref,qr/\G\s*->\s*/);
+        next if $$textref =~ m/\G\s*->\s*\w+(?![{([])/gc;
+        last;
+    }
+    $ref2slashvalid{$textref} = $ref2qmarkvalid{$textref} = 0;
 
-	my $endpos = pos($$textref);
-	return ($startpos, $varpos-$startpos,
-		$varpos,   $endpos-$varpos,
-		$endpos,   length($$textref)-$endpos
-		);
+    my $endpos = pos($$textref);
+    return ($startpos, $varpos-$startpos,
+            $varpos,   $endpos-$varpos,
+            $endpos,   length($$textref)-$endpos
+    );
 }
 
+my %ec_delim_cache;
+sub _ec_delims {
+    my ($ldel_inner, $ldel_outer) = @_;
+    return @{ $ec_delim_cache{$ldel_outer}{$ldel_inner} }
+        if $ec_delim_cache{$ldel_outer}{$ldel_inner};
+    my $rdel_inner = $ldel_inner;
+    my $rdel_outer = $ldel_outer;
+    my $posbug = pos;
+    for ($ldel_inner, $ldel_outer) { tr/[]()<>{}\0-\377/[[((<<{{/ds }
+    for ($rdel_inner, $rdel_outer) { tr/[]()<>{}\0-\377/]]))>>}}/ds }
+    for ($ldel_inner, $ldel_outer, $rdel_inner, $rdel_outer)
+    {
+        $_ = '('.join('|',map { quotemeta $_ } split('',$_)).')'
+    }
+    pos = $posbug;
+    @{ $ec_delim_cache{$ldel_outer}{$ldel_inner} = [
+        $ldel_outer, qr/\G\s*($rdel_outer)/, $ldel_inner, $rdel_inner
+    ] };
+}
 sub extract_codeblock (;$$$$$)
 {
-	my $textref = defined $_[0] ? \$_[0] : \$_;
-	my $wantarray = wantarray;
-	my $ldel_inner = defined $_[1] ? $_[1] : '{';
-	my $pre        = defined $_[2] ? $_[2] : '\s*';
-	my $ldel_outer = defined $_[3] ? $_[3] : $ldel_inner;
-	my $rd         = $_[4];
-	my $rdel_inner = $ldel_inner;
-	my $rdel_outer = $ldel_outer;
-	my $posbug = pos;
-	for ($ldel_inner, $ldel_outer) { tr/[]()<>{}\0-\377/[[((<<{{/ds }
-	for ($rdel_inner, $rdel_outer) { tr/[]()<>{}\0-\377/]]))>>}}/ds }
-	for ($ldel_inner, $ldel_outer, $rdel_inner, $rdel_outer)
-	{
-		$_ = '('.join('|',map { quotemeta $_ } split('',$_)).')'
-	}
-	pos = $posbug;
+    my $textref = defined $_[0] ? \$_[0] : \$_;
+    $ref2slashvalid{$textref} = 1, $ref2qmarkvalid{$textref} = 0 if !pos($$textref); # reset
+    my $wantarray = wantarray;
+    my $ldel_inner = defined $_[1] ? $_[1] : '{';
+    my $pre = !defined $_[2] ? qr/\G\s*/ : qr/\G$_[2]/;
+    my $ldel_outer = defined $_[3] ? $_[3] : $ldel_inner;
+    my $rd         = $_[4];
+    my @delims = _ec_delims($ldel_inner, $ldel_outer);
 
-	my @match = _match_codeblock($textref, $pre,
-				     $ldel_outer, $rdel_outer,
-				     $ldel_inner, $rdel_inner,
-				     $rd);
-	return _fail($wantarray, $textref) unless @match;
-	return _succeed($wantarray, $textref,
-			@match[2..3,4..5,0..1]	# MATCH, REMAINDER, PREFIX
-		       );
-
+    my @match = _match_codeblock($textref, $pre, @delims, $rd, 1);
+    return _fail($wantarray, $textref) unless @match;
+    return _succeed($wantarray, $textref,
+                    @match[2..3,4..5,0..1]    # MATCH, REMAINDER, PREFIX
+    );
 }
 
-sub _match_codeblock($$$$$$$)
+sub _match_codeblock
 {
-	my ($textref, $pre, $ldel_outer, $rdel_outer, $ldel_inner, $rdel_inner, $rd) = @_;
-	my $startpos = pos($$textref) = pos($$textref) || 0;
-	unless ($$textref =~ m/\G($pre)/gc)
-	{
-		_failmsg qq{Did not match prefix /$pre/ at"} .
-			    substr($$textref,pos($$textref),20) .
-			    q{..."},
-		         pos $$textref;
-		return;
-	}
-	my $codepos = pos($$textref);
-	unless ($$textref =~ m/\G($ldel_outer)/gc)	# OUTERMOST DELIMITER
-	{
-		_failmsg qq{Did not find expected opening bracket at "} .
-			     substr($$textref,pos($$textref),20) .
-			     q{..."},
-		         pos $$textref;
-		pos $$textref = $startpos;
-		return;
-	}
-	my $closing = $1;
-	   $closing =~ tr/([<{/)]>}/;
-	my $matched;
-	my $patvalid = 1;
-	while (pos($$textref) < length($$textref))
-	{
-		$matched = '';
-		if ($rd && $$textref =~ m#\G(\Q(?)\E|\Q(s?)\E|\Q(s)\E)#gc)
-		{
-			$patvalid = 0;
-			next;
-		}
+    my ($textref, $pre, $ldel_outer, $rdel_outer, $ldel_inner, $rdel_inner, $rd, $no_backcompat) = @_;
+    $rdel_outer = qr/\G\s*($rdel_outer)/ if !$no_backcompat; # Switch calls this func directly
+    my $startpos = pos($$textref) = pos($$textref) || 0;
+    unless ($$textref =~ m/$pre/gc)
+    {
+        _failmsg qq{Did not match prefix /$pre/ at"} .
+                     substr($$textref,pos($$textref),20) .
+                     q{..."},
+                 pos $$textref;
+        return;
+    }
+    my $codepos = pos($$textref);
+    unless ($$textref =~ m/\G($ldel_outer)/gc)  # OUTERMOST DELIMITER
+    {
+        _failmsg qq{Did not find expected opening bracket at "} .
+                     substr($$textref,pos($$textref),20) .
+                     q{..."},
+                 pos $$textref;
+        pos $$textref = $startpos;
+        return;
+    }
+    my $closing = $1;
+       $closing =~ tr/([<{/)]>}/;
+    my $matched;
+    $ref2slashvalid{$textref} = 1, $ref2qmarkvalid{$textref} = 0
+      if !pos($$textref) or !defined $ref2slashvalid{$textref}; # default, or reset
+    while (pos($$textref) < length($$textref))
+    {
+        if ($rd && $$textref =~ m#\G(\Q(?)\E|\Q(s?)\E|\Q(s)\E)#gc)
+        {
+            $ref2slashvalid{$textref} = $ref2qmarkvalid{$textref} = 0;
+            next;
+        }
 
-		if ($$textref =~ m/\G\s*#.*/gc)
-		{
-			next;
-		}
+        if ($$textref =~ m/\G\s*#.*/gc)
+        {
+            next;
+        }
 
-		if ($$textref =~ m/\G\s*($rdel_outer)/gc)
-		{
-			unless ($matched = ($closing && $1 eq $closing) )
-			{
-				next if $1 eq '>';	# MIGHT BE A "LESS THAN"
-				_failmsg q{Mismatched closing bracket at "} .
-					     substr($$textref,pos($$textref),20) .
-					     qq{...". Expected '$closing'},
-					 pos $$textref;
-			}
-			last;
-		}
+        if ($$textref =~ m/$rdel_outer/gc)
+        {
+            unless ($matched = ($closing && $1 eq $closing) )
+            {
+                next if $1 eq '>';      # MIGHT BE A "LESS THAN"
+                _failmsg q{Mismatched closing bracket at "} .
+                             substr($$textref,pos($$textref),20) .
+                             qq{...". Expected '$closing'},
+                         pos $$textref;
+            }
+            last;
+        }
 
-		if (_match_variable($textref,'\s*') ||
-		    _match_quotelike($textref,'\s*',$patvalid,$patvalid) )
-		{
-			$patvalid = 0;
-			next;
-		}
+        if (_match_variable($textref,qr/\G\s*/) ||
+            _match_quotelike($textref,qr/\G\s*/,$ref2slashvalid{$textref},$ref2qmarkvalid{$textref}) )
+        {
+            $ref2slashvalid{$textref} = $ref2qmarkvalid{$textref} = 0;
+            next;
+        }
 
+        if ($$textref =~ m#\G\s*(?!$ldel_inner)(?:$RE_PREREGEX_PAT|$RE_EXPR_PAT)#gc)
+        {
+            $ref2slashvalid{$textref} = $ref2qmarkvalid{$textref} = 1;
+            next;
+        }
 
-		# NEED TO COVER MANY MORE CASES HERE!!!
-		if ($$textref =~ m#\G\s*(?!$ldel_inner)
-					( [-+*x/%^&|.]=?
-					| [!=]~
-					| =(?!>)
-					| (\*\*|&&|\|\||<<|>>)=?
-					| split|grep|map|return
-					| [([]
-					)#gcx)
-		{
-			$patvalid = 1;
-			next;
-		}
+        if ( _match_codeblock($textref, qr/\G\s*/, $ldel_inner, qr/\G\s*($rdel_inner)/, $ldel_inner, $rdel_inner, $rd, 1) )
+        {
+            $ref2slashvalid{$textref} = $ref2qmarkvalid{$textref} = 1;
+            next;
+        }
 
-		if ( _match_codeblock($textref, '\s*', $ldel_inner, $rdel_inner, $ldel_inner, $rdel_inner, $rd) )
-		{
-			$patvalid = 1;
-			next;
-		}
+        if ($$textref =~ m/\G\s*$ldel_outer/gc)
+        {
+            _failmsg q{Improperly nested codeblock at "} .
+                         substr($$textref,pos($$textref),20) .
+                         q{..."},
+                     pos $$textref;
+            last;
+        }
 
-		if ($$textref =~ m/\G\s*$ldel_outer/gc)
-		{
-			_failmsg q{Improperly nested codeblock at "} .
-				     substr($$textref,pos($$textref),20) .
-				     q{..."},
-				 pos $$textref;
-			last;
-		}
+        $ref2slashvalid{$textref} = $ref2qmarkvalid{$textref} = 0;
+        $$textref =~ m/\G\s*(\w+|[-=>]>|.|\Z)/gc;
+    }
+    continue { $@ = undef }
 
-		$patvalid = 0;
-		$$textref =~ m/\G\s*(\w+|[-=>]>|.|\Z)/gc;
-	}
-	continue { $@ = undef }
+    unless ($matched)
+    {
+        _failmsg 'No match found for opening bracket', pos $$textref
+                unless $@;
+        return;
+    }
 
-	unless ($matched)
-	{
-		_failmsg 'No match found for opening bracket', pos $$textref
-			unless $@;
-		return;
-	}
-
-	my $endpos = pos($$textref);
-	return ( $startpos, $codepos-$startpos,
-		 $codepos, $endpos-$codepos,
-		 $endpos,  length($$textref)-$endpos,
-	       );
+    $ref2slashvalid{$textref} = $ref2qmarkvalid{$textref} = undef;
+    my $endpos = pos($$textref);
+    return ( $startpos, $codepos-$startpos,
+             $codepos, $endpos-$codepos,
+             $endpos,  length($$textref)-$endpos,
+    );
 }
 
 
 my %mods   = (
-		'none'	=> '[cgimsox]*',
-		'm'	=> '[cgimsox]*',
-		's'	=> '[cegimsox]*',
-		'tr'	=> '[cds]*',
-		'y'	=> '[cds]*',
-		'qq'	=> '',
-		'qx'	=> '',
-		'qw'	=> '',
-		'qr'	=> '[imsx]*',
-		'q'	=> '',
-	     );
+    'none' => '[cgimsox]*',
+    'm'    => '[cgimsox]*',
+    's'    => '[cegimsox]*',
+    'tr'   => '[cds]*',
+    'y'    => '[cds]*',
+    'qq'   => '',
+    'qx'   => '',
+    'qw'   => '',
+    'qr'   => '[imsx]*',
+    'q'    => '',
+);
 
 sub extract_quotelike (;$$)
 {
-	my $textref = $_[0] ? \$_[0] : \$_;
-	my $wantarray = wantarray;
-	my $pre  = defined $_[1] ? $_[1] : '\s*';
+    my $textref = $_[0] ? \$_[0] : \$_;
+    $ref2slashvalid{$textref} = 1, $ref2qmarkvalid{$textref} = 0 if !pos($$textref); # reset
+    my $wantarray = wantarray;
+    my $pre  = defined $_[1] ? qr/\G$_[1]/ : qr/\G\s*/;
 
-	my @match = _match_quotelike($textref,$pre,1,0);
-	return _fail($wantarray, $textref) unless @match;
-	return _succeed($wantarray, $textref,
-			$match[2], $match[18]-$match[2],	# MATCH
-			@match[18,19],				# REMAINDER
-			@match[0,1],				# PREFIX
-			@match[2..17],				# THE BITS
-			@match[20,21],				# ANY FILLET?
-		       );
+    my @match = _match_quotelike($textref,$pre,$ref2slashvalid{$textref},$ref2qmarkvalid{$textref});
+    return _fail($wantarray, $textref) unless @match;
+    return _succeed($wantarray, $textref,
+                    $match[2], $match[18]-$match[2],    # MATCH
+                    @match[18,19],                      # REMAINDER
+                    @match[0,1],                        # PREFIX
+                    @match[2..17],                      # THE BITS
+                    @match[20,21],                      # ANY FILLET?
+    );
 };
 
-sub _match_quotelike($$$$)	# ($textref, $prepat, $allow_raw_match)
+my %maybe_quote = map +($_=>1), qw(" ' `);
+sub _match_quotelike
 {
-	my ($textref, $pre, $rawmatch, $qmark) = @_;
+    my ($textref, $pre, $allow_slash_match, $allow_qmark_match) = @_;
+    $ref2slashvalid{$textref} = 1, $ref2qmarkvalid{$textref} = 0
+      if !pos($$textref) or !defined $ref2slashvalid{$textref}; # default, or reset
 
-	my ($textlen,$startpos,
-	    $oppos,
-	    $preld1pos,$ld1pos,$str1pos,$rd1pos,
-	    $preld2pos,$ld2pos,$str2pos,$rd2pos,
-	    $modpos) = ( length($$textref), pos($$textref) = pos($$textref) || 0 );
+    my ($textlen,$startpos,
+        $preld1pos,$ld1pos,$str1pos,$rd1pos,
+        $preld2pos,$ld2pos,$str2pos,$rd2pos,
+        $modpos) = ( length($$textref), pos($$textref) = pos($$textref) || 0 );
 
-	unless ($$textref =~ m/\G($pre)/gc)
-	{
-		_failmsg qq{Did not find prefix /$pre/ at "} .
-			     substr($$textref, pos($$textref), 20) .
-			     q{..."},
-		         pos $$textref;
-		return;
-	}
-	$oppos = pos($$textref);
+    unless ($$textref =~ m/$pre/gc)
+    {
+        _failmsg qq{Did not find prefix /$pre/ at "} .
+                     substr($$textref, pos($$textref), 20) .
+                     q{..."},
+                 pos $$textref;
+        return;
+    }
+    my $oppos = pos($$textref);
+    my $initial = substr($$textref,$oppos,1);
+    if ($initial && $maybe_quote{$initial}
+                 || $allow_slash_match && $initial eq '/'
+                 || $allow_qmark_match && $initial eq '?')
+    {
+        unless ($$textref =~ m/\G \Q$initial\E [^\\$initial]* (\\.[^\\$initial]*)* \Q$initial\E /gcsx)
+        {
+            _failmsg qq{Did not find closing delimiter to match '$initial' at "} .
+                         substr($$textref, $oppos, 20) .
+                         q{..."},
+                     pos $$textref;
+            pos $$textref = $startpos;
+            return;
+        }
+        $modpos= pos($$textref);
+        $rd1pos = $modpos-1;
 
-	my $initial = substr($$textref,$oppos,1);
+        if ($initial eq '/' || $initial eq '?')
+        {
+            $$textref =~ m/\G$mods{none}/gc
+        }
 
-	if ($initial && $initial =~ m|^[\"\'\`]|
-		     || $rawmatch && $initial =~ m|^/|
-		     || $qmark && $initial =~ m|^\?|)
-	{
-		unless ($$textref =~ m/ \Q$initial\E [^\\$initial]* (\\.[^\\$initial]*)* \Q$initial\E /gcsx)
-		{
-			_failmsg qq{Did not find closing delimiter to match '$initial' at "} .
-				     substr($$textref, $oppos, 20) .
-				     q{..."},
-				 pos $$textref;
-			pos $$textref = $startpos;
-			return;
-		}
-		$modpos= pos($$textref);
-		$rd1pos = $modpos-1;
+        my $endpos = pos($$textref);
+        $ref2qmarkvalid{$textref} = $ref2slashvalid{$textref} = 0;
+        return (
+            $startpos,  $oppos-$startpos,       # PREFIX
+            $oppos,     0,                      # NO OPERATOR
+            $oppos,     1,                      # LEFT DEL
+            $oppos+1,   $rd1pos-$oppos-1,       # STR/PAT
+            $rd1pos,    1,                      # RIGHT DEL
+            $modpos,    0,                      # NO 2ND LDEL
+            $modpos,    0,                      # NO 2ND STR
+            $modpos,    0,                      # NO 2ND RDEL
+            $modpos,    $endpos-$modpos,        # MODIFIERS
+            $endpos,    $textlen-$endpos,       # REMAINDER
+        );
+    }
 
-		if ($initial eq '/' || $initial eq '?')
-		{
-			$$textref =~ m/\G$mods{none}/gc
-		}
+    unless ($$textref =~ m{\G(\b(?:m|s|qq|qx|qw|q|qr|tr|y)\b(?=\s*\S)|<<(?=[a-zA-Z]|\s*['"`;,]))}gc)
+    {
+        _failmsg q{No quotelike operator found after prefix at "} .
+                     substr($$textref, pos($$textref), 20) .
+                     q{..."},
+                 pos $$textref;
+        pos $$textref = $startpos;
+        return;
+    }
 
-		my $endpos = pos($$textref);
-		return (
-			$startpos,	$oppos-$startpos,	# PREFIX
-			$oppos,		0,			# NO OPERATOR
-			$oppos,		1,			# LEFT DEL
-			$oppos+1,	$rd1pos-$oppos-1,	# STR/PAT
-			$rd1pos,	1,			# RIGHT DEL
-			$modpos,	0,			# NO 2ND LDEL
-			$modpos,	0,			# NO 2ND STR
-			$modpos,	0,			# NO 2ND RDEL
-			$modpos,	$endpos-$modpos,	# MODIFIERS
-			$endpos, 	$textlen-$endpos,	# REMAINDER
-		       );
-	}
-
-	unless ($$textref =~ m{\G(\b(?:m|s|qq|qx|qw|q|qr|tr|y)\b(?=\s*\S)|<<)}gc)
-	{
-		_failmsg q{No quotelike operator found after prefix at "} .
-			     substr($$textref, pos($$textref), 20) .
-			     q{..."},
-		         pos $$textref;
-		pos $$textref = $startpos;
-		return;
-	}
-
-	my $op = $1;
-	$preld1pos = pos($$textref);
-	if ($op eq '<<') {
-		$ld1pos = pos($$textref);
-		my $label;
-		if ($$textref =~ m{\G([A-Za-z_]\w*)}gc) {
-			$label = $1;
-		}
-		elsif ($$textref =~ m{ \G ' ([^'\\]* (?:\\.[^'\\]*)*) '
-				     | \G " ([^"\\]* (?:\\.[^"\\]*)*) "
-				     | \G ` ([^`\\]* (?:\\.[^`\\]*)*) `
-				     }gcsx) {
-			$label = $+;
-		}
-		else {
-			$label = "";
-		}
-		my $extrapos = pos($$textref);
-		$$textref =~ m{.*\n}gc;
-		$str1pos = pos($$textref)--;
-		unless ($$textref =~ m{.*?\n(?=\Q$label\E\n)}gc) {
-			_failmsg qq{Missing here doc terminator ('$label') after "} .
-				     substr($$textref, $startpos, 20) .
-				     q{..."},
-				 pos $$textref;
-			pos $$textref = $startpos;
-			return;
-		}
-		$rd1pos = pos($$textref);
+    my $op = $1;
+    $preld1pos = pos($$textref);
+    if ($op eq '<<') {
+        $ld1pos = pos($$textref);
+        my $label;
+        if ($$textref =~ m{\G([A-Za-z_]\w*)}gc) {
+            $label = $1;
+        }
+        elsif ($$textref =~ m{ \G ' ([^'\\]* (?:\\.[^'\\]*)*) '
+                             | \G " ([^"\\]* (?:\\.[^"\\]*)*) "
+                             | \G ` ([^`\\]* (?:\\.[^`\\]*)*) `
+                             }gcsx) {
+            $label = $+;
+        }
+        else {
+            $label = "";
+        }
+        my $extrapos = pos($$textref);
+        $$textref =~ m{.*\n}gc;
+        $str1pos = pos($$textref)--;
+        unless ($$textref =~ m{.*?\n(?=\Q$label\E\n)}gc) {
+            _failmsg qq{Missing here doc terminator ('$label') after "} .
+                         substr($$textref, $startpos, 20) .
+                         q{..."},
+                     pos $$textref;
+            pos $$textref = $startpos;
+            return;
+        }
+        $rd1pos = pos($$textref);
         $$textref =~ m{\Q$label\E\n}gc;
-		$ld2pos = pos($$textref);
-		return (
-			$startpos,	$oppos-$startpos,	# PREFIX
-			$oppos,		length($op),		# OPERATOR
-			$ld1pos,	$extrapos-$ld1pos,	# LEFT DEL
-			$str1pos,	$rd1pos-$str1pos,	# STR/PAT
-			$rd1pos,	$ld2pos-$rd1pos,	# RIGHT DEL
-			$ld2pos,	0,			# NO 2ND LDEL
-			$ld2pos,	0,                	# NO 2ND STR
-			$ld2pos,	0,	                # NO 2ND RDEL
-			$ld2pos,	0,                      # NO MODIFIERS
-			$ld2pos,	$textlen-$ld2pos,	# REMAINDER
-			$extrapos,      $str1pos-$extrapos,	# FILLETED BIT
-		       );
-	}
+        $ld2pos = pos($$textref);
+        $ref2qmarkvalid{$textref} = $ref2slashvalid{$textref} = 0;
+        return (
+            $startpos,  $oppos-$startpos,       # PREFIX
+            $oppos,     length($op),            # OPERATOR
+            $ld1pos,    $extrapos-$ld1pos,      # LEFT DEL
+            $str1pos,   $rd1pos-$str1pos,       # STR/PAT
+            $rd1pos,    $ld2pos-$rd1pos,        # RIGHT DEL
+            $ld2pos,    0,                      # NO 2ND LDEL
+            $ld2pos,    0,                      # NO 2ND STR
+            $ld2pos,    0,                      # NO 2ND RDEL
+            $ld2pos,    0,                      # NO MODIFIERS
+            $ld2pos,    $textlen-$ld2pos,       # REMAINDER
+            $extrapos,  $str1pos-$extrapos,     # FILLETED BIT
+        );
+    }
 
-	$$textref =~ m/\G\s*/gc;
-	$ld1pos = pos($$textref);
-	$str1pos = $ld1pos+1;
+    $$textref =~ m/\G\s*/gc;
+    $ld1pos = pos($$textref);
+    $str1pos = $ld1pos+1;
 
-	unless ($$textref =~ m/\G(\S)/gc)	# SHOULD USE LOOKAHEAD
-	{
-		_failmsg "No block delimiter found after quotelike $op",
-		         pos $$textref;
-		pos $$textref = $startpos;
-		return;
-	}
-	pos($$textref) = $ld1pos;	# HAVE TO DO THIS BECAUSE LOOKAHEAD BROKEN
-	my ($ldel1, $rdel1) = ("\Q$1","\Q$1");
-	if ($ldel1 =~ /[[(<{]/)
-	{
-		$rdel1 =~ tr/[({</])}>/;
-		defined(_match_bracketed($textref,"",$ldel1,"","",$rdel1))
-		|| do { pos $$textref = $startpos; return };
+    if ($$textref !~ m/\G(\S)/gc)   # SHOULD USE LOOKAHEAD
+    {
+        _failmsg "No block delimiter found after quotelike $op",
+                 pos $$textref;
+        pos $$textref = $startpos;
+        return;
+    }
+    elsif (substr($$textref, $ld1pos, 2) eq '=>')
+    {
+        _failmsg "quotelike $op was actually quoted by '=>'",
+                 pos $$textref;
+        pos $$textref = $startpos;
+        return;
+    }
+    pos($$textref) = $ld1pos;   # HAVE TO DO THIS BECAUSE LOOKAHEAD BROKEN
+    my ($ldel1, $rdel1) = ("\Q$1","\Q$1");
+    if ($ldel1 =~ /[[(<{]/)
+    {
+        $rdel1 =~ tr/[({</])}>/;
+        defined(_match_bracketed($textref,qr/\G/,qr/\G($ldel1)/,"","",qr/\G($rdel1)/))
+            || do { pos $$textref = $startpos; return };
         $ld2pos = pos($$textref);
         $rd1pos = $ld2pos-1;
-	}
-	else
-	{
-		$$textref =~ /\G$ldel1[^\\$ldel1]*(\\.[^\\$ldel1]*)*$ldel1/gcs
-		|| do { pos $$textref = $startpos; return };
+    }
+    else
+    {
+        $$textref =~ /\G$ldel1[^\\$ldel1]*(\\.[^\\$ldel1]*)*$ldel1/gcs
+            || do { pos $$textref = $startpos; return };
         $ld2pos = $rd1pos = pos($$textref)-1;
-	}
+    }
 
-	my $second_arg = $op =~ /s|tr|y/ ? 1 : 0;
-	if ($second_arg)
-	{
-		my ($ldel2, $rdel2);
-		if ($ldel1 =~ /[[(<{]/)
-		{
-			unless ($$textref =~ /\G\s*(\S)/gc)	# SHOULD USE LOOKAHEAD
-			{
-				_failmsg "Missing second block for quotelike $op",
-					 pos $$textref;
-				pos $$textref = $startpos;
-				return;
-			}
-			$ldel2 = $rdel2 = "\Q$1";
-			$rdel2 =~ tr/[({</])}>/;
-		}
-		else
-		{
-			$ldel2 = $rdel2 = $ldel1;
-		}
-		$str2pos = $ld2pos+1;
+    my $second_arg = $op =~ /s|tr|y/ ? 1 : 0;
+    if ($second_arg)
+    {
+        my ($ldel2, $rdel2);
+        if ($ldel1 =~ /[[(<{]/)
+        {
+            unless ($$textref =~ /\G\s*(\S)/gc) # SHOULD USE LOOKAHEAD
+            {
+                _failmsg "Missing second block for quotelike $op",
+                         pos $$textref;
+                pos $$textref = $startpos;
+                return;
+            }
+            $ldel2 = $rdel2 = "\Q$1";
+            $rdel2 =~ tr/[({</])}>/;
+        }
+        else
+        {
+            $ldel2 = $rdel2 = $ldel1;
+        }
+        $str2pos = $ld2pos+1;
 
-		if ($ldel2 =~ /[[(<{]/)
-		{
-			pos($$textref)--;	# OVERCOME BROKEN LOOKAHEAD
-			defined(_match_bracketed($textref,"",$ldel2,"","",$rdel2))
-			|| do { pos $$textref = $startpos; return };
-		}
-		else
-		{
-			$$textref =~ /[^\\$ldel2]*(\\.[^\\$ldel2]*)*$ldel2/gcs
-			|| do { pos $$textref = $startpos; return };
-		}
-		$rd2pos = pos($$textref)-1;
-	}
-	else
-	{
-		$ld2pos = $str2pos = $rd2pos = $rd1pos;
-	}
+        if ($ldel2 =~ /[[(<{]/)
+        {
+            pos($$textref)--;   # OVERCOME BROKEN LOOKAHEAD
+            defined(_match_bracketed($textref,qr/\G/,qr/\G($ldel2)/,"","",qr/\G($rdel2)/))
+                || do { pos $$textref = $startpos; return };
+        }
+        else
+        {
+            $$textref =~ /[^\\$ldel2]*(\\.[^\\$ldel2]*)*$ldel2/gcs
+                || do { pos $$textref = $startpos; return };
+        }
+        $rd2pos = pos($$textref)-1;
+    }
+    else
+    {
+        $ld2pos = $str2pos = $rd2pos = $rd1pos;
+    }
 
-	$modpos = pos $$textref;
+    $modpos = pos $$textref;
 
-	$$textref =~ m/\G($mods{$op})/gc;
-	my $endpos = pos $$textref;
+    $$textref =~ m/\G($mods{$op})/gc;
+    my $endpos = pos $$textref;
+    $ref2qmarkvalid{$textref} = $ref2slashvalid{$textref} = undef;
 
-	return (
-		$startpos,	$oppos-$startpos,	# PREFIX
-		$oppos,		length($op),		# OPERATOR
-		$ld1pos,	1,			# LEFT DEL
-		$str1pos,	$rd1pos-$str1pos,	# STR/PAT
-		$rd1pos,	1,			# RIGHT DEL
-		$ld2pos,	$second_arg,		# 2ND LDEL (MAYBE)
-		$str2pos,	$rd2pos-$str2pos,	# 2ND STR (MAYBE)
-		$rd2pos,	$second_arg,		# 2ND RDEL (MAYBE)
-		$modpos,	$endpos-$modpos,	# MODIFIERS
-		$endpos,	$textlen-$endpos,	# REMAINDER
-	       );
+    return (
+        $startpos,      $oppos-$startpos,       # PREFIX
+        $oppos,         length($op),            # OPERATOR
+        $ld1pos,        1,                      # LEFT DEL
+        $str1pos,       $rd1pos-$str1pos,       # STR/PAT
+        $rd1pos,        1,                      # RIGHT DEL
+        $ld2pos,        $second_arg,            # 2ND LDEL (MAYBE)
+        $str2pos,       $rd2pos-$str2pos,       # 2ND STR (MAYBE)
+        $rd2pos,        $second_arg,            # 2ND RDEL (MAYBE)
+        $modpos,        $endpos-$modpos,        # MODIFIERS
+        $endpos,        $textlen-$endpos,       # REMAINDER
+    );
 }
 
 my $def_func = [
-	sub { extract_variable($_[0], '') },
-	sub { extract_quotelike($_[0],'') },
-	sub { extract_codeblock($_[0],'{}','') },
+    sub { extract_variable($_[0], '') },
+    sub { extract_quotelike($_[0],'') },
+    sub { extract_codeblock($_[0],'{}','') },
 ];
+my %ref_not_regex = map +($_=>1), qw(CODE Text::Balanced::Extractor);
 
-sub extract_multiple (;$$$$)	# ($text, $functions_ref, $max_fields, $ignoreunknown)
+sub _update_patvalid {
+    my ($textref, $text) = @_;
+    if ($ref2slashvalid{$textref} && $text =~ m/(?:$RE_NUM|[\)\]])\s*$/)
+    {
+        $ref2slashvalid{$textref} = $ref2qmarkvalid{$textref} = 0;
+    } elsif (!$ref2slashvalid{$textref} && $text =~ m/$RE_PREREGEX_PAT\s*$/)
+    {
+        $ref2slashvalid{$textref} = $ref2qmarkvalid{$textref} = 1;
+    } elsif (!$ref2slashvalid{$textref} && $text =~ m/$RE_EXPR_PAT\s*$/)
+    {
+        $ref2slashvalid{$textref} = 1;
+        $ref2qmarkvalid{$textref} = 0;
+    }
+}
+sub extract_multiple (;$$$$)    # ($text, $functions_ref, $max_fields, $ignoreunknown)
 {
-	my $textref = defined($_[0]) ? \$_[0] : \$_;
-	my $posbug = pos;
-	my ($lastpos, $firstpos);
-	my @fields = ();
+    my $textref = defined($_[0]) ? \$_[0] : \$_;
+    $ref2slashvalid{$textref} = 1, $ref2qmarkvalid{$textref} = 0 if !pos($$textref); # reset
+    my $posbug = pos;
+    my ($lastpos, $firstpos);
+    my @fields = ();
 
-	#for ($$textref)
-	{
-		my @func = defined $_[1] ? @{$_[1]} : @{$def_func};
-		my $max  = defined $_[2] && $_[2]>0 ? $_[2] : 1_000_000_000;
-		my $igunk = $_[3];
+    #for ($$textref)
+    {
+        my @func = defined $_[1] ? @{$_[1]} : @{$def_func};
+        my $max  = defined $_[2] && $_[2]>0 ? $_[2] : 1_000_000_000;
+        my $igunk = $_[3];
 
-		pos $$textref ||= 0;
+        pos $$textref ||= 0;
 
-		unless (wantarray)
-		{
-			use Carp;
-			carp "extract_multiple reset maximal count to 1 in scalar context"
-				if $^W && defined($_[2]) && $max > 1;
-			$max = 1
-		}
+        unless (wantarray)
+        {
+            use Carp;
+            carp "extract_multiple reset maximal count to 1 in scalar context"
+                    if $^W && defined($_[2]) && $max > 1;
+            $max = 1
+        }
 
-		my $unkpos;
-		my $func;
-		my $class;
+        my @class;
+        foreach my $func ( @func )
+        {
+            push @class, undef;
+            ($class[-1], $func) = %$func if ref($func) eq 'HASH';
+            $func = qr/\G$func/ if !$ref_not_regex{ref $func};
+        }
 
-		my @class;
-		foreach $func ( @func )
-		{
-			if (ref($func) eq 'HASH')
-			{
-				push @class, (keys %$func)[0];
-				$func = (values %$func)[0];
-			}
-			else
-			{
-				push @class, undef;
-			}
-		}
-
-		FIELD: while (pos($$textref) < length($$textref))
-		{
-			my ($field, $rem);
-			my @bits;
-			foreach my $i ( 0..$#func )
-			{
-				my $pref;
-				$func = $func[$i];
-				$class = $class[$i];
-				$lastpos = pos $$textref;
-				if (ref($func) eq 'CODE')
-					{ ($field,$rem,$pref) = @bits = $func->($$textref) }
-				elsif (ref($func) eq 'Text::Balanced::Extractor')
-					{ @bits = $field = $func->extract($$textref) }
-				elsif( $$textref =~ m/\G$func/gc )
-					{ @bits = $field = defined($1)
-                                ? $1
-                                : substr($$textref, $-[0], $+[0] - $-[0])
+        my $unkpos;
+        FIELD: while (pos($$textref) < length($$textref))
+        {
+            foreach my $i ( 0..$#func )
+            {
+                my ($field, $pref);
+                my ($class, $func) = ($class[$i], $func[$i]);
+                $lastpos = pos $$textref;
+                if (ref($func) eq 'CODE')
+                    { ($field,undef,$pref) = $func->($$textref) }
+                elsif (ref($func) eq 'Text::Balanced::Extractor')
+                    { $field = $func->extract($$textref) }
+                elsif( $$textref =~ m/$func[$i]/gc )
+                    { $field = defined($1)
+                        ? $1
+                        : substr($$textref, $-[0], $+[0] - $-[0])
                     }
-				$pref ||= "";
-				if (defined($field) && length($field))
-				{
-					if (!$igunk) {
-						$unkpos = $lastpos
-							if length($pref) && !defined($unkpos);
-						if (defined $unkpos)
-						{
-							push @fields, substr($$textref, $unkpos, $lastpos-$unkpos).$pref;
-							$firstpos = $unkpos unless defined $firstpos;
-							undef $unkpos;
-							last FIELD if @fields == $max;
-						}
-					}
-					push @fields, $class
-						? bless (\$field, $class)
-						: $field;
-					$firstpos = $lastpos unless defined $firstpos;
-					$lastpos = pos $$textref;
-					last FIELD if @fields == $max;
-					next FIELD;
-				}
-			}
-			if ($$textref =~ /\G(.)/gcs)
-			{
-				$unkpos = pos($$textref)-1
-					unless $igunk || defined $unkpos;
-			}
-		}
+                $pref ||= "";
+                if (defined($field) && length($field))
+                {
+                    if (!$igunk) {
+                        $unkpos = $lastpos
+                            if length($pref) && !defined($unkpos);
+                        if (defined $unkpos)
+                        {
+                            push @fields, substr($$textref, $unkpos, $lastpos-$unkpos).$pref;
+                            $firstpos = $unkpos unless defined $firstpos;
+                            undef $unkpos;
+                            last FIELD if @fields == $max;
+                        }
+                    }
+                    push @fields, $class ? bless(\$field, $class) : $field;
+                    _update_patvalid($textref, $fields[-1]);
+                    $firstpos = $lastpos unless defined $firstpos;
+                    $lastpos = pos $$textref;
+                    last FIELD if @fields == $max;
+                    next FIELD;
+                }
+            }
+            if ($$textref =~ /\G(.)/gcs)
+            {
+                $unkpos = pos($$textref)-1
+                    unless $igunk || defined $unkpos;
+                _update_patvalid($textref, substr $$textref, $unkpos, pos($$textref)-$unkpos);
+            }
+        }
 
-		if (defined $unkpos)
-		{
-			push @fields, substr($$textref, $unkpos);
-			$firstpos = $unkpos unless defined $firstpos;
-			$lastpos = length $$textref;
-		}
-		last;
-	}
+        if (defined $unkpos)
+        {
+            push @fields, substr($$textref, $unkpos);
+            $firstpos = $unkpos unless defined $firstpos;
+            $lastpos = length $$textref;
+        }
+        last;
+    }
 
-	pos $$textref = $lastpos;
-	return @fields if wantarray;
+    pos $$textref = $lastpos;
+    return @fields if wantarray;
 
-	$firstpos ||= 0;
-	eval { substr($$textref,$firstpos,$lastpos-$firstpos)="";
-	       pos $$textref = $firstpos };
-	return $fields[0];
+    $firstpos ||= 0;
+    eval { substr($$textref,$firstpos,$lastpos-$firstpos)="";
+           pos $$textref = $firstpos };
+    return $fields[0];
 }
 
 sub gen_extract_tagged # ($opentag, $closetag, $pre, \%options)
 {
-	my $ldel    = $_[0];
-	my $rdel    = $_[1];
-	my $pre     = defined $_[2] ? $_[2] : '\s*';
-	my %options = defined $_[3] ? %{$_[3]} : ();
-	my $omode   = defined $options{fail} ? $options{fail} : '';
-	my $bad     = ref($options{reject}) eq 'ARRAY' ? join('|', @{$options{reject}})
-		    : defined($options{reject})	       ? $options{reject}
-		    :					 ''
-		    ;
-	my $ignore  = ref($options{ignore}) eq 'ARRAY' ? join('|', @{$options{ignore}})
-		    : defined($options{ignore})	       ? $options{ignore}
-		    :					 ''
-		    ;
+    my $ldel    = $_[0];
+    my $rdel    = $_[1];
+    my $pre     = defined $_[2] ? qr/\G$_[2]/ : qr/\G\s*/;
+    my %options = defined $_[3] ? %{$_[3]} : ();
+    my $omode   = defined $options{fail} ? $options{fail} : '';
+    my $bad     = ref($options{reject}) eq 'ARRAY' ? join('|', @{$options{reject}})
+                : defined($options{reject})        ? $options{reject}
+                :                                    ''
+                ;
+    my $ignore  = ref($options{ignore}) eq 'ARRAY' ? join('|', @{$options{ignore}})
+                : defined($options{ignore})        ? $options{ignore}
+                :                                    ''
+                ;
 
-	if (!defined $ldel) { $ldel = '<\w+(?:' . gen_delimited_pat(q{'"}) . '|[^>])*>'; }
+    $ldel = $et_default_ldel if !defined $ldel;
 
-	my $posbug = pos;
-	for ($ldel, $pre, $bad, $ignore) { $_ = qr/$_/ if $_ }
-	pos = $posbug;
+    my $posbug = pos;
+    for ($ldel, $bad, $ignore) { $_ = qr/$_/ if $_ }
+    pos = $posbug;
 
-	my $closure = sub
-	{
-		my $textref = defined $_[0] ? \$_[0] : \$_;
-		my @match = Text::Balanced::_match_tagged($textref, $pre, $ldel, $rdel, $omode, $bad, $ignore);
+    my $closure = sub
+    {
+        my $textref = defined $_[0] ? \$_[0] : \$_;
+        my @match = _match_tagged($textref, $pre, $ldel, $rdel, $omode, $bad, $ignore);
 
-		return _fail(wantarray, $textref) unless @match;
-		return _succeed wantarray, $textref,
-				$match[2], $match[3]+$match[5]+$match[7],	# MATCH
-				@match[8..9,0..1,2..7];				# REM, PRE, BITS
-	};
+        return _fail(wantarray, $textref) unless @match;
+        return _succeed wantarray, $textref,
+                        $match[2], $match[3]+$match[5]+$match[7],   # MATCH
+                        @match[8..9,0..1,2..7];                     # REM, PRE, BITS
+    };
 
-	bless $closure, 'Text::Balanced::Extractor';
+    bless $closure, 'Text::Balanced::Extractor';
 }
 
 package Text::Balanced::Extractor;
 
-sub extract($$)	# ($self, $text)
+sub extract($$) # ($self, $text)
 {
-	&{$_[0]}($_[1]);
+    &{$_[0]}($_[1]);
 }
 
 package Text::Balanced::ErrorMsg;
 
-use overload '""' => sub { "$_[0]->{error}, detected at offset $_[0]->{pos}" };
+use overload
+    '""' => sub { "$_[0]->{error}, detected at offset $_[0]->{pos}" },
+    fallback => 1;
 
 1;
 
@@ -1032,83 +1088,76 @@ Text::Balanced - Extract delimited text sequences from strings.
 
 =head1 SYNOPSIS
 
- use Text::Balanced qw (
-			extract_delimited
-			extract_bracketed
-			extract_quotelike
-			extract_codeblock
-			extract_variable
-			extract_tagged
-			extract_multiple
-			gen_delimited_pat
-			gen_extract_tagged
-		       );
+    use Text::Balanced qw (
+        extract_delimited
+        extract_bracketed
+        extract_quotelike
+        extract_codeblock
+        extract_variable
+        extract_tagged
+        extract_multiple
+        gen_delimited_pat
+        gen_extract_tagged
+    );
 
- # Extract the initial substring of $text that is delimited by
- # two (unescaped) instances of the first character in $delim.
+    # Extract the initial substring of $text that is delimited by
+    # two (unescaped) instances of the first character in $delim.
 
-	($extracted, $remainder) = extract_delimited($text,$delim);
+    ($extracted, $remainder) = extract_delimited($text,$delim);
 
+    # Extract the initial substring of $text that is bracketed
+    # with a delimiter(s) specified by $delim (where the string
+    # in $delim contains one or more of '(){}[]<>').
 
- # Extract the initial substring of $text that is bracketed
- # with a delimiter(s) specified by $delim (where the string
- # in $delim contains one or more of '(){}[]<>').
+    ($extracted, $remainder) = extract_bracketed($text,$delim);
 
-	($extracted, $remainder) = extract_bracketed($text,$delim);
+    # Extract the initial substring of $text that is bounded by
+    # an XML tag.
 
+    ($extracted, $remainder) = extract_tagged($text);
 
- # Extract the initial substring of $text that is bounded by
- # an XML tag.
+    # Extract the initial substring of $text that is bounded by
+    # a C<BEGIN>...C<END> pair. Don't allow nested C<BEGIN> tags
 
-	($extracted, $remainder) = extract_tagged($text);
+    ($extracted, $remainder) =
+        extract_tagged($text,"BEGIN","END",undef,{bad=>["BEGIN"]});
 
+    # Extract the initial substring of $text that represents a
+    # Perl "quote or quote-like operation"
 
- # Extract the initial substring of $text that is bounded by
- # a C<BEGIN>...C<END> pair. Don't allow nested C<BEGIN> tags
+    ($extracted, $remainder) = extract_quotelike($text);
 
-	($extracted, $remainder) =
-		extract_tagged($text,"BEGIN","END",undef,{bad=>["BEGIN"]});
+    # Extract the initial substring of $text that represents a block
+    # of Perl code, bracketed by any of character(s) specified by $delim
+    # (where the string $delim contains one or more of '(){}[]<>').
 
+    ($extracted, $remainder) = extract_codeblock($text,$delim);
 
- # Extract the initial substring of $text that represents a
- # Perl "quote or quote-like operation"
+    # Extract the initial substrings of $text that would be extracted by
+    # one or more sequential applications of the specified functions
+    # or regular expressions
 
-	($extracted, $remainder) = extract_quotelike($text);
+    @extracted = extract_multiple($text,
+                                  [ \&extract_bracketed,
+                                    \&extract_quotelike,
+                                    \&some_other_extractor_sub,
+                                    qr/[xyz]*/,
+                                    'literal',
+                                  ]);
 
+    # Create a string representing an optimized pattern (a la Friedl)
+    # that matches a substring delimited by any of the specified characters
+    # (in this case: any type of quote or a slash)
 
- # Extract the initial substring of $text that represents a block
- # of Perl code, bracketed by any of character(s) specified by $delim
- # (where the string $delim contains one or more of '(){}[]<>').
+    $patstring = gen_delimited_pat(q{'"`/});
 
-	($extracted, $remainder) = extract_codeblock($text,$delim);
+    # Generate a reference to an anonymous sub that is just like extract_tagged
+    # but pre-compiled and optimized for a specific pair of tags, and
+    # consequently much faster (i.e. 3 times faster). It uses qr// for better
+    # performance on repeated calls.
 
-
- # Extract the initial substrings of $text that would be extracted by
- # one or more sequential applications of the specified functions
- # or regular expressions
-
-	@extracted = extract_multiple($text,
-				      [ \&extract_bracketed,
-					\&extract_quotelike,
-					\&some_other_extractor_sub,
-					qr/[xyz]*/,
-					'literal',
-				      ]);
-
-# Create a string representing an optimized pattern (a la Friedl)
-# that matches a substring delimited by any of the specified characters
-# (in this case: any type of quote or a slash)
-
-	$patstring = gen_delimited_pat(q{'"`/});
-
-# Generate a reference to an anonymous sub that is just like extract_tagged
-# but pre-compiled and optimized for a specific pair of tags, and consequently
-# much faster (i.e. 3 times faster). It uses qr// for better performance on
-# repeated calls, so it only works under Perl 5.005 or later.
-
-	$extract_head = gen_extract_tagged('<HEAD>','</HEAD>');
-
-	($extracted, $remainder) = $extract_head->($text);
+    $extract_head = gen_extract_tagged('<HEAD>','</HEAD>');
+    ($extracted, $remainder) = $extract_head->($text);
 
 =head1 DESCRIPTION
 
@@ -1128,7 +1177,7 @@ they extract an occurrence of the substring appearing
 immediately at the current matching position in the
 string (like a C<\G>-anchored regex would).
 
-=head2 General behaviour in list contexts
+=head2 General Behaviour in List Contexts
 
 In a list context, all the subroutines return a list, the first three
 elements of which are always:
@@ -1160,21 +1209,21 @@ C<pos> value is updated to point at the first character after the
 extracted text. That means that in a list context the various
 subroutines can be used much like regular expressions. For example:
 
-	while ( $next = (extract_quotelike($text))[0] )
-	{
-		# process next quote-like (in $next)
-	}
+    while ( $next = (extract_quotelike($text))[0] )
+    {
+        # process next quote-like (in $next)
+    }
 
-=head2 General behaviour in scalar and void contexts
+=head2 General Behaviour in Scalar and Void Contexts
 
 In a scalar context, the extracted string is returned, having first been
 removed from the input text. Thus, the following code also processes
 each quote-like operation, but actually removes them from $text:
 
-	while ( $next = extract_quotelike($text) )
-	{
-		# process next quote-like (in $next)
-	}
+    while ( $next = extract_quotelike($text) )
+    {
+        # process next quote-like (in $next)
+    }
 
 Note that if the input text is a read-only string (i.e. a literal),
 no attempt is made to remove the extracted text.
@@ -1183,7 +1232,7 @@ In a void context the behaviour of the extraction subroutines is
 exactly the same as in a scalar context, except (of course) that the
 extracted substring is not returned.
 
-=head2 A note about prefixes
+=head2 A Note About Prefixes
 
 Prefix patterns are matched without any trailing modifiers (C</gimsox> etc.)
 This can bite you if you're expecting a prefix specification like
@@ -1194,19 +1243,23 @@ pattern will only succeed if the <H1> tag is on the current line, since
 To overcome this limitation, you need to turn on /s matching within
 the prefix pattern, using the C<(?s)> directive: '(?s).*?(?=<H1>)'
 
-=head2 C<extract_delimited>
+=head2 Functions
+
+=over 4
+
+=item C<extract_delimited>
 
 The C<extract_delimited> function formalizes the common idiom
 of extracting a single-character-delimited substring from the start of
 a string. For example, to extract a single-quote delimited string, the
 following code is typically used:
 
-	($remainder = $text) =~ s/\A('(\\.|[^'])*')//s;
-	$extracted = $1;
+    ($remainder = $text) =~ s/\A('(\\.|[^'])*')//s;
+    $extracted = $1;
 
 but with C<extract_delimited> it can be simplified to:
 
-	($extracted,$remainder) = extract_delimited($text, "'");
+    ($extracted,$remainder) = extract_delimited($text, "'");
 
 C<extract_delimited> takes up to four scalars (the input text, the
 delimiters, a prefix pattern to be skipped, and any escape characters)
@@ -1240,42 +1293,42 @@ removed from the beginning of the first argument.
 
 Examples:
 
-	# Remove a single-quoted substring from the very beginning of $text:
+    # Remove a single-quoted substring from the very beginning of $text:
 
-		$substring = extract_delimited($text, "'", '');
+        $substring = extract_delimited($text, "'", '');
 
-	# Remove a single-quoted Pascalish substring (i.e. one in which
-	# doubling the quote character escapes it) from the very
-	# beginning of $text:
+    # Remove a single-quoted Pascalish substring (i.e. one in which
+    # doubling the quote character escapes it) from the very
+    # beginning of $text:
 
-		$substring = extract_delimited($text, "'", '', "'");
+        $substring = extract_delimited($text, "'", '', "'");
 
-	# Extract a single- or double- quoted substring from the
-	# beginning of $text, optionally after some whitespace
-	# (note the list context to protect $text from modification):
+    # Extract a single- or double- quoted substring from the
+    # beginning of $text, optionally after some whitespace
+    # (note the list context to protect $text from modification):
 
-		($substring) = extract_delimited $text, q{"'};
+        ($substring) = extract_delimited $text, q{"'};
 
-	# Delete the substring delimited by the first '/' in $text:
+    # Delete the substring delimited by the first '/' in $text:
 
-		$text = join '', (extract_delimited($text,'/','[^/]*')[2,1];
+        $text = join '', (extract_delimited($text,'/','[^/]*')[2,1];
 
 Note that this last example is I<not> the same as deleting the first
 quote-like pattern. For instance, if C<$text> contained the string:
 
-	"if ('./cmd' =~ m/$UNIXCMD/s) { $cmd = $1; }"
+    "if ('./cmd' =~ m/$UNIXCMD/s) { $cmd = $1; }"
 
 then after the deletion it would contain:
 
-	"if ('.$UNIXCMD/s) { $cmd = $1; }"
+    "if ('.$UNIXCMD/s) { $cmd = $1; }"
 
 not:
 
-	"if ('./cmd' =~ ms) { $cmd = $1; }"
+    "if ('./cmd' =~ ms) { $cmd = $1; }"
 
 See L<"extract_quotelike"> for a (partial) solution to this problem.
 
-=head2 C<extract_bracketed>
+=item C<extract_bracketed>
 
 Like C<"extract_delimited">, the C<extract_bracketed> function takes
 up to three optional scalar arguments: a string to extract from, a delimiter
@@ -1307,15 +1360,15 @@ balanced and correctly nested within the substring, and any other kind of
 
 For example, given the string:
 
-	$text = "{ an '[irregularly :-(] {} parenthesized >:-)' string }";
+    $text = "{ an '[irregularly :-(] {} parenthesized >:-)' string }";
 
 then a call to C<extract_bracketed> in a list context:
 
-	@result = extract_bracketed( $text, '{}' );
+    @result = extract_bracketed( $text, '{}' );
 
 would return:
 
-	( "{ an '[irregularly :-(] {} parenthesized >:-)' string }" , "" , "" )
+    ( "{ an '[irregularly :-(] {} parenthesized >:-)' string }" , "" , "" )
 
 since both sets of C<'{..}'> brackets are properly nested and evenly balanced.
 (In a scalar context just the first element of the array would be returned. In
@@ -1323,18 +1376,18 @@ a void context, C<$text> would be replaced by an empty string.)
 
 Likewise the call in:
 
-	@result = extract_bracketed( $text, '{[' );
+    @result = extract_bracketed( $text, '{[' );
 
 would return the same result, since all sets of both types of specified
 delimiter brackets are correctly nested and balanced.
 
 However, the call in:
 
-	@result = extract_bracketed( $text, '{([<' );
+    @result = extract_bracketed( $text, '{([<' );
 
 would fail, returning:
 
-	( undef , "{ an '[irregularly :-(] {} parenthesized >:-)' string }"  );
+    ( undef , "{ an '[irregularly :-(] {} parenthesized >:-)' string }"  );
 
 because the embedded pairs of C<'(..)'>s and C<'[..]'>s are "cross-nested" and
 the embedded C<'E<gt>'> is unbalanced. (In a scalar context, this call would
@@ -1348,37 +1401,37 @@ However, if a particular species of quote character is included in the
 delimiter specification, then that type of quote will be correctly handled.
 for example, if C<$text> is:
 
-	$text = '<A HREF=">>>>">link</A>';
+    $text = '<A HREF=">>>>">link</A>';
 
 then
 
-	@result = extract_bracketed( $text, '<">' );
+    @result = extract_bracketed( $text, '<">' );
 
 returns:
 
-	( '<A HREF=">>>>">', 'link</A>', "" )
+    ( '<A HREF=">>>>">', 'link</A>', "" )
 
 as expected. Without the specification of C<"> as an embedded quoter:
 
-	@result = extract_bracketed( $text, '<>' );
+    @result = extract_bracketed( $text, '<>' );
 
 the result would be:
 
-	( '<A HREF=">', '>>>">link</A>', "" )
+    ( '<A HREF=">', '>>>">link</A>', "" )
 
 In addition to the quote delimiters C<'>, C<">, and C<`>, full Perl quote-like
 quoting (i.e. q{string}, qq{string}, etc) can be specified by including the
 letter 'q' as a delimiter. Hence:
 
-	@result = extract_bracketed( $text, '<q>' );
+    @result = extract_bracketed( $text, '<q>' );
 
 would correctly match something like this:
 
-	$text = '<leftop: conj /and/ conj>';
+    $text = '<leftop: conj /and/ conj>';
 
 See also: C<"extract_quotelike"> and C<"extract_codeblock">.
 
-=head2 C<extract_variable>
+=item C<extract_variable>
 
 C<extract_variable> extracts any valid Perl variable or
 variable-involved expression, including scalars, arrays, hashes, array
@@ -1429,8 +1482,7 @@ failure. In addition, the original input text has the returned substring
 In a void context, the input text just has the matched substring (and
 any specified prefix) removed.
 
-
-=head2 C<extract_tagged>
+=item C<extract_tagged>
 
 C<extract_tagged> extracts and segments text between (balanced)
 specified tags.
@@ -1445,7 +1497,7 @@ A string to be processed (C<$_> if the string is omitted or C<undef>)
 
 =item 2.
 
-A string specifying a pattern to be matched as the opening tag.
+A string specifying a pattern (i.e. regex) to be matched as the opening tag.
 If the pattern string is omitted (or C<undef>) then a pattern
 that matches any standard XML tag is used.
 
@@ -1487,7 +1539,7 @@ an HTML link (which should not contain nested links) use:
 =item C<ignore =E<gt> $listref>
 
 The list reference contains one or more strings specifying patterns
-that are I<not> be be treated as nested tags within the tagged text
+that are I<not> to be treated as nested tags within the tagged text
 (even if they would match the start tag pattern).
 
 For example, to extract an arbitrary XML tag, but ignore "empty" elements:
@@ -1508,7 +1560,7 @@ C<extract_tagged> returns the complete text up to the point of failure.
 If the string is "PARA", C<extract_tagged> returns only the first paragraph
 after the tag (up to the first line that is either empty or contains
 only whitespace characters).
-If the string is "", the the default behaviour (i.e. failure) is reinstated.
+If the string is "", the default behaviour (i.e. failure) is reinstated.
 
 For example, suppose the start tag "/para" introduces a paragraph, which then
 continues until the next "/endpara" tag or until another "/para" tag is
@@ -1575,9 +1627,7 @@ text has the returned substring (and any prefix) removed from it.
 In a void context, the input text just has the matched substring (and
 any specified prefix) removed.
 
-=head2 C<gen_extract_tagged>
-
-(Note: This subroutine is only available under Perl5.005)
+=item C<gen_extract_tagged>
 
 C<gen_extract_tagged> generates a new anonymous subroutine which
 extracts text between (balanced) specified tags. In other words,
@@ -1618,16 +1668,14 @@ equivalent to:
                 return $extractor->($text);
         }
 
-(although C<extract_tagged> is not currently implemented that way, in order
-to preserve pre-5.005 compatibility).
+(although C<extract_tagged> is not currently implemented that way).
 
 Using C<gen_extract_tagged> to create extraction functions for specific tags
 is a good idea if those functions are going to be called more than once, since
 their performance is typically twice as good as the more general-purpose
 C<extract_tagged>.
 
-
-=head2 C<extract_quotelike>
+=item C<extract_quotelike>
 
 C<extract_quotelike> attempts to recognize, extract, and segment any
 one of the various Perl quotes and quotelike operators (see
@@ -1757,7 +1805,7 @@ Examples:
                         print "$op is not a pattern matching operation\n";
                 }
 
-=head2 C<extract_quotelike> and "here documents"
+=item C<extract_quotelike>
 
 C<extract_quotelike> can successfully extract "here documents" from an input
 string, but with an important caveat in list contexts.
@@ -1842,7 +1890,7 @@ you can pass the input variable as an interpolated literal:
 
         $quotelike = extract_quotelike("$var");
 
-=head2 C<extract_codeblock>
+=item C<extract_codeblock>
 
 C<extract_codeblock> attempts to recognize and extract a balanced
 bracket delimited substring that may contain unbalanced brackets
@@ -1853,7 +1901,8 @@ C<"extract_quotelike">.
 C<extract_codeblock> takes the same initial three parameters as C<extract_bracketed>:
 a text to process, a set of delimiter brackets to look for, and a prefix to
 match first. It also takes an optional fourth parameter, which allows the
-outermost delimiter brackets to be specified separately (see below).
+outermost delimiter brackets to be specified separately (see below),
+and a fifth parameter used only by L<Parse::RecDescent>.
 
 Omitting the first argument (input text) means process C<$_> instead.
 Omitting the second argument (delimiter brackets) indicates that only C<'{'> is to be used.
@@ -1861,7 +1910,7 @@ Omitting the third argument (prefix argument) implies optional whitespace at the
 Omitting the fourth argument (outermost delimiter brackets) indicates that the
 value of the second argument is to be used for the outermost delimiters.
 
-Once the prefix an dthe outermost opening delimiter bracket have been
+Once the prefix and the outermost opening delimiter bracket have been
 recognized, code blocks are extracted by stepping through the input text and
 trying the following alternatives in sequence:
 
@@ -1933,7 +1982,7 @@ S<C<extract_codeblock($text, '{}', undef, 'E<lt>E<gt>')>>
 the '>' character is only treated as a delimited at the outermost
 level of the code block, so the directive is parsed correctly.
 
-=head2 C<extract_multiple>
+=item C<extract_multiple>
 
 The C<extract_multiple> subroutine takes a string to be processed and a
 list of extractors (subroutines or regular expressions) to apply to that string.
@@ -1947,7 +1996,7 @@ extracted substring removed from it. In all contexts
 C<extract_multiple> starts at the current C<pos> of the string, and
 sets that C<pos> appropriately after it matches.
 
-Hence, the aim of of a call to C<extract_multiple> in a list context
+Hence, the aim of a call to C<extract_multiple> in a list context
 is to split the processed string into as many non-overlapping fields as
 possible, by repeatedly applying each of the specified extractors
 to the remainder of the string. Thus C<extract_multiple> is
@@ -2062,12 +2111,14 @@ operator (and removes it from $text):
 
 Finally, here is yet another way to do comma-separated value parsing:
 
+        $csv_text = "a,'x b',c";
         @fields = extract_multiple($csv_text,
                                   [
                                         sub { extract_delimited($_[0],q{'"}) },
-                                        qr/([^,]+)(.*)/,
+                                        qr/([^,]+)/,
                                   ],
                                   undef,1);
+        # @fields is now ('a', "'x b'", 'c')
 
 The list in the second argument means:
 I<"Try and extract a ' or " delimited string, otherwise extract anything up to a comma...">.
@@ -2080,10 +2131,10 @@ If you wanted the commas preserved as separate fields (i.e. like split
 does if your split pattern has capturing parentheses), you would
 just make the last parameter undefined (or remove it).
 
-=head2 C<gen_delimited_pat>
+=item C<gen_delimited_pat>
 
 The C<gen_delimited_pat> subroutine takes a single (string) argument and
-   > builds a Friedl-style optimized regex that matches a string delimited
+builds a Friedl-style optimized regex that matches a string delimited
 by any one of the characters in the single argument. For example:
 
         gen_delimited_pat(q{'"})
@@ -2119,11 +2170,12 @@ If more delimiters than escape chars are specified, the last escape char
 is used for the remaining delimiters.
 If no escape char is specified for a given specified delimiter, '\' is used.
 
-=head2 C<delimited_pat>
+=item C<delimited_pat>
 
 Note that C<gen_delimited_pat> was previously called C<delimited_pat>.
 That name may still be used, but is now deprecated.
 
+=back
 
 =head1 DIAGNOSTICS
 
@@ -2257,25 +2309,126 @@ to match the original opening tag (and the failure mode was not
 
 =back
 
+=head1 EXPORTS
+
+The following symbols are, or can be, exported by this module:
+
+=over 4
+
+=item Default Exports
+
+I<None>.
+
+=item Optional Exports
+
+C<extract_delimited>,
+C<extract_bracketed>,
+C<extract_quotelike>,
+C<extract_codeblock>,
+C<extract_variable>,
+C<extract_tagged>,
+C<extract_multiple>,
+C<gen_delimited_pat>,
+C<gen_extract_tagged>,
+C<delimited_pat>.
+
+=item Export Tags
+
+=over 4
+
+=item C<:ALL>
+
+C<extract_delimited>,
+C<extract_bracketed>,
+C<extract_quotelike>,
+C<extract_codeblock>,
+C<extract_variable>,
+C<extract_tagged>,
+C<extract_multiple>,
+C<gen_delimited_pat>,
+C<gen_extract_tagged>,
+C<delimited_pat>.
+
+=back
+
+=back
+
+=head1 KNOWN BUGS
+
+See L<https://rt.cpan.org/Dist/Display.html?Status=Active&Queue=Text-Balanced>.
+
+=head1 FEEDBACK
+
+Patches, bug reports, suggestions or any other feedback is welcome.
+
+Patches can be sent as GitHub pull requests at
+L<https://github.com/steve-m-hay/Text-Balanced/pulls>.
+
+Bug reports and suggestions can be made on the CPAN Request Tracker at
+L<https://rt.cpan.org/Public/Bug/Report.html?Queue=Text-Balanced>.
+
+Currently active requests on the CPAN Request Tracker can be viewed at
+L<https://rt.cpan.org/Public/Dist/Display.html?Status=Active;Queue=Text-Balanced>.
+
+Please test this distribution.  See CPAN Testers Reports at
+L<https://www.cpantesters.org/> for details of how to get involved.
+
+Previous test results on CPAN Testers Reports can be viewed at
+L<https://www.cpantesters.org/distro/T/Text-Balanced.html>.
+
+Please rate this distribution on CPAN Ratings at
+L<https://cpanratings.perl.org/rate/?distribution=Text-Balanced>.
+
+=head1 AVAILABILITY
+
+The latest version of this module is available from CPAN (see
+L<perlmodlib/"CPAN"> for details) at
+
+L<https://metacpan.org/release/Text-Balanced> or
+
+L<https://www.cpan.org/authors/id/S/SH/SHAY/> or
+
+L<https://www.cpan.org/modules/by-module/Text/>.
+
+The latest source code is available from GitHub at
+L<https://github.com/steve-m-hay/Text-Balanced>.
+
+=head1 INSTALLATION
+
+See the F<INSTALL> file.
+
 =head1 AUTHOR
 
-Damian Conway (damian@conway.org)
+Damian Conway E<lt>L<damian@conway.org|mailto:damian@conway.org>E<gt>.
 
-=head1 BUGS AND IRRITATIONS
-
-There are undoubtedly serious bugs lurking somewhere in this code, if
-only because parts of it give the impression of understanding a great deal
-more about Perl than they really do.
-
-Bug reports and other feedback are most welcome.
+Steve Hay E<lt>L<shay@cpan.org|mailto:shay@cpan.org>E<gt> is now maintaining
+Text::Balanced as of version 2.03.
 
 =head1 COPYRIGHT
 
-Copyright 1997 - 2001 Damian Conway. All Rights Reserved.
+Copyright (C) 1997-2001 Damian Conway.  All rights reserved.
 
-Some (minor) parts copyright 2009 Adam Kennedy.
+Copyright (C) 2009 Adam Kennedy.
 
-This module is free software. It may be used, redistributed
-and/or modified under the same terms as Perl itself.
+Copyright (C) 2015, 2020, 2022 Steve Hay and other contributors.  All rights
+reserved.
+
+=head1 LICENCE
+
+This module is free software; you can redistribute it and/or modify it under the
+same terms as Perl itself, i.e. under the terms of either the GNU General Public
+License or the Artistic License, as specified in the F<LICENCE> file.
+
+=head1 VERSION
+
+Version 2.06
+
+=head1 DATE
+
+05 Jun 2022
+
+=head1 HISTORY
+
+See the F<Changes> file.
 
 =cut

@@ -13,7 +13,7 @@
 # On Ultrix, /bin/sh is too buggy, change the first line to: #!/bin/sh5
 
 
-# Copyright (C) 1998, 2002, 2004, 2006-2007, 2010-2018 Free Software
+# Copyright (C) 1998, 2002, 2004, 2006-2007, 2010-2023 Free Software
 # Foundation, Inc.
 # Copyright (C) 1993 Jean-loup Gailly
 
@@ -36,8 +36,8 @@ nl='
 '
 IFS=" $tab$nl"
 
-version='gzexe (gzip) 1.10
-Copyright (C) 2007, 2011-2018 Free Software Foundation, Inc.
+version='gzexe (gzip) 1.13
+Copyright (C) 2023 Free Software Foundation, Inc.
 This is free software.  You may redistribute copies of it under the terms of
 the GNU General Public License <https://www.gnu.org/licenses/gpl.html>.
 There is NO WARRANTY, to the extent permitted by law.
@@ -91,10 +91,11 @@ for i do
     continue
   fi
   if test $decomp -eq 0; then
-    if sed -e 1d -e 2q "$file" | grep "^skip=[0-9][0-9]*$" >/dev/null; then
+    case `LC_ALL=C sed -n -e 1d -e '/^skip=[0-9][0-9]*$/p' -e 2q "$file"` in
+    skip=[0-9] | skip=[0-9][0-9] | skip=[0-9][0-9][0-9])
       printf >&2 '%s\n' "$0: $i is already gzexe'd"
-      continue
-    fi
+      continue;;
+    esac
   fi
   if test -u "$file"; then
     printf >&2 '%s\n' "$0: $i has setuid permission, unchanged"
@@ -145,7 +146,7 @@ for i do
   if test $decomp -eq 0; then
     (cat <<'EOF' &&
 #!/bin/sh
-skip=44
+skip=49
 
 tab='	'
 nl='
@@ -202,7 +203,7 @@ EOF
   else
     # decompression
     skip=44
-    skip_line=`sed -e 1d -e 2q "$file"`
+    skip_line=`LC_ALL=C sed -e 1d -e 2q "$file"`
     case $skip_line in
     skip=[0-9] | skip=[0-9][0-9] | skip=[0-9][0-9][0-9])
       eval "$skip_line";;

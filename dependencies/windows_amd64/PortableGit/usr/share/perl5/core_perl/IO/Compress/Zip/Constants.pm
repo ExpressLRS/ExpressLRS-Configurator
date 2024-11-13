@@ -7,7 +7,7 @@ require Exporter;
 
 our ($VERSION, @ISA, @EXPORT, %ZIP_CM_MIN_VERSIONS);
 
-$VERSION = '2.093';
+$VERSION = '2.204';
 
 @ISA = qw(Exporter);
 
@@ -18,6 +18,9 @@ $VERSION = '2.093';
     ZIP_CM_BZIP2
     ZIP_CM_LZMA
     ZIP_CM_PPMD
+    ZIP_CM_XZ
+    ZIP_CM_ZSTD
+    ZIP_CM_AES
 
     ZIP_LOCAL_HDR_SIG
     ZIP_DATA_HDR_SIG
@@ -63,8 +66,11 @@ $VERSION = '2.093';
 use constant ZIP_CM_STORE                      => 0 ;
 use constant ZIP_CM_DEFLATE                    => 8 ;
 use constant ZIP_CM_BZIP2                      => 12 ;
-use constant ZIP_CM_LZMA                       => 14 ; # Not Supported yet
+use constant ZIP_CM_LZMA                       => 14 ;
+use constant ZIP_CM_ZSTD                       => 93 ;
+use constant ZIP_CM_XZ                         => 95 ;
 use constant ZIP_CM_PPMD                       => 98 ; # Not Supported yet
+use constant ZIP_CM_AES                        => 99 ;
 
 # General Purpose Flag
 use constant ZIP_GP_FLAG_ENCRYPTED_MASK        => (1 << 0) ;
@@ -116,10 +122,11 @@ use constant ZIP64_MIN_VERSION                 => 45;
             ZIP_CM_BZIP2()                     => 46,
             ZIP_CM_LZMA()                      => 63,
             ZIP_CM_PPMD()                      => 63,
+            ZIP_CM_ZSTD()                      => 20, # Winzip needs these to be 20
+            ZIP_CM_XZ()                        => 20,
             );
 
 
 1;
 
 __END__
-

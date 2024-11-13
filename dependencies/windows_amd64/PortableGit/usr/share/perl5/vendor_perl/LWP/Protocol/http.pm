@@ -2,13 +2,12 @@ package LWP::Protocol::http;
 
 use strict;
 
-our $VERSION = '6.52';
+our $VERSION = '6.77';
 
 require HTTP::Response;
 require HTTP::Status;
 require Net::HTTP;
-
-use base qw(LWP::Protocol);
+use parent qw(LWP::Protocol);
 
 our @EXTRA_SOCK_OPTS;
 my $CRLF = "\015\012";
@@ -50,8 +49,7 @@ sub _new_socket
 	die "$status\n\n$@";
     }
 
-    # perl 5.005's IO::Socket does not have the blocking method.
-    eval { $sock->blocking(0); };
+    $sock->blocking(0);
 
     $sock;
 }
@@ -152,13 +150,13 @@ sub request
     #   same target
 
     my $ssl_tunnel = $proxy && $url->scheme eq 'https'
-	&& $url->host.":".$url->port;
+	&& $url->host_port();
 
     my ($host,$port) = $proxy
 	? ($proxy->host,$proxy->port)
 	: ($url->host,$url->port);
     my $fullpath =
-	$method eq 'CONNECT' ? $url->host . ":" . $url->port :
+	$method eq 'CONNECT' ? $url->host_port() :
 	$proxy && ! $ssl_tunnel ? $url->as_string :
 	do {
 	    my $path = $url->path_query;

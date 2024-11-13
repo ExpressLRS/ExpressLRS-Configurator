@@ -1,6 +1,6 @@
 package Env;
 
-our $VERSION = '1.04';
+our $VERSION = '1.06';
 
 =head1 NAME
 
@@ -28,14 +28,14 @@ or '@'. Arrays are implemented in terms of C<split> and C<join>, using
 C<$Config::Config{path_sep}> as the delimiter.
 
 After an environment variable is tied, merely use it like a normal variable.
-You may access its value
+You may access its value 
 
     @path = split(/:/, $PATH);
     print join("\n", @LD_LIBRARY_PATH), "\n";
 
 or modify it
 
-    $PATH .= ":.";
+    $PATH .= ":/any/path";
     push @LD_LIBRARY_PATH, $dir;
 
 however you'd like. Bear in mind, however, that each access to a tied array
@@ -44,15 +44,16 @@ variable requires splitting the environment variable's string anew.
 The code:
 
     use Env qw(@PATH);
-    push @PATH, '.';
+    push @PATH, '/any/path';
 
-is equivalent to:
+is almost equivalent to:
 
     use Env qw(PATH);
-    $PATH .= ":.";
+    $PATH .= ":/any/path";
 
 except that if C<$ENV{PATH}> started out empty, the second approach leaves
-it with the (odd) value "C<:.>", but the first approach leaves it with "C<.>".
+it with the (odd) value "C<:/any/path>", but the first approach leaves it with
+"C</any/path>".
 
 To remove a tied environment variable from
 the environment, assign it the undefined value
@@ -74,7 +75,7 @@ Gregor N. Purdy E<lt>F<gregor@focusresearch.com>E<gt>
 =cut
 
 sub import {
-    my ($callpack) = caller(0);
+    my $callpack = caller(0);
     my $pack = shift;
     my @vars = grep /^[\$\@]?[A-Za-z_]\w*$/, (@_ ? @_ : keys(%ENV));
     return unless @vars;
@@ -118,7 +119,7 @@ sub STORE {
 ######################################################################
 
 package Env::Array;
-
+ 
 use Config;
 use Tie::Array;
 
@@ -227,7 +228,7 @@ package Env::Array::VMS;
 use Tie::Array;
 
 @ISA = qw(Tie::Array);
-
+ 
 sub TIEARRAY {
     bless \($_[1]);
 }

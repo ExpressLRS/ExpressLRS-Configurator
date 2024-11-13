@@ -4,21 +4,21 @@ use strict;
 use warnings;
 use bytes;
 
-use IO::Compress::Base::Common 2.093 ();
+use IO::Compress::Base::Common 2.204 ();
 
-use IO::Uncompress::Base 2.093 ;
+use IO::Uncompress::Base 2.204 ;
 
 
 require Exporter ;
 
 our ($VERSION, @ISA, @EXPORT_OK, %EXPORT_TAGS, $AnyUncompressError);
 
-$VERSION = '2.093';
+$VERSION = '2.204';
 $AnyUncompressError = '';
 
 @ISA = qw(IO::Uncompress::Base Exporter);
 @EXPORT_OK = qw( $AnyUncompressError anyuncompress ) ;
-%EXPORT_TAGS = %IO::Uncompress::Base::DEFLATE_CONSTANTS ;
+%EXPORT_TAGS = %IO::Uncompress::Base::DEFLATE_CONSTANTS if keys %IO::Uncompress::Base::DEFLATE_CONSTANTS;
 push @{ $EXPORT_TAGS{all} }, @EXPORT_OK ;
 Exporter::export_ok_tags('all');
 
@@ -33,26 +33,26 @@ BEGIN
    # Don't trigger any __DIE__ Hooks.
    local $SIG{__DIE__};
 
-   eval ' use IO::Uncompress::Adapter::Inflate 2.093 ;';
-   eval ' use IO::Uncompress::Adapter::Bunzip2 2.093 ;';
-   eval ' use IO::Uncompress::Adapter::LZO 2.093 ;';
-   eval ' use IO::Uncompress::Adapter::Lzf 2.093 ;';
-   eval ' use IO::Uncompress::Adapter::UnLzma 2.093 ;';
-   eval ' use IO::Uncompress::Adapter::UnXz 2.093 ;';
-   eval ' use IO::Uncompress::Adapter::UnZstd 2.083 ;';
-   eval ' use IO::Uncompress::Adapter::UnLzip 2.093 ;';
+   eval ' use IO::Uncompress::Adapter::Inflate 2.204 ;';
+   eval ' use IO::Uncompress::Adapter::Bunzip2 2.204 ;';
+   eval ' use IO::Uncompress::Adapter::LZO 2.204 ;';
+   eval ' use IO::Uncompress::Adapter::Lzf 2.204 ;';
+   eval ' use IO::Uncompress::Adapter::UnLzma 2.204 ;';
+   eval ' use IO::Uncompress::Adapter::UnXz 2.204 ;';
+   eval ' use IO::Uncompress::Adapter::UnZstd 2.204 ;';
+   eval ' use IO::Uncompress::Adapter::UnLzip 2.204 ;';
 
-   eval ' use IO::Uncompress::Bunzip2 2.093 ;';
-   eval ' use IO::Uncompress::UnLzop 2.093 ;';
-   eval ' use IO::Uncompress::Gunzip 2.093 ;';
-   eval ' use IO::Uncompress::Inflate 2.093 ;';
-   eval ' use IO::Uncompress::RawInflate 2.093 ;';
-   eval ' use IO::Uncompress::Unzip 2.093 ;';
-   eval ' use IO::Uncompress::UnLzf 2.093 ;';
-   eval ' use IO::Uncompress::UnLzma 2.093 ;';
-   eval ' use IO::Uncompress::UnXz 2.093 ;';
-   eval ' use IO::Uncompress::UnZstd 2.093 ;';
-   eval ' use IO::Uncompress::UnLzip 2.093 ;';
+   eval ' use IO::Uncompress::Bunzip2 2.204 ;';
+   eval ' use IO::Uncompress::UnLzop 2.204 ;';
+   eval ' use IO::Uncompress::Gunzip 2.204 ;';
+   eval ' use IO::Uncompress::Inflate 2.204 ;';
+   eval ' use IO::Uncompress::RawInflate 2.204 ;';
+   eval ' use IO::Uncompress::Unzip 2.204 ;';
+   eval ' use IO::Uncompress::UnLzf 2.204 ;';
+   eval ' use IO::Uncompress::UnLzma 2.204 ;';
+   eval ' use IO::Uncompress::UnXz 2.204 ;';
+   eval ' use IO::Uncompress::UnZstd 2.204 ;';
+   eval ' use IO::Uncompress::UnLzip 2.204 ;';
 
 }
 
@@ -206,7 +206,7 @@ sub mkUncomp
         *$self->{Info} = $self->readHeader($magic)
             or return undef ;
 
-        my ($obj, $errstr, $errno) = IO::Uncompress::Adapter::Zstd::mkUncompObject();
+        my ($obj, $errstr, $errno) = IO::Uncompress::Adapter::UnZstd::mkUncompObject();
 
         return $self->saveErrorString(undef, $errstr, $errno)
             if ! defined $obj;
@@ -270,7 +270,7 @@ __END__
 
 =head1 NAME
 
-IO::Uncompress::AnyUncompress - Uncompress gzip, zip, bzip2, xz, lzma, lzip, lzf or lzop file/buffer
+IO::Uncompress::AnyUncompress - Uncompress gzip, zip, bzip2, zstd, xz, lzma, lzip, lzf or lzop file/buffer
 
 =head1 SYNOPSIS
 
@@ -279,7 +279,7 @@ IO::Uncompress::AnyUncompress - Uncompress gzip, zip, bzip2, xz, lzma, lzip, lzf
     my $status = anyuncompress $input => $output [,OPTS]
         or die "anyuncompress failed: $AnyUncompressError\n";
 
-    my $z = new IO::Uncompress::AnyUncompress $input [OPTS]
+    my $z = IO::Uncompress::AnyUncompress->new( $input [OPTS] )
         or die "anyuncompress failed: $AnyUncompressError\n";
 
     $status = $z->read($buffer)
@@ -332,6 +332,8 @@ The formats supported are:
 =item gzip (RFC 1952)
 
 =item zip
+
+=item zstd (Zstandard)
 
 =item bzip2
 
@@ -598,7 +600,7 @@ uncompressed data to a buffer, C<$buffer>.
     use IO::Uncompress::AnyUncompress qw(anyuncompress $AnyUncompressError) ;
     use IO::File ;
 
-    my $input = new IO::File "<file1.txt.Compressed"
+    my $input = IO::File->new( "<file1.txt.Compressed" )
         or die "Cannot open 'file1.txt.Compressed': $!\n" ;
     my $buffer ;
     anyuncompress $input => \$buffer
@@ -633,7 +635,7 @@ and if you want to compress each file one at a time, this will do the trick
 
 The format of the constructor for IO::Uncompress::AnyUncompress is shown below
 
-    my $z = new IO::Uncompress::AnyUncompress $input [OPTS]
+    my $z = IO::Uncompress::AnyUncompress->new( $input [OPTS] )
         or die "IO::Uncompress::AnyUncompress failed: $AnyUncompressError\n";
 
 Returns an C<IO::Uncompress::AnyUncompress> object on success and undef on failure.
@@ -1034,7 +1036,7 @@ C<InputLength> option in the constructor.
 
 =head1 Importing
 
-No symbolic constants are required by this IO::Uncompress::AnyUncompress at present.
+No symbolic constants are required by IO::Uncompress::AnyUncompress at present.
 
 =over 5
 
@@ -1075,8 +1077,7 @@ See the Changes file.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2005-2019 Paul Marquess. All rights reserved.
+Copyright (c) 2005-2023 Paul Marquess. All rights reserved.
 
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
-
