@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 570 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/debug_read.al)"
+#line 982 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/debug_read.al)"
 ###
 ### read and write helpers that block
 ###

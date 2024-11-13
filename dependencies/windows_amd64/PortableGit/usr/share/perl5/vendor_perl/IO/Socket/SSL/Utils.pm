@@ -9,9 +9,9 @@ use Net::SSLeay;
 require Exporter;
 *import = \&Exporter::import;
 
-our $VERSION = '2.014';
+our $VERSION = '2.015';
 our @EXPORT = qw(
-    PEM_file2cert PEM_string2cert PEM_cert2file PEM_cert2string
+    PEM_file2cert PEM_file2certs PEM_string2cert PEM_cert2file PEM_certs2file PEM_cert2string
     PEM_file2key PEM_string2key PEM_key2file PEM_key2string
     KEY_free CERT_free
     KEY_create_rsa CERT_asHash CERT_create
@@ -35,6 +35,37 @@ sub PEM_cert2file {
     open( my $fh,'>',$file ) or croak("cannot write $file: $!");
     print $fh $string;
 }
+
+use constant PEM_R_NO_START_LINE => 108;
+sub PEM_file2certs {
+    my $file = shift;
+    my $bio = Net::SSLeay::BIO_new_file($file,'r') or
+	croak "cannot read $file: $!";
+    my @certs;
+    while (1) {
+	if (my $cert = Net::SSLeay::PEM_read_bio_X509($bio)) {
+	    push @certs, $cert;
+	} else {
+	    Net::SSLeay::BIO_free($bio);
+	    my $error = Net::SSLeay::ERR_get_error();
+	    last if ($error & 0xfff) == PEM_R_NO_START_LINE && @certs;
+	    croak "cannot parse $file as PEM X509 cert: " .
+		Net::SSLeay::ERR_error_string($error);
+	}
+    }
+    return @certs;
+}
+
+sub PEM_certs2file {
+    my $file = shift;
+    open( my $fh,'>',$file ) or croak("cannot write $file: $!");
+    for my $cert (@_) {
+	my $string = Net::SSLeay::PEM_get_string_X509($cert)
+	    or croak("cannot get string from cert");
+	print $fh $string;
+    }
+}
+
 
 sub PEM_string2cert {
     my $string = shift;
@@ -90,13 +121,11 @@ sub PEM_key2string {
 }
 
 sub CERT_free {
-    my $cert = shift or return;
-    Net::SSLeay::X509_free($cert);
+    Net::SSLeay::X509_free($_) for @_;
 }
 
 sub KEY_free {
-    my $key = shift or return;
-    Net::SSLeay::EVP_PKEY_free($key);
+    Net::SSLeay::EVP_PKEY_free($_) for @_;
 }
 
 sub KEY_create_rsa {
@@ -395,7 +424,7 @@ sub CERT_create {
     for(my $i=0;$i<@ext;$i+=2) {
 	$have_ext{ $ext[$i] }++
     }
-    for my $ext (@{ $args{ext} || [] }) {
+    for my $ext (@{ delete $args{ext} || [] }) {
 	my $nid = $ext->{nid}
 	    || $ext->{sn} && Net::SSLeay::OBJ_sn2nid($ext->{sn})
 	    || croak "cannot determine NID of extension";
@@ -414,6 +443,9 @@ sub CERT_create {
 	    Net::SSLeay::P_X509_add_extensions($cert, $issuer_cert, $nid, $val);
 	}
     }
+
+    die "unknown arguments: ". join(" ", sort keys %args) 
+	if !delete $args{ignore_invalid_args} && %args;
 
     Net::SSLeay::X509_set_issuer_name($cert,
 	Net::SSLeay::X509_get_subject_name($issuer_cert));
@@ -471,12 +503,21 @@ IO::Socket::SSL::Utils -- loading, storing, creating certificates and keys
 =head1 SYNOPSIS
 
     use IO::Socket::SSL::Utils;
-    my $cert = PEM_file2cert('cert.pem');  # load certificate from file
-    my $string = PEM_cert2string($cert);   # convert certificate to PEM string
+
+    $cert = PEM_file2cert('cert.pem');     # load certificate from file
+    my $hash = CERT_asHash($cert);         # get details from certificate
+    PEM_cert2file($cert,'cert.pem');       # write certificate to file
     CERT_free($cert);                      # free memory within OpenSSL
 
-    my $key = KEY_create_rsa(2048);        # create new 2048-bit RSA key
-    PEM_string2file($key,"key.pem");       # and write it to file
+    @certs = PEM_file2certs('chain.pem');  # load multiple certificates from file
+    PEM_certs2file('chain.pem', @certs);   # write multiple certificates to file
+    CERT_free(@certs);                     # free memory for all within OpenSSL
+
+    my $cert = PEM_string2cert($pem);      # load certificate from PEM string
+    $pem = PEM_cert2string($cert);         # convert certificate to PEM string
+
+    $key = KEY_create_rsa(2048);           # create new 2048-bit RSA key
+    PEM_key2file($key,"key.pem");          # and write it to file
     KEY_free($key);                        # free memory within OpenSSL
 
 
@@ -501,6 +542,10 @@ They croak if the operation cannot be completed.
 
 =item PEM_cert2file(cert,file)
 
+=item PEM_file2certs(file) -> @certs
+
+=item PEM_certs2file(file,@certs)
+
 =item PEM_string2cert(string) -> cert
 
 =item PEM_cert2string(cert) -> string
@@ -522,9 +567,9 @@ Each loaded or created cert and key must be freed to not leak memory.
 
 =over 8
 
-=item CERT_free(cert)
+=item CERT_free(@certs)
 
-=item KEY_free(key)
+=item KEY_free(@keys)
 
 =back
 
@@ -740,6 +785,11 @@ given both together.
 =item digest algorithm
 
 specify the algorithm used to sign the certificate, default SHA-256.
+
+=item ignore_invalid_args
+
+ignore any unknown arguments which might be in the argument list (which might be
+in the arguments for example as result from CERT_asHash)
 
 =back
 

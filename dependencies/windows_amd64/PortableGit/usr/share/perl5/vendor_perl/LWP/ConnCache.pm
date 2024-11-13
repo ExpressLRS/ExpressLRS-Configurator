@@ -2,7 +2,7 @@ package LWP::ConnCache;
 
 use strict;
 
-our $VERSION = '6.52';
+our $VERSION = '6.77';
 our $DEBUG;
 
 sub new {
@@ -222,7 +222,7 @@ then there is no limit.
 
 Get/set a limit for the number of connections of the specified type
 that can be cached.  The first parameter is a short string like
-"http" or "ftp".
+C<"http"> or C<"ftp">.
 
 =head2 drop
 
@@ -245,9 +245,9 @@ that can be cached.  The first parameter is a short string like
 Drop connections by some criteria.  The $checker argument is a
 subroutine that is called for each connection.  If the routine returns
 a TRUE value then the connection is dropped.  The routine is called
-with ($conn, $type, $key, $deposit_time) as arguments.
+with C<($conn, $type, $key, $deposit_time)> as arguments.
 
-Shortcuts: If the $checker argument is absent (or C<undef>) all cached
+Shortcuts: If the C<$checker> argument is absent (or C<undef>) all cached
 connections are dropped.  If the $checker is a number then all
 connections untouched that the given number of seconds or more are
 dropped.  If $checker is a string then all connections of the given

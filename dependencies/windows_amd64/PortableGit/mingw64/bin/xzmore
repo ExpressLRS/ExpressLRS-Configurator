@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-or-later
 
 # Copyright (C) 2001, 2002, 2007 Free Software Foundation
 # Copyright (C) 1992, 1993 Jean-loup Gailly
@@ -23,16 +24,16 @@
 # specified via XZ_OPT.
 xz='xz --format=auto'
 
-version='xzmore (XZ Utils) 5.2.5'
+version='xzmore (XZ Utils) 5.6.3'
 
 usage="Usage: ${0##*/} [OPTION]... [FILE]...
 Like 'more', but operate on the uncompressed contents of xz compressed FILEs.
 
-Report bugs to <lasse.collin@tukaani.org>."
+Report bugs to <xz@tukaani.org>."
 
 case $1 in
-	--help)    echo "$usage" || exit 2; exit;;
-	--version) echo "$version" || exit 2; exit;;
+	--help)    printf '%s\n' "$usage" || exit 2; exit;;
+	--version) printf '%s\n' "$version" || exit 2; exit;;
 esac
 
 oldtty=`stty -g 2>/dev/null`
@@ -50,9 +51,9 @@ fi
 
 if test $# = 0; then
 	if test -t 0; then
-		echo "$usage"; exit 1
+		printf '%s\n' "$usage"; exit 1
 	else
-		$xz -cdfq | eval "${PAGER:-more}"
+		$xz -cdfqQ | eval "${PAGER:-more}"
 	fi
 else
 	FIRST=1
@@ -69,8 +70,8 @@ else
 			esac
 		fi
 		if test "$ANS" != 's'; then
-			echo "------> $FILE <------"
-			$xz -cdfq -- "$FILE" | eval "${PAGER:-more}"
+			printf '%s\n' "------> $FILE <------"
+			$xz -cdfqQ -- "$FILE" | eval "${PAGER:-more}"
 		fi
 		if test -t 1; then
 			FIRST=0

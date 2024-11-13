@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 503 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/want_nothing.al)"
+#line 915 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/want_nothing.al)"
 ### Some methods that are macros in C
 
 sub want_nothing { want(shift) == 1 }

@@ -251,7 +251,7 @@ __git_zsh_main ()
 		done
 		;;
 	(arg)
-		local command="${words[1]}" __git_dir
+		local command="${words[1]}" __git_dir __git_cmd_idx=1
 
 		if (( $+opt_args[--bare] )); then
 			__git_dir='.'
@@ -272,6 +272,7 @@ _git ()
 {
 	local _ret=1
 	local cur cword prev
+	local __git_repo_path
 
 	cur=${words[CURRENT]}
 	prev=${words[CURRENT-1]}

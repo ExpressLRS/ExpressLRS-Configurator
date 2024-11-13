@@ -4,9 +4,9 @@ use Carp;
 use warnings;
 use strict;
 our $AUTOLOAD;
-our $VERSION = '1.01'; # remember to update version in POD!
+our $VERSION = '1.03'; # remember to update version in POD!
 # $DB::single=1;
-
+my $debug= $ENV{DEBUG_ATTRIBUTE_HANDLERS} || 0;
 my %symcache;
 sub findsym {
 	my ($pkg, $ref, $type) = @_;
@@ -73,24 +73,52 @@ sub import {
 		    local $Exporter::ExportLevel = 2;
 		    $tieclass->import(eval $args);
 	        }
-		$attr =~ s/__CALLER__/caller(1)/e;
-		$attr = caller()."::".$attr unless $attr =~ /::/;
-	        eval qq{
-	            sub $attr : ATTR(VAR) {
-			my (\$ref, \$data) = \@_[2,4];
-			my \$was_arrayref = ref \$data eq 'ARRAY';
-			\$data = [ \$data ] unless \$was_arrayref;
-			my \$type = ref(\$ref)||"value (".(\$ref||"<undef>").")";
-			 (\$type eq 'SCALAR')? tie \$\$ref,'$tieclass',$tiedata
-			:(\$type eq 'ARRAY') ? tie \@\$ref,'$tieclass',$tiedata
-			:(\$type eq 'HASH')  ? tie \%\$ref,'$tieclass',$tiedata
-			: die "Can't autotie a \$type\n"
-	            } 1
-	        } or die "Internal error: $@";
-	    }
+                my $code = qq{
+                    : ATTR(VAR) {
+                        my (\$ref, \$data) = \@_[2,4];
+                        my \$was_arrayref = ref \$data eq 'ARRAY';
+                        \$data = [ \$data ] unless \$was_arrayref;
+                        my \$type = ref(\$ref)||"value (".(\$ref||"<undef>").")";
+                          (\$type eq 'SCALAR')? tie \$\$ref,'$tieclass',$tiedata
+                        :(\$type eq 'ARRAY') ? tie \@\$ref,'$tieclass',$tiedata
+                        :(\$type eq 'HASH')  ? tie \%\$ref,'$tieclass',$tiedata
+                        : die "Can't autotie a \$type\n"
+                    }
+                };
+
+                if ($attr =~ /\A__CALLER__::/) {
+                    no strict 'refs';
+                    my $add_import = caller;
+                    my $next = defined &{ $add_import . '::import' } && \&{ $add_import . '::import' };
+                    *{ $add_import . '::import' } = sub {
+                        my $caller = caller;
+                        my $full_attr = $attr;
+                        $full_attr =~ s/__CALLER__/$caller/;
+                        eval qq{ sub $full_attr $code 1; }
+                            or die "Internal error: $@";
+
+                        goto &$next
+                            if $next;
+                        my $uni = defined &UNIVERSAL::import && \&UNIVERSAL::import;
+                        for my $isa (@{ $add_import . '::ISA' }) {
+                            if (my $import = $isa->can('import')) {
+                                goto &$import
+                                    if $import != $uni;
+                            }
+                        }
+                        goto &$uni
+                            if $uni;
+                    };
+                }
+                else {
+                    $attr = caller()."::".$attr unless $attr =~ /::/;
+                    eval qq{ sub $attr $code 1; }
+                      or die "Internal error: $@";
+                }
+            }
         }
         else {
-            croak "Can't understand $_";
+            croak "Can't understand $_"; 
         }
     }
 }
@@ -183,10 +211,10 @@ sub _gen_handler_AH_() {
 				if $global_phases{$gphase} <= $global_phase;
 			}
 			if ($global_phase != 0) {
-				# if _gen_handler_AH_ is being called after
+				# if _gen_handler_AH_ is being called after 
 				# CHECK it's for a lexical, so make sure
 				# it didn't want to run anything later
-
+			
 				local $Carp::CarpLevel = 2;
 				carp "Won't be able to apply END handler"
 					if $phase{$handler}{END};
@@ -213,7 +241,8 @@ sub _apply_handler_AH_ {
 	my ($declaration, $phase) = @_;
 	my ($pkg, $ref, $attr, $data, $raw, $handlerphase, $filename, $linenum) = @$declaration;
 	return unless $handlerphase->{$phase};
-	# print STDERR "Handling $attr on $ref in $phase with [$data]\n";
+        print STDERR "Handling $attr on $ref in $phase with [$data]\n"
+            if $debug;
 	my $type = ref $ref;
 	my $handler = "_ATTR_${type}_${attr}";
 	my $sym = findsym($pkg, $ref);
@@ -221,12 +250,29 @@ sub _apply_handler_AH_ {
 	no warnings;
 	if (!$raw && defined($data)) {
 	    if ($data ne '') {
-		my $evaled = eval("package $pkg; no warnings; no strict;
-				   local \$SIG{__WARN__}=sub{die}; [$data]");
-		$data = $evaled unless $@;
+                # keeping the minimum amount of code inside the eval string
+                # makes debugging perl internals issues with this logic easier.
+                my $code= "package $pkg; my \$ref= [$data]; \$data= \$ref; 1";
+                print STDERR "Evaling: '$code'\n"
+                    if $debug;
+                local $SIG{__WARN__} = sub{ die };
+                no strict;
+                no warnings;
+                # Note in production we do not need to use the return value from
+                # the eval or even consult $@ after the eval - if the evaled code
+                # compiles and runs successfully then it will update $data with
+                # the compiled form, if it fails then $data stays unchanged. The
+                # return value and $@ are only used for debugging purposes.
+                # IOW we could just replace the following with eval($code);
+                eval($code) or do {
+                    print STDERR "Eval failed: $@"
+                        if $debug;
+                };
 	    }
 	    else { $data = undef }
 	}
+
+        # now call the handler with the $data decoded (maybe)
 	$pkg->$handler($sym,
 		       (ref $sym eq 'GLOB' ? *{$sym}{ref $ref}||$ref : $ref),
 		       $attr,
@@ -272,7 +318,7 @@ Attribute::Handlers - Simpler definition of attribute handlers
 
 =head1 VERSION
 
-This document describes version 1.01 of Attribute::Handlers.
+This document describes version 1.03 of Attribute::Handlers.
 
 =head1 SYNOPSIS
 
@@ -315,7 +361,7 @@ This document describes version 1.01 of Attribute::Handlers.
     }
 
     sub Ugly : ATTR(CODE) {
-	# Invoked for any subroutine declared in MyClass (or a
+	# Invoked for any subroutine declared in MyClass (or a 
 	# derived class) with an :Ugly attribute.
 	...
     }
@@ -347,7 +393,7 @@ block). (C<UNITCHECK> blocks don't correspond to a global compilation
 phase, so they can't be specified here.)
 
 To create a handler, define it as a subroutine with the same name as
-the desired attribute, and declare the subroutine itself with the
+the desired attribute, and declare the subroutine itself with the  
 attribute C<:ATTR>. For example:
 
     package LoudDecl;
@@ -428,7 +474,7 @@ The package name argument will typically be the name of the class into
 which the subroutine was declared, but it may also be the name of a derived
 class (since handlers are inherited).
 
-If a lexical variable is given an attribute, there is no symbol table to
+If a lexical variable is given an attribute, there is no symbol table to 
 which it belongs, so the symbol table argument (C<$_[1]>) is set to the
 string C<'LEXICAL'> in that case. Likewise, ascribing an attribute to
 an anonymous subroutine results in a symbol table argument of C<'ANON'>.
@@ -667,18 +713,18 @@ current package. Otherwise it is installed in the qualifier's package:
      UNIVERSAL::Ugly => Software::Patent # tie attr installed everywhere
     };
 
-Autoties are most commonly used in the module to which they actually tie,
+Autoties are most commonly used in the module to which they actually tie, 
 and need to export their attributes to any module that calls them. To
 facilitate this, Attribute::Handlers recognizes a special "pseudo-class" --
 C<__CALLER__>, which may be specified as the qualifier of an attribute:
 
-    package Tie::Me::Kangaroo:Down::Sport;
+    package Tie::Me::Kangaroo::Down::Sport;
 
     use Attribute::Handlers autotie =>
 	 { '__CALLER__::Roo' => __PACKAGE__ };
 
 This causes Attribute::Handlers to define the C<Roo> attribute in the package
-that imports the Tie::Me::Kangaroo:Down::Sport module.
+that imports the Tie::Me::Kangaroo::Down::Sport module.
 
 Note that it is important to quote the __CALLER__::Roo identifier because
 a bug in perl 5.8 will refuse to parse it and cause an unknown error.
@@ -686,7 +732,7 @@ a bug in perl 5.8 will refuse to parse it and cause an unknown error.
 =head3 Passing the tied object to C<tie>
 
 Occasionally it is important to pass a reference to the object being tied
-to the TIESCALAR, TIEHASH, etc. that ties it.
+to the TIESCALAR, TIEHASH, etc. that ties it. 
 
 The C<autotie> mechanism supports this too. The following code:
 
@@ -791,7 +837,7 @@ would cause the following handlers to be invoked:
                                'LEXICAL',           # no typeglob
                                \@arr,               # referent
                                'Omni',              # attr name
-                               ""                   # eval'd attr data
+                               ""                   # eval'd attr data 
                                'CHECK',             # compiler phase
                              );
 

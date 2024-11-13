@@ -6,27 +6,27 @@ use strict;
 use warnings;
 use bytes;
 
-use IO::Compress::Base::Common  2.093 ();
+use IO::Compress::Base::Common  2.204 qw(:Parse);
 
-use IO::Uncompress::Adapter::Inflate  2.093 ();
+use IO::Uncompress::Adapter::Inflate  2.204 ();
 
 
-use IO::Uncompress::Base  2.093 ;
-use IO::Uncompress::Gunzip  2.093 ;
-use IO::Uncompress::Inflate  2.093 ;
-use IO::Uncompress::RawInflate  2.093 ;
-use IO::Uncompress::Unzip  2.093 ;
+use IO::Uncompress::Base  2.204 ;
+use IO::Uncompress::Gunzip  2.204 ;
+use IO::Uncompress::Inflate  2.204 ;
+use IO::Uncompress::RawInflate  2.204 ;
+use IO::Uncompress::Unzip  2.204 ;
 
 require Exporter ;
 
 our ($VERSION, @ISA, @EXPORT_OK, %EXPORT_TAGS, $AnyInflateError);
 
-$VERSION = '2.093';
+$VERSION = '2.204';
 $AnyInflateError = '';
 
 @ISA = qw(IO::Uncompress::Base Exporter);
 @EXPORT_OK = qw( $AnyInflateError anyinflate ) ;
-%EXPORT_TAGS = %IO::Uncompress::Base::DEFLATE_CONSTANTS ;
+%EXPORT_TAGS = %IO::Uncompress::Base::DEFLATE_CONSTANTS if keys %IO::Uncompress::Base::DEFLATE_CONSTANTS;
 push @{ $EXPORT_TAGS{all} }, @EXPORT_OK ;
 Exporter::export_ok_tags('all');
 
@@ -48,7 +48,6 @@ sub anyinflate
 
 sub getExtraParams
 {
-    use IO::Compress::Base::Common  2.093 qw(:Parse);
     return ( 'rawinflate' => [Parse_boolean,  0] ) ;
 }
 
@@ -135,7 +134,7 @@ IO::Uncompress::AnyInflate - Uncompress zlib-based (zip, gzip) file/buffer
     my $status = anyinflate $input => $output [,OPTS]
         or die "anyinflate failed: $AnyInflateError\n";
 
-    my $z = new IO::Uncompress::AnyInflate $input [OPTS]
+    my $z = IO::Uncompress::AnyInflate->new( $input [OPTS] )
         or die "anyinflate failed: $AnyInflateError\n";
 
     $status = $z->read($buffer)
@@ -444,7 +443,7 @@ uncompressed data to a buffer, C<$buffer>.
     use IO::Uncompress::AnyInflate qw(anyinflate $AnyInflateError) ;
     use IO::File ;
 
-    my $input = new IO::File "<file1.txt.Compressed"
+    my $input = IO::File->new( "<file1.txt.Compressed" )
         or die "Cannot open 'file1.txt.Compressed': $!\n" ;
     my $buffer ;
     anyinflate $input => \$buffer
@@ -479,7 +478,7 @@ and if you want to compress each file one at a time, this will do the trick
 
 The format of the constructor for IO::Uncompress::AnyInflate is shown below
 
-    my $z = new IO::Uncompress::AnyInflate $input [OPTS]
+    my $z = IO::Uncompress::AnyInflate->new( $input [OPTS] )
         or die "IO::Uncompress::AnyInflate failed: $AnyInflateError\n";
 
 Returns an C<IO::Uncompress::AnyInflate> object on success and undef on failure.
@@ -941,7 +940,7 @@ C<InputLength> option in the constructor.
 
 =head1 Importing
 
-No symbolic constants are required by this IO::Uncompress::AnyInflate at present.
+No symbolic constants are required by IO::Uncompress::AnyInflate at present.
 
 =over 5
 
@@ -977,15 +976,18 @@ L<Archive::Tar|Archive::Tar>,
 L<IO::Zlib|IO::Zlib>
 
 For RFC 1950, 1951 and 1952 see
-L<http://www.faqs.org/rfcs/rfc1950.html>,
-L<http://www.faqs.org/rfcs/rfc1951.html> and
-L<http://www.faqs.org/rfcs/rfc1952.html>
+L<https://datatracker.ietf.org/doc/html/rfc1950>,
+L<https://datatracker.ietf.org/doc/html/rfc1951> and
+L<https://datatracker.ietf.org/doc/html/rfc1952>
 
 The I<zlib> compression library was written by Jean-loup Gailly
 C<gzip@prep.ai.mit.edu> and Mark Adler C<madler@alumni.caltech.edu>.
 
 The primary site for the I<zlib> compression library is
 L<http://www.zlib.org>.
+
+The primary site for the I<zlib-ng> compression library is
+L<https://github.com/zlib-ng/zlib-ng>.
 
 The primary site for gzip is L<http://www.gzip.org>.
 
@@ -999,8 +1001,7 @@ See the Changes file.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2005-2019 Paul Marquess. All rights reserved.
+Copyright (c) 2005-2023 Paul Marquess. All rights reserved.
 
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
-

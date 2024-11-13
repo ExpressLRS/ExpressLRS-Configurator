@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 1438 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/head_https3.al)"
+#line 1851 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/head_https3.al)"
 sub head_https3 { do_httpx3(HEAD => 1, @_) }
 
 # end of Net::SSLeay::head_https3

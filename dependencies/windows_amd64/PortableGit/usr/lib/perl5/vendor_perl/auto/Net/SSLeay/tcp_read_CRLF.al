@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 912 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/tcp_read_CRLF.al)"
+#line 1324 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/tcp_read_CRLF.al)"
 sub tcp_read_CRLF { tcp_read_until($CRLF, $_[0]) }
 
 # ssl_write_CRLF($ssl, $message) writes $message and appends CRLF

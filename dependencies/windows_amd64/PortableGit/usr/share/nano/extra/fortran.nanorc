@@ -1,5 +1,7 @@
 ## Syntax highlighting for Fortran 90/95.
 
+## Original author:  Pascal Gentil
+
 syntax fortran "\.(f|for|f90|f95)$"
 comment "!"
 
@@ -10,7 +12,7 @@ icolor green "\<(append|asis|assign|assignment|associated|character|common)\>"
 icolor green "\<(complex|data|default|delim|dimension|double precision)\>"
 icolor green "\<(elemental|epsilon|external|file|fmt|form|format|huge)\>"
 icolor green "\<(implicit|include|index|inquire|integer|intent|interface)\>"
-icolor green "\<(intrinsic|iostat|kind|logical|module|none|null|only)>"
+icolor green "\<(intrinsic|iostat|kind|logical|module|none|null|only)\>"
 icolor green "\<(operator|optional|pack|parameter|pointer|position|private)\>"
 icolor green "\<(program|public|real|recl|recursive|selected_int_kind)\>"
 icolor green "\<(selected_real_kind|subroutine|status)\>"
@@ -34,7 +36,7 @@ icolor yellow "\<(.or.|repeat|select case|then|where|while)\>"
 icolor magenta "\<(continue|cycle|exit|go?to|result|return)\>"
 
 # Strings.
-color yellow "<[^= 	]*>" ""(\\.|[^"])*""
+color yellow ""([^"\]|\\.)*""
 
 # Comments.
 color blue "!.*"

@@ -5,16 +5,16 @@ use strict ;
 use warnings;
 use bytes;
 
-use Compress::Raw::Zlib  2.093 ;
-use IO::Compress::Base::Common  2.093 qw(:Status );
+use Compress::Raw::Zlib  2.204 ;
+use IO::Compress::Base::Common  2.204 qw(:Status );
 
-use IO::Uncompress::Base  2.093 ;
-use IO::Uncompress::Adapter::Inflate  2.093 ;
+use IO::Uncompress::Base  2.204 ;
+use IO::Uncompress::Adapter::Inflate  2.204 ;
 
 require Exporter ;
 our ($VERSION, @ISA, @EXPORT_OK, %EXPORT_TAGS, %DEFLATE_CONSTANTS, $RawInflateError);
 
-$VERSION = '2.093';
+$VERSION = '2.204';
 $RawInflateError = '';
 
 @ISA    = qw(IO::Uncompress::Base Exporter);
@@ -356,7 +356,7 @@ IO::Uncompress::RawInflate - Read RFC 1951 files/buffers
     my $status = rawinflate $input => $output [,OPTS]
         or die "rawinflate failed: $RawInflateError\n";
 
-    my $z = new IO::Uncompress::RawInflate $input [OPTS]
+    my $z = IO::Uncompress::RawInflate->new( $input [OPTS] )
         or die "rawinflate failed: $RawInflateError\n";
 
     $status = $z->read($buffer)
@@ -646,7 +646,7 @@ uncompressed data to a buffer, C<$buffer>.
     use IO::Uncompress::RawInflate qw(rawinflate $RawInflateError) ;
     use IO::File ;
 
-    my $input = new IO::File "<file1.txt.1951"
+    my $input = IO::File->new( "<file1.txt.1951" )
         or die "Cannot open 'file1.txt.1951': $!\n" ;
     my $buffer ;
     rawinflate $input => \$buffer
@@ -681,7 +681,7 @@ and if you want to compress each file one at a time, this will do the trick
 
 The format of the constructor for IO::Uncompress::RawInflate is shown below
 
-    my $z = new IO::Uncompress::RawInflate $input [OPTS]
+    my $z = IO::Uncompress::RawInflate->new( $input [OPTS] )
         or die "IO::Uncompress::RawInflate failed: $RawInflateError\n";
 
 Returns an C<IO::Uncompress::RawInflate> object on success and undef on failure.
@@ -1064,7 +1064,7 @@ C<InputLength> option in the constructor.
 
 =head1 Importing
 
-No symbolic constants are required by this IO::Uncompress::RawInflate at present.
+No symbolic constants are required by IO::Uncompress::RawInflate at present.
 
 =over 5
 
@@ -1100,15 +1100,18 @@ L<Archive::Tar|Archive::Tar>,
 L<IO::Zlib|IO::Zlib>
 
 For RFC 1950, 1951 and 1952 see
-L<http://www.faqs.org/rfcs/rfc1950.html>,
-L<http://www.faqs.org/rfcs/rfc1951.html> and
-L<http://www.faqs.org/rfcs/rfc1952.html>
+L<https://datatracker.ietf.org/doc/html/rfc1950>,
+L<https://datatracker.ietf.org/doc/html/rfc1951> and
+L<https://datatracker.ietf.org/doc/html/rfc1952>
 
 The I<zlib> compression library was written by Jean-loup Gailly
 C<gzip@prep.ai.mit.edu> and Mark Adler C<madler@alumni.caltech.edu>.
 
 The primary site for the I<zlib> compression library is
 L<http://www.zlib.org>.
+
+The primary site for the I<zlib-ng> compression library is
+L<https://github.com/zlib-ng/zlib-ng>.
 
 The primary site for gzip is L<http://www.gzip.org>.
 
@@ -1122,8 +1125,7 @@ See the Changes file.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2005-2019 Paul Marquess. All rights reserved.
+Copyright (c) 2005-2023 Paul Marquess. All rights reserved.
 
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
-

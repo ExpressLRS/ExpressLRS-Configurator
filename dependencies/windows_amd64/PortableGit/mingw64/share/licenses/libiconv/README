@@ -72,6 +72,24 @@ support for a few extra encodings:
         TDS565
     Platform specifics
         ATARIST, RISCOS-LATIN1
+    EBCDIC compatible (not ASCII compatible, very rarely used)
+        European languages
+            IBM-{037,273,277,278,280,282,284,285,297,423,500,870,871,875,880},
+            IBM-{905,924,1025,1026,1047,1112,1122,1123,1140,1141,1142,1143},
+            IBM-{1144,1145,1146,1147,1148,1149,1153,1154,1155,1156,1157,1158},
+            IBM-{1165,1166,4971}
+        Semitic languages
+            IBM-{424,425,12712,16804}
+        Persian
+            IBM-1097
+        Thai
+            IBM-{838,1160}
+        Laotian
+            IBM-1132
+        Vietnamese
+            IBM-{1130,1164}
+        Indic languages
+            IBM-1137
 
 It can convert from any of these encodings to any other, through Unicode
 conversion.
@@ -115,16 +133,14 @@ This library installs:
 
 To use it, simply #include <iconv.h> and use the functions.
 
-To use it in an autoconfiguring package:
-  - If you don't use automake, append m4/iconv.m4 to your aclocal.m4
-    file.
-  - If you do use automake, add m4/iconv.m4 to your m4 macro repository.
+To use it in a package that uses GNU autoconf and GNU automake:
+  - Use gnulib-tool to import the Gnulib module 'iconv'. It consists
+    of a couple of *.m4 files (iconv.m4 and its dependencies) and a
+    file 'build-aux/config.rpath'.
   - Add to the link command line of libraries and executables that use
     the functions the placeholder @LIBICONV@ (or, if using libtool for
-    the link, @LTLIBICONV@). If you use automake, the right place for
+    the link, @LTLIBICONV@). In Makefile.am files, the right place for
     these additions are the *_LDADD variables.
-Note that 'iconv.m4' is also part of GNU gnulib, available through
-the gnulib module 'iconv'.
 
 
 Copyright
@@ -139,17 +155,19 @@ The iconv _program_ and the documentation are under GPL, see file COPYING.
 Download
 --------
 
-    https://ftp.gnu.org/gnu/libiconv/libiconv-1.16.tar.gz
+    https://ftp.gnu.org/gnu/libiconv/libiconv-1.17.tar.gz
 
 Homepage
 --------
 
     https://www.gnu.org/software/libiconv/
 
-Bug reports to
---------------
+Bug reports
+-----------
 
-    <bug-gnu-libiconv@gnu.org>
+Report bugs
+  - in the bug tracker at <https://savannah.gnu.org/projects/libiconv>
+  - or by email to <bug-gnu-libiconv@gnu.org>.
 
 
 Bruno Haible <bruno@clisp.org>

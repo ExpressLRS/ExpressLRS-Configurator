@@ -1,7 +1,7 @@
 #!/bin/sh
 # sh is buggy on RS/6000 AIX 3.2. Replace above line with #!/bin/ksh
 
-# Copyright (C) 1998, 2002, 2006-2007, 2009-2018 Free Software Foundation, Inc.
+# Copyright (C) 1998, 2002, 2006-2007, 2009-2023 Free Software Foundation, Inc.
 # Copyright (C) 1993 Jean-loup Gailly
 
 # This program is free software; you can redistribute it and/or modify
@@ -24,8 +24,8 @@ case $1 in
   *)    prog=diff; cmp='${DIFF-diff}';;
 esac
 
-version="z$prog (gzip) 1.10
-Copyright (C) 2009, 2011-2018 Free Software Foundation, Inc.
+version="z$prog (gzip) 1.13
+Copyright (C) 2023 Free Software Foundation, Inc.
 This is free software.  You may redistribute copies of it under the terms of
 the GNU General Public License <https://www.gnu.org/licenses/gpl.html>.
 There is NO WARRANTY, to the extent permitted by law.
@@ -48,51 +48,85 @@ escape='
   $s/X$/'\''/
 '
 
-while :; do
-  case $1 in
+filesonly=
+file1=
+file2=
+needop=
+
+for arg
+do
+  case $filesonly$needop$arg in
   --h*) printf '%s\n' "$usage"   || exit 2; exit;;
   --v*) printf '%s\n' "$version" || exit 2; exit;;
-  --) shift; break;;
-  -*\'*) cmp="$cmp '"`printf '%sX\n' "$1" | sed "$escape"`;;
-  -?*) cmp="$cmp '$1'";;
-  *) break;;
+  --) filesonly=t;;
+  -*\'*) cmp="$cmp '"`printf '%sX\n' "$arg" | LC_ALL=C sed "$escape"`;;
+  -[CDFISUWXx]) needop="'$arg'";;
+  -?*) cmp="$cmp '$arg'";;
+  *) case $needop in
+     '') case $arg in
+         '') printf >&2 '%s\n' "$0: empty file name"; exit 2;;
+         esac
+         case $file1 in
+         '') file1=$arg;;
+         *) case $file2 in
+            '') file2=$arg;;
+            *) printf >&2 '%s\n' "$0: extra operand '$arg'"; exit 2;;
+            esac;;
+         esac;;
+     *) cmp="$cmp $needop '$arg'"
+        needop=;;
+     esac;;
   esac
-  shift
 done
+case $needop in
+'') ;;
+*) printf >&2 '%s\n' "$0: $prevarg: option requires an argument -- $needop"
+   exit 2;;
+esac
+
 cmp="$cmp --"
 
-for file
-do
-  test "X$file" = X- || <"$file" || exit 2
-done
+case $file1 in
+'') printf >&2 '%s\n' "$0: missing operand"; exit 2;;
+-) ;;
+*) <"$file1" || exit 2;;
+esac
+case $file2 in
+''|-) ;;
+*) <"$file2" || exit 2;;
+esac
 
 gzip_status=0
 exec 3>&1
 
-if test $# -eq 1; then
-  case $1 in
+case $file2 in
+'')
+  case $file1 in
   *[-.]gz* | *[-.][zZ] | *.t[ga]z)
-    FILE=`expr "X$1" : 'X\(.*\)[-.][zZtga]*$'`
+    FILE=`LC_ALL=C expr "X$file1" : 'X\(.*\)[-.][zZtga]*$'`
     gzip_status=$(
       exec 4>&1
-      (gzip -cd -- "$1" 4>&-; echo $? >&4) 3>&- | eval "$cmp" - '"$FILE"' >&3
+      (gzip -cd -- "$file1" 4>&-; echo $? >&4) 3>&- |
+        eval "$cmp" - '"$FILE"' >&3
     );;
   *)
-    printf >&2 '%s\n' "$0: $1: unknown compressed file extension"
+    printf >&2 '%s\n' "$0: $file1: unknown compressed file extension"
     exit 2;;
-  esac
-elif test $# -eq 2; then
-        case "$1" in
+  esac;;
+*)
+  case $file1,$file2 in
+  -,-)
+        gzip_status=$(
+          exec 4>&1
+          (gzip -cdfq - 4>&-; echo $? >&4) 3>&- |
+            eval "$cmp" - - >&3
+        );;
+  *)
+        case $file1 in
         *[-.]gz* | *[-.][zZ] | *.t[ga]z | -)
-                case "$2" in
+                case $file2 in
                 *[-.]gz* | *[-.][zZ] | *.t[ga]z | -)
-                    if test "$1$2" = --; then
-                        gzip_status=$(
-                          exec 4>&1
-                          (gzip -cdfq - 4>&-; echo $? >&4) 3>&- |
-                            eval "$cmp" - - >&3
-                        )
-                    elif
+                    if
                         # Reject Solaris 8's buggy /bin/bash 2.03.
                         echo X |
                          (echo X | eval "$cmp" /dev/fd/5 - >/dev/null 2>&1) \
@@ -100,8 +134,9 @@ elif test $# -eq 2; then
                     then
                         gzip_status=$(
                           exec 4>&1
-                          (gzip -cdfq -- "$1" 4>&-; echo $? >&4) 3>&- |
-                            ( (gzip -cdfq -- "$2" 4>&-; echo $? >&4) 3>&- 5<&- </dev/null |
+                          (gzip -cdfq -- "$file1" 4>&-; echo $? >&4) 3>&- |
+                              ((gzip -cdfq -- "$file2" 4>&-
+                                echo $? >&4) 3>&- 5<&- </dev/null |
                                eval "$cmp" /dev/fd/5 - >&3) 5<&0
                         )
                         cmp_status=$?
@@ -128,10 +163,10 @@ elif test $# -eq 2; then
                           set -C
                           tmp=${TMPDIR}zdiff$$
                         fi
-                        gzip -cdfq -- "$2" > "$tmp" || exit 2
+                        gzip -cdfq -- "$file2" > "$tmp" || exit 2
                         gzip_status=$(
                           exec 4>&1
-                          (gzip -cdfq -- "$1" 4>&-; echo $? >&4) 3>&- |
+                          (gzip -cdfq -- "$file1" 4>&-; echo $? >&4) 3>&- |
                             eval "$cmp" - '"$tmp"' >&3
                         )
                         cmp_status=$?
@@ -142,25 +177,22 @@ elif test $# -eq 2; then
                 *)
                     gzip_status=$(
                       exec 4>&1
-                      (gzip -cdfq -- "$1" 4>&-; echo $? >&4) 3>&- |
-                        eval "$cmp" - '"$2"' >&3
+                      (gzip -cdfq -- "$file1" 4>&-; echo $? >&4) 3>&- |
+                        eval "$cmp" - '"$file2"' >&3
                     );;
                 esac;;
-        *)      case "$2" in
+        *)      case $file2 in
                 *[-.]gz* | *[-.][zZ] | *.t[ga]z | -)
                         gzip_status=$(
                           exec 4>&1
-                          (gzip -cdfq -- "$2" 4>&-; echo $? >&4) 3>&- |
-                            eval "$cmp" '"$1"' - >&3
+                          (gzip -cdfq -- "$file2" 4>&-; echo $? >&4) 3>&- |
+                            eval "$cmp" '"$file1"' - >&3
                         );;
-                *)	eval "$cmp" '"$1"' '"$2"';;
+                *)	eval "$cmp" '"$file1"' '"$file2"';;
                 esac;;
-        esac
-else
-        printf >&2 '%s\n' \
-          "$0: invalid number of operands; try \`$0 --help' for help"
-        exit 2
-fi
+        esac;;
+  esac;;
+esac
 
 cmp_status=$?
 test "$gzip_status" -eq 0 || exit 2

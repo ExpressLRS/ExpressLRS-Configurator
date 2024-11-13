@@ -66,199 +66,626 @@ $Net::SSLeay::slowly = 0;
 $Net::SSLeay::random_device = '/dev/urandom';
 $Net::SSLeay::how_random = 512;
 
-$VERSION = '1.88'; # Also update $Net::SSLeay::Handle::VERSION
+# When updating this, also update $VERSION in the following files:
+#   inc/Test/Net/SSLeay.pm
+#   inc/Test/Net/SSLeay/Socket.pm
+#   lib/Net/SSLeay/Handle.pm
+$VERSION = '1.92';
+
 @ISA = qw(Exporter);
 
-#BEWARE:
-# 3-columns part of @EXPORT_OK related to constants is the output of command:
-# perl helper_script/regen_openssl_constants.pl -gen-pod
-# if you add/remove any constant you need to update it manually
+# This array is automatically generated - do not manually modify it.
+# To add or remove a constant, edit helper_script/constants.txt, then run
+# helper_script/update-exported-constants.
+my @constants = qw(
+    ASN1_STRFLGS_ESC_CTRL
+    ASN1_STRFLGS_ESC_MSB
+    ASN1_STRFLGS_ESC_QUOTE
+    ASN1_STRFLGS_RFC2253
+    CB_ACCEPT_EXIT
+    CB_ACCEPT_LOOP
+    CB_ALERT
+    CB_CONNECT_EXIT
+    CB_CONNECT_LOOP
+    CB_EXIT
+    CB_HANDSHAKE_DONE
+    CB_HANDSHAKE_START
+    CB_LOOP
+    CB_READ
+    CB_READ_ALERT
+    CB_WRITE
+    CB_WRITE_ALERT
+    ERROR_NONE
+    ERROR_SSL
+    ERROR_SYSCALL
+    ERROR_WANT_ACCEPT
+    ERROR_WANT_CONNECT
+    ERROR_WANT_READ
+    ERROR_WANT_WRITE
+    ERROR_WANT_X509_LOOKUP
+    ERROR_ZERO_RETURN
+    EVP_PKS_DSA
+    EVP_PKS_EC
+    EVP_PKS_RSA
+    EVP_PKT_ENC
+    EVP_PKT_EXCH
+    EVP_PKT_EXP
+    EVP_PKT_SIGN
+    EVP_PK_DH
+    EVP_PK_DSA
+    EVP_PK_EC
+    EVP_PK_RSA
+    FILETYPE_ASN1
+    FILETYPE_PEM
+    F_CLIENT_CERTIFICATE
+    F_CLIENT_HELLO
+    F_CLIENT_MASTER_KEY
+    F_D2I_SSL_SESSION
+    F_GET_CLIENT_FINISHED
+    F_GET_CLIENT_HELLO
+    F_GET_CLIENT_MASTER_KEY
+    F_GET_SERVER_FINISHED
+    F_GET_SERVER_HELLO
+    F_GET_SERVER_VERIFY
+    F_I2D_SSL_SESSION
+    F_READ_N
+    F_REQUEST_CERTIFICATE
+    F_SERVER_HELLO
+    F_SSL_CERT_NEW
+    F_SSL_GET_NEW_SESSION
+    F_SSL_NEW
+    F_SSL_READ
+    F_SSL_RSA_PRIVATE_DECRYPT
+    F_SSL_RSA_PUBLIC_ENCRYPT
+    F_SSL_SESSION_NEW
+    F_SSL_SESSION_PRINT_FP
+    F_SSL_SET_FD
+    F_SSL_SET_RFD
+    F_SSL_SET_WFD
+    F_SSL_USE_CERTIFICATE
+    F_SSL_USE_CERTIFICATE_ASN1
+    F_SSL_USE_CERTIFICATE_FILE
+    F_SSL_USE_PRIVATEKEY
+    F_SSL_USE_PRIVATEKEY_ASN1
+    F_SSL_USE_PRIVATEKEY_FILE
+    F_SSL_USE_RSAPRIVATEKEY
+    F_SSL_USE_RSAPRIVATEKEY_ASN1
+    F_SSL_USE_RSAPRIVATEKEY_FILE
+    F_WRITE_PENDING
+    GEN_DIRNAME
+    GEN_DNS
+    GEN_EDIPARTY
+    GEN_EMAIL
+    GEN_IPADD
+    GEN_OTHERNAME
+    GEN_RID
+    GEN_URI
+    GEN_X400
+    LIBRESSL_VERSION_NUMBER
+    MBSTRING_ASC
+    MBSTRING_BMP
+    MBSTRING_FLAG
+    MBSTRING_UNIV
+    MBSTRING_UTF8
+    MIN_RSA_MODULUS_LENGTH_IN_BYTES
+    MODE_ACCEPT_MOVING_WRITE_BUFFER
+    MODE_AUTO_RETRY
+    MODE_ENABLE_PARTIAL_WRITE
+    MODE_RELEASE_BUFFERS
+    NID_OCSP_sign
+    NID_SMIMECapabilities
+    NID_X500
+    NID_X509
+    NID_ad_OCSP
+    NID_ad_ca_issuers
+    NID_algorithm
+    NID_authority_key_identifier
+    NID_basic_constraints
+    NID_bf_cbc
+    NID_bf_cfb64
+    NID_bf_ecb
+    NID_bf_ofb64
+    NID_cast5_cbc
+    NID_cast5_cfb64
+    NID_cast5_ecb
+    NID_cast5_ofb64
+    NID_certBag
+    NID_certificate_policies
+    NID_client_auth
+    NID_code_sign
+    NID_commonName
+    NID_countryName
+    NID_crlBag
+    NID_crl_distribution_points
+    NID_crl_number
+    NID_crl_reason
+    NID_delta_crl
+    NID_des_cbc
+    NID_des_cfb64
+    NID_des_ecb
+    NID_des_ede
+    NID_des_ede3
+    NID_des_ede3_cbc
+    NID_des_ede3_cfb64
+    NID_des_ede3_ofb64
+    NID_des_ede_cbc
+    NID_des_ede_cfb64
+    NID_des_ede_ofb64
+    NID_des_ofb64
+    NID_description
+    NID_desx_cbc
+    NID_dhKeyAgreement
+    NID_dnQualifier
+    NID_dsa
+    NID_dsaWithSHA
+    NID_dsaWithSHA1
+    NID_dsaWithSHA1_2
+    NID_dsa_2
+    NID_email_protect
+    NID_ext_key_usage
+    NID_ext_req
+    NID_friendlyName
+    NID_givenName
+    NID_hmacWithSHA1
+    NID_id_ad
+    NID_id_ce
+    NID_id_kp
+    NID_id_pbkdf2
+    NID_id_pe
+    NID_id_pkix
+    NID_id_qt_cps
+    NID_id_qt_unotice
+    NID_idea_cbc
+    NID_idea_cfb64
+    NID_idea_ecb
+    NID_idea_ofb64
+    NID_info_access
+    NID_initials
+    NID_invalidity_date
+    NID_issuer_alt_name
+    NID_keyBag
+    NID_key_usage
+    NID_localKeyID
+    NID_localityName
+    NID_md2
+    NID_md2WithRSAEncryption
+    NID_md5
+    NID_md5WithRSA
+    NID_md5WithRSAEncryption
+    NID_md5_sha1
+    NID_mdc2
+    NID_mdc2WithRSA
+    NID_ms_code_com
+    NID_ms_code_ind
+    NID_ms_ctl_sign
+    NID_ms_efs
+    NID_ms_ext_req
+    NID_ms_sgc
+    NID_name
+    NID_netscape
+    NID_netscape_base_url
+    NID_netscape_ca_policy_url
+    NID_netscape_ca_revocation_url
+    NID_netscape_cert_extension
+    NID_netscape_cert_sequence
+    NID_netscape_cert_type
+    NID_netscape_comment
+    NID_netscape_data_type
+    NID_netscape_renewal_url
+    NID_netscape_revocation_url
+    NID_netscape_ssl_server_name
+    NID_ns_sgc
+    NID_organizationName
+    NID_organizationalUnitName
+    NID_pbeWithMD2AndDES_CBC
+    NID_pbeWithMD2AndRC2_CBC
+    NID_pbeWithMD5AndCast5_CBC
+    NID_pbeWithMD5AndDES_CBC
+    NID_pbeWithMD5AndRC2_CBC
+    NID_pbeWithSHA1AndDES_CBC
+    NID_pbeWithSHA1AndRC2_CBC
+    NID_pbe_WithSHA1And128BitRC2_CBC
+    NID_pbe_WithSHA1And128BitRC4
+    NID_pbe_WithSHA1And2_Key_TripleDES_CBC
+    NID_pbe_WithSHA1And3_Key_TripleDES_CBC
+    NID_pbe_WithSHA1And40BitRC2_CBC
+    NID_pbe_WithSHA1And40BitRC4
+    NID_pbes2
+    NID_pbmac1
+    NID_pkcs
+    NID_pkcs3
+    NID_pkcs7
+    NID_pkcs7_data
+    NID_pkcs7_digest
+    NID_pkcs7_encrypted
+    NID_pkcs7_enveloped
+    NID_pkcs7_signed
+    NID_pkcs7_signedAndEnveloped
+    NID_pkcs8ShroudedKeyBag
+    NID_pkcs9
+    NID_pkcs9_challengePassword
+    NID_pkcs9_contentType
+    NID_pkcs9_countersignature
+    NID_pkcs9_emailAddress
+    NID_pkcs9_extCertAttributes
+    NID_pkcs9_messageDigest
+    NID_pkcs9_signingTime
+    NID_pkcs9_unstructuredAddress
+    NID_pkcs9_unstructuredName
+    NID_private_key_usage_period
+    NID_rc2_40_cbc
+    NID_rc2_64_cbc
+    NID_rc2_cbc
+    NID_rc2_cfb64
+    NID_rc2_ecb
+    NID_rc2_ofb64
+    NID_rc4
+    NID_rc4_40
+    NID_rc5_cbc
+    NID_rc5_cfb64
+    NID_rc5_ecb
+    NID_rc5_ofb64
+    NID_ripemd160
+    NID_ripemd160WithRSA
+    NID_rle_compression
+    NID_rsa
+    NID_rsaEncryption
+    NID_rsadsi
+    NID_safeContentsBag
+    NID_sdsiCertificate
+    NID_secretBag
+    NID_serialNumber
+    NID_server_auth
+    NID_sha
+    NID_sha1
+    NID_sha1WithRSA
+    NID_sha1WithRSAEncryption
+    NID_shaWithRSAEncryption
+    NID_stateOrProvinceName
+    NID_subject_alt_name
+    NID_subject_key_identifier
+    NID_surname
+    NID_sxnet
+    NID_time_stamp
+    NID_title
+    NID_undef
+    NID_uniqueIdentifier
+    NID_x509Certificate
+    NID_x509Crl
+    NID_zlib_compression
+    NOTHING
+    OCSP_RESPONSE_STATUS_INTERNALERROR
+    OCSP_RESPONSE_STATUS_MALFORMEDREQUEST
+    OCSP_RESPONSE_STATUS_SIGREQUIRED
+    OCSP_RESPONSE_STATUS_SUCCESSFUL
+    OCSP_RESPONSE_STATUS_TRYLATER
+    OCSP_RESPONSE_STATUS_UNAUTHORIZED
+    OPENSSL_BUILT_ON
+    OPENSSL_CFLAGS
+    OPENSSL_CPU_INFO
+    OPENSSL_DIR
+    OPENSSL_ENGINES_DIR
+    OPENSSL_FULL_VERSION_STRING
+    OPENSSL_INFO_CONFIG_DIR
+    OPENSSL_INFO_CPU_SETTINGS
+    OPENSSL_INFO_DIR_FILENAME_SEPARATOR
+    OPENSSL_INFO_DSO_EXTENSION
+    OPENSSL_INFO_ENGINES_DIR
+    OPENSSL_INFO_LIST_SEPARATOR
+    OPENSSL_INFO_MODULES_DIR
+    OPENSSL_INFO_SEED_SOURCE
+    OPENSSL_MODULES_DIR
+    OPENSSL_PLATFORM
+    OPENSSL_VERSION
+    OPENSSL_VERSION_MAJOR
+    OPENSSL_VERSION_MINOR
+    OPENSSL_VERSION_NUMBER
+    OPENSSL_VERSION_PATCH
+    OPENSSL_VERSION_STRING
+    OP_ALL
+    OP_ALLOW_NO_DHE_KEX
+    OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION
+    OP_CIPHER_SERVER_PREFERENCE
+    OP_CISCO_ANYCONNECT
+    OP_COOKIE_EXCHANGE
+    OP_CRYPTOPRO_TLSEXT_BUG
+    OP_DONT_INSERT_EMPTY_FRAGMENTS
+    OP_ENABLE_MIDDLEBOX_COMPAT
+    OP_EPHEMERAL_RSA
+    OP_LEGACY_SERVER_CONNECT
+    OP_MICROSOFT_BIG_SSLV3_BUFFER
+    OP_MICROSOFT_SESS_ID_BUG
+    OP_MSIE_SSLV2_RSA_PADDING
+    OP_NETSCAPE_CA_DN_BUG
+    OP_NETSCAPE_CHALLENGE_BUG
+    OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG
+    OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG
+    OP_NON_EXPORT_FIRST
+    OP_NO_ANTI_REPLAY
+    OP_NO_CLIENT_RENEGOTIATION
+    OP_NO_COMPRESSION
+    OP_NO_ENCRYPT_THEN_MAC
+    OP_NO_QUERY_MTU
+    OP_NO_RENEGOTIATION
+    OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION
+    OP_NO_SSL_MASK
+    OP_NO_SSLv2
+    OP_NO_SSLv3
+    OP_NO_TICKET
+    OP_NO_TLSv1
+    OP_NO_TLSv1_1
+    OP_NO_TLSv1_2
+    OP_NO_TLSv1_3
+    OP_PKCS1_CHECK_1
+    OP_PKCS1_CHECK_2
+    OP_PRIORITIZE_CHACHA
+    OP_SAFARI_ECDHE_ECDSA_BUG
+    OP_SINGLE_DH_USE
+    OP_SINGLE_ECDH_USE
+    OP_SSLEAY_080_CLIENT_DH_BUG
+    OP_SSLREF2_REUSE_CERT_TYPE_BUG
+    OP_TLSEXT_PADDING
+    OP_TLS_BLOCK_PADDING_BUG
+    OP_TLS_D5_BUG
+    OP_TLS_ROLLBACK_BUG
+    READING
+    RECEIVED_SHUTDOWN
+    RSA_3
+    RSA_F4
+    R_BAD_AUTHENTICATION_TYPE
+    R_BAD_CHECKSUM
+    R_BAD_MAC_DECODE
+    R_BAD_RESPONSE_ARGUMENT
+    R_BAD_SSL_FILETYPE
+    R_BAD_SSL_SESSION_ID_LENGTH
+    R_BAD_STATE
+    R_BAD_WRITE_RETRY
+    R_CHALLENGE_IS_DIFFERENT
+    R_CIPHER_TABLE_SRC_ERROR
+    R_INVALID_CHALLENGE_LENGTH
+    R_NO_CERTIFICATE_SET
+    R_NO_CERTIFICATE_SPECIFIED
+    R_NO_CIPHER_LIST
+    R_NO_CIPHER_MATCH
+    R_NO_PRIVATEKEY
+    R_NO_PUBLICKEY
+    R_NULL_SSL_CTX
+    R_PEER_DID_NOT_RETURN_A_CERTIFICATE
+    R_PEER_ERROR
+    R_PEER_ERROR_CERTIFICATE
+    R_PEER_ERROR_NO_CIPHER
+    R_PEER_ERROR_UNSUPPORTED_CERTIFICATE_TYPE
+    R_PUBLIC_KEY_ENCRYPT_ERROR
+    R_PUBLIC_KEY_IS_NOT_RSA
+    R_READ_WRONG_PACKET_TYPE
+    R_SHORT_READ
+    R_SSL_SESSION_ID_IS_DIFFERENT
+    R_UNABLE_TO_EXTRACT_PUBLIC_KEY
+    R_UNKNOWN_REMOTE_ERROR_TYPE
+    R_UNKNOWN_STATE
+    R_X509_LIB
+    SENT_SHUTDOWN
+    SESSION_ASN1_VERSION
+    SESS_CACHE_BOTH
+    SESS_CACHE_CLIENT
+    SESS_CACHE_NO_AUTO_CLEAR
+    SESS_CACHE_NO_INTERNAL
+    SESS_CACHE_NO_INTERNAL_LOOKUP
+    SESS_CACHE_NO_INTERNAL_STORE
+    SESS_CACHE_OFF
+    SESS_CACHE_SERVER
+    SSL2_MT_CLIENT_CERTIFICATE
+    SSL2_MT_CLIENT_FINISHED
+    SSL2_MT_CLIENT_HELLO
+    SSL2_MT_CLIENT_MASTER_KEY
+    SSL2_MT_ERROR
+    SSL2_MT_REQUEST_CERTIFICATE
+    SSL2_MT_SERVER_FINISHED
+    SSL2_MT_SERVER_HELLO
+    SSL2_MT_SERVER_VERIFY
+    SSL2_VERSION
+    SSL3_MT_CCS
+    SSL3_MT_CERTIFICATE
+    SSL3_MT_CERTIFICATE_REQUEST
+    SSL3_MT_CERTIFICATE_STATUS
+    SSL3_MT_CERTIFICATE_URL
+    SSL3_MT_CERTIFICATE_VERIFY
+    SSL3_MT_CHANGE_CIPHER_SPEC
+    SSL3_MT_CLIENT_HELLO
+    SSL3_MT_CLIENT_KEY_EXCHANGE
+    SSL3_MT_ENCRYPTED_EXTENSIONS
+    SSL3_MT_END_OF_EARLY_DATA
+    SSL3_MT_FINISHED
+    SSL3_MT_HELLO_REQUEST
+    SSL3_MT_KEY_UPDATE
+    SSL3_MT_MESSAGE_HASH
+    SSL3_MT_NEWSESSION_TICKET
+    SSL3_MT_NEXT_PROTO
+    SSL3_MT_SERVER_DONE
+    SSL3_MT_SERVER_HELLO
+    SSL3_MT_SERVER_KEY_EXCHANGE
+    SSL3_MT_SUPPLEMENTAL_DATA
+    SSL3_RT_ALERT
+    SSL3_RT_APPLICATION_DATA
+    SSL3_RT_CHANGE_CIPHER_SPEC
+    SSL3_RT_HANDSHAKE
+    SSL3_RT_HEADER
+    SSL3_RT_INNER_CONTENT_TYPE
+    SSL3_VERSION
+    SSLEAY_BUILT_ON
+    SSLEAY_CFLAGS
+    SSLEAY_DIR
+    SSLEAY_PLATFORM
+    SSLEAY_VERSION
+    ST_ACCEPT
+    ST_BEFORE
+    ST_CONNECT
+    ST_INIT
+    ST_OK
+    ST_READ_BODY
+    ST_READ_HEADER
+    TLS1_1_VERSION
+    TLS1_2_VERSION
+    TLS1_3_VERSION
+    TLS1_VERSION
+    TLSEXT_STATUSTYPE_ocsp
+    VERIFY_CLIENT_ONCE
+    VERIFY_FAIL_IF_NO_PEER_CERT
+    VERIFY_NONE
+    VERIFY_PEER
+    VERIFY_POST_HANDSHAKE
+    V_OCSP_CERTSTATUS_GOOD
+    V_OCSP_CERTSTATUS_REVOKED
+    V_OCSP_CERTSTATUS_UNKNOWN
+    WRITING
+    X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT
+    X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS
+    X509_CHECK_FLAG_NEVER_CHECK_SUBJECT
+    X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS
+    X509_CHECK_FLAG_NO_WILDCARDS
+    X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS
+    X509_FILETYPE_ASN1
+    X509_FILETYPE_DEFAULT
+    X509_FILETYPE_PEM
+    X509_LOOKUP
+    X509_PURPOSE_ANY
+    X509_PURPOSE_CRL_SIGN
+    X509_PURPOSE_NS_SSL_SERVER
+    X509_PURPOSE_OCSP_HELPER
+    X509_PURPOSE_SMIME_ENCRYPT
+    X509_PURPOSE_SMIME_SIGN
+    X509_PURPOSE_SSL_CLIENT
+    X509_PURPOSE_SSL_SERVER
+    X509_PURPOSE_TIMESTAMP_SIGN
+    X509_TRUST_COMPAT
+    X509_TRUST_EMAIL
+    X509_TRUST_OBJECT_SIGN
+    X509_TRUST_OCSP_REQUEST
+    X509_TRUST_OCSP_SIGN
+    X509_TRUST_SSL_CLIENT
+    X509_TRUST_SSL_SERVER
+    X509_TRUST_TSA
+    X509_V_ERR_AKID_ISSUER_SERIAL_MISMATCH
+    X509_V_ERR_AKID_SKID_MISMATCH
+    X509_V_ERR_APPLICATION_VERIFICATION
+    X509_V_ERR_CA_KEY_TOO_SMALL
+    X509_V_ERR_CA_MD_TOO_WEAK
+    X509_V_ERR_CERT_CHAIN_TOO_LONG
+    X509_V_ERR_CERT_HAS_EXPIRED
+    X509_V_ERR_CERT_NOT_YET_VALID
+    X509_V_ERR_CERT_REJECTED
+    X509_V_ERR_CERT_REVOKED
+    X509_V_ERR_CERT_SIGNATURE_FAILURE
+    X509_V_ERR_CERT_UNTRUSTED
+    X509_V_ERR_CRL_HAS_EXPIRED
+    X509_V_ERR_CRL_NOT_YET_VALID
+    X509_V_ERR_CRL_PATH_VALIDATION_ERROR
+    X509_V_ERR_CRL_SIGNATURE_FAILURE
+    X509_V_ERR_DANE_NO_MATCH
+    X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT
+    X509_V_ERR_DIFFERENT_CRL_SCOPE
+    X509_V_ERR_EE_KEY_TOO_SMALL
+    X509_V_ERR_EMAIL_MISMATCH
+    X509_V_ERR_ERROR_IN_CERT_NOT_AFTER_FIELD
+    X509_V_ERR_ERROR_IN_CERT_NOT_BEFORE_FIELD
+    X509_V_ERR_ERROR_IN_CRL_LAST_UPDATE_FIELD
+    X509_V_ERR_ERROR_IN_CRL_NEXT_UPDATE_FIELD
+    X509_V_ERR_EXCLUDED_VIOLATION
+    X509_V_ERR_HOSTNAME_MISMATCH
+    X509_V_ERR_INVALID_CA
+    X509_V_ERR_INVALID_CALL
+    X509_V_ERR_INVALID_EXTENSION
+    X509_V_ERR_INVALID_NON_CA
+    X509_V_ERR_INVALID_POLICY_EXTENSION
+    X509_V_ERR_INVALID_PURPOSE
+    X509_V_ERR_IP_ADDRESS_MISMATCH
+    X509_V_ERR_KEYUSAGE_NO_CERTSIGN
+    X509_V_ERR_KEYUSAGE_NO_CRL_SIGN
+    X509_V_ERR_KEYUSAGE_NO_DIGITAL_SIGNATURE
+    X509_V_ERR_NO_EXPLICIT_POLICY
+    X509_V_ERR_NO_VALID_SCTS
+    X509_V_ERR_OCSP_CERT_UNKNOWN
+    X509_V_ERR_OCSP_VERIFY_FAILED
+    X509_V_ERR_OCSP_VERIFY_NEEDED
+    X509_V_ERR_OUT_OF_MEM
+    X509_V_ERR_PATH_LENGTH_EXCEEDED
+    X509_V_ERR_PATH_LOOP
+    X509_V_ERR_PERMITTED_VIOLATION
+    X509_V_ERR_PROXY_CERTIFICATES_NOT_ALLOWED
+    X509_V_ERR_PROXY_PATH_LENGTH_EXCEEDED
+    X509_V_ERR_PROXY_SUBJECT_NAME_VIOLATION
+    X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN
+    X509_V_ERR_STORE_LOOKUP
+    X509_V_ERR_SUBJECT_ISSUER_MISMATCH
+    X509_V_ERR_SUBTREE_MINMAX
+    X509_V_ERR_SUITE_B_CANNOT_SIGN_P_384_WITH_P_256
+    X509_V_ERR_SUITE_B_INVALID_ALGORITHM
+    X509_V_ERR_SUITE_B_INVALID_CURVE
+    X509_V_ERR_SUITE_B_INVALID_SIGNATURE_ALGORITHM
+    X509_V_ERR_SUITE_B_INVALID_VERSION
+    X509_V_ERR_SUITE_B_LOS_NOT_ALLOWED
+    X509_V_ERR_UNABLE_TO_DECODE_ISSUER_PUBLIC_KEY
+    X509_V_ERR_UNABLE_TO_DECRYPT_CERT_SIGNATURE
+    X509_V_ERR_UNABLE_TO_DECRYPT_CRL_SIGNATURE
+    X509_V_ERR_UNABLE_TO_GET_CRL
+    X509_V_ERR_UNABLE_TO_GET_CRL_ISSUER
+    X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT
+    X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT_LOCALLY
+    X509_V_ERR_UNABLE_TO_VERIFY_LEAF_SIGNATURE
+    X509_V_ERR_UNHANDLED_CRITICAL_CRL_EXTENSION
+    X509_V_ERR_UNHANDLED_CRITICAL_EXTENSION
+    X509_V_ERR_UNNESTED_RESOURCE
+    X509_V_ERR_UNSPECIFIED
+    X509_V_ERR_UNSUPPORTED_CONSTRAINT_SYNTAX
+    X509_V_ERR_UNSUPPORTED_CONSTRAINT_TYPE
+    X509_V_ERR_UNSUPPORTED_EXTENSION_FEATURE
+    X509_V_ERR_UNSUPPORTED_NAME_SYNTAX
+    X509_V_FLAG_ALLOW_PROXY_CERTS
+    X509_V_FLAG_CB_ISSUER_CHECK
+    X509_V_FLAG_CHECK_SS_SIGNATURE
+    X509_V_FLAG_CRL_CHECK
+    X509_V_FLAG_CRL_CHECK_ALL
+    X509_V_FLAG_EXPLICIT_POLICY
+    X509_V_FLAG_EXTENDED_CRL_SUPPORT
+    X509_V_FLAG_IGNORE_CRITICAL
+    X509_V_FLAG_INHIBIT_ANY
+    X509_V_FLAG_INHIBIT_MAP
+    X509_V_FLAG_LEGACY_VERIFY
+    X509_V_FLAG_NOTIFY_POLICY
+    X509_V_FLAG_NO_ALT_CHAINS
+    X509_V_FLAG_NO_CHECK_TIME
+    X509_V_FLAG_PARTIAL_CHAIN
+    X509_V_FLAG_POLICY_CHECK
+    X509_V_FLAG_POLICY_MASK
+    X509_V_FLAG_SUITEB_128_LOS
+    X509_V_FLAG_SUITEB_128_LOS_ONLY
+    X509_V_FLAG_SUITEB_192_LOS
+    X509_V_FLAG_TRUSTED_FIRST
+    X509_V_FLAG_USE_CHECK_TIME
+    X509_V_FLAG_USE_DELTAS
+    X509_V_FLAG_X509_STRICT
+    X509_V_OK
+    XN_FLAG_COMPAT
+    XN_FLAG_DN_REV
+    XN_FLAG_DUMP_UNKNOWN_FIELDS
+    XN_FLAG_FN_ALIGN
+    XN_FLAG_FN_LN
+    XN_FLAG_FN_MASK
+    XN_FLAG_FN_NONE
+    XN_FLAG_FN_OID
+    XN_FLAG_FN_SN
+    XN_FLAG_MULTILINE
+    XN_FLAG_ONELINE
+    XN_FLAG_RFC2253
+    XN_FLAG_SEP_COMMA_PLUS
+    XN_FLAG_SEP_CPLUS_SPC
+    XN_FLAG_SEP_MASK
+    XN_FLAG_SEP_MULTILINE
+    XN_FLAG_SEP_SPLUS_SPC
+    XN_FLAG_SPC_EQ
+);
 
-@EXPORT_OK = qw(
- ASN1_STRFLGS_ESC_CTRL           NID_netscape                              R_UNKNOWN_REMOTE_ERROR_TYPE
- ASN1_STRFLGS_ESC_MSB            NID_netscape_base_url                     R_UNKNOWN_STATE
- ASN1_STRFLGS_ESC_QUOTE          NID_netscape_ca_policy_url                R_X509_LIB
- ASN1_STRFLGS_RFC2253            NID_netscape_ca_revocation_url            SENT_SHUTDOWN
- CB_ACCEPT_EXIT                  NID_netscape_cert_extension               SESSION_ASN1_VERSION
- CB_ACCEPT_LOOP                  NID_netscape_cert_sequence                SESS_CACHE_BOTH
- CB_ALERT                        NID_netscape_cert_type                    SESS_CACHE_CLIENT
- CB_CONNECT_EXIT                 NID_netscape_comment                      SESS_CACHE_NO_AUTO_CLEAR
- CB_CONNECT_LOOP                 NID_netscape_data_type                    SESS_CACHE_NO_INTERNAL
- CB_EXIT                         NID_netscape_renewal_url                  SESS_CACHE_NO_INTERNAL_LOOKUP
- CB_HANDSHAKE_DONE               NID_netscape_revocation_url               SESS_CACHE_NO_INTERNAL_STORE
- CB_HANDSHAKE_START              NID_netscape_ssl_server_name              SESS_CACHE_OFF
- CB_LOOP                         NID_ns_sgc                                SESS_CACHE_SERVER
- CB_READ                         NID_organizationName                      SSL3_VERSION
- CB_READ_ALERT                   NID_organizationalUnitName                SSLEAY_BUILT_ON
- CB_WRITE                        NID_pbeWithMD2AndDES_CBC                  SSLEAY_CFLAGS
- CB_WRITE_ALERT                  NID_pbeWithMD2AndRC2_CBC                  SSLEAY_DIR
- ERROR_NONE                      NID_pbeWithMD5AndCast5_CBC                SSLEAY_PLATFORM
- ERROR_SSL                       NID_pbeWithMD5AndDES_CBC                  SSLEAY_VERSION
- ERROR_SYSCALL                   NID_pbeWithMD5AndRC2_CBC                  ST_ACCEPT
- ERROR_WANT_ACCEPT               NID_pbeWithSHA1AndDES_CBC                 ST_BEFORE
- ERROR_WANT_CONNECT              NID_pbeWithSHA1AndRC2_CBC                 ST_CONNECT
- ERROR_WANT_READ                 NID_pbe_WithSHA1And128BitRC2_CBC          ST_INIT
- ERROR_WANT_WRITE                NID_pbe_WithSHA1And128BitRC4              ST_OK
- ERROR_WANT_X509_LOOKUP          NID_pbe_WithSHA1And2_Key_TripleDES_CBC    ST_READ_BODY
- ERROR_ZERO_RETURN               NID_pbe_WithSHA1And3_Key_TripleDES_CBC    ST_READ_HEADER
- EVP_PKS_DSA                     NID_pbe_WithSHA1And40BitRC2_CBC           TLS1_1_VERSION
- EVP_PKS_EC                      NID_pbe_WithSHA1And40BitRC4               TLS1_2_VERSION
- EVP_PKS_RSA                     NID_pbes2                                 TLS1_3_VERSION
- EVP_PKT_ENC                     NID_pbmac1                                TLS1_VERSION
- EVP_PKT_EXCH                    NID_pkcs                                  TLSEXT_STATUSTYPE_ocsp
- EVP_PKT_EXP                     NID_pkcs3                                 VERIFY_CLIENT_ONCE
- EVP_PKT_SIGN                    NID_pkcs7                                 VERIFY_FAIL_IF_NO_PEER_CERT
- EVP_PK_DH                       NID_pkcs7_data                            VERIFY_NONE
- EVP_PK_DSA                      NID_pkcs7_digest                          VERIFY_PEER
- EVP_PK_EC                       NID_pkcs7_encrypted                       VERIFY_POST_HANDSHAKE
- EVP_PK_RSA                      NID_pkcs7_enveloped                       V_OCSP_CERTSTATUS_GOOD
- FILETYPE_ASN1                   NID_pkcs7_signed                          V_OCSP_CERTSTATUS_REVOKED
- FILETYPE_PEM                    NID_pkcs7_signedAndEnveloped              V_OCSP_CERTSTATUS_UNKNOWN
- F_CLIENT_CERTIFICATE            NID_pkcs8ShroudedKeyBag                   WRITING
- F_CLIENT_HELLO                  NID_pkcs9                                 X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT
- F_CLIENT_MASTER_KEY             NID_pkcs9_challengePassword               X509_CHECK_FLAG_MULTI_LABEL_WILDCARDS
- F_D2I_SSL_SESSION               NID_pkcs9_contentType                     X509_CHECK_FLAG_NEVER_CHECK_SUBJECT
- F_GET_CLIENT_FINISHED           NID_pkcs9_countersignature                X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS
- F_GET_CLIENT_HELLO              NID_pkcs9_emailAddress                    X509_CHECK_FLAG_NO_WILDCARDS
- F_GET_CLIENT_MASTER_KEY         NID_pkcs9_extCertAttributes               X509_CHECK_FLAG_SINGLE_LABEL_SUBDOMAINS
- F_GET_SERVER_FINISHED           NID_pkcs9_messageDigest                   X509_FILETYPE_ASN1
- F_GET_SERVER_HELLO              NID_pkcs9_signingTime                     X509_FILETYPE_DEFAULT
- F_GET_SERVER_VERIFY             NID_pkcs9_unstructuredAddress             X509_FILETYPE_PEM
- F_I2D_SSL_SESSION               NID_pkcs9_unstructuredName                X509_LOOKUP
- F_READ_N                        NID_private_key_usage_period              X509_PURPOSE_ANY
- F_REQUEST_CERTIFICATE           NID_rc2_40_cbc                            X509_PURPOSE_CRL_SIGN
- F_SERVER_HELLO                  NID_rc2_64_cbc                            X509_PURPOSE_NS_SSL_SERVER
- F_SSL_CERT_NEW                  NID_rc2_cbc                               X509_PURPOSE_OCSP_HELPER
- F_SSL_GET_NEW_SESSION           NID_rc2_cfb64                             X509_PURPOSE_SMIME_ENCRYPT
- F_SSL_NEW                       NID_rc2_ecb                               X509_PURPOSE_SMIME_SIGN
- F_SSL_READ                      NID_rc2_ofb64                             X509_PURPOSE_SSL_CLIENT
- F_SSL_RSA_PRIVATE_DECRYPT       NID_rc4                                   X509_PURPOSE_SSL_SERVER
- F_SSL_RSA_PUBLIC_ENCRYPT        NID_rc4_40                                X509_PURPOSE_TIMESTAMP_SIGN
- F_SSL_SESSION_NEW               NID_rc5_cbc                               X509_TRUST_COMPAT
- F_SSL_SESSION_PRINT_FP          NID_rc5_cfb64                             X509_TRUST_EMAIL
- F_SSL_SET_FD                    NID_rc5_ecb                               X509_TRUST_OBJECT_SIGN
- F_SSL_SET_RFD                   NID_rc5_ofb64                             X509_TRUST_OCSP_REQUEST
- F_SSL_SET_WFD                   NID_ripemd160                             X509_TRUST_OCSP_SIGN
- F_SSL_USE_CERTIFICATE           NID_ripemd160WithRSA                      X509_TRUST_SSL_CLIENT
- F_SSL_USE_CERTIFICATE_ASN1      NID_rle_compression                       X509_TRUST_SSL_SERVER
- F_SSL_USE_CERTIFICATE_FILE      NID_rsa                                   X509_TRUST_TSA
- F_SSL_USE_PRIVATEKEY            NID_rsaEncryption                         X509_V_ERR_AKID_ISSUER_SERIAL_MISMATCH
- F_SSL_USE_PRIVATEKEY_ASN1       NID_rsadsi                                X509_V_ERR_AKID_SKID_MISMATCH
- F_SSL_USE_PRIVATEKEY_FILE       NID_safeContentsBag                       X509_V_ERR_APPLICATION_VERIFICATION
- F_SSL_USE_RSAPRIVATEKEY         NID_sdsiCertificate                       X509_V_ERR_CA_KEY_TOO_SMALL
- F_SSL_USE_RSAPRIVATEKEY_ASN1    NID_secretBag                             X509_V_ERR_CA_MD_TOO_WEAK
- F_SSL_USE_RSAPRIVATEKEY_FILE    NID_serialNumber                          X509_V_ERR_CERT_CHAIN_TOO_LONG
- F_WRITE_PENDING                 NID_server_auth                           X509_V_ERR_CERT_HAS_EXPIRED
- GEN_DIRNAME                     NID_sha                                   X509_V_ERR_CERT_NOT_YET_VALID
- GEN_DNS                         NID_sha1                                  X509_V_ERR_CERT_REJECTED
- GEN_EDIPARTY                    NID_sha1WithRSA                           X509_V_ERR_CERT_REVOKED
- GEN_EMAIL                       NID_sha1WithRSAEncryption                 X509_V_ERR_CERT_SIGNATURE_FAILURE
- GEN_IPADD                       NID_shaWithRSAEncryption                  X509_V_ERR_CERT_UNTRUSTED
- GEN_OTHERNAME                   NID_stateOrProvinceName                   X509_V_ERR_CRL_HAS_EXPIRED
- GEN_RID                         NID_subject_alt_name                      X509_V_ERR_CRL_NOT_YET_VALID
- GEN_URI                         NID_subject_key_identifier                X509_V_ERR_CRL_PATH_VALIDATION_ERROR
- GEN_X400                        NID_surname                               X509_V_ERR_CRL_SIGNATURE_FAILURE
- LIBRESSL_VERSION_NUMBER         NID_sxnet                                 X509_V_ERR_DANE_NO_MATCH
- MBSTRING_ASC                    NID_time_stamp                            X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT
- MBSTRING_BMP                    NID_title                                 X509_V_ERR_DIFFERENT_CRL_SCOPE
- MBSTRING_FLAG                   NID_undef                                 X509_V_ERR_EE_KEY_TOO_SMALL
- MBSTRING_UNIV                   NID_uniqueIdentifier                      X509_V_ERR_EMAIL_MISMATCH
- MBSTRING_UTF8                   NID_x509Certificate                       X509_V_ERR_ERROR_IN_CERT_NOT_AFTER_FIELD
- MIN_RSA_MODULUS_LENGTH_IN_BYTES NID_x509Crl                               X509_V_ERR_ERROR_IN_CERT_NOT_BEFORE_FIELD
- MODE_ACCEPT_MOVING_WRITE_BUFFER NID_zlib_compression                      X509_V_ERR_ERROR_IN_CRL_LAST_UPDATE_FIELD
- MODE_AUTO_RETRY                 NOTHING                                   X509_V_ERR_ERROR_IN_CRL_NEXT_UPDATE_FIELD
- MODE_ENABLE_PARTIAL_WRITE       OCSP_RESPONSE_STATUS_INTERNALERROR        X509_V_ERR_EXCLUDED_VIOLATION
- MODE_RELEASE_BUFFERS            OCSP_RESPONSE_STATUS_MALFORMEDREQUEST     X509_V_ERR_HOSTNAME_MISMATCH
- NID_OCSP_sign                   OCSP_RESPONSE_STATUS_SIGREQUIRED          X509_V_ERR_INVALID_CA
- NID_SMIMECapabilities           OCSP_RESPONSE_STATUS_SUCCESSFUL           X509_V_ERR_INVALID_CALL
- NID_X500                        OCSP_RESPONSE_STATUS_TRYLATER             X509_V_ERR_INVALID_EXTENSION
- NID_X509                        OCSP_RESPONSE_STATUS_UNAUTHORIZED         X509_V_ERR_INVALID_NON_CA
- NID_ad_OCSP                     OPENSSL_BUILT_ON                          X509_V_ERR_INVALID_POLICY_EXTENSION
- NID_ad_ca_issuers               OPENSSL_CFLAGS                            X509_V_ERR_INVALID_PURPOSE
- NID_algorithm                   OPENSSL_DIR                               X509_V_ERR_IP_ADDRESS_MISMATCH
- NID_authority_key_identifier    OPENSSL_ENGINES_DIR                       X509_V_ERR_KEYUSAGE_NO_CERTSIGN
- NID_basic_constraints           OPENSSL_PLATFORM                          X509_V_ERR_KEYUSAGE_NO_CRL_SIGN
- NID_bf_cbc                      OPENSSL_VERSION                           X509_V_ERR_KEYUSAGE_NO_DIGITAL_SIGNATURE
- NID_bf_cfb64                    OPENSSL_VERSION_NUMBER                    X509_V_ERR_NO_EXPLICIT_POLICY
- NID_bf_ecb                      OP_ALL                                    X509_V_ERR_NO_VALID_SCTS
- NID_bf_ofb64                    OP_ALLOW_NO_DHE_KEX                       X509_V_ERR_OCSP_CERT_UNKNOWN
- NID_cast5_cbc                   OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION      X509_V_ERR_OCSP_VERIFY_FAILED
- NID_cast5_cfb64                 OP_CIPHER_SERVER_PREFERENCE               X509_V_ERR_OCSP_VERIFY_NEEDED
- NID_cast5_ecb                   OP_CISCO_ANYCONNECT                       X509_V_ERR_OUT_OF_MEM
- NID_cast5_ofb64                 OP_COOKIE_EXCHANGE                        X509_V_ERR_PATH_LENGTH_EXCEEDED
- NID_certBag                     OP_CRYPTOPRO_TLSEXT_BUG                   X509_V_ERR_PATH_LOOP
- NID_certificate_policies        OP_DONT_INSERT_EMPTY_FRAGMENTS            X509_V_ERR_PERMITTED_VIOLATION
- NID_client_auth                 OP_ENABLE_MIDDLEBOX_COMPAT                X509_V_ERR_PROXY_CERTIFICATES_NOT_ALLOWED
- NID_code_sign                   OP_EPHEMERAL_RSA                          X509_V_ERR_PROXY_PATH_LENGTH_EXCEEDED
- NID_commonName                  OP_LEGACY_SERVER_CONNECT                  X509_V_ERR_PROXY_SUBJECT_NAME_VIOLATION
- NID_countryName                 OP_MICROSOFT_BIG_SSLV3_BUFFER             X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN
- NID_crlBag                      OP_MICROSOFT_SESS_ID_BUG                  X509_V_ERR_STORE_LOOKUP
- NID_crl_distribution_points     OP_MSIE_SSLV2_RSA_PADDING                 X509_V_ERR_SUBJECT_ISSUER_MISMATCH
- NID_crl_number                  OP_NETSCAPE_CA_DN_BUG                     X509_V_ERR_SUBTREE_MINMAX
- NID_crl_reason                  OP_NETSCAPE_CHALLENGE_BUG                 X509_V_ERR_SUITE_B_CANNOT_SIGN_P_384_WITH_P_256
- NID_delta_crl                   OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG        X509_V_ERR_SUITE_B_INVALID_ALGORITHM
- NID_des_cbc                     OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG       X509_V_ERR_SUITE_B_INVALID_CURVE
- NID_des_cfb64                   OP_NON_EXPORT_FIRST                       X509_V_ERR_SUITE_B_INVALID_SIGNATURE_ALGORITHM
- NID_des_ecb                     OP_NO_ANTI_REPLAY                         X509_V_ERR_SUITE_B_INVALID_VERSION
- NID_des_ede                     OP_NO_CLIENT_RENEGOTIATION                X509_V_ERR_SUITE_B_LOS_NOT_ALLOWED
- NID_des_ede3                    OP_NO_COMPRESSION                         X509_V_ERR_UNABLE_TO_DECODE_ISSUER_PUBLIC_KEY
- NID_des_ede3_cbc                OP_NO_ENCRYPT_THEN_MAC                    X509_V_ERR_UNABLE_TO_DECRYPT_CERT_SIGNATURE
- NID_des_ede3_cfb64              OP_NO_QUERY_MTU                           X509_V_ERR_UNABLE_TO_DECRYPT_CRL_SIGNATURE
- NID_des_ede3_ofb64              OP_NO_RENEGOTIATION                       X509_V_ERR_UNABLE_TO_GET_CRL
- NID_des_ede_cbc                 OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION X509_V_ERR_UNABLE_TO_GET_CRL_ISSUER
- NID_des_ede_cfb64               OP_NO_SSL_MASK                            X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT
- NID_des_ede_ofb64               OP_NO_SSLv2                               X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT_LOCALLY
- NID_des_ofb64                   OP_NO_SSLv3                               X509_V_ERR_UNABLE_TO_VERIFY_LEAF_SIGNATURE
- NID_description                 OP_NO_TICKET                              X509_V_ERR_UNHANDLED_CRITICAL_CRL_EXTENSION
- NID_desx_cbc                    OP_NO_TLSv1                               X509_V_ERR_UNHANDLED_CRITICAL_EXTENSION
- NID_dhKeyAgreement              OP_NO_TLSv1_1                             X509_V_ERR_UNNESTED_RESOURCE
- NID_dnQualifier                 OP_NO_TLSv1_2                             X509_V_ERR_UNSPECIFIED
- NID_dsa                         OP_NO_TLSv1_3                             X509_V_ERR_UNSUPPORTED_CONSTRAINT_SYNTAX
- NID_dsaWithSHA                  OP_PKCS1_CHECK_1                          X509_V_ERR_UNSUPPORTED_CONSTRAINT_TYPE
- NID_dsaWithSHA1                 OP_PKCS1_CHECK_2                          X509_V_ERR_UNSUPPORTED_EXTENSION_FEATURE
- NID_dsaWithSHA1_2               OP_PRIORITIZE_CHACHA                      X509_V_ERR_UNSUPPORTED_NAME_SYNTAX
- NID_dsa_2                       OP_SAFARI_ECDHE_ECDSA_BUG                 X509_V_FLAG_ALLOW_PROXY_CERTS
- NID_email_protect               OP_SINGLE_DH_USE                          X509_V_FLAG_CB_ISSUER_CHECK
- NID_ext_key_usage               OP_SINGLE_ECDH_USE                        X509_V_FLAG_CHECK_SS_SIGNATURE
- NID_ext_req                     OP_SSLEAY_080_CLIENT_DH_BUG               X509_V_FLAG_CRL_CHECK
- NID_friendlyName                OP_SSLREF2_REUSE_CERT_TYPE_BUG            X509_V_FLAG_CRL_CHECK_ALL
- NID_givenName                   OP_TLSEXT_PADDING                         X509_V_FLAG_EXPLICIT_POLICY
- NID_hmacWithSHA1                OP_TLS_BLOCK_PADDING_BUG                  X509_V_FLAG_EXTENDED_CRL_SUPPORT
- NID_id_ad                       OP_TLS_D5_BUG                             X509_V_FLAG_IGNORE_CRITICAL
- NID_id_ce                       OP_TLS_ROLLBACK_BUG                       X509_V_FLAG_INHIBIT_ANY
- NID_id_kp                       READING                                   X509_V_FLAG_INHIBIT_MAP
- NID_id_pbkdf2                   RECEIVED_SHUTDOWN                         X509_V_FLAG_NOTIFY_POLICY
- NID_id_pe                       RSA_3                                     X509_V_FLAG_NO_ALT_CHAINS
- NID_id_pkix                     RSA_F4                                    X509_V_FLAG_NO_CHECK_TIME
- NID_id_qt_cps                   R_BAD_AUTHENTICATION_TYPE                 X509_V_FLAG_PARTIAL_CHAIN
- NID_id_qt_unotice               R_BAD_CHECKSUM                            X509_V_FLAG_POLICY_CHECK
- NID_idea_cbc                    R_BAD_MAC_DECODE                          X509_V_FLAG_POLICY_MASK
- NID_idea_cfb64                  R_BAD_RESPONSE_ARGUMENT                   X509_V_FLAG_SUITEB_128_LOS
- NID_idea_ecb                    R_BAD_SSL_FILETYPE                        X509_V_FLAG_SUITEB_128_LOS_ONLY
- NID_idea_ofb64                  R_BAD_SSL_SESSION_ID_LENGTH               X509_V_FLAG_SUITEB_192_LOS
- NID_info_access                 R_BAD_STATE                               X509_V_FLAG_TRUSTED_FIRST
- NID_initials                    R_BAD_WRITE_RETRY                         X509_V_FLAG_USE_CHECK_TIME
- NID_invalidity_date             R_CHALLENGE_IS_DIFFERENT                  X509_V_FLAG_USE_DELTAS
- NID_issuer_alt_name             R_CIPHER_TABLE_SRC_ERROR                  X509_V_FLAG_X509_STRICT
- NID_keyBag                      R_INVALID_CHALLENGE_LENGTH                X509_V_OK
- NID_key_usage                   R_NO_CERTIFICATE_SET                      XN_FLAG_COMPAT
- NID_localKeyID                  R_NO_CERTIFICATE_SPECIFIED                XN_FLAG_DN_REV
- NID_localityName                R_NO_CIPHER_LIST                          XN_FLAG_DUMP_UNKNOWN_FIELDS
- NID_md2                         R_NO_CIPHER_MATCH                         XN_FLAG_FN_ALIGN
- NID_md2WithRSAEncryption        R_NO_PRIVATEKEY                           XN_FLAG_FN_LN
- NID_md5                         R_NO_PUBLICKEY                            XN_FLAG_FN_MASK
- NID_md5WithRSA                  R_NULL_SSL_CTX                            XN_FLAG_FN_NONE
- NID_md5WithRSAEncryption        R_PEER_DID_NOT_RETURN_A_CERTIFICATE       XN_FLAG_FN_OID
- NID_md5_sha1                    R_PEER_ERROR                              XN_FLAG_FN_SN
- NID_mdc2                        R_PEER_ERROR_CERTIFICATE                  XN_FLAG_MULTILINE
- NID_mdc2WithRSA                 R_PEER_ERROR_NO_CIPHER                    XN_FLAG_ONELINE
- NID_ms_code_com                 R_PEER_ERROR_UNSUPPORTED_CERTIFICATE_TYPE XN_FLAG_RFC2253
- NID_ms_code_ind                 R_PUBLIC_KEY_ENCRYPT_ERROR                XN_FLAG_SEP_COMMA_PLUS
- NID_ms_ctl_sign                 R_PUBLIC_KEY_IS_NOT_RSA                   XN_FLAG_SEP_CPLUS_SPC
- NID_ms_efs                      R_READ_WRONG_PACKET_TYPE                  XN_FLAG_SEP_MASK
- NID_ms_ext_req                  R_SHORT_READ                              XN_FLAG_SEP_MULTILINE
- NID_ms_sgc                      R_SSL_SESSION_ID_IS_DIFFERENT             XN_FLAG_SEP_SPLUS_SPC
- NID_name                        R_UNABLE_TO_EXTRACT_PUBLIC_KEY            XN_FLAG_SPC_EQ
+my @functions = qw(
     BIO_eof
     BIO_f_ssl
     BIO_free
@@ -284,14 +711,12 @@ $VERSION = '1.88'; # Also update $Net::SSLeay::Handle::VERSION
     PEM_read_bio_X509_CRL
     RSA_free
     RSA_generate_key
-    SESSION
     SESSION_free
     SESSION_get_master_key
     SESSION_new
     SESSION_print
     X509_NAME_get_text_by_NID
     X509_NAME_oneline
-    X509_STORE_CTX_set_flags
     X509_STORE_add_cert
     X509_STORE_add_crl
     X509_check_email
@@ -305,9 +730,7 @@ $VERSION = '1.88'; # Also update $Net::SSLeay::Handle::VERSION
     X509_load_cert_file
     X509_load_crl_file
     accept
-    add_session
     clear
-    clear_error
     connect
     copy_session_id
     d2i_SSL_SESSION
@@ -315,8 +738,6 @@ $VERSION = '1.88'; # Also update $Net::SSLeay::Handle::VERSION
     die_now
     do_https
     dump_peer_certificate
-    err
-    flush_sessions
     free
     get_cipher
     get_cipher_list
@@ -354,7 +775,6 @@ $VERSION = '1.88'; # Also update $Net::SSLeay::Handle::VERSION
     post_httpx4
     print_errs
     read
-    remove_session
     rstate_string
     rstate_string_long
     set_bio
@@ -406,17 +826,9 @@ $VERSION = '1.88'; # Also update $Net::SSLeay::Handle::VERSION
     OCSP_response_status_str
     OCSP_response_verify
     OCSP_response_results
-    OCSP_RESPONSE_STATUS_INTERNALERROR
-    OCSP_RESPONSE_STATUS_MALFORMEDREQUEST
-    OCSP_RESPONSE_STATUS_SIGREQUIRED
-    OCSP_RESPONSE_STATUS_SUCCESSFUL
-    OCSP_RESPONSE_STATUS_TRYLATER
-    OCSP_RESPONSE_STATUS_UNAUTHORIZED
-    TLSEXT_STATUSTYPE_ocsp
-    V_OCSP_CERTSTATUS_GOOD
-    V_OCSP_CERTSTATUS_REVOKED
-    V_OCSP_CERTSTATUS_UNKNOWN
 );
+
+@EXPORT_OK = ( @constants, @functions );
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -1120,6 +1532,7 @@ sub sslcat { # address, port, message, $crt, $key --> reply / (reply,errs,cert)
     goto cleanup unless $written;
 
     sleep $slowly if $slowly;  # Closing too soon can abort broken servers
+    Net::SSLeay::shutdown($ssl); # Useful starting with OpenSSL 1.1.1e
     CORE::shutdown SSLCAT_S, 1;  # Half close --> No more output, send EOF to server
 
     warn "waiting for reply...\n" if $trace>2;

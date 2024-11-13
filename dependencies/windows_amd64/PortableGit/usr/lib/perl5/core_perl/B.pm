@@ -20,7 +20,7 @@ sub import {
 # walkoptree comes from B.xs
 
 BEGIN {
-    $B::VERSION = '1.80';
+    $B::VERSION = '1.88';
     @B::EXPORT_OK = ();
 
     # Our BOOT code needs $VERSION set, and will append to @EXPORT_OK.
@@ -62,6 +62,7 @@ push @B::EXPORT_OK, (qw(minus_c ppname save_BEGINs
 @B::CV::ISA = 'B::PVMG';
 @B::IO::ISA = 'B::PVMG';
 @B::FM::ISA = 'B::CV';
+@B::OBJ::ISA = 'B::PVMG';
 
 @B::OP::ISA = 'B::OBJECT';
 @B::UNOP::ISA = 'B::OP';
@@ -87,6 +88,12 @@ our @optype = qw(OP UNOP BINOP LOGOP LISTOP PMOP SVOP PADOP PVOP LOOP COP
 our @specialsv_name = qw(Nullsv &PL_sv_undef &PL_sv_yes &PL_sv_no
 			(SV*)pWARN_ALL (SV*)pWARN_NONE (SV*)pWARN_STD
                         &PL_sv_zero);
+
+# Back-compat
+{
+    no warnings 'once';
+    *CVf_METHOD = \&CVf_NOWARN_AMBIGUOUS;
+}
 
 {
     # Stop "-w" from complaining about the lack of a real B::OBJECT class
@@ -299,7 +306,7 @@ B - The Perl Compiler Backend
 The C<B> module supplies classes which allow a Perl program to delve
 into its own innards.  It is the module used to implement the
 "backends" of the Perl compiler.  Usage of the compiler does not
-require knowledge of this module: see the F<O> module for the
+require knowledge of this module: see the L<O> module for the
 user-visible part.  The C<B> module is of use to those who want to
 write new compiler backends.  This documentation assumes that the
 reader knows a fair amount about perl's internals including such
@@ -559,9 +566,9 @@ The inheritance hierarchy mimics the underlying C "inheritance":
                 +------------+------------+
                 |            |            |
               B::PV        B::IV        B::NV
-                  \         /           /
-                   \       /           /
-                    B::PVIV           /
+               /  \         /           /
+              /    \       /           /
+        B::INVLIST  B::PVIV           /
                          \           /
                           \         /
                            \       /
@@ -593,6 +600,26 @@ C<REFCNT> (corresponding to the C function C<SvREFCNT>).
 
 =item FLAGS
 
+=item IsBOOL
+
+Returns true if the SV is a boolean (true or false).
+You can then use C<TRUE> to check if the value is true or false.
+
+    my $something = ( 1 == 1 ) # boolean true
+                 || ( 1 == 0 ) # boolean false
+                 || 42         # IV true
+                 || 0;         # IV false
+    my $sv = B::svref_2object(\$something);
+
+    say q[Not a boolean value]
+        if ! $sv->IsBOOL;
+
+    say q[This is a boolean with value: true]
+        if   $sv->IsBOOL && $sv->TRUE_nomg;
+
+    say q[This is a boolean with value: false]
+        if   $sv->IsBOOL && ! $sv->TRUE_nomg;
+
 =item object_2svref
 
 Returns a reference to the regular scalar corresponding to this
@@ -600,6 +627,24 @@ B::SV object.  In other words, this method is the inverse operation
 to the svref_2object() subroutine.  This scalar and other data it points
 at should be considered read-only: modifying them is neither safe nor
 guaranteed to have a sensible effect.
+
+=item TRUE
+
+Returns a boolean indicating hether Perl would evaluate the SV as true or
+false.
+
+B<Warning> this call performs 'get' magic. If you only want to check the
+nature of this SV use C<TRUE_nomg> helper.
+
+This is an alias for C<SvTRUE($sv)>.
+
+=item TRUE_nomg
+
+Check if the value is true (do not perform 'get' magic).
+Returns a boolean indicating whether Perl would evaluate the SV as true or
+false.
+
+This is an alias for C<SvTRUE_nomg($sv)>.
 
 =back
 
@@ -732,6 +777,32 @@ Will die() if called on r-magic.
 
 Only valid on r-magic, returns the integer value of the REGEX stored
 in the MAGIC.
+
+=back
+
+=head2 B::INVLIST Methods
+
+=over 4
+
+=item prev_index
+
+Returns the cache result of previous invlist_search() (internal usage)
+
+=item is_offset
+
+Returns a boolean value (0 or 1) to know if the invlist is using an offset.
+When false the list begins with the code point U+0000.
+When true the list begins with the following elements.
+
+=item array_len
+
+Returns an integer with the size of the array used to define the invlist.
+
+=item get_invlist_array
+
+This method returns a list of integers representing the array used by the
+invlist.
+Note: this cannot be used while in middle of iterating on an invlist and croaks.
 
 =back
 
@@ -1287,6 +1358,8 @@ pointers and B::PADNAME objects otherwise.
 
 =item REFCNT
 
+=item GEN
+
 =item FLAGS
 
 For backward-compatibility, if the PADNAMEt_OUTER flag is set, the FLAGS
@@ -1322,6 +1395,10 @@ Only meaningful if PADNAMEt_OUTER is set.
 =item PARENT_FAKELEX_FLAGS
 
 Only meaningful if PADNAMEt_OUTER is set.
+
+=item IsUndef
+
+Returns a boolean value to check if the padname is PL_padname_undef.
 
 =back
 

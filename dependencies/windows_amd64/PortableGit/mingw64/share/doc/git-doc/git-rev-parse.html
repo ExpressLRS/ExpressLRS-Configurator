@@ -4,25 +4,23 @@
 <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="generator" content="Asciidoctor 2.0.10"/>
+<meta name="generator" content="Asciidoctor 2.0.23"/>
 <title>git-rev-parse(1)</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"/>
 <style>
-/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
-/* Uncomment @import statement to use as custom stylesheet */
-/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
-article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}
-audio,video{display:inline-block}
-audio:not([controls]){display:none;height:0}
-html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
 a{background:none}
 a:focus{outline:thin dotted}
 a:active,a:hover{outline:0}
 h1{font-size:2em;margin:.67em 0}
-abbr[title]{border-bottom:1px dotted}
 b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
 dfn{font-style:italic}
-hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+hr{height:0}
 mark{background:#ff0;color:#000}
 code,kbd,pre,samp{font-family:monospace;font-size:1em}
 pre{white-space:pre-wrap}
@@ -34,20 +32,22 @@ sub{bottom:-.25em}
 img{border:0}
 svg:not(:root){overflow:hidden}
 figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
 fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
 legend{border:0;padding:0}
 button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
 button,input{line-height:normal}
 button,select{text-transform:none}
-button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
 button[disabled],html input[disabled]{cursor:default}
-input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type=checkbox],input[type=radio]{padding:0}
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
 textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
-*,*::before,*::after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+*,::before,::after{box-sizing:border-box}
 html,body{font-size:100%}
-body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
 a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
@@ -62,14 +62,12 @@ img{-ms-interpolation-mode:bicubic}
 img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
-.center{margin-left:auto;margin-right:auto}
-.stretch{width:100%}
 .subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
-div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
 a{color:#2156a5;text-decoration:underline;line-height:inherit}
 a:hover,a:focus{color:#1d4b8f}
 a img{border:0}
-p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
 p aside{font-size:.875em;line-height:1.35;font-style:italic}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
 h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
@@ -78,46 +76,44 @@ h2{font-size:1.6875em}
 h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
 h4,h5{font-size:1.125em}
 h6{font-size:1em}
-hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
 em,i{font-style:italic;line-height:inherit}
 strong,b{font-weight:bold;line-height:inherit}
 small{font-size:60%;line-height:inherit}
 code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
-ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
 ul,ol{margin-left:1.5em}
-ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
-ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
-ul.square{list-style-type:square}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
 ul.circle{list-style-type:circle}
 ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
 ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
 dl dt{margin-bottom:.3125em;font-weight:bold}
 dl dd{margin-bottom:1.25em}
-abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
-abbr{text-transform:none}
 blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
-blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
-blockquote cite::before{content:"\2014 \0020"}
-blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
 blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
 @media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
 h1{font-size:2.75em}
 h2{font-size:2.3125em}
 h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
 h4{font-size:1.4375em}}
-table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
 table thead,table tfoot{background:#f7f8f7}
 table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt{background:#f8f8f7}
-table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
 .clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
 .clearfix::after,.float-group::after{clear:both}
-:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
-:not(pre)>code.nobreak{word-wrap:normal}
-:not(pre)>code.nowrap{white-space:nowrap}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
 pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
 pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
 pre>code{display:block}
@@ -125,7 +121,7 @@ pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
 em em{font-style:normal}
 strong strong{font-weight:400}
 .keyseq{color:rgba(51,51,51,.8)}
-kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
 .keyseq kbd:last-child{margin-right:0}
 .menuseq,.menuref{color:#000}
@@ -137,15 +133,15 @@ b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
 b.button::before{content:"[";padding:0 3px 0 2px}
 b.button::after{content:"]";padding:0 2px 0 3px}
 p a>code:hover{color:rgba(0,0,0,.9)}
-#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
 #header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
 #header::after,#content::after,#footnotes::after,#footer::after{clear:both}
 #content{margin-top:1.25em}
 #content::before{content:none}
 #header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
 #header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
-#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
-#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
 #header .details span:first-child{margin-left:-.125em}
 #header .details span.email a{color:rgba(0,0,0,.85)}
 #header .details br{display:none}
@@ -166,6 +162,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #toctitle{color:#7a2518;font-size:1.2em}
 @media screen and (min-width:768px){#toctitle{font-size:1.375em}
 body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
 #toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
 #toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
 #toc.toc2>ul{font-size:.9em;margin-bottom:0}
@@ -179,11 +176,11 @@ body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9
 #toc.toc2>ul{font-size:.95em}
 #toc.toc2 ul ul{padding-left:1.25em}
 body.toc2.toc-right{padding-left:0;padding-right:20em}}
-#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
 #content #toc>:first-child{margin-top:0}
 #content #toc>:last-child{margin-bottom:0}
-#footer{max-width:100%;background:rgba(0,0,0,.8);padding:1.25em}
-#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
 #content{margin-bottom:.625em}
 .sect1{padding-bottom:.625em}
 @media screen and (min-width:768px){#content{margin-bottom:1.25em}
@@ -196,29 +193,30 @@ body.toc2.toc-right{padding-left:0;padding-right:20em}}
 #content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
 #content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
 details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
-details>summary:first-of-type{cursor:pointer;display:list-item;outline:none;margin-bottom:.75em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
 .admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
 table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
-.paragraph.lead>p,#preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
-table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font-size:inherit}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
 .admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
 .admonitionblock>table td.icon{text-align:center;width:80px}
 .admonitionblock>table td.icon img{max-width:none}
 .admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
-.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
-.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
-.exampleblock>.content>:first-child{margin-top:0}
-.exampleblock>.content>:last-child{margin-bottom:0}
-.sidebarblock{border-style:solid;border-width:1px;border-color:#dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;-webkit-border-radius:4px;border-radius:4px}
-.sidebarblock>:first-child{margin-top:0}
-.sidebarblock>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
 .sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
-.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
-.literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;overflow-x:auto;padding:1em;font-size:.8125em}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
-.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
 .literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
 .listingblock>.content{position:relative}
 .listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
@@ -226,7 +224,7 @@ table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font
 .listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
 .listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
 .listingblock pre.highlightjs{padding:0}
-.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
 .listingblock pre.prettyprint{border-width:0}
 .prettyprint{background:#f7f7f8}
 pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
@@ -236,9 +234,8 @@ pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
 table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
 table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
 table.linenotable td.code{padding-left:.75em}
-table.linenotable td.linenos{border-right:1px solid currentColor;opacity:.35;padding-right:.5em}
-pre.pygments .lineno{border-right:1px solid currentColor;opacity:.35;display:inline-block;margin-right:.75em}
-pre.pygments .lineno::before{content:"";margin-right:-.125em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
 .quoteblock{margin:0 1em 1.25em 1.5em;display:table}
 .quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
 .quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
@@ -247,7 +244,7 @@ pre.pygments .lineno::before{content:"";margin-right:-.125em}
 .quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
 .quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
 .verseblock{margin:0 1em 1.25em}
-.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
 .verseblock pre strong{font-weight:400}
 .verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
 .quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
@@ -260,23 +257,22 @@ pre.pygments .lineno::before{content:"";margin-right:-.125em}
 .quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
 .quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
 .quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
-.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
-table.tableblock{max-width:100%;border-collapse:separate}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
 p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
 td.tableblock>.content>:last-child{margin-bottom:-1.25em}
-td.tableblock>.content>:last-child.sidebarblock{margin-bottom:0}
 table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
-table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
-table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
-table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
-table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
-table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
-table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
-table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
 table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
 table.frame-sides{border-width:0 1px}
-table.frame-topbot,table.frame-ends{border-width:1px 0}
-table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
 th.halign-left,td.halign-left{text-align:left}
 th.halign-right,td.halign-right{text-align:right}
 th.halign-center,td.halign-center{text-align:center}
@@ -284,7 +280,7 @@ th.valign-top,td.valign-top{vertical-align:top}
 th.valign-bottom,td.valign-bottom{vertical-align:bottom}
 th.valign-middle,td.valign-middle{vertical-align:middle}
 table thead th,table tfoot th{font-weight:bold}
-tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th{background:#f7f8f7}
 tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
 p.tableblock>code:only-child{background:none;padding:0}
 p.tableblock{font-size:1em}
@@ -292,14 +288,15 @@ ol{margin-left:1.75em}
 ul li ol{margin-left:1.5em}
 dl dd{margin-left:1.125em}
 dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
-ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
 ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
 ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
 ul.unstyled,ol.unstyled{margin-left:0}
-ul.checklist{margin-left:.625em}
-ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
-ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
-ul.inline{display:-ms-flexbox;display:-webkit-box;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
 ul.inline>li{margin-left:1.25em}
 .unstyled dl dt{font-weight:400;font-style:normal}
 ol.arabic{list-style-type:decimal}
@@ -313,11 +310,12 @@ ol.lowergreek{list-style-type:lower-greek}
 .hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
 td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
 td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
 .literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
 .colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
 .colist td:not([class]):first-child img{max-width:none}
 .colist td:not([class]):last-child{padding:.25em 0}
-.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
 .imageblock.left{margin:.25em .625em 1.25em 0}
 .imageblock.right{margin:.25em 0 1.25em .625em}
 .imageblock>.title{margin-bottom:0}
@@ -330,15 +328,13 @@ a.image{text-decoration:none;display:inline-block}
 a.image object{pointer-events:none}
 sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
 sup.footnote a,sup.footnoteref a{text-decoration:none}
-sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
 #footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
 #footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
 #footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
 #footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
 #footnotes .footnote:last-of-type{margin-bottom:0}
 #content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
-.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
-.gist .file-data>table td.line-data{width:99%}
 div.unbreakable{page-break-inside:avoid}
 .big{font-size:larger}
 .small{font-size:smaller}
@@ -385,7 +381,7 @@ a span.icon>.fa{cursor:inherit}
 .admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
 .admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
 .admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
-.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
 .conum[data-value] *{color:#fff!important}
 .conum[data-value]+b{display:none}
 .conum[data-value]::after{content:attr(data-value)}
@@ -393,25 +389,27 @@ pre .conum[data-value]{position:relative;top:-.125em}
 b.conum *{color:inherit!important}
 .conum:not([data-value]):empty{display:none}
 dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
-h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
 p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
-p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
 p{margin-bottom:1.25rem}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
-.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
 .print-only{display:none!important}
 @page{margin:1.25cm .75cm}
-@media print{*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
 html{font-size:80%}
 a{color:inherit!important;text-decoration:underline!important}
 a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
 a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
 abbr[title]::after{content:" (" attr(title) ")"}
 pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
 thead{display:table-header-group}
 svg{max-width:100%}
 p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
 h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
 #toc,.sidebarblock,.exampleblock>.content{background:none!important}
 #toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
 body.book #header{text-align:center}
@@ -428,12 +426,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .print-only{display:block!important}
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
-@media print,amzn-kf8{#header>h1:first-child{margin-top:1.25rem}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
 .sect1{padding:0!important}
 .sect1+.sect1{border:0}
 #footer{background:none}
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<style>
+pre>code {
+   display: inline;
+}
 </style>
 </head>
 <body class="manpage">
@@ -449,7 +452,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_synopsis">SYNOPSIS</h2>
 <div class="sectionbody">
 <div class="verseblock">
-<pre class="content"><em>git rev-parse</em> [&lt;options&gt;] &lt;args&gt;&#8230;&#8203;</pre>
+<pre class="content"><em>git rev-parse</em> [&lt;options&gt;] &lt;arg&gt;&#8230;&#8203;</pre>
 </div>
 </div>
 </div>
@@ -457,12 +460,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_description">DESCRIPTION</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Many Git porcelainish commands take mixture of flags
+<p>Many Git porcelainish commands take a mixture of flags
 (i.e. parameters that begin with a dash <em>-</em>) and parameters
 meant for the underlying <em>git rev-list</em> command they use internally
 and flags and parameters for the other commands they use
-downstream of <em>git rev-list</em>.  This command is used to
-distinguish between them.</p>
+downstream of <em>git rev-list</em>.  The primary purpose of this command
+is to allow calling programs to distinguish between them.  There are
+a few other operation modes that have nothing to do with the above
+"help parse command line options".</p>
+</div>
+<div class="paragraph">
+<p>Unless otherwise specified, most of the options and operation modes
+require you to run this command inside a git repository or a working
+tree that is under the control of a git repository, and will give you
+a fatal error otherwise.</p>
 </div>
 </div>
 </div>
@@ -478,13 +489,17 @@ distinguish between them.</p>
 <dl>
 <dt class="hdlist1">--parseopt</dt>
 <dd>
-<p>Use <em>git rev-parse</em> in option parsing mode (see PARSEOPT section below).</p>
+<p>Use <em>git rev-parse</em> in option parsing mode (see PARSEOPT section below).
+The command in this mode can be used outside a repository or
+a working tree controlled by a repository.</p>
 </dd>
 <dt class="hdlist1">--sq-quote</dt>
 <dd>
 <p>Use <em>git rev-parse</em> in shell quoting mode (see SQ-QUOTE
 section below). In contrast to the <code>--sq</code> option below, this
-mode does only quoting. Nothing else is done to command input.</p>
+mode only does quoting. Nothing else is done to command input.
+The command in this mode can be used outside a repository or
+a working tree controlled by a repository.</p>
 </dd>
 </dl>
 </div>
@@ -606,7 +621,7 @@ newlines (e.g. when using pickaxe <code>-S</code> with
 <em>git diff-*</em>). In contrast to the <code>--sq-quote</code> option,
 the command input is still interpreted as usual.</p>
 </dd>
-<dt class="hdlist1">--short[=length]</dt>
+<dt class="hdlist1">--short[=&lt;length&gt;]</dt>
 <dd>
 <p>Same as <code>--verify</code> but shortens the object name to a unique
 prefix with at least <code>length</code> characters. The minimum length
@@ -637,8 +652,29 @@ form as close to the original input as possible.</p>
 are not refs (i.e. branch or tag names; or more
 explicitly disambiguating "heads/master" form, when you
 want to name the "master" branch when there is an
-unfortunately named tag "master"), and show them as full
+unfortunately named tag "master"), and shows them as full
 refnames (e.g. "refs/heads/master").</p>
+</dd>
+<dt class="hdlist1">--output-object-format=(sha1|sha256|storage)</dt>
+<dd>
+<p>Allow oids to be input from any object format that the current
+repository supports.</p>
+<div class="literalblock">
+<div class="content">
+<pre>Specifying "sha1" translates if necessary and returns a sha1 oid.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Specifying "sha256" translates if necessary and returns a sha256 oid.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Specifying "storage" translates if necessary and returns an oid in
+encoded in the storage hash algorithm.</pre>
+</div>
+</div>
 </dd>
 </dl>
 </div>
@@ -651,9 +687,9 @@ refnames (e.g. "refs/heads/master").</p>
 <dd>
 <p>Show all refs found in <code>refs/</code>.</p>
 </dd>
-<dt class="hdlist1">--branches[=pattern]</dt>
-<dt class="hdlist1">--tags[=pattern]</dt>
-<dt class="hdlist1">--remotes[=pattern]</dt>
+<dt class="hdlist1">--branches[=&lt;pattern&gt;]</dt>
+<dt class="hdlist1">--tags[=&lt;pattern&gt;]</dt>
+<dt class="hdlist1">--remotes[=&lt;pattern&gt;]</dt>
 <dd>
 <p>Show all branches, tags, or remote-tracking branches,
 respectively (i.e., refs found in <code>refs/heads</code>,
@@ -664,7 +700,7 @@ shown.  If the pattern does not contain a globbing character (<code>?</code>,
 <code>*</code>, or <code>[</code>), it is turned into a prefix match by appending <code>/*</code>.</p>
 </div>
 </dd>
-<dt class="hdlist1">--glob=pattern</dt>
+<dt class="hdlist1">--glob=&lt;pattern&gt;</dt>
 <dd>
 <p>Show all refs matching the shell glob pattern <code>pattern</code>. If
 the pattern does not start with <code>refs/</code>, this is automatically
@@ -688,6 +724,15 @@ or <code>--all</code>. If a trailing <em>/*</em> is intended, it must be given
 explicitly.</p>
 </div>
 </dd>
+<dt class="hdlist1">--exclude-hidden=(fetch|receive|uploadpack)</dt>
+<dd>
+<p>Do not include refs that would be hidden by <code>git-fetch</code>,
+<code>git-receive-pack</code> or <code>git-upload-pack</code> by consulting the appropriate
+<code>fetch.hideRefs</code>, <code>receive.hideRefs</code> or <code>uploadpack.hideRefs</code>
+configuration along with <code>transfer.hideRefs</code> (see
+<a href="git-config.html">git-config(1)</a>). This option affects the next pseudo-ref option
+<code>--all</code> or <code>--glob</code> and is cleared after processing them.</p>
+</dd>
 <dt class="hdlist1">--disambiguate=&lt;prefix&gt;</dt>
 <dd>
 <p>Show every object whose name begins with the given prefix.
@@ -709,6 +754,25 @@ repository (e.g. GIT_DIR or GIT_WORK_TREE, but not GIT_EDITOR).
 Only the names of the variables are listed, not their value,
 even if they are set.</p>
 </dd>
+<dt class="hdlist1">--path-format=(absolute|relative)</dt>
+<dd>
+<p>Controls the behavior of certain other options. If specified as absolute, the
+paths printed by those options will be absolute and canonical. If specified as
+relative, the paths will be relative to the current working directory if that
+is possible.  The default is option specific.</p>
+<div class="paragraph">
+<p>This option may be specified multiple times and affects only the arguments that
+follow it on the command line, either to the end of the command line or the next
+instance of this option.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The following options are modified by <code>--path-format</code>:</p>
+</div>
+<div class="dlist">
+<dl>
 <dt class="hdlist1">--git-dir</dt>
 <dd>
 <p>Show <code>$GIT_DIR</code> if defined. Otherwise show the path to
@@ -720,14 +784,53 @@ is not detected to lie in a Git repository or work tree
 print a message to stderr and exit with nonzero status.</p>
 </div>
 </dd>
+<dt class="hdlist1">--git-common-dir</dt>
+<dd>
+<p>Show <code>$GIT_COMMON_DIR</code> if defined, else <code>$GIT_DIR</code>.</p>
+</dd>
+<dt class="hdlist1">--resolve-git-dir &lt;path&gt;</dt>
+<dd>
+<p>Check if &lt;path&gt; is a valid repository or a gitfile that
+points at a valid repository, and print the location of the
+repository.  If &lt;path&gt; is a gitfile then the resolved path
+to the real repository is printed.</p>
+</dd>
+<dt class="hdlist1">--git-path &lt;path&gt;</dt>
+<dd>
+<p>Resolve "$GIT_DIR/&lt;path&gt;" and takes other path relocation
+variables such as $GIT_OBJECT_DIRECTORY,
+$GIT_INDEX_FILE&#8230;&#8203; into account. For example, if
+$GIT_OBJECT_DIRECTORY is set to /foo/bar then "git rev-parse
+--git-path objects/abc" returns /foo/bar/abc.</p>
+</dd>
+<dt class="hdlist1">--show-toplevel</dt>
+<dd>
+<p>Show the (by default, absolute) path of the top-level directory
+of the working tree. If there is no working tree, report an error.</p>
+</dd>
+<dt class="hdlist1">--show-superproject-working-tree</dt>
+<dd>
+<p>Show the absolute path of the root of the superproject&#8217;s
+working tree (if exists) that uses the current repository as
+its submodule.  Outputs nothing if the current repository is
+not used as a submodule by any project.</p>
+</dd>
+<dt class="hdlist1">--shared-index-path</dt>
+<dd>
+<p>Show the path to the shared index file in split index mode, or
+empty if not in split-index mode.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The following options are unaffected by <code>--path-format</code>:</p>
+</div>
+<div class="dlist">
+<dl>
 <dt class="hdlist1">--absolute-git-dir</dt>
 <dd>
 <p>Like <code>--git-dir</code>, but its output is always the canonicalized
 absolute path.</p>
-</dd>
-<dt class="hdlist1">--git-common-dir</dt>
-<dd>
-<p>Show <code>$GIT_COMMON_DIR</code> if defined, else <code>$GIT_DIR</code>.</p>
 </dd>
 <dt class="hdlist1">--is-inside-git-dir</dt>
 <dd>
@@ -747,21 +850,6 @@ repository print "true", otherwise "false".</p>
 <dd>
 <p>When the repository is shallow print "true", otherwise "false".</p>
 </dd>
-<dt class="hdlist1">--resolve-git-dir &lt;path&gt;</dt>
-<dd>
-<p>Check if &lt;path&gt; is a valid repository or a gitfile that
-points at a valid repository, and print the location of the
-repository.  If &lt;path&gt; is a gitfile then the resolved path
-to the real repository is printed.</p>
-</dd>
-<dt class="hdlist1">--git-path &lt;path&gt;</dt>
-<dd>
-<p>Resolve "$GIT_DIR/&lt;path&gt;" and takes other path relocation
-variables such as $GIT_OBJECT_DIRECTORY,
-$GIT_INDEX_FILE&#8230;&#8203; into account. For example, if
-$GIT_OBJECT_DIRECTORY is set to /foo/bar then "git rev-parse
---git-path objects/abc" returns /foo/bar/abc.</p>
-</dd>
 <dt class="hdlist1">--show-cdup</dt>
 <dd>
 <p>When the command is invoked from a subdirectory, show the
@@ -774,29 +862,16 @@ directory (typically a sequence of "../", or an empty string).</p>
 path of the current directory relative to the top-level
 directory.</p>
 </dd>
-<dt class="hdlist1">--show-toplevel</dt>
-<dd>
-<p>Show the absolute path of the top-level directory of the working
-tree. If there is no working tree, report an error.</p>
-</dd>
-<dt class="hdlist1">--show-superproject-working-tree</dt>
-<dd>
-<p>Show the absolute path of the root of the superproject&#8217;s
-working tree (if exists) that uses the current repository as
-its submodule.  Outputs nothing if the current repository is
-not used as a submodule by any project.</p>
-</dd>
-<dt class="hdlist1">--shared-index-path</dt>
-<dd>
-<p>Show the path to the shared index file in split index mode, or
-empty if not in split-index mode.</p>
-</dd>
 <dt class="hdlist1">--show-object-format[=(storage|input|output)]</dt>
 <dd>
 <p>Show the object format (hash algorithm) used for the repository
 for storage inside the <code>.git</code> directory, input, or output. For
 input, multiple algorithms may be printed, space-separated.
 If not specified, the default is "storage".</p>
+</dd>
+<dt class="hdlist1">--show-ref-format</dt>
+<dd>
+<p>Show the reference storage format used for the repository.</p>
 </dd>
 </dl>
 </div>
@@ -805,19 +880,19 @@ If not specified, the default is "storage".</p>
 <h3 id="_other_options">Other Options</h3>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">--since=datestring</dt>
-<dt class="hdlist1">--after=datestring</dt>
+<dt class="hdlist1">--since=&lt;datestring&gt;</dt>
+<dt class="hdlist1">--after=&lt;datestring&gt;</dt>
 <dd>
 <p>Parse the date string, and output the corresponding
 --max-age= parameter for <em>git rev-list</em>.</p>
 </dd>
-<dt class="hdlist1">--until=datestring</dt>
-<dt class="hdlist1">--before=datestring</dt>
+<dt class="hdlist1">--until=&lt;datestring&gt;</dt>
+<dt class="hdlist1">--before=&lt;datestring&gt;</dt>
 <dd>
 <p>Parse the date string, and output the corresponding
 --min-age= parameter for <em>git rev-list</em>.</p>
 </dd>
-<dt class="hdlist1">&lt;args&gt;&#8230;&#8203;</dt>
+<dt class="hdlist1">&lt;arg&gt;&#8230;&#8203;</dt>
 <dd>
 <p>Flags and parameters to be parsed.</p>
 </dd>
@@ -878,8 +953,9 @@ first match in the following rules:</p>
 <ol class="arabic">
 <li>
 <p>If <em>$GIT_DIR/&lt;refname&gt;</em> exists, that is what you mean (this is usually
-useful only for <code>HEAD</code>, <code>FETCH_HEAD</code>, <code>ORIG_HEAD</code>, <code>MERGE_HEAD</code>
-and <code>CHERRY_PICK_HEAD</code>);</p>
+useful only for <code>HEAD</code>, <code>FETCH_HEAD</code>, <code>ORIG_HEAD</code>, <code>MERGE_HEAD</code>,
+<code>REBASE_HEAD</code>, <code>REVERT_HEAD</code>, <code>CHERRY_PICK_HEAD</code>, <code>BISECT_HEAD</code>
+and <code>AUTO_MERGE</code>);</p>
 </li>
 <li>
 <p>otherwise, <em>refs/&lt;refname&gt;</em> if it exists;</p>
@@ -895,27 +971,65 @@ and <code>CHERRY_PICK_HEAD</code>);</p>
 </li>
 <li>
 <p>otherwise, <em>refs/remotes/&lt;refname&gt;/HEAD</em> if it exists.</p>
-<div class="paragraph">
-<p><code>HEAD</code> names the commit on which you based the changes in the working tree.
-<code>FETCH_HEAD</code> records the branch which you fetched from a remote repository
-with your last <code>git fetch</code> invocation.
-<code>ORIG_HEAD</code> is created by commands that move your <code>HEAD</code> in a drastic
-way, to record the position of the <code>HEAD</code> before their operation, so that
-you can easily change the tip of the branch back to the state before you ran
-them.
-<code>MERGE_HEAD</code> records the commit(s) which you are merging into your branch
-when you run <code>git merge</code>.
-<code>CHERRY_PICK_HEAD</code> records the commit which you are cherry-picking
-when you run <code>git cherry-pick</code>.</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>HEAD</code></dt>
+<dd>
+<p>names the commit on which you based the changes in the working tree.</p>
+</dd>
+<dt class="hdlist1"><code>FETCH_HEAD</code></dt>
+<dd>
+<p>records the branch which you fetched from a remote repository with
+your last <code>git fetch</code> invocation.</p>
+</dd>
+<dt class="hdlist1"><code>ORIG_HEAD</code></dt>
+<dd>
+<p>is created by commands that move your <code>HEAD</code> in a drastic way (<code>git
+am</code>, <code>git merge</code>, <code>git rebase</code>, <code>git reset</code>), to record the position
+of the <code>HEAD</code> before their operation, so that you can easily change
+the tip of the branch back to the state before you ran them.</p>
+</dd>
+<dt class="hdlist1"><code>MERGE_HEAD</code></dt>
+<dd>
+<p>records the commit(s) which you are merging into your branch when you
+run <code>git merge</code>.</p>
+</dd>
+<dt class="hdlist1"><code>REBASE_HEAD</code></dt>
+<dd>
+<p>during a rebase, records the commit at which the operation is
+currently stopped, either because of conflicts or an <code>edit</code> command in
+an interactive rebase.</p>
+</dd>
+<dt class="hdlist1"><code>REVERT_HEAD</code></dt>
+<dd>
+<p>records the commit which you are reverting when you run <code>git revert</code>.</p>
+</dd>
+<dt class="hdlist1"><code>CHERRY_PICK_HEAD</code></dt>
+<dd>
+<p>records the commit which you are cherry-picking when you run <code>git
+cherry-pick</code>.</p>
+</dd>
+<dt class="hdlist1"><code>BISECT_HEAD</code></dt>
+<dd>
+<p>records the current commit to be tested when you run <code>git bisect
+--no-checkout</code>.</p>
+</dd>
+<dt class="hdlist1"><code>AUTO_MERGE</code></dt>
+<dd>
+<p>records a tree object corresponding to the state the
+<em>ort</em> merge strategy wrote to the working tree when a merge operation
+resulted in conflicts.</p>
+</dd>
+</dl>
+</div>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>Note that any of the <em>refs/*</em> cases above may come either from
 the <code>$GIT_DIR/refs</code> directory or from the <code>$GIT_DIR/packed-refs</code> file.
 While the ref name encoding is unspecified, UTF-8 is preferred as
 some output processing may assume ref names in UTF-8.</p>
-</div>
-</li>
-</ol>
 </div>
 </dd>
 <dt class="hdlist1"><em>@</em></dt>
@@ -958,20 +1072,17 @@ before the current one.</p>
 </dd>
 <dt class="hdlist1"><em>[&lt;branchname&gt;]@{upstream}</em>, e.g. <em>master@{upstream}</em>, <em>@{u}</em></dt>
 <dd>
-<p>The suffix <em>@{upstream}</em> to a branchname (short form <em>&lt;branchname&gt;@{u}</em>)
-refers to the branch that the branch specified by branchname is set to build on
-top of (configured with <code>branch.&lt;name&gt;.remote</code> and
-<code>branch.&lt;name&gt;.merge</code>).  A missing branchname defaults to the
-current one. These suffixes are also accepted when spelled in uppercase, and
-they mean the same thing no matter the case.</p>
+<p>A branch B may be set up to build on top of a branch X (configured with
+<code>branch.&lt;name&gt;.merge</code>) at a remote R (configured with
+<code>branch.&lt;name&gt;.remote</code>). B@{u} refers to the remote-tracking branch for
+the branch X taken from remote R, typically found at <code>refs/remotes/R/X</code>.</p>
 </dd>
 <dt class="hdlist1"><em>[&lt;branchname&gt;]@{push}</em>, e.g. <em>master@{push}</em>, <em>@{push}</em></dt>
 <dd>
 <p>The suffix <em>@{push}</em> reports the branch "where we would push to" if
 <code>git push</code> were run while <code>branchname</code> was checked out (or the current
-<code>HEAD</code> if no branchname is specified). Since our push destination is
-in a remote repository, of course, we report the local tracking branch
-that corresponds to that branch (i.e., something in <code>refs/remotes/</code>).</p>
+<code>HEAD</code> if no branchname is specified). Like for <em>@{upstream}</em>, we report
+the remote-tracking branch that corresponds to that branch at the remote.</p>
 <div class="paragraph">
 <p>Here&#8217;s an example to make it more clear:</p>
 </div>
@@ -1149,6 +1260,10 @@ any of the given commits.</p>
 <p>A commit&#8217;s reachable set is the commit itself and the commits in
 its ancestry chain.</p>
 </div>
+<div class="paragraph">
+<p>There are several notations to specify a set of connected commits
+(called a "revision range"), illustrated below.</p>
+</div>
 <div class="sect2">
 <h3 id="_commit_exclusions">Commit Exclusions</h3>
 <div class="dlist">
@@ -1175,7 +1290,7 @@ to the syntax explained in SPECIFYING REVISIONS above), you can ask
 for commits that are reachable from r2 excluding those that are reachable
 from r1 by <em>^r1 r2</em> and it can be written as <em>r1..r2</em>.</p>
 </dd>
-<dt class="hdlist1">The <em>&#8230;&#8203;</em> (three-dot) Symmetric Difference Notation</dt>
+<dt class="hdlist1">The <em>...</em> (three-dot) Symmetric Difference Notation</dt>
 <dd>
 <p>A similar notation <em>r1...r2</em> is called symmetric difference
 of <em>r1</em> and <em>r2</em> and is defined as
@@ -1192,6 +1307,34 @@ did I do since I forked from the origin branch?"  Similarly, <em>..origin</em>
 is a shorthand for <em>HEAD..origin</em> and asks "What did the origin do since
 I forked from them?"  Note that <em>..</em> would mean <em>HEAD..HEAD</em> which is an
 empty range that is both reachable and unreachable from HEAD.</p>
+</div>
+<div class="paragraph">
+<p>Commands that are specifically designed to take two distinct ranges
+(e.g. "git range-diff R1 R2" to compare two ranges) do exist, but
+they are exceptions.  Unless otherwise noted, all "git" commands
+that operate on a set of commits work on a single revision range.
+In other words, writing two "two-dot range notation" next to each
+other, e.g.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ git log A..B C..D</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>does <strong>not</strong> specify two revision ranges for most commands.  Instead
+it will name a single connected set of commits, i.e. those that are
+reachable from either B or D but are reachable from neither A or C.
+In a linear history like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>---A---B---o---o---C---D</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>because A and B are reachable from C, the revision range specified
+by these two dotted ranges is a single commit D.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1259,7 +1402,7 @@ its parents, but not the commit itself).</p>
 <dt class="hdlist1"><em>&lt;rev&gt;^!</em>, e.g. <em>HEAD^!</em></dt>
 <dd>
 <p>A suffix <em>^</em> followed by an exclamation mark is the same
-as giving commit <em>&lt;rev&gt;</em> and then all its parents prefixed with
+as giving commit <em>&lt;rev&gt;</em> and all its parents prefixed with
 <em>^</em> to exclude them (and their ancestors).</p>
 </dd>
 <dt class="hdlist1"><em>&lt;rev&gt;^-&lt;n&gt;</em>, e.g. <em>HEAD^-, HEAD^-2</em></dt>
@@ -1380,7 +1523,7 @@ dash to separate words in a multi-word argument hint.</p>
 </div>
 <div class="paragraph">
 <p>The remainder of the line, after stripping the spaces, is used
-as the help associated to the option.</p>
+as the help associated with the option.</p>
 </div>
 <div class="paragraph">
 <p>Blank lines are ignored, and lines that don&#8217;t match this specification are used
@@ -1397,7 +1540,7 @@ some-command [&lt;options&gt;] &lt;args&gt;...
 
 some-command does foo and bar!
 --
-h,help    show the help
+h,help!   show the help
 
 foo       some nifty option --foo
 bar=      some cool option --bar with an argument
@@ -1424,10 +1567,10 @@ usage text would be shown:</p>
     some-command does foo and bar!
 
     -h, --help            show the help
-    --foo                 some nifty option --foo
-    --bar ...             some cool option --bar with an argument
-    --baz &lt;arg&gt;           another cool option --baz with a named argument
-    --qux[=&lt;path&gt;]        qux may take a path argument but has meaning by itself
+    --[no-]foo            some nifty option --foo
+    --[no-]bar ...        some cool option --bar with an argument
+    --[no-]baz &lt;arg&gt;      another cool option --baz with a named argument
+    --[no-]qux[=&lt;path&gt;]   qux may take a path argument but has meaning by itself
 
 An option group Header
     -C[...]               option C with an optional argument</pre>
@@ -1518,7 +1661,7 @@ $ sh your-git-script.sh "a b'c"</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-09 12:57:53 UTC
+Last updated 2024-10-22 10:19:45 UTC
 </div>
 </div>
 </body>

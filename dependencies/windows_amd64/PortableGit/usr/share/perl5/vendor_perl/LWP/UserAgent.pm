@@ -2,20 +2,23 @@ package LWP::UserAgent;
 
 use strict;
 
-use base qw(LWP::MemberMixin);
+use parent qw(LWP::MemberMixin);
 
 use Carp ();
+use File::Copy ();
 use HTTP::Request ();
 use HTTP::Response ();
 use HTTP::Date ();
 
 use LWP ();
+use HTTP::Status ();
 use LWP::Protocol ();
+use Module::Load qw( load );
 
-use Scalar::Util qw(blessed);
+use Scalar::Util qw(blessed openhandle);
 use Try::Tiny qw(try catch);
 
-our $VERSION = '6.52';
+our $VERSION = '6.77';
 
 sub new
 {
@@ -84,6 +87,10 @@ sub new
     $requests_redirectable = ['GET', 'HEAD']
       unless defined $requests_redirectable;
 
+    my $cookie_jar_class = delete $cnf{cookie_jar_class};
+    $cookie_jar_class = 'HTTP::Cookies'
+      unless defined $cookie_jar_class;
+
     # Actually ""s are just as good as 0's, but for concision we'll just say:
     Carp::croak("protocols_allowed has to be an arrayref or 0, not \"$protocols_allowed\"!")
       if $protocols_allowed and ref($protocols_allowed) ne 'ARRAY';
@@ -112,6 +119,7 @@ sub new
         protocols_forbidden   => $protocols_forbidden,
         requests_redirectable => $requests_redirectable,
         send_te               => $send_te,
+        cookie_jar_class      => $cookie_jar_class,
     }, $class;
 
     $self->agent(defined($agent) ? $agent : $class->_agent)
@@ -444,38 +452,41 @@ sub get {
     return $self->request( HTTP::Request::Common::GET( @parameters ), @suff );
 }
 
-sub _has_raw_content {
+sub _maybe_copy_default_content_type {
     my $self = shift;
-    shift; # drop url
+    my $req  = shift;
 
-    # taken from HTTP::Request::Common::request_type_with_data
+    my $default_ct = $self->default_header('Content-Type');
+    return unless defined $default_ct;
+
+    # drop url
+    shift;
+
+    # adapted from HTTP::Request::Common::request_type_with_data
     my $content;
     $content = shift if @_ and ref $_[0];
-    my($k, $v);
-    while (($k,$v) = splice(@_, 0, 2)) {
+
+    # We only care about the final value, really
+    my $ct;
+
+    my ($k, $v);
+    while (($k, $v) = splice(@_, 0, 2)) {
         if (lc($k) eq 'content') {
             $content = $v;
         }
+        elsif (lc($k) eq 'content-type') {
+            $ct = $v;
+        }
     }
 
-    # We were given Content => 'string' ...
-    if (defined $content && ! ref ($content)) {
-        return 1;
-    }
+    # Content-type provided and truthy? skip
+    return if $ct;
 
-    return;
-}
+    # Content is not just a string? Then it must be x-www-form-urlencoded
+    return if defined $content && ref($content);
 
-sub _maybe_copy_default_content_type {
-    my ($self, $req, @parameters) = @_;
-
-    # If we have a default Content-Type and someone passes in a POST/PUT
-    # with Content => 'some-string-value', use that Content-Type instead
-    # of x-www-form-urlencoded
-    my $ct = $self->default_header('Content-Type');
-    return unless defined $ct && $self->_has_raw_content(@parameters);
-
-    $req->header('Content-Type' => $ct);
+    # Provide default
+    $req->header('Content-Type' => $default_ct);
 }
 
 sub post {
@@ -553,11 +564,13 @@ sub _process_colonic_headers {
 	    # Some sanity-checking...
 	    Carp::croak("A :content_file value can't be undef")
 		unless defined $arg;
-	    Carp::croak("A :content_file value can't be a reference")
-		if ref $arg;
-	    Carp::croak("A :content_file value can't be \"\"")
-		unless length $arg;
 
+	    unless ( defined openhandle($arg) ) {
+		    Carp::croak("A :content_file value can't be a reference")
+			if ref $arg;
+		    Carp::croak("A :content_file value can't be \"\"")
+			unless length $arg;
+	    }
 	}
 	elsif ($args->[$i] eq ':read_size_hint') {
 	    $size = $args->[$i + 1];
@@ -705,7 +718,21 @@ sub get_basic_credentials
 }
 
 
-sub timeout      { shift->_elem('timeout',      @_); }
+sub timeout
+{
+    my $self = shift;
+    my $old = $self->{timeout};
+    if (@_) {
+        $self->{timeout} = shift;
+        if (my $conn_cache = $self->conn_cache) {
+            for my $conn ($conn_cache->get_connections) {
+                $conn->timeout($self->{timeout});
+            }
+        }
+    }
+    return $old;
+}
+
 sub local_address{ shift->_elem('local_address',@_); }
 sub max_size     { shift->_elem('max_size',     @_); }
 sub max_redirect { shift->_elem('max_redirect', @_); }
@@ -748,7 +775,7 @@ sub parse_head {
                require HTML::HeadParser;
                $parser = HTML::HeadParser->new;
                $parser->xml_mode(1) if $response->content_is_xhtml;
-               $parser->utf8_mode(1) if $] >= 5.008 && $HTML::Parser::VERSION >= 3.40;
+               $parser->utf8_mode(1) if $HTML::Parser::VERSION >= 3.40;
 
                push(@{$response->{handlers}{response_data}}, {
 		   callback => sub {
@@ -777,24 +804,38 @@ sub parse_head {
 sub cookie_jar {
     my $self = shift;
     my $old = $self->{cookie_jar};
-    if (@_) {
-	my $jar = shift;
-	if (ref($jar) eq "HASH") {
-	    require HTTP::Cookies;
-	    $jar = HTTP::Cookies->new(%$jar);
-	}
-	$self->{cookie_jar} = $jar;
-        $self->set_my_handler("request_prepare",
-            $jar ? sub {
-                return if $_[0]->header("Cookie");
-                $jar->add_cookie_header($_[0]);
-            } : undef,
-        );
-        $self->set_my_handler("response_done",
-            $jar ? sub { $jar->extract_cookies($_[0]); } : undef,
-        );
+
+    return $old unless @_;
+
+    my $jar = shift;
+    if (ref($jar) eq "HASH") {
+        my $class = $self->{cookie_jar_class};
+        try {
+            load($class);
+            $jar = $class->new(%$jar);
+        }
+        catch {
+            my $error = $_;
+            if ($error =~ /Can't locate/) {
+                die "cookie_jar_class '$class' not found\n";
+            }
+            else {
+                die "$error\n";
+            }
+        };
     }
-    $old;
+    $self->{cookie_jar} = $jar;
+    $self->set_my_handler("request_prepare",
+        $jar ? sub {
+            return if $_[0]->header("Cookie");
+            $jar->add_cookie_header($_[0]);
+        } : undef,
+    );
+    $self->set_my_handler("response_done",
+        $jar ? sub { $jar->extract_cookies($_[0]); } : undef,
+    );
+
+    return $old;
 }
 
 sub default_headers {
@@ -838,16 +879,21 @@ sub from {  # legacy
 
 sub conn_cache {
     my $self = shift;
-    my $old = $self->{conn_cache};
+    my $old  = $self->{conn_cache};
     if (@_) {
-	my $cache = shift;
-	if (ref($cache) eq "HASH") {
-	    require LWP::ConnCache;
-	    $cache = LWP::ConnCache->new(%$cache);
-	}
-	$self->{conn_cache} = $cache;
+        my $cache = shift;
+        if ( ref($cache) eq "HASH" ) {
+            require LWP::ConnCache;
+            $cache = LWP::ConnCache->new(%$cache);
+        }
+        elsif ( defined $cache)  {
+            for my $conn ( $cache->get_connections ) {
+                $conn->timeout( $self->timeout );
+            }
+        }
+        $self->{conn_cache} = $cache;
     }
-    $old;
+    return $old;
 }
 
 
@@ -1001,10 +1047,14 @@ sub mirror
             $request->header( 'If-Modified-Since' => HTTP::Date::time2str($mtime) );
         }
     }
-    my $tmpfile = "$file-$$";
+
+    require File::Temp;
+    my ($tmpfh, $tmpfile) = File::Temp::tempfile("$file-XXXXXX");
+    close($tmpfh) or die "Could not close tmpfile '$tmpfile': $!";
 
     my $response = $self->request($request, $tmpfile);
     if ( $response->header('X-Died') ) {
+        unlink($tmpfile);
         die $response->header('X-Died');
     }
 
@@ -1018,26 +1068,32 @@ sub mirror
 
         if ( defined $content_length and $file_length < $content_length ) {
             unlink($tmpfile);
-            die "Transfer truncated: " . "only $file_length out of $content_length bytes received\n";
+            die "Transfer truncated: only $file_length out of $content_length bytes received\n";
         }
         elsif ( defined $content_length and $file_length > $content_length ) {
             unlink($tmpfile);
-            die "Content-length mismatch: " . "expected $content_length bytes, got $file_length\n";
+            die "Content-length mismatch: expected $content_length bytes, got $file_length\n";
         }
         # The file was the expected length.
         else {
             # Replace the stale file with a fresh copy
-            if ( -e $file ) {
-                # Some DOSish systems fail to rename if the target exists
-                chmod 0777, $file;
-                unlink $file;
-            }
-            rename( $tmpfile, $file )
+            # File::Copy will attempt to do it atomically,
+            # and fall back to a delete + copy if that fails.
+            File::Copy::move( $tmpfile, $file )
                 or die "Cannot rename '$tmpfile' to '$file': $!\n";
+
+            # Set standard file permissions if umask is supported.
+            # If not, leave what File::Temp created in effect.
+            if ( defined(my $umask = umask()) ) {
+                my $mode = 0666 &~ $umask;
+                chmod $mode, $file
+                    or die sprintf("Cannot chmod %o '%s': %s\n", $mode, $file, $!);
+            }
 
             # make sure the file has the same last modification time
             if ( my $lm = $response->last_modified ) {
-                utime $lm, $lm, $file;
+                utime $lm, $lm, $file
+                    or warn "Cannot update modification time of '$file': $!\n";
             }
         }
     }
@@ -1056,9 +1112,8 @@ sub _need_proxy {
     if ($ua->{no_proxy}) {
         if (my $host = eval { $req->uri->host }) {
             for my $domain (@{$ua->{no_proxy}}) {
-                if ($host =~ /\Q$domain\E$/) {
-                    return;
-                }
+                $domain =~ s/^\.//;
+                return if $host =~ /(?:^|\.)\Q$domain\E$/;
             }
         }
     }
@@ -1267,6 +1322,7 @@ The following options correspond to attribute methods described below:
    agent                   "libwww-perl/#.###"
    conn_cache              undef
    cookie_jar              undef
+   cookie_jar_class        HTTP::Cookies
    default_headers         HTTP::Headers->new
    from                    undef
    local_address           undef
@@ -1276,8 +1332,10 @@ The following options correspond to attribute methods described below:
    parse_head              1
    protocols_allowed       undef
    protocols_forbidden     undef
-   proxy                   undef
+   proxy                   {}
    requests_redirectable   ['GET', 'HEAD']
+   send_te                 1
+   show_progress           undef
    ssl_opts                { verify_hostname => 1 }
    timeout                 180
 
@@ -1355,9 +1413,9 @@ instead.  See L</"BEST PRACTICES"> for more information.
 The default is to have no cookie jar, i.e. never automatically add
 C<Cookie> headers to the requests.
 
-Shortcut: If a reference to a plain hash is passed in, it is replaced with an
-instance of L<HTTP::Cookies> that is initialized based on the hash. This form
-also automatically loads the L<HTTP::Cookies> module.  It means that:
+If C<$jar> contains an unblessed hash reference, a new cookie jar object is
+created for you automatically. The object is of the class set with the
+C<cookie_jar_class> constructor argument, which defaults to L<HTTP::Cookies>.
 
   $ua->cookie_jar({ file => "$ENV{HOME}/.cookies.txt" });
 
@@ -1365,6 +1423,20 @@ is really just a shortcut for:
 
   require HTTP::Cookies;
   $ua->cookie_jar(HTTP::Cookies->new(file => "$ENV{HOME}/.cookies.txt"));
+
+As described above and in L</"BEST PRACTICES">, you should set
+C<cookie_jar_class> to C<"HTTP::CookieJar::LWP"> to get a safer cookie jar.
+
+  my $ua = LWP::UserAgent->new( cookie_jar_class => 'HTTP::CookieJar::LWP' );
+  $ua->cookie_jar({}); # HTTP::CookieJar::LWP takes no args
+
+These can also be combined into the constructor, so a jar is created at
+instantiation.
+
+  my $ua = LWP::UserAgent->new(
+    cookie_jar_class => 'HTTP::CookieJar::LWP',
+    cookie_jar       =>  {},
+  );
 
 =head2 credentials
 
@@ -1551,6 +1623,14 @@ This option is initialized from the C<PERL_LWP_SSL_VERIFY_HOSTNAME> environment
 variable.  If this environment variable isn't set; then C<verify_hostname>
 defaults to 1.
 
+Please note that that recently the overall effect of this option with regards to
+SSL handling has changed. As of version 6.11 of L<LWP::Protocol::https>, which is an
+external module, SSL certificate verification was harmonized to behave in sync with
+L<IO::Socket::SSL>. With this change, setting this option no longer disables all SSL
+certificate verification, only the hostname checks. To disable all verification,
+use the C<SSL_verify_mode> option in the C<ssl_opts> attribute. For example:
+C<$ua->ssl_opts(SSL_verify_mode => IO::Socket::SSL::SSL_VERIFY_NONE);>
+
 =item C<SSL_ca_file> => $path
 
 The path to a file containing Certificate Authority certificates.
@@ -1623,8 +1703,8 @@ C<CGI_HTTP_PROXY> environment variable can be used instead.
     $ua->no_proxy('localhost', 'example.com');
     $ua->no_proxy(); # clear the list
 
-Do not proxy requests to the given domains.  Calling C<no_proxy> without
-any domains clears the list of domains.
+Do not proxy requests to the given domains, including subdomains.
+Calling C<no_proxy> without any domains clears the list of domains.
 
 =head2 proxy
 
@@ -1791,7 +1871,7 @@ Set handlers private to the executing subroutine.  Works by defaulting
 an C<owner> field to the C<%matchspec> that holds the name of the called
 subroutine.  You might pass an explicit C<owner> to override this.
 
-If $cb is passed as C<undef>, remove the handler.
+If C<$cb> is passed as C<undef>, remove the handler.
 
 =head1 REQUEST METHODS
 
@@ -1807,7 +1887,7 @@ This method will dispatch a C<DELETE> request on the given URL.  Additional
 headers and content options are the same as for the L<LWP::UserAgent/get>
 method.
 
-This method will use the DELETE() function from L<HTTP::Request::Common>
+This method will use the C<DELETE()> function from L<HTTP::Request::Common>
 to build the request.  See L<HTTP::Request::Common> for a details on
 how to pass form content and other advanced features.
 
@@ -1835,13 +1915,15 @@ Fields names that start with ":" are special.  These will not
 initialize headers of the request but will determine how the response
 content is treated.  The following special field names are recognized:
 
-    ':content_file'   => $filename
+    ':content_file'   => $filename # or $filehandle
     ':content_cb'     => \&callback
     ':read_size_hint' => $bytes
 
-If a $filename is provided with the C<:content_file> option, then the
-response content will be saved here instead of in the response
-object.  If a callback is provided with the C<:content_cb> option then
+If a C<$filename> or C<$filehandle> is provided with the C<:content_file>
+option, then the response content will be saved here instead of in
+the response object.  The C<$filehandle> may also be an object with
+an open file descriptor, such as a L<File::Temp> object.
+If a callback is provided with the C<:content_cb> option then
 this function will be called for each chunk of the response content as
 it is received from the server.  If neither of these options are
 given, then the response content will accumulate in the response
@@ -1861,9 +1943,9 @@ number of callback invocations.
 
 The callback function is called with 3 arguments: a chunk of data, a
 reference to the response object, and a reference to the protocol
-object.  The callback can abort the request by invoking die().  The
+object.  The callback can abort the request by invoking C<die()>.  The
 exception message will show up as the "X-Died" header field in the
-response returned by the get() function.
+response returned by the C<< $ua->get() >> method.
 
 =head2 head
 
@@ -1908,6 +1990,8 @@ time of the file.  If the document on the server has not changed since
 this time, then nothing happens.  If the document has been updated, it
 will be downloaded again.  The modification time of the file will be
 forced to match that of the server.
+
+Uses L<File::Copy/move> to attempt to atomically replace the C<$filename>.
 
 The return value is an L<HTTP::Response> object.
 
@@ -2121,8 +2205,7 @@ See L</"cookie_jar"> for more information.
 
 =head2 Managing Protocols
 
-C<protocols_allowed> gives you the ability to whitelist the protocols you're
-willing to allow.
+C<protocols_allowed> gives you the ability to allow arbitrary protocols.
 
     my $ua = LWP::UserAgent->new(
         protocols_allowed => [ 'http', 'https' ]
@@ -2131,8 +2214,7 @@ willing to allow.
 This will prevent you from inadvertently following URLs like
 C<file:///etc/passwd>.  See L</"protocols_allowed">.
 
-C<protocols_forbidden> gives you the ability to blacklist the protocols you're
-unwilling to allow.
+C<protocols_forbidden> gives you the ability to deny arbitrary protocols.
 
     my $ua = LWP::UserAgent->new(
         protocols_forbidden => [ 'file', 'mailto', 'ssh', ]

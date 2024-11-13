@@ -1,9 +1,8 @@
 package HTML::Parser;
 
 use strict;
-use vars qw($VERSION @ISA);
 
-$VERSION = "3.72";
+our $VERSION = '3.81';
 
 require HTML::Entities;
 
@@ -87,13 +86,13 @@ sub parse_file
         # Assume $file is a filename
         local(*F);
         open(F, "<", $file) || return undef;
-	binmode(F);  # should we? good for byte counts
+        binmode(F);  # should we? good for byte counts
         $opened++;
         $file = *F;
     }
     my $chunk = '';
     while (read($file, $chunk, 512)) {
-	$self->parse($chunk) || last;
+        $self->parse($chunk) || last;
     }
     close($file) if $opened;
     $self->eof;
@@ -105,7 +104,7 @@ sub netscape_buggy_comment  # legacy
     my $self = shift;
     require Carp;
     Carp::carp("netscape_buggy_comment() is deprecated.  " .
-	       "Please use the strict_comment() method instead");
+        "Please use the strict_comment() method instead");
     my $old = !$self->strict_comment;
     $self->strict_comment(!shift) if @_;
     return $old;
@@ -130,26 +129,32 @@ HTML::Parser - HTML parser class
 
 =head1 SYNOPSIS
 
- use HTML::Parser ();
+    use strict;
+    use warnings;
+    use HTML::Parser ();
 
- # Create parser object
- $p = HTML::Parser->new( api_version => 3,
-                         start_h => [\&start, "tagname, attr"],
-                         end_h   => [\&end,   "tagname"],
-                         marked_sections => 1,
-                       );
+    # Create parser object
+    my $p = HTML::Parser->new(
+        api_version     => 3,
+        start_h         => [\&start, "tagname, attr"],
+        end_h           => [\&end,   "tagname"],
+        marked_sections => 1,
+    );
 
- # Parse document text chunk by chunk
- $p->parse($chunk1);
- $p->parse($chunk2);
- #...
- $p->eof;                 # signal end of document
+    # Parse document text chunk by chunk
+    $p->parse($chunk1);
+    $p->parse($chunk2);
 
- # Parse directly from file
- $p->parse_file("foo.html");
- # or
- open(my $fh, "<:utf8", "foo.html") || die;
- $p->parse_file($fh);
+    # ...
+    # signal end of document
+    $p->eof;
+
+    # Parse directly from file
+    $p->parse_file("foo.html");
+
+    # or
+    open(my $fh, "<:utf8", "foo.html") || die;
+    $p->parse_file($fh);
 
 =head1 DESCRIPTION
 
@@ -205,22 +210,29 @@ mode.
 
 Examples:
 
- $p = HTML::Parser->new(api_version => 3,
-                        text_h => [ sub {...}, "dtext" ]);
+ $p = HTML::Parser->new(
+   api_version => 3,
+   text_h => [ sub {...}, "dtext" ]
+ );
 
 This creates a new parser object with a text event handler subroutine
 that receives the original text with general entities decoded.
 
- $p = HTML::Parser->new(api_version => 3,
-			start_h => [ 'my_start', "self,tokens" ]);
+ $p = HTML::Parser->new(
+   api_version => 3,
+   start_h => [ 'my_start', "self,tokens" ]
+ );
 
 This creates a new parser object with a start event handler method
 that receives the $p and the tokens array.
 
- $p = HTML::Parser->new(api_version => 3,
-		        handlers => { text => [\@array, "event,text"],
-                                      comment => [\@array, "event,text"],
-                                    });
+ $p = HTML::Parser->new(
+   api_version => 3,
+   handlers => {
+     text => [\@array, "event,text"],
+     comment => [\@array, "event,text"],
+   }
+ );
 
 This creates a new parser object that stores the event type and the
 original text in @array for text and comment events.
@@ -252,14 +264,14 @@ Parsing will also abort if one of the event handlers calls $p->eof.
 
 The effect of this is the same as:
 
- while (1) {
-    my $chunk = &$code_ref();
-    if (!defined($chunk) || !length($chunk)) {
-        $p->eof;
-        return $p;
+    while (1) {
+        my $chunk = &$code_ref();
+        if (!defined($chunk) || !length($chunk)) {
+            $p->eof;
+            return $p;
+        }
+        $p->parse($chunk) || return undef;
     }
-    $p->parse($chunk) || return undef;
- }
 
 But it is more efficient as this loop runs internally in XS code.
 
@@ -341,17 +353,17 @@ argspecs.
 
 =item $p->case_sensitive( $bool )
 
-By default, tagnames and attribute names are down-cased.  Enabling this
+By default, tag names and attribute names are down-cased.  Enabling this
 attribute leaves them as found in the HTML source document.
 
 =item $p->closing_plaintext
 
 =item $p->closing_plaintext( $bool )
 
-By default, "plaintext" element can never be closed. Everything up to
+By default, C<plaintext> element can never be closed. Everything up to
 the end of the document is parsed in CDATA mode.  This historical
 behaviour is what at least MSIE does.  Enabling this attribute makes
-closing "</plaintext>" tag effective and the parsing process will resume
+closing C< </plaintext> > tag effective and the parsing process will resume
 after seeing this tag.  This emulates early gecko-based browsers.
 
 =item $p->empty_element_tags
@@ -544,8 +556,8 @@ Examples:
 
     $p->handler(start =>  "start", 'self, attr, attrseq, text' );
 
-This causes the "start" method of object $p to be called for 'start' events.
-The callback signature is $p->start(\%attr, \@attr_seq, $text).
+This causes the "start" method of object C<$p> to be called for 'start' events.
+The callback signature is C<< $p->start(\%attr, \@attr_seq, $text) >>.
 
     $p->handler(start =>  \&start, 'attr, attrseq, text' );
 
@@ -978,27 +990,31 @@ HTML::Parser version 2 callback methods.
 
 This is equivalent to the following method calls:
 
-   $p->handler(start   => "start",   "self, tagname, attr, attrseq, text");
-   $p->handler(end     => "end",     "self, tagname, text");
-   $p->handler(text    => "text",    "self, text, is_cdata");
-   $p->handler(process => "process", "self, token0, text");
-   $p->handler(comment =>
-             sub {
-		 my($self, $tokens) = @_;
-		 for (@$tokens) {$self->comment($_);}},
-             "self, tokens");
-   $p->handler(declaration =>
-             sub {
-		 my $self = shift;
-		 $self->declaration(substr($_[0], 2, -1));},
-             "self, text");
+    $p->handler(start   => "start",   "self, tagname, attr, attrseq, text");
+    $p->handler(end     => "end",     "self, tagname, text");
+    $p->handler(text    => "text",    "self, text, is_cdata");
+    $p->handler(process => "process", "self, token0, text");
+    $p->handler(
+        comment => sub {
+            my ($self, $tokens) = @_;
+            for (@$tokens) { $self->comment($_); }
+        },
+        "self, tokens"
+    );
+    $p->handler(
+        declaration => sub {
+            my $self = shift;
+            $self->declaration(substr($_[0], 2, -1));
+        },
+        "self, text"
+    );
 
 Setting up these handlers can also be requested with the "api_version =>
 2" constructor option.
 
 =head1 SUBCLASSING
 
-The C<HTML::Parser> class is subclassable.  Parser objects are plain
+The C<HTML::Parser> class is able to be subclassed.  Parser objects are plain
 hashes and C<HTML::Parser> reserves only hash keys that start with
 "_hparser".  The parser state can be set up by invoking the init()
 method, which takes the same arguments as new().
@@ -1009,18 +1025,21 @@ The first simple example shows how you might strip out comments from
 an HTML document.  We achieve this by setting up a comment handler that
 does nothing and a default handler that will print out anything else:
 
-  use HTML::Parser;
-  HTML::Parser->new(default_h => [sub { print shift }, 'text'],
-                    comment_h => [""],
-                   )->parse_file(shift || die) || die $!;
+    use HTML::Parser ();
+    HTML::Parser->new(
+        default_h => [sub { print shift }, 'text'],
+        comment_h => [""],
+    )->parse_file(shift || die)
+        || die $!;
 
 An alternative implementation is:
 
-  use HTML::Parser;
-  HTML::Parser->new(end_document_h => [sub { print shift },
-                                       'skipped_text'],
-                    comment_h      => [""],
-                   )->parse_file(shift || die) || die $!;
+    use HTML::Parser ();
+    HTML::Parser->new(
+        end_document_h => [sub { print shift }, 'skipped_text'],
+        comment_h      => [""],
+    )->parse_file(shift || die)
+        || die $!;
 
 This will in most cases be much more efficient since only a single
 callback will be made.
@@ -1031,21 +1050,24 @@ handler.  When it sees the title start tag it enables a text handler
 that prints any text found and an end handler that will terminate
 parsing as soon as the title end tag is seen:
 
-  use HTML::Parser ();
+    use HTML::Parser ();
 
-  sub start_handler
-  {
-    return if shift ne "title";
-    my $self = shift;
-    $self->handler(text => sub { print shift }, "dtext");
-    $self->handler(end  => sub { shift->eof if shift eq "title"; },
-		           "tagname,self");
-  }
+    sub start_handler {
+        return if shift ne "title";
+        my $self = shift;
+        $self->handler(text => sub { print shift }, "dtext");
+        $self->handler(
+            end => sub {
+                shift->eof if shift eq "title";
+            },
+            "tagname,self"
+        );
+    }
 
-  my $p = HTML::Parser->new(api_version => 3);
-  $p->handler( start => \&start_handler, "tagname,self");
-  $p->parse_file(shift || die) || die $!;
-  print "\n";
+    my $p = HTML::Parser->new(api_version => 3);
+    $p->handler(start => \&start_handler, "tagname,self");
+    $p->parse_file(shift || die) || die $!;
+    print "\n";
 
 More examples are found in the F<eg/> directory of the C<HTML-Parser>
 distribution: the program C<hrefsub> shows how you can edit all links
@@ -1080,7 +1102,7 @@ respectively.
 NET tags, e.g. "code/.../" are not recognized.  This is SGML
 shorthand for "<code>...</code>".
 
-Unclosed start or end tags, e.g. "<tt<b>...</b</tt>" are not
+Incomplete start or end tags, e.g. "<tt<b>...</b</tt>" are not
 recognized.
 
 =head1 DIAGNOSTICS
@@ -1190,23 +1212,23 @@ opened in ":utf8" mode.
 
 The alternative solution is to enable the C<utf8_mode> and not decode before
 passing strings to $p->parse().  The parser can process raw undecoded UTF-8
-sanely if the C<utf8_mode> is enabled, or if the "attr", "@attr" or "dtext"
+sanely if the C<utf8_mode> is enabled, or if the C<attr>, C<@attr> or C<dtext>
 argspecs are avoided.
 
-=item Parsing string decoded with wrong endianness
+=item Parsing string decoded with wrong endian selection
 
 (W) The first character in the document is U+FFFE.  This is not a
-legal Unicode character but a byte swapped BOM.  The result of parsing
+legal Unicode character but a byte swapped C<BOM>.  The result of parsing
 will likely be garbage.
 
 =item Parsing of undecoded UTF-32
 
-(W) The parser found the Unicode UTF-32 BOM signature at the start
+(W) The parser found the Unicode UTF-32 C<BOM> signature at the start
 of the document.  The result of parsing will likely be garbage.
 
 =item Parsing of undecoded UTF-16
 
-(W) The parser found the Unicode UTF-16 BOM signature at the start of
+(W) The parser found the Unicode UTF-16 C<BOM> signature at the start of
 the document.  The result of parsing will likely be garbage.
 
 =back

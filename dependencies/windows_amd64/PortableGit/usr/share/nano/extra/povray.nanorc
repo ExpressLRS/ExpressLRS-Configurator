@@ -1,5 +1,7 @@
 ## Syntax highlighting for POV-Ray files.
 
+## Original author:  Donnie Berkholz
+
 syntax pov "\.(pov|POV|povray|POVRAY)$"
 comment "//"
 

@@ -5,17 +5,16 @@
 #
 
 package Errno;
-require Exporter;
+use Exporter 'import';
 use strict;
 
 use Config;
 "$Config{'archname'}-$Config{'osvers'}" eq
-"x86_64-msys-thread-multi-3.1.7-340.x86_64" or
-	die "Errno architecture (x86_64-msys-thread-multi-3.1.7-340.x86_64) does not match executable architecture ($Config{'archname'}-$Config{'osvers'})";
+"x86_64-msys-thread-multi-3.4.10-b7ef037e.x86_64" or
+	die "Errno architecture (x86_64-msys-thread-multi-3.4.10-b7ef037e.x86_64) does not match executable architecture ($Config{'archname'}-$Config{'osvers'})";
 
-our $VERSION = "1.30";
+our $VERSION = "1.37";
 $VERSION = eval $VERSION;
-our @ISA = 'Exporter';
 
 my %err;
 
@@ -251,8 +250,8 @@ non-zero value only if C<$!> is set to that value. For example:
             warn "Get a wife!\n";
         } else {
             warn "This path is barred: $!";
-        }
-    }
+        } 
+    } 
 
 If a specified constant C<EFOO> does not exist on the system, C<$!{EFOO}>
 returns C<"">.  You may use C<exists $!{EFOO}> to check whether the

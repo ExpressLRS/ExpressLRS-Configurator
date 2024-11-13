@@ -642,7 +642,7 @@ namespace eval tcltest {
 
     proc IsVerbose {level} {
 	variable Option
-	return [expr {[lsearch -exact $Option(-verbose) $level] >= 0}]
+	return [expr {$level in $Option(-verbose)}]
     }
 
     # Default verbosity is to show bodies of failed tests

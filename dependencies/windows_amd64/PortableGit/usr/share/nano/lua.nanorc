@@ -20,7 +20,7 @@ color normal "\.\.\."
 color brightblue "\<(do|end|while|repeat|until|if|elseif|then|else|for|in|function|local|return|break)\>"
 
 # Keywords
-color brightyellow "\<(_G|_VERSION|assert|collectgarbage|dofile|error|getfenv|getmetatable|ipairs|load|loadfile|module|next|pairs|pcall|print|rawequal|rawget|rawlen|rawset|require|select|setfenv|setmetatable|tonumber|tostring|type|unpack|xpcall)\s*\("
+color brightyellow "\<(_G|_VERSION|assert|collectgarbage|dofile|error|getfenv|getmetatable|ipairs|load|loadfile|module|next|pairs|pcall|print|rawequal|rawget|rawlen|rawset|require|select|setfenv|setmetatable|tonumber|tostring|type|unpack|xpcall)[[:blank:]]*\("
 
 # Standard library
 color brightyellow "\<coroutine\.(create|isyieldable|resume|running|status|wrap|yield)\>"
@@ -45,7 +45,7 @@ color brightmagenta "\<(false|nil|true)\>"
 
 # Decimal and hexadecimal numbers
 color red "\<[0-9]+(\.[0-9]*)?([Ee][+-]?[0-9]+)?\>"
-color red "\<0x[0-9A-Fa-f]+(\.[0-9A-Fa-f]*)?([Pp][+-]?[0-9]+)?\>"
+color red "\<0x[[:xdigit:]]+(\.[[:xdigit:]]*)?([Pp][+-]?[0-9]+)?\>"
 
 # Brackets
 color brightmagenta "\(|\)|\[|\]|\{|\}"
@@ -54,7 +54,7 @@ color brightmagenta "\(|\)|\[|\]|\{|\}"
 color brightcyan "^#!.*"
 
 # Strings
-color red ""(\\.|[^"\])*"|'(\\.|[^'\])*'"
+color red ""([^"\]|\\.)*"|'([^'\]|\\.)*'"
 
 # Simple comments and multiline comments
 color green "--.*"

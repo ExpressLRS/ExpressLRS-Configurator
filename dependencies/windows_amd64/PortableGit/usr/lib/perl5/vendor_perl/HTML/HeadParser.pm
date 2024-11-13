@@ -84,14 +84,14 @@ superclass) are available:
 
 
 require HTML::Parser;
-@ISA = qw(HTML::Parser);
+our @ISA = qw(HTML::Parser);
 
 use HTML::Entities ();
 
 use strict;
-use vars qw($VERSION $DEBUG);
+our $DEBUG;
 #$DEBUG = 1;
-$VERSION = "3.71";
+our $VERSION = '3.81';
 
 =item $hp = HTML::HeadParser->new
 
@@ -312,4 +312,3 @@ This library is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
 
 =cut
-

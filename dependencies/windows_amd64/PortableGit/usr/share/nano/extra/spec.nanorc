@@ -1,5 +1,7 @@
 ## Syntax highlighting for RPM spec files.
 
+## Original author:  Asterios Dramis
+
 syntax spec "\.spec(\.[^/]+)?$"
 comment "#"
 

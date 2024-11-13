@@ -9,11 +9,11 @@ App::Prove::State::Result::Test - Individual test results.
 
 =head1 VERSION
 
-Version 3.42
+Version 3.44
 
 =cut
 
-our $VERSION = '3.42';
+our $VERSION = '3.44';
 
 =head1 DESCRIPTION
 
@@ -122,7 +122,7 @@ The number of tests with TODO directives.
 
 =head3 C<sequence>
 
-The order in which this test was run for the given test suite result.
+The order in which this test was run for the given test suite result. 
 
 =head3 C<total_passes>
 

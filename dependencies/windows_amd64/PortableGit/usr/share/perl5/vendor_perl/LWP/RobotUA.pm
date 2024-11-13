@@ -1,8 +1,8 @@
 package LWP::RobotUA;
 
-use base qw(LWP::UserAgent);
+use parent qw(LWP::UserAgent);
 
-our $VERSION = '6.52';
+our $VERSION = '6.77';
 
 require WWW::RobotRules;
 require HTTP::Request;
@@ -215,7 +215,7 @@ should consult the F</robots.txt> file to ensure that they are welcomed
 and they should not make requests too frequently.
 
 But before you consider writing a robot, take a look at
-L<URL:http://www.robotstxt.org/>.
+L<http://www.robotstxt.org/>.
 
 When you use an I<LWP::RobotUA> object as your user agent, then you do not
 really have to think about these things yourself; C<robots.txt> files
@@ -240,7 +240,7 @@ same methods. In addition the following methods are provided:
 The LWP::UserAgent options C<agent> and C<from> are mandatory.  The
 options C<delay>, C<use_sleep> and C<rules> initialize attributes
 private to the RobotUA.  If C<rules> are not provided, then
-C<WWW::RobotRules> is instantiated providing an internal database of
+L<WWW::RobotRules> is instantiated providing an internal database of
 F<robots.txt>.
 
 It is also possible to just pass the value of C<agent>, C<from> and

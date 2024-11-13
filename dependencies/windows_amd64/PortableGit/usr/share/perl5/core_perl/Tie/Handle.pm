@@ -1,7 +1,7 @@
 package Tie::Handle;
 
 use 5.006_001;
-our $VERSION = '4.2';
+our $VERSION = '4.3';
 
 # Tie::StdHandle used to be inside Tie::Handle.  For backwards compatibility
 # loading Tie::Handle has to make Tie::StdHandle available.
@@ -31,7 +31,7 @@ Tie::Handle - base class definitions for tied handles
 This module provides some skeletal methods for handle-tying classes. See
 L<perltie> for a list of the functions required in tying a handle to a package.
 The basic B<Tie::Handle> package provides a C<new> method, as well as methods
-C<TIEHANDLE>, C<PRINT>, C<PRINTF> and C<GETC>.
+C<TIEHANDLE>, C<PRINT>, C<PRINTF> and C<GETC>. 
 
 For developers wishing to write their own tied-handle classes, the methods
 are summarized below. The L<perltie> section not only documents these, but
@@ -128,7 +128,7 @@ sub new {
     $pkg->TIEHANDLE(@_);
 }
 
-# "Grandfather" the new, a la Tie::Hash
+# Legacy support for new(), a la Tie::Hash
 
 sub TIEHANDLE {
     my $pkg = shift;
@@ -155,7 +155,7 @@ sub PRINT {
 
 sub PRINTF {
     my $self = shift;
-
+    
     if($self->can('WRITE') != \&WRITE) {
 	my $buf = sprintf(shift,@_);
 	$self->WRITE($buf,length($buf),0);
@@ -172,7 +172,7 @@ sub READLINE {
 
 sub GETC {
     my $self = shift;
-
+    
     if($self->can('READ') != \&READ) {
 	my $buf;
 	$self->READ($buf,1);

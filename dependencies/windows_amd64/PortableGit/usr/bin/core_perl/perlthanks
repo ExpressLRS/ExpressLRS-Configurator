@@ -1,10 +1,10 @@
 #!/usr/bin/perl
     eval 'exec /usr/bin/perl -S $0 ${1+"$@"}'
-	if $running_under_some_shell;
+	if 0; # ^ Run only under a shell
 
-my $config_tag1 = '5.32.1 - Sun Jan 24 14:39:15 GMT 2021';
+my $config_tag1 = '5.38.2 - Fri Dec  1 16:19:30 UTC 2023';
 
-my $patchlevel_date = 1611499142;
+my $patchlevel_date = 1701173777;
 my @patches = Config::local_patches();
 my $patch_tags = join "", map /(\S+)/ ? "+$1 " : (), @patches;
 
@@ -24,7 +24,7 @@ BEGIN {
     eval { require Mail::Send;};
     $::HaveSend = ($@ eq "");
     eval { require Mail::Util; } ;
-    $::HaveUtil = ($@ eq "");
+    $::HaveUtil = (!$ENV{PERL_BUILD_PACKAGING} and $@ eq "");
     # use secure tempfiles wherever possible
     eval { require File::Temp; };
     $::HaveTemp = ($@ eq "");
@@ -34,7 +34,7 @@ BEGIN {
     $::HaveWrap = ($@ eq "");
 };
 
-our $VERSION = "1.42";
+our $VERSION = "1.43";
 
 #TODO:
 #       make sure failure (transmission-wise) of Mail::Send is accounted for.
@@ -170,7 +170,7 @@ sub Init {
     if ($opt{T}) {
 	$thanks = 'thanks';
     }
-
+    
     $progname = $thanks ? 'perlthanks' : 'perlbug';
     # Target address
     $address = $opt{a} || ($thanks ? $thanksaddress : "");
@@ -210,7 +210,7 @@ sub Init {
 
     # Body of report
     $body = $opt{b} || "";
-
+	
     # Editor
     $ed = $opt{e} || $ENV{VISUAL} || $ENV{EDITOR} || $ENV{EDIT}
 	|| ($Is_VMS && "edit/tpu")
@@ -281,7 +281,7 @@ EOF
     }
 
     # Message-Id - rjsf
-    $messageid = "<$::Config{'version'}_${$}_".time."\@$domain>";
+    $messageid = "<$::Config{'version'}_${$}_".time."\@$domain>"; 
 
     # My username
     $me = $Is_MSWin32 ? $ENV{'USERNAME'}
@@ -322,13 +322,13 @@ EOF
     }
 
     # Prompt for subject of message, if needed
-
+    
     if ($subject && TrivialSubject($subject)) {
 	$subject = '';
     }
 
     unless ($subject) {
-	    print
+	    print 
 "First of all, please provide a subject for the report.\n";
 	if ( not $thanks)  {
 	    paraprint <<EOF;
@@ -364,7 +364,7 @@ EOF
 	    || $from || '';
 
 	unless ($guess) {
-		# move $domain to where we can use it elsewhere
+		# move $domain to where we can use it elsewhere	
         if ($domain) {
 		if ($Is_VMS && !$::Config{'d_socket'}) {
 		    $guess = "$domain\:\:$me";
@@ -422,8 +422,8 @@ EOF
     }
 
     $cc = '' if $cc =~ /^(none|yourself|me|myself|ourselves)$/i;
-    if ($cc) {
-        $andcc = " and $cc"
+    if ($cc) { 
+        $andcc = " and $cc" 
     } else {
         $andcc = ''
     }
@@ -568,6 +568,10 @@ generated with the help of perlbug $VERSION running under perl $perl_version.
 
 EOF
 
+    if ($report_about_module) {
+	print REP "Module: $report_about_module\n\n";
+    }
+
     if ($body) {
 	print REP $body;
     } elsif ($usefile) {
@@ -594,12 +598,25 @@ EOF
 	    print REP <<'EOF';
 
 -----------------------------------------------------------------
-[Please describe your issue here]
+<!--[Please describe your issue here]-->
+
+**Description**
+<!-- A clear and concise description of what the bug is. -->
 
 
 
-[Please do not change anything below this line]
------------------------------------------------------------------
+**Steps to Reproduce**
+<!-- A one-liner or script to reproduce the issue. -->
+
+
+
+**Expected behavior**
+<!-- A clear and concise description of what you expected to happen. -->
+
+
+
+<!--[Please do not change anything below this line]-->
+<!------------------------------------------------------------------- -->
 EOF
 	}
     }
@@ -619,26 +636,30 @@ sub Dump {
     $severity ||= 'low';
 
     print OUT <<EFF;
+
+
 ---
-Flags:
-    category=$category
-    severity=$severity
+**Flags**
+- category=$category
+- severity=$severity
 EFF
 
     if ($has_patch) {
         print OUT <<EFF;
-    Type=Patch
-    PatchStatus=HasPatch
+- Type=Patch
+- PatchStatus=HasPatch
 EFF
     }
 
-    if ($report_about_module ) {
+    if ($report_about_module ) { 
         print OUT <<EFF;
-    module=$report_about_module
+- module=$report_about_module
 EFF
     }
     print OUT <<EFF;
 ---
+**Perl configuration**
+```
 EFF
     print OUT "This perlbug was built using Perl $config_tag1\n",
 	    "It is being executed now by  Perl $config_tag2.\n\n"
@@ -693,6 +714,7 @@ EOF
 	    print OUT "$_='$value'\n";
 	}
     }
+    print OUT "```\n";
 } # sub Dump
 
 sub Edit {
@@ -767,7 +789,7 @@ sub NowWhat {
 	    my $menu = <<EOF;
 
 
-You have finished composing your report. At this point, you have
+You have finished composing your report. At this point, you have 
 a few options. You can:
 
     * Save the report to a [f]ile
@@ -1264,9 +1286,6 @@ release of Perl, are likely to receive less attention from the
 volunteers who build and maintain Perl than reports about bugs in
 the current release.
 
-This tool isn't appropriate for reporting bugs in any version
-prior to Perl 5.0.
-
 =item Are you sure what you have is a bug?
 
 A significant number of the bug reports we get turn out to be
@@ -1296,7 +1315,7 @@ L<perldebug>.
 =item Do you have a proper test case?
 
 The easier it is to reproduce your bug, the more likely it will be
-fixed -- if nobody can duplicate your problem, it probably won't be
+fixed -- if nobody can duplicate your problem, it probably won't be 
 addressed.
 
 A good test case has most of these attributes: short, simple code;
@@ -1357,7 +1376,7 @@ by Perl's test suite).
 
 Yes, you can do this by either using the C<-T> option, or by invoking
 the program as C<perlthanks>. Thank-you notes are good. It makes people
-smile.
+smile. 
 
 =back
 
@@ -1484,7 +1503,7 @@ testing purposes.
 
 =item B<-T>
 
-Send a thank-you note instead of a bug report.
+Send a thank-you note instead of a bug report. 
 
 =item B<-v>
 

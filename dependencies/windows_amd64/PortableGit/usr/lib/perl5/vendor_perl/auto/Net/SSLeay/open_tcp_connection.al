@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 515 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/open_tcp_connection.al)"
+#line 927 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/open_tcp_connection.al)"
 sub open_tcp_connection {
     my ($dest_serv, $port) = @_;
     my ($errs);

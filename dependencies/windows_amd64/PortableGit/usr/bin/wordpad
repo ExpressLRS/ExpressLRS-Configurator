@@ -17,10 +17,10 @@ esac
 
 case "$1" in
 */.git/*) ;; # needs LF line endings
-*) exec $WORDPAD "$1" || die "Could not launch $WORDPAD";;
+*) exec "$WORDPAD" "$1" || die "Could not launch $WORDPAD";;
 esac
 
-$WORDPAD "$1" &&
+"$WORDPAD" "$1" &&
 dos2unix.exe "$1" &&
 case "$1" in
 */COMMIT_EDITMSG|*\\COMMIT_EDITMSG)

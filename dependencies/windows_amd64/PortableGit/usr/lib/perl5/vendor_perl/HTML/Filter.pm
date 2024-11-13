@@ -1,12 +1,10 @@
 package HTML::Filter;
 
 use strict;
-use vars qw(@ISA $VERSION);
 
 require HTML::Parser;
-@ISA=qw(HTML::Parser);
-
-$VERSION = "3.72";
+our @ISA = qw(HTML::Parser);
+our $VERSION = '3.81';
 
 sub declaration { $_[0]->output("<!$_[1]>")     }
 sub process     { $_[0]->output($_[2])          }

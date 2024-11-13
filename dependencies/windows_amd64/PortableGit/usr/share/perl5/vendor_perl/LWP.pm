@@ -1,10 +1,8 @@
 package LWP;
 
-our $VERSION = '6.52';
+our $VERSION = '6.77';
 
 require LWP::UserAgent;  # this should load everything you need
-
-sub Version { $VERSION; }
 
 1;
 
@@ -103,7 +101,7 @@ The libwww-perl library is based on HTTP style communication. This
 section tries to describe what that means.
 
 Let us start with this quote from the HTTP specification document
-<URL:http://www.w3.org/Protocols/>:
+L<http://www.w3.org/Protocols/>:
 
 =over 3
 
@@ -273,12 +271,12 @@ address will be sent to the servers with every request.
 =item *
 
 B<parse_head> specifies whether we should initialize response
-headers from the E<lt>head> section of HTML documents.
+headers from the C<< <head> >> section of HTML documents.
 
 =item *
 
 B<proxy> and B<no_proxy> specify if and when to go through
-a proxy server. <URL:http://www.w3.org/History/1994/WWW/Proxies/>
+a proxy server. L<http://www.w3.org/History/1994/WWW/Proxies/>
 
 =item *
 
@@ -318,7 +316,7 @@ represented in actual perl code:
       print $res->status_line, "\n";
   }
 
-The $ua is created once when the application starts up.  New request
+The C<$ua> is created once when the application starts up.  New request
 objects should normally created for each request sent.
 
 
@@ -328,7 +326,7 @@ This section discusses the various protocol schemes and
 the HTTP style methods that headers may be used for each.
 
 For all requests, a "User-Agent" header is added and initialized from
-the $ua->agent attribute before the request is handed to the network
+the C<< $ua->agent >> attribute before the request is handed to the network
 layer.  In the same way, a "From" header is initialized from the
 $ua->from attribute.
 
@@ -352,7 +350,7 @@ internal error response.
 The library automatically adds a "Host" and a "Content-Length" header
 to the HTTP request before it is sent over the network.
 
-For a GET request you might want to add a "If-Modified-Since" or
+For a GET request you might want to add an "If-Modified-Since" or
 "If-None-Match" header to make the request conditional.
 
 For a POST request you should add the "Content-Type" header.  When you

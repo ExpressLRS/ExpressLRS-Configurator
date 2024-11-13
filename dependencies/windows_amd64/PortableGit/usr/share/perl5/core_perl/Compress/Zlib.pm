@@ -7,17 +7,17 @@ use Carp ;
 use IO::Handle ;
 use Scalar::Util qw(dualvar);
 
-use IO::Compress::Base::Common 2.093 ;
-use Compress::Raw::Zlib 2.093 ;
-use IO::Compress::Gzip 2.093 ;
-use IO::Uncompress::Gunzip 2.093 ;
+use IO::Compress::Base::Common 2.204 ;
+use Compress::Raw::Zlib 2.204 ;
+use IO::Compress::Gzip 2.204 ;
+use IO::Uncompress::Gunzip 2.204 ;
 
 use strict ;
 use warnings ;
 use bytes ;
 our ($VERSION, $XS_VERSION, @ISA, @EXPORT, @EXPORT_OK, %EXPORT_TAGS);
 
-$VERSION = '2.093';
+$VERSION = '2.204';
 $XS_VERSION = $VERSION;
 $VERSION = eval $VERSION;
 
@@ -134,12 +134,12 @@ sub gzopen($$)
     _set_gzerr(0) ;
 
     if ($writing) {
-        $gz = new IO::Compress::Gzip($file, Minimal => 1, AutoClose => 1,
+        $gz = IO::Compress::Gzip->new($file, Minimal => 1, AutoClose => 1,
                                      %defOpts)
             or $Compress::Zlib::gzerrno = $IO::Compress::Gzip::GzipError;
     }
     else {
-        $gz = new IO::Uncompress::Gunzip($file,
+        $gz = IO::Uncompress::Gunzip->new($file,
                                          Transparent => 1,
                                          Append => 0,
                                          AutoClose => 1,
@@ -461,7 +461,7 @@ sub inflate
 
 package Compress::Zlib ;
 
-use IO::Compress::Gzip::Constants 2.093 ;
+use IO::Compress::Gzip::Constants 2.204 ;
 
 sub memGzip($)
 {
@@ -1484,15 +1484,18 @@ L<Archive::Tar|Archive::Tar>,
 L<IO::Zlib|IO::Zlib>
 
 For RFC 1950, 1951 and 1952 see
-L<http://www.faqs.org/rfcs/rfc1950.html>,
-L<http://www.faqs.org/rfcs/rfc1951.html> and
-L<http://www.faqs.org/rfcs/rfc1952.html>
+L<https://datatracker.ietf.org/doc/html/rfc1950>,
+L<https://datatracker.ietf.org/doc/html/rfc1951> and
+L<https://datatracker.ietf.org/doc/html/rfc1952>
 
 The I<zlib> compression library was written by Jean-loup Gailly
 C<gzip@prep.ai.mit.edu> and Mark Adler C<madler@alumni.caltech.edu>.
 
 The primary site for the I<zlib> compression library is
 L<http://www.zlib.org>.
+
+The primary site for the I<zlib-ng> compression library is
+L<https://github.com/zlib-ng/zlib-ng>.
 
 The primary site for gzip is L<http://www.gzip.org>.
 
@@ -1506,8 +1509,7 @@ See the Changes file.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 1995-2019 Paul Marquess. All rights reserved.
+Copyright (c) 1995-2023 Paul Marquess. All rights reserved.
 
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
-

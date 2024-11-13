@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 630 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/ssl_write_all.al)"
+#line 1042 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/ssl_write_all.al)"
 sub ssl_write_all {
     my $ssl = $_[0];
     my ($data_ref, $errs);

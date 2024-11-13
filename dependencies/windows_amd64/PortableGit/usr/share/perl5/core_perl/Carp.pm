@@ -179,7 +179,7 @@ BEGIN {
             ? do { require "overload.pm"; _fetch_sub overload => 'mycan' }
             : \&UNIVERSAL::can;
 
-        # _blessed is either UNIVERAL::isa(...), or, in the presence of an
+        # _blessed is either UNIVERSAL::isa(...), or, in the presence of an
         # override, a hideous, but fairly reliable, workaround.
         *_blessed = $isa
             ? sub { &$isa($_[0], "UNIVERSAL") }
@@ -211,7 +211,7 @@ BEGIN {
 }
 
 
-our $VERSION = '1.50';
+our $VERSION = '1.54';
 $VERSION =~ tr/_//d;
 
 our $MaxEvalLen = 0;
@@ -284,7 +284,7 @@ sub shortmess {
     my $cgc = _cgc();
 
     # Icky backwards compatibility wrapper. :-(
-    local @CARP_NOT = $cgc ? $cgc->() : caller();
+    local @CARP_NOT = scalar( $cgc ? $cgc->() : caller() );
     shortmess_heavy(@_);
 }
 
@@ -776,8 +776,8 @@ Carp - alternative warn and die for modules
     # cluck, longmess and shortmess not exported by default
     use Carp qw(cluck longmess shortmess);
     cluck "This is how we got here!"; # warn with stack backtrace
-    $long_message   = longmess( "message from cluck() or confess()" );
-    $short_message  = shortmess( "message from carp() or croak()" );
+    my $long_message   = longmess( "message from cluck() or confess()" );
+    my $short_message  = shortmess( "message from carp() or croak()" );
 
 =head1 DESCRIPTION
 
@@ -802,7 +802,7 @@ Of course, C<Carp> can't guarantee the latter.
 
 You can also alter the way the output and logic of C<Carp> works, by
 changing some global variables in the C<Carp> namespace. See the
-section on C<GLOBAL VARIABLES> below.
+section on L</GLOBAL VARIABLES> below.
 
 Here is a more complete description of how C<carp> and C<croak> work.
 What they do is search the call-stack for a function call stack where
@@ -868,7 +868,7 @@ or by including the string C<-MCarp=verbose> in the PERL5OPT
 environment variable.
 
 Alternately, you can set the global variable C<$Carp::Verbose> to true.
-See the C<GLOBAL VARIABLES> section below.
+See the L</GLOBAL VARIABLES> section below.
 
 =head2 Stack Trace formatting
 
@@ -944,10 +944,10 @@ This variable sets a general argument formatter to display references.
 Plain scalars and objects that implement C<CARP_TRACE> will not go through
 this formatter.  Calling C<Carp> from within this function is not supported.
 
-local $Carp::RefArgFormatter = sub {
-    require Data::Dumper;
-    Data::Dumper::Dump($_[0]); # not necessarily safe
-};
+    local $Carp::RefArgFormatter = sub {
+        require Data::Dumper;
+        Data::Dumper->Dump($_[0]); # not necessarily safe
+    };
 
 =head2 @CARP_NOT
 

@@ -12,13 +12,20 @@ case "$1" in
 		odt2txt "$1" || cat "$1"
 		;;
 	*.doc | *.DOC | *.dot | *.DOT)
-		antiword -m UTF-8 "$1" | sed "s/\^M$//" || cat "$1"
+		case "$(file --brief --mime-type "$1")" in
+			application/msword)
+				out=$(antiword -m UTF-8 "$1") && sed "s/\^M$//" <<<$out || cat "$1"
+				;;
+			*)
+				cat "$1"
+				;;
+		esac
 		;;
 	*.docx | *.DOCX | *.dotx | *.DOTX | *.docm | *.DOCM | *.dotm | *.DOTM)
-		docx2txt.pl "$1" -
+		docx2txt.pl "$1" - || cat "$1"
 		;;
 	*.pdf | *.PDF)
-		pdftotext -layout -enc UTF-8 "$1" - | sed "s/(\^M$)|(^\^L)//"
+		out=$(pdftotext -q -layout -enc UTF-8 "$1" -) && sed "s/(\^M$)|(^\^L)//" <<<$out || cat "$1"
 		;;
 	# TODO add rtf support
 	*.rtf | *.RTF)

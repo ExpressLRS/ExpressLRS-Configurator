@@ -3,7 +3,7 @@ package URI::urn::isbn;  # RFC 3187
 use strict;
 use warnings;
 
-our $VERSION = '5.07';
+our $VERSION = '5.29';
 
 use parent 'URI::urn';
 
@@ -11,13 +11,13 @@ use Carp qw(carp);
 
 BEGIN {
     require Business::ISBN;
-    
+
     local $^W = 0; # don't warn about dev versions, perl5.004 style
-    warn "Using Business::ISBN version " . Business::ISBN->VERSION . 
-        " which is deprecated.\nUpgrade to Business::ISBN version 2\n"
-        if Business::ISBN->VERSION < 2;
+    warn "Using Business::ISBN version " . Business::ISBN->VERSION .
+        " which is deprecated.\nUpgrade to Business::ISBN version 3.005\n"
+        if Business::ISBN->VERSION < 3.005;
     }
-    
+
 sub _isbn {
     my $nss = shift;
     $nss = $nss->nss if ref($nss);
@@ -61,7 +61,7 @@ sub isbn_group_code {
 sub isbn_country_code {
     my $name = (caller(0))[3]; $name =~ s/.*:://;
     carp "$name is DEPRECATED. Use isbn_group_code instead";
-    
+
     no strict 'refs';
     &isbn_group_code;
 }
@@ -74,7 +74,7 @@ my $isbn13_method = do {
 
 sub isbn13 {
     my $isbn = shift->_isbn || return undef;
-    
+
     # Business::ISBN 1.x didn't put hyphens in the EAN, and it was just a string
     # Business::ISBN 2.0 doesn't do EAN, but it does ISBN-13 objects
     #   and it uses the hyphens, so call as_string with an empty anon array

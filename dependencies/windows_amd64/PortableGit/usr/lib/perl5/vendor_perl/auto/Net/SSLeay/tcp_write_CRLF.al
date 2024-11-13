@@ -3,7 +3,7 @@
 # See AutoSplit.pm.
 package Net::SSLeay;
 
-#line 930 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/tcp_write_CRLF.al)"
+#line 1342 "blib/lib/Net/SSLeay.pm (autosplit into blib/lib/auto/Net/SSLeay/tcp_write_CRLF.al)"
 sub tcp_write_CRLF {
   # the next line uses less memory but might use more network packets
   return tcp_write_all($_[0]) + tcp_write_all($CRLF);

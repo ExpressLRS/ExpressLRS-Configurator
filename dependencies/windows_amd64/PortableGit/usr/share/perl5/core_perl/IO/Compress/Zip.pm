@@ -4,30 +4,41 @@ use strict ;
 use warnings;
 use bytes;
 
-use IO::Compress::Base::Common  2.093 qw(:Status );
-use IO::Compress::RawDeflate 2.093 ();
-use IO::Compress::Adapter::Deflate 2.093 ;
-use IO::Compress::Adapter::Identity 2.093 ;
-use IO::Compress::Zlib::Extra 2.093 ;
-use IO::Compress::Zip::Constants 2.093 ;
+use IO::Compress::Base::Common  2.204 qw(:Status );
+use IO::Compress::RawDeflate 2.204 ();
+use IO::Compress::Adapter::Deflate 2.204 ;
+use IO::Compress::Adapter::Identity 2.204 ;
+use IO::Compress::Zlib::Extra 2.204 ;
+use IO::Compress::Zip::Constants 2.204 ;
 
 use File::Spec();
 use Config;
 
-use Compress::Raw::Zlib  2.093 ();
+use Compress::Raw::Zlib  2.204 ();
 
 BEGIN
 {
     eval { require IO::Compress::Adapter::Bzip2 ;
-           import  IO::Compress::Adapter::Bzip2 2.093 ;
+           IO::Compress::Adapter::Bzip2->import( 2.201 );
            require IO::Compress::Bzip2 ;
-           import  IO::Compress::Bzip2 2.093 ;
+           IO::Compress::Bzip2->import( 2.201 );
          } ;
 
     eval { require IO::Compress::Adapter::Lzma ;
-           import  IO::Compress::Adapter::Lzma 2.093 ;
+           IO::Compress::Adapter::Lzma->import( 2.201 );
            require IO::Compress::Lzma ;
-           import  IO::Compress::Lzma 2.093 ;
+           IO::Compress::Lzma->import( 2.201 );
+         } ;
+
+    eval { require IO::Compress::Adapter::Xz ;
+           IO::Compress::Adapter::Xz->import( 2.201 );
+           require IO::Compress::Xz ;
+           IO::Compress::Xz->import( 2.201 );
+         } ;
+    eval { require IO::Compress::Adapter::Zstd ;
+           IO::Compress::Adapter::Zstd->import( 2.201 );
+           require IO::Compress::Zstd ;
+           IO::Compress::Zstd->import( 2.201 );
          } ;
 }
 
@@ -36,7 +47,7 @@ require Exporter ;
 
 our ($VERSION, @ISA, @EXPORT_OK, %EXPORT_TAGS, %DEFLATE_CONSTANTS, $ZipError);
 
-$VERSION = '2.093';
+$VERSION = '2.204';
 $ZipError = '';
 
 @ISA = qw(IO::Compress::RawDeflate Exporter);
@@ -45,7 +56,7 @@ $ZipError = '';
 
 push @{ $EXPORT_TAGS{all} }, @EXPORT_OK ;
 
-$EXPORT_TAGS{zip_method} = [qw( ZIP_CM_STORE ZIP_CM_DEFLATE ZIP_CM_BZIP2 ZIP_CM_LZMA)];
+$EXPORT_TAGS{zip_method} = [qw( ZIP_CM_STORE ZIP_CM_DEFLATE ZIP_CM_BZIP2 ZIP_CM_LZMA ZIP_CM_XZ ZIP_CM_ZSTD)];
 push @{ $EXPORT_TAGS{all} }, @{ $EXPORT_TAGS{zip_method} };
 
 Exporter::export_ok_tags('all');
@@ -74,12 +85,24 @@ sub isMethodAvailable
         if $method == ZIP_CM_STORE || $method == ZIP_CM_DEFLATE ;
 
     return 1
-        if $method == ZIP_CM_BZIP2 and
-           defined $IO::Compress::Adapter::Bzip2::VERSION;
+        if $method == ZIP_CM_BZIP2 &&
+           defined $IO::Compress::Adapter::Bzip2::VERSION &&
+           defined &{ "IO::Compress::Adapter::Bzip2::mkRawZipCompObject" };
 
     return 1
-        if $method == ZIP_CM_LZMA and
-           defined $IO::Compress::Adapter::Lzma::VERSION;
+        if $method == ZIP_CM_LZMA &&
+           defined $IO::Compress::Adapter::Lzma::VERSION &&
+           defined &{ "IO::Compress::Adapter::Lzma::mkRawZipCompObject" };
+
+    return 1
+        if $method == ZIP_CM_XZ &&
+           defined $IO::Compress::Adapter::Xz::VERSION &&
+           defined &{ "IO::Compress::Adapter::Xz::mkRawZipCompObject" };
+
+    return 1
+        if $method == ZIP_CM_ZSTD &&
+           defined $IO::Compress::Adapter::ZSTD::VERSION &&
+           defined &{ "IO::Compress::Adapter::ZSTD::mkRawZipCompObject" };
 
     return 0;
 }
@@ -141,13 +164,25 @@ sub mkComp
                                                                                  );
         *$self->{ZipData}{CRC32} = Compress::Raw::Zlib::crc32(undef);
     }
+    elsif (*$self->{ZipData}{Method} == ZIP_CM_XZ) {
+        ($obj, $errstr, $errno) = IO::Compress::Adapter::Xz::mkCompObject($got->getValue('preset'),
+                                                                                 $got->getValue('extreme'),
+                                                                                 0
+                                                                                 );
+        *$self->{ZipData}{CRC32} = Compress::Raw::Zlib::crc32(undef);
+    }
+    elsif (*$self->{ZipData}{Method} == ZIP_CM_ZSTD) {
+        ($obj, $errstr, $errno) = IO::Compress::Adapter::Zstd::mkCompObject(defined $got->getValue('level') ? $got->getValue('level') : 3,
+                                                                           );
+        *$self->{ZipData}{CRC32} = Compress::Raw::Zlib::crc32(undef);
+    }
 
     return $self->saveErrorString(undef, $errstr, $errno)
        if ! defined $obj;
 
     if (! defined *$self->{ZipData}{SizesOffset}) {
         *$self->{ZipData}{SizesOffset} = 0;
-        *$self->{ZipData}{Offset} = new U64 ;
+        *$self->{ZipData}{Offset} = U64->new();
     }
 
     *$self->{ZipData}{AnyZip64} = 0
@@ -535,6 +570,8 @@ sub mkFinalTrailer
         $z64e .= U64::pack_V64 $entries   ; # entries in central dir
         $z64e .= U64::pack_V64 $cd_len    ; # size of central dir
         $z64e .= *$self->{ZipData}{Offset}->getPacked_V64() ; # offset to start central dir
+        $z64e .= *$self->{ZipData}{extrafieldzip64}  # otional extra field
+            if defined *$self->{ZipData}{extrafieldzip64} ;
 
         $z64e  = pack("V", ZIP64_END_CENTRAL_REC_HDR_SIG) # signature
               .  U64::pack_V64(length $z64e)
@@ -607,7 +644,7 @@ sub ckParams
     }
 
     *$self->{ZipData}{AnyZip64} = 1
-        if $got->getValue('zip64');
+        if $got->getValue('zip64') || $got->getValue('extrafieldzip64') ;
     *$self->{ZipData}{Zip64} = $got->getValue('zip64');
     *$self->{ZipData}{Stream} = $got->getValue('stream');
 
@@ -627,7 +664,7 @@ sub ckParams
 
     *$self->{ZipData}{ZipComment} = $got->getValue('zipcomment') ;
 
-    for my $name (qw( extrafieldlocal extrafieldcentral ))
+    for my $name (qw( extrafieldlocal extrafieldcentral extrafieldzip64))
     {
         my $data = $got->getValue($name) ;
         if (defined $data) {
@@ -636,6 +673,7 @@ sub ckParams
                 if $bad ;
 
             $got->setValue($name, $data) ;
+            *$self->{ZipData}{$name} = $data;
         }
     }
 
@@ -700,6 +738,7 @@ our %PARAMS = (
             'textflag'  => [IO::Compress::Base::Common::Parse_boolean,   0],
             'extrafieldlocal'  => [IO::Compress::Base::Common::Parse_any,    undef],
             'extrafieldcentral'=> [IO::Compress::Base::Common::Parse_any,    undef],
+            'extrafieldzip64'  => [IO::Compress::Base::Common::Parse_any,    undef],
 
             # Lzma
             'preset'   => [IO::Compress::Base::Common::Parse_unsigned, 6],
@@ -723,6 +762,7 @@ sub getExtraParams
 
 sub getInverseClass
 {
+    no warnings 'once';
     return ('IO::Uncompress::Unzip',
                 \$IO::Uncompress::Unzip::UnzipError);
 }
@@ -875,7 +915,7 @@ IO::Compress::Zip - Write zip files/buffers
     my $status = zip $input => $output [,OPTS]
         or die "zip failed: $ZipError\n";
 
-    my $z = new IO::Compress::Zip $output [,OPTS]
+    my $z = IO::Compress::Zip->new( $output [,OPTS] )
         or die "zip failed: $ZipError\n";
 
     $z->print($string);
@@ -916,19 +956,35 @@ This module provides a Perl interface that allows writing zip
 compressed data to files or buffer.
 
 The primary purpose of this module is to provide streaming write access to
-zip files and buffers. It is not a general-purpose file archiver. If that
-is what you want, check out C<Archive::Zip> or C<Archive::Zip::SimpleZip>.
+zip files and buffers.
 
-At present the following compression methods are supported by IO::Compress::Zip,
-namely Store (no compression at all), Deflate, Bzip2 and LZMA.
-
-B<Note>
+At present the following compression methods are supported by IO::Compress::Zip
 
 =over 5
 
-=item * To use Bzip2 compression, the module C<IO::Compress::Bzip2> must be installed.
+=item Store (0)
 
-=item * To use LZMA compression, the module C<IO::Compress::Lzma> must be installed.
+=item Deflate (8)
+
+=item Bzip2 (12)
+
+To write Bzip2 content, the module C<IO::Uncompress::Bunzip2> must
+be installed.
+
+=item Lzma (14)
+
+To write LZMA content, the module C<IO::Uncompress::UnLzma> must
+be installed.
+
+=item Zstandard (93)
+
+To write Zstandard content, the module C<IO::Compress::Zstd> must
+be installed.
+
+=item Xz (95)
+
+To write Xz content, the module C<IO::Uncompress::UnXz> must
+be installed.
 
 =back
 
@@ -1005,12 +1061,24 @@ See L<File::GlobMapper|File::GlobMapper> for more details.
 If the C<$input_filename_or_reference> parameter is any other type,
 C<undef> will be returned.
 
-In addition, if C<$input_filename_or_reference> is a simple filename,
-the default values for
-the C<Name>, C<Time>, C<TextFlag>, C<ExtAttr>, C<exUnixN> and C<exTime> options will be sourced from that file.
+In addition, if C<$input_filename_or_reference> corresponds to a filename
+from the filesystem, a number of zip file header fields will be populated by default
+using the following attributes from the input file
+
+=over 5
+
+=item * the full filename contained in C<$input_filename_or_reference>
+
+=item * the file protection attributes
+
+=item * the UID/GID for the file
+
+=item * the file timestamps
+
+=back
 
 If you do not want to use these defaults they can be overridden by
-explicitly setting the C<Name>, C<Time>, C<TextFlag>, C<ExtAttr>, C<exUnixN> and C<exTime> options or by setting the
+explicitly setting one, or more, of the C<Name>, C<Time>, C<TextFlag>, C<ExtAttr>, C<exUnixN> and C<exTime> options or by setting the
 C<Minimal> parameter.
 
 =head3 The C<$output_filename_or_reference> parameter
@@ -1205,7 +1273,7 @@ compressed data to a buffer, C<$buffer>.
     use IO::Compress::Zip qw(zip $ZipError) ;
     use IO::File ;
 
-    my $input = new IO::File "<file1.txt"
+    my $input = IO::File->new( "<file1.txt" )
         or die "Cannot open 'file1.txt': $!\n" ;
     my $buffer ;
     zip $input => \$buffer
@@ -1246,7 +1314,7 @@ or more succinctly
 
 The format of the constructor for C<IO::Compress::Zip> is shown below
 
-    my $z = new IO::Compress::Zip $output [,OPTS]
+    my $z = IO::Compress::Zip->new( $output [,OPTS] )
         or die "IO::Compress::Zip failed: $ZipError\n";
 
 It returns an C<IO::Compress::Zip> object on success and undef on failure.
@@ -1553,7 +1621,7 @@ The default is 0.
 
 =back
 
-=head3 Lzma Compression Options
+=head3 Lzma and Xz Compression Options
 
 =over 5
 
@@ -1683,11 +1751,11 @@ By default, no comment field is written to the zip file.
 
 =item C<< Method => $method >>
 
-Controls which compression method is used. At present four compression
-methods are supported, namely Store (no compression at all), Deflate,
-Bzip2 and Lzma.
+Controls which compression method is used. At present the compression
+methods supported are: Store (no compression at all), Deflate,
+Bzip2, Zstd, Xz and Lzma.
 
-The symbols, ZIP_CM_STORE, ZIP_CM_DEFLATE, ZIP_CM_BZIP2 and ZIP_CM_LZMA
+The symbols ZIP_CM_STORE, ZIP_CM_DEFLATE, ZIP_CM_BZIP2, ZIP_CM_ZSTD, ZIP_CM_XZ and ZIP_CM_LZMA
 are used to select the compression method.
 
 These constants are not imported by C<IO::Compress::Zip> by default.
@@ -1703,6 +1771,14 @@ content when C<IO::Compress::Bzip2> is not available.
 Note that to create Lzma content, the module C<IO::Compress::Lzma> must
 be installed. A fatal error will be thrown if you attempt to create Lzma
 content when C<IO::Compress::Lzma> is not available.
+
+Note that to create Xz content, the module C<IO::Compress::Xz> must
+be installed. A fatal error will be thrown if you attempt to create Xz
+content when C<IO::Compress::Xz> is not available.
+
+Note that to create Zstd content, the module C<IO::Compress::Zstd> must
+be installed. A fatal error will be thrown if you attempt to create Zstd
+content when C<IO::Compress::Zstd> is not available.
 
 The default method is ZIP_CM_DEFLATE.
 
@@ -2065,15 +2141,18 @@ L<Archive::Tar|Archive::Tar>,
 L<IO::Zlib|IO::Zlib>
 
 For RFC 1950, 1951 and 1952 see
-L<http://www.faqs.org/rfcs/rfc1950.html>,
-L<http://www.faqs.org/rfcs/rfc1951.html> and
-L<http://www.faqs.org/rfcs/rfc1952.html>
+L<https://datatracker.ietf.org/doc/html/rfc1950>,
+L<https://datatracker.ietf.org/doc/html/rfc1951> and
+L<https://datatracker.ietf.org/doc/html/rfc1952>
 
 The I<zlib> compression library was written by Jean-loup Gailly
 C<gzip@prep.ai.mit.edu> and Mark Adler C<madler@alumni.caltech.edu>.
 
 The primary site for the I<zlib> compression library is
 L<http://www.zlib.org>.
+
+The primary site for the I<zlib-ng> compression library is
+L<https://github.com/zlib-ng/zlib-ng>.
 
 The primary site for gzip is L<http://www.gzip.org>.
 
@@ -2087,8 +2166,7 @@ See the Changes file.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2005-2019 Paul Marquess. All rights reserved.
+Copyright (c) 2005-2023 Paul Marquess. All rights reserved.
 
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
-

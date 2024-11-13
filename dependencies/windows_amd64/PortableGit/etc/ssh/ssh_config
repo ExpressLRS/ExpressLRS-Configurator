@@ -1,4 +1,4 @@
-#	$OpenBSD: ssh_config,v 1.35 2020/07/17 03:43:42 dtucker Exp $
+#	$OpenBSD: ssh_config,v 1.36 2023/08/02 23:04:38 djm Exp $
 
 # This is the ssh client system-wide configuration file.  See
 # ssh_config(5) for more information.  This file provides defaults for
@@ -25,7 +25,7 @@
 #   GSSAPIAuthentication no
 #   GSSAPIDelegateCredentials no
 #   BatchMode no
-#   CheckHostIP yes
+#   CheckHostIP no
 #   AddressFamily any
 #   ConnectTimeout 0
 #   StrictHostKeyChecking ask
@@ -45,4 +45,10 @@
 #   RekeyLimit 1G 1h
 #   UserKnownHostsFile ~/.ssh/known_hosts.d/%k
 # Added by git-extra
-Ciphers +aes128-cbc,3des-cbc,aes256-cbc,aes192-cbc
+Host ssh.dev.azure.com
+	HostkeyAlgorithms +ssh-rsa
+	PubkeyAcceptedAlgorithms +ssh-rsa
+# Added by git-extra
+Host *.visualstudio.com
+	HostkeyAlgorithms +ssh-rsa
+	PubkeyAcceptedAlgorithms +ssh-rsa
