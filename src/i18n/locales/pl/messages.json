@@ -175,7 +175,7 @@
   },
   "WifiDeviceList": {
     "Name": "Nazwa",
-    "Target": "Cel",
+    "Target": "Urządzenie docelowe",
     "Version": "Wersja",
     "Type": "Rodzaj",
     "DNS": "DNS",
@@ -208,7 +208,7 @@
   "ConfiguratorView": {
     "DownloadLUAScript": "Pobierz skrypt LUA",
     "FirmwareVersion": "Wersja oprogramowania",
-    "Target": "Cel",
+    "Target": "Urządzenie docelowe",
     "Notice": "Powiadomienie",
     "SelectFirmwareVersionFirst": "Proszę najpierw wybrać wersję oprogramowania.",
     "DeviceOptions": "Opcje urządzenia",
