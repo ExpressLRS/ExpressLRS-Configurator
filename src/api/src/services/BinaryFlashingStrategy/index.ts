@@ -562,7 +562,10 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       let flasherArgs: string[][];
       if (
         gitRepository.hardwareArtifactUrl &&
-        params.firmware.source !== FirmwareSource.Local
+        !(
+          params.firmware.source === FirmwareSource.Local &&
+          fs.existsSync(path.join(firmwareDescriptionsPath, 'hardware'))
+        )
       ) {
         flasherArgs = this.binaryConfigurator.buildBinaryConfigFlags(
           outputDirectory,
