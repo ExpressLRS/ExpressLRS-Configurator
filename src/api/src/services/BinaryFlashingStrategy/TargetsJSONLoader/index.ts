@@ -77,6 +77,8 @@ export class TargetsJSONLoader {
               category = `${categoryName} ${this.frequencyFormatter(
                 config.frequency
               )}`;
+            } else {
+              category = `${categoryName} Dual Band`;
             }
 
             result[id] = {
