@@ -22,29 +22,32 @@ const mergeWithDeviceOptionsFromStorage = async (
   const addOverrides = (deviceOption: UserDefine): UserDefine => {
     if (
       deviceOption.key === UserDefineKey.BINDING_PHRASE &&
-      savedBindingPhrase.length > 0
+      savedBindingPhrase !== null
     ) {
       return {
         ...deviceOption,
-        value: savedBindingPhrase,
+        enabled: savedBindingPhrase.enabled || false,
+        value: savedBindingPhrase.value,
       };
     }
     if (
       deviceOption.key === UserDefineKey.HOME_WIFI_SSID &&
-      wifiSSID.length > 0
+      wifiSSID !== null
     ) {
       return {
         ...deviceOption,
-        value: wifiSSID,
+        enabled: wifiSSID.enabled || false,
+        value: wifiSSID.value,
       };
     }
     if (
       deviceOption.key === UserDefineKey.HOME_WIFI_PASSWORD &&
-      wifiPassword.length > 0
+      wifiPassword !== null
     ) {
       return {
         ...deviceOption,
-        value: wifiPassword,
+        enabled: wifiPassword.enabled || false,
+        value: wifiPassword.value,
       };
     }
     if (

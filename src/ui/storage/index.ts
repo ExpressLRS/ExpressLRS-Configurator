@@ -22,9 +22,9 @@ export interface IApplicationStorage {
 
   getDeviceOptions(deviceTarget: string): Promise<DeviceOptions | null>;
 
-  setBindingPhrase(bindingPhrase: string): Promise<void>;
+  setBindingPhrase(bindingPhrase: string, enabled: boolean): Promise<void>;
 
-  getBindingPhrase(): Promise<string>;
+  getBindingPhrase(): Promise<Partial<UserDefine> | null>;
 
   getFirmwareSource(
     gitRepository: GitRepository
@@ -39,13 +39,13 @@ export interface IApplicationStorage {
 
   setShowPreReleases(value: boolean): Promise<void>;
 
-  setWifiSSID(value: string): Promise<void>;
+  setWifiSSID(value: string, enabled: boolean): Promise<void>;
 
-  getWifiSSID(): Promise<string>;
+  getWifiSSID(): Promise<Partial<UserDefine> | null>;
 
-  setWifiPassword(value: string): Promise<void>;
+  setWifiPassword(value: string, enabled: boolean): Promise<void>;
 
-  getWifiPassword(): Promise<string>;
+  getWifiPassword(): Promise<Partial<UserDefine> | null>;
 
   setRegulatoryDomain900(value: UserDefineKey): Promise<void>;
 
@@ -133,16 +133,25 @@ export default class ApplicationStorage implements IApplicationStorage {
     );
   }
 
-  async setBindingPhrase(bindingPhrase: string): Promise<void> {
+  async setBindingPhrase(
+    bindingPhrase: string,
+    enabled: boolean
+  ): Promise<void> {
     localStorage.setItem(BINDING_PHRASE_KEY, bindingPhrase);
+    localStorage.setItem(`${BINDING_PHRASE_KEY}.enabled`, String(enabled));
   }
 
-  async getBindingPhrase(): Promise<string> {
+  async getBindingPhrase(): Promise<Partial<UserDefine> | null> {
     const value = localStorage.getItem(BINDING_PHRASE_KEY);
+    const enabled =
+      localStorage.getItem(`${BINDING_PHRASE_KEY}.enabled`) === 'true';
     if (value === null) {
-      return '';
+      return null;
     }
-    return value;
+    return {
+      value,
+      enabled,
+    };
   }
 
   async getShowPreReleases(defaultValue: boolean): Promise<boolean> {
@@ -164,28 +173,39 @@ export default class ApplicationStorage implements IApplicationStorage {
     localStorage.setItem(UI_SHOW_FIRMWARE_PRE_RELEASES, JSON.stringify(value));
   }
 
-  async setWifiSSID(bindingPhrase: string): Promise<void> {
-    localStorage.setItem(WIFI_SSID_KEY, bindingPhrase);
+  async setWifiSSID(value: string, enabled: boolean): Promise<void> {
+    localStorage.setItem(WIFI_SSID_KEY, value);
+    localStorage.setItem(`${WIFI_SSID_KEY}.enabled`, String(enabled));
   }
 
-  async getWifiSSID(): Promise<string> {
+  async getWifiSSID(): Promise<Partial<UserDefine> | null> {
     const value = localStorage.getItem(WIFI_SSID_KEY);
+    const enabled = localStorage.getItem(`${WIFI_SSID_KEY}.enabled`) === 'true';
     if (value === null) {
-      return '';
+      return null;
     }
-    return value;
+    return {
+      value,
+      enabled,
+    };
   }
 
-  async setWifiPassword(bindingPhrase: string): Promise<void> {
-    localStorage.setItem(WIFI_PASSWORD_KEY, bindingPhrase);
+  async setWifiPassword(value: string, enabled: boolean): Promise<void> {
+    localStorage.setItem(WIFI_PASSWORD_KEY, value);
+    localStorage.setItem(`${WIFI_PASSWORD_KEY}.enabled`, String(enabled));
   }
 
-  async getWifiPassword(): Promise<string> {
+  async getWifiPassword(): Promise<Partial<UserDefine> | null> {
     const value = localStorage.getItem(WIFI_PASSWORD_KEY);
+    const enabled =
+      localStorage.getItem(`${WIFI_PASSWORD_KEY}.enabled`) === 'true';
     if (value === null) {
-      return '';
+      return null;
     }
-    return value;
+    return {
+      value,
+      enabled,
+    };
   }
 
   async setRegulatoryDomain900(bindingPhrase: UserDefineKey): Promise<void> {

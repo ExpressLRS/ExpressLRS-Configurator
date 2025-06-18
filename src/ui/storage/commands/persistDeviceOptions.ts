@@ -14,24 +14,27 @@ const persistDeviceOptions = async (
 
     await Promise.all(
       deviceOptions.userDefineOptions.map(async (userDefine) => {
-        if (
-          userDefine.enabled &&
-          userDefine.value &&
-          userDefine.value?.length > 0
-        ) {
-          switch (userDefine.key) {
-            case UserDefineKey.BINDING_PHRASE:
-              await storage.setBindingPhrase(userDefine.value);
-              break;
-            case UserDefineKey.HOME_WIFI_SSID:
-              await storage.setWifiSSID(userDefine.value);
-              break;
-            case UserDefineKey.HOME_WIFI_PASSWORD:
-              await storage.setWifiPassword(userDefine.value);
-              break;
-            default:
-              break;
-          }
+        switch (userDefine.key) {
+          case UserDefineKey.BINDING_PHRASE:
+            await storage.setBindingPhrase(
+              userDefine.value || '',
+              userDefine.enabled
+            );
+            break;
+          case UserDefineKey.HOME_WIFI_SSID:
+            await storage.setWifiSSID(
+              userDefine.value || '',
+              userDefine.enabled
+            );
+            break;
+          case UserDefineKey.HOME_WIFI_PASSWORD:
+            await storage.setWifiPassword(
+              userDefine.value || '',
+              userDefine.enabled
+            );
+            break;
+          default:
+            break;
         }
         if (userDefine.optionGroup && userDefine.enabled) {
           switch (userDefine.optionGroup) {
