@@ -7,10 +7,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['ubuntu-20.04', 'windows-2019', 'macos-13']
+        os: ['ubuntu-22.04', 'windows-2019', 'macos-13']
     steps:
       - name: Setup apt dependencies
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           sudo apt update
           sudo apt-get install --no-install-recommends -y libarchive-tools rpm
@@ -66,7 +66,7 @@ jobs:
           yarn electron-builder --publish always --x64 --mac
 
       - name: Publish Linux releases
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         env:
           # These values are used for auto updates signing
           # APPLE_ID: ${{ secrets.APPLE_ID }}
