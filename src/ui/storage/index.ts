@@ -2,6 +2,7 @@ import {
   FirmwareVersionDataInput,
   UserDefine,
   UserDefineKey,
+  UserDefineOptionGroup,
   UserDefinesMode,
 } from '../gql/generated/types';
 import GitRepository from '../models/GitRepository';
@@ -22,9 +23,12 @@ export interface IApplicationStorage {
 
   getDeviceOptions(deviceTarget: string): Promise<DeviceOptions | null>;
 
-  setBindingPhrase(bindingPhrase: string): Promise<void>;
-
-  getBindingPhrase(): Promise<string>;
+  getGlobalOption(key: UserDefineKey): Promise<Partial<UserDefine> | null>;
+  setGlobalOption(
+    key: UserDefineKey,
+    value: string,
+    enabled: boolean
+  ): Promise<void>;
 
   getFirmwareSource(
     gitRepository: GitRepository
@@ -39,21 +43,13 @@ export interface IApplicationStorage {
 
   setShowPreReleases(value: boolean): Promise<void>;
 
-  setWifiSSID(value: string): Promise<void>;
-
-  getWifiSSID(): Promise<string>;
-
-  setWifiPassword(value: string): Promise<void>;
-
-  getWifiPassword(): Promise<string>;
-
-  setRegulatoryDomain900(value: UserDefineKey): Promise<void>;
-
-  getRegulatoryDomain900(): Promise<UserDefineKey | null>;
-
-  setRegulatoryDomain2400(value: UserDefineKey): Promise<void>;
-
-  getRegulatoryDomain2400(): Promise<UserDefineKey | null>;
+  setOptionsGroupValue(
+    group: UserDefineOptionGroup,
+    key: UserDefineKey
+  ): Promise<void>;
+  getOptionsGroupValue(
+    group: UserDefineOptionGroup
+  ): Promise<UserDefineKey | null>;
 
   setShowSensitiveFieldData(field: string, value: boolean): Promise<void>;
 
@@ -65,13 +61,8 @@ export interface IApplicationStorage {
 }
 
 const DEVICE_OPTIONS_BY_TARGET_KEYSPACE = 'device_options';
-const BINDING_PHRASE_KEY = 'binding_phrase';
 const FIRMWARE_SOURCE_KEY = 'firmware_source';
 const UI_SHOW_FIRMWARE_PRE_RELEASES = 'ui_show_pre_releases';
-const WIFI_SSID_KEY = 'wifi_ssid';
-const WIFI_PASSWORD_KEY = 'wifi_password';
-const REGULATORY_DOMAIN_900_KEY = 'regulatory_domain_900';
-const REGULATORY_DOMAIN_2400_KEY = 'regulatory_domain_2400';
 const EXPERT_MODE = 'expert_mode';
 
 export default class ApplicationStorage implements IApplicationStorage {
@@ -133,16 +124,78 @@ export default class ApplicationStorage implements IApplicationStorage {
     );
   }
 
-  async setBindingPhrase(bindingPhrase: string): Promise<void> {
-    localStorage.setItem(BINDING_PHRASE_KEY, bindingPhrase);
+  private getGlobalOptionKey(key: UserDefineKey): string {
+    // we retain backwards compatibility with previous configurator versions
+    const BINDING_PHRASE_KEY = 'binding_phrase';
+    const WIFI_SSID_KEY = 'wifi_ssid';
+    const WIFI_PASSWORD_KEY = 'wifi_password';
+
+    switch (key) {
+      case UserDefineKey.BINDING_PHRASE:
+        return BINDING_PHRASE_KEY;
+      case UserDefineKey.HOME_WIFI_SSID:
+        return WIFI_SSID_KEY;
+      case UserDefineKey.HOME_WIFI_PASSWORD:
+        return WIFI_PASSWORD_KEY;
+      default:
+        return key;
+    }
   }
 
-  async getBindingPhrase(): Promise<string> {
-    const value = localStorage.getItem(BINDING_PHRASE_KEY);
+  async setGlobalOption(
+    key: UserDefineKey,
+    value: string,
+    enabled: boolean
+  ): Promise<void> {
+    localStorage.setItem(this.getGlobalOptionKey(key), value);
+    localStorage.setItem(
+      `${this.getGlobalOptionKey(key)}.enabled`,
+      String(enabled)
+    );
+  }
+
+  async getGlobalOption(
+    key: UserDefineKey
+  ): Promise<Partial<UserDefine> | null> {
+    const value = localStorage.getItem(this.getGlobalOptionKey(key));
+    const enabled =
+      localStorage.getItem(`${this.getGlobalOptionKey(key)}.enabled`) ===
+      'true';
     if (value === null) {
-      return '';
+      return null;
     }
-    return value;
+    return {
+      value,
+      enabled,
+    };
+  }
+
+  private getOptionGroupKey(group: UserDefineOptionGroup): string {
+    // we retain backwards compatibility with previous configurator versions
+    const REGULATORY_DOMAIN_900_KEY = 'regulatory_domain_900';
+    const REGULATORY_DOMAIN_2400_KEY = 'regulatory_domain_2400';
+
+    switch (group) {
+      case UserDefineOptionGroup.RegulatoryDomain900:
+        return REGULATORY_DOMAIN_900_KEY;
+      case UserDefineOptionGroup.RegulatoryDomain2400:
+        return REGULATORY_DOMAIN_2400_KEY;
+      default:
+        return group;
+    }
+  }
+
+  async setOptionsGroupValue(
+    group: UserDefineOptionGroup,
+    key: UserDefineKey
+  ): Promise<void> {
+    localStorage.setItem(this.getOptionGroupKey(group), key);
+  }
+
+  async getOptionsGroupValue(
+    group: UserDefineOptionGroup
+  ): Promise<UserDefineKey | null> {
+    return localStorage.getItem(this.getOptionGroupKey(group)) as UserDefineKey;
   }
 
   async getShowPreReleases(defaultValue: boolean): Promise<boolean> {
@@ -162,46 +215,6 @@ export default class ApplicationStorage implements IApplicationStorage {
 
   async setShowPreReleases(value: boolean): Promise<void> {
     localStorage.setItem(UI_SHOW_FIRMWARE_PRE_RELEASES, JSON.stringify(value));
-  }
-
-  async setWifiSSID(bindingPhrase: string): Promise<void> {
-    localStorage.setItem(WIFI_SSID_KEY, bindingPhrase);
-  }
-
-  async getWifiSSID(): Promise<string> {
-    const value = localStorage.getItem(WIFI_SSID_KEY);
-    if (value === null) {
-      return '';
-    }
-    return value;
-  }
-
-  async setWifiPassword(bindingPhrase: string): Promise<void> {
-    localStorage.setItem(WIFI_PASSWORD_KEY, bindingPhrase);
-  }
-
-  async getWifiPassword(): Promise<string> {
-    const value = localStorage.getItem(WIFI_PASSWORD_KEY);
-    if (value === null) {
-      return '';
-    }
-    return value;
-  }
-
-  async setRegulatoryDomain900(bindingPhrase: UserDefineKey): Promise<void> {
-    localStorage.setItem(REGULATORY_DOMAIN_900_KEY, bindingPhrase);
-  }
-
-  async getRegulatoryDomain900(): Promise<UserDefineKey | null> {
-    return localStorage.getItem(REGULATORY_DOMAIN_900_KEY) as UserDefineKey;
-  }
-
-  async setRegulatoryDomain2400(bindingPhrase: UserDefineKey): Promise<void> {
-    localStorage.setItem(REGULATORY_DOMAIN_2400_KEY, bindingPhrase);
-  }
-
-  async getRegulatoryDomain2400(): Promise<UserDefineKey | null> {
-    return localStorage.getItem(REGULATORY_DOMAIN_2400_KEY) as UserDefineKey;
   }
 
   async setShowSensitiveFieldData(

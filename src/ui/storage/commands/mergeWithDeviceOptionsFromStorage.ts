@@ -1,7 +1,7 @@
 import {
-  UserDefineOptionGroup,
   UserDefine,
   UserDefineKey,
+  UserDefineOptionGroup,
 } from '../../gql/generated/types';
 import { DeviceOptions, IApplicationStorage } from '../index';
 
@@ -10,41 +10,52 @@ const mergeWithDeviceOptionsFromStorage = async (
   device: string | null,
   deviceOptions: DeviceOptions
 ): Promise<DeviceOptions> => {
-  const savedBindingPhrase = await storage.getBindingPhrase();
+  const savedBindingPhrase = await storage.getGlobalOption(
+    UserDefineKey.BINDING_PHRASE
+  );
   const savedTargetOptions = device
     ? await storage.getDeviceOptions(device)
     : null;
-  const wifiSSID = await storage.getWifiSSID();
-  const wifiPassword = await storage.getWifiPassword();
-  const regulatoryDomain900 = await storage.getRegulatoryDomain900();
-  const regulatoryDomain2400 = await storage.getRegulatoryDomain2400();
+  const wifiSSID = await storage.getGlobalOption(UserDefineKey.HOME_WIFI_SSID);
+  const wifiPassword = await storage.getGlobalOption(
+    UserDefineKey.HOME_WIFI_PASSWORD
+  );
+  const regulatoryDomain900 = await storage.getOptionsGroupValue(
+    UserDefineOptionGroup.RegulatoryDomain900
+  );
+  const regulatoryDomain2400 = await storage.getOptionsGroupValue(
+    UserDefineOptionGroup.RegulatoryDomain2400
+  );
 
   const addOverrides = (deviceOption: UserDefine): UserDefine => {
     if (
       deviceOption.key === UserDefineKey.BINDING_PHRASE &&
-      savedBindingPhrase.length > 0
+      savedBindingPhrase !== null
     ) {
       return {
         ...deviceOption,
-        value: savedBindingPhrase,
+        enabled: savedBindingPhrase.enabled || false,
+        value: savedBindingPhrase.value,
       };
     }
     if (
       deviceOption.key === UserDefineKey.HOME_WIFI_SSID &&
-      wifiSSID.length > 0
+      wifiSSID !== null
     ) {
       return {
         ...deviceOption,
-        value: wifiSSID,
+        enabled: wifiSSID.enabled || false,
+        value: wifiSSID.value,
       };
     }
     if (
       deviceOption.key === UserDefineKey.HOME_WIFI_PASSWORD &&
-      wifiPassword.length > 0
+      wifiPassword !== null
     ) {
       return {
         ...deviceOption,
-        value: wifiPassword,
+        enabled: wifiPassword.enabled || false,
+        value: wifiPassword.value,
       };
     }
     if (
