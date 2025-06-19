@@ -20,8 +20,12 @@ const mergeWithDeviceOptionsFromStorage = async (
   const wifiPassword = await storage.getGlobalOption(
     UserDefineKey.HOME_WIFI_PASSWORD
   );
-  const regulatoryDomain900 = await storage.getRegulatoryDomain900();
-  const regulatoryDomain2400 = await storage.getRegulatoryDomain2400();
+  const regulatoryDomain900 = await storage.getOptionsGroupValue(
+    UserDefineOptionGroup.RegulatoryDomain900
+  );
+  const regulatoryDomain2400 = await storage.getOptionsGroupValue(
+    UserDefineOptionGroup.RegulatoryDomain2400
+  );
 
   const addOverrides = (deviceOption: UserDefine): UserDefine => {
     if (
