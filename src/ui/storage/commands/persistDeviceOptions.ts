@@ -16,19 +16,10 @@ const persistDeviceOptions = async (
       deviceOptions.userDefineOptions.map(async (userDefine) => {
         switch (userDefine.key) {
           case UserDefineKey.BINDING_PHRASE:
-            await storage.setBindingPhrase(
-              userDefine.value || '',
-              userDefine.enabled
-            );
-            break;
           case UserDefineKey.HOME_WIFI_SSID:
-            await storage.setWifiSSID(
-              userDefine.value || '',
-              userDefine.enabled
-            );
-            break;
           case UserDefineKey.HOME_WIFI_PASSWORD:
-            await storage.setWifiPassword(
+            await storage.setGlobalOption(
+              userDefine.key,
               userDefine.value || '',
               userDefine.enabled
             );

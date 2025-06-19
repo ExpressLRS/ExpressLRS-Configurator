@@ -22,9 +22,12 @@ export interface IApplicationStorage {
 
   getDeviceOptions(deviceTarget: string): Promise<DeviceOptions | null>;
 
-  setBindingPhrase(bindingPhrase: string, enabled: boolean): Promise<void>;
-
-  getBindingPhrase(): Promise<Partial<UserDefine> | null>;
+  getGlobalOption(key: UserDefineKey): Promise<Partial<UserDefine> | null>;
+  setGlobalOption(
+    key: UserDefineKey,
+    value: string,
+    enabled: boolean
+  ): Promise<void>;
 
   getFirmwareSource(
     gitRepository: GitRepository
@@ -38,14 +41,6 @@ export interface IApplicationStorage {
   getShowPreReleases(defaultValue: boolean): Promise<boolean>;
 
   setShowPreReleases(value: boolean): Promise<void>;
-
-  setWifiSSID(value: string, enabled: boolean): Promise<void>;
-
-  getWifiSSID(): Promise<Partial<UserDefine> | null>;
-
-  setWifiPassword(value: string, enabled: boolean): Promise<void>;
-
-  getWifiPassword(): Promise<Partial<UserDefine> | null>;
 
   setRegulatoryDomain900(value: UserDefineKey): Promise<void>;
 
@@ -65,11 +60,8 @@ export interface IApplicationStorage {
 }
 
 const DEVICE_OPTIONS_BY_TARGET_KEYSPACE = 'device_options';
-const BINDING_PHRASE_KEY = 'binding_phrase';
 const FIRMWARE_SOURCE_KEY = 'firmware_source';
 const UI_SHOW_FIRMWARE_PRE_RELEASES = 'ui_show_pre_releases';
-const WIFI_SSID_KEY = 'wifi_ssid';
-const WIFI_PASSWORD_KEY = 'wifi_password';
 const REGULATORY_DOMAIN_900_KEY = 'regulatory_domain_900';
 const REGULATORY_DOMAIN_2400_KEY = 'regulatory_domain_2400';
 const EXPERT_MODE = 'expert_mode';
@@ -133,18 +125,43 @@ export default class ApplicationStorage implements IApplicationStorage {
     );
   }
 
-  async setBindingPhrase(
-    bindingPhrase: string,
-    enabled: boolean
-  ): Promise<void> {
-    localStorage.setItem(BINDING_PHRASE_KEY, bindingPhrase);
-    localStorage.setItem(`${BINDING_PHRASE_KEY}.enabled`, String(enabled));
+  private getGlobalOptionKey(key: UserDefineKey): string {
+    // we retain backwards compatibility with previous configurator versions
+    const BINDING_PHRASE_KEY = 'binding_phrase';
+    const WIFI_SSID_KEY = 'wifi_ssid';
+    const WIFI_PASSWORD_KEY = 'wifi_password';
+
+    switch (key) {
+      case UserDefineKey.BINDING_PHRASE:
+        return BINDING_PHRASE_KEY;
+      case UserDefineKey.HOME_WIFI_SSID:
+        return WIFI_SSID_KEY;
+      case UserDefineKey.HOME_WIFI_PASSWORD:
+        return WIFI_PASSWORD_KEY;
+      default:
+        return key;
+    }
   }
 
-  async getBindingPhrase(): Promise<Partial<UserDefine> | null> {
-    const value = localStorage.getItem(BINDING_PHRASE_KEY);
+  async setGlobalOption(
+    key: UserDefineKey,
+    value: string,
+    enabled: boolean
+  ): Promise<void> {
+    localStorage.setItem(this.getGlobalOptionKey(key), value);
+    localStorage.setItem(
+      `${this.getGlobalOptionKey(key)}.enabled`,
+      String(enabled)
+    );
+  }
+
+  async getGlobalOption(
+    key: UserDefineKey
+  ): Promise<Partial<UserDefine> | null> {
+    const value = localStorage.getItem(this.getGlobalOptionKey(key));
     const enabled =
-      localStorage.getItem(`${BINDING_PHRASE_KEY}.enabled`) === 'true';
+      localStorage.getItem(`${this.getGlobalOptionKey(key)}.enabled`) ===
+      'true';
     if (value === null) {
       return null;
     }
@@ -171,41 +188,6 @@ export default class ApplicationStorage implements IApplicationStorage {
 
   async setShowPreReleases(value: boolean): Promise<void> {
     localStorage.setItem(UI_SHOW_FIRMWARE_PRE_RELEASES, JSON.stringify(value));
-  }
-
-  async setWifiSSID(value: string, enabled: boolean): Promise<void> {
-    localStorage.setItem(WIFI_SSID_KEY, value);
-    localStorage.setItem(`${WIFI_SSID_KEY}.enabled`, String(enabled));
-  }
-
-  async getWifiSSID(): Promise<Partial<UserDefine> | null> {
-    const value = localStorage.getItem(WIFI_SSID_KEY);
-    const enabled = localStorage.getItem(`${WIFI_SSID_KEY}.enabled`) === 'true';
-    if (value === null) {
-      return null;
-    }
-    return {
-      value,
-      enabled,
-    };
-  }
-
-  async setWifiPassword(value: string, enabled: boolean): Promise<void> {
-    localStorage.setItem(WIFI_PASSWORD_KEY, value);
-    localStorage.setItem(`${WIFI_PASSWORD_KEY}.enabled`, String(enabled));
-  }
-
-  async getWifiPassword(): Promise<Partial<UserDefine> | null> {
-    const value = localStorage.getItem(WIFI_PASSWORD_KEY);
-    const enabled =
-      localStorage.getItem(`${WIFI_PASSWORD_KEY}.enabled`) === 'true';
-    if (value === null) {
-      return null;
-    }
-    return {
-      value,
-      enabled,
-    };
   }
 
   async setRegulatoryDomain900(bindingPhrase: UserDefineKey): Promise<void> {

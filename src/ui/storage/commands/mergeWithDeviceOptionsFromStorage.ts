@@ -1,7 +1,7 @@
 import {
-  UserDefineOptionGroup,
   UserDefine,
   UserDefineKey,
+  UserDefineOptionGroup,
 } from '../../gql/generated/types';
 import { DeviceOptions, IApplicationStorage } from '../index';
 
@@ -10,12 +10,16 @@ const mergeWithDeviceOptionsFromStorage = async (
   device: string | null,
   deviceOptions: DeviceOptions
 ): Promise<DeviceOptions> => {
-  const savedBindingPhrase = await storage.getBindingPhrase();
+  const savedBindingPhrase = await storage.getGlobalOption(
+    UserDefineKey.BINDING_PHRASE
+  );
   const savedTargetOptions = device
     ? await storage.getDeviceOptions(device)
     : null;
-  const wifiSSID = await storage.getWifiSSID();
-  const wifiPassword = await storage.getWifiPassword();
+  const wifiSSID = await storage.getGlobalOption(UserDefineKey.HOME_WIFI_SSID);
+  const wifiPassword = await storage.getGlobalOption(
+    UserDefineKey.HOME_WIFI_PASSWORD
+  );
   const regulatoryDomain900 = await storage.getRegulatoryDomain900();
   const regulatoryDomain2400 = await storage.getRegulatoryDomain2400();
 
