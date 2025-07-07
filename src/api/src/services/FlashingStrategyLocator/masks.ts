@@ -21,9 +21,6 @@ export const maskBuildFlashFirmwareParams = (
   params: BuildFlashFirmwareParams
 ): BuildFlashFirmwareParams => {
   const result = cloneDeep(params);
-  if (result.userDefinesTxt?.length > 0) {
-    result.userDefinesTxt = '******';
-  }
   result.userDefines = result.userDefines.map((userDefine) => {
     const sensitiveDataKeys = [
       UserDefineKey.BINDING_PHRASE,

@@ -30,7 +30,6 @@ export enum BuildFirmwareErrorType {
 
 export enum BuildFirmwareStep {
   BUILDING_FIRMWARE = 'BUILDING_FIRMWARE',
-  BUILDING_USER_DEFINES = 'BUILDING_USER_DEFINES',
   DOWNLOADING_FIRMWARE = 'DOWNLOADING_FIRMWARE',
   FLASHING_FIRMWARE = 'FLASHING_FIRMWARE',
   VERIFYING_BUILD_SYSTEM = 'VERIFYING_BUILD_SYSTEM'
@@ -44,8 +43,6 @@ export type BuildFlashFirmwareInput = {
   readonly target?: Scalars['String']['input'];
   readonly type?: BuildJobType;
   readonly userDefines?: ReadonlyArray<UserDefineInput>;
-  readonly userDefinesMode?: UserDefinesMode;
-  readonly userDefinesTxt?: Scalars['String']['input'];
 };
 
 export type BuildFlashFirmwareResult = {
@@ -455,11 +452,6 @@ export enum UserDefineOptionGroup {
   RegulatoryDomain2400 = 'RegulatoryDomain2400'
 }
 
-export enum UserDefinesMode {
-  Manual = 'Manual',
-  UserInterface = 'UserInterface'
-}
-
 export type AvailableDevicesListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -500,13 +492,6 @@ export type BuildProgressNotificationsSubscriptionVariables = Exact<{ [key: stri
 
 
 export type BuildProgressNotificationsSubscription = { readonly __typename?: 'Subscription', readonly buildProgressNotifications: { readonly __typename?: 'BuildProgressNotification', readonly type: BuildProgressNotificationType, readonly step?: BuildFirmwareStep | null, readonly message?: string | null } };
-
-export type BuildUserDefinesTxtMutationVariables = Exact<{
-  input: BuildUserDefinesTxtInput;
-}>;
-
-
-export type BuildUserDefinesTxtMutation = { readonly __typename?: 'Mutation', readonly buildUserDefinesTxt: { readonly __typename?: 'BuildUserDefinesTxtResult', readonly userDefinesTxt?: string | null } };
 
 export type CheckForUpdatesQueryVariables = Exact<{
   currentVersion: Scalars['String']['input'];
@@ -880,39 +865,6 @@ export function useBuildProgressNotificationsSubscription(baseOptions?: Apollo.S
       }
 export type BuildProgressNotificationsSubscriptionHookResult = ReturnType<typeof useBuildProgressNotificationsSubscription>;
 export type BuildProgressNotificationsSubscriptionResult = Apollo.SubscriptionResult<BuildProgressNotificationsSubscription>;
-export const BuildUserDefinesTxtDocument = gql`
-    mutation buildUserDefinesTxt($input: BuildUserDefinesTxtInput!) {
-  buildUserDefinesTxt(input: $input) {
-    userDefinesTxt
-  }
-}
-    `;
-export type BuildUserDefinesTxtMutationFn = Apollo.MutationFunction<BuildUserDefinesTxtMutation, BuildUserDefinesTxtMutationVariables>;
-
-/**
- * __useBuildUserDefinesTxtMutation__
- *
- * To run a mutation, you first call `useBuildUserDefinesTxtMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useBuildUserDefinesTxtMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [buildUserDefinesTxtMutation, { data, loading, error }] = useBuildUserDefinesTxtMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useBuildUserDefinesTxtMutation(baseOptions?: Apollo.MutationHookOptions<BuildUserDefinesTxtMutation, BuildUserDefinesTxtMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<BuildUserDefinesTxtMutation, BuildUserDefinesTxtMutationVariables>(BuildUserDefinesTxtDocument, options);
-      }
-export type BuildUserDefinesTxtMutationHookResult = ReturnType<typeof useBuildUserDefinesTxtMutation>;
-export type BuildUserDefinesTxtMutationResult = Apollo.MutationResult<BuildUserDefinesTxtMutation>;
-export type BuildUserDefinesTxtMutationOptions = Apollo.BaseMutationOptions<BuildUserDefinesTxtMutation, BuildUserDefinesTxtMutationVariables>;
 export const CheckForUpdatesDocument = gql`
     query checkForUpdates($currentVersion: String!) {
   checkForUpdates(currentVersion: $currentVersion) {
