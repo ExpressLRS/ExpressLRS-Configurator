@@ -327,11 +327,30 @@ export default class DeviceDescriptionsLoader {
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400)
       );
     }
-    // no support for LR1121 LBT yet. SPI commands are too slow
+
     if (args.target.includes('tx_dual') || args.target.includes('rx_dual')) {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400)
       );
+      /*
+        LBT support for dual-band hardware was added only after 3.5.6.
+
+        So with our best effort, we are trying to determine if lbt is actually
+         supported by the firmware. We can do that accurately with git tag
+         semver comparison. For everything else, we will assume that it is
+         supported. 
+       */
+      if (
+        (args.source === FirmwareSource.GitTag &&
+          semver.gt(args.gitTag, '3.5.6')) ||
+        args.source !== FirmwareSource.GitTag
+      ) {
+        userDefines.push(
+          targetUserDefinesFactory.build(
+            UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400
+          )
+        );
+      }
     }
     if (
       args.target.includes('_900.') ||
