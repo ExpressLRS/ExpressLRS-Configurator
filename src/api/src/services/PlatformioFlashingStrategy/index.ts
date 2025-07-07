@@ -2,7 +2,6 @@ import { Service } from 'typedi';
 import { PubSubEngine } from 'graphql-subscriptions';
 import * as os from 'os';
 import BuildJobType from '../../models/enum/BuildJobType';
-import UserDefinesMode from '../../models/enum/UserDefinesMode';
 import UserDefine from '../../models/UserDefine';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import BuildFlashFirmwareResult from '../../graphql/objects/BuildFlashFirmwareResult';
@@ -274,14 +273,7 @@ export default class PlatformioFlashingStrategyService
         gitRepositoryUrl,
       });
 
-      await this.updateProgress(
-        BuildProgressNotificationType.Info,
-        BuildFirmwareStep.BUILDING_USER_DEFINES
-      );
-      if (
-        params.userDefinesMode === UserDefinesMode.UserInterface &&
-        params.firmware.source !== FirmwareSource.Local
-      ) {
+      if (params.firmware.source !== FirmwareSource.Local) {
         const compatCheck =
           await this.builder.checkDefaultUserDefinesCompatibilityAtPath(
             firmwarePath,
@@ -302,20 +294,7 @@ export default class PlatformioFlashingStrategyService
         }
       }
 
-      let userDefines = '';
-      switch (params.userDefinesMode) {
-        case UserDefinesMode.Manual:
-          userDefines = params.userDefinesTxt;
-          break;
-        case UserDefinesMode.UserInterface:
-          userDefines = new UserDefinesTxtFactory().build(params.userDefines);
-          break;
-        default:
-          throw new Error(
-            `unsupported user defines mode: ${params.userDefinesMode}`
-          );
-      }
-
+      const userDefines = new UserDefinesTxtFactory().build(params.userDefines);
       const platformioStateJson = await this.platformio.getPlatformioState();
       this.logger?.log('platformio state json', {
         platformioStateJson,

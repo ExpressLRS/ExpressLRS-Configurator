@@ -1,9 +1,0 @@
-mutation buildUserDefinesTxt(
-  $input: BuildUserDefinesTxtInput!
-) {
-  buildUserDefinesTxt(
-    input: $input
-  ) {
-    userDefinesTxt
-  }
-}

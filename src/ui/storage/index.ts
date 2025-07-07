@@ -3,14 +3,11 @@ import {
   UserDefine,
   UserDefineKey,
   UserDefineOptionGroup,
-  UserDefinesMode,
 } from '../gql/generated/types';
 import GitRepository from '../models/GitRepository';
 
 export interface DeviceOptions {
-  userDefinesMode: UserDefinesMode;
   userDefineOptions: UserDefine[];
-  userDefinesTxt: string;
 }
 
 export interface IApplicationStorage {

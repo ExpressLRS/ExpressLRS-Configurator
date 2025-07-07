@@ -61,7 +61,6 @@ import {
   useLuaScriptLazyQuery,
   UserDefineKey,
   UserDefineKind,
-  UserDefinesMode,
   useTargetDeviceOptionsLazyQuery,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
@@ -264,8 +263,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   const [deviceOptionsFormData, setDeviceOptionsFormData] =
     useState<DeviceOptionsFormData>({
-      userDefinesTxt: '',
-      userDefinesMode: UserDefinesMode.UserInterface,
       userDefineOptions: [],
     });
 
@@ -327,8 +324,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       validateFirmwareVersionData(firmwareVersionData).length > 0
     ) {
       setDeviceOptionsFormData({
-        userDefinesTxt: '',
-        userDefinesMode: UserDefinesMode.UserInterface,
         userDefineOptions: [],
       });
     } else {
@@ -580,20 +575,12 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       return;
     }
 
-    switch (deviceOptionsFormData.userDefinesMode) {
-      case UserDefinesMode.Manual:
-        break;
-      case UserDefinesMode.UserInterface:
-        const errs = new UserDefinesValidator().validate(
-          deviceOptionsFormData.userDefineOptions
-        );
-        if (errs.length > 0) {
-          setDeviceOptionsValidationErrors(errs);
-          return;
-        }
-        break;
-      default:
-        break;
+    const errs = new UserDefinesValidator().validate(
+      deviceOptionsFormData.userDefineOptions
+    );
+    if (errs.length > 0) {
+      setDeviceOptionsValidationErrors(errs);
+      return;
     }
 
     let uploadPort: string | undefined;
@@ -624,8 +611,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       type,
       firmware: firmwareVersionData,
       target: deviceTarget.name,
-      userDefinesTxt: deviceOptionsFormData.userDefinesTxt,
-      userDefinesMode: deviceOptionsFormData.userDefinesMode,
       userDefines,
       serialDevice: uploadPort,
       erase,
@@ -870,20 +855,17 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
               title={
                 <div ref={deviceOptionsRef}>
                   {t('ConfiguratorView.DeviceOptions')}{' '}
-                  {deviceOptionsFormData.userDefinesMode ===
-                    UserDefinesMode.UserInterface &&
-                    deviceTarget !== null &&
-                    !loadingOptions && (
-                      <Tooltip
-                        placement="top"
-                        arrow
-                        title={<div>{t('ConfiguratorView.ResetDevice')}</div>}
-                      >
-                        <Button onClick={onResetToDefaults} size="small">
-                          {t('ConfiguratorView.Reset')}
-                        </Button>
-                      </Tooltip>
-                    )}
+                  {deviceTarget !== null && !loadingOptions && (
+                    <Tooltip
+                      placement="top"
+                      arrow
+                      title={<div>{t('ConfiguratorView.ResetDevice')}</div>}
+                    >
+                      <Button onClick={onResetToDefaults} size="small">
+                        {t('ConfiguratorView.Reset')}
+                      </Button>
+                    </Tooltip>
+                  )}
                 </div>
               }
             />
@@ -896,16 +878,14 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   onChange={onUserDefines}
                 />
               )}
-              {deviceOptionsFormData.userDefinesMode ===
-                UserDefinesMode.UserInterface &&
-                (firmwareVersionData === null ||
-                  validateFirmwareVersionData(firmwareVersionData).length > 0 ||
-                  deviceTarget === null) && (
-                  <Alert severity="info">
-                    <AlertTitle>{t('ConfiguratorView.Notice')}</AlertTitle>
-                    {t('ConfiguratorView.SelectFirmwareVersionFirst')}
-                  </Alert>
-                )}
+              {(firmwareVersionData === null ||
+                validateFirmwareVersionData(firmwareVersionData).length > 0 ||
+                deviceTarget === null) && (
+                <Alert severity="info">
+                  <AlertTitle>{t('ConfiguratorView.Notice')}</AlertTitle>
+                  {t('ConfiguratorView.SelectFirmwareVersionFirst')}
+                </Alert>
+              )}
               <ShowAlerts
                 severity="error"
                 messages={deviceOptionsResponseError}

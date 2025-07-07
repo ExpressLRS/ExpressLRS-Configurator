@@ -96,10 +96,6 @@ const mergeWithDeviceOptionsFromStorage = async (
     }
   );
   return {
-    userDefinesMode:
-      savedTargetOptions?.userDefinesMode ?? deviceOptions.userDefinesMode,
-    userDefinesTxt:
-      savedTargetOptions?.userDefinesTxt ?? deviceOptions?.userDefinesTxt,
     userDefineOptions,
   };
 };

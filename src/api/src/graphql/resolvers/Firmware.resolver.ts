@@ -24,9 +24,6 @@ import FlashingStrategyLocatorService from '../../services/FlashingStrategyLocat
 import { BuildProgressNotificationPayload } from '../../services/FlashingStrategyLocator/BuildProgressNotificationPayload';
 import { BuildLogUpdatePayload } from '../../services/FlashingStrategyLocator/BuildLogUpdatePayload';
 import Platformio from '../../library/Platformio';
-import BuildUserDefinesTxtInput from '../inputs/BuildUserDefinesTxtInput';
-import BuildUserDefinesTxtResult from '../objects/BuilduserDefinesTxtResult';
-import UserDefinesTxtFactory from '../../factories/UserDefinesTxtFactory';
 
 @Service()
 @Resolver()
@@ -70,15 +67,6 @@ export default class FirmwareResolver {
       gitRepository
     );
     return strategy.buildFlashFirmware(input, gitRepository);
-  }
-
-  @Mutation(() => BuildUserDefinesTxtResult)
-  async buildUserDefinesTxt(
-    @Arg('input', () => BuildUserDefinesTxtInput)
-    input: BuildUserDefinesTxtInput
-  ): Promise<BuildUserDefinesTxtResult> {
-    const userDefinesTxt = new UserDefinesTxtFactory().build(input.userDefines);
-    return new BuildUserDefinesTxtResult(userDefinesTxt);
   }
 
   @Mutation(() => ClearPlatformioCoreDirResult)
