@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ['ubuntu-22.04', 'windows-2019', 'macos-13']
+        os: ['ubuntu-22.04', 'windows-2022', 'macos-13']
     steps:
       - name: Setup apt dependencies
         if: matrix.os == 'ubuntu-22.04'
@@ -37,7 +37,7 @@ jobs:
           yarn install --prefer-offline --network-timeout 180000
 
       - name: Publish Windows releases
-        if: matrix.os == 'windows-2019'
+        if: matrix.os == 'windows-2022'
         shell: powershell
         env:
           # These values are used for auto updates signing
