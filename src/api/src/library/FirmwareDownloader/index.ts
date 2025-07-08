@@ -101,7 +101,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
       config: [],
       trimmed: false,
     };
-    return simpleGit(options);
+    return simpleGit(options).env({ ...process.env, GIT_CONFIG_GLOBAL: '' });
   }
 
   async clearLocks(directory: string): Promise<void> {
