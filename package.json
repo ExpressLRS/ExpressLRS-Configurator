@@ -346,7 +346,7 @@
     "regenerator-runtime": "^0.14.1",
     "sanitize-filename": "^1.6.3",
     "semver": "^7.3.8",
-    "simple-git": "^3.22.0",
+    "simple-git": "^3.28.0",
     "source-map-support": "^0.5.21",
     "ts-node": "^10.9.2",
     "type-graphql": "2.0.0-beta.3",
