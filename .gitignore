@@ -54,3 +54,5 @@ __pycache__
 r2
 crowdin_env.sh
 purge.sh
+
+patch_targets*
