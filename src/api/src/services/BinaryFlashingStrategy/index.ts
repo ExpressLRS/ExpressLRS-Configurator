@@ -37,7 +37,6 @@ import DeviceDescriptionsLoader from './DeviceDescriptionsLoader';
 import { FirmwareVersionData } from '../FlashingStrategyLocator/FirmwareVersionData';
 import Platformio from '../../library/Platformio';
 import FirmwareBuilder from '../../library/FirmwareBuilder';
-import UserDefinesMode from '../../models/enum/UserDefinesMode';
 import UserDefinesTxtFactory from '../../factories/UserDefinesTxtFactory';
 import BinaryConfigurator from './BinaryConfigurator';
 import {
@@ -244,10 +243,6 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
   }
 
   isRequestCompatibleWithCache(params: BuildFlashFirmwareParams): boolean {
-    if (params.userDefinesMode === UserDefinesMode.Manual) {
-      return false;
-    }
-
     if (params.firmware.source === FirmwareSource.Local) {
       return false;
     }
@@ -258,8 +253,6 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
   async compileBinary(
     target: string,
     firmwareSourcePath: string,
-    userDefinesMode: UserDefinesMode,
-    userDefinesTxt: string,
     userDefines: UserDefine[]
   ): Promise<string> {
     const pythonCheck = await this.platformio.checkPython();
@@ -298,23 +291,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       }
     }
 
-    await this.updateProgress(
-      BuildProgressNotificationType.Info,
-      BuildFirmwareStep.BUILDING_USER_DEFINES
-    );
-
-    let buildUserDefines = '';
-    switch (userDefinesMode) {
-      case UserDefinesMode.Manual:
-        buildUserDefines = userDefinesTxt;
-        break;
-      case UserDefinesMode.UserInterface:
-        buildUserDefines = new UserDefinesTxtFactory().build(userDefines);
-        break;
-      default:
-        throw new Error(`unsupported user defines mode: ${userDefinesMode}`);
-    }
-
+    const buildUserDefines = new UserDefinesTxtFactory().build(userDefines);
     const platformioStateJson = await this.platformio.getPlatformioState();
     this.logger?.log('platformio state json', {
       platformioStateJson,
@@ -537,8 +514,6 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         sourceFirmwareBinPath = await this.compileBinary(
           target,
           firmwareSourcePath,
-          params.userDefinesMode,
-          params.userDefinesTxt,
           params.userDefines
         );
         // In some cases we need to copy multiple artifacts, for example hdzero goggles contains

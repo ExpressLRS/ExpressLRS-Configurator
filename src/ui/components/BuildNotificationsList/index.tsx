@@ -42,8 +42,6 @@ const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> =
           return t('BuildNotificationsList.VerifyingBuildSystem');
         case BuildFirmwareStep.DOWNLOADING_FIRMWARE:
           return t('BuildNotificationsList.DownloadingFirmware');
-        case BuildFirmwareStep.BUILDING_USER_DEFINES:
-          return t('BuildNotificationsList.BuildingUserDefinesTXT');
         case BuildFirmwareStep.BUILDING_FIRMWARE:
           return t('BuildNotificationsList.CompilingFirmware');
         case BuildFirmwareStep.FLASHING_FIRMWARE:

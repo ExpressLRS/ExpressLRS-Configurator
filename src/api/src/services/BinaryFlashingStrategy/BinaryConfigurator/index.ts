@@ -5,7 +5,6 @@ import UserDefineKey from '../../../library/FirmwareBuilder/Enum/UserDefineKey';
 import { NoOpFunc, OnOutputFunc } from '../../../library/Commander';
 import Python from '../../../library/Python';
 import { LoggerService } from '../../../logger';
-import UserDefinesMode from '../../../models/enum/UserDefinesMode';
 
 const maskSensitiveFlags = (data: string[][]): string[][] => {
   const sensitiveData = ['--phrase', '--ssid', '--password'];
@@ -57,9 +56,7 @@ export default class BinaryConfigurator {
       flags.push(['--tx']);
     }
 
-    if (params.userDefinesMode === UserDefinesMode.UserInterface) {
-      flags.push(...this.userDefinesToFlags(params.userDefines));
-    }
+    flags.push(...this.userDefinesToFlags(params.userDefines));
 
     if (params.forceFlash) {
       flags.push(['--force']);

@@ -88,12 +88,6 @@
             "deprecationReason": null
           },
           {
-            "name": "BUILDING_USER_DEFINES",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "DOWNLOADING_FIRMWARE",
             "description": null,
             "isDeprecated": false,
@@ -233,38 +227,6 @@
               }
             },
             "defaultValue": "[]",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "userDefinesMode",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "UserDefinesMode",
-                "ofType": null
-              }
-            },
-            "defaultValue": "UserInterface",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "userDefinesTxt",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "defaultValue": "\"\"",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -3565,29 +3527,6 @@
           },
           {
             "name": "RegulatoryDomain2400",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "UserDefinesMode",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "Manual",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "UserInterface",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

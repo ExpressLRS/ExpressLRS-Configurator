@@ -39,8 +39,6 @@ const BuildProgressBar: FunctionComponent<BuildProgressBarProps> = memo(
               return 10;
             case BuildFirmwareStep.DOWNLOADING_FIRMWARE:
               return 35;
-            case BuildFirmwareStep.BUILDING_USER_DEFINES:
-              return 37;
             case BuildFirmwareStep.BUILDING_FIRMWARE:
               return 77;
             default:
@@ -52,8 +50,6 @@ const BuildProgressBar: FunctionComponent<BuildProgressBarProps> = memo(
               return 5;
             case BuildFirmwareStep.DOWNLOADING_FIRMWARE:
               return 15;
-            case BuildFirmwareStep.BUILDING_USER_DEFINES:
-              return 28;
             case BuildFirmwareStep.BUILDING_FIRMWARE:
               return 56;
             case BuildFirmwareStep.FLASHING_FIRMWARE:

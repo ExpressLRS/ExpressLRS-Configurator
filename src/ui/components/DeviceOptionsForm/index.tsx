@@ -1,53 +1,19 @@
-import {
-  Button,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  Radio,
-  RadioGroup,
-  TextField,
-  Typography,
-} from '@mui/material';
-import React, { FunctionComponent, useRef } from 'react';
+import { Grid, Typography } from '@mui/material';
+import React, { FunctionComponent } from 'react';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import UserDefinesList from '../UserDefinesList';
-import {
-  useBuildUserDefinesTxtMutation,
-  UserDefine,
-  UserDefineKey,
-  UserDefinesMode,
-} from '../../gql/generated/types';
-import ShowAlerts from '../ShowAlerts';
-import Loader from '../Loader';
+import { UserDefine, UserDefineKey } from '../../gql/generated/types';
 import useAppState from '../../hooks/useAppState';
 
 const styles: Record<string, SxProps<Theme>> = {
   categoryTitle: {
     marginBottom: 1,
   },
-  userDefinesMode: {
-    marginTop: 1,
-    paddingTop: 0,
-    paddingRight: 0,
-    paddingBottom: 2,
-    paddingLeft: 1,
-  },
-  radioControl: {
-    marginRight: 4,
-  },
-  radio: {
-    marginRight: 1,
-  },
-  textarea: {
-    marginY: 1,
-  },
 };
 
 export interface DeviceOptionsFormData {
-  userDefinesMode: UserDefinesMode;
   userDefineOptions: UserDefine[];
-  userDefinesTxt: string;
 }
 
 interface DeviceOptionsFormProps {
@@ -223,241 +189,116 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
       userDefineOptions: updatedOptions,
     });
   };
-
-  const onUserDefinesTxt = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    onChange({
-      ...deviceOptions,
-      userDefinesTxt: event.currentTarget.value,
-    });
-  };
-
-  const onUserDefinesMode = (
-    _event: React.ChangeEvent<HTMLInputElement>,
-    value: string
-  ) => {
-    onChange({
-      ...deviceOptions,
-      userDefinesMode: value as UserDefinesMode,
-    });
-  };
-
-  const userDefinesTxtRef = useRef<HTMLInputElement>();
-  const [
-    buildUserDefinesTxtMutation,
-    { error: buildError, loading: buildLoading },
-  ] = useBuildUserDefinesTxtMutation();
-  const onCopyFromStandardMode = () => {
-    buildUserDefinesTxtMutation({
-      variables: {
-        input: {
-          userDefines: cleanUserDefines(deviceOptions.userDefineOptions),
-        },
-      },
-    })
-      .then((result) => {
-        if (
-          result.data?.buildUserDefinesTxt === undefined ||
-          result.data?.buildUserDefinesTxt === null
-        ) {
-          return;
-        }
-        const userDefinesTxt =
-          result.data?.buildUserDefinesTxt.userDefinesTxt || '';
-        onChange({
-          ...deviceOptions,
-          userDefinesTxt,
-        });
-        if (
-          userDefinesTxtRef.current !== undefined &&
-          userDefinesTxtRef.current.value !== undefined
-        ) {
-          userDefinesTxtRef.current.value = userDefinesTxt;
-          userDefinesTxtRef.current?.blur();
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
   return (
-    <>
-      {isExpertModeEnabled && (
-        <FormControl component="fieldset" sx={styles.userDefinesMode}>
-          <RadioGroup
-            row
-            value={deviceOptions.userDefinesMode}
-            onChange={onUserDefinesMode}
-            defaultValue="top"
-          >
-            <FormControlLabel
-              value={UserDefinesMode.UserInterface}
-              sx={styles.radioControl}
-              control={<Radio sx={styles.radio} color="primary" />}
-              label={t('DeviceOptionsForm.StandardMode')}
-            />
-            <FormControlLabel
-              value={UserDefinesMode.Manual}
-              sx={styles.radioControl}
-              control={<Radio sx={styles.radio} color="primary" />}
-              label={t('DeviceOptionsForm.ManualMode')}
-            />
-          </RadioGroup>
-        </FormControl>
-      )}
-      {deviceOptions.userDefinesMode === UserDefinesMode.Manual && (
-        <Grid container spacing={3}>
-          <Grid item xs>
-            <TextField
-              sx={styles.textarea}
-              multiline
-              InputLabelProps={{ shrink: true }}
-              inputRef={userDefinesTxtRef}
-              label="user_defines.txt"
-              onBlur={onUserDefinesTxt}
-              defaultValue={deviceOptions.userDefinesTxt}
-              fullWidth
-              rows={10}
-            />
-            <Loader loading={buildLoading} />
-            <ShowAlerts severity="error" messages={buildError} />
-            <Button onClick={onCopyFromStandardMode} size="small">
-              {t('DeviceOptionsForm.CopyFromStandardMode')}
-            </Button>
-
-            <ShowAlerts
-              severity="warning"
-              messages={t('DeviceOptionsForm.LongerBuildTimeWarning')}
-            />
-          </Grid>
+    target !== null &&
+    categories !== null && (
+      <Grid container spacing={3}>
+        <Grid item xs>
+          {categories[UserDefineCategory.RegulatoryDomainsISM]?.length > 0 && (
+            <>
+              <Typography variant="h6" sx={styles.categoryTitle}>
+                {t('DeviceOptionsForm.RegulatoryDomainsISM')}
+              </Typography>
+              <UserDefinesList
+                options={categories[UserDefineCategory.RegulatoryDomainsISM]}
+                onChange={onOptionUpdate}
+              />
+            </>
+          )}
+          {categories[UserDefineCategory.RegulatoryDomains900]?.length > 0 && (
+            <>
+              <Typography variant="h6" sx={styles.categoryTitle}>
+                {t('DeviceOptionsForm.RegulatoryDomains900')}
+              </Typography>
+              <UserDefinesList
+                options={categories[UserDefineCategory.RegulatoryDomains900]}
+                onChange={onOptionUpdate}
+              />
+            </>
+          )}
+          {categories[UserDefineCategory.RegulatoryDomains433]?.length > 0 && (
+            <>
+              <Typography variant="h6" sx={styles.categoryTitle}>
+                {t('DeviceOptionsForm.RegulatoryDomains433')}
+              </Typography>
+              <UserDefinesList
+                options={categories[UserDefineCategory.RegulatoryDomains433]}
+                onChange={onOptionUpdate}
+              />
+            </>
+          )}
+          {categories[UserDefineCategory.BindingPhrase]?.length > 0 && (
+            <>
+              <Typography variant="h6">
+                {t('DeviceOptionsForm.BindingPhraseSetup')}
+              </Typography>
+              <UserDefinesList
+                options={categories[UserDefineCategory.BindingPhrase]}
+                onChange={onOptionUpdate}
+              />
+            </>
+          )}
+          {categories[UserDefineCategory.CompatibilityOptions]?.length > 0 && (
+            <>
+              <Typography variant="h6">
+                {t('DeviceOptionsForm.CompatibilityOptions')}
+              </Typography>
+              <UserDefinesList
+                options={categories[UserDefineCategory.CompatibilityOptions]}
+                onChange={onOptionUpdate}
+              />
+            </>
+          )}
         </Grid>
-      )}
-      {target !== null &&
-        categories !== null &&
-        deviceOptions.userDefinesMode === UserDefinesMode.UserInterface && (
-          <Grid container spacing={3}>
-            <Grid item xs>
-              {categories[UserDefineCategory.RegulatoryDomainsISM]?.length >
-                0 && (
-                <>
-                  <Typography variant="h6" sx={styles.categoryTitle}>
-                    {t('DeviceOptionsForm.RegulatoryDomainsISM')}
-                  </Typography>
-                  <UserDefinesList
-                    options={
-                      categories[UserDefineCategory.RegulatoryDomainsISM]
-                    }
-                    onChange={onOptionUpdate}
-                  />
-                </>
-              )}
-              {categories[UserDefineCategory.RegulatoryDomains900]?.length >
-                0 && (
-                <>
-                  <Typography variant="h6" sx={styles.categoryTitle}>
-                    {t('DeviceOptionsForm.RegulatoryDomains900')}
-                  </Typography>
-                  <UserDefinesList
-                    options={
-                      categories[UserDefineCategory.RegulatoryDomains900]
-                    }
-                    onChange={onOptionUpdate}
-                  />
-                </>
-              )}
-              {categories[UserDefineCategory.RegulatoryDomains433]?.length >
-                0 && (
-                <>
-                  <Typography variant="h6" sx={styles.categoryTitle}>
-                    {t('DeviceOptionsForm.RegulatoryDomains433')}
-                  </Typography>
-                  <UserDefinesList
-                    options={
-                      categories[UserDefineCategory.RegulatoryDomains433]
-                    }
-                    onChange={onOptionUpdate}
-                  />
-                </>
-              )}
-              {categories[UserDefineCategory.BindingPhrase]?.length > 0 && (
-                <>
-                  <Typography variant="h6">
-                    {t('DeviceOptionsForm.BindingPhraseSetup')}
-                  </Typography>
-                  <UserDefinesList
-                    options={categories[UserDefineCategory.BindingPhrase]}
-                    onChange={onOptionUpdate}
-                  />
-                </>
-              )}
-              {categories[UserDefineCategory.CompatibilityOptions]?.length >
-                0 && (
-                <>
-                  <Typography variant="h6">
-                    {t('DeviceOptionsForm.CompatibilityOptions')}
-                  </Typography>
-                  <UserDefinesList
-                    options={
-                      categories[UserDefineCategory.CompatibilityOptions]
-                    }
-                    onChange={onOptionUpdate}
-                  />
-                </>
-              )}
-            </Grid>
 
-            <Grid item xs>
-              {categories[UserDefineCategory.PerformanceOptions]?.length >
-                0 && (
-                <>
-                  <Typography variant="h6">
-                    {t('DeviceOptionsForm.PerformanceOptions')}
-                  </Typography>
-                  <UserDefinesList
-                    options={categories[UserDefineCategory.PerformanceOptions]}
-                    onChange={onOptionUpdate}
-                  />
-                </>
-              )}
-              {categories[UserDefineCategory.ExtraData]?.length > 0 && (
-                <>
-                  <Typography variant="h6">
-                    {t('DeviceOptionsForm.ExtraData')}
-                  </Typography>
-                  <UserDefinesList
-                    options={categories[UserDefineCategory.ExtraData]}
-                    onChange={onOptionUpdate}
-                  />
-                </>
-              )}
-              {categories[UserDefineCategory.NetworkOptions]?.length > 0 && (
-                <>
-                  <Typography variant="h6">
-                    {t('DeviceOptionsForm.Network')}
-                  </Typography>
-                  <UserDefinesList
-                    options={categories[UserDefineCategory.NetworkOptions]}
-                    onChange={onOptionUpdate}
-                  />
-                </>
-              )}
-              {categories[UserDefineCategory.OtherOptions]?.length > 0 && (
-                <>
-                  <Typography variant="h6">
-                    {t('DeviceOptionsForm.OtherOptions')}
-                  </Typography>
-                  <UserDefinesList
-                    options={categories[UserDefineCategory.OtherOptions]}
-                    onChange={onOptionUpdate}
-                  />
-                </>
-              )}
-            </Grid>
-          </Grid>
-        )}
-    </>
+        <Grid item xs>
+          {categories[UserDefineCategory.PerformanceOptions]?.length > 0 && (
+            <>
+              <Typography variant="h6">
+                {t('DeviceOptionsForm.PerformanceOptions')}
+              </Typography>
+              <UserDefinesList
+                options={categories[UserDefineCategory.PerformanceOptions]}
+                onChange={onOptionUpdate}
+              />
+            </>
+          )}
+          {categories[UserDefineCategory.ExtraData]?.length > 0 && (
+            <>
+              <Typography variant="h6">
+                {t('DeviceOptionsForm.ExtraData')}
+              </Typography>
+              <UserDefinesList
+                options={categories[UserDefineCategory.ExtraData]}
+                onChange={onOptionUpdate}
+              />
+            </>
+          )}
+          {categories[UserDefineCategory.NetworkOptions]?.length > 0 && (
+            <>
+              <Typography variant="h6">
+                {t('DeviceOptionsForm.Network')}
+              </Typography>
+              <UserDefinesList
+                options={categories[UserDefineCategory.NetworkOptions]}
+                onChange={onOptionUpdate}
+              />
+            </>
+          )}
+          {categories[UserDefineCategory.OtherOptions]?.length > 0 && (
+            <>
+              <Typography variant="h6">
+                {t('DeviceOptionsForm.OtherOptions')}
+              </Typography>
+              <UserDefinesList
+                options={categories[UserDefineCategory.OtherOptions]}
+                onChange={onOptionUpdate}
+              />
+            </>
+          )}
+        </Grid>
+      </Grid>
+    )
   );
 };
 export default DeviceOptionsForm;
