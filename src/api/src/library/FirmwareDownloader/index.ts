@@ -97,6 +97,9 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
     const options: SimpleGitOptions = {
       baseDir: this.getRepoDirectory(repository),
       binary: this.gitBinaryLocation,
+      unsafe: {
+        allowUnsafeCustomBinary: true,
+      },
       maxConcurrentProcesses: 1,
       config: [],
       trimmed: false,
