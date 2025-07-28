@@ -71,13 +71,12 @@ export class TargetsJSONLoader {
             const frequencyNumber = parseInt(frequency, 10);
 
             let category = categoryName;
-
-            if (frequencyNumber) {
+            if ((type === 'tx' || type === 'rx') && frequencyNumber) {
               config.frequency = frequencyNumber;
               category = `${categoryName} ${this.frequencyFormatter(
                 config.frequency
               )}`;
-            } else {
+            } else if (frequency === 'dual') {
               category = `${categoryName} Dual Band`;
             }
 
