@@ -133,7 +133,7 @@
     "REGULATORY_DOMAIN_AU_915": "915 MHz 澳大利亚",
     "REGULATORY_DOMAIN_EU_433": "433 MHz 欧洲",
     "REGULATORY_DOMAIN_EU_868": "868 MHz 欧洲",
-    "REGULATORY_DOMAIN_FCC_915": "915 MHz FPC",
+    "REGULATORY_DOMAIN_FCC_915": "915 MHz FCC",
     "REGULATORY_DOMAIN_IN_866": "868 MHz 印度",
     "REGULATORY_DOMAIN_EU_CE_2400": "2.4 GHz LBT (Listen before Talk)",
     "REGULATORY_DOMAIN_ISM_2400": "2.4 GHz ISM (标准)",
@@ -144,7 +144,7 @@
     "USE_R9MM_R9MINI_SBUS": "启用 R9MM/R9Mini SBUS"
   },
   "UserDefineDescription": {
-    "RegulatoryDomain915": "咨询 <LoRaWANLink>LoRaWAN 频率计划和条例</LoRaWANLink> 来查看您所在位置使用的监管域。",
+    "RegulatoryDomain915": "查询 <LoRaWANLink>LoRaWAN 频率计划和条例</LoRaWANLink> 来查看您所在位置使用的监管域。",
     "Wiki": "请查看我们的 Wiki 页面了解最新定义。",
     "RegulatoryDomainISM2400": "ISM 无线电波段是国际上保留的无线电频谱的一部分。你可以在任何国家安全地使用这一监管领域。",
     "RegulatoryDomainEUCE2400": "对于早于 v3.x 的固件版本，EU CE 2.4 GHz 监管域将最大功率限制在 10mW，不需要 LBT（Listen Before Talk）。对于晚于 v3.x 的固件版本，EU CE 2.4 GHz 监管域将最大功率限制在 100mW，并启用 LBT（Listen Before Talk）。",
