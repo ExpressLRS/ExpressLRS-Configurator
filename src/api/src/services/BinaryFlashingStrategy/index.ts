@@ -339,8 +339,20 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     return `${regulatoryDomain}/${platformioTarget}/firmware.bin`;
   }
 
-  getCompileTarget(config: DeviceDescription): string {
-    let target = `${config.firmware}_via_UART`;
+  getCompileTarget(
+    config: DeviceDescription,
+    userDefines: UserDefine[]
+  ): string {
+    const rxAsTx =
+      userDefines.find((item) => {
+        return item.key === UserDefineKey.RX_AS_TX && item.enabled;
+      }) !== undefined;
+    const firmwareName = rxAsTx
+      ? config.firmware.replace('_RX', '_TX')
+      : config.firmware;
+
+    let target = `${firmwareName}_via_UART`;
+
     if (config.upload_methods.includes('stlink')) {
       target = `${config.firmware}_via_STLINK`;
     }
@@ -510,7 +522,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
       // we were not able to find cloud binaries, so we will build them on the spot
       if (firmwareDescriptionsPath === firmwareSourcePath) {
-        const target = this.getCompileTarget(config);
+        const target = this.getCompileTarget(config, params.userDefines);
         sourceFirmwareBinPath = await this.compileBinary(
           target,
           firmwareSourcePath,
