@@ -5,8 +5,10 @@
 [![Chat](https://img.shields.io/discord/596350022191415318)](http://discord.gg/dS6ReFY)
 [![Open Collective backers](https://img.shields.io/opencollective/backers/expresslrs?label=Open%20Collective%20backers)](https://opencollective.com/expresslrs)
 
-ExpressLRS Configurator is a cross-platform build & configuration tool for the
-[ExpressLRS](https://github.com/ExpressLRS/ExpressLRS) - open source RC link for RC applications.
+**ExpressLRS Configurator** is a cross-platform build & configuration tool for the
+[ExpressLRS](https://github.com/ExpressLRS/ExpressLRS) - open source RC link for RC applications. Developed and
+maintained by **ExpressLRS LLC** and its passionate open source community, working together to advance
+reliable, high-performance radio control technology.
 
 ## Need help? Confused? Join the Community!
 
