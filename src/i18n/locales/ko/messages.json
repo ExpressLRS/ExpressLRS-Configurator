@@ -79,7 +79,7 @@
     "FlashingMethod": "플래시 방법"
   },
   "Header": {
-    "ExpressLRSConfigurator": "ExpressLRS 컨피규레이터",
+    "ExpressLRSConfigurator": "ExpressLRS™ Configurator",
     "DownloadNewestRelease": "최신 버전을 다운로드하려면 클릭하세요.",
     "UpdateAvailable": "새로운 업데이트가 있습니다!",
     "Documentation": "문서 자료",
@@ -149,7 +149,7 @@
     "RegulatoryDomainISM2400": "ISM 무선 대역은 국제적으로 확보된 공용 무선 주파수입니다. 이 규제 범위는 모든 국가에서 안전하게 사용할 수 있습니다.",
     "RegulatoryDomainEUCE2400": "유럽 지역 (EU) 규제. v3.x 이전 펌웨어 버전의 경우, EU CE 2.4GHz 규제 범위에서 최대 전력을 10mW로 제한하며, 이 경우 LBT(Listen Before Talk)가 필요하지 않습니다. v3.x 이후 펌웨어 버전의 경우 EU CE 2.4GHz 규제 범위에서 최대 전력을 100mW로 제한하고 LBT(Listen Before Talk)를 활성화합니다.",
     "BindingPhrase": "바인딩 문구를 사용하면 수동으로 일일이 바인딩하지 않아도 수신기와 송신기가 자동으로 바인딩 됩니다. (바인딩 구문 없이 플래싱된 수신기는 기존(traditional) 바인딩 방법이 필요합니다.) TX와 RX 모두 동일한 바인딩 문구로 설정되어 있어야 서로 연결됩니다. 기억하기 쉬운 문구를 영어 알파벳과 숫자만으로 구성하여 정해 주세요. 바인딩 문구는 비밀번호가 아니며, 이는 보안을 위한 것이 아니고, 다른 파일럿과 주파수가 겹치지 않도록 해 주는 역할을 합니다.",
-    "AutoWifiOnInterval": "<p>부팅 후 설정된 시간이 지나도록 연결이 되지 않으면 자동으로 WiFi 모드로 진입합니다. 이 방법으로 수신기의 Wi-Fi 네트워크에 연결한 뒤 10.0.0.1을 방문하여 펌웨어를 업데이트 할 수 있습니다</p><p>WiFi 자동 켜기 시간은 <strong>초</strong> 단위로 정의됩니다. 기본값은 60초입니다.</p>",
+    "AutoWifiOnInterval": "<p>If no RC link is detected within the configured time after boot, the module will automatically enable its WiFi access point. This allows you to connect to the module’s WiFi network and access <strong>10.0.0.1</strong> to perform firmware updates.</p> <p>The auto-enable delay is set in <strong>seconds</strong>. Default: <strong>60 seconds</strong>.</p>",
     "TLMReportIntervalMs": "<p>TX 모듈이 지정된 간격으로 조종기에 텔레메트리 데이터를 전송하도록 합니다. 이렇게 하면 높은 텔레메트리 비율 또는 50hz와 같은 낮은 속도를 사용할 때 '텔레메트리 손실' 경고가 줄어듭니다. </p><p>기본값은 <strong>240LU</strong>입니다. 이를 변경하려면 밀리초 값 뒤에 <strong>LU</strong>를 붙여야 합니다. 예를 들어 100밀리초의 텔레메트리 업데이트 속도를 지정하려면, <strong>100LU</strong>와 같이 입력하세요.</p><p>일반적으로 EdgeTX/OpenTX 기반 조종기의 경우 <strong>240LU</strong> 값을, ErskyTx 조종의 경우 <strong>100LU</strong> 값을 설정하면 됩니다.</p>",
     "LockOnFirstConnection": "RF 모드 잠금 - 기본 모드에서는 송신기와 수신기간 연결을 설정할 때, 수신기가 사용 가능한 모든 RF 모드를 총 5초 간격으로 훑으며 송신기가 패킷을 전송중인 모드를 찾습니다. 이 RF 모드 잠금 모드를 사용하면, 최초 한 번만 모든 RF모드를 검색하고, 일단 연결이 이루어지면 (전원이 끊기기 전까지) 해당 RF모드로 고정하여 다른 모드에서 송신 신호를 찾지 않게 됩니다. (즉, 노콘 후 재 연결이 보다 빠르게 이루어집니다)",
     "JustBeepOnce": "이 설정은 TX에서 한 번의 신호음만 울릴지, 시작 멜로디를 재생할지 여부를 설정합니다.",

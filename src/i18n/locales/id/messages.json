@@ -79,7 +79,7 @@
     "FlashingMethod": "Cara tulis (Flash)"
   },
   "Header": {
-    "ExpressLRSConfigurator": "Pengkonfigurasi ExpressLRS",
+    "ExpressLRSConfigurator": "ExpressLRS™ Configurator",
     "DownloadNewestRelease": "Klik untuk mengunduh (Download) rilis terbaru",
     "UpdateAvailable": "Pembaruan tersedia!",
     "Documentation": "Dokumentasi",
@@ -149,7 +149,7 @@
     "RegulatoryDomainISM2400": "Band ISM adalah porsi spektrum radio yang disiapkan secara international. Anda dapat menggunakan regulasi ini dengan aman di negara manapun.",
     "RegulatoryDomainEUCE2400": "Untuk firmware versi sebelum v3.x, regulasi khusus EU CE 2.4 Ghz mambatasi power hingga 10mW, sehingga tidak memerlukan LBT (Listen Before Talk). Untuk firmware versi 3.x dan setelahnya, EU CE 2.4 GHz membatasi daya hingga 100mW dan menggunakan LBT (Listen Before Talk).",
     "BindingPhrase": "Binding phrase menghubungkan receiver ke transmitter tanpa mengharuskan Anda untuk binding secara manual. Receiver yang di-flash tanpa binding phrase akan memerlukan metode pengikatan(binding) tradisional. Baik TX dan RX harus memiliki binding phrase yang sama untuk terhubung. Tetapkan sesuatu yang mudah diingat, dan batasi frasa alfanumerik yang sesuai dengan alfabet Latin. Ini bukan kata sandi, dan tidak memberikan keamanan apa pun, ini hanya mengurangi tabrakan RF dengan pilot lain.",
-    "AutoWifiOnInterval": "<p>Ini akan secara otomatis mengaktifkan wifi untuk setiap modul yang memiliki ESP8285 di dalamnya jika tidak ada koneksi yang ditemukan setelah beberapa detik sejak boot. Hal ini memungkinkan mendorong pembaruan firmware ke RX dengan menghubungkan ke jaringan wifi-nya dan mengunjungi 10.0.0.1</p><p>Interval aktif otomatis ditentukan dalam <strong>detik</strong>. Standarnya adalah 60 detik.</p>",
+    "AutoWifiOnInterval": "<p>If no RC link is detected within the configured time after boot, the module will automatically enable its WiFi access point. This allows you to connect to the module’s WiFi network and access <strong>10.0.0.1</strong> to perform firmware updates.</p> <p>The auto-enable delay is set in <strong>seconds</strong>. Default: <strong>60 seconds</strong>.</p>",
     "TLMReportIntervalMs": "<p>Membuat modul TX mengirimkan data telemetri ke handset pada interval tetap. Ini mengurangi peringatan 「Telemetri Hilang」 saat berjalan pada rasio telemetri tinggi, atau kecepatan rendah seperti 50 hz.</p><p>Nilai defaultnya adalah <strong>240LU</strong>. Jika Anda ingin mengubahnya, Anda harus mengakhiri nilai milidetik Anda dengan <strong>LU</strong>. Misalnya, untuk menentukan kecepatan pembaruan telemetri 100 ms, Anda harus memasukkannya seperti ini: <strong>100LU</strong>.</p><p>umumnya, Anda ingin mempertahankan <strong>240LU</strong> nilai untuk radio berbasis EdgeTX/OpenTX, dan <strong>100LU</strong> untuk radio ErskyTx.</p>",
     "LockOnFirstConnection": "RF Mode Locking - Mode default adalah untuk RX untuk menggilir mode RF yang tersedia dengan jeda 5 detik dari mode tertinggi ke terendah dan menemukan mode mana yang ditransmisikan Tx. Hal ini memungkinkan RX untuk berputar, tetapi setelah koneksi dibuat, Rx tidak akan lagi berputar melalui mode RF (sampai menerima reset daya).",
     "JustBeepOnce": "Fitur ini membuat TX hanya bersuara sekali melainkan memainkan dering start up.",
