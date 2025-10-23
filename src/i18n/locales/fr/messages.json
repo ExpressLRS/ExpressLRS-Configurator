@@ -79,7 +79,7 @@
     "FlashingMethod": "Méthode de mise à jour"
   },
   "Header": {
-    "ExpressLRSConfigurator": "Configurateur ExpressLRS",
+    "ExpressLRSConfigurator": "ExpressLRS™ Configurator",
     "DownloadNewestRelease": "Cliquez ici pour télécharger la dernière version",
     "UpdateAvailable": "Mise à jour disponible !",
     "Documentation": "Documentation",
@@ -149,7 +149,7 @@
     "RegulatoryDomainISM2400": "Les bandes radio ISM sont des portions du spectre radio réservé au niveau international. Vous pouvez utiliser ce domaine réglementaire en toute sécurité dans n'importe quel pays.",
     "RegulatoryDomainEUCE2400": "Pour les versions antérieures à v3.x, le domaine réglementaire EU CE 2.4 GHz limite la puissance maximale à 10 mW, ce qui ne nécessite pas LBT (Listen Before Talk). Pour les versions supérieures à v3.x, le domaine de régulation EU CE 2.4 GHz limite la puissance maximale à 100mW, et active LBT (Listen Before Talk).",
     "BindingPhrase": "La phrase d'appairage appaire les récepteurs et transmetteurs automatiquement. Les récepteurs sans phrases d'appairage devront être appairés manuellement. Le TX et le RX doivent avoir la même phrase d'appairage afin de se connecter. Utilisez quelque chose de facile a retenir, utilisant uniquement des caractères alphanumériques de l'alphabet Latin. Ceci n'est pas un mot de passe et ne sécurise en rien la connexion, elle permet juste d'éviter des collisions RF entre les pilotes.",
-    "AutoWifiOnInterval": "<p>Active automatiquement le Wifi sur les modules intégrant un ESP8285 si aucune connexion n'est détectée après un certain délai. Cela permet de mettre a jour le micrologiciel en se connectant au point d'accès du module à l'adresse 10.0.0.1</p><p>Le délai est défini en <strong>secondes</strong>. 60 secondes par défaut.</p>",
+    "AutoWifiOnInterval": "<p>Si aucun lien RC n'est détecté dans le délai configuré après démarrage, le module activera automatiquement son point d'accès WiFi. Vous pourrez vous connecter au réseau WiFi du module et accéder à <strong>10.0.0.1</strong> pour effectuer des mises à jour logicielles.</p> <p> Le délai d'auto-activation est exprimé en <strong>secondes</strong>. Par défaut: <strong>60 secondes</strong>.</p>",
     "TLMReportIntervalMs": "<p>Configure le TX afin qu'il transmette les données de télémétrie à la radio commande à un intervalle fixe. Cela réduit les avertissements「Télémétrie Perdue」lors de l'utilisation d'un gros ratio de télémétrie et d'une vitesse de transmission basse comme 50Hz.</p><p>La valeur par défaut est <strong>240LU</strong>. Si vous souhaitez modifier cette valeur, vous devez ajouter le suffixe <strong>LU</strong> à votre valeur en millisecondes. Par exemple, pour définir un taux de mise à jour de la télémétrie à 100ms, vous devez saisir <strong>100LU</strong>.</p><p><strong>240LU</strong> est recommandée pour les radios basées sur EdgeTX/OpenTX et <strong>100LU</strong> pour celles sur ErskyTx.</p>",
     "LockOnFirstConnection": "Verrouillage du mode RF - Par défaut, le RX parcours tous les modes RF disponibles espacés de 5 s du mode le plus élevé au plus faible afin de trouver celui utilisé par le TX. Une fois la connexion établie, le RX ne parcours plus les modes jusqu'à son prochain redémarrage.",
     "JustBeepOnce": "Définit si le TX ne bip qu'une seule fois ou s'il joue la tonalité de démarrage.",

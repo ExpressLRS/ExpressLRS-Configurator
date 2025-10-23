@@ -79,7 +79,7 @@
     "FlashingMethod": "Brændings metode"
   },
   "Header": {
-    "ExpressLRSConfigurator": "ExpressLRS Configurator",
+    "ExpressLRSConfigurator": "ExpressLRS™ Configurator",
     "DownloadNewestRelease": "Klik for at hente den nyeste version",
     "UpdateAvailable": "En ny version er fundet !",
     "Documentation": "Dokumentation",
@@ -149,7 +149,7 @@
     "RegulatoryDomainISM2400": "ISM radiobånd er del af det radiospektrum, der er reserveret internationalt. Du kan bruge dette regulerende område sikkert i alle lande.",
     "RegulatoryDomainEUCE2400": "For firmware version tidligere end v3.x, begrænser EU CE 2. GHz regulering den maksimale effekt til 10mW, som ikke kræver LBT (Listen Before Talk). For firmware version senere end v3.x, begrænser EU CE 2,4 GHz regulering den maksimale effekt til 100 mW og muliggør LBT.",
     "BindingPhrase": "Tilslutningskoder parrer modtager og sender, uden at kræve at du tilslutter manuelt. Modtagere brændt uden en tilslutnings kode vil kræve den traditionelle tilslutnings metode. Både TX og RX skal have den samme tilslutnings kode for at tilslutte. Sæt noget mindeværdigt, og begræns til alfanumeriske sætninger i overensstemmelse med det latinske alfabet. Dette er ikke en adgangskode, og giver ikke nogen sikkerhed, det reducerer helt enkelt RF kollisioner med andre piloter.",
-    "AutoWifiOnInterval": "<p>Dette vil automatisk slå WiFi til for ethvert modul, der har en ESP8285 chip, hvis der ikke etableres forbindelse efter et antal sekunder fra boot. Dette gør det muligt at skubbe firmwareopdateringer til RX ved at forbinde til dens WiFi netværk og besøge 10.0.0.</p><p>Auto på interval er defineret i <strong>sekunder</strong>. Standard valg er 60 sekunder.</p>",
+    "AutoWifiOnInterval": "<p>Hvis der ikke etableres et RC-link inden for den konfigurerede tid efter opstart, vil modulet automatisk aktivere sit WiFi adgangspunkt. Dette giver dig mulighed for at oprette forbindelse til modulet via WiFi og få adgang til <strong>10. .0.1</strong> for at gennemføre en firmwareopdatering.</p> <p>Auto-aktiverer forsinkelse er angivet i <strong>sekunder</strong>. Standard: <strong>60 sekunder</strong>.</p>",
     "TLMReportIntervalMs": "<p>Får TX-modulet til at sende telemetri data til håndsæt med et fast interval. Dette reducerer de - Telemetri Lost- advarsler, når der anvendes høje telemeteri hastigheder eller lave hastigheder som 50 hz.</p><p>Standard værdi er <strong>240LU</strong>. Hvis du ønsker at ændre det skal du bagvedstille din millisekunderværdi med <strong>LU</strong>. For eksempel, for at specificere 100 ms telemetri opdateringshastighed skal du indtaste det som dette: <strong>100LU</strong>.</p><p>Typisk ønsker du at beholde <strong>240LU</strong> værdien for EdgeTX/OpenTX baserede radioer, <strong>100LU</strong> for ErskyTx.</p>",
     "LockOnFirstConnection": "Låsning af RF-tilstand - Standardtilstand er for RX at rulle gennem de tilgængelige RF tilstande med 5s pause, gående fra højeste til laveste tilstand og finde hvilken tilstand TX sender i. Dette gør det muligt for RX at rulle indtil en forbindelse er etableret (indtil den modtager en nulstilling af strøm).",
     "JustBeepOnce": "Indstilling om TX kun bipper en gang versus spiller en melodi ved start.",

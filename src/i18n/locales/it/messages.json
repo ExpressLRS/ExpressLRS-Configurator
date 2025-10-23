@@ -79,7 +79,7 @@
     "FlashingMethod": "Modalità di Flash"
   },
   "Header": {
-    "ExpressLRSConfigurator": "Configuratore ExpressLRS",
+    "ExpressLRSConfigurator": "ExpressLRS™ Configurator",
     "DownloadNewestRelease": "Clicca per scaricare una nuova release",
     "UpdateAvailable": "Aggiornamento disponibile!",
     "Documentation": "Documentazione",
@@ -149,7 +149,7 @@
     "RegulatoryDomainISM2400": "Le bande radio ISM sono porzioni dello spettro radio riservato a livello internazionale. È possibile utilizzare questo norma di regolamentazione in modo sicuro in qualsiasi paese.",
     "RegulatoryDomainEUCE2400": "Per le versioni di firmware precedenti a v3.x, l'UE CE 2.4GHz la norma di regolamentazione limita la potenza massima a 10mW, che non richiede LBT (Listen Before Talk). Per le versioni del firmware successive a v3.x, le norma di regolamentazione EU CE 2.4 GHz limita la potenza massima a 100mW e abilita LBT (Listen Before Talk).",
     "BindingPhrase": "La frase per associare abbina i ricevitori ai trasmettitori senza richiedere di associarli manualmente. I ricevitori flashati senza una frase richiederanno il metodo di abbinamento tradizionale. Sia il TX che il RX devono avere la stessa frase abbinata per connettersi. Imposta qualcosa di memorabile e limitati a frasi alfanumeriche conformi all'alfabeto latino. Questa non è una password e non fornisce alcuna sicurezza, riduce semplicemente le collisioni RF con altri piloti.",
-    "AutoWifiOnInterval": "<p>Questo accenderà automaticamente il wifi su qualsiasi modulo che abbia un ESP8285 se non si trova alcuna connessione dopo aver impostato un numero di secondi dall'avvio. Questo consente di inviare gli aggiornamenti del firmware all' RX connettendosi alla sua rete wifi e visitando 10.0.0.1</p><p>L'intervallo automatico è definito in <strong>secondi</strong>. Il valore predefinito è 60 secondi.</p>",
+    "AutoWifiOnInterval": "<p>Se non viene rilevato alcun collegamento RC in un tempo limite dopo l'avvio, il modulo attiverà automaticamente il WiFi. Questo ti connsente la connessione al modulo WiFi e di accedere a <strong>10.0.0.1</strong> per eseguire l'aggiornamento del firmware.</p> <p>Il ritardo di abilitazione automatica è in <strong>secondi</strong>. Predefinito: <strong>60 secondi</strong>.</p>",
     "TLMReportIntervalMs": "<p>Fa in modo che il modulo TX invii i dati di telemetria alla radio ad intervalli fissi. Questo riduce gli avvisi di 「Telemetry Lost」 quando si esegue con un rapporto di telemetria elevato o frequenze basse come 50 Hz.</p><p>Il valore predefinito è <strong>240LU</strong>. Se vuoi cambiarlo devi aggiungere al tuo valore in millisecondi il suffisso <strong>LU</strong>. Ad esempio, per specificare una frequenza di aggiornamento della telemetria di 100 ms devi inserirla in questo modo: <strong>100LU</strong>.</p><p>In genere, vuoi mantenere <strong>240LU</strong> valore per le radio basate su EdgeTX/OpenTX e <strong>100LU</strong> per quelle ErskyTx.</p>",
     "LockOnFirstConnection": "Blocco modalità RF - La modalità predefinita consente all'RX di cercare ciclicamente le modalità RF disponibili con pause di 5 secondi passando dalla modalità più alta a quella più bassa e trovando su quale modalità sta trasmettendo il Tx. Ciò consente all'RX di ricercare, ma una volta stabilita una connessione, l'Rx non passerà più attraverso le modalità RF (fino a quando non riceve un ripristino dell'alimentazione).",
     "JustBeepOnce": "Questo imposta se il TX emette un segnale acustico o riproduce una musica all'avvio.",
