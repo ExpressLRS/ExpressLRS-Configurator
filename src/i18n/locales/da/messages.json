@@ -106,10 +106,10 @@
     "Support": "Support"
   },
   "FlashingMethod": {
-    "BetaflightPassthrough": "Betaflight gennemstiling",
+    "BetaflightPassthrough": "Betaflight gennemstilling",
     "DFU": "DFU (Device Firmware Upgrade)",
-    "EdgeTxPassthrough": "EdgeTX gennemstiling",
-    "Passthrough": "Gennemstiling",
+    "EdgeTxPassthrough": "EdgeTX gennemstilling",
+    "Passthrough": "Gennemstilling",
     "STLink": "STLink",
     "Stock_BL": "Default bootloader",
     "UART": "UART (Seriel)",
