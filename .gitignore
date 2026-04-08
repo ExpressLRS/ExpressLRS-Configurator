@@ -56,3 +56,4 @@ crowdin_env.sh
 purge.sh
 
 patch_targets*
+patcher
