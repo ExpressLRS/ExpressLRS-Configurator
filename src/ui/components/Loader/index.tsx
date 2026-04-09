@@ -1,6 +1,6 @@
 import { Box, CircularProgress } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 const styles: Record<string, SxProps<Theme>> = {
   root: {
@@ -17,11 +17,13 @@ interface LoaderProps {
 
 const Loader: FunctionComponent<LoaderProps> = ({ loading, sx = {} }) => {
   const sxStyle = { ...styles.root, ...sx };
-  return loading ? (
-    <Box sx={sxStyle}>
-      <CircularProgress />
-    </Box>
-  ) : null;
+  return loading
+    ? (
+        <Box sx={sxStyle}>
+          <CircularProgress />
+        </Box>
+      )
+    : null;
 };
 
 export default Loader;

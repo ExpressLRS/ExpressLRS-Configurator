@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { PubSubEngine } from 'graphql-subscriptions';
+import { type PubSub } from 'type-graphql';
 import MulticastDnsInformation from '../../models/MulticastDnsInformation';
 import MulticastDnsEventType from '../../models/enum/MulticastDnsEventType';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
@@ -7,7 +7,7 @@ import { LoggerService } from '../../logger';
 
 @Service()
 export default class MulticastDnsNotificationsService {
-  constructor(private pubSub: PubSubEngine, private logger: LoggerService) {}
+  constructor(private pubSub: PubSub, private logger: LoggerService) {}
 
   public async sendDeviceAdded(data: MulticastDnsInformation): Promise<void> {
     const record = {

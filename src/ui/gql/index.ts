@@ -15,7 +15,7 @@ const httpLink = new HttpLink({
 const wsLink = new GraphQLWsLink(
   createClient({
     url: searchParams.get('subscriptions_url') ?? 'ws://localhost:3500/graphql',
-  })
+  }),
 );
 
 // Send query request based on the type definition
@@ -23,20 +23,17 @@ const link = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
     return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
+      definition.kind === 'OperationDefinition'
+      && definition.operation === 'subscription'
     );
   },
   wsLink,
-  httpLink
+  httpLink,
 );
 
-const client = () =>
-  new ApolloClient({
-    connectToDevTools: process.env.NODE_ENV === 'development',
-    ssrForceFetchDelay: 100,
-    cache: new InMemoryCache(),
-    link,
-  });
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link,
+});
 
-export default client();
+export default client;

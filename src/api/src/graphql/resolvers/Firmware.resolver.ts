@@ -30,17 +30,17 @@ import Platformio from '../../library/Platformio';
 export default class FirmwareResolver {
   constructor(
     private flashingStrategyLocatorService: FlashingStrategyLocatorService,
-    private platformio: Platformio
+    private platformio: Platformio,
   ) {}
 
   @Query(() => [Device])
   async availableFirmwareTargets(
     @Args(() => TargetArgs) args: TargetArgs,
-    @Arg('gitRepository', () => GitRepository) gitRepository: GitRepository
+    @Arg('gitRepository', () => GitRepository) gitRepository: GitRepository,
   ): Promise<Device[]> {
     const strategy = await this.flashingStrategyLocatorService.locate(
       args,
-      gitRepository
+      gitRepository,
     );
     return strategy.availableFirmwareTargets(args, gitRepository);
   }
@@ -48,11 +48,11 @@ export default class FirmwareResolver {
   @Query(() => [UserDefine])
   async targetDeviceOptions(
     @Args(() => TargetDeviceOptionsArgs) args: TargetDeviceOptionsArgs,
-    @Arg('gitRepository', () => GitRepository) gitRepository: GitRepository
+    @Arg('gitRepository', () => GitRepository) gitRepository: GitRepository,
   ): Promise<UserDefine[]> {
     const strategy = await this.flashingStrategyLocatorService.locate(
       args,
-      gitRepository
+      gitRepository,
     );
     return strategy.targetDeviceOptions(args, gitRepository);
   }
@@ -60,11 +60,11 @@ export default class FirmwareResolver {
   @Mutation(() => BuildFlashFirmwareResult)
   async buildFlashFirmware(
     @Arg('input', () => BuildFlashFirmwareInput) input: BuildFlashFirmwareInput,
-    @Arg('gitRepository', () => GitRepository) gitRepository: GitRepository
+    @Arg('gitRepository', () => GitRepository) gitRepository: GitRepository,
   ): Promise<BuildFlashFirmwareResult> {
     const strategy = await this.flashingStrategyLocatorService.locate(
       input.firmware,
-      gitRepository
+      gitRepository,
     );
     return strategy.buildFlashFirmware(input, gitRepository);
   }
@@ -77,7 +77,7 @@ export default class FirmwareResolver {
     } catch (e) {
       return new ClearPlatformioCoreDirResult(
         false,
-        `Failed to clear platformio state: ${e}`
+        `Failed to clear platformio state: ${e}`,
       );
     }
   }
@@ -90,7 +90,7 @@ export default class FirmwareResolver {
     } catch (e) {
       return new ClearFirmwareFilesResult(
         false,
-        `Failed to clear firmware files cache: ${e}`
+        `Failed to clear firmware files cache: ${e}`,
       );
     }
   }
@@ -99,7 +99,7 @@ export default class FirmwareResolver {
     topics: [PubSubTopic.BuildProgressNotification],
   })
   buildProgressNotifications(
-    @Root() n: BuildProgressNotificationPayload
+    @Root() n: BuildProgressNotificationPayload,
   ): BuildProgressNotification {
     return new BuildProgressNotification(n.type, n.step, n.message);
   }

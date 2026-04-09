@@ -55,18 +55,18 @@ export const sortDeviceTargets = (targets: readonly Target[]): Target[] => {
 };
 
 const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
-  props
+  props,
 ) => {
   const { onChange, currentTarget, currentDevice } = props;
   const { t } = useTranslation();
   const targetMappingsSorted = useMemo(
     () => sortDeviceTargets(currentDevice?.targets ?? []),
-    [currentDevice?.targets]
+    [currentDevice?.targets],
   );
 
   const onFlashingMethodChange = (
     _event: React.ChangeEvent<HTMLInputElement>,
-    value: string
+    value: string,
   ) => {
     const target = targetMappingsSorted?.find((item) => {
       return item.id === value;
@@ -100,7 +100,7 @@ const FlashingMethodOptions: FunctionComponent<FlashingMethodsListProps> = (
         />
       );
     },
-    [currentDevice?.wikiUrl]
+    [currentDevice?.wikiUrl],
   );
 
   return (

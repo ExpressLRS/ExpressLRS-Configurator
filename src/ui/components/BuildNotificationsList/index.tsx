@@ -18,12 +18,12 @@ interface BuildNotificationsListProps {
   notifications: BuildProgressNotification[];
 }
 
-const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> =
-  memo(({ notifications }) => {
+const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps>
+  = memo(({ notifications }) => {
     const { t } = useTranslation();
 
     const toSeverity = (
-      item: BuildProgressNotificationType
+      item: BuildProgressNotificationType,
     ): 'error' | 'info' | 'success' => {
       switch (item) {
         case BuildProgressNotificationType.Error:
@@ -56,9 +56,9 @@ const BuildNotificationsList: FunctionComponent<BuildNotificationsListProps> =
           return (
             <React.Fragment key={`${idx}-${item.step}`}>
               <Alert sx={styles.notification} severity={toSeverity(item.type)}>
-                {item?.step !== undefined &&
-                  item.step !== null &&
-                  toText(item.step)}
+                {item?.step !== undefined
+                  && item.step !== null
+                  && toText(item.step)}
               </Alert>
             </React.Fragment>
           );

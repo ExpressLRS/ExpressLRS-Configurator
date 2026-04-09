@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { useBuildLogUpdatesSubscription } from '../gql/generated/types';
+import { useSubscription } from '@apollo/client/react';
+import { BuildLogUpdatesDocument } from '../gql/generated/types';
 import client from '../gql';
 import EventsBatcher from '../library/EventsBatcher';
 
@@ -18,11 +19,11 @@ export default function useBuildLogs() {
       setLogs(newLogsList.join(''));
     });
   }, []);
-  useBuildLogUpdatesSubscription({
+  useSubscription(BuildLogUpdatesDocument, {
     fetchPolicy: 'network-only',
     client,
-    onSubscriptionData: (options) => {
-      const args = options.subscriptionData.data?.buildLogUpdates.data;
+    onData: ({ data }) => {
+      const args = data.data?.buildLogUpdates.data;
       if (args !== undefined && eventsBatcherRef.current !== null) {
         eventsBatcherRef.current.enqueue(args);
       }

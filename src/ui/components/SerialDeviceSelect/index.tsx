@@ -1,12 +1,13 @@
 import { Box, Tooltip } from '@mui/material';
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import QuestionIcon from '@mui/icons-material/Help';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import Omnibox, { Option } from '../Omnibox';
+import { useQuery } from '@apollo/client/react';
 import {
   SerialPortInformation,
-  useAvailableDevicesListQuery,
+  AvailableDevicesListDocument,
 } from '../../gql/generated/types';
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
@@ -39,13 +40,13 @@ interface SerialDeviceSelectProps {
 }
 
 const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
-  props
+  props,
 ) => {
   const { serialDevice, onChange } = props;
   const { t } = useTranslation();
 
-  const { loading, data, error, previousData, startPolling, stopPolling } =
-    useAvailableDevicesListQuery();
+  const { loading, data, error, previousData, startPolling, stopPolling }
+    = useQuery(AvailableDevicesListDocument);
 
   useEffect(() => {
     startPolling(1000);
@@ -54,8 +55,8 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
     };
   }, [startPolling, stopPolling]);
 
-  const options: Option[] =
-    data?.availableDevicesList?.map((target) => ({
+  const options: Option[]
+    = data?.availableDevicesList?.map((target) => ({
       label: `${target.path} ${target.manufacturer}`,
       value: target.path,
     })) ?? [];
@@ -65,7 +66,7 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
           label: serialDevice,
           value: serialDevice,
         }
-      : null
+      : null,
   );
   const onSerialDeviceChange = (value: string | null) => {
     if (value === null) {
@@ -81,7 +82,7 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
   useEffect(() => {
     const difference = (
       a: readonly Pick<SerialPortInformation, 'path' | 'manufacturer'>[],
-      b: readonly Pick<SerialPortInformation, 'path' | 'manufacturer'>[]
+      b: readonly Pick<SerialPortInformation, 'path' | 'manufacturer'>[],
     ): Pick<SerialPortInformation, 'path' | 'manufacturer'>[] => {
       return a.filter((item) => {
         return b.find((item2) => item2.path === item.path) === undefined;
@@ -90,13 +91,13 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
     if (currentValue !== null) {
       const removed = difference(
         previousData?.availableDevicesList ?? [],
-        data?.availableDevicesList ?? []
+        data?.availableDevicesList ?? [],
       );
       if (
-        removed.find((item) => item.path === currentValue.value) !==
-          undefined &&
-        data?.availableDevicesList &&
-        data?.availableDevicesList.length > 0
+        removed.find((item) => item.path === currentValue.value)
+        !== undefined
+        && data?.availableDevicesList
+        && data?.availableDevicesList.length > 0
       ) {
         onSerialDeviceChange(data?.availableDevicesList[0].path);
       }
@@ -115,11 +116,11 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
         <Tooltip
           placement="top"
           arrow
-          title={
+          title={(
             <div>
               <p>{t('SerialDeviceSelect.ManualSelectionTitleTooltip')}</p>
             </div>
-          }
+          )}
         >
           <QuestionIcon sx={styles.icon} />
         </Tooltip>

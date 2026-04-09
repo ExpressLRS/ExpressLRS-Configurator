@@ -12,7 +12,7 @@ export default class SourcesResolver {
   @Query(() => [String])
   async gitBranches(
     @Arg('owner', () => String) owner: string,
-    @Arg('repository', () => String) repository: string
+    @Arg('repository', () => String) repository: string,
   ) {
     return this.gitClient.loadBranches(owner, repository);
   }
@@ -20,7 +20,7 @@ export default class SourcesResolver {
   @Query(() => [String])
   async gitTags(
     @Arg('owner', () => String) owner: string,
-    @Arg('repository', () => String) repository: string
+    @Arg('repository', () => String) repository: string,
   ) {
     return this.gitClient.loadTags(owner, repository);
   }
@@ -28,7 +28,7 @@ export default class SourcesResolver {
   @Query(() => [Release])
   async releases(
     @Arg('owner', () => String) owner: string,
-    @Arg('repository', () => String) repository: string
+    @Arg('repository', () => String) repository: string,
   ) {
     return this.gitClient.loadReleases(owner, repository);
   }
@@ -36,7 +36,7 @@ export default class SourcesResolver {
   @Query(() => [PullRequest])
   async pullRequests(
     @Arg('owner', () => String) owner: string,
-    @Arg('repository', () => String) repository: string
+    @Arg('repository', () => String) repository: string,
   ) {
     return this.gitClient.loadPullRequests(owner, repository);
   }

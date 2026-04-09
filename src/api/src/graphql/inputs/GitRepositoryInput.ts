@@ -26,7 +26,7 @@ export default class GitRepository {
     repositoryName: string,
     rawRepoUrl: string,
     srcFolder: string,
-    hardwareArtifactUrl: string | null
+    hardwareArtifactUrl: string | null,
   ) {
     this.url = url;
     this.owner = owner;

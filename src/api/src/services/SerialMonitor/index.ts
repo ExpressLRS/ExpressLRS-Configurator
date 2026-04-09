@@ -1,6 +1,6 @@
 import { Service } from 'typedi';
 import { SerialPort } from 'serialport';
-import { PubSubEngine } from 'graphql-subscriptions';
+import { type PubSub } from 'type-graphql';
 import SerialPortInformation from '../../models/SerialPortInformation';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import { LoggerService } from '../../logger';
@@ -19,7 +19,7 @@ export interface SerialMonitorEventPayload {
 export default class SerialMonitorService {
   port: SerialPort | null;
 
-  constructor(private pubSub: PubSubEngine, private logger: LoggerService) {
+  constructor(private pubSub: PubSub, private logger: LoggerService) {
     this.port = null;
   }
 
@@ -49,14 +49,14 @@ export default class SerialMonitorService {
       list = await SerialPort.list();
     }
     return list.map(
-      (item) => new SerialPortInformation(item.path, item.manufacturer || '')
+      (item) => new SerialPortInformation(item.path, item.manufacturer || ''),
     );
   }
 
   async connect(device: string, baudRate: number): Promise<void> {
     if (this.port !== null) {
       this.logger.log(
-        'we are already connected to serial device, resetting connection'
+        'we are already connected to serial device, resetting connection',
       );
       await this.disconnect();
     }

@@ -59,7 +59,7 @@ export default class OctopusGitHubClient implements IGitHubClient {
 
   async loadPullRequests(
     owner: string,
-    repository: string
+    repository: string,
   ): Promise<PullRequest[]> {
     const response = await this.client.rest.pulls.list({
       owner,

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { Box, Tooltip } from '@mui/material';
 import QuestionIcon from '@mui/icons-material/Help';
 import { SxProps, Theme } from '@mui/system';
@@ -44,8 +44,8 @@ const FlashingMethodDescription: FunctionComponent<
             <p>
               <DocumentationLink
                 url={
-                  wikiUrl ??
-                  'https://www.expresslrs.org/software/updating/betaflight-passthrough/'
+                  wikiUrl
+                  ?? 'https://www.expresslrs.org/software/updating/betaflight-passthrough/'
                 }
               >
                 {t('FlashingMethodDescription.BetaflightPassthroughWiki')}
@@ -60,8 +60,8 @@ const FlashingMethodDescription: FunctionComponent<
             <p>
               <DocumentationLink
                 url={
-                  wikiUrl ??
-                  'https://www.expresslrs.org/quick-start/getting-started/'
+                  wikiUrl
+                  ?? 'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 {t('FlashingMethodDescription.GeneralWiki')}
@@ -76,8 +76,8 @@ const FlashingMethodDescription: FunctionComponent<
             <p>
               <DocumentationLink
                 url={
-                  wikiUrl ??
-                  'https://www.expresslrs.org/quick-start/getting-started/'
+                  wikiUrl
+                  ?? 'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 {t('FlashingMethodDescription.GeneralWiki')}
@@ -92,8 +92,8 @@ const FlashingMethodDescription: FunctionComponent<
             <p>
               <DocumentationLink
                 url={
-                  wikiUrl ??
-                  'https://www.expresslrs.org/quick-start/getting-started/'
+                  wikiUrl
+                  ?? 'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 {t('FlashingMethodDescription.GeneralWiki')}
@@ -108,8 +108,8 @@ const FlashingMethodDescription: FunctionComponent<
             <p>
               <DocumentationLink
                 url={
-                  wikiUrl ??
-                  'https://www.expresslrs.org/quick-start/getting-started/'
+                  wikiUrl
+                  ?? 'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 {t('FlashingMethodDescription.GeneralWiki')}
@@ -124,8 +124,8 @@ const FlashingMethodDescription: FunctionComponent<
             <p>
               <DocumentationLink
                 url={
-                  wikiUrl ??
-                  'https://www.expresslrs.org/software/updating/wifi-updating/'
+                  wikiUrl
+                  ?? 'https://www.expresslrs.org/software/updating/wifi-updating/'
                 }
               >
                 {t('FlashingMethodDescription.GeneralWiki')}
@@ -140,8 +140,8 @@ const FlashingMethodDescription: FunctionComponent<
             <p>
               <DocumentationLink
                 url={
-                  wikiUrl ??
-                  'https://www.expresslrs.org/quick-start/getting-started/'
+                  wikiUrl
+                  ?? 'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 {t('FlashingMethodDescription.GeneralWiki')}
@@ -156,8 +156,8 @@ const FlashingMethodDescription: FunctionComponent<
             <p>
               <DocumentationLink
                 url={
-                  wikiUrl ??
-                  'https://www.expresslrs.org/quick-start/getting-started/'
+                  wikiUrl
+                  ?? 'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 {t('FlashingMethodDescription.GeneralWiki')}
@@ -172,8 +172,8 @@ const FlashingMethodDescription: FunctionComponent<
             <p>
               <DocumentationLink
                 url={
-                  wikiUrl ??
-                  'https://www.expresslrs.org/quick-start/getting-started/'
+                  wikiUrl
+                  ?? 'https://www.expresslrs.org/quick-start/getting-started/'
                 }
               >
                 {t('FlashingMethodDescription.GeneralWiki')}

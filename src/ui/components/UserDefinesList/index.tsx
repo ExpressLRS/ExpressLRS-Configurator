@@ -1,9 +1,9 @@
-/* eslint-disable react/jsx-no-bind */
 import React, { FunctionComponent } from 'react';
 import {
   Checkbox,
   List,
   ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
@@ -53,20 +53,20 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
     }
   };
 
-  const onUserDefineValueChange =
-    (data: UserDefineKey) =>
-    (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      const opt = options.find(({ key }) => key === data);
-      if (opt !== undefined) {
-        const update = {
-          ...opt,
-          value: event.target.value,
-        };
-        onChange(update);
-      } else {
-        throw new Error(`user define key ${data} not found`);
-      }
-    };
+  const onUserDefineValueChange
+    = (data: UserDefineKey) =>
+      (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        const opt = options.find(({ key }) => key === data);
+        if (opt !== undefined) {
+          const update = {
+            ...opt,
+            value: event.target.value,
+          };
+          onChange(update);
+        } else {
+          throw new Error(`user define key ${data} not found`);
+        }
+      };
 
   const onEnumValueChange = (data: UserDefineKey) => (value: string | null) => {
     const opt = options.find(({ key }) => key === data);
@@ -97,10 +97,9 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
       {options.map((item) => {
         return (
           <React.Fragment key={item.key}>
-            <ListItem
+            <ListItemButton
               dense
               selected={item.enabled}
-              button
               onClick={onChecked.bind(this, item.key)}
             >
               <ListItemIcon sx={styles.icon}>
@@ -115,7 +114,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
               <ListItemSecondaryAction>
                 <UserDefineDescription userDefine={item.key} />
               </ListItemSecondaryAction>
-            </ListItem>
+            </ListItemButton>
             {item.type === UserDefineKind.Text && item.enabled && (
               <ListItem sx={styles.complimentaryItem}>
                 {!item.sensitive && (

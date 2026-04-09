@@ -18,7 +18,7 @@ export const maskSensitiveData = (haystack: string): string => {
 };
 
 export const maskBuildFlashFirmwareParams = (
-  params: BuildFlashFirmwareParams
+  params: BuildFlashFirmwareParams,
 ): BuildFlashFirmwareParams => {
   const result = cloneDeep(params);
   result.userDefines = result.userDefines.map((userDefine) => {

@@ -12,12 +12,11 @@ export interface CommandResult {
 }
 
 export default class Commander {
-  // eslint-disable-next-line class-methods-use-this
   async runCommand(
     cmd: string,
     args: string[],
     options: child_process.SpawnOptions = {},
-    onOutput: OnOutputFunc = NoOpFunc
+    onOutput: OnOutputFunc = NoOpFunc,
   ): Promise<CommandResult> {
     return new Promise((resolve) => {
       const outputLines: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any

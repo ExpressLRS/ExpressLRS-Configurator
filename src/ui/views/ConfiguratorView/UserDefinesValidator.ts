@@ -36,22 +36,22 @@ export default class UserDefinesValidator {
       (categoryUserDefines: UserDefineKey[], categoryName: string) => {
         // check if we have any options present from the category
         const userDefinesFilterByCategory = data.filter(({ key }) =>
-          categoryUserDefines.includes(key)
+          categoryUserDefines.includes(key),
         );
         const enabledUserDefines = userDefinesFilterByCategory.filter(
-          ({ enabled }) => enabled
+          ({ enabled }) => enabled,
         );
         if (
-          userDefinesFilterByCategory.length > 0 &&
-          enabledUserDefines.length === 0
+          userDefinesFilterByCategory.length > 0
+          && enabledUserDefines.length === 0
         ) {
           results.push(
             new Error(
-              `You must choose regulatory domain for your device in ${categoryName} band`
-            )
+              `You must choose regulatory domain for your device in ${categoryName} band`,
+            ),
           );
         }
-      }
+      },
     );
 
     return results;
@@ -64,16 +64,16 @@ export default class UserDefinesValidator {
 
     const minLength = 6;
     if (
-      option !== undefined &&
-      option.enabled &&
-      option.value !== undefined &&
-      option.value !== null &&
-      option.value.length < minLength
+      option !== undefined
+      && option.enabled
+      && option.value !== undefined
+      && option.value !== null
+      && option.value.length < minLength
     ) {
       results.push(
         new Error(
-          `Custom binding phrase must be longer than ${minLength} characters`
-        )
+          `Custom binding phrase must be longer than ${minLength} characters`,
+        ),
       );
     }
 
@@ -84,12 +84,12 @@ export default class UserDefinesValidator {
     const results: Error[] = [];
 
     const option = data.find(
-      ({ key }) => key === UserDefineKey.MY_STARTUP_MELODY
+      ({ key }) => key === UserDefineKey.MY_STARTUP_MELODY,
     );
 
     if (option && option.enabled && option.value && option.value.length === 0) {
       results.push(
-        new Error('Custom startup melody selected, but not entered')
+        new Error('Custom startup melody selected, but not entered'),
       );
     }
 

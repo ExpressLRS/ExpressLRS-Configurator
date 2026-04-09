@@ -25,12 +25,12 @@ interface GitRepository {
 export default class UserDefinesBuilder {
   constructor(
     private userDefinesLoader: UserDefinesLoader,
-    private deviceService: DeviceService
+    private deviceService: DeviceService,
   ) {}
 
   async loadForDevice(
     input: UserDefineFilters,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<UserDefine[]> {
     const device = this.deviceService.getDevices().find((item) => {
       return item.targets.find((t) => t.name === input.target);
@@ -47,11 +47,11 @@ export default class UserDefinesBuilder {
     }
     const compatibleKeys = await this.userDefinesLoader.loadUserDefinesTxt(
       input,
-      gitRepository
+      gitRepository,
     );
     if (compatibleKeys.length < 3) {
       throw new Error(
-        `failed to parse compatible user define keys, list is too small: ${compatibleKeys}`
+        `failed to parse compatible user define keys, list is too small: ${compatibleKeys}`,
       );
     }
     return userDefines.filter((userDefine) => {

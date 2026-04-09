@@ -22,7 +22,7 @@ export default class GitTargetsService extends TargetsLoader {
     private logger: LoggerService,
     private deviceService: DeviceService,
     private PATH: string,
-    private targetStoragePath: string
+    private targetStoragePath: string,
   ) {
     super();
     this.mutex = new Mutex();
@@ -30,7 +30,7 @@ export default class GitTargetsService extends TargetsLoader {
 
   async loadTargetsList(
     args: TargetArgs,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<Device[]> {
     await this.mutex.tryLockWithTimeout(60000);
 
@@ -54,18 +54,18 @@ export default class GitTargetsService extends TargetsLoader {
           baseDirectory: this.targetStoragePath,
           gitBinaryLocation: gitPath,
         },
-        this.logger
+        this.logger,
       );
 
       let availableTargets: string[] = [];
-      const srcFolder =
-        gitRepository.srcFolder === '/' ? '' : `${gitRepository.srcFolder}/`;
+      const srcFolder
+        = gitRepository.srcFolder === '/' ? '' : `${gitRepository.srcFolder}/`;
       switch (args.source) {
         case FirmwareSource.GitBranch:
           const branchResult = await firmwareDownload.checkoutBranch(
             gitRepository.url,
             `${srcFolder}targets`,
-            args.gitBranch
+            args.gitBranch,
           );
           availableTargets = await loadTargetsFromDirectory(branchResult.path);
           break;
@@ -73,7 +73,7 @@ export default class GitTargetsService extends TargetsLoader {
           const commitResult = await firmwareDownload.checkoutCommit(
             gitRepository.url,
             `${srcFolder}targets`,
-            args.gitCommit
+            args.gitCommit,
           );
           availableTargets = await loadTargetsFromDirectory(commitResult.path);
           break;
@@ -81,7 +81,7 @@ export default class GitTargetsService extends TargetsLoader {
           const tagResult = await firmwareDownload.checkoutTag(
             gitRepository.url,
             `${srcFolder}targets`,
-            args.gitTag
+            args.gitTag,
           );
           availableTargets = await loadTargetsFromDirectory(tagResult.path);
           break;
@@ -92,18 +92,18 @@ export default class GitTargetsService extends TargetsLoader {
           const prResult = await firmwareDownload.checkoutCommit(
             gitRepository.url,
             `${srcFolder}targets`,
-            args.gitPullRequest.headCommitHash
+            args.gitPullRequest.headCommitHash,
           );
           availableTargets = await loadTargetsFromDirectory(prResult.path);
           break;
         case FirmwareSource.Local:
           availableTargets = await loadTargetsFromDirectory(
-            path.join(args.localPath, 'targets')
+            path.join(args.localPath, 'targets'),
           );
           break;
         default:
           throw new Error(
-            `unsupported firmware source for the targets service: ${args.source}`
+            `unsupported firmware source for the targets service: ${args.source}`,
           );
       }
       const devices = this.deviceService.getDevices();
@@ -111,7 +111,7 @@ export default class GitTargetsService extends TargetsLoader {
         .map((value) => {
           const device = { ...value };
           device.targets = value.targets.filter((item) =>
-            availableTargets.find((target) => target === item.name)
+            availableTargets.find((target) => target === item.name),
           );
           return device;
         })

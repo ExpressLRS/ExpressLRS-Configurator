@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { Rtttl } from 'bluejay-rtttl-parse';
 
 export class MelodyParser {
@@ -37,7 +36,7 @@ export class MelodyParser {
   static #parseMelody(
     melodyString: string,
     bpm = 120,
-    transposeBySemitones = 0
+    transposeBySemitones = 0,
   ) {
     // parse string to python list
     const tokenizedNotes = melodyString.split(' ');
@@ -63,19 +62,19 @@ export class MelodyParser {
   static parseToArray(melodyOrRTTTL: string) {
     if (melodyOrRTTTL.indexOf('|') !== -1) {
       const defineValue = melodyOrRTTTL.split('|');
-      const transposeBySemitones =
-        defineValue.length > 2 ? Number(defineValue[2]) : 0;
+      const transposeBySemitones
+        = defineValue.length > 2 ? Number(defineValue[2]) : 0;
       return this.#parseMelody(
         defineValue[0].trim(),
         Number(defineValue[1]),
-        transposeBySemitones
+        transposeBySemitones,
       );
     }
     const melody = Rtttl.parse(melodyOrRTTTL).melody.map(
       (v: { frequency: number; duration: number }) => [
         Math.floor(v.frequency),
         Math.floor(v.duration),
-      ]
+      ],
     );
     if (melody.length > 32) melody.length = 32;
     return melody;

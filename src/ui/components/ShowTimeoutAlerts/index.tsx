@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import ShowAlerts, { ShowAlertsProps } from '../ShowAlerts';
 
 interface ShowTimeoutAlertsProps extends ShowAlertsProps {

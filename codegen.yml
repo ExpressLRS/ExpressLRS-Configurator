@@ -7,7 +7,7 @@ generates:
     plugins:
       - 'typescript'
       - 'typescript-operations'
-      - 'typescript-react-apollo'
+      - 'typed-document-node'
     config:
       immutableTypes: true
       namingConvention:

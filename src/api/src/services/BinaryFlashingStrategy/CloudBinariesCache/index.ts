@@ -11,7 +11,7 @@ export default class CloudBinariesCache {
     const workingDir = path.join(
       this.firmwareCachePath,
       repositoryName,
-      commitHash
+      commitHash,
     );
     await mkdirp(workingDir);
     const firmwareCacheDir = path.join(workingDir, 'firmware');

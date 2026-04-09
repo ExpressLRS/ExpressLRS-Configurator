@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { Alert, Box } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +23,7 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
 
   const isUserDefine = (key: UserDefineKey, enabledValue: boolean): boolean => {
     const value = deviceOptionsFormData.userDefineOptions.find(
-      (item) => item.key === key
+      (item) => item.key === key,
     );
     if (value === undefined) {
       return false;
@@ -34,15 +34,17 @@ const UserDefinesAdvisor: FunctionComponent<UserDefinesAdvisorProps> = ({
   if (isUserDefine(UserDefineKey.UART_INVERTED, false)) {
     messages.push(t('UserDefinesAdvisor.DisableUARTInvertedWarning'));
   }
-  return messages.length > 0 ? (
-    <Box sx={styles.container}>
-      {messages.map((message, idx) => (
-        <Alert key={idx} severity="warning">
-          {message}
-        </Alert>
-      ))}
-    </Box>
-  ) : null;
+  return messages.length > 0
+    ? (
+        <Box sx={styles.container}>
+          {messages.map((message, idx) => (
+            <Alert key={idx} severity="warning">
+              {message}
+            </Alert>
+          ))}
+        </Box>
+      )
+    : null;
 };
 
 export default UserDefinesAdvisor;

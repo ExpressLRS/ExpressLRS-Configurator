@@ -38,7 +38,7 @@ export default class BinaryConfigurator {
     firmwareBinaryPath: string,
     hardwareDefinitionsPath: string | null,
     firmwareArtifactsDirPath: string,
-    params: BuildFlashFirmwareParams
+    params: BuildFlashFirmwareParams,
   ): string[][] {
     const flags: string[][] = [];
 
@@ -49,8 +49,8 @@ export default class BinaryConfigurator {
       flags.push(['--dir', firmwareArtifactsDirPath]);
     }
 
-    const [manufacturer, subType, device, uploadMethod] =
-      params.target.split('.');
+    const [manufacturer, subType, device, uploadMethod]
+      = params.target.split('.');
     flags.push(['--target', `${manufacturer}.${subType}.${device}`]);
     if (subType.toLocaleLowerCase().includes('tx_')) {
       flags.push(['--tx']);
@@ -74,8 +74,8 @@ export default class BinaryConfigurator {
     }
 
     if (
-      params.serialDevice?.length !== undefined &&
-      params.serialDevice?.length > 0
+      params.serialDevice?.length !== undefined
+      && params.serialDevice?.length > 0
     ) {
       flags.push(['--port', params.serialDevice]);
     }
@@ -243,7 +243,7 @@ export default class BinaryConfigurator {
   async run(
     flasherPath: string,
     flags: string[][],
-    onUpdate: OnOutputFunc = NoOpFunc
+    onUpdate: OnOutputFunc = NoOpFunc,
   ) {
     this.logger.log('flags', {
       flags: maskSensitiveFlags(flags),
@@ -253,7 +253,7 @@ export default class BinaryConfigurator {
     return this.python.runPythonScript(
       flasherPath,
       binaryConfiguratorArgs,
-      onUpdate
+      onUpdate,
     );
   }
 }

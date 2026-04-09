@@ -1,4 +1,4 @@
-import React, {
+import {
   FunctionComponent,
   useCallback,
   useEffect,
@@ -79,7 +79,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
   // Used when currentTarget is changed from Network devices popup
   useEffect(() => {
     const device = deviceTargets?.find((item) =>
-      item.targets.find((target) => target.id === currentTarget?.id)
+      item.targets.find((target) => target.id === currentTarget?.id),
     );
 
     // verify that if there is a currentTarget that the category and device values match that target
@@ -107,7 +107,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
       setCurrentDevice(null);
       onChange(null);
     },
-    [onChange, currentCategory]
+    [onChange, currentCategory],
   );
 
   const onDeviceChange = useCallback(
@@ -122,7 +122,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
         onChange(targets[0] ?? null);
       }
     },
-    [onChange, currentDevice, deviceTargets]
+    [onChange, currentDevice, deviceTargets],
   );
 
   /*
@@ -130,17 +130,17 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
    */
   useEffect(() => {
     if (
-      deviceTargets === null ||
-      currentDevice === null ||
-      currentCategory === null
+      deviceTargets === null
+      || currentDevice === null
+      || currentCategory === null
     ) {
       return;
     }
     const category = deviceTargets?.find(
-      (item) => item.category === currentCategory
+      (item) => item.category === currentCategory,
     );
     const device = deviceTargets?.find(
-      (item) => item.name === currentDevice?.name
+      (item) => item.name === currentDevice?.name,
     );
     if (!category && !device) {
       onCategoryChange(null);
@@ -171,7 +171,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
               title={t('DeviceTargetForm.DeviceCategory')}
               currentValue={
                 categorySelectOptions.find(
-                  (item) => item.value === currentCategory
+                  (item) => item.value === currentCategory,
                 ) ?? null
               }
               onChange={onCategoryChange}
@@ -183,7 +183,7 @@ const DeviceTargetForm: FunctionComponent<FirmwareVersionCardProps> = ({
               title={t('DeviceTargetForm.Device')}
               currentValue={
                 deviceSelectOptions.find(
-                  (item) => item.value === currentDevice?.id
+                  (item) => item.value === currentDevice?.id,
                 ) ?? null
               }
               onChange={onDeviceChange}

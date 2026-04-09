@@ -20,8 +20,8 @@ export default class MenuBuilder {
 
   buildMenu(): Menu | null {
     if (
-      process.env.NODE_ENV === 'development' ||
-      process.env.DEBUG_PROD === 'true'
+      process.env.NODE_ENV === 'development'
+      || process.env.DEBUG_PROD === 'true'
     ) {
       this.setupDevelopmentEnvironment();
     }
@@ -31,8 +31,8 @@ export default class MenuBuilder {
     //     ? this.buildDarwinTemplate()
     //     : this.buildDefaultTemplate();
 
-    const template =
-      process.platform === 'darwin' ? this.buildDarwinTemplate() : null;
+    const template
+      = process.platform === 'darwin' ? this.buildDarwinTemplate() : null;
 
     if (template !== null) {
       const menu = Menu.buildFromTemplate(template);
@@ -222,8 +222,8 @@ export default class MenuBuilder {
       {
         label: '&View',
         submenu:
-          process.env.NODE_ENV === 'development' ||
-          process.env.DEBUG_PROD === 'true'
+          process.env.NODE_ENV === 'development'
+          || process.env.DEBUG_PROD === 'true'
             ? [
                 {
                   label: '&Reload',
@@ -237,7 +237,7 @@ export default class MenuBuilder {
                   accelerator: 'F11',
                   click: () => {
                     this.mainWindow.setFullScreen(
-                      !this.mainWindow.isFullScreen()
+                      !this.mainWindow.isFullScreen(),
                     );
                   },
                 },
@@ -255,7 +255,7 @@ export default class MenuBuilder {
                   accelerator: 'F11',
                   click: () => {
                     this.mainWindow.setFullScreen(
-                      !this.mainWindow.isFullScreen()
+                      !this.mainWindow.isFullScreen(),
                     );
                   },
                 },
@@ -268,7 +268,7 @@ export default class MenuBuilder {
             label: 'Learn More',
             click() {
               shell.openExternal(
-                'https://github.com/expresslrs/expresslrs-configurator'
+                'https://github.com/expresslrs/expresslrs-configurator',
               );
             },
           },

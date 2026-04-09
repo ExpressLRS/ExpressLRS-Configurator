@@ -1,8 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
-import { useClearFirmwareFilesMutation } from '../../../../gql/generated/types';
+import { useMutation } from '@apollo/client/react';
+import { ClearFirmwareFilesDocument } from '../../../../gql/generated/types';
 import Loader from '../../../../components/Loader';
 import ShowAlerts from '../../../../components/ShowAlerts';
 
@@ -14,8 +15,8 @@ const styles: Record<string, SxProps<Theme>> = {
 
 const ClearFirmwareFiles: FunctionComponent = () => {
   const { t } = useTranslation();
-  const [clearFirmwareFiles, { loading, data, error }] =
-    useClearFirmwareFilesMutation();
+  const [clearFirmwareFiles, { loading, data, error }]
+    = useMutation(ClearFirmwareFilesDocument);
   const onSubmit = () => {
     clearFirmwareFiles().catch((err) => {
       console.error('clearFirmwareFiles err: ', err);

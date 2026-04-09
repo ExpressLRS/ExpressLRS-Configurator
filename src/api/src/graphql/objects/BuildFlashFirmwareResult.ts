@@ -19,7 +19,7 @@ export default class BuildFlashFirmwareResult {
     success: boolean,
     message?: string,
     errorType?: BuildFirmwareErrorType,
-    firmwareBinPath?: string
+    firmwareBinPath?: string,
   ) {
     this.success = success;
     this.errorType = errorType;

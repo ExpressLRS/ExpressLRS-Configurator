@@ -57,7 +57,7 @@ export default class Device {
     abbreviatedName?: string | null,
     luaName?: string | null,
     priorTargetName?: string | null,
-    platform?: string | null
+    platform?: string | null,
   ) {
     this.id = id;
     this.name = name;

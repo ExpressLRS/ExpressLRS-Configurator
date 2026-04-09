@@ -7,7 +7,7 @@ import { DeviceOptions, IApplicationStorage } from '../index';
 const persistDeviceOptions = async (
   storage: IApplicationStorage,
   device: string,
-  deviceOptions: DeviceOptions
+  deviceOptions: DeviceOptions,
 ): Promise<void> => {
   if (deviceOptions !== null) {
     await storage.saveDeviceOptions(device, deviceOptions);
@@ -21,7 +21,7 @@ const persistDeviceOptions = async (
             await storage.setGlobalOption(
               userDefine.key,
               userDefine.value || '',
-              userDefine.enabled
+              userDefine.enabled,
             );
             break;
           default:
@@ -33,14 +33,14 @@ const persistDeviceOptions = async (
             case UserDefineOptionGroup.RegulatoryDomain2400:
               await storage.setOptionsGroupValue(
                 userDefine.optionGroup,
-                userDefine.key
+                userDefine.key,
               );
               break;
             default:
               break;
           }
         }
-      })
+      }),
     );
   }
 };

@@ -1,11 +1,12 @@
 import { Box, Button, Card, CardContent, Divider } from '@mui/material';
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import { FunctionComponent, useState, useEffect } from 'react';
 import ListIcon from '@mui/icons-material/List';
 import { useTranslation } from 'react-i18next';
 import Loader from '../../components/Loader';
 import CardTitle from '../../components/CardTitle';
 import { IpcRequest } from '../../../ipc';
-import { useLogFileLazyQuery, LogEntry } from '../../gql/generated/types';
+import { useLazyQuery } from '@apollo/client/react';
+import { LogFileDocument, LogEntry } from '../../gql/generated/types';
 import MainLayout from '../../layouts/MainLayout';
 import LogsViewEntry from './logsViewEntry';
 
@@ -19,7 +20,7 @@ const LogsView: FunctionComponent = () => {
       loading: fetchLogsDataLoading,
       error: fetchLogsDataError,
     },
-  ] = useLogFileLazyQuery({ fetchPolicy: 'network-only' });
+  ] = useLazyQuery(LogFileDocument, { fetchPolicy: 'network-only' });
 
   const onLogs = () => {
     window.electron.ipcRenderer.sendMessage(IpcRequest.OpenLogsFolder);
@@ -50,9 +51,9 @@ const LogsView: FunctionComponent = () => {
               {t('LogsView.OpenLogsFolder')}
             </Button>
           </Box>
-          {!fetchLogsDataLoading &&
-            !fetchLogsDataError &&
-            logs.map((log: LogEntry, idx: number) => (
+          {!fetchLogsDataLoading
+            && !fetchLogsDataError
+            && logs.map((log: LogEntry, idx: number) => (
               <LogsViewEntry key={idx} logEntry={log} />
             ))}
         </CardContent>

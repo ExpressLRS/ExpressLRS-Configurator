@@ -22,8 +22,8 @@ export type TargetsJSONRaw = {
   [manufacturer: string]: {
     [key in string]:
       | {
-          [key: string]: DeviceDescription;
-        }
+        [key: string]: DeviceDescription;
+      }
       | string;
   };
 };
@@ -33,7 +33,7 @@ export class TargetsJSONLoader {
 
   private async getTargets(targetsJsonPath: string) {
     return JSON.parse(
-      await fs.promises.readFile(targetsJsonPath, 'utf-8')
+      await fs.promises.readFile(targetsJsonPath, 'utf-8'),
     ) as TargetsJSONRaw;
   }
 
@@ -74,7 +74,7 @@ export class TargetsJSONLoader {
             if ((type === 'tx' || type === 'rx') && frequencyNumber) {
               config.frequency = frequencyNumber;
               category = `${categoryName} ${this.frequencyFormatter(
-                config.frequency
+                config.frequency,
               )}`;
             } else if (frequency === 'dual') {
               category = `${categoryName} Dual Band`;
@@ -119,7 +119,7 @@ export class TargetsJSONLoader {
 
     if (!valid) {
       this.logger.error(
-        `${id} in targets file is not a valid Config, missing fields ${missingFields}`
+        `${id} in targets file is not a valid Config, missing fields ${missingFields}`,
       );
     }
     return valid;

@@ -35,7 +35,7 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
 }) => {
   const onInputChange = (
     _event: React.SyntheticEvent<Element, Event>,
-    opt: Option | null
+    opt: Option | null,
   ) => {
     if (opt && opt.value) {
       onChange(opt.value);
@@ -45,11 +45,11 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
   };
   const filterOptions = (
     values: Option[],
-    { inputValue }: FilterOptionsState<Option>
+    { inputValue }: FilterOptionsState<Option>,
   ): OptionWithMatches[] => {
     if (inputValue) {
       const searchResults = new QuickScore(values, ['label']).search(
-        inputValue
+        inputValue,
       );
       return searchResults.map((result) => {
         return {
@@ -76,8 +76,7 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
       disabled={disabled}
       getOptionLabel={(option) => option.label}
       isOptionEqualToValue={(option, otherOption) =>
-        option.value === otherOption.value
-      }
+        option.value === otherOption.value}
       openOnFocus
       clearIcon={false}
       renderInput={(params) => (
@@ -96,7 +95,7 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
               {parts.map(
                 (
                   part: { highlight: boolean; text: React.ReactNode },
-                  index: string | number | null | undefined
+                  index: string | number | null | undefined,
                 ) => (
                   <span
                     key={index}
@@ -106,7 +105,7 @@ const Omnibox: FunctionComponent<OmniboxProps> = ({
                   >
                     {part.text}
                   </span>
-                )
+                ),
               )}
             </div>
           </li>

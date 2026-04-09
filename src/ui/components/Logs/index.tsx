@@ -1,6 +1,6 @@
-import React, {FunctionComponent, memo, useEffect, useRef} from 'react';
-import {Box} from '@mui/material'
-import {SxProps, Theme} from '@mui/system';
+import { FunctionComponent, memo, useEffect, useRef } from 'react';
+import { Box } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 
 const styles: Record<string, SxProps<Theme>> = {
   root: {
@@ -19,8 +19,7 @@ interface LogsProps {
   data: string;
 }
 
-const Logs: FunctionComponent<LogsProps> = memo(({data}) => {
-
+const Logs: FunctionComponent<LogsProps> = memo(({ data }) => {
   const container = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (container.current !== null) {
@@ -29,7 +28,7 @@ const Logs: FunctionComponent<LogsProps> = memo(({data}) => {
   }, [data]);
   return (
     <Box ref={container} sx={styles.root}>
-      <Box component='pre' sx={styles.logs}>
+      <Box component="pre" sx={styles.logs}>
         <code>{data}</code>
       </Box>
     </Box>

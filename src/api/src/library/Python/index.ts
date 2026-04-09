@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import fs from 'fs';
 import path from 'path';
 import child_process from 'child_process';
@@ -9,14 +8,14 @@ export default class Python {
   constructor(
     public PATH: string,
     private env: NodeJS.ProcessEnv,
-    private logger: LoggerService
+    private logger: LoggerService,
   ) {}
 
   async runPythonScript(
     script: string,
     args: string[],
     onUpdate: OnOutputFunc = NoOpFunc,
-    options: child_process.SpawnOptions = {}
+    options: child_process.SpawnOptions = {},
   ): Promise<CommandResult> {
     const pyExec = await this.findPythonExecutable(this.PATH);
     if (pyExec === null) {
@@ -35,7 +34,7 @@ export default class Python {
       pyExec,
       [script, ...args],
       spawnOptions,
-      onUpdate
+      onUpdate,
     );
   }
 
@@ -49,9 +48,8 @@ export default class Python {
       'assert sys.version_info >= (3, 6)',
       'print(sys.executable)',
     ];
-    // eslint-disable-next-line no-restricted-syntax
+
     for (const location of envPath.split(path.delimiter)) {
-      // eslint-disable-next-line no-restricted-syntax
       for (const exename of exenames) {
         const executable = path
           .normalize(path.join(location, exename))
@@ -59,9 +57,9 @@ export default class Python {
         try {
           let res: CommandResult | null = null;
           if (
-            fs.existsSync(executable) &&
-            // eslint-disable-next-line no-cond-assign
-            (res = await new Commander().runCommand(executable, [
+            fs.existsSync(executable)
+
+            && (res = await new Commander().runCommand(executable, [
               '-c',
               pythonAssertCode.join(';'),
             ]))

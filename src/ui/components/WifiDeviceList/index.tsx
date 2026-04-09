@@ -7,7 +7,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import React, { FunctionComponent, useMemo } from 'react';
+import { FunctionComponent, useMemo } from 'react';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import { MulticastDnsInformation } from '../../gql/generated/types';

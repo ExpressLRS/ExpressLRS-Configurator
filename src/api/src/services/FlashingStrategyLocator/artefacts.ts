@@ -8,12 +8,12 @@ import FirmwareSource from '../../models/enum/FirmwareSource';
 import { BuildFlashFirmwareParams } from './BuildFlashFirmwareParams';
 
 export const generateFirmwareFileName = (
-  params: BuildFlashFirmwareParams
+  params: BuildFlashFirmwareParams,
 ): string => {
-  const { source, gitBranch, gitCommit, gitTag, gitPullRequest } =
-    params.firmware;
+  const { source, gitBranch, gitCommit, gitTag, gitPullRequest }
+    = params.firmware;
   const deviceName = params.userDefines.find(
-    (userDefine) => userDefine.key === UserDefineKey.DEVICE_NAME
+    (userDefine) => userDefine.key === UserDefineKey.DEVICE_NAME,
   )?.value;
   let target = params.target.toString();
 
@@ -45,7 +45,7 @@ export const generateFirmwareFileName = (
 export const createBinaryCopyWithCanonicalName = async (
   params: BuildFlashFirmwareParams,
   firmwareBinPath: string,
-  tmpPath = ''
+  tmpPath = '',
 ): Promise<string> => {
   if (fs.existsSync(firmwareBinPath)) {
     const newFirmwareBaseName = generateFirmwareFileName(params);
@@ -54,20 +54,20 @@ export const createBinaryCopyWithCanonicalName = async (
     if (tmpPath.length === 0) {
       // eslint-disable-next-line no-param-reassign
       tmpPath = await fs.promises.mkdtemp(
-        path.join(os.tmpdir(), `${params.target}_`)
+        path.join(os.tmpdir(), `${params.target}_`),
       );
     }
 
     // copy with original filename to tmpPath
     const tmpFirmwareBinPathOriginalName = path.join(
       tmpPath,
-      path.basename(firmwareBinPath)
+      path.basename(firmwareBinPath),
     );
     await fs.promises.copyFile(firmwareBinPath, tmpFirmwareBinPathOriginalName);
 
     const tmpFirmwareBinPath = path.join(
       tmpPath,
-      `${newFirmwareBaseName}${firmwareExtension}`
+      `${newFirmwareBaseName}${firmwareExtension}`,
     );
 
     try {

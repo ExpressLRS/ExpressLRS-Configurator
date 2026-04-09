@@ -59,23 +59,23 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
     return result;
   }, [wifiDevices]);
 
-  const [currentlySelectedValue, setCurrentlySelectedValue] =
-    useState<Option | null>(
+  const [currentlySelectedValue, setCurrentlySelectedValue]
+    = useState<Option | null>(
       wifiDevice
         ? options.find((item) => item.value === wifiDevice) ?? null
-        : null
+        : null,
     );
 
   useEffect(() => {
     setCurrentlySelectedValue(
-      options.find((item) => item.value === wifiDevice) ??
-        options[0] ??
-        currentlySelectedValue
+      options.find((item) => item.value === wifiDevice)
+      ?? options[0]
+      ?? currentlySelectedValue,
     );
   }, [currentlySelectedValue, options, wifiDevice]);
 
   const [currentTextBoxValue, setCurrentTextBoxValue] = useState<string | null>(
-    wifiDevice
+    wifiDevice,
   );
 
   const onDeviceSelectChange = useCallback(
@@ -84,12 +84,12 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
         setCurrentlySelectedValue(null);
       } else {
         setCurrentlySelectedValue(
-          options.find((item) => item.value === value) ?? null
+          options.find((item) => item.value === value) ?? null,
         );
         onChange(value);
       }
     },
-    [onChange, options]
+    [onChange, options],
   );
 
   const onTextFieldValueChange = useCallback(
@@ -97,11 +97,11 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
       setCurrentTextBoxValue(event.target.value);
       onChange(event.target.value);
     },
-    [onChange]
+    [onChange],
   );
 
   const [wifiSource, setWifiSource] = useState<WifiSourceType>(
-    WifiSourceType.LIST
+    WifiSourceType.LIST,
   );
 
   const handleWifiSourceChange = useCallback(
@@ -113,7 +113,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
         onChange(currentTextBoxValue);
       }
     },
-    [currentTextBoxValue, currentlySelectedValue, onChange]
+    [currentTextBoxValue, currentlySelectedValue, onChange],
   );
 
   return (
@@ -139,7 +139,7 @@ const WifiDeviceSelect: FunctionComponent<WifiDeviceSelectProps> = (props) => {
             title={t('WifiDeviceSelect.WifiDeviceSelection')}
             currentValue={
               options.find(
-                (item) => item.value === currentlySelectedValue?.value
+                (item) => item.value === currentlySelectedValue?.value,
               ) ?? null
             }
             onChange={onDeviceSelectChange}

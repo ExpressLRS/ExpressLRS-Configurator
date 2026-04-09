@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import simpleGit, { ResetMode, SimpleGitOptions } from 'simple-git';
 import { existsSync } from 'fs';
 import * as fs from 'fs/promises';
@@ -41,9 +40,7 @@ export const findGitExecutable = async (envPath: string): Promise<string> => {
   const IS_WINDOWS = process.platform.startsWith('win');
   const exenames = IS_WINDOWS ? ['git.exe', 'git'] : ['git'];
 
-  // eslint-disable-next-line no-restricted-syntax
   for (const location of envPath.split(path.delimiter)) {
-    // eslint-disable-next-line no-restricted-syntax
     for (const exename of exenames) {
       const executable = path
         .normalize(path.join(location, exename))
@@ -51,9 +48,9 @@ export const findGitExecutable = async (envPath: string): Promise<string> => {
       try {
         let res: CommandResult | null = null;
         if (
-          existsSync(executable) &&
-          // eslint-disable-next-line no-cond-assign
-          (res = await new Commander().runCommand(executable, ['--version']))
+          existsSync(executable)
+
+          && (res = await new Commander().runCommand(executable, ['--version']))
         ) {
           console.log('tested git exec', executable);
           if (res.success) {
@@ -76,7 +73,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
 
   constructor(
     { baseDirectory, gitBinaryLocation }: FirmwareDownloaderProps,
-    private logger: LoggerService
+    private logger: LoggerService,
   ) {
     this.baseDirectory = baseDirectory;
     this.gitBinaryLocation = gitBinaryLocation;
@@ -132,14 +129,14 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
 
     const git = this.getSimpleGit(directory);
 
-    let isTargetDirectoryEmpty: boolean =
-      (await fs.readdir(directory)).length === 0;
+    let isTargetDirectoryEmpty: boolean
+      = (await fs.readdir(directory)).length === 0;
 
     // if directory is not empty and it is not a valid repo, remove the existing files
     if (!isTargetDirectoryEmpty && !(await git.checkIsRepo())) {
       this.logger.log(
         'Invalid git repository detected, removing the existing files',
-        { directory }
+        { directory },
       );
       await fs.rm(directory, { recursive: true, force: true });
       await fs.mkdir(directory, { recursive: true });
@@ -171,7 +168,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
   async checkoutTag(
     repository: string,
     srcFolder: string,
-    tagName: string
+    tagName: string,
   ): Promise<FirmwareResult> {
     const directory = this.getRepoDirectory(repository);
     await this.syncRepo(repository, srcFolder);
@@ -191,7 +188,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
   async checkoutBranch(
     repository: string,
     srcFolder: string,
-    branch: string
+    branch: string,
   ): Promise<FirmwareResult> {
     const directory = this.getRepoDirectory(repository);
     await this.syncRepo(repository, srcFolder);
@@ -211,7 +208,7 @@ export class GitFirmwareDownloader implements IFirmwareDownloader {
   async checkoutCommit(
     repository: string,
     srcFolder: string,
-    commit: string
+    commit: string,
   ): Promise<FirmwareResult> {
     const directory = this.getRepoDirectory(repository);
     await this.syncRepo(repository, srcFolder);

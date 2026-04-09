@@ -20,14 +20,14 @@ export default class GitUserDefinesLoader implements UserDefinesLoader {
   constructor(
     private logger: LoggerService,
     private PATH: string,
-    private userDefinesStoragePath: string
+    private userDefinesStoragePath: string,
   ) {
     this.mutex = new Mutex();
   }
 
   async loadUserDefinesTxt(
     userDefineFilters: UserDefineFilters,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<UserDefineKey[]> {
     await this.mutex.tryLockWithTimeout(60000);
     try {
@@ -54,46 +54,46 @@ export default class GitUserDefinesLoader implements UserDefinesLoader {
           baseDirectory: this.userDefinesStoragePath,
           gitBinaryLocation: gitPath,
         },
-        this.logger
+        this.logger,
       );
-      const srcFolder =
-        gitRepository.srcFolder === '/' ? '' : `${gitRepository.srcFolder}/`;
+      const srcFolder
+        = gitRepository.srcFolder === '/' ? '' : `${gitRepository.srcFolder}/`;
 
       switch (userDefineFilters.source) {
         case FirmwareSource.GitBranch:
           const branchResult = await firmwareDownload.checkoutBranch(
             gitRepository.url,
             `${srcFolder}user_defines.txt`,
-            userDefineFilters.gitBranch
+            userDefineFilters.gitBranch,
           );
           const branchData = await fs.promises.readFile(
             branchResult.path,
-            'utf8'
+            'utf8',
           );
           return extractCompatibleKeys(branchData);
         case FirmwareSource.GitCommit:
           const commitResult = await firmwareDownload.checkoutCommit(
             gitRepository.url,
             `${srcFolder}user_defines.txt`,
-            userDefineFilters.gitCommit
+            userDefineFilters.gitCommit,
           );
           const commitData = await fs.promises.readFile(
             commitResult.path,
-            'utf8'
+            'utf8',
           );
           return extractCompatibleKeys(commitData);
         case FirmwareSource.GitTag:
           const tagResult = await firmwareDownload.checkoutTag(
             gitRepository.url,
             `${srcFolder}user_defines.txt`,
-            userDefineFilters.gitTag
+            userDefineFilters.gitTag,
           );
           const tagData = await fs.promises.readFile(tagResult.path, 'utf8');
           return extractCompatibleKeys(tagData);
         case FirmwareSource.Local:
           const data = await fs.promises.readFile(
             path.join(userDefineFilters.localPath, 'user_defines.txt'),
-            'utf8'
+            'utf8',
           );
           return extractCompatibleKeys(data);
         case FirmwareSource.GitPullRequest:
@@ -103,13 +103,13 @@ export default class GitUserDefinesLoader implements UserDefinesLoader {
           const prResult = await firmwareDownload.checkoutCommit(
             gitRepository.url,
             `${srcFolder}user_defines.txt`,
-            userDefineFilters.gitPullRequest.headCommitHash
+            userDefineFilters.gitPullRequest.headCommitHash,
           );
           const prData = await fs.promises.readFile(prResult.path, 'utf8');
           return extractCompatibleKeys(prData);
         default:
           throw new Error(
-            `unsupported firmware source: ${userDefineFilters.source}`
+            `unsupported firmware source: ${userDefineFilters.source}`,
           );
       }
     } finally {

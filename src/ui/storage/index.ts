@@ -65,7 +65,7 @@ const EXPERT_MODE = 'expert_mode';
 export default class ApplicationStorage implements IApplicationStorage {
   async saveDeviceOptions(
     device: string,
-    deviceOptions: DeviceOptions
+    deviceOptions: DeviceOptions,
   ): Promise<void> {
     const key = `${DEVICE_OPTIONS_BY_TARGET_KEYSPACE}.${device}`;
     localStorage.setItem(key, JSON.stringify(deviceOptions));
@@ -95,10 +95,10 @@ export default class ApplicationStorage implements IApplicationStorage {
   }
 
   async getFirmwareSource(
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<FirmwareVersionDataInput | null> {
     const value = localStorage.getItem(
-      `${gitRepository.owner}-${gitRepository.repositoryName}-${FIRMWARE_SOURCE_KEY}`
+      `${gitRepository.owner}-${gitRepository.repositoryName}-${FIRMWARE_SOURCE_KEY}`,
     );
     if (value === null) {
       return null;
@@ -113,11 +113,11 @@ export default class ApplicationStorage implements IApplicationStorage {
 
   async setFirmwareSource(
     input: FirmwareVersionDataInput,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<void> {
     localStorage.setItem(
       `${gitRepository.owner}-${gitRepository.repositoryName}-${FIRMWARE_SOURCE_KEY}`,
-      JSON.stringify(input)
+      JSON.stringify(input),
     );
   }
 
@@ -142,22 +142,22 @@ export default class ApplicationStorage implements IApplicationStorage {
   async setGlobalOption(
     key: UserDefineKey,
     value: string,
-    enabled: boolean
+    enabled: boolean,
   ): Promise<void> {
     localStorage.setItem(this.getGlobalOptionKey(key), value);
     localStorage.setItem(
       `${this.getGlobalOptionKey(key)}.enabled`,
-      String(enabled)
+      String(enabled),
     );
   }
 
   async getGlobalOption(
-    key: UserDefineKey
+    key: UserDefineKey,
   ): Promise<Partial<UserDefine> | null> {
     const value = localStorage.getItem(this.getGlobalOptionKey(key));
-    const enabled =
-      localStorage.getItem(`${this.getGlobalOptionKey(key)}.enabled`) ===
-      'true';
+    const enabled
+      = localStorage.getItem(`${this.getGlobalOptionKey(key)}.enabled`)
+        === 'true';
     if (value === null) {
       return null;
     }
@@ -184,13 +184,13 @@ export default class ApplicationStorage implements IApplicationStorage {
 
   async setOptionsGroupValue(
     group: UserDefineOptionGroup,
-    key: UserDefineKey
+    key: UserDefineKey,
   ): Promise<void> {
     localStorage.setItem(this.getOptionGroupKey(group), key);
   }
 
   async getOptionsGroupValue(
-    group: UserDefineOptionGroup
+    group: UserDefineOptionGroup,
   ): Promise<UserDefineKey | null> {
     return localStorage.getItem(this.getOptionGroupKey(group)) as UserDefineKey;
   }
@@ -204,7 +204,7 @@ export default class ApplicationStorage implements IApplicationStorage {
       return JSON.parse(result);
     } catch (e) {
       console.error(
-        'failed to load user ui preference for ui-show-prereleases'
+        'failed to load user ui preference for ui-show-prereleases',
       );
       return defaultValue;
     }
@@ -216,11 +216,11 @@ export default class ApplicationStorage implements IApplicationStorage {
 
   async setShowSensitiveFieldData(
     field: string,
-    value: boolean
+    value: boolean,
   ): Promise<void> {
     localStorage.setItem(
       `ShowSensitiveFieldData-${field}`,
-      JSON.stringify(value)
+      JSON.stringify(value),
     );
   }
 

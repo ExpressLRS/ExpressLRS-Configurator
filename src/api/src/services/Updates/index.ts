@@ -12,7 +12,7 @@ export default class UpdatesService {
   }
 
   async checkForNewerReleases(
-    currentVersion: string
+    currentVersion: string,
   ): Promise<UpdatesAvailability> {
     const response = await this.client.repos.listReleases({
       owner: this.repositoryOwner,
@@ -28,14 +28,14 @@ export default class UpdatesService {
       const release = response.data[i];
       const newestVersion = semver.coerce(release.tag_name);
       if (
-        newestVersion !== null &&
-        !release.prerelease &&
-        semver.gt(newestVersion, currentVersion)
+        newestVersion !== null
+        && !release.prerelease
+        && semver.gt(newestVersion, currentVersion)
       ) {
         return new UpdatesAvailability(
           true,
           newestVersion.format(),
-          release.html_url
+          release.html_url,
         );
       }
     }
