@@ -8,8 +8,6 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import 'reflect-metadata';
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 import path from 'path';
 import { app, BrowserWindow, dialog, ipcMain, shell, session } from 'electron';
 import { mkdirp } from 'mkdirp';
@@ -179,38 +177,7 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install();
 }
 
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.DEBUG_PROD === 'true'
-) {
-  require('electron-debug')({
-    showDevTools: false,
-  });
-}
-const installExtensions = async () => {
-  const installer = await import('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = [installer.REACT_DEVELOPER_TOOLS];
-  return installer
-    .default(extensions, {
-      forceDownload,
-      loadExtensionOptions: {
-        allowFileAccess: true,
-      },
-    })
-    .catch((err: Error) => {
-      logger.error(err);
-    });
-};
-
 const createWindow = async () => {
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.DEBUG_PROD === 'true'
-  ) {
-    await installExtensions();
-  }
-
   const RESOURCES_PATH = app.isPackaged
     ? path.join(process.resourcesPath, 'assets')
     : path.join(__dirname, '../../assets');
