@@ -22,7 +22,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -48,7 +47,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -75,7 +73,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -102,7 +99,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -132,7 +128,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -159,7 +154,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -191,7 +185,6 @@
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
-    "deviceType": "ExpressLRS",
     "aliases": [
       {
         "category": "Flywoo",
@@ -302,7 +295,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
-    "deviceType": "ExpressLRS",
     "aliases": [
       {
         "category": "BETAFPV",
@@ -347,7 +339,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
-    "deviceType": "ExpressLRS",
     "aliases": [
       {
         "category": "Happymodel 2.4 GHz",
@@ -378,7 +369,6 @@
       "RCVR_UART_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   }
 ]

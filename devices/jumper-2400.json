@@ -23,7 +23,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/jumper-aion/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -53,7 +52,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/aion-internal/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -83,7 +81,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/jumper-internal/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -115,7 +112,6 @@
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "",
-    "deviceType": "ExpressLRS",
     "aliases": []
   }
 ]

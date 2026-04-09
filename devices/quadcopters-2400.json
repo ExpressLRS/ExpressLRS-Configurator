@@ -23,7 +23,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "",
-    "deviceType": "ExpressLRS",
     "aliases": [
       {
         "category": "QuadKopters",
@@ -62,7 +61,6 @@
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "",
-    "deviceType": "ExpressLRS",
     "aliases": []
   }
 ]

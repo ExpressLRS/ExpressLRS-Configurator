@@ -25,7 +25,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -59,7 +58,6 @@
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "",
-    "deviceType": "ExpressLRS",
     "aliases": []
   }
 ]

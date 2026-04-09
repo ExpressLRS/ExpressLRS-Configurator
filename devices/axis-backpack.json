@@ -14,7 +14,6 @@
     ],
     "userDefines": ["BINDING_PHRASE", "HOME_WIFI_SSID", "HOME_WIFI_PASSWORD"],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/axisflying-thor/",
-    "deviceType": "Backpack",
     "aliases": []
   }
 ]

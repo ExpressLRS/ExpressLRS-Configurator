@@ -30,7 +30,6 @@
       "UNLOCK_HIGHER_POWER"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/frsky-r9modules/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -58,7 +57,6 @@
       "DISABLE_ALL_BEEPS"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/frsky-r9modules/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -83,7 +81,6 @@
       "DISABLE_ALL_BEEPS"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/frsky-r9modules/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -110,7 +107,6 @@
       "RCVR_UART_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/r9/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -136,7 +132,6 @@
       "RCVR_UART_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/r9/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -162,7 +157,6 @@
       "RCVR_UART_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/r9/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -188,7 +182,6 @@
       "RCVR_UART_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/r9/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -214,7 +207,6 @@
       "RCVR_UART_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/r9/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   }
 ]

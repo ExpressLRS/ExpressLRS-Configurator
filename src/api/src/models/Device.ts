@@ -1,5 +1,4 @@
 import { Field, ObjectType } from 'type-graphql';
-import DeviceType from './enum/DeviceType';
 import Target from './Target';
 import UserDefine from './UserDefine';
 
@@ -22,9 +21,6 @@ export default class Device {
 
   @Field(() => String, { nullable: true })
   wikiUrl?: string;
-
-  @Field(() => DeviceType)
-  deviceType: DeviceType;
 
   @Field(() => Boolean)
   verifiedHardware: boolean;
@@ -50,7 +46,6 @@ export default class Device {
     category: string,
     targets: Target[],
     userDefines: UserDefine[],
-    deviceType: DeviceType,
     verifiedHardware: boolean,
     wikiUrl?: string,
     parent?: string | null,
@@ -65,7 +60,6 @@ export default class Device {
     this.targets = targets;
     this.userDefines = userDefines;
     this.wikiUrl = wikiUrl;
-    this.deviceType = deviceType;
     this.verifiedHardware = verifiedHardware;
     this.parent = parent;
     this.abbreviatedName = abbreviatedName;

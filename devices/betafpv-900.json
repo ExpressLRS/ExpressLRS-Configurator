@@ -26,7 +26,6 @@
       "UNLOCK_HIGHER_POWER"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv900/",
-    "deviceType": "ExpressLRS",
     "aliases": [
       {
         "category": "HiYOUNGER",
@@ -64,7 +63,6 @@
       "UNLOCK_HIGHER_POWER"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv900/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -98,7 +96,6 @@
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/betafpv900/",
-    "deviceType": "ExpressLRS",
     "aliases": [
       {
         "category": "HiYOUNGER",

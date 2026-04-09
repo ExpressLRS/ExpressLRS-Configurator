@@ -25,7 +25,6 @@ query availableFirmwareTargets(
       flashingMethod
     }
     wikiUrl
-    deviceType
     parent
     abbreviatedName
     verifiedHardware

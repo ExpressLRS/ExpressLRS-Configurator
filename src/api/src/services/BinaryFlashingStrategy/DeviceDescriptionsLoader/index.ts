@@ -16,7 +16,6 @@ import Mutex from '../../../library/Mutex';
 import { DeviceDescription, TargetsJSONLoader } from '../TargetsJSONLoader';
 import FlashingMethod from '../../../models/enum/FlashingMethod';
 import Target from '../../../models/Target';
-import DeviceType from '../../../models/enum/DeviceType';
 import { UserDefineFilters } from '../../UserDefinesLoader';
 import UserDefine from '../../../models/UserDefine';
 import TargetUserDefinesFactory from '../../../factories/TargetUserDefinesFactory';
@@ -106,7 +105,6 @@ export default class DeviceDescriptionsLoader {
       category,
       uploadMethods,
       [],
-      DeviceType.ExpressLRS,
       true,
       undefined,
       undefined,

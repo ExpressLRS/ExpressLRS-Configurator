@@ -14,7 +14,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "",
-    "deviceType": "Backpack",
     "aliases": []
   },
   {
@@ -44,7 +43,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "",
-    "deviceType": "Backpack",
     "aliases": [
       {
         "category": "TX",
@@ -73,7 +71,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "",
-    "deviceType": "Backpack",
     "aliases": []
   }
 ]

@@ -19,7 +19,6 @@
       "MY_STARTUP_MELODY"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/ghost2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -42,7 +41,6 @@
       "MY_STARTUP_MELODY"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/ghost2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -66,7 +64,6 @@
       "RCVR_UART_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/ghost2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   }
 ]

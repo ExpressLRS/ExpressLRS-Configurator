@@ -31,6 +31,7 @@ import {
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ContentCopy, NetworkWifi, Save } from '@mui/icons-material';
 import { SxProps, Theme } from '@mui/system';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import FirmwareVersionForm from '../../components/FirmwareVersionForm';
 import DeviceTargetForm from '../../components/DeviceTargetForm';
@@ -49,7 +50,6 @@ import {
   BuildJobType,
   BuildProgressNotification,
   Device,
-  DeviceType,
   FirmwareSource,
   FirmwareVersionDataInput,
   FlashingMethod,
@@ -147,7 +147,6 @@ interface ConfiguratorViewProps {
   selectedDevice: string | null;
   networkDevices: Map<string, MulticastDnsInformation>;
   onDeviceChange: (dnsDevice: MulticastDnsInformation | null) => void;
-  deviceType: DeviceType;
   buildProgressNotifications: BuildProgressNotification[];
   lastBuildProgressNotification: BuildProgressNotification | null;
   resetBuildProgressNotifications: () => void;
@@ -163,13 +162,15 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     selectedDevice,
     networkDevices,
     onDeviceChange,
-    deviceType,
     buildProgressNotifications,
     lastBuildProgressNotification,
     resetBuildProgressNotifications,
     buildLogs,
     resetBuildLogs,
   } = props;
+
+  const location = useLocation();
+  const isExpressLRSRoute = location.pathname === '/configurator';
 
   const [viewState, setViewState] = useState<ViewState>(
     ViewState.Configuration
@@ -443,8 +444,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   }, [deviceTarget]);
 
   const hasLuaScript = useMemo(() => {
-    return deviceType === DeviceType.ExpressLRS && isTX;
-  }, [deviceType, isTX]);
+    return isExpressLRSRoute && isTX;
+  }, [isExpressLRSRoute, isTX]);
 
   const [
     fetchLuaScript,

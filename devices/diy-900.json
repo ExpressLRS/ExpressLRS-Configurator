@@ -25,7 +25,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy900/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -54,7 +53,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy900/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -84,7 +82,6 @@
       "UNLOCK_HIGHER_POWER"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy900/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -113,7 +110,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/diy900/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -147,7 +143,6 @@
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
-    "deviceType": "ExpressLRS",
     "aliases": [
       {
         "category": "GEPRC",
@@ -188,7 +183,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -210,7 +204,6 @@
       "RCVR_UART_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -232,7 +225,6 @@
       "UART_INVERTED"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy900/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   }
 ]

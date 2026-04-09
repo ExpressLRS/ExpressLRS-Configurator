@@ -12,7 +12,7 @@ import SerialMonitorView from './views/SerialMonitorView';
 import SettingsView from './views/SettingsView';
 import SupportView from './views/SupportView';
 import { Config } from './config';
-import { DeviceType, MulticastDnsInformation } from './gql/generated/types';
+import { MulticastDnsInformation } from './gql/generated/types';
 import useNetworkDevices from './hooks/useNetworkDevices';
 import WifiDeviceNotification from './components/WifiDeviceNotification';
 import AppStateProvider from './context/AppStateProvider';
@@ -70,7 +70,6 @@ const App = () => {
                       selectedDevice={device}
                       networkDevices={networkDevices}
                       onDeviceChange={onDeviceChange}
-                      deviceType={DeviceType.ExpressLRS}
                       buildProgressNotifications={buildProgressNotifications}
                       lastBuildProgressNotification={
                         lastBuildProgressNotification
@@ -92,7 +91,6 @@ const App = () => {
                       selectedDevice={device}
                       networkDevices={networkDevices}
                       onDeviceChange={onDeviceChange}
-                      deviceType={DeviceType.Backpack}
                       buildProgressNotifications={buildProgressNotifications}
                       lastBuildProgressNotification={
                         lastBuildProgressNotification

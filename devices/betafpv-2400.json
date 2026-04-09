@@ -24,7 +24,6 @@
       "UNLOCK_HIGHER_POWER"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv2400/",
-    "deviceType": "ExpressLRS",
     "aliases": [
       {
         "category": "HiYOUNGER",
@@ -60,7 +59,6 @@
       "UNLOCK_HIGHER_POWER"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -87,7 +85,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -117,7 +114,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/betafpv2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -161,7 +157,6 @@
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/betafpv2400/",
-    "deviceType": "ExpressLRS",
     "aliases": [
       {
         "category": "HiYOUNGER",
@@ -214,7 +209,6 @@
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/diy2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   }
 ]

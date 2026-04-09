@@ -5,7 +5,6 @@ import Device from '../../models/Device';
 import Target from '../../models/Target';
 import FlashingMethod from '../../models/enum/FlashingMethod';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
-import DeviceType from '../../models/enum/DeviceType';
 import { LoggerService } from '../../logger';
 import UserDefineOverride from '../../models/UserDefineOverride';
 import TargetUserDefinesFactory from '../../factories/TargetUserDefinesFactory';
@@ -119,13 +118,6 @@ export default class DeviceService implements IDevices {
           }
         );
 
-        const deviceType =
-          DeviceType[value.deviceType as keyof typeof DeviceType];
-
-        if (!deviceType) {
-          throw new Error(`"${value.deviceType}" is not a valid device type`);
-        }
-
         const device: Device = {
           id: value.name,
           name: value.name,
@@ -133,7 +125,6 @@ export default class DeviceService implements IDevices {
           targets,
           userDefines,
           wikiUrl: value.wikiUrl,
-          deviceType,
           parent: null,
           abbreviatedName: value.abbreviatedName,
           verifiedHardware: value.verifiedHardware ?? true,
@@ -163,7 +154,6 @@ export default class DeviceService implements IDevices {
                 }),
                 userDefines: device.userDefines,
                 wikiUrl: alias.wikiUrl,
-                deviceType: device.deviceType,
                 parent: device.id,
                 abbreviatedName: alias.abbreviatedName,
                 verifiedHardware: alias.verifiedHardware ?? true,

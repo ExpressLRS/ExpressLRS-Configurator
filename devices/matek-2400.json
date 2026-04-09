@@ -28,7 +28,6 @@
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/matek2400/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -54,7 +53,6 @@
       "HOME_WIFI_PASSWORD"
     ],
     "wikiUrl": "",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -86,7 +84,6 @@
       "RCVR_INVERT_TX"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/matek2400/",
-    "deviceType": "ExpressLRS",
     "aliases": [
       {
         "category": "RadioMaster",

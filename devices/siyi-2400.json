@@ -20,7 +20,6 @@
       "UART_INVERTED"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/transmitters/siyifm30/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -44,7 +43,6 @@
       "RCVR_UART_BAUD"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/siyiFRmini/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   },
   {
@@ -68,7 +66,6 @@
       "UART_INVERTED"
     ],
     "wikiUrl": "https://www.expresslrs.org/quick-start/receivers/siyiFRmini/",
-    "deviceType": "ExpressLRS",
     "aliases": []
   }
 ]
