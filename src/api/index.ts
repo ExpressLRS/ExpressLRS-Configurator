@@ -1,10 +1,10 @@
 import { createServer } from 'http';
 import { ApolloServer } from '@apollo/server';
-import { expressMiddleware } from '@apollo/server/express4';
+import { expressMiddleware } from '@as-integrations/express5';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
-import { PubSub } from 'graphql-subscriptions';
+import { createPubSub } from '@graphql-yoga/subscription';
 import { WebSocketServer } from 'ws';
-import { useServer } from 'graphql-ws/lib/use/ws';
+import { useServer } from 'graphql-ws/use/ws';
 import express, { Express } from 'express';
 import cors from 'cors';
 import * as http from 'http';
@@ -23,7 +23,6 @@ import FirmwareResolver from './src/graphql/resolvers/Firmware.resolver';
 import SourcesResolver from './src/graphql/resolvers/Sources.resolver';
 
 // importing for side effects
-// eslint-disable-next-line import/extensions
 import './src/graphql/enum/UserDefineKey';
 import UserDefinesBuilder from './src/services/UserDefinesBuilder';
 import UpdatesService from './src/services/Updates';
@@ -59,7 +58,7 @@ export default class ApiServer {
   }
 
   async buildContainer(config: IConfig, logger: LoggerService): Promise<void> {
-    const pubSub = new PubSub();
+    const pubSub = createPubSub();
     Container.set([{ id: ConfigToken, value: config }]);
     Container.set([{ id: PubSubToken, value: pubSub }]);
     Container.set([{ id: LoggerToken, value: logger }]);
@@ -73,7 +72,7 @@ export default class ApiServer {
       config.platformioStateTempStoragePath,
       config.env,
       logger,
-      python
+      python,
     );
 
     Container.set(Platformio, platformio);
@@ -82,27 +81,27 @@ export default class ApiServer {
       UpdatesService,
       new UpdatesService(
         config.configuratorGit.owner,
-        config.configuratorGit.repositoryName
-      )
+        config.configuratorGit.repositoryName,
+      ),
     );
     Container.set(
       SerialMonitorService,
-      new SerialMonitorService(pubSub, logger)
+      new SerialMonitorService(pubSub, logger),
     );
 
     const mDnsNotifications = new MulticastDnsNotificationsService(
       pubSub,
-      logger
+      logger,
     );
     if (config.multicastDnsSimulatorEnabled) {
       Container.set(
         MulticastDnsService,
-        new MulticastDnsSimulatorService(mDnsNotifications)
+        new MulticastDnsSimulatorService(mDnsNotifications),
       );
     } else {
       Container.set(
         MulticastDnsService,
-        new MulticastDnsService(mDnsNotifications, logger)
+        new MulticastDnsService(mDnsNotifications, logger),
       );
     }
 
@@ -115,9 +114,9 @@ export default class ApiServer {
       new GitUserDefinesLoader(
         logger,
         config.PATH,
-        config.userDefinesStoragePath
+        config.userDefinesStoragePath,
       ),
-      deviceService
+      deviceService,
     );
 
     Container.set(UserDefinesBuilder, userDefinesBuilder);
@@ -126,13 +125,13 @@ export default class ApiServer {
       logger,
       deviceService,
       config.PATH,
-      config.targetsStoragePath
+      config.targetsStoragePath,
     );
     Container.set(TargetsLoader, targetsLoader);
 
     const firmwareBuilder = new FirmwareBuilder(platformio, logger);
-    const platformioFlashingStrategyService =
-      new PlatformioFlashingStrategyService(
+    const platformioFlashingStrategyService
+      = new PlatformioFlashingStrategyService(
         config.PATH,
         config.firmwaresPath,
         platformio,
@@ -140,24 +139,24 @@ export default class ApiServer {
         pubSub,
         logger,
         userDefinesBuilder,
-        targetsLoader
+        targetsLoader,
       );
 
     const targetStorageGitPath = path.join(
       config.userDataPath,
       'firmwares',
-      'binary-targets'
+      'binary-targets',
     );
 
     const deviceDescriptionsLoader = new DeviceDescriptionsLoader(
       logger,
       config.PATH,
       targetStorageGitPath,
-      path.join(config.userDataPath, 'firmwares', 'device-options')
+      path.join(config.userDataPath, 'firmwares', 'device-options'),
     );
     const cloudBinariesCache = new CloudBinariesCache(
       config.cloudCacheServer,
-      config.firmwareCloudCachePath
+      config.firmwareCloudCachePath,
     );
     const binaryConfigurator = new BinaryConfigurator(python, logger);
     const binaryFlashingStrategyService = new BinaryFlashingStrategyService(
@@ -170,15 +169,15 @@ export default class ApiServer {
       deviceDescriptionsLoader,
       cloudBinariesCache,
       targetStorageGitPath,
-      logger
+      logger,
     );
 
     Container.set(
       FlashingStrategyLocatorService,
       new FlashingStrategyLocatorService(
         [binaryFlashingStrategyService, platformioFlashingStrategyService],
-        logger
-      )
+        logger,
+      ),
     );
 
     Container.set(LuaService, new LuaService(logger));
@@ -188,7 +187,7 @@ export default class ApiServer {
   async start(
     config: IConfig,
     logger: LoggerService,
-    port: number
+    port: number,
   ): Promise<http.Server> {
     await this.buildContainer(config, logger);
     this.app = express();
@@ -198,7 +197,7 @@ export default class ApiServer {
       cors<cors.CorsRequest>({
         credentials: true,
         origin: true,
-      })
+      }),
     );
     this.app.use('/locales', express.static(config.localesPath));
 
@@ -227,7 +226,7 @@ export default class ApiServer {
         LogFileResolver,
       ],
       container: Container,
-      pubSub: Container.get<PubSub>(PubSubToken),
+      pubSub: Container.get(PubSubToken),
     });
 
     // not a React component

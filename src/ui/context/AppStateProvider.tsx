@@ -7,12 +7,12 @@ export const AppStateContext = React.createContext<{
   appState: AppState;
   setAppState: (appState: AppState) => void;
 }>({
-  appState: {
-    appStatus: AppStatus.Interactive,
-    isExpertModeEnabled: false,
-  },
-  setAppState: () => {},
-});
+      appState: {
+        appStatus: AppStatus.Interactive,
+        isExpertModeEnabled: false,
+      },
+      setAppState: () => {},
+    });
 
 interface AppStateProviderContextProps {
   children?: React.ReactNode;
@@ -35,7 +35,7 @@ const AppStateProvider: FunctionComponent<AppStateProviderContextProps> = ({
   };
   const value = useMemo(
     () => ({ appState, setAppState: preSetAppState }),
-    [appState]
+    [appState],
   );
   return (
     <AppStateContext.Provider value={value}>

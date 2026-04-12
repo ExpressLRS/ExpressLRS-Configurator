@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useQuery, useSubscription } from '@apollo/client/react';
 import {
   MulticastDnsEventType,
   MulticastDnsInformation,
-  useAvailableMulticastDnsDevicesListQuery,
-  useMulticastDnsMonitorUpdatesSubscription,
+  AvailableMulticastDnsDevicesListDocument,
+  MulticastDnsMonitorUpdatesDocument,
 } from '../gql/generated/types';
 import client from '../gql';
 
@@ -12,8 +13,8 @@ export default function useNetworkDevices() {
     Map<string, MulticastDnsInformation>
   >(new Map<string, MulticastDnsInformation>());
 
-  const { data: multicastDnsDevicesListData } =
-    useAvailableMulticastDnsDevicesListQuery({
+  const { data: multicastDnsDevicesListData }
+    = useQuery(AvailableMulticastDnsDevicesListDocument, {
       fetchPolicy: 'network-only',
       client,
     });
@@ -21,12 +22,12 @@ export default function useNetworkDevices() {
   useEffect(() => {
     if (multicastDnsDevicesListData) {
       const multicastDnsDevicesCopy = new Map<string, MulticastDnsInformation>(
-        networkDevices
+        networkDevices,
       );
       multicastDnsDevicesListData.availableMulticastDnsDevicesList.forEach(
         (item) => {
           multicastDnsDevicesCopy.set(item.name, item);
-        }
+        },
       );
       setNetworkDevices(multicastDnsDevicesCopy);
     }
@@ -37,11 +38,11 @@ export default function useNetworkDevices() {
     MulticastDnsInformation[]
   >([]);
 
-  useMulticastDnsMonitorUpdatesSubscription({
+  useSubscription(MulticastDnsMonitorUpdatesDocument, {
     fetchPolicy: 'network-only',
     client,
-    onSubscriptionData: (options) => {
-      const update = options.subscriptionData.data?.multicastDnsMonitorUpdates;
+    onData: ({ data }) => {
+      const update = data.data?.multicastDnsMonitorUpdates;
 
       if (update) {
         const multicastDnsDevicesCopy = new Map<
@@ -63,7 +64,7 @@ export default function useNetworkDevices() {
 
           if (newNetworkDevices.find((d) => d.name === update.data.name)) {
             const newDevices = newNetworkDevices.filter(
-              (d) => d.name !== update.data.name
+              (d) => d.name !== update.data.name,
             );
             setNewNetworkDevices(newDevices);
           }
@@ -77,10 +78,10 @@ export default function useNetworkDevices() {
   const removeDeviceFromNewList = useCallback(
     (deviceName: string) => {
       setNewNetworkDevices(
-        newNetworkDevices.filter((d) => d.name !== deviceName)
+        newNetworkDevices.filter((d) => d.name !== deviceName),
       );
     },
-    [newNetworkDevices]
+    [newNetworkDevices],
   );
 
   return {

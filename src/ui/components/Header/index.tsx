@@ -1,4 +1,4 @@
-import React, { FunctionComponent, memo } from 'react';
+import { FunctionComponent, memo } from 'react';
 import { AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -9,7 +9,8 @@ import { Config } from '../../config';
 import LogotypeIcon from '../../../../assets/logotype.svg';
 import DiscordIcon from '../../../../assets/DiscordIcon.svg';
 import OpenCollectiveIcon from '../../../../assets/OpenCollective.svg';
-import { useCheckForUpdatesQuery } from '../../gql/generated/types';
+import { useQuery } from '@apollo/client/react';
+import { CheckForUpdatesDocument } from '../../gql/generated/types';
 
 const styles: Record<string, SxProps<Theme>> = {
   title: {
@@ -55,7 +56,7 @@ const styles: Record<string, SxProps<Theme>> = {
 const Header: FunctionComponent = memo(() => {
   const { t } = useTranslation();
 
-  const { data: updateResponse } = useCheckForUpdatesQuery({
+  const { data: updateResponse } = useQuery(CheckForUpdatesDocument, {
     variables: {
       currentVersion: process.env.EXPRESSLRS_CONFIGURATOR_VERSION || '0.0.1',
     },
@@ -66,9 +67,11 @@ const Header: FunctionComponent = memo(() => {
         <Box sx={styles.logotype}>
           <img src={LogotypeIcon} alt={t('Header.ExpressLRSConfigurator')} />
           <Typography variant="h4" sx={styles.title}>
-            {t('Header.ExpressLRSConfigurator')}{' '}
+            {t('Header.ExpressLRSConfigurator')}
+            {' '}
             <Box component="span" sx={styles.version}>
-              v{process.env.EXPRESSLRS_CONFIGURATOR_VERSION}
+              v
+              {process.env.EXPRESSLRS_CONFIGURATOR_VERSION}
             </Box>
             {updateResponse?.checkForUpdates?.updateAvailable && (
               <Box

@@ -3,7 +3,7 @@ import path from 'path';
 import extractTargets from './extractTargets';
 
 const loadTargetsFromDirectory = async (
-  localPath: string
+  localPath: string,
 ): Promise<string[]> => {
   if (!fs.existsSync(localPath)) {
     const errorMessage = `directory ${localPath} does not exist`;
@@ -29,7 +29,7 @@ const loadTargetsFromDirectory = async (
         return extractTargets(data);
       }
       return [];
-    })
+    }),
   );
   return values.reduce<string[]>((prev, curr) => {
     return prev.concat(curr);

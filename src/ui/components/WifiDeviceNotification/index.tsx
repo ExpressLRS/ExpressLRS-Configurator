@@ -1,5 +1,5 @@
 import { Alert, Button, Snackbar } from '@mui/material';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MulticastDnsInformation } from '../../gql/generated/types';
 import useAppState from '../../hooks/useAppState';
@@ -12,14 +12,14 @@ interface WifiDeviceNotificationProps {
 }
 
 const WifiDeviceNotification: FunctionComponent<WifiDeviceNotificationProps> = (
-  props
+  props,
 ) => {
   const { newNetworkDevices, removeDeviceFromNewList, onDeviceChange } = props;
   const { appStatus } = useAppState();
   const { t } = useTranslation();
 
-  const result =
-    appStatus === AppStatus.Interactive
+  const result
+    = appStatus === AppStatus.Interactive
       ? newNetworkDevices.map((dnsDevice) => {
           const handleClose = () => {
             removeDeviceFromNewList(dnsDevice.name);
@@ -33,8 +33,13 @@ const WifiDeviceNotification: FunctionComponent<WifiDeviceNotificationProps> = (
               onClose={handleClose}
             >
               <Alert onClose={handleClose} severity="info">
-                {t('WifiDeviceNotification.NewDevice')} {dnsDevice.name} (
-                {dnsDevice.ip})
+                {t('WifiDeviceNotification.NewDevice')}
+                {' '}
+                {dnsDevice.name}
+                {' '}
+                (
+                {dnsDevice.ip}
+                )
                 <Button
                   size="small"
                   onClick={() => {
@@ -50,7 +55,6 @@ const WifiDeviceNotification: FunctionComponent<WifiDeviceNotificationProps> = (
         })
       : null;
 
-  // eslint-disable-next-line react/jsx-no-useless-fragment
   return <>{result}</>;
 };
 

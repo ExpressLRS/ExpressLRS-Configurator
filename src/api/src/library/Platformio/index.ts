@@ -34,7 +34,7 @@ const prependPATH = (pth: string, item: string): string => {
 
 const envFilter = (
   env: NodeJS.ProcessEnv,
-  blacklist: string[]
+  blacklist: string[],
 ): NodeJS.ProcessEnv => {
   const result: NodeJS.ProcessEnv = {};
   Object.keys(env).forEach((key) => {
@@ -53,7 +53,7 @@ export default class Platformio {
     private stateTempStoragePath: string,
     env: NodeJS.ProcessEnv,
     private logger: LoggerService,
-    private python: Python
+    private python: Python,
   ) {
     // Fix for https://github.com/ExpressLRS/ExpressLRS-Configurator/issues/440
     const blacklistedEnvKeys = ['PYTHONPATH', 'PYTHONHOME'];
@@ -76,26 +76,26 @@ export default class Platformio {
       [this.getPlatformioPath, 'check', 'python'],
       {
         env: this.env,
-      }
+      },
     );
   }
 
   async getPlatformioState(): Promise<PlatformioCoreState> {
     const statePath = path.join(
       this.stateTempStoragePath,
-      `core-dump-${Math.round(Math.random() * 1000000)}.json`
+      `core-dump-${Math.round(Math.random() * 1000000)}.json`,
     );
 
     const cmdArgs = ['check', 'core', '--dump-state', statePath];
 
     const result = await this.python.runPythonScript(
       this.getPlatformioPath,
-      cmdArgs
+      cmdArgs,
     );
 
     if (!result.success) {
       throw new Error(
-        `failed to get state json: ${result.stderr} ${result.stdout}`
+        `failed to get state json: ${result.stderr} ${result.stdout}`,
       );
     }
 
@@ -119,7 +119,7 @@ export default class Platformio {
   async runPIOCommand(
     args: string[],
     options: child_process.SpawnOptions,
-    onOutput: OnOutputFunc = NoOpFunc
+    onOutput: OnOutputFunc = NoOpFunc,
   ) {
     this.logger.log('pio cmd', {
       args,
@@ -130,9 +130,9 @@ export default class Platformio {
     });
 
     if (
-      options?.env?.PATH?.length !== undefined &&
-      options?.env?.PATH?.length > 0 &&
-      state.penv_bin_dir.length > 0
+      options?.env?.PATH?.length !== undefined
+      && options?.env?.PATH?.length > 0
+      && state.penv_bin_dir.length > 0
     ) {
       options.env.PATH = prependPATH(options.env.PATH, state.penv_bin_dir);
       this.logger.log('bundle platformio venv PATH with env PATH', {
@@ -140,7 +140,6 @@ export default class Platformio {
       });
     }
 
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     let { platformio_exe } = state;
     // if using shell, surround exe in quotes in case path has a space in it
     if (options.shell) {
@@ -151,14 +150,14 @@ export default class Platformio {
       platformio_exe,
       [...args],
       options,
-      onOutput
+      onOutput,
     );
   }
 
   async build(
     projectDir: string,
     environment: string,
-    onUpdate: OnOutputFunc = NoOpFunc
+    onUpdate: OnOutputFunc = NoOpFunc,
   ) {
     return this.runPIOCommand(
       ['run', '--project-dir', `"${projectDir}"`, '--environment', environment],
@@ -167,7 +166,7 @@ export default class Platformio {
         shell: true,
         windowsVerbatimArguments: true,
       },
-      onUpdate
+      onUpdate,
     );
   }
 
@@ -176,7 +175,7 @@ export default class Platformio {
     environment: string,
     serialPort: string | undefined,
     uploadType: UploadType,
-    onUpdate: OnOutputFunc = NoOpFunc
+    onUpdate: OnOutputFunc = NoOpFunc,
   ) {
     const params = [
       'run',
@@ -198,7 +197,7 @@ export default class Platformio {
         shell: true,
         windowsVerbatimArguments: true,
       },
-      onUpdate
+      onUpdate,
     );
   }
 
@@ -215,9 +214,9 @@ export default class Platformio {
   async clearPlatformioUsingCoreState(): Promise<void> {
     const platformioStateJson = await this.getPlatformioState();
     if (
-      platformioStateJson.core_dir === undefined ||
-      platformioStateJson.core_dir.length === 0 ||
-      platformioStateJson.core_dir.indexOf('.platformio') === -1
+      platformioStateJson.core_dir === undefined
+      || platformioStateJson.core_dir.length === 0
+      || platformioStateJson.core_dir.indexOf('.platformio') === -1
     ) {
       throw new Error(`core_dir is invalid: ${platformioStateJson.core_dir}`);
     }
@@ -239,7 +238,7 @@ export default class Platformio {
         undefined,
         {
           err: e,
-        }
+        },
       );
       return this.removePlatformioDir();
     }

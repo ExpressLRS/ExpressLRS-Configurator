@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from 'react';
-import { Routes, Route, HashRouter, Navigate } from 'react-router-dom';
+import { useCallback, useState } from 'react';
+import { Routes, Route, HashRouter, Navigate } from 'react-router';
 import CssBaseline from '@mui/material/CssBaseline';
 import '@fontsource/roboto';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/react';
 import theme from './theme';
 import client from './gql';
 import ConfiguratorView from './views/ConfiguratorView';
@@ -20,8 +20,8 @@ import useBuildProgressNotifications from './hooks/useBuildProgressNotifications
 import useBuildLogs from './hooks/useBuildLogs';
 
 const App = () => {
-  const { networkDevices, newNetworkDevices, removeDeviceFromNewList } =
-    useNetworkDevices();
+  const { networkDevices, newNetworkDevices, removeDeviceFromNewList }
+    = useNetworkDevices();
 
   const [device, setDevice] = useState<string | null>('');
 
@@ -38,7 +38,7 @@ const App = () => {
         }
       }
     },
-    []
+    [],
   );
 
   const {
@@ -63,7 +63,7 @@ const App = () => {
                 />
                 <Route
                   path="/configurator"
-                  element={
+                  element={(
                     <ConfiguratorView
                       key="configurator"
                       gitRepository={Config.expressLRSGit}
@@ -81,11 +81,11 @@ const App = () => {
                       buildLogs={buildLogs}
                       resetBuildLogs={resetLogs}
                     />
-                  }
+                  )}
                 />
                 <Route
                   path="/backpack"
-                  element={
+                  element={(
                     <ConfiguratorView
                       key="backpack"
                       gitRepository={Config.backpackGit}
@@ -103,7 +103,7 @@ const App = () => {
                       buildLogs={buildLogs}
                       resetBuildLogs={resetLogs}
                     />
-                  }
+                  )}
                 />
                 <Route path="/logs" element={<LogsView />} />
                 <Route path="/serial-monitor" element={<SerialMonitorView />} />

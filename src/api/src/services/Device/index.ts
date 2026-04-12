@@ -33,14 +33,13 @@ export default class DeviceService implements IDevices {
       })
       .then((configs) => {
         return configs.map((file) => {
-          // eslint-disable-next-line promise/no-nesting
           return fs.readFile(file, 'utf8').then((data) => JSON.parse(data));
         });
       });
     const configsRaw = await Promise.all(files);
     const configs = configsRaw.reduce(
       (accumulator, current) => accumulator.concat(current),
-      []
+      [],
     );
     this.devices = this.processDeviceConfigs(configs);
   }
@@ -62,7 +61,7 @@ export default class DeviceService implements IDevices {
         }
         if (!value.userDefines || value.userDefines.length === 0) {
           throw new Error(
-            `devices must have a list of supported user defines!`
+            `devices must have a list of supported user defines!`,
           );
         }
 
@@ -72,14 +71,14 @@ export default class DeviceService implements IDevices {
               throw new Error(`target must have a name property`);
             }
 
-            const flashingMethod =
-              FlashingMethod[
+            const flashingMethod
+              = FlashingMethod[
                 item.flashingMethod as keyof typeof FlashingMethod
               ];
 
             if (!flashingMethod) {
               throw new Error(
-                `error parsing target "${item.name}": "${item.flashingMethod}" is not a valid flashing method`
+                `error parsing target "${item.name}": "${item.flashingMethod}" is not a valid flashing method`,
               );
             }
 
@@ -88,15 +87,15 @@ export default class DeviceService implements IDevices {
               name: item.name,
               flashingMethod,
             };
-          }
+          },
         );
 
         const targetUserDefinesFactory = new TargetUserDefinesFactory(null);
         const userDefines: UserDefine[] = value.userDefines.map(
           (item: string | UserDefineOverride) => {
             if (typeof item === 'string') {
-              const userDefineKey =
-                UserDefineKey[item as keyof typeof UserDefineKey];
+              const userDefineKey
+                = UserDefineKey[item as keyof typeof UserDefineKey];
               if (!userDefineKey) {
                 throw new Error(`"${item}" is not a valid User Define`);
               }
@@ -104,8 +103,8 @@ export default class DeviceService implements IDevices {
             }
 
             if (typeof item === 'object') {
-              const userDefineKey =
-                UserDefineKey[item.key as keyof typeof UserDefineKey];
+              const userDefineKey
+                = UserDefineKey[item.key as keyof typeof UserDefineKey];
               if (!userDefineKey) {
                 throw new Error(`"${item}" is not a valid User Define`);
               }
@@ -116,11 +115,11 @@ export default class DeviceService implements IDevices {
             }
 
             throw new Error(`"${item}" is not a valid User Define`);
-          }
+          },
         );
 
-        const deviceType =
-          DeviceType[value.deviceType as keyof typeof DeviceType];
+        const deviceType
+          = DeviceType[value.deviceType as keyof typeof DeviceType];
 
         if (!deviceType) {
           throw new Error(`"${value.deviceType}" is not a valid device type`);
@@ -168,7 +167,7 @@ export default class DeviceService implements IDevices {
                 abbreviatedName: alias.abbreviatedName,
                 verifiedHardware: alias.verifiedHardware ?? true,
               });
-            }
+            },
           );
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -188,7 +187,7 @@ export default class DeviceService implements IDevices {
 
   applyUserDefineOverride(
     userDefine: UserDefine,
-    userDefineOverride: UserDefineOverride
+    userDefineOverride: UserDefineOverride,
   ): UserDefine {
     const userDefineCopy: UserDefine = { ...userDefine };
 

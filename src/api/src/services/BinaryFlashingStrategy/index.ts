@@ -1,6 +1,5 @@
-/* eslint-disable no-bitwise */
 import { Service } from 'typedi';
-import { PubSubEngine } from 'graphql-subscriptions';
+import { type PubSub } from 'type-graphql';
 import * as os from 'os';
 import semver from 'semver';
 import path from 'path';
@@ -55,21 +54,21 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
   constructor(
     private PATH: string,
     private firmwaresPath: string,
-    private pubSub: PubSubEngine,
+    private pubSub: PubSub,
     private binaryConfigurator: BinaryConfigurator,
     private platformio: Platformio,
     private builder: FirmwareBuilder,
     private deviceDescriptionsLoader: DeviceDescriptionsLoader,
     private cloudBinariesCache: CloudBinariesCache,
     private targetStorageGitPath: string,
-    private logger: LoggerService
+    private logger: LoggerService,
   ) {
     this.mutex = new Mutex();
   }
 
   private async updateProgress(
     type: BuildProgressNotificationType,
-    step: BuildFirmwareStep
+    step: BuildFirmwareStep,
   ): Promise<void> {
     this.logger?.log('build progress notification', {
       type,
@@ -93,25 +92,25 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
   async availableFirmwareTargets(
     args: TargetArgs,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<Device[]> {
     return this.deviceDescriptionsLoader.loadTargetsList(args, gitRepository);
   }
 
   async targetDeviceOptions(
     args: UserDefineFilters,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<UserDefine[]> {
     return this.deviceDescriptionsLoader.targetDeviceOptions(
       args,
-      gitRepository
+      gitRepository,
     );
   }
 
   private osUsernameContainsAmpersand(): boolean {
     if (
-      os.platform() === 'win32' &&
-      os.userInfo({ encoding: 'utf8' }).username.indexOf('&') > -1
+      os.platform() === 'win32'
+      && os.userInfo({ encoding: 'utf8' }).username.indexOf('&') > -1
     ) {
       return true;
     }
@@ -120,19 +119,19 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
   async isCompatible(params: IsCompatibleArgs, gitRepository: GitRepository) {
     if (
-      gitRepository.url.toLowerCase() ===
-        'https://github.com/expresslrs/backpack'.toLowerCase() &&
-      params.source === FirmwareSource.GitTag &&
-      semver.lte(params.gitTag, '1.3.0')
+      gitRepository.url.toLowerCase()
+      === 'https://github.com/expresslrs/backpack'.toLowerCase()
+      && params.source === FirmwareSource.GitTag
+      && semver.lte(params.gitTag, '1.3.0')
     ) {
       return false;
     }
 
     if (
-      gitRepository.url.toLowerCase() ===
-        'https://github.com/expresslrs/expresslrs'.toLowerCase() &&
-      params.source === FirmwareSource.GitTag &&
-      semver.lt(params.gitTag, '3.0.0')
+      gitRepository.url.toLowerCase()
+      === 'https://github.com/expresslrs/expresslrs'.toLowerCase()
+      && params.source === FirmwareSource.GitTag
+      && semver.lt(params.gitTag, '3.0.0')
     ) {
       return false;
     }
@@ -143,7 +142,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
   async downloadSource(
     firmware: FirmwareVersionData,
     gitRepositoryUrl: string,
-    gitRepositorySrcFolder: string
+    gitRepositorySrcFolder: string,
   ): Promise<string> {
     let gitPath = '';
     try {
@@ -164,7 +163,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         baseDirectory: this.firmwaresPath,
         gitBinaryLocation: gitPath,
       },
-      this.logger
+      this.logger,
     );
 
     let firmwarePath = '';
@@ -173,7 +172,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         const tagResult = await firmwareDownload.checkoutTag(
           gitRepositoryUrl,
           gitRepositorySrcFolder,
-          firmware.gitTag
+          firmware.gitTag,
         );
         firmwarePath = tagResult.path;
         break;
@@ -181,7 +180,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         const branchResult = await firmwareDownload.checkoutBranch(
           gitRepositoryUrl,
           gitRepositorySrcFolder,
-          firmware.gitBranch
+          firmware.gitBranch,
         );
         firmwarePath = branchResult.path;
         break;
@@ -189,7 +188,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         const commitResult = await firmwareDownload.checkoutCommit(
           gitRepositoryUrl,
           gitRepositorySrcFolder,
-          firmware.gitCommit
+          firmware.gitCommit,
         );
         firmwarePath = commitResult.path;
         break;
@@ -201,7 +200,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           const pullRequestResult = await firmwareDownload.checkoutCommit(
             gitRepositoryUrl,
             gitRepositorySrcFolder,
-            firmware.gitPullRequest.headCommitHash
+            firmware.gitPullRequest.headCommitHash,
           );
           firmwarePath = pullRequestResult.path;
         }
@@ -236,7 +235,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         baseDirectory: this.firmwaresPath,
         gitBinaryLocation: gitPath,
       },
-      this.logger
+      this.logger,
     );
 
     return firmwareDownload.currentCommitHash(gitRepositoryUrl);
@@ -253,7 +252,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
   async compileBinary(
     target: string,
     firmwareSourcePath: string,
-    userDefines: UserDefine[]
+    userDefines: UserDefine[],
   ): Promise<string> {
     const pythonCheck = await this.platformio.checkPython();
     if (!pythonCheck.success) {
@@ -262,14 +261,14 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         stdout: pythonCheck.stdout,
       });
       throw new Error(
-        `Python dependency error: ${pythonCheck.stderr} ${pythonCheck.stdout}`
+        `Python dependency error: ${pythonCheck.stderr} ${pythonCheck.stdout}`,
       );
     }
 
     const coreCheck = await this.platformio.checkCore();
     if (!coreCheck.success) {
       await this.updateLogs(
-        'Failed to find Platformio on your computer. Trying to install it automatically...'
+        'Failed to find Platformio on your computer. Trying to install it automatically...',
       );
       this.logger?.error('platformio dependency check error', undefined, {
         stderr: coreCheck.stderr,
@@ -278,7 +277,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       const platformioInstallResult = await this.platformio.install(
         (output) => {
           this.updateLogs(output);
-        }
+        },
       );
       if (!platformioInstallResult.success) {
         this.logger?.error('platformio installation error', undefined, {
@@ -286,7 +285,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           stdout: platformioInstallResult.stdout,
         });
         throw new Error(
-          `platformio error: ${platformioInstallResult.stderr} ${platformioInstallResult.stdout}`
+          `platformio error: ${platformioInstallResult.stderr} ${platformioInstallResult.stdout}`,
         );
       }
     }
@@ -299,7 +298,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
     await this.updateProgress(
       BuildProgressNotificationType.Info,
-      BuildFirmwareStep.BUILDING_FIRMWARE
+      BuildFirmwareStep.BUILDING_FIRMWARE,
     );
     const compileResult = await this.builder.build(
       target,
@@ -307,7 +306,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       firmwareSourcePath,
       (output) => {
         this.updateLogs(output);
-      }
+      },
     );
     if (!compileResult.success) {
       this.logger?.error('compile error', undefined, {
@@ -323,7 +322,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
   async getCachedBuildPath(
     platformioTarget: string,
-    userDefines: UserDefine[]
+    userDefines: UserDefine[],
   ): Promise<string> {
     if (platformioTarget.includes('Backpack')) {
       return `${platformioTarget}/firmware.bin`;
@@ -331,7 +330,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
     let regulatoryDomain: 'LBT' | 'FCC' = 'FCC';
     const regDomainCE2400 = userDefines.find(
-      ({ key }) => key === UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400
+      ({ key }) => key === UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
     );
     if (regDomainCE2400?.enabled) {
       regulatoryDomain = 'LBT';
@@ -341,10 +340,10 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
   getCompileTarget(
     config: DeviceDescription,
-    userDefines: UserDefine[]
+    userDefines: UserDefine[],
   ): string {
-    const rxAsTx =
-      userDefines.find((item) => {
+    const rxAsTx
+      = userDefines.find((item) => {
         return item.key === UserDefineKey.RX_AS_TX && item.enabled;
       }) !== undefined;
     const firmwareName = rxAsTx
@@ -367,7 +366,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       .filter((filename) => binaryExtensions.includes(path.extname(filename)));
 
     return firmwareBinFiles.map((filename) =>
-      path.join(firmwareSearchPath, filename)
+      path.join(firmwareSearchPath, filename),
     );
   }
 
@@ -383,7 +382,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     const matchedFilenameFile = searchValues.find((searchFile) => {
       return (
         firmwareBinFiles.find(
-          (firmwareBinPath) => searchFile === path.basename(firmwareBinPath)
+          (firmwareBinPath) => searchFile === path.basename(firmwareBinPath),
         ) !== undefined
       );
     });
@@ -403,7 +402,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     const jobs = firmwareBinFiles.map((artifact) => {
       return fs.promises.copyFile(
         artifact,
-        path.join(target, path.basename(artifact))
+        path.join(target, path.basename(artifact)),
       );
     });
     await Promise.all(jobs);
@@ -411,7 +410,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
   async buildFlashFirmware(
     params: BuildFlashFirmwareParams,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<BuildFlashFirmwareResult> {
     const gitRepositoryUrl = gitRepository.url;
     const gitRepositorySrcFolder = gitRepository.srcFolder;
@@ -425,7 +424,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       return new BuildFlashFirmwareResult(
         false,
         'there is another build/flash request in progress...',
-        BuildFirmwareErrorType.GenericError
+        BuildFirmwareErrorType.GenericError,
       );
     }
     this.mutex.tryLock();
@@ -433,7 +432,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     try {
       await this.updateProgress(
         BuildProgressNotificationType.Info,
-        BuildFirmwareStep.VERIFYING_BUILD_SYSTEM
+        BuildFirmwareStep.VERIFYING_BUILD_SYSTEM,
       );
 
       const badUsername = this.osUsernameContainsAmpersand();
@@ -441,18 +440,18 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         return new BuildFlashFirmwareResult(
           false,
           'Windows username contains & ampersand character. At this time it is not supported and build process will fail. Please change the Windows username.',
-          BuildFirmwareErrorType.GenericError
+          BuildFirmwareErrorType.GenericError,
         );
       }
 
       await this.updateProgress(
         BuildProgressNotificationType.Info,
-        BuildFirmwareStep.DOWNLOADING_FIRMWARE
+        BuildFirmwareStep.DOWNLOADING_FIRMWARE,
       );
       const firmwareSourcePath = await this.downloadSource(
         params.firmware,
         gitRepositoryUrl,
-        gitRepositorySrcFolder
+        gitRepositorySrcFolder,
       );
 
       const config = await this.deviceDescriptionsLoader.getDeviceConfig(
@@ -464,7 +463,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           url: gitRepositoryUrl,
           srcFolder: gitRepositorySrcFolder,
           hardwareArtifactUrl: gitRepository.hardwareArtifactUrl,
-        }
+        },
       );
 
       let sourceFirmwareBinPath = '';
@@ -476,12 +475,12 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       let flasherPath = path.join(
         firmwareSourcePath,
         'python',
-        'binary_configurator.py'
+        'binary_configurator.py',
       );
 
       if (this.isRequestCompatibleWithCache(params)) {
         const currentCommitHash = await this.getCurrentSourceCommit(
-          gitRepositoryUrl
+          gitRepositoryUrl,
         );
         this.logger.log('firmware build request is compatible with cache', {
           currentCommitHash,
@@ -489,11 +488,11 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         try {
           const cacheLocation = await this.cloudBinariesCache.download(
             gitRepository.repositoryName,
-            currentCommitHash
+            currentCommitHash,
           );
           const cachedBinaryPath = await this.getCachedBuildPath(
             config.firmware,
-            params.userDefines
+            params.userDefines,
           );
           sourceFirmwareBinPath = path.join(cacheLocation, cachedBinaryPath);
 
@@ -515,7 +514,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
             {
               e,
               currentCommitHash,
-            }
+            },
           );
         }
       }
@@ -526,14 +525,14 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         sourceFirmwareBinPath = await this.compileBinary(
           target,
           firmwareSourcePath,
-          params.userDefines
+          params.userDefines,
         );
         // In some cases we need to copy multiple artifacts, for example hdzero goggles contains
         // boot_app0.bin, bootloader.bin, firmware.bin, partitions.bin files
         firmwareArtifactsDirPath = path.dirname(sourceFirmwareBinPath);
         await this.copyFirmwareArtifacts(
           firmwareArtifactsDirPath,
-          workingDirectory
+          workingDirectory,
         );
         firmwareBinFile = path.join(workingDirectory, 'firmware.bin');
       }
@@ -543,15 +542,15 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
       await this.updateProgress(
         BuildProgressNotificationType.Info,
-        BuildFirmwareStep.BUILDING_FIRMWARE
+        BuildFirmwareStep.BUILDING_FIRMWARE,
       );
 
       let flasherArgs: string[][];
       if (
-        gitRepository.hardwareArtifactUrl &&
-        !(
-          params.firmware.source === FirmwareSource.Local &&
-          fs.existsSync(path.join(firmwareDescriptionsPath, 'hardware'))
+        gitRepository.hardwareArtifactUrl
+        && !(
+          params.firmware.source === FirmwareSource.Local
+          && fs.existsSync(path.join(firmwareDescriptionsPath, 'hardware'))
         )
       ) {
         flasherArgs = this.binaryConfigurator.buildBinaryConfigFlags(
@@ -559,7 +558,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           firmwareBinFile,
           this.targetStorageGitPath,
           firmwareDescriptionsPath,
-          params
+          params,
         );
       } else {
         flasherArgs = this.binaryConfigurator.buildBinaryConfigFlags(
@@ -567,7 +566,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           firmwareBinFile,
           null,
           firmwareDescriptionsPath,
-          params
+          params,
         );
       }
       const binaryConfiguratorResult = await this.binaryConfigurator.run(
@@ -575,7 +574,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         flasherArgs,
         (output) => {
           this.updateLogs(output);
-        }
+        },
       );
       if (!binaryConfiguratorResult.success) {
         this.logger?.error('compile error', undefined, {
@@ -586,7 +585,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         return new BuildFlashFirmwareResult(
           false,
           binaryConfiguratorResult.stderr,
-          BuildFirmwareErrorType.BuildError
+          BuildFirmwareErrorType.BuildError,
         );
       }
 
@@ -595,19 +594,19 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         let canonicalBinPath = mainArtifactBinary;
         if (firmwareBinFile !== '') {
           mainArtifactBinary = this.searchFirmwareBinPath(
-            path.dirname(firmwareBinFile)
+            path.dirname(firmwareBinFile),
           );
           canonicalBinPath = await createBinaryCopyWithCanonicalName(
             params,
             mainArtifactBinary,
-            outputDirectory
+            outputDirectory,
           );
         }
         return new BuildFlashFirmwareResult(
           true,
           undefined,
           undefined,
-          canonicalBinPath
+          canonicalBinPath,
         );
       }
 
@@ -617,7 +616,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
 
       return new BuildFlashFirmwareResult(
         false,
-        `Build Job Type ${params.type} is not currently supported`
+        `Build Job Type ${params.type} is not currently supported`,
       );
     } catch (e) {
       this.logger?.error('generic error', undefined, {
@@ -626,7 +625,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       return new BuildFlashFirmwareResult(
         false,
         `Error: ${e}`,
-        BuildFirmwareErrorType.GenericError
+        BuildFirmwareErrorType.GenericError,
       );
     } finally {
       this.mutex.unlock();

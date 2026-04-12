@@ -8,8 +8,6 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import 'reflect-metadata';
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 import path from 'path';
 import { app, BrowserWindow, dialog, ipcMain, shell, session } from 'electron';
 import { mkdirp } from 'mkdirp';
@@ -41,7 +39,7 @@ const winstonLogger = winston.createLogger({
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.timestamp(),
-        winston.format.prettyPrint()
+        winston.format.prettyPrint(),
       ),
     }),
     new winston.transports.File({
@@ -52,7 +50,7 @@ const winstonLogger = winston.createLogger({
       format: winston.format.combine(
         winston.format.timestamp(),
         winston.format.prettyPrint(),
-        winston.format.json()
+        winston.format.json(),
       ),
     }),
   ],
@@ -73,7 +71,7 @@ function resolveHtmlPath(htmlFileName: string, qs?: string) {
   return `file://${path.resolve(
     __dirname,
     '../renderer/',
-    `${htmlFileName}?${qs}`
+    `${htmlFileName}?${qs}`,
   )}`;
 }
 
@@ -100,11 +98,11 @@ if (isWindows) {
       mkdirp.sync(dirtyUserDataDirectory);
       userDataDirectory = dirtyUserDataDirectory;
       logger.log(
-        `Non-ASCII path detected, using ${dirtyUserDataDirectory} directory for firmware storage`
+        `Non-ASCII path detected, using ${dirtyUserDataDirectory} directory for firmware storage`,
       );
     } else {
       logger.log(
-        `using appdata path ${userDataDirectory} for firmware storage`
+        `using appdata path ${userDataDirectory} for firmware storage`,
       );
     }
   } catch (err) {
@@ -113,16 +111,14 @@ if (isWindows) {
       undefined,
       {
         err,
-      }
+      },
     );
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 const handleFatalError = (err: Error | object | null | undefined | unknown) => {
   logger.error(`handling fatal error: ${err}`);
   try {
-    // eslint-disable-next-line promise/no-promise-in-callback
     dialog
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -179,38 +175,7 @@ if (process.env.NODE_ENV === 'production') {
   sourceMapSupport.install();
 }
 
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.DEBUG_PROD === 'true'
-) {
-  require('electron-debug')({
-    showDevTools: false,
-  });
-}
-const installExtensions = async () => {
-  const installer = await import('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = [installer.REACT_DEVELOPER_TOOLS];
-  return installer
-    .default(extensions, {
-      forceDownload,
-      loadExtensionOptions: {
-        allowFileAccess: true,
-      },
-    })
-    .catch((err: Error) => {
-      logger.error(err);
-    });
-};
-
 const createWindow = async () => {
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.DEBUG_PROD === 'true'
-  ) {
-    await installExtensions();
-  }
-
   const RESOURCES_PATH = app.isPackaged
     ? path.join(process.resourcesPath, 'assets')
     : path.join(__dirname, '../../assets');
@@ -229,18 +194,18 @@ const createWindow = async () => {
   const firmwareCloudCachePath = path.join(
     userDataDirectory,
     'firmwares',
-    'cloud'
+    'cloud',
   );
   await mkdirp(firmwareCloudCachePath);
   const targetsStoragePath = path.join(
     userDataDirectory,
     'firmwares',
-    'targets'
+    'targets',
   );
   const userDefinesStoragePath = path.join(
     userDataDirectory,
     'firmwares',
-    'userDefines'
+    'userDefines',
   );
 
   const dependenciesPath = app.isPackaged
@@ -250,7 +215,7 @@ const createWindow = async () => {
   const getPlatformioPath = path.join(dependenciesPath, 'get-platformio.py');
   const platformioStateTempStoragePath = path.join(
     userDataDirectory,
-    'platformio-temp-state-storage'
+    'platformio-temp-state-storage',
   );
 
   const localApiServerEnv = process.env;
@@ -270,11 +235,11 @@ const createWindow = async () => {
         fs.unlinkSync(testFile);
         localApiServerEnv.PLATFORMIO_INSTALLER_TMPDIR = publicFolder;
         logger.log(
-          `using public folder ${publicFolder} for PlatformIO Installer`
+          `using public folder ${publicFolder} for PlatformIO Installer`,
         );
       } else {
         logger.log(
-          `using appdata path ${userDataDirectory} for PlatformIO Installer`
+          `using appdata path ${userDataDirectory} for PlatformIO Installer`,
         );
       }
     } catch (err) {
@@ -283,7 +248,7 @@ const createWindow = async () => {
         undefined,
         {
           err,
-        }
+        },
       );
     }
   }
@@ -305,11 +270,11 @@ const createWindow = async () => {
   if (isWindows) {
     const portablePythonLocation = path.join(
       dependenciesPath,
-      'windows_amd64/python'
+      'windows_amd64/python',
     );
     const portableGitLocation = path.join(
       dependenciesPath,
-      'windows_amd64/PortableGit/bin'
+      'windows_amd64/PortableGit/bin',
     );
     PATH = prependPATH(PATH, portablePythonLocation);
     PATH = prependPATH(PATH, portableGitLocation);
@@ -317,17 +282,17 @@ const createWindow = async () => {
   if (isMacOS) {
     const portablePythonLocation = path.join(
       dependenciesPath,
-      'darwin_amd64/python-portable-darwin-3.8.4/bin'
+      'darwin_amd64/python-portable-darwin-3.8.4/bin',
     );
     const portableGitLocation = path.join(
       dependenciesPath,
-      'darwin_amd64/git-2.29.2/bin'
+      'darwin_amd64/git-2.29.2/bin',
     );
     PATH = prependPATH(PATH, portablePythonLocation);
     PATH = prependPATH(PATH, portableGitLocation);
     localApiServerEnv.GIT_EXEC_PATH = path.join(
       dependenciesPath,
-      'darwin_amd64/git-2.29.2/libexec/git-core'
+      'darwin_amd64/git-2.29.2/libexec/git-core',
     );
   }
   localApiServerEnv.PATH = PATH;
@@ -380,7 +345,7 @@ const createWindow = async () => {
       localesPath,
     },
     logger,
-    port
+    port,
   );
   logger.log('server started');
 
@@ -400,7 +365,6 @@ const createWindow = async () => {
     },
   });
   mainWindow.on('close', (e) => {
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     if (buildInProgress) {
       const choice = dialog.showMessageBoxSync(mainWindow!, {
         type: 'question',
@@ -420,8 +384,8 @@ const createWindow = async () => {
   mainWindow.loadURL(
     resolveHtmlPath(
       'index.html',
-      `base_url=${baseUrl}&api_url=${apiUrl}&subscriptions_url=${subscriptionsUrl}`
-    )
+      `base_url=${baseUrl}&api_url=${apiUrl}&subscriptions_url=${subscriptionsUrl}`,
+    ),
   );
 
   // TODO: Use 'ready-to-show' event
@@ -476,7 +440,6 @@ if (!isOSSupported) {
   app
     .whenReady()
     .then(() => {
-      // eslint-disable-next-line promise/no-nesting
       dialog
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -487,11 +450,9 @@ if (!isOSSupported) {
           detail: 'Unsupported OS Version Detected',
           message: ``,
         })
-        // eslint-disable-next-line promise/no-nesting
         .then(() => {
           process.exit(1);
         })
-        // eslint-disable-next-line promise/no-nesting
         .catch((dialogErr) => {
           logger.error('failed to show error dialog', dialogErr.stack);
           process.exit(1);
@@ -534,7 +495,7 @@ ipcMain.on(
       path: arg.path,
     });
     shell.showItemInFolder(arg.path);
-  }
+  },
 );
 
 ipcMain.handle(
@@ -555,7 +516,7 @@ ipcMain.handle(
       success: true,
       directoryPath: result.filePaths[0],
     };
-  }
+  },
 );
 
 ipcMain.on(IpcRequest.OpenLogsFolder, () => {
@@ -574,7 +535,7 @@ ipcMain.on(
     logger.log('received a request to update build status', {
       arg,
     });
-  }
+  },
 );
 
 ipcMain.handle(
@@ -596,5 +557,5 @@ ipcMain.handle(
       success: true,
       path: result.filePath,
     };
-  }
+  },
 );

@@ -50,14 +50,14 @@ export default class DeviceDescriptionsLoader {
     private logger: LoggerService,
     private PATH: string,
     private targetStorageGitPath: string,
-    private deviceOptionsGitPath: string
+    private deviceOptionsGitPath: string,
   ) {
     this.targetsMutex = new Mutex();
     this.deviceOptionsMutex = new Mutex();
   }
 
   private uploadMethodToFlashingMethod(
-    uploadMethod: string
+    uploadMethod: string,
   ): FlashingMethod | null {
     switch (uploadMethod.toLowerCase()) {
       case 'betaflight':
@@ -87,17 +87,17 @@ export default class DeviceDescriptionsLoader {
   private configToDevice(
     id: string,
     category: string,
-    config: DeviceDescription
+    config: DeviceDescription,
   ): Device {
     const uploadMethods: Target[] = config.upload_methods
       .filter(
         (uploadMethod) =>
-          this.uploadMethodToFlashingMethod(uploadMethod) !== null
+          this.uploadMethodToFlashingMethod(uploadMethod) !== null,
       )
       .map((uploadMethod) => {
         const targetName = `${id}.${uploadMethod}`;
-        const mappedUploadMethod =
-          this.uploadMethodToFlashingMethod(uploadMethod);
+        const mappedUploadMethod
+          = this.uploadMethodToFlashingMethod(uploadMethod);
         return new Target(targetName, targetName, mappedUploadMethod!);
       });
     return new Device(
@@ -113,13 +113,13 @@ export default class DeviceDescriptionsLoader {
       undefined,
       config.lua_name,
       config.prior_target_name,
-      config.platform
+      config.platform,
     );
   }
 
   async loadTargetsList(
     args: TargetArgs,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<Device[]> {
     let targetsDataDirectory = '';
     await this.targetsMutex.tryLockWithTimeout(15 * 60 * 1000);
@@ -127,7 +127,7 @@ export default class DeviceDescriptionsLoader {
       targetsDataDirectory = await this.loadTargetsData(
         this.targetStorageGitPath,
         args,
-        gitRepository
+        gitRepository,
       );
     } finally {
       this.targetsMutex.unlock();
@@ -136,19 +136,18 @@ export default class DeviceDescriptionsLoader {
     const targetsJSONLoader = new TargetsJSONLoader(this.logger);
     const targetsJSONPath = path.join(targetsDataDirectory, 'targets.json');
     const data = await targetsJSONLoader.loadDeviceDescriptions(
-      targetsJSONPath
+      targetsJSONPath,
     );
     const devices: Device[] = [];
     Object.keys(data).forEach((id) => {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       const { min_version } = data[id].config;
       if (
-        !min_version ||
-        args.source !== FirmwareSource.GitTag ||
-        semver.gte(args.gitTag, min_version)
+        !min_version
+        || args.source !== FirmwareSource.GitTag
+        || semver.gte(args.gitTag, min_version)
       ) {
         devices.push(
-          this.configToDevice(id, data[id].category, data[id].config)
+          this.configToDevice(id, data[id].category, data[id].config),
         );
       }
     });
@@ -158,7 +157,7 @@ export default class DeviceDescriptionsLoader {
   private async loadTargetsData(
     gitRepositoryPath: string,
     args: FirmwareVersion,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<string> {
     let gitPath = '';
     try {
@@ -175,8 +174,8 @@ export default class DeviceDescriptionsLoader {
     });
 
     if (
-      args.source === FirmwareSource.Local &&
-      existsSync(path.join(args.localPath, 'hardware'))
+      args.source === FirmwareSource.Local
+      && existsSync(path.join(args.localPath, 'hardware'))
     ) {
       return path.join(args.localPath, 'hardware');
     }
@@ -189,7 +188,7 @@ export default class DeviceDescriptionsLoader {
       if (
         await new AmazonS3().downloadIfModified(
           gitRepository.hardwareArtifactUrl,
-          outputZipFile
+          outputZipFile,
         )
       ) {
         await extractZip(outputZipFile, {
@@ -205,31 +204,31 @@ export default class DeviceDescriptionsLoader {
         baseDirectory: gitRepositoryPath,
         gitBinaryLocation: gitPath,
       },
-      this.logger
+      this.logger,
     );
 
-    const srcFolder =
-      gitRepository.srcFolder === '/' ? '' : `${gitRepository.srcFolder}/`;
+    const srcFolder
+      = gitRepository.srcFolder === '/' ? '' : `${gitRepository.srcFolder}/`;
     switch (args.source) {
       case FirmwareSource.GitBranch:
         const branchResult = await firmwareDownload.checkoutBranch(
           gitRepository.url,
           `${srcFolder}hardware`,
-          args.gitBranch
+          args.gitBranch,
         );
         return branchResult.path;
       case FirmwareSource.GitCommit:
         const commitResult = await firmwareDownload.checkoutCommit(
           gitRepository.url,
           `${srcFolder}hardware`,
-          args.gitCommit
+          args.gitCommit,
         );
         return commitResult.path;
       case FirmwareSource.GitTag:
         const tagResult = await firmwareDownload.checkoutTag(
           gitRepository.url,
           `${srcFolder}hardware`,
-          args.gitTag
+          args.gitTag,
         );
         return tagResult.path;
       case FirmwareSource.GitPullRequest:
@@ -239,21 +238,21 @@ export default class DeviceDescriptionsLoader {
         const prResult = await firmwareDownload.checkoutCommit(
           gitRepository.url,
           `${srcFolder}hardware`,
-          args.gitPullRequest.headCommitHash
+          args.gitPullRequest.headCommitHash,
         );
         return prResult.path;
       case FirmwareSource.Local:
         return path.join(args.localPath, 'hardware');
       default:
         throw new Error(
-          `unsupported firmware source for the targets service: ${args.source}`
+          `unsupported firmware source for the targets service: ${args.source}`,
         );
     }
   }
 
   private splitLastOccurrence(
     str: string,
-    substring: string
+    substring: string,
   ): [string, string] {
     const lastIndex = str.lastIndexOf(substring);
 
@@ -266,7 +265,7 @@ export default class DeviceDescriptionsLoader {
 
   async getDeviceConfig(
     args: UserDefineFilters,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<DeviceDescription> {
     let targetsDataDirectory = '';
     await this.deviceOptionsMutex.tryLockWithTimeout(15 * 60 * 1000);
@@ -274,7 +273,7 @@ export default class DeviceDescriptionsLoader {
       targetsDataDirectory = await this.loadTargetsData(
         this.deviceOptionsGitPath,
         args,
-        gitRepository
+        gitRepository,
       );
     } finally {
       this.deviceOptionsMutex.unlock();
@@ -283,7 +282,7 @@ export default class DeviceDescriptionsLoader {
     const targetsJSONLoader = new TargetsJSONLoader(this.logger);
     const targetsJSONPath = path.join(targetsDataDirectory, 'targets.json');
     const data = await targetsJSONLoader.loadDeviceDescriptions(
-      targetsJSONPath
+      targetsJSONPath,
     );
 
     /*
@@ -305,32 +304,32 @@ export default class DeviceDescriptionsLoader {
 
   async targetDeviceOptions(
     args: UserDefineFilters,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<UserDefine[]> {
     const config = await this.getDeviceConfig(args, gitRepository);
 
     const userDefines: UserDefine[] = [];
     const targetUserDefinesFactory = new TargetUserDefinesFactory(
-      config.platform
+      config.platform,
     );
     userDefines.push(
-      targetUserDefinesFactory.build(UserDefineKey.BINDING_PHRASE)
+      targetUserDefinesFactory.build(UserDefineKey.BINDING_PHRASE),
     );
 
     if (args.target.includes('_2400.')) {
       userDefines.push(
         targetUserDefinesFactory.build(
-          UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400
-        )
+          UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
+        ),
       );
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400)
+        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400),
       );
     }
 
     if (args.target.includes('tx_dual') || args.target.includes('rx_dual')) {
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400)
+        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_ISM_2400),
       );
       /*
         LBT support for dual-band hardware was added only after 3.5.6.
@@ -338,91 +337,91 @@ export default class DeviceDescriptionsLoader {
         So with our best effort, we are trying to determine if lbt is actually
          supported by the firmware. We can do that accurately with git tag
          semver comparison. For everything else, we will assume that it is
-         supported. 
+         supported.
        */
       if (
-        (args.source === FirmwareSource.GitTag &&
-          semver.gt(args.gitTag, '3.5.6')) ||
-        args.source !== FirmwareSource.GitTag
+        (args.source === FirmwareSource.GitTag
+          && semver.gt(args.gitTag, '3.5.6'))
+        || args.source !== FirmwareSource.GitTag
       ) {
         userDefines.push(
           targetUserDefinesFactory.build(
-            UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400
-          )
+            UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
+          ),
         );
       }
     }
     if (
-      args.target.includes('_900.') ||
-      args.target.includes('tx_dual') ||
-      args.target.includes('rx_dual')
+      args.target.includes('_900.')
+      || args.target.includes('tx_dual')
+      || args.target.includes('rx_dual')
     ) {
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_AU_915)
+        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_AU_915),
       );
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_EU_868)
+        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_EU_868),
       );
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_FCC_915)
+        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_FCC_915),
       );
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_IN_866)
+        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       );
     }
     if (config.upload_methods.includes('wifi')) {
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.HOME_WIFI_SSID)
+        targetUserDefinesFactory.build(UserDefineKey.HOME_WIFI_SSID),
       );
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.HOME_WIFI_PASSWORD)
+        targetUserDefinesFactory.build(UserDefineKey.HOME_WIFI_PASSWORD),
       );
       if (!config.firmware.endsWith('_Backpack')) {
         userDefines.push(
-          targetUserDefinesFactory.build(UserDefineKey.AUTO_WIFI_ON_INTERVAL)
+          targetUserDefinesFactory.build(UserDefineKey.AUTO_WIFI_ON_INTERVAL),
         );
       }
     }
     if (config.features && config.features.includes('buzzer')) {
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.DISABLE_ALL_BEEPS)
+        targetUserDefinesFactory.build(UserDefineKey.DISABLE_ALL_BEEPS),
       );
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.JUST_BEEP_ONCE)
+        targetUserDefinesFactory.build(UserDefineKey.JUST_BEEP_ONCE),
       );
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.MY_STARTUP_MELODY)
+        targetUserDefinesFactory.build(UserDefineKey.MY_STARTUP_MELODY),
       );
     }
     if (config.features && config.features.includes('unlock-higher-power')) {
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.UNLOCK_HIGHER_POWER)
+        targetUserDefinesFactory.build(UserDefineKey.UNLOCK_HIGHER_POWER),
       );
     }
     if (args.target.includes('.tx_')) {
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.TLM_REPORT_INTERVAL_MS)
+        targetUserDefinesFactory.build(UserDefineKey.TLM_REPORT_INTERVAL_MS),
       );
       // https://github.com/ExpressLRS/ExpressLRS-Configurator/issues/684
       if (!config.platform.startsWith('esp32')) {
         userDefines.push(
-          targetUserDefinesFactory.build(UserDefineKey.UART_INVERTED)
+          targetUserDefinesFactory.build(UserDefineKey.UART_INVERTED),
         );
       }
     }
     if (args.target.includes('.rx_')) {
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.RCVR_UART_BAUD)
+        targetUserDefinesFactory.build(UserDefineKey.RCVR_UART_BAUD),
       );
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.LOCK_ON_FIRST_CONNECTION)
+        targetUserDefinesFactory.build(UserDefineKey.LOCK_ON_FIRST_CONNECTION),
       );
       if (
-        config.platform.startsWith('esp32') ||
-        config.platform.startsWith('esp8285')
+        config.platform.startsWith('esp32')
+        || config.platform.startsWith('esp8285')
       ) {
         userDefines.push(
-          targetUserDefinesFactory.build(UserDefineKey.RX_AS_TX)
+          targetUserDefinesFactory.build(UserDefineKey.RX_AS_TX),
         );
       }
     }

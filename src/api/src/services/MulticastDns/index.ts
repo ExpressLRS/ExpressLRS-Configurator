@@ -26,7 +26,7 @@ export default class MulticastDnsService {
 
   constructor(
     private notifications: MulticastDnsNotificationsService,
-    private logger: LoggerService
+    private logger: LoggerService,
   ) {
     this.devices = {};
     const mdns = makeMdns();
@@ -38,7 +38,7 @@ export default class MulticastDnsService {
         this.logger?.error(
           'Error encountered while handling multicast dns response:',
           e?.trace,
-          { err: e }
+          { err: e },
         );
       }
     });
@@ -87,7 +87,7 @@ export default class MulticastDnsService {
     parsedResults?.forEach((match) => {
       const key = match[1];
       const userDefineKey = Object.values(UserDefineKey).find(
-        (item) => item.toUpperCase() === key
+        (item) => item.toUpperCase() === key,
       );
 
       if (userDefineKey) {
@@ -100,7 +100,7 @@ export default class MulticastDnsService {
             ];
             const sensitive = sensitiveKeys.includes(userDefineKey);
             userDefines.push(
-              UserDefine.Text(userDefineKey, match[2], true, sensitive)
+              UserDefine.Text(userDefineKey, match[2], true, sensitive),
             );
           } else {
             userDefines.push(UserDefine.Boolean(userDefineKey, true));
@@ -109,7 +109,7 @@ export default class MulticastDnsService {
       } else {
         this.logger.error(
           `error while parsing user defines, user define key ${key} not found`,
-          Error().stack
+          Error().stack,
         );
       }
     });
@@ -121,7 +121,7 @@ export default class MulticastDnsService {
     const items = [...response.answers, ...response.additionals];
 
     const txtResponse: TxtAnswer = items.find(
-      (answer) => answer.type === 'TXT'
+      (answer) => answer.type === 'TXT',
     ) as TxtAnswer;
 
     if (txtResponse) {
@@ -169,11 +169,11 @@ export default class MulticastDnsService {
       if (vendor === 'elrs') {
         const name = txtResponse.name?.substring(
           0,
-          txtResponse.name.indexOf('.')
+          txtResponse.name.indexOf('.'),
         );
 
         const srvResponse: SrvAnswer = items.find(
-          (answer) => answer.type === 'SRV'
+          (answer) => answer.type === 'SRV',
         ) as SrvAnswer;
 
         if (srvResponse) {
@@ -182,7 +182,7 @@ export default class MulticastDnsService {
 
           const aResponse: StringAnswer = items.find(
             (answer) =>
-              answer.type === 'A' && answer.name === srvResponse.data.target
+              answer.type === 'A' && answer.name === srvResponse.data.target,
           ) as StringAnswer;
 
           if (aResponse) {
@@ -205,8 +205,8 @@ export default class MulticastDnsService {
               this.devices[name] = mdnsInformation;
               this.notifications.sendDeviceAdded(mdnsInformation);
             } else if (
-              JSON.stringify(this.devices[name]) !==
-              JSON.stringify(mdnsInformation)
+              JSON.stringify(this.devices[name])
+              !== JSON.stringify(mdnsInformation)
             ) {
               this.devices[name] = mdnsInformation;
               this.notifications.sendDeviceUpdated(mdnsInformation);

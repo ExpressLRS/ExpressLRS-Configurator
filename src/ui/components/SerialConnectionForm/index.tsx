@@ -3,9 +3,10 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import Omnibox, { Option } from '../Omnibox';
+import { useQuery } from '@apollo/client/react';
 import {
   SerialPortInformation,
-  useAvailableDevicesListQuery,
+  AvailableDevicesListDocument,
 } from '../../gql/generated/types';
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
@@ -29,13 +30,13 @@ interface SerialConnectionFormProps {
 }
 
 const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
-  props
+  props,
 ) => {
   const { onConnect, serialDevice, baudRate } = props;
   const { t } = useTranslation();
 
-  const { loading, data, error, previousData, startPolling, stopPolling } =
-    useAvailableDevicesListQuery();
+  const { loading, data, error, previousData, startPolling, stopPolling }
+    = useQuery(AvailableDevicesListDocument);
 
   useEffect(() => {
     startPolling(1000);
@@ -44,8 +45,8 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
     };
   }, [startPolling, stopPolling]);
 
-  const options: Option[] =
-    data?.availableDevicesList?.map((target) => ({
+  const options: Option[]
+    = data?.availableDevicesList?.map((target) => ({
       label: `${target.path} ${target.manufacturer}`,
       value: target.path,
     })) ?? [];
@@ -57,7 +58,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
           label: serialDevice,
           value: serialDevice,
         }
-      : null
+      : null,
   );
   const onSerialDeviceChange = (value: string | null) => {
     if (value === null) {
@@ -70,7 +71,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
     }
   };
   const onBaudChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
     if (event.target.validity.valid) {
       try {
@@ -84,7 +85,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
   useEffect(() => {
     const difference = (
       a: readonly Pick<SerialPortInformation, 'path' | 'manufacturer'>[],
-      b: readonly Pick<SerialPortInformation, 'path' | 'manufacturer'>[]
+      b: readonly Pick<SerialPortInformation, 'path' | 'manufacturer'>[],
     ): Pick<SerialPortInformation, 'path' | 'manufacturer'>[] => {
       return a.filter((item) => {
         return b.find((item2) => item2.path === item.path) === undefined;
@@ -93,7 +94,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
     if (currentValue === null) {
       const added = difference(
         data?.availableDevicesList ?? [],
-        previousData?.availableDevicesList ?? []
+        previousData?.availableDevicesList ?? [],
       );
       if (added.length > 0) {
         onSerialDeviceChange(added[0].path);
@@ -101,7 +102,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
     } else {
       const added = difference(
         data?.availableDevicesList ?? [],
-        previousData?.availableDevicesList ?? []
+        previousData?.availableDevicesList ?? [],
       );
       if (added.length > 0) {
         onSerialDeviceChange(added[0].path);
@@ -109,13 +110,13 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
       }
       const removed = difference(
         previousData?.availableDevicesList ?? [],
-        data?.availableDevicesList ?? []
+        data?.availableDevicesList ?? [],
       );
       if (
-        removed.find((item) => item.path === currentValue.value) !==
-          undefined &&
-        data?.availableDevicesList &&
-        data?.availableDevicesList.length > 0
+        removed.find((item) => item.path === currentValue.value)
+        !== undefined
+        && data?.availableDevicesList
+        && data?.availableDevicesList.length > 0
       ) {
         onSerialDeviceChange(data?.availableDevicesList[0].path);
       }
@@ -129,7 +130,7 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
   return (
     <Box sx={styles.root}>
       <Grid container spacing={2}>
-        <Grid item xs={3}>
+        <Grid size={3}>
           <Omnibox
             title={t('SerialConnectionForm.SerialDevice')}
             currentValue={currentValue}
@@ -140,21 +141,23 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
           <Loader sx={styles.loader} loading={loading} />
           <ShowAlerts severity="error" messages={error} />
         </Grid>
-        <Grid item>
+        <Grid>
           <TextField
             size="medium"
             onBlur={onBaudChange}
             defaultValue={currentBaud}
             fullWidth
-            inputProps={{
-              min: 0,
-              type: 'number',
-              step: '1',
+            slotProps={{
+              htmlInput: {
+                min: 0,
+                type: 'number',
+                step: '1',
+              },
             }}
             label={t('SerialConnectionForm.BaudRate')}
           />
         </Grid>
-        <Grid item>
+        <Grid>
           <Button
             onClick={onSubmit}
             size="large"

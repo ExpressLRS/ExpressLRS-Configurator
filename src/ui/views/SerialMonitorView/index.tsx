@@ -1,17 +1,18 @@
 import { Button, Card, CardContent, Divider } from '@mui/material';
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import DvrIcon from '@mui/icons-material/Dvr';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import CardTitle from '../../components/CardTitle';
 import SerialConnectionForm from '../../components/SerialConnectionForm';
 import EventsBatcher from '../../library/EventsBatcher';
+import { useMutation, useSubscription } from '@apollo/client/react';
 import {
   SerialMonitorEventType,
-  useConnectToSerialDeviceMutation,
-  useDisconnectFromSerialDeviceMutation,
-  useSerialMonitorEventsSubscription,
-  useSerialMonitorLogsSubscription,
+  ConnectToSerialDeviceDocument,
+  DisconnectFromSerialDeviceDocument,
+  SerialMonitorEventsDocument,
+  SerialMonitorLogsDocument,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import ShowAlerts from '../../components/ShowAlerts';
@@ -31,7 +32,7 @@ enum ViewState {
 
 const SerialMonitorView: FunctionComponent = () => {
   const [viewState, setViewState] = useState<ViewState>(
-    ViewState.ConnectionConfig
+    ViewState.ConnectionConfig,
   );
 
   const { t } = useTranslation();
@@ -50,19 +51,19 @@ const SerialMonitorView: FunctionComponent = () => {
       setLogs(newLogsList.join(''));
     });
   }, []);
-  useSerialMonitorLogsSubscription({
+  useSubscription(SerialMonitorLogsDocument, {
     fetchPolicy: 'network-only',
-    onSubscriptionData: (options) => {
-      const args = options.subscriptionData.data?.serialMonitorLogs.data;
+    onData: ({ data }) => {
+      const args = data.data?.serialMonitorLogs.data;
       if (args !== undefined && eventsBatcherRef.current !== null) {
         eventsBatcherRef.current.enqueue(args);
       }
     },
   });
 
-  useSerialMonitorEventsSubscription({
-    onSubscriptionData: (options) => {
-      const args = options.subscriptionData.data?.serialMonitorEvents;
+  useSubscription(SerialMonitorEventsDocument, {
+    onData: ({ data }) => {
+      const args = data.data?.serialMonitorEvents;
       if (args !== undefined) {
         if (args.type === SerialMonitorEventType.Disconnected) {
           setViewState(ViewState.ConnectionConfig);
@@ -76,7 +77,7 @@ const SerialMonitorView: FunctionComponent = () => {
   const [
     connectToSerialDeviceMutation,
     { loading: connectInProgress, data: response, error: connectError },
-  ] = useConnectToSerialDeviceMutation();
+  ] = useMutation(ConnectToSerialDeviceDocument);
   const onConnect = (newSerialDevice: string, newBaudRate: number) => {
     setSerialDevice(newSerialDevice);
     setBaudRate(newBaudRate);
@@ -103,7 +104,7 @@ const SerialMonitorView: FunctionComponent = () => {
   const [
     disconnectFromSerialDeviceMutation,
     { loading: disconnectInProgress, error: disconnectError },
-  ] = useDisconnectFromSerialDeviceMutation();
+  ] = useMutation(DisconnectFromSerialDeviceDocument);
   const onDisconnect = () => {
     disconnectFromSerialDeviceMutation()
       .then((data) => {

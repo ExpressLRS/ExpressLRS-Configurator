@@ -10,7 +10,7 @@ export default class UpdatesResolver {
 
   @Query(() => UpdatesAvailability)
   async checkForUpdates(
-    @Arg('currentVersion', () => String) currentVersion: string
+    @Arg('currentVersion', () => String) currentVersion: string,
   ) {
     return this.updatesService.checkForNewerReleases(currentVersion);
   }

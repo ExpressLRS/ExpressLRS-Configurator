@@ -5,7 +5,7 @@ import {
   Divider,
   FormControlLabel,
 } from '@mui/material';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LanguageIcon from '@mui/icons-material/Language';
 import DeveloperModeIcon from '@mui/icons-material/DeveloperMode';
@@ -21,10 +21,10 @@ const SettingsView: FunctionComponent = () => {
 
   // Sort language labels in "()" alphabetically except English, because English has no "()".
   const languages: Option[] = [...locales].sort((a, b) => {
-    const labelA =
-      a.label.match(/\(([^)]+)\)/)?.[1].toLowerCase() || a.label.toLowerCase();
-    const labelB =
-      b.label.match(/\(([^)]+)\)/)?.[1].toLowerCase() || b.label.toLowerCase();
+    const labelA
+      = a.label.match(/\(([^)]+)\)/)?.[1].toLowerCase() || a.label.toLowerCase();
+    const labelB
+      = b.label.match(/\(([^)]+)\)/)?.[1].toLowerCase() || b.label.toLowerCase();
     return labelA.localeCompare(labelB);
   });
 
@@ -78,14 +78,14 @@ const SettingsView: FunctionComponent = () => {
         />
         <CardContent style={{ paddingLeft: 26, marginTop: -18 }}>
           <FormControlLabel
-            control={
+            control={(
               <Checkbox
                 checked={appState.isExpertModeEnabled}
                 onChange={() => {
                   setExpertMode();
                 }}
               />
-            }
+            )}
             label={<>{t('SettingsView.ExpertMode')}</>}
           />
           <p>{t('SettingsView.ExpertModeDescription')}</p>

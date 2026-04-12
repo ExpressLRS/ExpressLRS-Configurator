@@ -11,7 +11,7 @@ function insideFlatpak() {
 
 function createReadStreamSafe(
   filename: string,
-  options?: { encoding?: BufferEncoding; autoClose?: boolean }
+  options?: { encoding?: BufferEncoding; autoClose?: boolean },
 ): Promise<ReadStream> {
   return new Promise((resolve, reject) => {
     const fileStream = fs.createReadStream(filename, options);
@@ -40,7 +40,6 @@ function listPorts(): Promise<PortInfo[]> {
       return;
     }
 
-    // eslint-disable-next-line no-restricted-syntax
     for await (const fileDirent of openedDir) {
       const dir = fileDirent.name;
       const dirPath = path.join(ttySysClassPath, dir);

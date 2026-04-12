@@ -9,7 +9,7 @@ export default class Updater {
   constructor(
     private logger: LoggerService,
     private mainWindow: BrowserWindow,
-    private baseUrl: string
+    private baseUrl: string,
   ) {
     const systemLocale = Intl.DateTimeFormat().resolvedOptions().locale;
 
@@ -21,14 +21,13 @@ export default class Updater {
       .use(Backend)
       .use(initReactI18next)
       .init({
-        initImmediate: false,
         fallbackLng: 'en',
         backend: {
           loadPath,
         },
         debug:
-          process.env.NODE_ENV === 'development' ||
-          process.env.DEBUG_PROD === 'true',
+          process.env.NODE_ENV === 'development'
+          || process.env.DEBUG_PROD === 'true',
       });
 
     i18n.loadLanguages(systemLocale);

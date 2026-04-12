@@ -1,4 +1,4 @@
-import React, { FunctionComponent, memo } from 'react';
+import { FunctionComponent, memo } from 'react';
 import { Box, Tooltip } from '@mui/material';
 import QuestionIcon from '@mui/icons-material/Help';
 import { SxProps, Theme } from '@mui/system';
@@ -21,8 +21,8 @@ interface UserDefineDescriptionProps {
   userDefine: UserDefineKey;
 }
 
-const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps> =
-  memo(({ userDefine }) => {
+const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps>
+  = memo(({ userDefine }) => {
     const { t } = useTranslation();
     const toText = (key: UserDefineKey) => {
       switch (key) {

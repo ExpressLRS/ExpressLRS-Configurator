@@ -1,8 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
-import { useClearPlatformioCoreDirMutation } from '../../../../gql/generated/types';
+import { useMutation } from '@apollo/client/react';
+import { ClearPlatformioCoreDirDocument } from '../../../../gql/generated/types';
 import Loader from '../../../../components/Loader';
 import ShowAlerts from '../../../../components/ShowAlerts';
 
@@ -15,8 +16,8 @@ const styles: Record<string, SxProps<Theme>> = {
 const ClearPlatformioDependencies: FunctionComponent = () => {
   const { t } = useTranslation();
 
-  const [clearPlatformioCoreDirMutation, { loading, data, error }] =
-    useClearPlatformioCoreDirMutation();
+  const [clearPlatformioCoreDirMutation, { loading, data, error }]
+    = useMutation(ClearPlatformioCoreDirDocument);
   const onClearPlatformioDependencies = () => {
     clearPlatformioCoreDirMutation().catch((err) => {
       console.error('clearPlatformioCoreDirMutation err: ', err);

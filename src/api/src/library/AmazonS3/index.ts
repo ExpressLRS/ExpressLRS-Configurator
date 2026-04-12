@@ -1,4 +1,3 @@
-import fetch, { Headers } from 'node-fetch';
 import { writeFile } from 'fs/promises';
 import fs from 'fs';
 
@@ -17,13 +16,13 @@ export default class AmazonS3 {
     }
 
     if (response.status === 200) {
-      const buffer = await response.buffer();
+      const buffer = Buffer.from(await response.arrayBuffer());
       await writeFile(outputFile, buffer);
       return true;
     }
 
     throw new Error(
-      `Error encountered while retrieving ${url}, ${response.status} - ${response.statusText}`
+      `Error encountered while retrieving ${url}, ${response.status} - ${response.statusText}`,
     );
   }
 }

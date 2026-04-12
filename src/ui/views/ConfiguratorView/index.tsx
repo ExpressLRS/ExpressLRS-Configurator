@@ -1,4 +1,4 @@
-import React, {
+import {
   FunctionComponent,
   useCallback,
   useEffect,
@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useLazyQuery, useMutation } from '@apollo/client/react';
 import {
   Alert,
   AlertTitle,
@@ -22,7 +23,7 @@ import {
   Divider,
   IconButton,
   List,
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Tooltip,
@@ -56,12 +57,12 @@ import {
   MulticastDnsInformation,
   Target,
   TargetDeviceOptionsQuery,
-  useAvailableFirmwareTargetsLazyQuery,
-  useBuildFlashFirmwareMutation,
-  useLuaScriptLazyQuery,
   UserDefineKey,
   UserDefineKind,
-  useTargetDeviceOptionsLazyQuery,
+  AvailableFirmwareTargetsDocument,
+  BuildFlashFirmwareDocument,
+  LuaScriptDocument,
+  TargetDeviceOptionsDocument,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
 import BuildResponse from '../../components/BuildResponse';
@@ -100,7 +101,7 @@ const styles: Record<string, SxProps<Theme>> = {
 };
 
 export const validateFirmwareVersionData = (
-  data: FirmwareVersionDataInput
+  data: FirmwareVersionDataInput,
 ): Error[] => {
   const errors: Error[] = [];
   switch (data.source) {
@@ -172,22 +173,22 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   } = props;
 
   const [viewState, setViewState] = useState<ViewState>(
-    ViewState.Configuration
+    ViewState.Configuration,
   );
 
   const { setAppStatus } = useAppState();
 
-  const [firmwareVersionData, setFirmwareVersionData] =
-    useState<FirmwareVersionDataInput | null>(null);
+  const [firmwareVersionData, setFirmwareVersionData]
+    = useState<FirmwareVersionDataInput | null>(null);
   const [firmwareVersionErrors, setFirmwareVersionErrors] = useState<Error[]>(
-    []
+    [],
   );
   const onFirmwareVersionData = useCallback(
     (data: FirmwareVersionDataInput) => {
       setFirmwareVersionErrors([]);
       setFirmwareVersionData(data);
     },
-    []
+    [],
   );
 
   const [deviceTarget, setDeviceTarget] = useState<Target | null>(null);
@@ -200,7 +201,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       // if target was manually changed, set selected device to null
       onDeviceChange(null);
     },
-    [onDeviceChange]
+    [onDeviceChange],
   );
 
   const [deviceTargets, setDeviceTargets] = useState<Device[] | null>(null);
@@ -208,7 +209,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const [
     fetchDeviceTargets,
     { loading: loadingTargets, error: targetsResponseError },
-  ] = useAvailableFirmwareTargetsLazyQuery({
+  ] = useLazyQuery(AvailableFirmwareTargetsDocument, {
     fetchPolicy: 'network-only',
   });
 
@@ -220,8 +221,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   useEffect(() => {
     if (
-      firmwareVersionData === null ||
-      validateFirmwareVersionData(firmwareVersionData).length > 0
+      firmwareVersionData === null
+      || validateFirmwareVersionData(firmwareVersionData).length > 0
     ) {
       setDeviceTargets(null);
     } else {
@@ -246,28 +247,28 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         .then((response) => {
           if (response.data?.availableFirmwareTargets) {
             setDeviceTargets([
-              ...(response.data.availableFirmwareTargets as Device[]),
-            ]);
+              ...response.data.availableFirmwareTargets,
+            ] as Device[]);
           } else {
             setDeviceTargets(null);
           }
         })
-        .catch((err) => {
+        .catch((err: unknown) => {
           console.error(
             'failed to fetch device targets for the firmware source',
-            err
+            err,
           );
         });
     }
   }, [gitRepository, firmwareVersionData, fetchDeviceTargets]);
 
-  const [deviceOptionsFormData, setDeviceOptionsFormData] =
-    useState<DeviceOptionsFormData>({
+  const [deviceOptionsFormData, setDeviceOptionsFormData]
+    = useState<DeviceOptionsFormData>({
       userDefineOptions: [],
     });
 
   const handleDeviceOptionsResponse = async (
-    deviceOptionsResponse: TargetDeviceOptionsQuery
+    deviceOptionsResponse: TargetDeviceOptionsQuery,
   ) => {
     const storage = new ApplicationStorage();
     const deviceName = device?.name || null;
@@ -277,16 +278,16 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       {
         ...deviceOptionsFormData,
         userDefineOptions: [...deviceOptionsResponse.targetDeviceOptions],
-      }
+      },
     );
 
     // if a network device is selected, merge in its options
     if (selectedDevice && networkDevices.has(selectedDevice)) {
       const networkDevice = networkDevices.get(selectedDevice);
-      userDefineOptions.userDefineOptions =
-        userDefineOptions.userDefineOptions.map((userDefineOption) => {
+      userDefineOptions.userDefineOptions
+        = userDefineOptions.userDefineOptions.map((userDefineOption) => {
           const networkDeviceOption = networkDevice?.options.find(
-            (item) => item.key === userDefineOption.key
+            (item) => item.key === userDefineOption.key,
           );
           if (networkDeviceOption) {
             return {
@@ -308,20 +309,26 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       data: deviceOptionsResponse,
       error: deviceOptionsResponseError,
     },
-  ] = useTargetDeviceOptionsLazyQuery({
+  ] = useLazyQuery(TargetDeviceOptionsDocument, {
     fetchPolicy: 'network-only',
-    onCompleted: (data) => {
-      handleDeviceOptionsResponse(data).catch((err) => {
-        console.error('failed to handle device options response', err);
-      });
-    },
   });
 
   useEffect(() => {
+    if (deviceOptionsResponse) {
+      handleDeviceOptionsResponse(deviceOptionsResponse).catch(
+        (err: unknown) => {
+          console.error('failed to handle device options response', err);
+        },
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deviceOptionsResponse]);
+
+  useEffect(() => {
     if (
-      deviceTarget === null ||
-      firmwareVersionData === null ||
-      validateFirmwareVersionData(firmwareVersionData).length > 0
+      deviceTarget === null
+      || firmwareVersionData === null
+      || validateFirmwareVersionData(firmwareVersionData).length > 0
     ) {
       setDeviceOptionsFormData({
         userDefineOptions: [],
@@ -352,7 +359,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const onResetToDefaults = () => {
     const handleReset = async () => {
       if (deviceOptionsResponse === undefined || deviceTarget === null) {
-        // eslint-disable-next-line no-alert
         alert(`deviceOptionsResponse is undefined`);
         return;
       }
@@ -367,7 +373,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           {
             ...deviceOptionsFormData,
             userDefineOptions: [...deviceOptionsResponse.targetDeviceOptions],
-          }
+          },
         );
         setDeviceOptionsFormData(userDefineOptions);
       }
@@ -390,7 +396,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         }
       }
     },
-    [deviceTarget, deviceTargets]
+    [deviceTarget, deviceTargets],
   );
 
   const [
@@ -400,7 +406,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       data: response,
       error: buildFlashErrorResponse,
     },
-  ] = useBuildFlashFirmwareMutation();
+  ] = useMutation(BuildFlashFirmwareDocument);
 
   useEffect(() => {
     const arg = response?.buildFlashFirmware?.firmwareBinPath;
@@ -410,7 +416,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       };
       window.electron.ipcRenderer.sendMessage(
         IpcRequest.OpenFileLocation,
-        body
+        body,
       );
     }
   }, [response]);
@@ -423,8 +429,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       return true;
     }
     if (
-      deviceTarget.flashingMethod === FlashingMethod.BetaflightPassthrough &&
-      device.platform === 'esp8285'
+      deviceTarget.flashingMethod === FlashingMethod.BetaflightPassthrough
+      && device.platform === 'esp8285'
     ) {
       return true;
     }
@@ -449,7 +455,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const [
     fetchLuaScript,
     { data: luaScriptResponse, error: luaScriptResponseError },
-  ] = useLuaScriptLazyQuery();
+  ] = useLazyQuery(LuaScriptDocument);
 
   useEffect(() => {
     if (firmwareVersionData && isTX && hasLuaScript) {
@@ -503,11 +509,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   useEffect(() => {
     if (
-      deviceTarget &&
-      (deviceTarget.flashingMethod === FlashingMethod.BetaflightPassthrough ||
-        deviceTarget.flashingMethod === FlashingMethod.UART ||
-        deviceTarget.flashingMethod === FlashingMethod.EdgeTxPassthrough ||
-        deviceTarget.flashingMethod === FlashingMethod.Passthrough)
+      deviceTarget
+      && (deviceTarget.flashingMethod === FlashingMethod.BetaflightPassthrough
+        || deviceTarget.flashingMethod === FlashingMethod.UART
+        || deviceTarget.flashingMethod === FlashingMethod.EdgeTxPassthrough
+        || deviceTarget.flashingMethod === FlashingMethod.Passthrough)
     ) {
       setSerialPortRequired(true);
     } else {
@@ -521,8 +527,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     }
   }, [deviceTarget, deviceTarget, deviceTargets]);
 
-  const [deviceOptionsValidationErrors, setDeviceOptionsValidationErrors] =
-    useState<Error[] | null>(null);
+  const [deviceOptionsValidationErrors, setDeviceOptionsValidationErrors]
+    = useState<Error[] | null>(null);
 
   const reset = () => {
     resetBuildLogs();
@@ -544,7 +550,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   };
 
   const [currentJobType, setCurrentJobType] = useState<BuildJobType>(
-    BuildJobType.Build
+    BuildJobType.Build,
   );
   const sendJob = (type: BuildJobType, force: boolean) => {
     reset();
@@ -576,7 +582,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     }
 
     const errs = new UserDefinesValidator().validate(
-      deviceOptionsFormData.userDefineOptions
+      deviceOptionsFormData.userDefineOptions,
     );
     if (errs.length > 0) {
       setDeviceOptionsValidationErrors(errs);
@@ -592,7 +598,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     }
 
     const userDefines = cleanUserDefines(
-      deviceOptionsFormData.userDefineOptions
+      deviceOptionsFormData.userDefineOptions,
     );
 
     if (device?.parent && device?.name) {
@@ -635,8 +641,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   useEffect(() => {
     if (
-      !buildInProgress &&
-      response?.buildFlashFirmware?.success !== undefined
+      !buildInProgress
+      && response?.buildFlashFirmware?.success !== undefined
     ) {
       window.scrollTo(0, document.body.scrollHeight);
     }
@@ -652,8 +658,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const deviceTargetRef = useRef<HTMLDivElement | null>(null);
   const deviceOptionsRef = useRef<HTMLDivElement | null>(null);
 
-  const [deviceSelectErrorDialogOpen, setDeviceSelectErrorDialogOpen] =
-    useState<boolean>(false);
+  const [deviceSelectErrorDialogOpen, setDeviceSelectErrorDialogOpen]
+    = useState<boolean>(false);
 
   const handleSelectedDeviceChange = useCallback(
     (deviceName: string) => {
@@ -679,8 +685,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
         // if no matches found by deviceName, then use the target
         if (
-          deviceMatches?.length === 0 &&
-          dnsDeviceTarget.trim().length !== 0
+          deviceMatches?.length === 0
+          && dnsDeviceTarget.trim().length !== 0
         ) {
           deviceMatches = deviceTargets?.filter((item) => {
             // only match on a device that doesn't have a parent, which means it
@@ -701,7 +707,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         // if no device is found that matches the target
         if (!deviceMatches || deviceMatches.length === 0) {
           console.error(
-            `no device matches found for target ${dnsDeviceTarget}!`
+            `no device matches found for target ${dnsDeviceTarget}!`,
           );
           setDeviceSelectErrorDialogOpen(true);
           return;
@@ -711,7 +717,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         // we do not know which one is correct and do not want to pick the wrong device.
         if (deviceMatches.length > 1) {
           console.error(
-            `multiple device matches found for target ${dnsDeviceTarget}!`
+            `multiple device matches found for target ${dnsDeviceTarget}!`,
           );
           setDeviceSelectErrorDialogOpen(true);
           return;
@@ -719,12 +725,12 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
         const deviceMatch = deviceMatches[0];
 
-        const dTarget =
-          deviceMatch?.targets.find((target) => {
+        const dTarget
+          = deviceMatch?.targets.find((target) => {
             return target.flashingMethod === FlashingMethod.WIFI;
-          }) ||
-          deviceMatch?.targets[0] ||
-          null;
+          })
+          || deviceMatch?.targets[0]
+          || null;
 
         if (dTarget !== deviceTarget) {
           setDeviceTarget(dTarget);
@@ -734,7 +740,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         setWifiDevice(dnsDevice.ip);
       }
     },
-    [deviceTarget, deviceTargets, networkDevices]
+    [deviceTarget, deviceTargets, networkDevices],
   );
 
   useEffect(() => {
@@ -746,10 +752,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
   const luaDownloadButton = () => {
     if (
-      hasLuaScript &&
-      luaScriptResponse &&
-      luaScriptResponse.luaScript.fileLocation &&
-      luaScriptResponse.luaScript.fileLocation.length > 0
+      hasLuaScript
+      && luaScriptResponse
+      && luaScriptResponse.luaScript.fileLocation
+      && luaScriptResponse.luaScript.fileLocation.length > 0
     ) {
       return (
         <Button
@@ -779,10 +785,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         .replace(/[^0-9]/gi, '')}.txt`,
     };
 
-    const result: SaveFileResponseBody =
-      await window.electron.ipcRenderer.invoke(
+    const result: SaveFileResponseBody
+      = await window.electron.ipcRenderer.invoke(
         IpcRequest.SaveFile,
-        saveFileRequestBody
+        saveFileRequestBody,
       );
 
     if (result.success) {
@@ -791,7 +797,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       };
       window.electron.ipcRenderer.sendMessage(
         IpcRequest.OpenFileLocation,
-        openFileLocationRequestBody
+        openFileLocationRequestBody,
       );
     }
   }, [buildLogs]);
@@ -822,9 +828,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             />
             <Divider />
             <CardContent ref={deviceTargetRef}>
-              {firmwareVersionData === null ||
-                (validateFirmwareVersionData(firmwareVersionData).length >
-                  0 && (
+              {firmwareVersionData === null
+                || (validateFirmwareVersionData(firmwareVersionData).length
+                  > 0 && (
                   <Alert severity="info">
                     <AlertTitle>{t('ConfiguratorView.Notice')}</AlertTitle>
                     {t('ConfiguratorView.SelectFirmwareVersionFirst')}
@@ -852,9 +858,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
             <CardTitle
               icon={<SettingsIcon />}
-              title={
+              title={(
                 <div ref={deviceOptionsRef}>
-                  {t('ConfiguratorView.DeviceOptions')}{' '}
+                  {t('ConfiguratorView.DeviceOptions')}
+                  {' '}
                   {deviceTarget !== null && !loadingOptions && (
                     <Tooltip
                       placement="top"
@@ -867,7 +874,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     </Tooltip>
                   )}
                 </div>
-              }
+              )}
             />
             <Divider />
             <CardContent>
@@ -878,9 +885,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   onChange={onUserDefines}
                 />
               )}
-              {(firmwareVersionData === null ||
-                validateFirmwareVersionData(firmwareVersionData).length > 0 ||
-                deviceTarget === null) && (
+              {(firmwareVersionData === null
+                || validateFirmwareVersionData(firmwareVersionData).length > 0
+                || deviceTarget === null) && (
                 <Alert severity="info">
                   <AlertTitle>{t('ConfiguratorView.Notice')}</AlertTitle>
                   {t('ConfiguratorView.SelectFirmwareVersionFirst')}
@@ -923,15 +930,15 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                         return (
                           deviceTarget?.name
                             ?.toUpperCase()
-                            .startsWith(item.target.toUpperCase()) ||
-                          device?.luaName?.toUpperCase() ===
-                            item.deviceName.toUpperCase() ||
-                          (device?.priorTargetName &&
-                            item.target
-                              .toUpperCase()
-                              .startsWith(device.priorTargetName.toUpperCase()))
+                            .startsWith(item.target.toUpperCase())
+                            || device?.luaName?.toUpperCase()
+                            === item.deviceName.toUpperCase()
+                            || (device?.priorTargetName
+                              && item.target
+                                .toUpperCase()
+                                .startsWith(device.priorTargetName.toUpperCase()))
                         );
-                      }
+                      },
                     )}
                     onChange={onWifiDevice}
                   />
@@ -941,10 +948,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 </Typography>
                 <List>
                   {eraseSupported && (
-                    <ListItem
+                    <ListItemButton
                       dense
                       selected={erase}
-                      button
                       onClick={() => {
                         setErase(!erase);
                       }}
@@ -960,12 +966,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       <ListItemText>
                         {t('ConfiguratorView.EraseBeforeFlash')}
                       </ListItemText>
-                    </ListItem>
+                    </ListItemButton>
                   )}
-                  <ListItem
+                  <ListItemButton
                     dense
                     selected={forceFlash}
-                    button
                     onClick={() => {
                       setForceFlash(!forceFlash);
                     }}
@@ -981,36 +986,36 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     <ListItemText>
                       {t('ConfiguratorView.ForceFlash')}
                     </ListItemText>
-                  </ListItem>
+                  </ListItemButton>
                 </List>
-                {deviceTarget?.flashingMethod !== FlashingMethod.UART &&
-                  deviceTarget?.flashingMethod !== FlashingMethod.Passthrough &&
-                  deviceTarget?.flashingMethod !==
-                    FlashingMethod.EdgeTxPassthrough &&
-                  deviceTarget?.flashingMethod !== FlashingMethod.DFU &&
-                  deviceTarget?.flashingMethod !== FlashingMethod.STLink &&
-                  deviceTarget?.flashingMethod !==
-                    FlashingMethod.BetaflightPassthrough && (
-                    <Button
-                      sx={styles.button}
-                      size="large"
-                      variant="contained"
-                      onClick={onBuild}
-                    >
-                      {t('ConfiguratorView.Build')}
-                    </Button>
-                  )}
-                {deviceTarget?.flashingMethod !== FlashingMethod.Stock_BL &&
-                  deviceTarget?.flashingMethod !== FlashingMethod.Zip && (
-                    <Button
-                      sx={styles.button}
-                      size="large"
-                      variant="contained"
-                      onClick={onFlash}
-                    >
-                      {t('ConfiguratorView.Flash')}
-                    </Button>
-                  )}
+                {deviceTarget?.flashingMethod !== FlashingMethod.UART
+                  && deviceTarget?.flashingMethod !== FlashingMethod.Passthrough
+                  && deviceTarget?.flashingMethod
+                  !== FlashingMethod.EdgeTxPassthrough
+                  && deviceTarget?.flashingMethod !== FlashingMethod.DFU
+                  && deviceTarget?.flashingMethod !== FlashingMethod.STLink
+                  && deviceTarget?.flashingMethod
+                  !== FlashingMethod.BetaflightPassthrough && (
+                  <Button
+                    sx={styles.button}
+                    size="large"
+                    variant="contained"
+                    onClick={onBuild}
+                  >
+                    {t('ConfiguratorView.Build')}
+                  </Button>
+                )}
+                {deviceTarget?.flashingMethod !== FlashingMethod.Stock_BL
+                  && deviceTarget?.flashingMethod !== FlashingMethod.Zip && (
+                  <Button
+                    sx={styles.button}
+                    size="large"
+                    variant="contained"
+                    onClick={onFlash}
+                  >
+                    {t('ConfiguratorView.Flash')}
+                  </Button>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -1084,7 +1089,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             <>
               <CardTitle
                 icon={<SettingsIcon />}
-                title={
+                title={(
                   <Box display="flex" justifyContent="space-between">
                     <Box>{t('ConfiguratorView.Logs')}</Box>
                     <Box>
@@ -1106,7 +1111,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                       </IconButton>
                     </Box>
                   </Box>
-                }
+                )}
               />
               <Divider />
               <CardContent>
@@ -1131,19 +1136,19 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
               />
               <Divider />
               <CardContent>
-                {response?.buildFlashFirmware?.success &&
-                  currentJobType === BuildJobType.Flash &&
-                  deviceTarget?.flashingMethod === FlashingMethod.WIFI && (
-                    <Alert sx={styles.buildNotification} severity="warning">
-                      <AlertTitle>{t('ConfiguratorView.Warning')}</AlertTitle>
-                      {t('ConfiguratorView.WaitForLEDBeforeDisconnectingPower')}
-                    </Alert>
-                  )}
+                {response?.buildFlashFirmware?.success
+                  && currentJobType === BuildJobType.Flash
+                  && deviceTarget?.flashingMethod === FlashingMethod.WIFI && (
+                  <Alert sx={styles.buildNotification} severity="warning">
+                    <AlertTitle>{t('ConfiguratorView.Warning')}</AlertTitle>
+                    {t('ConfiguratorView.WaitForLEDBeforeDisconnectingPower')}
+                  </Alert>
+                )}
                 <ShowAfterTimeout
                   timeout={
-                    response?.buildFlashFirmware?.success &&
-                    currentJobType === BuildJobType.Flash &&
-                    deviceTarget?.flashingMethod === FlashingMethod.WIFI
+                    response?.buildFlashFirmware?.success
+                    && currentJobType === BuildJobType.Flash
+                    && deviceTarget?.flashingMethod === FlashingMethod.WIFI
                       ? 15000
                       : 1000
                   }
@@ -1166,15 +1171,15 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                     )}
                   </>
                 </ShowAfterTimeout>
-                {response?.buildFlashFirmware?.success &&
-                  currentJobType === BuildJobType.Build && (
-                    <Alert sx={styles.buildNotification} severity="info">
-                      <AlertTitle>
-                        {t('ConfiguratorView.BuildNotice')}
-                      </AlertTitle>
-                      {t('ConfiguratorView.FirmwareOpenedInFileExplorer')}
-                    </Alert>
-                  )}
+                {response?.buildFlashFirmware?.success
+                  && currentJobType === BuildJobType.Build && (
+                  <Alert sx={styles.buildNotification} severity="info">
+                    <AlertTitle>
+                      {t('ConfiguratorView.BuildNotice')}
+                    </AlertTitle>
+                    {t('ConfiguratorView.FirmwareOpenedInFileExplorer')}
+                  </Alert>
+                )}
               </CardContent>
               <Divider />
             </>
@@ -1222,18 +1227,18 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   </Button>
                 )}
 
-                {!response?.buildFlashFirmware.success &&
-                  response?.buildFlashFirmware.errorType ===
-                    BuildFirmwareErrorType.TargetMismatch && (
-                    <Button
-                      sx={styles.button}
-                      size="large"
-                      variant="contained"
-                      onClick={onForceFlash}
-                    >
-                      {t('ConfiguratorView.ForceFlash')}
-                    </Button>
-                  )}
+                {!response?.buildFlashFirmware.success
+                  && response?.buildFlashFirmware.errorType
+                  === BuildFirmwareErrorType.TargetMismatch && (
+                  <Button
+                    sx={styles.button}
+                    size="large"
+                    variant="contained"
+                    onClick={onForceFlash}
+                  >
+                    {t('ConfiguratorView.ForceFlash')}
+                  </Button>
+                )}
 
                 {response?.buildFlashFirmware.success && luaDownloadButton()}
               </CardContent>

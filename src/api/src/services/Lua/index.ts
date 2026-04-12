@@ -33,7 +33,7 @@ export default class LuaService implements ILua {
     gitRepositoryOwner: string,
     gitRepositoryName: string,
     gitRepositorySrcFolder: string,
-    ref: string
+    ref: string,
   ): Promise<string | null> {
     if (!ref || ref.length === 0) {
       return null;
@@ -106,7 +106,7 @@ export default class LuaService implements ILua {
 
   async loadLuaScript(
     args: TargetArgs,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<string | null> {
     let luaScript: string | null = null;
 
@@ -116,7 +116,7 @@ export default class LuaService implements ILua {
           gitRepository.owner,
           gitRepository.repositoryName,
           gitRepository.srcFolder,
-          args.gitBranch
+          args.gitBranch,
         );
         break;
       case FirmwareSource.GitCommit:
@@ -124,7 +124,7 @@ export default class LuaService implements ILua {
           gitRepository.owner,
           gitRepository.repositoryName,
           gitRepository.srcFolder,
-          args.gitCommit
+          args.gitCommit,
         );
         break;
       case FirmwareSource.GitTag:
@@ -132,7 +132,7 @@ export default class LuaService implements ILua {
           gitRepository.owner,
           gitRepository.repositoryName,
           gitRepository.srcFolder,
-          args.gitTag
+          args.gitTag,
         );
         break;
       case FirmwareSource.Local:
@@ -144,13 +144,13 @@ export default class LuaService implements ILua {
             gitRepository.owner,
             gitRepository.repositoryName,
             gitRepository.srcFolder,
-            args.gitPullRequest.headCommitHash
+            args.gitPullRequest.headCommitHash,
           );
         }
         break;
       default:
         throw new Error(
-          `unsupported firmware source for the lua service: ${args.source}`
+          `unsupported firmware source for the lua service: ${args.source}`,
         );
     }
 

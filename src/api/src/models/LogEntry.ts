@@ -19,7 +19,7 @@ export default class LogEntry {
     level: string,
     message: string,
     timestamp: string,
-    context?: unknown
+    context?: unknown,
   ) {
     this.level = level;
     this.message = message;

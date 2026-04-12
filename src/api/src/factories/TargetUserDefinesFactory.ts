@@ -15,19 +15,19 @@ export default class TargetUserDefinesFactory {
         return UserDefine.Boolean(
           UserDefineKey.REGULATORY_DOMAIN_AU_915,
           false,
-          UserDefineOptionGroup.RegulatoryDomain900
+          UserDefineOptionGroup.RegulatoryDomain900,
         );
       case UserDefineKey.REGULATORY_DOMAIN_EU_868:
         return UserDefine.Boolean(
           UserDefineKey.REGULATORY_DOMAIN_EU_868,
           false,
-          UserDefineOptionGroup.RegulatoryDomain900
+          UserDefineOptionGroup.RegulatoryDomain900,
         );
       case UserDefineKey.REGULATORY_DOMAIN_IN_866:
         return UserDefine.Boolean(
           UserDefineKey.REGULATORY_DOMAIN_IN_866,
           false,
-          UserDefineOptionGroup.RegulatoryDomain900
+          UserDefineOptionGroup.RegulatoryDomain900,
         );
       case UserDefineKey.REGULATORY_DOMAIN_AU_433:
         return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_AU_433);
@@ -37,19 +37,19 @@ export default class TargetUserDefinesFactory {
         return UserDefine.Boolean(
           UserDefineKey.REGULATORY_DOMAIN_FCC_915,
           false,
-          UserDefineOptionGroup.RegulatoryDomain900
+          UserDefineOptionGroup.RegulatoryDomain900,
         );
       case UserDefineKey.REGULATORY_DOMAIN_ISM_2400:
         return UserDefine.Boolean(
           UserDefineKey.REGULATORY_DOMAIN_ISM_2400,
           true,
-          UserDefineOptionGroup.RegulatoryDomain2400
+          UserDefineOptionGroup.RegulatoryDomain2400,
         );
       case UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400:
         return UserDefine.Boolean(
           UserDefineKey.REGULATORY_DOMAIN_EU_CE_2400,
           true,
-          UserDefineOptionGroup.RegulatoryDomain2400
+          UserDefineOptionGroup.RegulatoryDomain2400,
         );
       // Hybrid switches
       case UserDefineKey.TLM_REPORT_INTERVAL_MS:
@@ -85,7 +85,7 @@ export default class TargetUserDefinesFactory {
           UserDefineKey.HOME_WIFI_PASSWORD,
           '',
           false,
-          true
+          true,
         );
       case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
         return UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '60', true);

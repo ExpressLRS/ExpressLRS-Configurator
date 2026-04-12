@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import {
   Box,
   Divider,
@@ -14,7 +14,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import DvrIcon from '@mui/icons-material/Dvr';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ListIcon from '@mui/icons-material/List';
-import { matchPath, useLocation, Link } from 'react-router-dom';
+import { matchPath, useLocation, Link } from 'react-router';
 import BackpackIcon from '@mui/icons-material/Backpack';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
@@ -42,13 +42,13 @@ const styles: Record<string, SxProps<Theme>> = {
 
 const Sidebar: FunctionComponent = () => {
   const location = useLocation();
-  const configuratorActive =
-    matchPath(location.pathname, '/configurator') !== null;
+  const configuratorActive
+    = matchPath(location.pathname, '/configurator') !== null;
   const backpackActive = matchPath(location.pathname, '/backpack') !== null;
   // const settingsActive = matchPath(location.pathname, '/settings') !== null;
   const logsActive = matchPath(location.pathname, '/logs') !== null;
-  const serialMonitorActive =
-    matchPath(location.pathname, '/serial-monitor') !== null;
+  const serialMonitorActive
+    = matchPath(location.pathname, '/serial-monitor') !== null;
   const settingsActive = matchPath(location.pathname, '/settings') !== null;
   const supportActive = matchPath(location.pathname, '/support') !== null;
   const { appStatus, isExpertModeEnabled } = useAppState();

@@ -1,5 +1,5 @@
 import { Button, Card, CardContent, Divider } from '@mui/material';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';

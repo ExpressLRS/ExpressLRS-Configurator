@@ -8,29 +8,29 @@ import { DeviceOptions, IApplicationStorage } from '../index';
 const mergeWithDeviceOptionsFromStorage = async (
   storage: IApplicationStorage,
   device: string | null,
-  deviceOptions: DeviceOptions
+  deviceOptions: DeviceOptions,
 ): Promise<DeviceOptions> => {
   const savedBindingPhrase = await storage.getGlobalOption(
-    UserDefineKey.BINDING_PHRASE
+    UserDefineKey.BINDING_PHRASE,
   );
   const savedTargetOptions = device
     ? await storage.getDeviceOptions(device)
     : null;
   const wifiSSID = await storage.getGlobalOption(UserDefineKey.HOME_WIFI_SSID);
   const wifiPassword = await storage.getGlobalOption(
-    UserDefineKey.HOME_WIFI_PASSWORD
+    UserDefineKey.HOME_WIFI_PASSWORD,
   );
   const regulatoryDomain900 = await storage.getOptionsGroupValue(
-    UserDefineOptionGroup.RegulatoryDomain900
+    UserDefineOptionGroup.RegulatoryDomain900,
   );
   const regulatoryDomain2400 = await storage.getOptionsGroupValue(
-    UserDefineOptionGroup.RegulatoryDomain2400
+    UserDefineOptionGroup.RegulatoryDomain2400,
   );
 
   const addOverrides = (deviceOption: UserDefine): UserDefine => {
     if (
-      deviceOption.key === UserDefineKey.BINDING_PHRASE &&
-      savedBindingPhrase !== null
+      deviceOption.key === UserDefineKey.BINDING_PHRASE
+      && savedBindingPhrase !== null
     ) {
       return {
         ...deviceOption,
@@ -39,8 +39,8 @@ const mergeWithDeviceOptionsFromStorage = async (
       };
     }
     if (
-      deviceOption.key === UserDefineKey.HOME_WIFI_SSID &&
-      wifiSSID !== null
+      deviceOption.key === UserDefineKey.HOME_WIFI_SSID
+      && wifiSSID !== null
     ) {
       return {
         ...deviceOption,
@@ -49,8 +49,8 @@ const mergeWithDeviceOptionsFromStorage = async (
       };
     }
     if (
-      deviceOption.key === UserDefineKey.HOME_WIFI_PASSWORD &&
-      wifiPassword !== null
+      deviceOption.key === UserDefineKey.HOME_WIFI_PASSWORD
+      && wifiPassword !== null
     ) {
       return {
         ...deviceOption,
@@ -82,7 +82,7 @@ const mergeWithDeviceOptionsFromStorage = async (
         return addOverrides(deviceOption);
       }
       const savedOption = savedTargetOptions?.userDefineOptions.find(
-        ({ key }) => key === deviceOption.key
+        ({ key }) => key === deviceOption.key,
       );
       if (savedOption === undefined) {
         return addOverrides(deviceOption);
@@ -93,7 +93,7 @@ const mergeWithDeviceOptionsFromStorage = async (
         value: savedOption.value,
       };
       return addOverrides(opt);
-    }
+    },
   );
   return {
     userDefineOptions,

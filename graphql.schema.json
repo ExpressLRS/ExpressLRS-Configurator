@@ -1,19 +1,23 @@
 {
   "__schema": {
     "queryType": {
-      "name": "Query"
+      "name": "Query",
+      "kind": "OBJECT"
     },
     "mutationType": {
-      "name": "Mutation"
+      "name": "Mutation",
+      "kind": "OBJECT"
     },
     "subscriptionType": {
-      "name": "Subscription"
+      "name": "Subscription",
+      "kind": "OBJECT"
     },
     "types": [
       {
         "kind": "SCALAR",
         "name": "Boolean",
         "description": "The `Boolean` scalar type represents `true` or `false`.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -24,6 +28,7 @@
         "kind": "ENUM",
         "name": "BuildFirmwareErrorType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -77,6 +82,7 @@
         "kind": "ENUM",
         "name": "BuildFirmwareStep",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -112,6 +118,7 @@
         "kind": "INPUT_OBJECT",
         "name": "BuildFlashFirmwareInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -239,6 +246,7 @@
         "kind": "OBJECT",
         "name": "BuildFlashFirmwareResult",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "errorType",
@@ -302,6 +310,7 @@
         "kind": "ENUM",
         "name": "BuildJobType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -325,6 +334,7 @@
         "kind": "OBJECT",
         "name": "BuildLogUpdate",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "data",
@@ -352,6 +362,7 @@
         "kind": "OBJECT",
         "name": "BuildProgressNotification",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "message",
@@ -403,6 +414,7 @@
         "kind": "ENUM",
         "name": "BuildProgressNotificationType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -429,67 +441,10 @@
         "possibleTypes": null
       },
       {
-        "kind": "INPUT_OBJECT",
-        "name": "BuildUserDefinesTxtInput",
-        "description": null,
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "userDefines",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "UserDefineInput",
-                    "ofType": null
-                  }
-                }
-              }
-            },
-            "defaultValue": "[]",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "BuildUserDefinesTxtResult",
-        "description": null,
-        "fields": [
-          {
-            "name": "userDefinesTxt",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "ClearFirmwareFilesResult",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "message",
@@ -529,6 +484,7 @@
         "kind": "OBJECT",
         "name": "ClearPlatformioCoreDirResult",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "message",
@@ -568,6 +524,7 @@
         "kind": "OBJECT",
         "name": "Device",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "abbreviatedName",
@@ -779,6 +736,7 @@
         "kind": "ENUM",
         "name": "DeviceType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -802,6 +760,7 @@
         "kind": "ENUM",
         "name": "FirmwareSource",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -843,6 +802,7 @@
         "kind": "INPUT_OBJECT",
         "name": "FirmwareVersionDataInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -946,6 +906,7 @@
         "kind": "ENUM",
         "name": "FlashingMethod",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1011,6 +972,7 @@
         "kind": "SCALAR",
         "name": "Float",
         "description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1021,6 +983,7 @@
         "kind": "INPUT_OBJECT",
         "name": "GitRepositoryInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1124,6 +1087,7 @@
         "kind": "SCALAR",
         "name": "Int",
         "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1134,6 +1098,7 @@
         "kind": "SCALAR",
         "name": "JSONObject",
         "description": "JSON object",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1144,6 +1109,7 @@
         "kind": "OBJECT",
         "name": "LogEntry",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "context",
@@ -1215,6 +1181,7 @@
         "kind": "OBJECT",
         "name": "LogFile",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "content",
@@ -1246,6 +1213,7 @@
         "kind": "OBJECT",
         "name": "LuaScript",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "fileLocation",
@@ -1269,6 +1237,7 @@
         "kind": "ENUM",
         "name": "MulticastDnsEventType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1298,6 +1267,7 @@
         "kind": "OBJECT",
         "name": "MulticastDnsInformation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "deviceName",
@@ -1477,6 +1447,7 @@
         "kind": "OBJECT",
         "name": "MulticastDnsMonitorUpdate",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "data",
@@ -1520,6 +1491,7 @@
         "kind": "OBJECT",
         "name": "Mutation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "buildFlashFirmware",
@@ -1564,39 +1536,6 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "BuildFlashFirmwareResult",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "buildUserDefinesTxt",
-            "description": null,
-            "args": [
-              {
-                "name": "input",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "BuildUserDefinesTxtInput",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "BuildUserDefinesTxtResult",
                 "ofType": null
               }
             },
@@ -1694,6 +1633,7 @@
         "kind": "INPUT_OBJECT",
         "name": "PullRequestInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -1769,6 +1709,7 @@
         "kind": "OBJECT",
         "name": "PullRequestType",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "headCommitHash",
@@ -1844,6 +1785,7 @@
         "kind": "OBJECT",
         "name": "Query",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "availableDevicesList",
@@ -2604,6 +2546,7 @@
         "kind": "OBJECT",
         "name": "Release",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "preRelease",
@@ -2647,6 +2590,7 @@
         "kind": "INPUT_OBJECT",
         "name": "SerialConnectionConfigInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -2690,6 +2634,7 @@
         "kind": "OBJECT",
         "name": "SerialMonitorEvent",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "type",
@@ -2717,6 +2662,7 @@
         "kind": "ENUM",
         "name": "SerialMonitorEventType",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2752,6 +2698,7 @@
         "kind": "OBJECT",
         "name": "SerialMonitorLogUpdate",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "data",
@@ -2779,6 +2726,7 @@
         "kind": "OBJECT",
         "name": "SerialPortConnectResult",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "message",
@@ -2818,6 +2766,7 @@
         "kind": "OBJECT",
         "name": "SerialPortDisconnectResult",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "message",
@@ -2857,6 +2806,7 @@
         "kind": "OBJECT",
         "name": "SerialPortInformation",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "manufacturer",
@@ -2900,6 +2850,7 @@
         "kind": "SCALAR",
         "name": "String",
         "description": "The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2910,6 +2861,7 @@
         "kind": "OBJECT",
         "name": "Subscription",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "buildLogUpdates",
@@ -3001,6 +2953,7 @@
         "kind": "OBJECT",
         "name": "Target",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "flashingMethod",
@@ -3060,6 +3013,7 @@
         "kind": "OBJECT",
         "name": "UpdatesAvailability",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "newestVersion",
@@ -3119,6 +3073,7 @@
         "kind": "OBJECT",
         "name": "UserDefine",
         "description": null,
+        "isOneOf": null,
         "fields": [
           {
             "name": "enabled",
@@ -3234,6 +3189,7 @@
         "kind": "INPUT_OBJECT",
         "name": "UserDefineInput",
         "description": null,
+        "isOneOf": false,
         "fields": null,
         "inputFields": [
           {
@@ -3325,6 +3281,7 @@
         "kind": "ENUM",
         "name": "UserDefineKey",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3486,6 +3443,7 @@
         "kind": "ENUM",
         "name": "UserDefineKind",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3515,6 +3473,7 @@
         "kind": "ENUM",
         "name": "UserDefineOptionGroup",
         "description": null,
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3538,6 +3497,7 @@
         "kind": "OBJECT",
         "name": "__Directive",
         "description": "A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.\n\nIn some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -3654,6 +3614,7 @@
         "kind": "ENUM",
         "name": "__DirectiveLocation",
         "description": "A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3779,6 +3740,7 @@
         "kind": "OBJECT",
         "name": "__EnumValue",
         "description": "One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -3846,6 +3808,7 @@
         "kind": "OBJECT",
         "name": "__Field",
         "description": "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -3966,6 +3929,7 @@
         "kind": "OBJECT",
         "name": "__InputValue",
         "description": "Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "name",
@@ -4061,6 +4025,7 @@
         "kind": "OBJECT",
         "name": "__Schema",
         "description": "A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "description",
@@ -4172,6 +4137,7 @@
         "kind": "OBJECT",
         "name": "__Type",
         "description": "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.\n\nDepending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.",
+        "isOneOf": null,
         "fields": [
           {
             "name": "kind",
@@ -4375,6 +4341,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "isOneOf",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -4386,6 +4364,7 @@
         "kind": "ENUM",
         "name": "__TypeKind",
         "description": "An enum describing what kind of type a given `__Type` is.",
+        "isOneOf": null,
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4472,7 +4451,11 @@
         "name": "include",
         "description": "Directs the executor to include this field or fragment only when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -4493,10 +4476,23 @@
         ]
       },
       {
+        "name": "oneOf",
+        "description": "Indicates exactly one field must be supplied and this field must not be `null`.",
+        "isRepeatable": false,
+        "locations": [
+          "INPUT_OBJECT"
+        ],
+        "args": []
+      },
+      {
         "name": "skip",
         "description": "Directs the executor to skip this field or fragment when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -4520,7 +4516,9 @@
         "name": "specifiedBy",
         "description": "Exposes a URL that specifies the behavior of this scalar.",
         "isRepeatable": false,
-        "locations": ["SCALAR"],
+        "locations": [
+          "SCALAR"
+        ],
         "args": [
           {
             "name": "url",

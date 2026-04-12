@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import UserDefinesList from '../UserDefinesList';
@@ -61,7 +61,7 @@ const EXPERT_MODE_USER_DEFINES: UserDefineKey[] = [
 
 const userDefinesToCategories = (
   userDefines: UserDefine[],
-  isExpertModeEnabled: boolean
+  isExpertModeEnabled: boolean,
 ): UserDefinesByCategory => {
   const result: UserDefinesByCategory = {
     [UserDefineCategory.RegulatoryDomainsISM]: [],
@@ -118,7 +118,7 @@ const userDefinesToCategories = (
 
   const defineToCategory = (key: UserDefineKey): UserDefineCategory => {
     const cats: UserDefineCategory[] = Object.keys(
-      keysToCategories
+      keysToCategories,
     ) as UserDefineCategory[];
     for (let i = 0; i < cats.length; i++) {
       const defineCategory = cats[i];
@@ -131,9 +131,9 @@ const userDefinesToCategories = (
 
   userDefines.forEach((userDefine) => {
     if (
-      isExpertModeEnabled ||
-      (!isExpertModeEnabled &&
-        !EXPERT_MODE_USER_DEFINES.includes(userDefine.key))
+      isExpertModeEnabled
+      || (!isExpertModeEnabled
+        && !EXPERT_MODE_USER_DEFINES.includes(userDefine.key))
     ) {
       result[defineToCategory(userDefine.key)].push(userDefine);
     }
@@ -153,13 +153,13 @@ export const cleanUserDefines = (userDefines: UserDefine[]): UserDefine[] => {
 };
 
 const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
-  props
+  props,
 ) => {
   const { target, deviceOptions, onChange } = props;
   const { isExpertModeEnabled } = useAppState();
   const categories = userDefinesToCategories(
     deviceOptions.userDefineOptions,
-    isExpertModeEnabled
+    isExpertModeEnabled,
   );
   const { t } = useTranslation();
 
@@ -172,9 +172,9 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
       }
       // if part of the same optionGroup as the item being updated, disable it.
       if (
-        data.enabled &&
-        data.optionGroup &&
-        data.optionGroup === opt.optionGroup
+        data.enabled
+        && data.optionGroup
+        && data.optionGroup === opt.optionGroup
       ) {
         return {
           ...opt,
@@ -190,10 +190,10 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
     });
   };
   return (
-    target !== null &&
-    categories !== null && (
+    target !== null
+    && categories !== null && (
       <Grid container spacing={3}>
-        <Grid item xs>
+        <Grid size="grow">
           {categories[UserDefineCategory.RegulatoryDomainsISM]?.length > 0 && (
             <>
               <Typography variant="h6" sx={styles.categoryTitle}>
@@ -251,7 +251,7 @@ const DeviceOptionsForm: FunctionComponent<DeviceOptionsFormProps> = (
           )}
         </Grid>
 
-        <Grid item xs>
+        <Grid size="grow">
           {categories[UserDefineCategory.PerformanceOptions]?.length > 0 && (
             <>
               <Typography variant="h6">

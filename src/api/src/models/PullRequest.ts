@@ -19,7 +19,7 @@ export default class PullRequest {
     title: string,
     id: number,
     number: number,
-    headCommitHash: string
+    headCommitHash: string,
   ) {
     this.title = title;
     this.id = id;

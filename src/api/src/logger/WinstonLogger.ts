@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable react/static-property-placement */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Logger } from 'winston';
 import { Service } from 'typedi';
@@ -30,7 +30,7 @@ export default class WinstonLoggerService implements LoggerService {
   public error(
     message: any,
     trace?: string,
-    context?: Record<string, unknown>
+    context?: Record<string, unknown>,
   ): any {
     context = context || this.context;
 

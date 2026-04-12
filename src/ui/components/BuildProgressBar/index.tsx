@@ -1,4 +1,4 @@
-import React, { FunctionComponent, memo } from 'react';
+import { FunctionComponent, memo } from 'react';
 import { LinearProgress } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
 import {
@@ -24,7 +24,7 @@ interface BuildProgressBarProps {
 const BuildProgressBar: FunctionComponent<BuildProgressBarProps> = memo(
   ({ inProgress, jobType, progressNotification }) => {
     const toProgressValue = (
-      notification: BuildProgressNotification | null
+      notification: BuildProgressNotification | null,
     ): number => {
       if (notification === null) {
         return 0;
@@ -70,7 +70,7 @@ const BuildProgressBar: FunctionComponent<BuildProgressBarProps> = memo(
         value={toProgressValue(progressNotification)}
       />
     );
-  }
+  },
 );
 
 export default BuildProgressBar;

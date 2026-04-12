@@ -33,20 +33,20 @@ export default class UserDefine {
     value = '',
     enumValues?: string[],
     optionGroup?: UserDefineOptionGroup,
-    sensitive = false
+    sensitive = false,
   ) {
     this.type = type;
 
     if (type === UserDefineKind.Enum) {
       if (enumValues === undefined || enumValues.length === 0) {
         throw new Error(
-          `enum option for ${key} enum values are invalid: ${enumValues}`
+          `enum option for ${key} enum values are invalid: ${enumValues}`,
         );
       }
 
       if (enumValues?.indexOf(value) === -1) {
         throw new Error(
-          `enum option ${key} value ${value} does not belong to the enum itself: ${enumValues}`
+          `enum option ${key} value ${value} does not belong to the enum itself: ${enumValues}`,
         );
       }
     }
@@ -62,7 +62,7 @@ export default class UserDefine {
   static Boolean(
     key: UserDefineKey,
     enabled = false,
-    userDefineOptionGroup?: UserDefineOptionGroup
+    userDefineOptionGroup?: UserDefineOptionGroup,
   ): UserDefine {
     return new UserDefine(
       UserDefineKind.Boolean,
@@ -70,7 +70,7 @@ export default class UserDefine {
       enabled,
       undefined,
       undefined,
-      userDefineOptionGroup
+      userDefineOptionGroup,
     );
   }
 
@@ -78,7 +78,7 @@ export default class UserDefine {
     key: UserDefineKey,
     value = '',
     enabled = false,
-    sensitive = false
+    sensitive = false,
   ): UserDefine {
     return new UserDefine(
       UserDefineKind.Text,
@@ -87,7 +87,7 @@ export default class UserDefine {
       value,
       undefined,
       undefined,
-      sensitive
+      sensitive,
     );
   }
 
@@ -95,7 +95,7 @@ export default class UserDefine {
     key: UserDefineKey,
     enumValues: string[],
     value = '',
-    enabled = false
+    enabled = false,
   ): UserDefine {
     return new UserDefine(UserDefineKind.Enum, key, enabled, value, enumValues);
   }

@@ -5,8 +5,7 @@ import { BuildProgressNotificationPayload } from '../services/FlashingStrategyLo
 
 @ObjectType('BuildProgressNotification')
 export default class BuildProgressNotification
-  implements BuildProgressNotificationPayload
-{
+implements BuildProgressNotificationPayload {
   @Field(() => BuildProgressNotificationType)
   type: BuildProgressNotificationType;
 
@@ -19,7 +18,7 @@ export default class BuildProgressNotification
   constructor(
     type: BuildProgressNotificationType,
     step?: BuildFirmwareStep,
-    message?: string
+    message?: string,
   ) {
     this.type = type;
     this.step = step;

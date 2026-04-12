@@ -16,7 +16,7 @@ export default class FirmwareBuilder {
 
   async checkDefaultUserDefinesCompatibilityAtPath(
     firmwarePath: string,
-    keys: UserDefineKey[]
+    keys: UserDefineKey[],
   ): Promise<UserDefinesCompatibilityResult> {
     const userDefinesPath = path.join(firmwarePath, 'user_defines.txt');
     const userDefinesTxt = await fs.promises.readFile(userDefinesPath, 'utf8');
@@ -25,10 +25,10 @@ export default class FirmwareBuilder {
 
   async checkDefaultUserDefinesCompatibility(
     userDefinesTxt: string,
-    keys: UserDefineKey[]
+    keys: UserDefineKey[],
   ): Promise<UserDefinesCompatibilityResult> {
     const incompatibleKeys = keys.filter(
-      (key) => userDefinesTxt.indexOf(key) === -1
+      (key) => userDefinesTxt.indexOf(key) === -1,
     );
     if (incompatibleKeys.length > 0) {
       return {
@@ -54,11 +54,11 @@ export default class FirmwareBuilder {
     const firmwareBinFiles = fs
       .readdirSync(firmwareBuildPath)
       .filter((filename: string) =>
-        binaryExtensions.includes(path.extname(filename))
+        binaryExtensions.includes(path.extname(filename)),
       );
 
     return firmwareBinFiles.map((filename: string) =>
-      path.join(firmwareBuildPath, filename)
+      path.join(firmwareBuildPath, filename),
     );
   }
 
@@ -74,8 +74,8 @@ export default class FirmwareBuilder {
 
     const matchedBinFile = firmwareBinFiles.find((firmwareBinPath) =>
       searchValues.find(
-        (searchValue) => searchValue === path.basename(firmwareBinPath)
-      )
+        (searchValue) => searchValue === path.basename(firmwareBinPath),
+      ),
     );
 
     return matchedBinFile || path.join(firmwareBuildPath, 'firmware.bin');
@@ -94,7 +94,7 @@ export default class FirmwareBuilder {
         path.join(projectDir, '.pio', 'build', environment, 'backpack.bin'),
         path.join(projectDir, '.pio', 'build', environment, 'firmware.bin'),
       ];
-      // eslint-disable-next-line no-restricted-syntax
+
       for (const location of paths) {
         if (fs.existsSync(location)) {
           this.logger.log('removing stale bin', {
@@ -114,7 +114,7 @@ export default class FirmwareBuilder {
     target: string,
     userDefines: string,
     firmwarePath: string,
-    onOutput: OnOutputFunc = NoOpFunc
+    onOutput: OnOutputFunc = NoOpFunc,
   ): Promise<CommandResult> {
     await this.storeUserDefines(firmwarePath, userDefines);
     await this.removeStaleBinaries(firmwarePath, target);
@@ -127,7 +127,7 @@ export default class FirmwareBuilder {
     firmwarePath: string,
     serialPort: string | undefined,
     uploadType: UploadType,
-    onOutput: OnOutputFunc = NoOpFunc
+    onOutput: OnOutputFunc = NoOpFunc,
   ): Promise<CommandResult> {
     await this.storeUserDefines(firmwarePath, userDefines);
     await this.removeStaleBinaries(firmwarePath, target);
@@ -136,7 +136,7 @@ export default class FirmwareBuilder {
       target,
       serialPort,
       uploadType,
-      onOutput
+      onOutput,
     );
   }
 }

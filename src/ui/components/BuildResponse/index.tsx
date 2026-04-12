@@ -1,4 +1,4 @@
-import React, { FunctionComponent, memo } from 'react';
+import { FunctionComponent, memo } from 'react';
 import { Alert, AlertTitle } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation, Trans } from 'react-i18next';
@@ -58,7 +58,7 @@ const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
           <Alert sx={styles.errorMessage} severity="error">
             <AlertTitle>
               {toTitle(
-                response?.errorType ?? BuildFirmwareErrorType.GenericError
+                response?.errorType ?? BuildFirmwareErrorType.GenericError,
               )}
             </AlertTitle>
             <p>
@@ -84,7 +84,7 @@ const BuildResponse: FunctionComponent<BuildResponseProps> = memo(
         )}
       </>
     );
-  }
+  },
 );
 
 export default BuildResponse;

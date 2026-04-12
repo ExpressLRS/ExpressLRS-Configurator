@@ -18,7 +18,7 @@ export default class MulticastDnsSimulatorService {
           UserDefineKey.BINDING_PHRASE,
           `test-tx-binding-phrase`,
           true,
-          true
+          true,
         ),
         UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
       ],
@@ -38,7 +38,7 @@ export default class MulticastDnsSimulatorService {
           UserDefineKey.BINDING_PHRASE,
           `test-rx-binding-phrase`,
           true,
-          true
+          true,
         ),
         UserDefine.Boolean(UserDefineKey.UART_INVERTED, true),
       ],

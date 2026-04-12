@@ -21,7 +21,7 @@ export default class MulticastDnsMonitorResolver {
     topics: [PubSubTopic.MulticastDnsEvents],
   })
   multicastDnsMonitorUpdates(
-    @Root() n: MulticastDnsServicePayload
+    @Root() n: MulticastDnsServicePayload,
   ): MulticastDnsMonitorUpdate {
     return new MulticastDnsMonitorUpdate(n.type, n.data);
   }

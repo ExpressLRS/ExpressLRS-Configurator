@@ -43,7 +43,7 @@ export default class MulticastDnsInformation {
     ip: string,
     dns: string,
     port: number,
-    deviceName: string
+    deviceName: string,
   ) {
     this.name = name;
     this.options = options;

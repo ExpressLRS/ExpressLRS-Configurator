@@ -17,12 +17,13 @@ import { useTranslation } from 'react-i18next';
 import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 import Omnibox from '../Omnibox';
+import { useLazyQuery } from '@apollo/client/react';
 import {
   FirmwareSource,
   FirmwareVersionDataInput,
-  useGetBranchesLazyQuery,
-  useGetReleasesLazyQuery,
-  useGetPullRequestsLazyQuery,
+  GetBranchesDocument,
+  GetReleasesDocument,
+  GetPullRequestsDocument,
   PullRequestInput,
 } from '../../gql/generated/types';
 import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
@@ -67,18 +68,18 @@ interface FirmwareVersionCardProps {
 }
 
 const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
-  props
+  props,
 ) => {
   const { onChange, data, gitRepository } = props;
 
   const { t } = useTranslation();
 
   const [firmwareSource, setFirmwareSource] = useState<FirmwareSource>(
-    data?.source || FirmwareSource.GitTag
+    data?.source || FirmwareSource.GitTag,
   );
   const handleFirmwareSourceChange = (
     _event: React.SyntheticEvent,
-    value: FirmwareSource
+    value: FirmwareSource,
   ) => {
     setFirmwareSource(value);
   };
@@ -96,7 +97,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   }, []);
   const onShowPreReleases = (
     _event: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean
+    checked: boolean,
   ) => {
     setShowPreReleases(checked);
     new ApplicationStorage().setShowPreReleases(checked).catch((err: Error) => {
@@ -107,7 +108,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   const [
     queryGitTags,
     { loading: gitTagsLoading, data: gitTagsResponse, error: tagsError },
-  ] = useGetReleasesLazyQuery();
+  ] = useLazyQuery(GetReleasesDocument);
 
   const [
     queryGitBranches,
@@ -116,7 +117,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       data: gitBranchesResponse,
       error: branchesError,
     },
-  ] = useGetBranchesLazyQuery();
+  ] = useLazyQuery(GetBranchesDocument);
 
   const [
     queryGitPullRequests,
@@ -125,10 +126,10 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       data: gitPullRequestsResponse,
       error: pullRequestsError,
     },
-  ] = useGetPullRequestsLazyQuery();
+  ] = useLazyQuery(GetPullRequestsDocument);
 
-  const loading =
-    gitTagsLoading || gitBranchesLoading || gitPullRequestsLoading;
+  const loading
+    = gitTagsLoading || gitBranchesLoading || gitPullRequestsLoading;
 
   const gitTags = useMemo(() => {
     return (
@@ -153,7 +154,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   const gitPullRequests = gitPullRequestsResponse?.pullRequests;
 
   const [currentGitTag, setCurrentGitTag] = useState<string>(
-    data?.gitTag || ''
+    data?.gitTag || '',
   );
   const onGitTag = (name: string | null) => {
     if (name === null) {
@@ -169,10 +170,10 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   useEffect(() => {
     if (firmwareSource === FirmwareSource.GitTag) {
       if (
-        !showPreReleases &&
-        gitTags?.length &&
-        gitTags?.length > 0 &&
-        gitTags
+        !showPreReleases
+        && gitTags?.length
+        && gitTags?.length > 0
+        && gitTags
           ?.filter(({ preRelease }) => !preRelease)
           .find((item) => item.tagName === currentGitTag) === undefined
       ) {
@@ -182,7 +183,7 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   }, [showPreReleases, currentGitTag, gitTags, firmwareSource]);
 
   const [currentGitBranch, setCurrentGitBranch] = useState<string>(
-    data?.gitBranch || ''
+    data?.gitBranch || '',
   );
   const onGitBranch = (name: string | null) => {
     if (name === null) {
@@ -193,15 +194,15 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
   };
 
   const [currentGitCommit, setCurrentGitCommit] = useState<string>(
-    data?.gitCommit || ''
+    data?.gitCommit || '',
   );
   const [debouncedGitCommit, setDebouncedGitCommit] = useState<string>(
-    data?.gitCommit || ''
+    data?.gitCommit || '',
   );
 
   const debouncedGitCommitHandler = useMemo(
     () => debounce(setDebouncedGitCommit, 1000),
-    [setDebouncedGitCommit]
+    [setDebouncedGitCommit],
   );
 
   // Stop the invocation of the debounced function
@@ -226,17 +227,17 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     setLocalPath(event.target.value);
   };
 
-  const [currentGitPullRequest, setCurrentGitPullRequest] =
-    useState<PullRequestInput | null>(data?.gitPullRequest || null);
+  const [currentGitPullRequest, setCurrentGitPullRequest]
+    = useState<PullRequestInput | null>(data?.gitPullRequest || null);
 
   /*
     Make sure that a valid pull request is selected
    */
   useEffect(() => {
     if (gitPullRequestsResponse?.pullRequests && currentGitPullRequest) {
-      const pullRequest =
-        gitPullRequestsResponse.pullRequests.find(
-          (item) => item.number === currentGitPullRequest.number
+      const pullRequest
+        = gitPullRequestsResponse.pullRequests.find(
+          (item) => item.number === currentGitPullRequest.number,
         ) || null;
       // if we have a list of pull requests and the current pull request is not
       // part of that list, then set current pull request to null
@@ -245,8 +246,8 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
       }
       // prevent stale head commit hash cache
       if (
-        pullRequest &&
-        pullRequest.headCommitHash !== currentGitPullRequest.headCommitHash
+        pullRequest
+        && pullRequest.headCommitHash !== currentGitPullRequest.headCommitHash
       ) {
         setCurrentGitPullRequest({
           id: pullRequest.id,
@@ -402,8 +403,8 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
     }));
   }, [gitPullRequests]);
 
-  const showBetaFpvAlert =
-    localPath?.toLocaleLowerCase()?.indexOf('betafpv') > -1;
+  const showBetaFpvAlert
+    = localPath?.toLocaleLowerCase()?.indexOf('betafpv') > -1;
 
   const { isExpertModeEnabled } = useAppState();
 
@@ -450,20 +451,20 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
             <>
               <FormControlLabel
                 sx={styles.preReleaseCheckbox}
-                control={
+                control={(
                   <Checkbox
                     checked={showPreReleases}
                     onChange={onShowPreReleases}
                   />
-                }
+                )}
                 label={t('FirmwareVersionForm.ShowPreRreleases')}
               />
               <Omnibox
                 title={t('FirmwareVersionForm.Releases')}
                 options={gitTagOptions}
                 currentValue={
-                  gitTagOptions.find((item) => item.value === currentGitTag) ??
-                  null
+                  gitTagOptions.find((item) => item.value === currentGitTag)
+                  ?? null
                 }
                 onChange={onGitTag}
               />
@@ -476,48 +477,48 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
               >
                 {t('FirmwareVersionForm.ReleaseNotes')}
               </Button>
-              {currentGitTag &&
-                gitTagOptions.length > 0 &&
-                gitTagOptions[0]?.value !== currentGitTag && (
-                  <Alert sx={styles.firmwareVersionAlert} severity="info">
-                    {t('FirmwareVersionForm.NewerVersionAvailable')}
-                  </Alert>
-                )}
-              {(currentGitTag === '2.5.0' || currentGitTag === '2.5.1') &&
-                gitRepository.repositoryName === 'ExpressLRS' && (
-                  <Alert sx={styles.firmwareVersionAlert} severity="warning">
-                    {t('FirmwareVersionForm.UpgradeToV3')}
-                  </Alert>
-                )}
+              {currentGitTag
+                && gitTagOptions.length > 0
+                && gitTagOptions[0]?.value !== currentGitTag && (
+                <Alert sx={styles.firmwareVersionAlert} severity="info">
+                  {t('FirmwareVersionForm.NewerVersionAvailable')}
+                </Alert>
+              )}
+              {(currentGitTag === '2.5.0' || currentGitTag === '2.5.1')
+                && gitRepository.repositoryName === 'ExpressLRS' && (
+                <Alert sx={styles.firmwareVersionAlert} severity="warning">
+                  {t('FirmwareVersionForm.UpgradeToV3')}
+                </Alert>
+              )}
             </>
           )}
         </Box>
       )}
-      {firmwareSource === FirmwareSource.GitBranch &&
-        gitBranches !== undefined && (
-          <>
-            <Alert severity="warning" sx={styles.dangerZone}>
-              <AlertTitle>
-                {t('FirmwareVersionForm.DangerZoneTitle')}
-              </AlertTitle>
-              {t('FirmwareVersionForm.DangerZoneContent')}
-            </Alert>
-            <Box sx={styles.tabContents}>
-              {!loading && (
-                <Omnibox
-                  title={t('FirmwareVersionForm.GitBranches')}
-                  options={gitBranchOptions}
-                  currentValue={
-                    gitBranchOptions.find(
-                      (item) => item.value === currentGitBranch
-                    ) ?? null
-                  }
-                  onChange={onGitBranch}
-                />
-              )}
-            </Box>
-          </>
-        )}
+      {firmwareSource === FirmwareSource.GitBranch
+        && gitBranches !== undefined && (
+        <>
+          <Alert severity="warning" sx={styles.dangerZone}>
+            <AlertTitle>
+              {t('FirmwareVersionForm.DangerZoneTitle')}
+            </AlertTitle>
+            {t('FirmwareVersionForm.DangerZoneContent')}
+          </Alert>
+          <Box sx={styles.tabContents}>
+            {!loading && (
+              <Omnibox
+                title={t('FirmwareVersionForm.GitBranches')}
+                options={gitBranchOptions}
+                currentValue={
+                  gitBranchOptions.find(
+                    (item) => item.value === currentGitBranch,
+                  ) ?? null
+                }
+                onChange={onGitBranch}
+              />
+            )}
+          </Box>
+        </>
+      )}
       {firmwareSource === FirmwareSource.GitCommit && (
         <>
           <Alert severity="warning" sx={styles.dangerZone}>
@@ -571,32 +572,32 @@ const FirmwareVersionForm: FunctionComponent<FirmwareVersionCardProps> = (
           </Box>
         </>
       )}
-      {firmwareSource === FirmwareSource.GitPullRequest &&
-        gitPullRequests !== undefined && (
-          <>
-            <Alert severity="warning" sx={styles.dangerZone}>
-              <AlertTitle>
-                {t('FirmwareVersionForm.DangerZoneTitle')}
-              </AlertTitle>
-              {t('FirmwareVersionForm.DangerZoneContent')}
-            </Alert>
-            <Box sx={styles.tabContents}>
-              {!loading && (
-                <Omnibox
-                  title={t('FirmwareVersionForm.GitPullRequests')}
-                  options={gitPullRequestOptions ?? []}
-                  currentValue={
-                    gitPullRequestOptions?.find(
-                      (item) =>
-                        item.value === `${currentGitPullRequest?.number}`
-                    ) ?? null
-                  }
-                  onChange={onGitPullRequest}
-                />
-              )}
-            </Box>
-          </>
-        )}
+      {firmwareSource === FirmwareSource.GitPullRequest
+        && gitPullRequests !== undefined && (
+        <>
+          <Alert severity="warning" sx={styles.dangerZone}>
+            <AlertTitle>
+              {t('FirmwareVersionForm.DangerZoneTitle')}
+            </AlertTitle>
+            {t('FirmwareVersionForm.DangerZoneContent')}
+          </Alert>
+          <Box sx={styles.tabContents}>
+            {!loading && (
+              <Omnibox
+                title={t('FirmwareVersionForm.GitPullRequests')}
+                options={gitPullRequestOptions ?? []}
+                currentValue={
+                  gitPullRequestOptions?.find(
+                    (item) =>
+                      item.value === `${currentGitPullRequest?.number}`,
+                  ) ?? null
+                }
+                onChange={onGitPullRequest}
+              />
+            )}
+          </Box>
+        </>
+      )}
       <Loader loading={loading} />
       <ShowAlerts severity="error" messages={branchesError} />
       <ShowAlerts severity="error" messages={tagsError} />

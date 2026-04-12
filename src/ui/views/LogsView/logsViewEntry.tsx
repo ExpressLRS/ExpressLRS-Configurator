@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import theme from '../../theme';
 import { LogEntry } from '../../gql/generated/types';
 import LogsViewEntryContext from './logsViewEntryContext';
@@ -41,7 +41,9 @@ const LogEntryComponent: FunctionComponent<{ logEntry: LogEntry }> = ({
           ]
         </Typography>
         <Typography mr={1} color={LogLevelColor.get(level)}>
-          [{level.toUpperCase()}]
+          [
+          {level.toUpperCase()}
+          ]
         </Typography>
         <Typography>{message}</Typography>
       </Box>

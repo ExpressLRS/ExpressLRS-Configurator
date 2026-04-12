@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { PubSubEngine } from 'graphql-subscriptions';
+import { type PubSub } from 'type-graphql';
 import * as os from 'os';
 import BuildJobType from '../../models/enum/BuildJobType';
 import UserDefine from '../../models/UserDefine';
@@ -42,8 +42,7 @@ import {
 
 @Service()
 export default class PlatformioFlashingStrategyService
-  implements FlashingStrategy
-{
+implements FlashingStrategy {
   readonly name: string = 'PlatformioFlashingStrategy';
 
   mutex: Mutex;
@@ -53,17 +52,17 @@ export default class PlatformioFlashingStrategyService
     private firmwaresPath: string,
     private platformio: Platformio,
     private builder: FirmwareBuilder,
-    private pubSub: PubSubEngine,
+    private pubSub: PubSub,
     private logger: LoggerService,
     private userDefinesBuilder: UserDefinesBuilder,
-    private targetsLoader: TargetsLoader
+    private targetsLoader: TargetsLoader,
   ) {
     this.mutex = new Mutex();
   }
 
   private async updateProgress(
     type: BuildProgressNotificationType,
-    step: BuildFirmwareStep
+    step: BuildFirmwareStep,
   ): Promise<void> {
     this.logger?.log('build progress notification', {
       type,
@@ -87,22 +86,22 @@ export default class PlatformioFlashingStrategyService
 
   async availableFirmwareTargets(
     args: TargetArgs,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<Device[]> {
     return this.targetsLoader.loadTargetsList(args, gitRepository);
   }
 
   async targetDeviceOptions(
     args: UserDefineFilters,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<UserDefine[]> {
     return this.userDefinesBuilder.loadForDevice(args, gitRepository);
   }
 
   private osUsernameContainsAmpersand(): boolean {
     if (
-      os.platform() === 'win32' &&
-      os.userInfo({ encoding: 'utf8' }).username.indexOf('&') > -1
+      os.platform() === 'win32'
+      && os.userInfo({ encoding: 'utf8' }).username.indexOf('&') > -1
     ) {
       return true;
     }
@@ -110,17 +109,17 @@ export default class PlatformioFlashingStrategyService
   }
 
   async isCompatible(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     _params: IsCompatibleArgs,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _gitRepository: GitRepository
+
+    _gitRepository: GitRepository,
   ) {
     return true;
   }
 
   async buildFlashFirmware(
     params: BuildFlashFirmwareParams,
-    gitRepository: GitRepository
+    gitRepository: GitRepository,
   ): Promise<BuildFlashFirmwareResult> {
     const gitRepositoryUrl = gitRepository.url;
     const gitRepositorySrcFolder = gitRepository.srcFolder;
@@ -134,7 +133,7 @@ export default class PlatformioFlashingStrategyService
       return new BuildFlashFirmwareResult(
         false,
         'there is another build/flash request in progress...',
-        BuildFirmwareErrorType.GenericError
+        BuildFirmwareErrorType.GenericError,
       );
     }
     this.mutex.tryLock();
@@ -142,7 +141,7 @@ export default class PlatformioFlashingStrategyService
     try {
       await this.updateProgress(
         BuildProgressNotificationType.Info,
-        BuildFirmwareStep.VERIFYING_BUILD_SYSTEM
+        BuildFirmwareStep.VERIFYING_BUILD_SYSTEM,
       );
 
       const badUsername = this.osUsernameContainsAmpersand();
@@ -150,7 +149,7 @@ export default class PlatformioFlashingStrategyService
         return new BuildFlashFirmwareResult(
           false,
           'Windows username contains & ampersand character. At this time it is not supported and build process will fail. Please change the Windows username.',
-          BuildFirmwareErrorType.GenericError
+          BuildFirmwareErrorType.GenericError,
         );
       }
 
@@ -163,14 +162,14 @@ export default class PlatformioFlashingStrategyService
         return new BuildFlashFirmwareResult(
           false,
           `Python dependency error: ${pythonCheck.stderr} ${pythonCheck.stdout}`,
-          BuildFirmwareErrorType.PythonDependencyError
+          BuildFirmwareErrorType.PythonDependencyError,
         );
       }
 
       const coreCheck = await this.platformio.checkCore();
       if (!coreCheck.success) {
         await this.updateLogs(
-          'Failed to find Platformio on your computer. Trying to install it automatically...'
+          'Failed to find Platformio on your computer. Trying to install it automatically...',
         );
         this.logger?.error('platformio dependency check error', undefined, {
           stderr: coreCheck.stderr,
@@ -179,7 +178,7 @@ export default class PlatformioFlashingStrategyService
         const platformioInstallResult = await this.platformio.install(
           (output) => {
             this.updateLogs(output);
-          }
+          },
         );
         if (!platformioInstallResult.success) {
           this.logger?.error('platformio installation error', undefined, {
@@ -189,7 +188,7 @@ export default class PlatformioFlashingStrategyService
           return new BuildFlashFirmwareResult(
             false,
             `platformio error: ${platformioInstallResult.stderr} ${platformioInstallResult.stdout}`,
-            BuildFirmwareErrorType.PlatformioDependencyError
+            BuildFirmwareErrorType.PlatformioDependencyError,
           );
         }
       }
@@ -205,7 +204,7 @@ export default class PlatformioFlashingStrategyService
         return new BuildFlashFirmwareResult(
           false,
           `${e}`,
-          BuildFirmwareErrorType.GitDependencyError
+          BuildFirmwareErrorType.GitDependencyError,
         );
       }
       this.logger?.log('git path', {
@@ -217,12 +216,12 @@ export default class PlatformioFlashingStrategyService
           baseDirectory: this.firmwaresPath,
           gitBinaryLocation: gitPath,
         },
-        this.logger
+        this.logger,
       );
 
       await this.updateProgress(
         BuildProgressNotificationType.Info,
-        BuildFirmwareStep.DOWNLOADING_FIRMWARE
+        BuildFirmwareStep.DOWNLOADING_FIRMWARE,
       );
       let firmwarePath = '';
       switch (params.firmware.source) {
@@ -230,7 +229,7 @@ export default class PlatformioFlashingStrategyService
           const tagResult = await firmwareDownload.checkoutTag(
             gitRepositoryUrl,
             gitRepositorySrcFolder,
-            params.firmware.gitTag
+            params.firmware.gitTag,
           );
           firmwarePath = tagResult.path;
           break;
@@ -238,7 +237,7 @@ export default class PlatformioFlashingStrategyService
           const branchResult = await firmwareDownload.checkoutBranch(
             gitRepositoryUrl,
             gitRepositorySrcFolder,
-            params.firmware.gitBranch
+            params.firmware.gitBranch,
           );
           firmwarePath = branchResult.path;
           break;
@@ -246,7 +245,7 @@ export default class PlatformioFlashingStrategyService
           const commitResult = await firmwareDownload.checkoutCommit(
             gitRepositoryUrl,
             gitRepositorySrcFolder,
-            params.firmware.gitCommit
+            params.firmware.gitCommit,
           );
           firmwarePath = commitResult.path;
           break;
@@ -258,14 +257,14 @@ export default class PlatformioFlashingStrategyService
             const pullRequestResult = await firmwareDownload.checkoutCommit(
               gitRepositoryUrl,
               gitRepositorySrcFolder,
-              params.firmware.gitPullRequest.headCommitHash
+              params.firmware.gitPullRequest.headCommitHash,
             );
             firmwarePath = pullRequestResult.path;
           }
           break;
         default:
           throw new Error(
-            `unsupported firmware source: ${params.firmware.source}`
+            `unsupported firmware source: ${params.firmware.source}`,
           );
       }
       this.logger?.log('firmware path', {
@@ -274,22 +273,22 @@ export default class PlatformioFlashingStrategyService
       });
 
       if (params.firmware.source !== FirmwareSource.Local) {
-        const compatCheck =
-          await this.builder.checkDefaultUserDefinesCompatibilityAtPath(
+        const compatCheck
+          = await this.builder.checkDefaultUserDefinesCompatibilityAtPath(
             firmwarePath,
             params.userDefines
               .filter(
                 (userDefine) =>
-                  userDefine.enabled &&
-                  userDefine.key !== UserDefineKey.DEVICE_NAME
+                  userDefine.enabled
+                  && userDefine.key !== UserDefineKey.DEVICE_NAME,
               )
-              .map(({ key }) => key)
+              .map(({ key }) => key),
           );
         if (!compatCheck.compatible) {
           return new BuildFlashFirmwareResult(
             false,
             `Downloaded firmware is not compatible with the following user defines: ${compatCheck.incompatibleKeys}`,
-            BuildFirmwareErrorType.BuildError
+            BuildFirmwareErrorType.BuildError,
           );
         }
       }
@@ -303,7 +302,7 @@ export default class PlatformioFlashingStrategyService
       if (params.type === BuildJobType.Build) {
         await this.updateProgress(
           BuildProgressNotificationType.Info,
-          BuildFirmwareStep.BUILDING_FIRMWARE
+          BuildFirmwareStep.BUILDING_FIRMWARE,
         );
         const compileResult = await this.builder.build(
           params.target,
@@ -311,7 +310,7 @@ export default class PlatformioFlashingStrategyService
           firmwarePath,
           (output) => {
             this.updateLogs(output);
-          }
+          },
         );
         if (!compileResult.success) {
           this.logger?.error('compile error', undefined, {
@@ -322,29 +321,29 @@ export default class PlatformioFlashingStrategyService
           return new BuildFlashFirmwareResult(
             false,
             compileResult.stderr,
-            BuildFirmwareErrorType.BuildError
+            BuildFirmwareErrorType.BuildError,
           );
         }
 
         const firmwareBinPath = this.builder.getFirmwareBinPath(
           params.target,
-          firmwarePath
+          firmwarePath,
         );
-        const canonicalFirmwareBinPath =
-          await createBinaryCopyWithCanonicalName(params, firmwareBinPath);
+        const canonicalFirmwareBinPath
+          = await createBinaryCopyWithCanonicalName(params, firmwareBinPath);
 
         return new BuildFlashFirmwareResult(
           true,
           undefined,
           undefined,
-          canonicalFirmwareBinPath
+          canonicalFirmwareBinPath,
         );
       }
 
       if (params.type === BuildJobType.Flash) {
         await this.updateProgress(
           BuildProgressNotificationType.Info,
-          BuildFirmwareStep.FLASHING_FIRMWARE
+          BuildFirmwareStep.FLASHING_FIRMWARE,
         );
 
         const uploadType = params.forceFlash
@@ -359,7 +358,7 @@ export default class PlatformioFlashingStrategyService
           uploadType,
           (output) => {
             this.updateLogs(output);
-          }
+          },
         );
         if (!flashResult.success) {
           this.logger?.error('flash error', undefined, {
@@ -377,7 +376,7 @@ export default class PlatformioFlashingStrategyService
             flashResult.stderr,
             uploadError === -2
               ? BuildFirmwareErrorType.TargetMismatch
-              : BuildFirmwareErrorType.FlashError
+              : BuildFirmwareErrorType.FlashError,
           );
         }
       }
@@ -390,7 +389,7 @@ export default class PlatformioFlashingStrategyService
       return new BuildFlashFirmwareResult(
         false,
         `Error: ${e}`,
-        BuildFirmwareErrorType.GenericError
+        BuildFirmwareErrorType.GenericError,
       );
     } finally {
       this.mutex.unlock();

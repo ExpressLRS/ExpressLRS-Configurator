@@ -32,7 +32,7 @@ export default class SerialMonitorResolver {
   @Mutation(() => SerialPortConnectResult)
   async connectToSerialDevice(
     @Arg('input', () => SerialConnectionConfigInput)
-    input: SerialConnectionConfigInput
+    input: SerialConnectionConfigInput,
   ): Promise<SerialPortConnectResult> {
     try {
       await this.serialMonitorService.connect(input.port, input.baudRate);
@@ -56,7 +56,7 @@ export default class SerialMonitorResolver {
     topics: [PubSubTopic.SerialMonitorStream],
   })
   serialMonitorLogs(
-    @Root() n: SerialMonitorLogUpdatePayload
+    @Root() n: SerialMonitorLogUpdatePayload,
   ): SerialMonitorLogUpdate {
     return new SerialMonitorLogUpdate(n.data);
   }
@@ -65,7 +65,7 @@ export default class SerialMonitorResolver {
     topics: [PubSubTopic.SerialMonitorEvents],
   })
   serialMonitorEvents(
-    @Root() n: SerialMonitorEventPayload
+    @Root() n: SerialMonitorEventPayload,
   ): SerialMonitorEvent {
     return new SerialMonitorEvent(n.type);
   }

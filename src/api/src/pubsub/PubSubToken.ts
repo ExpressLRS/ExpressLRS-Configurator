@@ -1,6 +1,6 @@
 import { Token } from 'typedi';
-import { PubSubEngine } from 'graphql-subscriptions';
+import { type PubSub } from 'type-graphql';
 
-const PubSubToken = new Token<PubSubEngine>('PUBSUB_TOKEN');
+const PubSubToken = new Token<PubSub>('PUBSUB_TOKEN');
 
 export default PubSubToken;
