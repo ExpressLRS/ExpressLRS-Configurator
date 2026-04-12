@@ -103,7 +103,9 @@
     "Logs": "Logs",
     "SerialMonitor": "Serial Monitor",
     "Settings": "Settings",
-    "Support": "Support"
+    "Support": "Support",
+    "SwitchToLightTheme": "Switch to light theme",
+    "SwitchToDarkTheme": "Switch to dark theme"
   },
   "FlashingMethod": {
     "BetaflightPassthrough": "Betaflight Passthrough",
@@ -253,7 +255,11 @@
     "CurrentLanguage": "Current language",
     "ExpertMode": "Expert Mode",
     "ApplicationOptions": "Application Options",
-    "ExpertModeDescription": "Enable Expert Mode to unlock advanced features including additional firmware sources, the ability to build firmware with manual user-defined parameters, and access to serial monitor screen for detailed diagnostics."
+    "ExpertModeDescription": "Enable Expert Mode to unlock advanced features including additional firmware sources, the ability to build firmware with manual user-defined parameters, and access to serial monitor screen for detailed diagnostics.",
+    "ThemeSelector": "Theme",
+    "ThemeSystem": "System (follow OS preference)",
+    "ThemeLight": "Light",
+    "ThemeDark": "Dark"
   },
   "SupportView": {
     "Support": "Support",

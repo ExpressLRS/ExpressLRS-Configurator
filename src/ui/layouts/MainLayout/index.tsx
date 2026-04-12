@@ -7,12 +7,21 @@ import Sidebar from '../../components/Sidebar';
 const styles: Record<string, SxProps<Theme>> = {
   root: {
     display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    overflow: 'hidden',
+  },
+  body: {
+    display: 'flex',
+    flex: 1,
+    minHeight: 0,
   },
   main: {
     marginY: 4,
   },
   content: {
     flexGrow: 1,
+    overflowY: 'auto',
     '& .MuiCard-root': {
       marginBottom: 4,
     },
@@ -27,10 +36,12 @@ const MainLayout: FunctionComponent<MainLayoutProps> = (props) => {
   const { children } = props;
   return (
     <Box component="main" sx={styles.root}>
-      <Sidebar />
-      <Box sx={styles.content}>
-        <Header />
-        <Container sx={styles.main}>{children}</Container>
+      <Header />
+      <Box sx={styles.body}>
+        <Sidebar />
+        <Box sx={styles.content}>
+          <Container sx={styles.main}>{children}</Container>
+        </Box>
       </Box>
     </Box>
   );

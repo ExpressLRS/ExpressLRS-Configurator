@@ -13,6 +13,10 @@ import { useQuery } from '@apollo/client/react';
 import { CheckForUpdatesDocument } from '../../gql/generated/types';
 
 const styles: Record<string, SxProps<Theme>> = {
+  appBar: {
+    background: (theme: Theme) => theme.palette.custom.appBarGradient,
+    color: (theme: Theme) => theme.palette.custom.appBarTextColor,
+  },
   title: {
     fontSize: 'theme.typography.h4.fontSize',
     lineHeight: 'theme.typography.h4.fontSize',
@@ -30,7 +34,7 @@ const styles: Record<string, SxProps<Theme>> = {
   updateAvailable: {
     fontSize: '0.4em',
     marginLeft: '0.4em',
-    color: 'rgb(52 216 52) !important',
+    color: (theme: Theme) => `${theme.palette.custom.updateAvailableColor} !important`,
   },
   toolbar: {
     display: 'flex',
@@ -62,7 +66,7 @@ const Header: FunctionComponent = memo(() => {
     },
   });
   return (
-    <AppBar position="static" color="default">
+    <AppBar position="static" elevation={0} sx={styles.appBar}>
       <Toolbar sx={styles.toolbar}>
         <Box sx={styles.logotype}>
           <img src={LogotypeIcon} alt={t('Header.ExpressLRSConfigurator')} />
@@ -95,6 +99,7 @@ const Header: FunctionComponent = memo(() => {
               title={t('Header.Documentation')}
               rel="noreferrer noreferrer"
               size="large"
+              color="inherit"
             >
               <WebIcon sx={styles.svgIcon} />
             </IconButton>
@@ -106,6 +111,7 @@ const Header: FunctionComponent = memo(() => {
               title={t('Header.Discord')}
               rel="noreferrer noreferrer"
               size="large"
+              color="inherit"
             >
               <Box
                 component="img"
@@ -122,6 +128,7 @@ const Header: FunctionComponent = memo(() => {
               title={t('Header.FacebookGroup')}
               rel="noreferrer noreferrer"
               size="large"
+              color="inherit"
             >
               <FacebookIcon sx={styles.facebookIcon} />
             </IconButton>
@@ -133,6 +140,7 @@ const Header: FunctionComponent = memo(() => {
               title={t('Header.Github')}
               rel="noreferrer noreferrer"
               size="large"
+              color="inherit"
             >
               <GitHubIcon />
             </IconButton>
@@ -144,6 +152,7 @@ const Header: FunctionComponent = memo(() => {
               title={t('Header.OpenCollective')}
               rel="noreferrer noreferrer"
               size="large"
+              color="inherit"
             >
               <Box
                 component="img"

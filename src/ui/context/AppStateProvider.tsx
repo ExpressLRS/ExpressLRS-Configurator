@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useMemo, useState } from 'react';
 import AppState from '../models/AppState';
 import AppStatus from '../models/enum/AppStatus';
+import ThemeMode from '../models/enum/ThemeMode';
 import ApplicationStorage from '../storage';
 
 export const AppStateContext = React.createContext<{
@@ -10,6 +11,7 @@ export const AppStateContext = React.createContext<{
       appState: {
         appStatus: AppStatus.Interactive,
         isExpertModeEnabled: false,
+        themeMode: ThemeMode.System,
       },
       setAppState: () => {},
     });
@@ -17,6 +19,19 @@ export const AppStateContext = React.createContext<{
 interface AppStateProviderContextProps {
   children?: React.ReactNode;
 }
+
+const parseThemeMode = (value: string | null): ThemeMode => {
+  switch (value) {
+    case ThemeMode.Light:
+      return ThemeMode.Light;
+    case ThemeMode.Dark:
+      return ThemeMode.Dark;
+    case ThemeMode.System:
+      return ThemeMode.System;
+    default:
+      return ThemeMode.System;
+  }
+};
 
 const AppStateProvider: FunctionComponent<AppStateProviderContextProps> = ({
   children,
@@ -26,11 +41,13 @@ const AppStateProvider: FunctionComponent<AppStateProviderContextProps> = ({
     return {
       appStatus: AppStatus.Interactive,
       isExpertModeEnabled: storage.getExpertModeEnabled() ?? false,
+      themeMode: parseThemeMode(storage.getThemeMode()),
     };
   });
   const preSetAppState = (state: AppState) => {
     const storage = new ApplicationStorage();
     storage.setExpertModeEnabled(state.isExpertModeEnabled);
+    storage.setThemeMode(state.themeMode);
     setAppState(state);
   };
   const value = useMemo(

@@ -9,7 +9,6 @@ import {
   SerialPortInformation,
   AvailableDevicesListDocument,
 } from '../../gql/generated/types';
-import Loader from '../Loader';
 import ShowAlerts from '../ShowAlerts';
 
 const styles: Record<string, SxProps<Theme>> = {
@@ -28,10 +27,6 @@ const styles: Record<string, SxProps<Theme>> = {
     fontSize: '1.44em',
   },
 
-  loader: {
-    marginTop: 2,
-    marginBottom: 2,
-  },
 };
 
 interface SerialDeviceSelectProps {
@@ -126,7 +121,6 @@ const SerialDeviceSelect: FunctionComponent<SerialDeviceSelectProps> = (
         </Tooltip>
       </Box>
 
-      <Loader sx={styles.loader} loading={loading} />
       <ShowAlerts severity="error" messages={error} />
     </Box>
   );

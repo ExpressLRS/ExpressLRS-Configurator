@@ -3,8 +3,44 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <script>
+      (function () {
+        try {
+          var mode = localStorage.getItem('theme_mode');
+          var isDark;
+          if (mode === 'light') {
+            isDark = false;
+          } else if (mode === 'dark') {
+            isDark = true;
+          } else {
+            isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          }
+          document.documentElement.style.backgroundColor = isDark ? '#303030' : '#f5f5f5';
+        } catch (e) {
+          document.documentElement.style.backgroundColor = '#303030';
+        }
+      })();
+    </script>
 </head>
-<body style="background-color: #303030;">
+<body>
+<script>
+  (function () {
+    try {
+      var mode = localStorage.getItem('theme_mode');
+      var isDark;
+      if (mode === 'light') {
+        isDark = false;
+      } else if (mode === 'dark') {
+        isDark = true;
+      } else {
+        isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      document.body.style.backgroundColor = isDark ? '#303030' : '#f5f5f5';
+    } catch (e) {
+      document.body.style.backgroundColor = '#303030';
+    }
+  })();
+</script>
 <div id="root"></div>
 </body>
 </html>

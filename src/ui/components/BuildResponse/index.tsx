@@ -12,7 +12,7 @@ import DocumentationLink from '../DocumentationLink';
 const styles: Record<string, SxProps<Theme>> = {
   errorMessage: {
     a: {
-      color: 'white',
+      color: (theme: Theme) => theme.palette.custom.alertError.text,
     },
   },
 };
