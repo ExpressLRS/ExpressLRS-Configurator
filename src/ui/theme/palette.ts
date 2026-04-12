@@ -7,20 +7,20 @@ export const BRAND_APPBAR_GRADIENT
 export const darkPalette: PaletteOptions = {
   mode: 'dark',
   primary: {
-    main: '#5f8bf3', // ELRS docs dark primary - accessible on dark backgrounds
-    light: '#90aff5',
-    dark: '#4361AA', // Brand blue
-    contrastText: '#ffffff',
-  },
-  secondary: {
-    main: '#9FC76F', // Brand sage/lime green
-    light: '#b8d694',
+    main: '#a6cf74', // ELRS brand green accent - matches docs dark accent
+    light: '#c4e0a0',
     dark: '#7da34e',
     contrastText: '#000000',
   },
+  secondary: {
+    main: '#5f8bf3', // ELRS brand blue
+    light: '#90aff5',
+    dark: '#4361AA',
+    contrastText: '#ffffff',
+  },
   background: {
-    default: '#303030',
-    paper: '#424242',
+    default: '#1e2129', // hsl(225, 15%, 14%) - website slate scheme
+    paper: '#272a35', // hsl(225, 15%, 18%) - slightly elevated
   },
   error: {
     main: '#f44336',
@@ -39,7 +39,7 @@ export const darkPalette: PaletteOptions = {
     secondary: 'rgba(255,255,255,0.7)',
   },
   custom: {
-    linkColor: '#90caf9',
+    linkColor: '#5f8bf3', // Brand blue for links
     updateAvailableColor: '#9FC76F',
     appBarGradient: BRAND_APPBAR_GRADIENT,
     appBarTextColor: '#ffffff',
@@ -53,19 +53,19 @@ export const darkPalette: PaletteOptions = {
 export const lightPalette: PaletteOptions = {
   mode: 'light',
   primary: {
+    main: '#5d8a3a', // Dark green for contrast on white backgrounds
+    light: '#7da34e',
+    dark: '#3d6320',
+    contrastText: '#ffffff',
+  },
+  secondary: {
     main: '#4361AA', // Brand blue
     light: '#6b83c2',
     dark: '#2e4377',
     contrastText: '#ffffff',
   },
-  secondary: {
-    main: '#7da34e', // Slightly darker brand green for contrast on white
-    light: '#9FC76F', // Brand sage
-    dark: '#5d7e35',
-    contrastText: '#ffffff',
-  },
   background: {
-    default: '#f5f5f5',
+    default: '#fafafa', // Near-white, matching website's white-dominant light theme
     paper: '#ffffff',
   },
   error: {

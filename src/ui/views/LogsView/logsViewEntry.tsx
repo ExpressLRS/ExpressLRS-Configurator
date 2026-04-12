@@ -14,15 +14,14 @@ enum LogLevel {
   SILLY = 'silly',
 }
 
-// TODO: assign different colors
 const LogLevelColor = new Map<string, string>([
   [LogLevel.ERROR, theme.palette.error.main],
-  [LogLevel.WARN, theme.palette.primary.main],
+  [LogLevel.WARN, theme.palette.warning.main],
   [LogLevel.INFO, theme.palette.info.light],
-  [LogLevel.HTTP, theme.palette.primary.main],
-  [LogLevel.VERBOSE, theme.palette.primary.main],
-  [LogLevel.DEBUG, theme.palette.primary.main],
-  [LogLevel.SILLY, theme.palette.primary.main],
+  [LogLevel.HTTP, theme.palette.info.main],
+  [LogLevel.VERBOSE, theme.palette.text.secondary],
+  [LogLevel.DEBUG, theme.palette.text.secondary],
+  [LogLevel.SILLY, theme.palette.text.disabled],
 ]);
 
 const LogEntryComponent: FunctionComponent<{ logEntry: LogEntry }> = ({
