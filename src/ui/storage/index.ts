@@ -55,12 +55,17 @@ export interface IApplicationStorage {
   setExpertModeEnabled(value: boolean): void;
 
   getExpertModeEnabled(): boolean | null;
+
+  setThemeMode(value: string): void;
+
+  getThemeMode(): string | null;
 }
 
 const DEVICE_OPTIONS_BY_TARGET_KEYSPACE = 'device_options';
 const FIRMWARE_SOURCE_KEY = 'firmware_source';
 const UI_SHOW_FIRMWARE_PRE_RELEASES = 'ui_show_pre_releases';
 const EXPERT_MODE = 'expert_mode';
+const THEME_MODE_KEY = 'theme_mode';
 
 export default class ApplicationStorage implements IApplicationStorage {
   async saveDeviceOptions(
@@ -253,5 +258,13 @@ export default class ApplicationStorage implements IApplicationStorage {
       }
     }
     return null;
+  }
+
+  setThemeMode(value: string): void {
+    localStorage.setItem(THEME_MODE_KEY, value);
+  }
+
+  getThemeMode(): string | null {
+    return localStorage.getItem(THEME_MODE_KEY);
   }
 }

@@ -3,18 +3,23 @@ import {
   CardContent,
   Checkbox,
   Divider,
+  FormControl,
   FormControlLabel,
+  Radio,
+  RadioGroup,
 } from '@mui/material';
-import { FunctionComponent } from 'react';
+import { ChangeEvent, FunctionComponent } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LanguageIcon from '@mui/icons-material/Language';
 import DeveloperModeIcon from '@mui/icons-material/DeveloperMode';
+import Brightness6Icon from '@mui/icons-material/Brightness6';
 import { useTranslation } from 'react-i18next';
 import CardTitle from '../../components/CardTitle';
 import MainLayout from '../../layouts/MainLayout';
 import Omnibox, { Option } from '../../components/Omnibox';
 import locales from '../../../i18n/locales.json';
 import useAppState from '../../hooks/useAppState';
+import ThemeMode from '../../models/enum/ThemeMode';
 
 const SettingsView: FunctionComponent = () => {
   const { t, i18n } = useTranslation();
@@ -54,6 +59,14 @@ const SettingsView: FunctionComponent = () => {
       isExpertModeEnabled: !appState.isExpertModeEnabled,
     });
   };
+
+  const onThemeModeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setAppState({
+      ...appState,
+      themeMode: event.target.value as ThemeMode,
+    });
+  };
+
   return (
     <MainLayout>
       <Card>
@@ -70,6 +83,35 @@ const SettingsView: FunctionComponent = () => {
             onChange={onLocaleChange}
             options={languages}
           />
+        </CardContent>
+        <Divider />
+        <CardTitle
+          icon={<Brightness6Icon />}
+          title={t('SettingsView.ThemeSelector')}
+        />
+        <CardContent style={{ paddingLeft: 26, marginTop: -18 }}>
+          <FormControl>
+            <RadioGroup
+              value={appState.themeMode}
+              onChange={onThemeModeChange}
+            >
+              <FormControlLabel
+                value={ThemeMode.System}
+                control={<Radio />}
+                label={t('SettingsView.ThemeSystem')}
+              />
+              <FormControlLabel
+                value={ThemeMode.Light}
+                control={<Radio />}
+                label={t('SettingsView.ThemeLight')}
+              />
+              <FormControlLabel
+                value={ThemeMode.Dark}
+                control={<Radio />}
+                label={t('SettingsView.ThemeDark')}
+              />
+            </RadioGroup>
+          </FormControl>
         </CardContent>
         <Divider />
         <CardTitle

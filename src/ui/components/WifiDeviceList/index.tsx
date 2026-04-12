@@ -16,7 +16,7 @@ const styles: Record<string, SxProps<Theme>> = {
   root: {
     marginBottom: 2,
     '& a': {
-      color: '#90caf9',
+      color: (theme: Theme) => theme.palette.custom.linkColor,
     },
   },
 };
