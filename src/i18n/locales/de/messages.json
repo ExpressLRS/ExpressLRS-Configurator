@@ -103,7 +103,9 @@
     "Logs": "Logs",
     "SerialMonitor": "Serielles Terminal",
     "Settings": "Einstellungen",
-    "Support": "Hilfe"
+    "Support": "Hilfe",
+    "SwitchToLightTheme": "Switch to light theme",
+    "SwitchToDarkTheme": "Switch to dark theme"
   },
   "FlashingMethod": {
     "BetaflightPassthrough": "Betaflight Passthrough",
@@ -253,7 +255,11 @@
     "CurrentLanguage": "Aktuelle Sprache",
     "ExpertMode": "Expertenmodus",
     "ApplicationOptions": "Anwendungsoptionen",
-    "ExpertModeDescription": "Aktiviere den Expertenmodus um erweiterte Funktionen zu entsperren, einschließlich zusätzlicher Firmware-Quellen, die Möglichkeit zur Erstellung von Firmware mit manuell definierten Parametern und Zugriff auf ein serielles terminal für detaillierte Diagnosen."
+    "ExpertModeDescription": "Aktiviere den Expertenmodus um erweiterte Funktionen zu entsperren, einschließlich zusätzlicher Firmware-Quellen, die Möglichkeit zur Erstellung von Firmware mit manuell definierten Parametern und Zugriff auf ein serielles terminal für detaillierte Diagnosen.",
+    "ThemeSelector": "Theme",
+    "ThemeSystem": "System (follow OS preference)",
+    "ThemeLight": "Light",
+    "ThemeDark": "Dark"
   },
   "SupportView": {
     "Support": "Hilfe",

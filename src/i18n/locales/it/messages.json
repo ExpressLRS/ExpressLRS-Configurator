@@ -79,7 +79,7 @@
     "FlashingMethod": "Modalità di Flash"
   },
   "Header": {
-    "ExpressLRSConfigurator": "ExpressLRS™ Configurator",
+    "ExpressLRSConfigurator": "Configuratore ExpressLRS™",
     "DownloadNewestRelease": "Clicca per scaricare una nuova release",
     "UpdateAvailable": "Aggiornamento disponibile!",
     "Documentation": "Documentazione",
@@ -103,7 +103,9 @@
     "Logs": "Logs",
     "SerialMonitor": "Monitor Seriale",
     "Settings": "Impostazioni",
-    "Support": "Supporto"
+    "Support": "Supporto",
+    "SwitchToLightTheme": "Switch to light theme",
+    "SwitchToDarkTheme": "Switch to dark theme"
   },
   "FlashingMethod": {
     "BetaflightPassthrough": "Passaggio tramite Betaflight",
@@ -253,7 +255,11 @@
     "CurrentLanguage": "Lingua attuale",
     "ExpertMode": "Modalità esperto",
     "ApplicationOptions": "Opzioni applicazione",
-    "ExpertModeDescription": "Abilita la Modalità Esperto per sbloccare funzionalità avanzate tra cui sorgenti firmware aggiuntive, la capacità di creare un firmware con parametri manuali definiti dall'utente e l'accesso allo schermo del monitor seriale per la diagnostica dettagliata."
+    "ExpertModeDescription": "Abilita la Modalità Esperto per sbloccare funzionalità avanzate tra cui sorgenti firmware aggiuntive, la capacità di creare un firmware con parametri manuali definiti dall'utente e l'accesso allo schermo del monitor seriale per la diagnostica dettagliata.",
+    "ThemeSelector": "Theme",
+    "ThemeSystem": "System (follow OS preference)",
+    "ThemeLight": "Light",
+    "ThemeDark": "Dark"
   },
   "SupportView": {
     "Support": "Supporto",
