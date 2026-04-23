@@ -103,7 +103,9 @@
     "Logs": "Logs",
     "SerialMonitor": "Moniteur de port série",
     "Settings": "Paramètres",
-    "Support": "Support"
+    "Support": "Support",
+    "SwitchToLightTheme": "Switch to light theme",
+    "SwitchToDarkTheme": "Switch to dark theme"
   },
   "FlashingMethod": {
     "BetaflightPassthrough": "Betaflight Passthrough",
@@ -253,7 +255,11 @@
     "CurrentLanguage": "Langue actuelle",
     "ExpertMode": "Mode expert",
     "ApplicationOptions": "Options de l'application",
-    "ExpertModeDescription": "Activer le mode expert pour débloquer des fonctionnalités avancées, telles que des sources de logiciels supplémentaires, la possibilité de générer un logiciel avec des paramètres définis manuellement par l'utilisateur et l'accès au moniteur série pour des diagnostics détaillés."
+    "ExpertModeDescription": "Activer le mode expert pour débloquer des fonctionnalités avancées, telles que des sources de logiciels supplémentaires, la possibilité de générer un logiciel avec des paramètres définis manuellement par l'utilisateur et l'accès au moniteur série pour des diagnostics détaillés.",
+    "ThemeSelector": "Theme",
+    "ThemeSystem": "System (follow OS preference)",
+    "ThemeLight": "Light",
+    "ThemeDark": "Dark"
   },
   "SupportView": {
     "Support": "Support",

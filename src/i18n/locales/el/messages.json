@@ -103,7 +103,9 @@
     "Logs": "Logs",
     "SerialMonitor": "Serial Monitor",
     "Settings": "Ρυθμίσεις",
-    "Support": "Υποστήριξη"
+    "Support": "Υποστήριξη",
+    "SwitchToLightTheme": "Switch to light theme",
+    "SwitchToDarkTheme": "Switch to dark theme"
   },
   "FlashingMethod": {
     "BetaflightPassthrough": "Betaflight Passthrough",
@@ -253,7 +255,11 @@
     "CurrentLanguage": "Τρέχουσα γλώσσα",
     "ExpertMode": "Για προχωρημένους",
     "ApplicationOptions": "Επιλογές εφαρμογής",
-    "ExpertModeDescription": "Ενεργοποίηση της λειτουργίας για προχωρημένους για να ξεκλειδώσετε προηγμένες λειτουργίες, συμπεριλαμβανομένων πρόσθετων πηγών υλικολογισμικού, τη δυνατότητα κατασκευής υλικολογισμικού με χειροκίνητες παραμέτρους που ορίζονται από τον χρήστη και την πρόσβαση σε σειριακή παρακολούθηση για λεπτομερή διάγνωση."
+    "ExpertModeDescription": "Ενεργοποίηση της λειτουργίας για προχωρημένους για να ξεκλειδώσετε προηγμένες λειτουργίες, συμπεριλαμβανομένων πρόσθετων πηγών υλικολογισμικού, τη δυνατότητα κατασκευής υλικολογισμικού με χειροκίνητες παραμέτρους που ορίζονται από τον χρήστη και την πρόσβαση σε σειριακή παρακολούθηση για λεπτομερή διάγνωση.",
+    "ThemeSelector": "Theme",
+    "ThemeSystem": "System (follow OS preference)",
+    "ThemeLight": "Light",
+    "ThemeDark": "Dark"
   },
   "SupportView": {
     "Support": "Υποστήριξη",

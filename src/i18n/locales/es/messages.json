@@ -103,7 +103,9 @@
     "Logs": "Registros",
     "SerialMonitor": "Monitor serie",
     "Settings": "Ajustes",
-    "Support": "Soporte"
+    "Support": "Soporte",
+    "SwitchToLightTheme": "Switch to light theme",
+    "SwitchToDarkTheme": "Switch to dark theme"
   },
   "FlashingMethod": {
     "BetaflightPassthrough": "Paso a través de Betaflight",
@@ -253,7 +255,11 @@
     "CurrentLanguage": "Idioma actual",
     "ExpertMode": "Módo experto",
     "ApplicationOptions": "Opciones de la aplicación",
-    "ExpertModeDescription": "Habilita el Modo Experto para desbloquear funciones avanzadas incluyendo fuentes adicionales de firmware, la capacidad de compilar el firmware con parámetros definidos manualmente por el usuario, y el acceso a la pantalla del monitor de serie para un diagnóstico detallado."
+    "ExpertModeDescription": "Habilita el Modo Experto para desbloquear funciones avanzadas incluyendo fuentes adicionales de firmware, la capacidad de compilar el firmware con parámetros definidos manualmente por el usuario, y el acceso a la pantalla del monitor de serie para un diagnóstico detallado.",
+    "ThemeSelector": "Theme",
+    "ThemeSystem": "System (follow OS preference)",
+    "ThemeLight": "Light",
+    "ThemeDark": "Dark"
   },
   "SupportView": {
     "Support": "Soporte",

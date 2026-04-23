@@ -103,7 +103,9 @@
     "Logs": "로그 기록",
     "SerialMonitor": "시리얼 모니터",
     "Settings": "설정",
-    "Support": "사용자 지원"
+    "Support": "사용자 지원",
+    "SwitchToLightTheme": "Switch to light theme",
+    "SwitchToDarkTheme": "Switch to dark theme"
   },
   "FlashingMethod": {
     "BetaflightPassthrough": "베타플라이트 패스스루",
@@ -253,7 +255,11 @@
     "CurrentLanguage": "현재 언어",
     "ExpertMode": "전문가 모드",
     "ApplicationOptions": "프로그램 옵션",
-    "ExpertModeDescription": "전문가 모드를 활성화하면 추가 펌웨어 소스, 사용자 정의 파라미터를 수동 정의하여 펌웨어 빌드, 자세한 진단을 위한 시리얼 모니터 등의 고급 기능을 사용할 수 있습니다."
+    "ExpertModeDescription": "전문가 모드를 활성화하면 추가 펌웨어 소스, 사용자 정의 파라미터를 수동 정의하여 펌웨어 빌드, 자세한 진단을 위한 시리얼 모니터 등의 고급 기능을 사용할 수 있습니다.",
+    "ThemeSelector": "Theme",
+    "ThemeSystem": "System (follow OS preference)",
+    "ThemeLight": "Light",
+    "ThemeDark": "Dark"
   },
   "SupportView": {
     "Support": "사용자 지원",

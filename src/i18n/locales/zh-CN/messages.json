@@ -103,7 +103,9 @@
     "Logs": "日志",
     "SerialMonitor": "串口监视器",
     "Settings": "设置",
-    "Support": "支持"
+    "Support": "支持",
+    "SwitchToLightTheme": "Switch to light theme",
+    "SwitchToDarkTheme": "Switch to dark theme"
   },
   "FlashingMethod": {
     "BetaflightPassthrough": "Betaflight 穿透",
@@ -253,7 +255,11 @@
     "CurrentLanguage": "当前语言",
     "ExpertMode": "专家模式",
     "ApplicationOptions": "应用程序选项",
-    "ExpertModeDescription": "启用专家模式来解锁高级功能，包括额外的固件源，能够构建用户手动定义参数的固件，并访问串口监视器以获得详细诊断信息。"
+    "ExpertModeDescription": "启用专家模式来解锁高级功能，包括额外的固件源，能够构建用户手动定义参数的固件，并访问串口监视器以获得详细诊断信息。",
+    "ThemeSelector": "Theme",
+    "ThemeSystem": "System (follow OS preference)",
+    "ThemeLight": "Light",
+    "ThemeDark": "Dark"
   },
   "SupportView": {
     "Support": "支持",

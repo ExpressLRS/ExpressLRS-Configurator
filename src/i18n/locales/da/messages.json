@@ -79,7 +79,7 @@
     "FlashingMethod": "Brændings metode"
   },
   "Header": {
-    "ExpressLRSConfigurator": "ExpressLRS™ Configurator",
+    "ExpressLRSConfigurator": "ExpressLRS Configurator",
     "DownloadNewestRelease": "Klik for at hente den nyeste version",
     "UpdateAvailable": "En ny version er fundet !",
     "Documentation": "Dokumentation",
@@ -103,13 +103,15 @@
     "Logs": "Logfiler",
     "SerialMonitor": "Seriel monitor",
     "Settings": "Indstillinger",
-    "Support": "Support"
+    "Support": "Support",
+    "SwitchToLightTheme": "Skift til lyst tema",
+    "SwitchToDarkTheme": "Skift til mørkt tema"
   },
   "FlashingMethod": {
-    "BetaflightPassthrough": "Betaflight gennemstiling",
+    "BetaflightPassthrough": "Betaflight gennemstilling",
     "DFU": "DFU (Device Firmware Upgrade)",
-    "EdgeTxPassthrough": "EdgeTX gennemstiling",
-    "Passthrough": "Gennemstiling",
+    "EdgeTxPassthrough": "EdgeTX gennemstilling",
+    "Passthrough": "Gennemstilling",
     "STLink": "STLink",
     "Stock_BL": "Default bootloader",
     "UART": "UART (Seriel)",
@@ -161,7 +163,7 @@
     "RCVRUARTBaud": "Modtager UART baud hastighed. Standard valg er 420000. Indstil til 400000 og din modtager vil arbejde med Kiss v1 FC.",
     "RCVRInvertTX": "Hvis du bruger en FC, der kun har RXI/SBUS (RX inverteret), skal du vælge denne indstilling for at invertere CRSF-output fra modtageren. Dette konverterer ikke output til SBUS, det er inverteret CRSF. CRSF skal derfor stadig være modtagerprotokol, som er valgt i din FC. Gælder kun ESP-baserede modtagere.",
     "UseR9MMR9MiniSBUS": "<p><strong>DETTE ÅBNER IKKE SBUS PROTOKOL.</strong></p><p>Dette er nyttigt for F4 FCs som ikke har en uninverteret UART indstilling. Dette gælder kun een retning, så du mister radio telemetri og passthrough brænding. Dette vil give output fra standard SBUS pin på din R9MM/R9Mini. Valg af serialrx_inverteret = ON, kan også være nødvendigt for Betaflight kompatibilitet</p>",
-    "HomeWifiSSID": "Angiv adgangskode til WiFi netværk. Det vil tillade hardware med WiFi automatisk at oprette forbindelse.",
+    "HomeWifiSSID": "Angiv netværksnavn (SSID) til WiFi netværk. Det vil tillade hardware med WiFi automatisk at oprette forbindelse.",
     "HomeWifiPassword": "Angiv adgangskode til WiFi netværk. Det vil tillade hardware med WiFi automatisk at oprette forbindelse.",
     "RxAsTx": "Brænd modtager med denne indstilling aktiv, istedet for med dit TX-modul."
   },
@@ -253,7 +255,11 @@
     "CurrentLanguage": "Nuværende sprog",
     "ExpertMode": "Ekspert tilstand",
     "ApplicationOptions": "Program indstillinger",
-    "ExpertModeDescription": "Aktiver Ekspert tilstand for at få adgang til avancerede funktioner, flere kilder med firmware-kilder, mulighed for at bygge firmware med manuelt angivet brugerdefinerede parametre og mulighed for detaljeret diagnosticering med seriel monitor."
+    "ExpertModeDescription": "Aktiver Ekspert tilstand for at få adgang til avancerede funktioner, flere kilder med firmware-kilder, mulighed for at bygge firmware med manuelt angivet brugerdefinerede parametre og mulighed for detaljeret diagnosticering med seriel monitor.",
+    "ThemeSelector": "Tema",
+    "ThemeSystem": "System (følg system standard)",
+    "ThemeLight": "Lyst",
+    "ThemeDark": "Mørkt"
   },
   "SupportView": {
     "Support": "Support",

@@ -103,7 +103,9 @@
     "Logs": "Registros",
     "SerialMonitor": "Monitor Serial",
     "Settings": "Configurações",
-    "Support": "Suporte"
+    "Support": "Suporte",
+    "SwitchToLightTheme": "Switch to light theme",
+    "SwitchToDarkTheme": "Switch to dark theme"
   },
   "FlashingMethod": {
     "BetaflightPassthrough": "Modo de passagem Betaflight",
@@ -253,7 +255,11 @@
     "CurrentLanguage": "Idioma atual",
     "ExpertMode": "Modo Avançado",
     "ApplicationOptions": "Opções de Aplicação",
-    "ExpertModeDescription": "Ative o Modo Avançado para desbloquear recursos, incluindo fontes adicionais de firmware, a capacidade de construir o firmware com parâmetros definidos manualmente pelo usuário, e o acesso à tela de monitoramento em série para diagnósticos detalhados."
+    "ExpertModeDescription": "Ative o Modo Avançado para desbloquear recursos, incluindo fontes adicionais de firmware, a capacidade de construir o firmware com parâmetros definidos manualmente pelo usuário, e o acesso à tela de monitoramento em série para diagnósticos detalhados.",
+    "ThemeSelector": "Theme",
+    "ThemeSystem": "System (follow OS preference)",
+    "ThemeLight": "Light",
+    "ThemeDark": "Dark"
   },
   "SupportView": {
     "Support": "Suporte",
