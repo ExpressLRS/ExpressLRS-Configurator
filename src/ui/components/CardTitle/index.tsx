@@ -10,8 +10,8 @@ const CardTitle: FunctionComponent<CardTitleProps> = memo(({ icon, title }) => {
   return (
     <CardContent>
       <Grid container spacing={1} alignItems="center">
-        <Grid>{icon}</Grid>
-        <Grid flexGrow={1} style={{ paddingTop: 2 }}>
+        <Grid sx={{ display: 'flex' }}>{icon}</Grid>
+        <Grid flexGrow={1}>
           <Typography variant="h6">{title}</Typography>
         </Grid>
       </Grid>
