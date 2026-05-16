@@ -47,6 +47,7 @@ import BinaryFlashingStrategyService from './src/services/BinaryFlashingStrategy
 import DeviceDescriptionsLoader from './src/services/BinaryFlashingStrategy/DeviceDescriptionsLoader';
 import BinaryConfigurator from './src/services/BinaryFlashingStrategy/BinaryConfigurator';
 import CloudBinariesCache from './src/services/BinaryFlashingStrategy/CloudBinariesCache';
+import FlashOutputParserService from './src/services/FlashOutputParser';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -130,6 +131,8 @@ export default class ApiServer {
     Container.set(TargetsLoader, targetsLoader);
 
     const firmwareBuilder = new FirmwareBuilder(platformio, logger);
+    const flashOutputParserService = new FlashOutputParserService();
+    Container.set(FlashOutputParserService, flashOutputParserService);
     const platformioFlashingStrategyService
       = new PlatformioFlashingStrategyService(
         config.PATH,
@@ -140,6 +143,7 @@ export default class ApiServer {
         logger,
         userDefinesBuilder,
         targetsLoader,
+        flashOutputParserService,
       );
 
     const targetStorageGitPath = path.join(
@@ -170,6 +174,7 @@ export default class ApiServer {
       cloudBinariesCache,
       targetStorageGitPath,
       logger,
+      flashOutputParserService,
     );
 
     Container.set(

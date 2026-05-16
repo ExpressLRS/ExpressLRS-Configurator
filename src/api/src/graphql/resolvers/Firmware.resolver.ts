@@ -101,7 +101,7 @@ export default class FirmwareResolver {
   buildProgressNotifications(
     @Root() n: BuildProgressNotificationPayload,
   ): BuildProgressNotification {
-    return new BuildProgressNotification(n.type, n.step, n.message);
+    return new BuildProgressNotification(n.type, n.step, n.substep, n.progress);
   }
 
   @Subscription(() => BuildLogUpdate, {

@@ -10,6 +10,7 @@ import BuildFirmwareErrorType from '../../models/enum/BuildFirmwareErrorType';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildProgressNotificationType from '../../models/enum/BuildProgressNotificationType';
 import BuildFirmwareStep from '../../models/enum/FirmwareBuildStep';
+import BuildFirmwareSubstep from '../../models/enum/BuildFirmwareSubstep';
 import {
   findGitExecutable,
   GitFirmwareDownloader,
@@ -39,6 +40,20 @@ import {
   maskBuildFlashFirmwareParams,
   maskSensitiveData,
 } from '../FlashingStrategyLocator/masks';
+import FlashingMethod from '../../models/enum/FlashingMethod';
+import FlashOutputParserService from '../FlashOutputParser';
+
+function detectFlashingMethodFromTarget(target: string): FlashingMethod {
+  const upper = target.toUpperCase();
+  if (upper.includes('_VIA_WIFI')) return FlashingMethod.WIFI;
+  if (upper.includes('_VIA_BETAFLIGHT')) return FlashingMethod.BetaflightPassthrough;
+  if (upper.includes('_VIA_ETX')) return FlashingMethod.EdgeTxPassthrough;
+  if (upper.includes('_VIA_PASSTHROUGH')) return FlashingMethod.Passthrough;
+  if (upper.includes('_VIA_STLINK')) return FlashingMethod.STLink;
+  if (upper.includes('_VIA_DFU')) return FlashingMethod.DFU;
+  if (upper.includes('_VIA_STOCK')) return FlashingMethod.Stock_BL;
+  return FlashingMethod.UART;
+}
 
 @Service()
 export default class PlatformioFlashingStrategyService
@@ -56,6 +71,7 @@ implements FlashingStrategy {
     private logger: LoggerService,
     private userDefinesBuilder: UserDefinesBuilder,
     private targetsLoader: TargetsLoader,
+    private flashOutputParserService: FlashOutputParserService,
   ) {
     this.mutex = new Mutex();
   }
@@ -63,14 +79,20 @@ implements FlashingStrategy {
   private async updateProgress(
     type: BuildProgressNotificationType,
     step: BuildFirmwareStep,
+    substep?: BuildFirmwareSubstep,
+    progress?: number,
   ): Promise<void> {
     this.logger?.log('build progress notification', {
       type,
       step,
+      substep,
+      progress,
     });
     return this.pubSub!.publish(PubSubTopic.BuildProgressNotification, {
       type,
       step,
+      substep,
+      progress,
     });
   }
 
@@ -138,6 +160,16 @@ implements FlashingStrategy {
     }
     this.mutex.tryLock();
 
+    const flashOutputParser = this.flashOutputParserService.create(
+      (type, step, substep, progress) => {
+        this.updateProgress(type, step, substep, progress);
+      },
+      {
+        flashingMethod: detectFlashingMethodFromTarget(params.target),
+        jobType: params.type,
+      },
+    );
+
     try {
       await this.updateProgress(
         BuildProgressNotificationType.Info,
@@ -178,6 +210,7 @@ implements FlashingStrategy {
         const platformioInstallResult = await this.platformio.install(
           (output) => {
             this.updateLogs(output);
+            flashOutputParser(output);
           },
         );
         if (!platformioInstallResult.success) {
@@ -310,6 +343,7 @@ implements FlashingStrategy {
           firmwarePath,
           (output) => {
             this.updateLogs(output);
+            flashOutputParser(output);
           },
         );
         if (!compileResult.success) {
@@ -318,6 +352,10 @@ implements FlashingStrategy {
             stderr: compileResult.stderr,
             stdout: compileResult.stdout,
           });
+          await this.updateProgress(
+            BuildProgressNotificationType.Error,
+            BuildFirmwareStep.BUILDING_FIRMWARE,
+          );
           return new BuildFlashFirmwareResult(
             false,
             compileResult.stderr,
@@ -332,6 +370,10 @@ implements FlashingStrategy {
         const canonicalFirmwareBinPath
           = await createBinaryCopyWithCanonicalName(params, firmwareBinPath);
 
+        await this.updateProgress(
+          BuildProgressNotificationType.Success,
+          BuildFirmwareStep.BUILDING_FIRMWARE,
+        );
         return new BuildFlashFirmwareResult(
           true,
           undefined,
@@ -358,6 +400,7 @@ implements FlashingStrategy {
           uploadType,
           (output) => {
             this.updateLogs(output);
+            flashOutputParser(output);
           },
         );
         if (!flashResult.success) {
@@ -371,6 +414,10 @@ implements FlashingStrategy {
           if (matches.length > 0) {
             uploadError = Number.parseInt(matches[0][1], 10);
           }
+          await this.updateProgress(
+            BuildProgressNotificationType.Error,
+            BuildFirmwareStep.FLASHING_FIRMWARE,
+          );
           return new BuildFlashFirmwareResult(
             false,
             flashResult.stderr,
@@ -379,6 +426,10 @@ implements FlashingStrategy {
               : BuildFirmwareErrorType.FlashError,
           );
         }
+        await this.updateProgress(
+          BuildProgressNotificationType.Success,
+          BuildFirmwareStep.FLASHING_FIRMWARE,
+        );
       }
 
       return new BuildFlashFirmwareResult(true);
@@ -386,6 +437,13 @@ implements FlashingStrategy {
       this.logger?.error('generic error', undefined, {
         err: e,
       });
+      const errorStep = params.type === BuildJobType.Flash
+        ? BuildFirmwareStep.FLASHING_FIRMWARE
+        : BuildFirmwareStep.BUILDING_FIRMWARE;
+      await this.updateProgress(
+        BuildProgressNotificationType.Error,
+        errorStep,
+      );
       return new BuildFlashFirmwareResult(
         false,
         `Error: ${e}`,

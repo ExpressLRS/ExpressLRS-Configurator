@@ -8,6 +8,9 @@ import {
 } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client/react';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Alert,
   AlertTitle,
   Box,
@@ -30,6 +33,7 @@ import {
   Typography,
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ContentCopy, NetworkWifi, Save } from '@mui/icons-material';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
@@ -42,13 +46,13 @@ import DeviceOptionsForm, {
 import ShowAlerts from '../../components/ShowAlerts';
 import CardTitle from '../../components/CardTitle';
 import Logs from '../../components/Logs';
-import BuildProgressBar from '../../components/BuildProgressBar';
-import BuildNotificationsList from '../../components/BuildNotificationsList';
+import FlashingStepper from '../../components/FlashingStepper';
 import {
   BuildFirmwareErrorType,
   BuildFlashFirmwareInput,
   BuildJobType,
   BuildProgressNotification,
+  BuildProgressNotificationType,
   Device,
   DeviceType,
   FirmwareSource,
@@ -150,7 +154,6 @@ interface ConfiguratorViewProps {
   onDeviceChange: (dnsDevice: MulticastDnsInformation | null) => void;
   deviceType: DeviceType;
   buildProgressNotifications: BuildProgressNotification[];
-  lastBuildProgressNotification: BuildProgressNotification | null;
   resetBuildProgressNotifications: () => void;
   buildLogs: string;
   resetBuildLogs: () => void;
@@ -166,7 +169,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     onDeviceChange,
     deviceType,
     buildProgressNotifications,
-    lastBuildProgressNotification,
     resetBuildProgressNotifications,
     buildLogs,
     resetBuildLogs,
@@ -500,6 +502,17 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   const onWifiDevice = useCallback((newWifiDevice: string | null) => {
     setWifiDevice(newWifiDevice);
   }, []);
+
+  const [logsExpanded, setLogsExpanded] = useState(false);
+  const hasErrorInSession
+    = buildProgressNotifications.some(
+      (n) => n.type === BuildProgressNotificationType.Error,
+    ) || (response?.buildFlashFirmware?.success === false);
+  useEffect(() => {
+    if (hasErrorInSession) {
+      setLogsExpanded(true);
+    }
+  }, [hasErrorInSession]);
 
   const [erase, setErase] = useState<boolean>(false);
   const [forceFlash, setForceFlash] = useState<boolean>(false);
@@ -1073,48 +1086,50 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           />
           <Divider />
           <CardContent>
-            <BuildProgressBar
-              inProgress={buildInProgress}
-              jobType={currentJobType}
-              progressNotification={lastBuildProgressNotification}
-            />
-            <BuildNotificationsList
+            <FlashingStepper
               notifications={buildProgressNotifications}
+              jobType={currentJobType}
+              flashingMethod={deviceTarget?.flashingMethod}
             />
 
             <ShowAlerts severity="error" messages={buildFlashErrorResponse} />
           </CardContent>
 
           {buildLogs.length > 0 && (
-            <>
-              <CardTitle
-                icon={<SettingsIcon />}
-                title={(
-                  <Box display="flex" justifyContent="space-between">
-                    <Box>{t('ConfiguratorView.Logs')}</Box>
-                    <Box>
-                      <IconButton
-                        aria-label={t('ConfiguratorView.CopyLogToClipboard')}
-                        title={t('ConfiguratorView.CopyLogToClipboard')}
-                        onClick={async () => {
-                          await navigator.clipboard.writeText(buildLogs);
-                        }}
-                      >
-                        <ContentCopy />
-                      </IconButton>
-                      <IconButton
-                        aria-label={t('ConfiguratorView.SaveLogToFile')}
-                        title={t('ConfiguratorView.SaveLogToFile')}
-                        onClick={saveBuildLogToFile}
-                      >
-                        <Save />
-                      </IconButton>
-                    </Box>
+            <Accordion
+              expanded={logsExpanded}
+              onChange={(_, isExpanded) => setLogsExpanded(isExpanded)}
+              disableGutters
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  width="100%"
+                >
+                  <Typography>{t('ConfiguratorView.Logs')}</Typography>
+                  <Box onClick={(e) => e.stopPropagation()}>
+                    <IconButton
+                      aria-label={t('ConfiguratorView.CopyLogToClipboard')}
+                      title={t('ConfiguratorView.CopyLogToClipboard')}
+                      onClick={async () => {
+                        await navigator.clipboard.writeText(buildLogs);
+                      }}
+                    >
+                      <ContentCopy />
+                    </IconButton>
+                    <IconButton
+                      aria-label={t('ConfiguratorView.SaveLogToFile')}
+                      title={t('ConfiguratorView.SaveLogToFile')}
+                      onClick={saveBuildLogToFile}
+                    >
+                      <Save />
+                    </IconButton>
                   </Box>
-                )}
-              />
-              <Divider />
-              <CardContent>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
                 <Box sx={styles.longBuildDurationWarning}>
                   <ShowTimeoutAlerts
                     severity="warning"
@@ -1124,9 +1139,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   />
                 </Box>
                 <Logs data={buildLogs} />
-              </CardContent>
-              <Divider />
-            </>
+              </AccordionDetails>
+            </Accordion>
           )}
           {response !== undefined && (
             <>
