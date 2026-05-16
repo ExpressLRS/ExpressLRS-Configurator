@@ -34,6 +34,7 @@ import {
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import TerminalIcon from '@mui/icons-material/Terminal';
 import { ContentCopy, NetworkWifi, Save } from '@mui/icons-material';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
@@ -101,6 +102,20 @@ const styles: Record<string, SxProps<Theme>> = {
   },
   buildNotification: {
     marginBottom: 1,
+  },
+  logsAccordion: {
+    boxShadow: 'none',
+    backgroundImage: 'none',
+    borderBottom: 1,
+    borderColor: 'divider',
+    '&.Mui-expanded::before': {
+      opacity: 1,
+    },
+  },
+  logsSummaryTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1,
   },
 };
 
@@ -1100,6 +1115,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
               expanded={logsExpanded}
               onChange={(_, isExpanded) => setLogsExpanded(isExpanded)}
               disableGutters
+              elevation={0}
+              square
+              sx={styles.logsAccordion}
             >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Box
@@ -1108,7 +1126,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   alignItems="center"
                   width="100%"
                 >
-                  <Typography>{t('ConfiguratorView.Logs')}</Typography>
+                  <Box sx={styles.logsSummaryTitle}>
+                    <TerminalIcon fontSize="small" />
+                    <Typography>{t('ConfiguratorView.Logs')}</Typography>
+                  </Box>
                   <Box onClick={(e) => e.stopPropagation()}>
                     <IconButton
                       aria-label={t('ConfiguratorView.CopyLogToClipboard')}
