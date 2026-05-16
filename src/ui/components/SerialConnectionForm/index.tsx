@@ -45,6 +45,8 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
     };
   }, [startPolling, stopPolling]);
 
+  const initialLoading = loading && !data;
+
   const options: Option[]
     = data?.availableDevicesList?.map((target) => ({
       label: `${target.path} ${target.manufacturer}`,
@@ -136,9 +138,9 @@ const SerialConnectionForm: FunctionComponent<SerialConnectionFormProps> = (
             currentValue={currentValue}
             onChange={onSerialDeviceChange}
             options={options}
-            loading={loading}
+            loading={initialLoading}
           />
-          <Loader sx={styles.loader} loading={loading} />
+          <Loader sx={styles.loader} loading={initialLoading} />
           <ShowAlerts severity="error" messages={error} />
         </Grid>
         <Grid>
