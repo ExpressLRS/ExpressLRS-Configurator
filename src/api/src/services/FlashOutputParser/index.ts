@@ -165,8 +165,10 @@ const RULES: Rule[] = [
   {
     // curl xferd column: %Total Total %Recv Recv %Xferd Xferd AvgDload AvgUpload ...
     // We match the data row (not header), capturing the %Xferd column (group 1).
+    // Byte-count columns (Total/Recv/Xferd/AvgDload/AvgUpload) may carry a
+    // unit suffix (e.g. "151k", "2M") once values exceed ~1KB, so allow \S*.
     group: ParserGroup.WifiCurl,
-    pattern: /^\s*\d+\s+\d+\S*\s+\d+\s+\d+\s+(\d+)\s+\d+\s+\d+\s+/m,
+    pattern: /^\s*\d+\s+\d+\S*\s+\d+\s+\d+\S*\s+(\d+)\s+\d+\S*\s+\d+\S*\s+/m,
     step: BuildFirmwareStep.FLASHING_FIRMWARE,
     substep: BuildFirmwareSubstep.UploadingFirmware,
     hasProgress: true,

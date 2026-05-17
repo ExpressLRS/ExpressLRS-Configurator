@@ -176,6 +176,21 @@ describe('createFlashOutputParser', () => {
       }
     });
 
+    it('parses progress from curl rows with unit-suffixed Xferd (k/M)', () => {
+      // Once transferred bytes exceed ~1KB curl prints "192k", "1138k", etc.
+      // in the Xferd column. The progress parser must still extract %Xferd
+      // from those rows, not only from the all-digit early rows.
+      const { parser, emits } = makeParser(flashWifi);
+      parser(fixture('wifi-curl-success.log'));
+      const progresses = emits
+        .filter((e) => e.substep === 'UPLOADING_FIRMWARE')
+        .map((e) => e.progress)
+        .filter((p): p is number => p !== undefined);
+      expect(progresses).toEqual(
+        expect.arrayContaining([0, 5, 12, 24, 48, 71, 88, 100]),
+      );
+    });
+
     it('final emit on success is type=Success', () => {
       const { parser, emits } = makeParser(flashWifi);
       parser(fixture('wifi-curl-success.log'));
