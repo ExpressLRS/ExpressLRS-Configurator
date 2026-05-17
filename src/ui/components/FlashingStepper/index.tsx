@@ -1,5 +1,7 @@
 import { FunctionComponent, memo, ReactElement, useMemo } from 'react';
 import {
+  Alert,
+  AlertTitle,
   Box,
   CircularProgress,
   LinearProgress,
@@ -14,15 +16,18 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import { SxProps, Theme } from '@mui/system';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
+  BuildFirmwareErrorType,
   BuildFirmwareStep,
   BuildFirmwareSubstep,
+  BuildFlashFirmwareResult,
   BuildJobType,
   BuildProgressNotification,
   BuildProgressNotificationType,
   FlashingMethod,
 } from '../../gql/generated/types';
+import DocumentationLink from '../DocumentationLink';
 
 type StepStatus = 'pending' | 'active' | 'completed' | 'error';
 
@@ -136,8 +141,8 @@ function reduceNotifications(
     (s) => s.status === 'active' || s.status === 'error',
   );
   if (activeIdx === -1) {
-    const allCompleted = reducedSteps.every((s) => s.status === 'completed');
-    activeIdx = allCompleted ? reducedSteps.length : 0;
+    const firstPending = reducedSteps.findIndex((s) => s.status === 'pending');
+    activeIdx = firstPending === -1 ? reducedSteps.length : firstPending;
   }
   return { steps: reducedSteps, activeIdx };
 }
@@ -182,16 +187,63 @@ const styles: Record<string, SxProps<Theme>> = {
     marginTop: 1,
     fontStyle: 'italic',
   },
+  resultBlock: {
+    marginTop: 1,
+  },
+  resultAlert: {
+    marginTop: 1,
+    marginBottom: 1,
+  },
+  errorMessage: {
+    marginTop: 1,
+    marginBottom: 1,
+    a: {
+      color: (theme: Theme) => theme.palette.custom.alertError.text,
+    },
+  },
 };
+
+type ErrorTitleKey =
+  | 'BuildResponse.Error'
+  | 'BuildResponse.GitDependencyError'
+  | 'BuildResponse.PythonDependencyError'
+  | 'BuildResponse.PlatformioDependencyError'
+  | 'BuildResponse.BuildError'
+  | 'BuildResponse.FlashError'
+  | 'BuildResponse.TargetMismatch';
+
+function errorTypeTitleKey(
+  errorType: BuildFirmwareErrorType | null | undefined,
+): ErrorTitleKey {
+  switch (errorType) {
+    case BuildFirmwareErrorType.GitDependencyError:
+      return 'BuildResponse.GitDependencyError';
+    case BuildFirmwareErrorType.PythonDependencyError:
+      return 'BuildResponse.PythonDependencyError';
+    case BuildFirmwareErrorType.PlatformioDependencyError:
+      return 'BuildResponse.PlatformioDependencyError';
+    case BuildFirmwareErrorType.BuildError:
+      return 'BuildResponse.BuildError';
+    case BuildFirmwareErrorType.FlashError:
+      return 'BuildResponse.FlashError';
+    case BuildFirmwareErrorType.TargetMismatch:
+      return 'BuildResponse.TargetMismatch';
+    case BuildFirmwareErrorType.GenericError:
+    default:
+      return 'BuildResponse.Error';
+  }
+}
 
 interface FlashingStepperProps {
   notifications: BuildProgressNotification[];
   jobType: BuildJobType;
   flashingMethod?: FlashingMethod;
+  hasLuaScript?: boolean;
+  response?: BuildFlashFirmwareResult;
 }
 
 const FlashingStepper: FunctionComponent<FlashingStepperProps> = memo(
-  ({ notifications, jobType, flashingMethod }) => {
+  ({ notifications, jobType, flashingMethod, hasLuaScript, response }) => {
     const { t } = useTranslation();
 
     const { steps, activeIdx } = useMemo(
@@ -252,46 +304,102 @@ const FlashingStepper: FunctionComponent<FlashingStepperProps> = memo(
       );
     };
 
-    const lastStepIdx = steps.length - 1;
-    const lastStepIsCompleted = steps[lastStepIdx]?.status === 'completed';
+    const renderResultBlock = (): ReactElement | null => {
+      if (!response) return null;
+      if (response.success) {
+        return (
+          <Box sx={styles.resultBlock}>
+            {jobType === BuildJobType.Flash
+              && flashingMethod === FlashingMethod.WIFI && (
+              <Alert severity="warning" sx={styles.resultAlert}>
+                <AlertTitle>{t('ConfiguratorView.Warning')}</AlertTitle>
+                {t('ConfiguratorView.WaitForLEDBeforeDisconnectingPower')}
+              </Alert>
+            )}
+            {hasLuaScript && (
+              <Alert severity="info" sx={styles.resultAlert}>
+                <AlertTitle>{t('ConfiguratorView.UpdateLuaScript')}</AlertTitle>
+                {t('ConfiguratorView.UpdateLuaScriptOnRadio')}
+              </Alert>
+            )}
+            {jobType === BuildJobType.Build && (
+              <Alert severity="info" sx={styles.resultAlert}>
+                <AlertTitle>{t('ConfiguratorView.BuildNotice')}</AlertTitle>
+                {t('ConfiguratorView.FirmwareOpenedInFileExplorer')}
+              </Alert>
+            )}
+            {isBuildOnly && (
+              <Typography
+                variant="body2"
+                color="success.main"
+                sx={styles.doneHint}
+              >
+                {flashingMethod === FlashingMethod.Stock_BL
+                  ? t('FlashingStepper.StockBlDoneHint')
+                  : t('FlashingStepper.BuildOnlyDoneHint')}
+              </Typography>
+            )}
+          </Box>
+        );
+      }
+      const errorType = response.errorType ?? BuildFirmwareErrorType.GenericError;
+      return (
+        <Box sx={styles.resultBlock}>
+          <Alert severity="error" sx={styles.errorMessage}>
+            <AlertTitle>{t(errorTypeTitleKey(errorType))}</AlertTitle>
+            <p>
+              <Trans
+                i18nKey="BuildResponse.ErrorDetails"
+                components={{
+                  ExpresslrsLink: (
+                    <DocumentationLink url="https://www.expresslrs.org/" />
+                  ),
+                  FlashingGuideLink: (
+                    <DocumentationLink url="https://www.expresslrs.org/quick-start/getting-started/" />
+                  ),
+                  TroubleshootingGuideLink: (
+                    <DocumentationLink url="https://www.expresslrs.org/quick-start/troubleshooting/#flashingupdating" />
+                  ),
+                  ExpressLRSDiscordLink: (
+                    <DocumentationLink url="https://discord.gg/dS6ReFY" />
+                  ),
+                }}
+              />
+            </p>
+          </Alert>
+        </Box>
+      );
+    };
 
     return (
-      <Stepper
-        orientation="vertical"
-        activeStep={Math.min(activeIdx, steps.length)}
-        sx={styles.stepper}
-      >
-        {steps.map((s, idx) => (
-          <Step
-            key={s.step}
-            completed={s.status === 'completed'}
-            active={s.status === 'active' || s.status === 'error'}
-          >
-            <StepLabel
-              StepIconComponent={(p) => (
-                <CustomStepIcon {...p} status={s.status} />
-              )}
-              error={s.status === 'error'}
+      <Box>
+        <Stepper
+          orientation="vertical"
+          activeStep={Math.min(activeIdx, steps.length)}
+          sx={styles.stepper}
+        >
+          {steps.map((s) => (
+            <Step
+              key={s.step}
+              completed={s.status === 'completed'}
+              active={s.status === 'active' || s.status === 'error'}
             >
-              {t(`FlashingStepper.Step.${s.step}`)}
-            </StepLabel>
-            <StepContent>
-              {sublineFor(s)}
-              {idx === lastStepIdx && isBuildOnly && lastStepIsCompleted && (
-                <Typography
-                  variant="body2"
-                  color="success.main"
-                  sx={styles.doneHint}
-                >
-                  {flashingMethod === FlashingMethod.Stock_BL
-                    ? t('FlashingStepper.StockBlDoneHint')
-                    : t('FlashingStepper.BuildOnlyDoneHint')}
-                </Typography>
-              )}
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
+              <StepLabel
+                StepIconComponent={(p) => (
+                  <CustomStepIcon {...p} status={s.status} />
+                )}
+                error={s.status === 'error'}
+              >
+                {t(`FlashingStepper.Step.${s.step}_${s.status}`, {
+                  defaultValue: t(`FlashingStepper.Step.${s.step}`),
+                })}
+              </StepLabel>
+              <StepContent>{sublineFor(s)}</StepContent>
+            </Step>
+          ))}
+        </Stepper>
+        {renderResultBlock()}
+      </Box>
     );
   },
 );

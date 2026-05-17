@@ -249,7 +249,6 @@ const RULES: Rule[] = [
     step: BuildFirmwareStep.BUILDING_FIRMWARE,
     type: BuildProgressNotificationType.Error,
   },
-  // Stock_BL SD-card hint — log-only (surfaced via BuildResponse).
   {
     group: ParserGroup.Build,
     pattern: /Copy .* to SD card and choose flash ext\. ELRS/i,

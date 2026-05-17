@@ -70,7 +70,6 @@ import {
   TargetDeviceOptionsDocument,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
-import BuildResponse from '../../components/BuildResponse';
 import {
   IpcRequest,
   OpenFileLocationRequestBody,
@@ -88,7 +87,6 @@ import WifiDeviceSelect from '../../components/WifiDeviceSelect';
 import WifiDeviceList from '../../components/WifiDeviceList';
 import GitRepository from '../../models/GitRepository';
 import ShowTimeoutAlerts from '../../components/ShowTimeoutAlerts';
-import ShowAfterTimeout from '../../components/ShowAfterTimeout';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
 import MainLayout from '../../layouts/MainLayout';
@@ -1105,12 +1103,16 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
               notifications={buildProgressNotifications}
               jobType={currentJobType}
               flashingMethod={deviceTarget?.flashingMethod}
+              hasLuaScript={hasLuaScript}
+              response={response?.buildFlashFirmware}
             />
 
             <ShowAlerts severity="error" messages={buildFlashErrorResponse} />
           </CardContent>
 
-          {buildLogs.length > 0 && (
+          {buildLogs.length > 0
+            && response?.buildFlashFirmware
+            && !response.buildFlashFirmware.success && (
             <Accordion
               expanded={logsExpanded}
               onChange={(_, isExpanded) => setLogsExpanded(isExpanded)}
@@ -1162,62 +1164,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <Logs data={buildLogs} />
               </AccordionDetails>
             </Accordion>
-          )}
-          {response !== undefined && (
-            <>
-              <CardTitle
-                icon={<SettingsIcon />}
-                title={t('ConfiguratorView.Result')}
-              />
-              <Divider />
-              <CardContent>
-                {response?.buildFlashFirmware?.success
-                  && currentJobType === BuildJobType.Flash
-                  && deviceTarget?.flashingMethod === FlashingMethod.WIFI && (
-                  <Alert sx={styles.buildNotification} severity="warning">
-                    <AlertTitle>{t('ConfiguratorView.Warning')}</AlertTitle>
-                    {t('ConfiguratorView.WaitForLEDBeforeDisconnectingPower')}
-                  </Alert>
-                )}
-                <ShowAfterTimeout
-                  timeout={
-                    response?.buildFlashFirmware?.success
-                    && currentJobType === BuildJobType.Flash
-                    && deviceTarget?.flashingMethod === FlashingMethod.WIFI
-                      ? 15000
-                      : 1000
-                  }
-                  active={!buildInProgress}
-                >
-                  <>
-                    <Box sx={styles.buildNotification}>
-                      <BuildResponse
-                        response={response?.buildFlashFirmware}
-                        firmwareVersionData={firmwareVersionData}
-                      />
-                    </Box>
-                    {response?.buildFlashFirmware?.success && hasLuaScript && (
-                      <Alert sx={styles.buildNotification} severity="info">
-                        <AlertTitle>
-                          {t('ConfiguratorView.UpdateLuaScript')}
-                        </AlertTitle>
-                        {t('ConfiguratorView.UpdateLuaScriptOnRadio')}
-                      </Alert>
-                    )}
-                  </>
-                </ShowAfterTimeout>
-                {response?.buildFlashFirmware?.success
-                  && currentJobType === BuildJobType.Build && (
-                  <Alert sx={styles.buildNotification} severity="info">
-                    <AlertTitle>
-                      {t('ConfiguratorView.BuildNotice')}
-                    </AlertTitle>
-                    {t('ConfiguratorView.FirmwareOpenedInFileExplorer')}
-                  </Alert>
-                )}
-              </CardContent>
-              <Divider />
-            </>
           )}
           {!buildInProgress && (
             <>
