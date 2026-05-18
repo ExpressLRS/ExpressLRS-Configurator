@@ -48,6 +48,14 @@ jobs:
         run: |
           yarn lint
 
+      - name: yarn typecheck
+        run: |
+          yarn typecheck
+
+      - name: yarn test
+        run: |
+          yarn test
+
       - name: yarn package
         run: |
           yarn package
@@ -64,10 +72,6 @@ jobs:
             release/*.pacman
             release/*.zip
           if-no-files-found: ignore
-
-      - name: yarn test
-        run: |
-          yarn test
 
   comment-artifacts:
     if: github.event_name == 'pull_request'
