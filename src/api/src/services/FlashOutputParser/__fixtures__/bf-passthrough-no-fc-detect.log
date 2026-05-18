@@ -1,0 +1,18 @@
+  ** Searching flight controllers **
+  ** No FC found, find all ports **
+
+Detected the following serial ports on this system:
+  /dev/ttyACM0
+
+======== PASSTHROUGH INIT ========
+  Trying to initialize /dev/ttyACM0 @ 420000
+
+Cannot detect RX target, blindly flashing!
+
+WARNING: Pre-connection option "no_reset" was selected. Connection may fail if the chip is not in bootloader or flasher stub mode.
+
+esptool.py v4.2.1
+Serial port /dev/ttyACM0
+Connecting....................................
+
+A fatal error occurred: Failed to connect to ESP32: No serial data received.

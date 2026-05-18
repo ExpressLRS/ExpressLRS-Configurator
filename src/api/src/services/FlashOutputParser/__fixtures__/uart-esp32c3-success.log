@@ -1,0 +1,73 @@
+esptool.py v4.2.1
+Serial port /dev/ttyACM0
+Connecting...
+.
+
+Chip is ESP32-C3 (revision 4)
+Features: Wi-Fi
+Crystal is 40MHz
+MAC: 28:37:2f:de:cd:d0
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Auto-detected Flash size: 4MB
+Flash will be erased from 0x00000000 to 0x00003fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+Flash will be erased from 0x0000e000 to 0x0000ffff...
+Flash will be erased from 0x00010000 to 0x00156fff...
+Compressed 13248 bytes to 9562...
+Writing at 0x00000000... (100 %)
+
+Wrote 13248 bytes (9562 compressed) at 0x00000000 in 0.3 seconds (effective 366.7 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 146...
+Writing at 0x00008000... (100 %)
+
+Wrote 3072 bytes (146 compressed) at 0x00008000 in 0.1 seconds (effective 481.8 kbit/s)...
+Hash of data verified.
+Compressed 8192 bytes to 47...
+Writing at 0x0000e000... (100 %)
+
+Wrote 8192 bytes (47 compressed) at 0x0000e000 in 0.1 seconds (effective 619.9 kbit/s)...
+Hash of data verified.
+Compressed 1337568 bytes to 842042...
+Writing at 0x00010000... (1 %)
+
+Writing at 0x000152ab... (3 %)
+
+Writing at 0x00019293... (5 %)
+
+Writing at 0x00021289... (9 %)
+
+Writing at 0x0002602c... (11 %)
+
+Writing at 0x0003b7e7... (19 %)
+
+Writing at 0x0005c444... (25 %)
+
+Writing at 0x000738fc... (30 %)
+
+Writing at 0x000947b3... (40 %)
+
+Writing at 0x000b444b... (50 %)
+
+Writing at 0x000d908a... (61 %)
+
+Writing at 0x000f6262... (71 %)
+
+Writing at 0x00119b02... (82 %)
+
+Writing at 0x00132ac2... (90 %)
+
+Writing at 0x0014d188... (98 %)
+
+Writing at 0x0015373e... (100 %)
+
+Wrote 1337568 bytes (842042 compressed) at 0x00010000 in 17.4 seconds (effective 614.0 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...

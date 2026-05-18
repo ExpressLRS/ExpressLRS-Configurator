@@ -1,0 +1,7 @@
+Processing Generic_ESP32_2400_TX_via_UART (board: esp32; platform: espressif32; framework: arduino)
+--------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "binary_configurator.py", line 412, in main
+    import intelhex
+ModuleNotFoundError: No module named 'intelhex'
+============================ [FAILED] Took 3.21 seconds =============================

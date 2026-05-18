@@ -1,0 +1,16 @@
+  ** Searching flight controllers **
+      > FC found from '/dev/ttyACM0'
+
+Detected the following serial ports on this system:
+  /dev/ttyACM0
+
+======== PASSTHROUGH INIT ========
+  Trying to initialize /dev/ttyACM0 @ 460800
+
+Enabling serial passthrough...
+Traceback (most recent call last):
+  File "ETXinitPassthrough.py", line 80, in <module>
+    etx_passthrough_init(args.port, args.baud)
+  File "ETXinitPassthrough.py", line 50, in etx_passthrough_init
+    raise SystemExit("Expected 'set: ' prompt — got nothing. Is the radio in passthrough mode?")
+SystemExit: Expected 'set: ' prompt — got nothing. Is the radio in passthrough mode?

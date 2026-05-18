@@ -1,0 +1,6 @@
+Processing Frsky_TX_R9M_via_UART (board: r9m; platform: ststm32; framework: arduino)
+--------------------------------------------------------------------------------
+Compiling .pio\build\Frsky_TX_R9M_via_UART\src\main.cpp.o
+Linking .pio\build\Frsky_TX_R9M_via_UART\firmware.elf
+Building .pio\build\Frsky_TX_R9M_via_UART\firmware.bin
+============================ [SUCCESS] Took 87.65 seconds =============================
