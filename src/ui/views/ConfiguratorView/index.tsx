@@ -1110,9 +1110,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             <ShowAlerts severity="error" messages={buildFlashErrorResponse} />
           </CardContent>
 
-          {buildLogs.length > 0
-            && response?.buildFlashFirmware
-            && !response.buildFlashFirmware.success && (
+          {hasErrorInSession && (
             <Accordion
               expanded={logsExpanded}
               onChange={(_, isExpanded) => setLogsExpanded(isExpanded)}

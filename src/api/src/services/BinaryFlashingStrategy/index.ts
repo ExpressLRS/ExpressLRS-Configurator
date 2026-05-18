@@ -615,6 +615,9 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           params,
         );
       }
+      await this.updateLogs(
+        `> ${this.binaryConfigurator.formatCommand(flasherPath, flasherArgs)}`,
+      );
       const binaryConfiguratorResult = await this.binaryConfigurator.run(
         flasherPath,
         flasherArgs,
@@ -632,6 +635,14 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           stderr: binaryConfiguratorResult.stderr,
           stdout: binaryConfiguratorResult.stdout,
         });
+        const streamedNothing
+          = binaryConfiguratorResult.stdout.length === 0
+            && binaryConfiguratorResult.stderr.length === 0;
+        if (streamedNothing) {
+          await this.updateLogs(
+            `Flasher exited with code ${binaryConfiguratorResult.code} without producing any output.`,
+          );
+        }
         await this.updateProgress(
           BuildProgressNotificationType.Error,
           finalStep,

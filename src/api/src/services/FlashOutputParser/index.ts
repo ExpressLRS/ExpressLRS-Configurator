@@ -181,8 +181,13 @@ const RULES: Rule[] = [
     substep: BuildFirmwareSubstep.UploadingFirmware,
   },
   {
+    // Terminal failure only: emitted by upload_via_esp8266_backpack.do_upload
+    // after every address+retry has been exhausted. Transient `curl: (N)` /
+    // "Operation timed out" lines are intentionally NOT matched here because
+    // curl is configured with --retry 2 and the python wrapper tries multiple
+    // addresses, so a single curl error does not mean the upload has failed.
     group: ParserGroup.WifiCurl,
-    pattern: /WIFI upload FAILED|curl:\s*\(\d+\)|Operation timed out|Couldn't connect to server/i,
+    pattern: /WIFI upload FAILED/i,
     step: BuildFirmwareStep.FLASHING_FIRMWARE,
     type: BuildProgressNotificationType.Error,
   },

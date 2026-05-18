@@ -240,6 +240,11 @@ export default class BinaryConfigurator {
     return flags;
   }
 
+  formatCommand(flasherPath: string, flags: string[][]): string {
+    const maskedArgs = this.stringifyFlags(maskSensitiveFlags(flags));
+    return ['python', flasherPath, ...maskedArgs].join(' ');
+  }
+
   async run(
     flasherPath: string,
     flags: string[][],

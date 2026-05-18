@@ -352,6 +352,14 @@ implements FlashingStrategy {
             stderr: compileResult.stderr,
             stdout: compileResult.stdout,
           });
+          if (
+            compileResult.stdout.length === 0
+            && compileResult.stderr.length === 0
+          ) {
+            await this.updateLogs(
+              `Build exited with code ${compileResult.code} without producing any output.`,
+            );
+          }
           await this.updateProgress(
             BuildProgressNotificationType.Error,
             BuildFirmwareStep.BUILDING_FIRMWARE,
@@ -408,6 +416,14 @@ implements FlashingStrategy {
             stderr: flashResult.stderr,
             stdout: flashResult.stdout,
           });
+          if (
+            flashResult.stdout.length === 0
+            && flashResult.stderr.length === 0
+          ) {
+            await this.updateLogs(
+              `Flash exited with code ${flashResult.code} without producing any output.`,
+            );
+          }
           const uploadErrorRegexp = /\*\*\* \[upload\] Error (-*\d+)/g;
           let uploadError = 0;
           const matches = [...flashResult.stderr.matchAll(uploadErrorRegexp)];
