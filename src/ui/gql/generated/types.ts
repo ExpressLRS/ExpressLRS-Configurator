@@ -50,6 +50,7 @@ export enum BuildFirmwareSubstep {
 export type BuildFlashFirmwareInput = {
   readonly erase?: Scalars['Boolean']['input'];
   readonly firmware?: FirmwareVersionDataInput;
+  readonly flashingMethod?: FlashingMethod;
   readonly forceFlash?: Scalars['Boolean']['input'];
   readonly serialDevice?: InputMaybe<Scalars['String']['input']>;
   readonly target?: Scalars['String']['input'];

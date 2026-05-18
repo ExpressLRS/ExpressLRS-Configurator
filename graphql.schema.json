@@ -232,6 +232,22 @@
             "deprecationReason": null
           },
           {
+            "name": "flashingMethod",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "FlashingMethod",
+                "ofType": null
+              }
+            },
+            "defaultValue": "UART",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "forceFlash",
             "description": null,
             "type": {

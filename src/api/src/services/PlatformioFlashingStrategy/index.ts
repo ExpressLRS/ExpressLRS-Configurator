@@ -40,20 +40,7 @@ import {
   maskBuildFlashFirmwareParams,
   maskSensitiveData,
 } from '../FlashingStrategyLocator/masks';
-import FlashingMethod from '../../models/enum/FlashingMethod';
 import FlashOutputParserService from '../FlashOutputParser';
-
-function detectFlashingMethodFromTarget(target: string): FlashingMethod {
-  const upper = target.toUpperCase();
-  if (upper.includes('_VIA_WIFI')) return FlashingMethod.WIFI;
-  if (upper.includes('_VIA_BETAFLIGHT')) return FlashingMethod.BetaflightPassthrough;
-  if (upper.includes('_VIA_ETX')) return FlashingMethod.EdgeTxPassthrough;
-  if (upper.includes('_VIA_PASSTHROUGH')) return FlashingMethod.Passthrough;
-  if (upper.includes('_VIA_STLINK')) return FlashingMethod.STLink;
-  if (upper.includes('_VIA_DFU')) return FlashingMethod.DFU;
-  if (upper.includes('_VIA_STOCK')) return FlashingMethod.Stock_BL;
-  return FlashingMethod.UART;
-}
 
 @Service()
 export default class PlatformioFlashingStrategyService
@@ -165,7 +152,7 @@ implements FlashingStrategy {
         this.updateProgress(type, step, substep, progress);
       },
       {
-        flashingMethod: detectFlashingMethodFromTarget(params.target),
+        flashingMethod: params.flashingMethod,
         jobType: params.type,
       },
     );

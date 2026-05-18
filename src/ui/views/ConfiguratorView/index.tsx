@@ -643,6 +643,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       type,
       firmware: firmwareVersionData,
       target: deviceTarget.name,
+      flashingMethod: deviceTarget.flashingMethod,
       userDefines,
       serialDevice: uploadPort,
       erase,

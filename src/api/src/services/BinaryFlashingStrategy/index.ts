@@ -45,31 +45,9 @@ import {
 } from '../FlashingStrategyLocator/masks';
 import CloudBinariesCache from './CloudBinariesCache';
 import { DeviceDescription } from './TargetsJSONLoader';
-import FlashingMethod from '../../models/enum/FlashingMethod';
 import FlashOutputParserService, {
   FlashOutputParser,
 } from '../FlashOutputParser';
-
-function mapUploadMethodToFlashingMethod(uploadMethod: string): FlashingMethod {
-  switch (uploadMethod) {
-    case 'uart':
-      return FlashingMethod.UART;
-    case 'betaflight':
-      return FlashingMethod.BetaflightPassthrough;
-    case 'passthru':
-      return FlashingMethod.Passthrough;
-    case 'wifi':
-      return FlashingMethod.WIFI;
-    case 'etx':
-      return FlashingMethod.EdgeTxPassthrough;
-    case 'stlink':
-      return FlashingMethod.STLink;
-    case 'stock':
-      return FlashingMethod.Stock_BL;
-    default:
-      return FlashingMethod.UART;
-  }
-}
 
 @Service()
 export default class BinaryFlashingStrategyService implements FlashingStrategy {
@@ -465,13 +443,11 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     }
     this.mutex.tryLock();
 
-    const uploadMethod = params.target.split('.')[3] ?? 'uart';
-    const flashingMethod = mapUploadMethodToFlashingMethod(uploadMethod);
     const flashOutputParser = this.flashOutputParserService.create(
       (type, step, substep, progress) => {
         this.updateProgress(type, step, substep, progress);
       },
-      { flashingMethod, jobType: params.type },
+      { flashingMethod: params.flashingMethod, jobType: params.type },
     );
 
     try {
