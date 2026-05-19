@@ -1,0 +1,39 @@
+  ** Searching flight controllers **
+  ** No FC found, find all ports **
+
+Detected the following serial ports on this system:
+  /dev/ttyACM0
+
+======== PASSTHROUGH INIT ========
+  Trying to initialize /dev/ttyACM0 @ 420000
+
+Enabling serial passthrough...
+  CMD: 'serialpassthrough 0 420000'
+
+======== PASSTHROUGH DONE ========
+
+esptool.py v4.2.1
+Serial port /dev/ttyACM0
+Connecting...
+Chip is ESP32-C3 (revision 4)
+Features: Wi-Fi
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Auto-detected Flash size: 4MB
+Flash will be erased from 0x00010000 to 0x00156fff...
+Compressed 1337568 bytes to 842044...
+Writing at 0x00010000... (1 %)
+
+Writing at 0x000152ab... (3 %)
+
+Writing at 0x00021289... (9 %)
+
+Writing at 0x00029ffb... (13 %)
+
+Traceback (most recent call last):
+  File "esptool.py", line 5439, in <module>
+serial.serialutil.SerialException: write failed: [Errno 5] Input/output error

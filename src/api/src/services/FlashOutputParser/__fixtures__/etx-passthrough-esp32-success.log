@@ -1,0 +1,60 @@
+  ** Searching flight controllers **
+      > FC found from '/dev/ttyACM0'
+
+Detected the following serial ports on this system:
+  /dev/ttyACM0
+
+======== PASSTHROUGH INIT ========
+  Trying to initialize /dev/ttyACM0 @ 460800
+
+Enabling serial passthrough...
+  CMD: 'serialpassthrough rfmod 0 460800'
+
+======== PASSTHROUGH DONE ========
+
+esptool.py v4.2.1
+Serial port /dev/ttyACM0
+WARNING: Pre-connection option "no_reset" was selected. Connection may fail if the chip is not in bootloader or flasher stub mode.
+Connecting...
+.
+
+Chip is ESP32-D0WDQ6 (revision 1)
+Features: WiFi, BT, Dual Core, 240MHz, VRef calibration in efuse, Coding Scheme None
+Crystal is 40MHz
+MAC: ec:62:60:9e:23:10
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Auto-detected Flash size: 8MB
+Flash will be erased from 0x00001000 to 0x00005fff...
+Flash will be erased from 0x00010000 to 0x0019ffff...
+Compressed 17536 bytes to 12202...
+Writing at 0x00001000... (100 %)
+
+Wrote 17536 bytes (12202 compressed) at 0x00001000 in 0.6 seconds (effective 223.6 kbit/s)...
+Hash of data verified.
+Compressed 1634768 bytes to 1011131...
+Writing at 0x00010000... (1 %)
+
+Writing at 0x0001d33c... (3 %)
+
+Writing at 0x00021289... (9 %)
+
+Writing at 0x000947b3... (40 %)
+
+Writing at 0x000ea842... (50 %)
+
+Writing at 0x00130c67... (70 %)
+
+Writing at 0x00157305... (82 %)
+
+Writing at 0x0019a742... (100 %)
+
+Wrote 1634768 bytes (1011131 compressed) at 0x00010000 in 24.4 seconds (effective 537.1 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...

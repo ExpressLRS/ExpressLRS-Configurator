@@ -1,0 +1,7 @@
+Processing Frsky_TX_R9M_via_UART (board: r9m; platform: ststm32; framework: arduino)
+--------------------------------------------------------------------------------
+Compiling .pio\build\Frsky_TX_R9M_via_UART\src\main.cpp.o
+Linking .pio\build\Frsky_TX_R9M_via_UART\firmware.elf
+*** [uploadforce] Stop.
+No matching target found for 'uploadforce'.
+============================ [FAILED] Took 12.34 seconds =============================

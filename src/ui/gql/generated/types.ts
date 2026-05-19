@@ -33,9 +33,24 @@ export enum BuildFirmwareStep {
   VERIFYING_BUILD_SYSTEM = 'VERIFYING_BUILD_SYSTEM'
 }
 
+export enum BuildFirmwareSubstep {
+  CompilingFirmware = 'CompilingFirmware',
+  ConnectingToDevice = 'ConnectingToDevice',
+  DetectingDevice = 'DetectingDevice',
+  ErasingFlash = 'ErasingFlash',
+  InstallingDependencies = 'InstallingDependencies',
+  PackagingFirmware = 'PackagingFirmware',
+  RestartingDevice = 'RestartingDevice',
+  TargetMismatch = 'TargetMismatch',
+  UploadingFirmware = 'UploadingFirmware',
+  VerifyingFirmware = 'VerifyingFirmware',
+  WritingFirmware = 'WritingFirmware'
+}
+
 export type BuildFlashFirmwareInput = {
   readonly erase?: Scalars['Boolean']['input'];
   readonly firmware?: FirmwareVersionDataInput;
+  readonly flashingMethod?: FlashingMethod;
   readonly forceFlash?: Scalars['Boolean']['input'];
   readonly serialDevice?: InputMaybe<Scalars['String']['input']>;
   readonly target?: Scalars['String']['input'];
@@ -63,8 +78,9 @@ export type BuildLogUpdate = {
 
 export type BuildProgressNotification = {
   readonly __typename?: 'BuildProgressNotification';
-  readonly message?: Maybe<Scalars['String']['output']>;
+  readonly progress?: Maybe<Scalars['Float']['output']>;
   readonly step?: Maybe<BuildFirmwareStep>;
+  readonly substep?: Maybe<BuildFirmwareSubstep>;
   readonly type: BuildProgressNotificationType;
 };
 
@@ -474,7 +490,7 @@ export type BuildLogUpdatesSubscription = { readonly __typename?: 'Subscription'
 export type BuildProgressNotificationsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BuildProgressNotificationsSubscription = { readonly __typename?: 'Subscription', readonly buildProgressNotifications: { readonly __typename?: 'BuildProgressNotification', readonly type: BuildProgressNotificationType, readonly step?: BuildFirmwareStep | null, readonly message?: string | null } };
+export type BuildProgressNotificationsSubscription = { readonly __typename?: 'Subscription', readonly buildProgressNotifications: { readonly __typename?: 'BuildProgressNotification', readonly type: BuildProgressNotificationType, readonly step?: BuildFirmwareStep | null, readonly substep?: BuildFirmwareSubstep | null, readonly progress?: number | null } };
 
 export type CheckForUpdatesQueryVariables = Exact<{
   currentVersion: Scalars['String']['input'];
@@ -592,7 +608,7 @@ export const AvailableFirmwareTargetsDocument = {"kind":"Document","definitions"
 export const AvailableMulticastDnsDevicesListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"availableMulticastDnsDevicesList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"availableMulticastDnsDevicesList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"options"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"enabled"}},{"kind":"Field","name":{"kind":"Name","value":"enumValues"}},{"kind":"Field","name":{"kind":"Name","value":"value"}},{"kind":"Field","name":{"kind":"Name","value":"sensitive"}}]}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"vendor"}},{"kind":"Field","name":{"kind":"Name","value":"ip"}},{"kind":"Field","name":{"kind":"Name","value":"dns"}},{"kind":"Field","name":{"kind":"Name","value":"port"}},{"kind":"Field","name":{"kind":"Name","value":"deviceName"}}]}}]}}]} as unknown as DocumentNode<AvailableMulticastDnsDevicesListQuery, AvailableMulticastDnsDevicesListQueryVariables>;
 export const BuildFlashFirmwareDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"buildFlashFirmware"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BuildFlashFirmwareInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gitRepository"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GitRepositoryInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buildFlashFirmware"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}},{"kind":"Argument","name":{"kind":"Name","value":"gitRepository"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gitRepository"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"errorType"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"firmwareBinPath"}}]}}]}}]} as unknown as DocumentNode<BuildFlashFirmwareMutation, BuildFlashFirmwareMutationVariables>;
 export const BuildLogUpdatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"buildLogUpdates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buildLogUpdates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"}}]}}]}}]} as unknown as DocumentNode<BuildLogUpdatesSubscription, BuildLogUpdatesSubscriptionVariables>;
-export const BuildProgressNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"buildProgressNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buildProgressNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"step"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<BuildProgressNotificationsSubscription, BuildProgressNotificationsSubscriptionVariables>;
+export const BuildProgressNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"buildProgressNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"buildProgressNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"step"}},{"kind":"Field","name":{"kind":"Name","value":"substep"}},{"kind":"Field","name":{"kind":"Name","value":"progress"}}]}}]}}]} as unknown as DocumentNode<BuildProgressNotificationsSubscription, BuildProgressNotificationsSubscriptionVariables>;
 export const CheckForUpdatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"checkForUpdates"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"currentVersion"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"checkForUpdates"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"currentVersion"},"value":{"kind":"Variable","name":{"kind":"Name","value":"currentVersion"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateAvailable"}},{"kind":"Field","name":{"kind":"Name","value":"newestVersion"}},{"kind":"Field","name":{"kind":"Name","value":"releaseUrl"}}]}}]}}]} as unknown as DocumentNode<CheckForUpdatesQuery, CheckForUpdatesQueryVariables>;
 export const ClearFirmwareFilesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"clearFirmwareFiles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"clearFirmwareFiles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<ClearFirmwareFilesMutation, ClearFirmwareFilesMutationVariables>;
 export const ClearPlatformioCoreDirDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"clearPlatformioCoreDir"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"clearPlatformioCoreDir"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<ClearPlatformioCoreDirMutation, ClearPlatformioCoreDirMutationVariables>;

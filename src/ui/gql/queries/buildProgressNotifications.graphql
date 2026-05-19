@@ -2,6 +2,7 @@ subscription buildProgressNotifications {
   buildProgressNotifications {
     type
     step
-    message
+    substep
+    progress
   }
 }

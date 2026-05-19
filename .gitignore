@@ -1,6 +1,7 @@
 # Logs
 /logs
 *.log
+!src/api/src/services/FlashOutputParser/__fixtures__/*.log
 
 # Runtime data
 /pids

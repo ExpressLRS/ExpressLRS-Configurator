@@ -1,0 +1,19 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  5 1596k    0     0    5 88805      0  33756  0:00:48  0:00:02  0:00:46 33753
+
+ 17 1596k    0     0   17  280k      0  45856  0:00:35  0:00:06  0:00:29 67427
+
+ 17 1596k    0     0   17  280k      0   5703  0:04:46  0:00:50  0:03:56     0
+
+ 17 1596k    0     0   17  280k      0   4782  0:05:41  0:01:00  0:04:41     0
+curl: (28) Operation timed out after 60001 milliseconds with 0 bytes received
+Warning: Problem : timeout. Will retry in 1 seconds. 2 retries left.
+
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:14 --:--:--     0
+curl: (7) Failed to connect to 192.168.88.79 port 80 after 14298 ms: Couldn't connect to server
+
+ ** UPLOADING TO: http://192.168.88.79/update
+WIFI upload FAILED!

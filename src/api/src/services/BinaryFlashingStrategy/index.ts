@@ -11,6 +11,7 @@ import BuildFirmwareErrorType from '../../models/enum/BuildFirmwareErrorType';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildProgressNotificationType from '../../models/enum/BuildProgressNotificationType';
 import BuildFirmwareStep from '../../models/enum/FirmwareBuildStep';
+import BuildFirmwareSubstep from '../../models/enum/BuildFirmwareSubstep';
 import { LoggerService } from '../../logger';
 import UserDefineKey from '../../library/FirmwareBuilder/Enum/UserDefineKey';
 import { BuildFlashFirmwareParams } from '../FlashingStrategyLocator/BuildFlashFirmwareParams';
@@ -44,6 +45,9 @@ import {
 } from '../FlashingStrategyLocator/masks';
 import CloudBinariesCache from './CloudBinariesCache';
 import { DeviceDescription } from './TargetsJSONLoader';
+import FlashOutputParserService, {
+  FlashOutputParser,
+} from '../FlashOutputParser';
 
 @Service()
 export default class BinaryFlashingStrategyService implements FlashingStrategy {
@@ -62,6 +66,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     private cloudBinariesCache: CloudBinariesCache,
     private targetStorageGitPath: string,
     private logger: LoggerService,
+    private flashOutputParserService: FlashOutputParserService,
   ) {
     this.mutex = new Mutex();
   }
@@ -69,14 +74,20 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
   private async updateProgress(
     type: BuildProgressNotificationType,
     step: BuildFirmwareStep,
+    substep?: BuildFirmwareSubstep,
+    progress?: number,
   ): Promise<void> {
     this.logger?.log('build progress notification', {
       type,
       step,
+      substep,
+      progress,
     });
     return this.pubSub!.publish(PubSubTopic.BuildProgressNotification, {
       type,
       step,
+      substep,
+      progress,
     });
   }
 
@@ -253,7 +264,12 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     target: string,
     firmwareSourcePath: string,
     userDefines: UserDefine[],
+    parser?: FlashOutputParser,
   ): Promise<string> {
+    const onOutput = (output: string) => {
+      this.updateLogs(output);
+      parser?.(output);
+    };
     const pythonCheck = await this.platformio.checkPython();
     if (!pythonCheck.success) {
       this.logger?.error('python dependency check error', undefined, {
@@ -274,11 +290,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         stderr: coreCheck.stderr,
         stdout: coreCheck.stdout,
       });
-      const platformioInstallResult = await this.platformio.install(
-        (output) => {
-          this.updateLogs(output);
-        },
-      );
+      const platformioInstallResult = await this.platformio.install(onOutput);
       if (!platformioInstallResult.success) {
         this.logger?.error('platformio installation error', undefined, {
           stderr: platformioInstallResult.stderr,
@@ -304,9 +316,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       target,
       buildUserDefines,
       firmwareSourcePath,
-      (output) => {
-        this.updateLogs(output);
-      },
+      onOutput,
     );
     if (!compileResult.success) {
       this.logger?.error('compile error', undefined, {
@@ -314,6 +324,10 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         stderr: compileResult.stderr,
         stdout: compileResult.stdout,
       });
+      await this.updateProgress(
+        BuildProgressNotificationType.Error,
+        BuildFirmwareStep.BUILDING_FIRMWARE,
+      );
       throw new Error(`failed to compile firmware: ${compileResult.stderr}`);
     }
 
@@ -429,6 +443,13 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     }
     this.mutex.tryLock();
 
+    const flashOutputParser = this.flashOutputParserService.create(
+      (type, step, substep, progress) => {
+        this.updateProgress(type, step, substep, progress);
+      },
+      { flashingMethod: params.flashingMethod, jobType: params.type },
+    );
+
     try {
       await this.updateProgress(
         BuildProgressNotificationType.Info,
@@ -526,6 +547,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           target,
           firmwareSourcePath,
           params.userDefines,
+          flashOutputParser,
         );
         // In some cases we need to copy multiple artifacts, for example hdzero goggles contains
         // boot_app0.bin, bootloader.bin, firmware.bin, partitions.bin files
@@ -569,25 +591,48 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           params,
         );
       }
+      await this.updateLogs(
+        `> ${this.binaryConfigurator.formatCommand(flasherPath, flasherArgs)}`,
+      );
       const binaryConfiguratorResult = await this.binaryConfigurator.run(
         flasherPath,
         flasherArgs,
         (output) => {
           this.updateLogs(output);
+          flashOutputParser(output);
         },
       );
+      const finalStep = params.type === BuildJobType.Flash
+        ? BuildFirmwareStep.FLASHING_FIRMWARE
+        : BuildFirmwareStep.BUILDING_FIRMWARE;
       if (!binaryConfiguratorResult.success) {
         this.logger?.error('compile error', undefined, {
           code: binaryConfiguratorResult.code,
           stderr: binaryConfiguratorResult.stderr,
           stdout: binaryConfiguratorResult.stdout,
         });
+        const streamedNothing
+          = binaryConfiguratorResult.stdout.length === 0
+            && binaryConfiguratorResult.stderr.length === 0;
+        if (streamedNothing) {
+          await this.updateLogs(
+            `Flasher exited with code ${binaryConfiguratorResult.code} without producing any output.`,
+          );
+        }
+        await this.updateProgress(
+          BuildProgressNotificationType.Error,
+          finalStep,
+        );
         return new BuildFlashFirmwareResult(
           false,
           binaryConfiguratorResult.stderr,
           BuildFirmwareErrorType.BuildError,
         );
       }
+      await this.updateProgress(
+        BuildProgressNotificationType.Success,
+        finalStep,
+      );
 
       if (params.type === BuildJobType.Build) {
         let mainArtifactBinary = this.searchFirmwareBinPath(outputDirectory);
@@ -622,6 +667,13 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       this.logger?.error('generic error', undefined, {
         err: e,
       });
+      const errorStep = params.type === BuildJobType.Flash
+        ? BuildFirmwareStep.FLASHING_FIRMWARE
+        : BuildFirmwareStep.BUILDING_FIRMWARE;
+      await this.updateProgress(
+        BuildProgressNotificationType.Error,
+        errorStep,
+      );
       return new BuildFlashFirmwareResult(
         false,
         `Error: ${e}`,

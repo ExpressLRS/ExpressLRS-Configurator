@@ -8,6 +8,9 @@ import {
 } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client/react';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Alert,
   AlertTitle,
   Box,
@@ -30,6 +33,8 @@ import {
   Typography,
 } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import TerminalIcon from '@mui/icons-material/Terminal';
 import { ContentCopy, NetworkWifi, Save } from '@mui/icons-material';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
@@ -42,13 +47,13 @@ import DeviceOptionsForm, {
 import ShowAlerts from '../../components/ShowAlerts';
 import CardTitle from '../../components/CardTitle';
 import Logs from '../../components/Logs';
-import BuildProgressBar from '../../components/BuildProgressBar';
-import BuildNotificationsList from '../../components/BuildNotificationsList';
+import FlashingStepper from '../../components/FlashingStepper';
 import {
   BuildFirmwareErrorType,
   BuildFlashFirmwareInput,
   BuildJobType,
   BuildProgressNotification,
+  BuildProgressNotificationType,
   Device,
   DeviceType,
   FirmwareSource,
@@ -65,7 +70,6 @@ import {
   TargetDeviceOptionsDocument,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
-import BuildResponse from '../../components/BuildResponse';
 import {
   IpcRequest,
   OpenFileLocationRequestBody,
@@ -83,7 +87,6 @@ import WifiDeviceSelect from '../../components/WifiDeviceSelect';
 import WifiDeviceList from '../../components/WifiDeviceList';
 import GitRepository from '../../models/GitRepository';
 import ShowTimeoutAlerts from '../../components/ShowTimeoutAlerts';
-import ShowAfterTimeout from '../../components/ShowAfterTimeout';
 import useAppState from '../../hooks/useAppState';
 import AppStatus from '../../models/enum/AppStatus';
 import MainLayout from '../../layouts/MainLayout';
@@ -97,6 +100,20 @@ const styles: Record<string, SxProps<Theme>> = {
   },
   buildNotification: {
     marginBottom: 1,
+  },
+  logsAccordion: {
+    boxShadow: 'none',
+    backgroundImage: 'none',
+    borderBottom: 1,
+    borderColor: 'divider',
+    '&.Mui-expanded::before': {
+      opacity: 1,
+    },
+  },
+  logsSummaryTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1,
   },
 };
 
@@ -150,7 +167,6 @@ interface ConfiguratorViewProps {
   onDeviceChange: (dnsDevice: MulticastDnsInformation | null) => void;
   deviceType: DeviceType;
   buildProgressNotifications: BuildProgressNotification[];
-  lastBuildProgressNotification: BuildProgressNotification | null;
   resetBuildProgressNotifications: () => void;
   buildLogs: string;
   resetBuildLogs: () => void;
@@ -166,7 +182,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     onDeviceChange,
     deviceType,
     buildProgressNotifications,
-    lastBuildProgressNotification,
     resetBuildProgressNotifications,
     buildLogs,
     resetBuildLogs,
@@ -501,6 +516,17 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     setWifiDevice(newWifiDevice);
   }, []);
 
+  const [logsExpanded, setLogsExpanded] = useState(false);
+  const hasErrorInSession
+    = buildProgressNotifications.some(
+      (n) => n.type === BuildProgressNotificationType.Error,
+    ) || (response?.buildFlashFirmware?.success === false);
+  useEffect(() => {
+    if (hasErrorInSession) {
+      setLogsExpanded(true);
+    }
+  }, [hasErrorInSession]);
+
   const [erase, setErase] = useState<boolean>(false);
   const [forceFlash, setForceFlash] = useState<boolean>(false);
 
@@ -617,6 +643,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       type,
       firmware: firmwareVersionData,
       target: deviceTarget.name,
+      flashingMethod: deviceTarget.flashingMethod,
       userDefines,
       serialDevice: uploadPort,
       erase,
@@ -1073,48 +1100,58 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
           />
           <Divider />
           <CardContent>
-            <BuildProgressBar
-              inProgress={buildInProgress}
-              jobType={currentJobType}
-              progressNotification={lastBuildProgressNotification}
-            />
-            <BuildNotificationsList
+            <FlashingStepper
               notifications={buildProgressNotifications}
+              jobType={currentJobType}
+              flashingMethod={deviceTarget?.flashingMethod}
+              hasLuaScript={hasLuaScript}
+              response={response?.buildFlashFirmware}
             />
 
             <ShowAlerts severity="error" messages={buildFlashErrorResponse} />
           </CardContent>
 
-          {buildLogs.length > 0 && (
-            <>
-              <CardTitle
-                icon={<SettingsIcon />}
-                title={(
-                  <Box display="flex" justifyContent="space-between">
-                    <Box>{t('ConfiguratorView.Logs')}</Box>
-                    <Box>
-                      <IconButton
-                        aria-label={t('ConfiguratorView.CopyLogToClipboard')}
-                        title={t('ConfiguratorView.CopyLogToClipboard')}
-                        onClick={async () => {
-                          await navigator.clipboard.writeText(buildLogs);
-                        }}
-                      >
-                        <ContentCopy />
-                      </IconButton>
-                      <IconButton
-                        aria-label={t('ConfiguratorView.SaveLogToFile')}
-                        title={t('ConfiguratorView.SaveLogToFile')}
-                        onClick={saveBuildLogToFile}
-                      >
-                        <Save />
-                      </IconButton>
-                    </Box>
+          {hasErrorInSession && (
+            <Accordion
+              expanded={logsExpanded}
+              onChange={(_, isExpanded) => setLogsExpanded(isExpanded)}
+              disableGutters
+              elevation={0}
+              square
+              sx={styles.logsAccordion}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  width="100%"
+                >
+                  <Box sx={styles.logsSummaryTitle}>
+                    <TerminalIcon fontSize="small" />
+                    <Typography>{t('ConfiguratorView.Logs')}</Typography>
                   </Box>
-                )}
-              />
-              <Divider />
-              <CardContent>
+                  <Box onClick={(e) => e.stopPropagation()}>
+                    <IconButton
+                      aria-label={t('ConfiguratorView.CopyLogToClipboard')}
+                      title={t('ConfiguratorView.CopyLogToClipboard')}
+                      onClick={async () => {
+                        await navigator.clipboard.writeText(buildLogs);
+                      }}
+                    >
+                      <ContentCopy />
+                    </IconButton>
+                    <IconButton
+                      aria-label={t('ConfiguratorView.SaveLogToFile')}
+                      title={t('ConfiguratorView.SaveLogToFile')}
+                      onClick={saveBuildLogToFile}
+                    >
+                      <Save />
+                    </IconButton>
+                  </Box>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails>
                 <Box sx={styles.longBuildDurationWarning}>
                   <ShowTimeoutAlerts
                     severity="warning"
@@ -1124,65 +1161,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   />
                 </Box>
                 <Logs data={buildLogs} />
-              </CardContent>
-              <Divider />
-            </>
-          )}
-          {response !== undefined && (
-            <>
-              <CardTitle
-                icon={<SettingsIcon />}
-                title={t('ConfiguratorView.Result')}
-              />
-              <Divider />
-              <CardContent>
-                {response?.buildFlashFirmware?.success
-                  && currentJobType === BuildJobType.Flash
-                  && deviceTarget?.flashingMethod === FlashingMethod.WIFI && (
-                  <Alert sx={styles.buildNotification} severity="warning">
-                    <AlertTitle>{t('ConfiguratorView.Warning')}</AlertTitle>
-                    {t('ConfiguratorView.WaitForLEDBeforeDisconnectingPower')}
-                  </Alert>
-                )}
-                <ShowAfterTimeout
-                  timeout={
-                    response?.buildFlashFirmware?.success
-                    && currentJobType === BuildJobType.Flash
-                    && deviceTarget?.flashingMethod === FlashingMethod.WIFI
-                      ? 15000
-                      : 1000
-                  }
-                  active={!buildInProgress}
-                >
-                  <>
-                    <Box sx={styles.buildNotification}>
-                      <BuildResponse
-                        response={response?.buildFlashFirmware}
-                        firmwareVersionData={firmwareVersionData}
-                      />
-                    </Box>
-                    {response?.buildFlashFirmware?.success && hasLuaScript && (
-                      <Alert sx={styles.buildNotification} severity="info">
-                        <AlertTitle>
-                          {t('ConfiguratorView.UpdateLuaScript')}
-                        </AlertTitle>
-                        {t('ConfiguratorView.UpdateLuaScriptOnRadio')}
-                      </Alert>
-                    )}
-                  </>
-                </ShowAfterTimeout>
-                {response?.buildFlashFirmware?.success
-                  && currentJobType === BuildJobType.Build && (
-                  <Alert sx={styles.buildNotification} severity="info">
-                    <AlertTitle>
-                      {t('ConfiguratorView.BuildNotice')}
-                    </AlertTitle>
-                    {t('ConfiguratorView.FirmwareOpenedInFileExplorer')}
-                  </Alert>
-                )}
-              </CardContent>
-              <Divider />
-            </>
+              </AccordionDetails>
+            </Accordion>
           )}
           {!buildInProgress && (
             <>

@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "C:\Users\X\.shiv\flasher.pyz_xyz\site-packages\binary_configurator.py", line 437, in main
+    return binary_flash.upload(options, args)
+  File "C:\Users\X\.shiv\flasher.pyz_xyz\site-packages\binary_flash.py", line 200, in upload
+    return upload_stm32_stlink(args, options)
+  File "C:\Users\X\.shiv\flasher.pyz_xyz\site-packages\binary_flash.py", line 55, in upload_stm32_stlink
+    stlink = external.pystlink.PyStlink(verbosity=1)
+  File "C:\Users\X\.shiv\flasher.pyz_xyz\site-packages/external\pystlink\pystlink_api.py", line 42, in __init__
+    self._connector = stlinkusb.StlinkUsbConnector(dbg=self._dbg, serial=self._serial, index=self._index)
+  File "C:\Users\X\.shiv\flasher.pyz_xyz\site-packages/external\pystlink\lib\stlinkusb.py", line 67, in __init__
+    devices = usb.core.find(find_all=True)
+  File "C:\Users\X\.shiv\flasher.pyz_xyz\site-packages/external\usb\core.py", line 1309, in find
+    raise NoBackendError('No backend available')
+usb.core.NoBackendError: No backend available

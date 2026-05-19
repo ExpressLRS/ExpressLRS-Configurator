@@ -10,6 +10,7 @@ import BuildFirmwareErrorType from '../../models/enum/BuildFirmwareErrorType';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
 import BuildProgressNotificationType from '../../models/enum/BuildProgressNotificationType';
 import BuildFirmwareStep from '../../models/enum/FirmwareBuildStep';
+import BuildFirmwareSubstep from '../../models/enum/BuildFirmwareSubstep';
 import {
   findGitExecutable,
   GitFirmwareDownloader,
@@ -39,6 +40,7 @@ import {
   maskBuildFlashFirmwareParams,
   maskSensitiveData,
 } from '../FlashingStrategyLocator/masks';
+import FlashOutputParserService from '../FlashOutputParser';
 
 @Service()
 export default class PlatformioFlashingStrategyService
@@ -56,6 +58,7 @@ implements FlashingStrategy {
     private logger: LoggerService,
     private userDefinesBuilder: UserDefinesBuilder,
     private targetsLoader: TargetsLoader,
+    private flashOutputParserService: FlashOutputParserService,
   ) {
     this.mutex = new Mutex();
   }
@@ -63,14 +66,20 @@ implements FlashingStrategy {
   private async updateProgress(
     type: BuildProgressNotificationType,
     step: BuildFirmwareStep,
+    substep?: BuildFirmwareSubstep,
+    progress?: number,
   ): Promise<void> {
     this.logger?.log('build progress notification', {
       type,
       step,
+      substep,
+      progress,
     });
     return this.pubSub!.publish(PubSubTopic.BuildProgressNotification, {
       type,
       step,
+      substep,
+      progress,
     });
   }
 
@@ -138,6 +147,16 @@ implements FlashingStrategy {
     }
     this.mutex.tryLock();
 
+    const flashOutputParser = this.flashOutputParserService.create(
+      (type, step, substep, progress) => {
+        this.updateProgress(type, step, substep, progress);
+      },
+      {
+        flashingMethod: params.flashingMethod,
+        jobType: params.type,
+      },
+    );
+
     try {
       await this.updateProgress(
         BuildProgressNotificationType.Info,
@@ -178,6 +197,7 @@ implements FlashingStrategy {
         const platformioInstallResult = await this.platformio.install(
           (output) => {
             this.updateLogs(output);
+            flashOutputParser(output);
           },
         );
         if (!platformioInstallResult.success) {
@@ -310,6 +330,7 @@ implements FlashingStrategy {
           firmwarePath,
           (output) => {
             this.updateLogs(output);
+            flashOutputParser(output);
           },
         );
         if (!compileResult.success) {
@@ -318,6 +339,18 @@ implements FlashingStrategy {
             stderr: compileResult.stderr,
             stdout: compileResult.stdout,
           });
+          if (
+            compileResult.stdout.length === 0
+            && compileResult.stderr.length === 0
+          ) {
+            await this.updateLogs(
+              `Build exited with code ${compileResult.code} without producing any output.`,
+            );
+          }
+          await this.updateProgress(
+            BuildProgressNotificationType.Error,
+            BuildFirmwareStep.BUILDING_FIRMWARE,
+          );
           return new BuildFlashFirmwareResult(
             false,
             compileResult.stderr,
@@ -332,6 +365,10 @@ implements FlashingStrategy {
         const canonicalFirmwareBinPath
           = await createBinaryCopyWithCanonicalName(params, firmwareBinPath);
 
+        await this.updateProgress(
+          BuildProgressNotificationType.Success,
+          BuildFirmwareStep.BUILDING_FIRMWARE,
+        );
         return new BuildFlashFirmwareResult(
           true,
           undefined,
@@ -358,6 +395,7 @@ implements FlashingStrategy {
           uploadType,
           (output) => {
             this.updateLogs(output);
+            flashOutputParser(output);
           },
         );
         if (!flashResult.success) {
@@ -365,12 +403,24 @@ implements FlashingStrategy {
             stderr: flashResult.stderr,
             stdout: flashResult.stdout,
           });
+          if (
+            flashResult.stdout.length === 0
+            && flashResult.stderr.length === 0
+          ) {
+            await this.updateLogs(
+              `Flash exited with code ${flashResult.code} without producing any output.`,
+            );
+          }
           const uploadErrorRegexp = /\*\*\* \[upload\] Error (-*\d+)/g;
           let uploadError = 0;
           const matches = [...flashResult.stderr.matchAll(uploadErrorRegexp)];
           if (matches.length > 0) {
             uploadError = Number.parseInt(matches[0][1], 10);
           }
+          await this.updateProgress(
+            BuildProgressNotificationType.Error,
+            BuildFirmwareStep.FLASHING_FIRMWARE,
+          );
           return new BuildFlashFirmwareResult(
             false,
             flashResult.stderr,
@@ -379,6 +429,10 @@ implements FlashingStrategy {
               : BuildFirmwareErrorType.FlashError,
           );
         }
+        await this.updateProgress(
+          BuildProgressNotificationType.Success,
+          BuildFirmwareStep.FLASHING_FIRMWARE,
+        );
       }
 
       return new BuildFlashFirmwareResult(true);
@@ -386,6 +440,13 @@ implements FlashingStrategy {
       this.logger?.error('generic error', undefined, {
         err: e,
       });
+      const errorStep = params.type === BuildJobType.Flash
+        ? BuildFirmwareStep.FLASHING_FIRMWARE
+        : BuildFirmwareStep.BUILDING_FIRMWARE;
+      await this.updateProgress(
+        BuildProgressNotificationType.Error,
+        errorStep,
+      );
       return new BuildFlashFirmwareResult(
         false,
         `Error: ${e}`,

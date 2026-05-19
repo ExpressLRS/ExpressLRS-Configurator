@@ -1,0 +1,28 @@
+Processing Frsky_TX_R9M_LITE_PRO_via_STLINK (board: r9m_lite_pro; platform: ststm32; framework: arduino)
+--------------------------------------------------------------------------------
+Compiling .pio\build\Frsky_TX_R9M_LITE_PRO_via_STLINK\FrameworkArduino\stm32\usb\hid\usbd_hid_composite.c.o
+Compiling .pio\build\Frsky_TX_R9M_LITE_PRO_via_STLINK\FrameworkArduino\wiring_analog.c.o
+Compiling .pio\build\Frsky_TX_R9M_LITE_PRO_via_STLINK\FrameworkArduino\wiring_digital.c.o
+Archiving .pio\build\Frsky_TX_R9M_LITE_PRO_via_STLINK\libFrameworkArduino.a
+Linking .pio\build\Frsky_TX_R9M_LITE_PRO_via_STLINK\firmware.elf
+Checking size .pio\build\Frsky_TX_R9M_LITE_PRO_via_STLINK\firmware.elf
+RAM:   [=         ]  14.9% (used 6108 bytes from 40960 bytes)
+Flash: [==        ]  20.8% (used 54476 bytes from 262144 bytes)
+Building .pio\build\Frsky_TX_R9M_LITE_PRO_via_STLINK\firmware.bin
+
+=====================================================================================
+|| !!! Copy .pio\build\Frsky_TX_R9M_LITE_PRO_via_STLINK\firmware.elrs to SD card and choose flash ext. ELRS !!! ||
+=====================================================================================
+
+======================== [SUCCESS] Took 298.33 seconds ========================
+
+Traceback (most recent call last):
+  File "C:\Users\X\firmwares\binary\ExpressLRS\src\python\binary_configurator.py", line 420, in <module>
+    exit(main())
+  File "C:\Users\X\firmwares\binary\ExpressLRS\src\python\binary_flash.py", line 197, in upload
+    return upload_stm32_stlink(args, options)
+  File "C:\Users\X\firmwares\binary\ExpressLRS\src\python\binary_flash.py", line 55, in upload_stm32_stlink
+    stlink = external.pystlink.PyStlink(verbosity=1)
+  File "usb\core.py", line 1309, in find
+    raise NoBackendError('No backend available')
+usb.core.NoBackendError: No backend available

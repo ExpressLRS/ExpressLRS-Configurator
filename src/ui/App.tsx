@@ -72,7 +72,6 @@ const App = () => {
 
   const {
     buildProgressNotifications,
-    lastBuildProgressNotification,
     resetBuildProgressNotifications,
   } = useBuildProgressNotifications();
 
@@ -99,9 +98,6 @@ const App = () => {
                     onDeviceChange={onDeviceChange}
                     deviceType={DeviceType.ExpressLRS}
                     buildProgressNotifications={buildProgressNotifications}
-                    lastBuildProgressNotification={
-                      lastBuildProgressNotification
-                    }
                     resetBuildProgressNotifications={
                       resetBuildProgressNotifications
                     }
@@ -121,9 +117,6 @@ const App = () => {
                     onDeviceChange={onDeviceChange}
                     deviceType={DeviceType.Backpack}
                     buildProgressNotifications={buildProgressNotifications}
-                    lastBuildProgressNotification={
-                      lastBuildProgressNotification
-                    }
                     resetBuildProgressNotifications={
                       resetBuildProgressNotifications
                     }

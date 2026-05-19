@@ -11,8 +11,6 @@ export default function useBuildProgressNotifications() {
     BuildProgressNotification[]
   >([]);
   const buildProgressNotificationsRef = useRef<BuildProgressNotification[]>([]);
-  const [lastBuildProgressNotification, setLastBuildProgressNotification]
-    = useState<BuildProgressNotification | null>(null);
 
   useSubscription(BuildProgressNotificationsDocument, {
     client,
@@ -25,7 +23,6 @@ export default function useBuildProgressNotifications() {
         ];
         buildProgressNotificationsRef.current = newNotificationsList;
         setBuildProgressNotifications(newNotificationsList);
-        setLastBuildProgressNotification(args);
       }
     },
   });
@@ -33,12 +30,10 @@ export default function useBuildProgressNotifications() {
   const resetBuildProgressNotifications = () => {
     buildProgressNotificationsRef.current = [];
     setBuildProgressNotifications([]);
-    setLastBuildProgressNotification(null);
   };
 
   return {
     buildProgressNotifications,
-    lastBuildProgressNotification,
     resetBuildProgressNotifications,
   };
 }

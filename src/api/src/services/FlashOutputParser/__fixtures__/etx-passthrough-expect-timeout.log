@@ -1,0 +1,26 @@
+  ** Searching flight controllers **
+      > FC found from '/dev/ttyACM0'
+
+Detected the following serial ports on this system:
+  /dev/ttyACM0
+
+======== PASSTHROUGH INIT ========
+  Trying to initialize /dev/ttyACM0 @ 460800
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "/path/to/flasher.pyz/site-packages/binary_configurator.py", line 278, in main
+    return binary_flash.upload(options, args)
+  File "/path/to/flasher.pyz/site-packages/binary_flash.py", line 157, in upload
+    return upload_esp32_etx(args)
+  File "/path/to/flasher.pyz/site-packages/binary_flash.py", line 93, in upload_esp32_etx
+    ETXinitPassthrough.etx_passthrough_init(args.port, args.baud)
+  File "/path/to/flasher.pyz/site-packages/ETXinitPassthrough.py", line 24, in etx_passthrough_init
+    rl.expect_bytes(b"set: ", timeout=1.0)
+  File "/path/to/flasher.pyz/site-packages/external/streamexpect.py", line 516, in expect_bytes
+    return self.expect(BytesSearcher(b), timeout)
+  File "/path/to/flasher.pyz/site-packages/external/streamexpect.py", line 666, in expect
+    incoming = self._stream_adapter.poll(end - time.time())
+  File "/path/to/flasher.pyz/site-packages/external/streamexpect.py", line 455, in poll
+    raise ExpectTimeout()
+external.streamexpect.ExpectTimeout

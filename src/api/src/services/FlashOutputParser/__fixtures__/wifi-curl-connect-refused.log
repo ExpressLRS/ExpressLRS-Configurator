@@ -1,0 +1,10 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+
+  0     0    0     0    0     0      0      0 --:--:--  0:00:14 --:--:--     0
+curl: (7) Failed to connect to 192.168.88.79 port 80 after 14298 ms: Couldn't connect to server
+
+ ** UPLOADING TO: http://192.168.88.79/update
+WIFI upload FAILED!
