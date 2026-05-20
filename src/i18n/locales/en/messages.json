@@ -136,6 +136,7 @@
     "ManualSelectionTitleTooltip": "Use manual serial port selection if automatic selection fails to select a correct port. In the vast majority of cases there is no need to use this option."
   },
   "Sidebar": {
+    "Home": "Home",
     "Configurator": "Configurator",
     "Backpack": "Backpack",
     "Logs": "Logs",
@@ -316,5 +317,47 @@
     "YouCanManuallyClearAllDependencies": "If you close the Configurator while platformio downloads dependencies git repository state can get corrupted. You can manually clear all dependencies and start the build process again.",
     "ClearPlatformioDependencies": "Clear platformio dependencies",
     "CorruptedPlatformioDependenciesDeleted": "Corrupted platformio dependencies were deleted and git repository was cleaned. Try building again."
+  },
+  "HomeView": {
+    "Welcome": "Welcome to ExpressLRS Configurator",
+    "Intro": "ExpressLRS Configurator is the official tool for building and flashing ExpressLRS firmware onto your transmitters, receivers, and backpacks. Pick a starting point below.",
+    "Flash": {
+      "Title": "What would you like to flash?",
+      "ExpressLRS": "ExpressLRS Firmware",
+      "ExpressLRSDescription": "Flash the main ExpressLRS firmware to your transmitter or receiver.",
+      "Backpack": "Backpack",
+      "BackpackDescription": "Flash the Backpack firmware to TX modules, video receivers, antenna trackers, or race timers."
+    },
+    "Resources": {
+      "Title": "Resources & Getting Started",
+      "GettingStarted": "Getting Started Guide",
+      "GettingStartedDescription": "New to ExpressLRS? Read the step-by-step quick start guide.",
+      "ProductFinder": "Product Finder",
+      "ProductFinderDescription": "Find supported hardware and identify your transmitter or receiver.",
+      "Documentation": "Documentation",
+      "DocumentationDescription": "Browse the full ExpressLRS documentation at expresslrs.org.",
+      "LuaScripts": "Lua Scripts",
+      "LuaScriptsDescription": "Download the ExpressLRS Lua scripts for EdgeTX and OpenTX radios."
+    },
+    "Community": {
+      "Title": "Join the Community",
+      "Subtitle": "Thousands of pilots and developers are already here.",
+      "Discord": "Discord",
+      "DiscordDescription": "Join the conversation. Get help, share builds, and connect with thousands of pilots and developers.",
+      "JoinDiscord": "Join Discord",
+      "Facebook": "Facebook",
+      "FacebookDescription": "Join our Facebook group - one of the most active FPV communities with thousands of members.",
+      "JoinGroup": "Join Group"
+    },
+    "Support": {
+      "Title": "Support the Project",
+      "Subtitle": "Whether you write code, improve documentation, report bugs, or back the project - every contribution matters.",
+      "GitHub": "GitHub",
+      "GitHubDescription": "Help build the future of RC. Code, documentation, and testing - every contribution matters.",
+      "Contribute": "Contribute",
+      "OpenCollective": "OpenCollective",
+      "OpenCollectiveDescription": "Support ExpressLRS development with a one-time or recurring contribution.",
+      "SupportProject": "Support"
+    }
   }
 }
