@@ -6,6 +6,9 @@ interface IConfig {
   facebookGroupUrl: string;
   discordUrl: string;
   openCollectiveUrl: string;
+  gettingStartedUrl: string;
+  productFinderUrl: string;
+  luaScriptsUrl: string;
   expressLRSGit: GitRepository;
   backpackGit: GitRepository;
 }
@@ -16,6 +19,9 @@ export const Config: IConfig = {
   facebookGroupUrl: 'https://www.facebook.com/groups/636441730280366',
   discordUrl: 'https://discord.gg/dS6ReFY',
   openCollectiveUrl: 'https://opencollective.com/expresslrs',
+  gettingStartedUrl: 'https://www.expresslrs.org/quick-start/getting-started/',
+  productFinderUrl: 'https://www.expresslrs.org/hardware/product-finder/',
+  luaScriptsUrl: 'https://github.com/ExpressLRS/Lua-Scripts/',
   expressLRSGit: {
     cloneUrl: 'https://github.com/ExpressLRS/ExpressLRS',
     url: 'https://github.com/ExpressLRS/ExpressLRS',
