@@ -6,6 +6,44 @@
     "CompilingFirmware": "正在编译固件",
     "FlashingDevice": "正在刷写设备"
   },
+  "FlashingStepper": {
+    "BuildOnlyDoneHint": "固件二进制文件就绪。通过您设备的 WiFi 网络接口上传。",
+    "StockBlDoneHint": "复制 firmware.elrs 到您遥控器的 SD 卡并在遥控上选择 'flash ext. ELRS'。",
+    "ShowLog": "显示完整日志",
+    "Step": {
+      "VERIFYING_BUILD_SYSTEM": "正在验证编译环境",
+      "DOWNLOADING_FIRMWARE": "正在下载固件源",
+      "BUILDING_FIRMWARE": "正在编译固件",
+      "FLASHING_FIRMWARE": "正在刷入固件至设备"
+    },
+    "Status": {
+      "InstallingDependencies": "正在安装编译工具",
+      "CompilingFirmware": "正在编译",
+      "PackagingFirmware": "正在打包固件二进制文件",
+      "DetectingDevice": "正在检测设备",
+      "ConnectingToDevice": "正在连接设备",
+      "ErasingFlash": "正在擦除闪存",
+      "WritingFirmware": "正在烧写固件",
+      "VerifyingFirmware": "正在验证固件",
+      "RestartingDevice": "正在重启设备",
+      "UploadingFirmware": "正在通过 Wi-Fi 上传固件",
+      "TargetMismatch": "所选目标错误"
+    },
+    "Failed": {
+      "InstallingDependencies": "安装编译工具失败",
+      "CompilingFirmware": "编译失败",
+      "PackagingFirmware": "打包固件二进制文件失败",
+      "DetectingDevice": "无法检测到设备",
+      "ConnectingToDevice": "无法连接到设备",
+      "ErasingFlash": "擦除闪存失败",
+      "WritingFirmware": "烧写固件失败",
+      "VerifyingFirmware": "固件验证失败",
+      "RestartingDevice": "重启设备失败",
+      "UploadingFirmware": "通过 Wi-Fi 上传固件失败",
+      "TargetMismatch": "所选目标错误",
+      "Generic": "出错了"
+    }
+  },
   "BuildResponse": {
     "Error": "错误",
     "GitDependencyError": "Git 依赖错误",
