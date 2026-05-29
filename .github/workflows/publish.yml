@@ -63,7 +63,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           yarn build
-          yarn electron-builder --publish always --x64 --mac
+          yarn electron-builder --publish always --universal --mac
 
       - name: Publish Linux releases
         if: matrix.os == 'ubuntu-22.04'
