@@ -6,6 +6,44 @@
     "CompilingFirmware": "Kompilowanie firmware",
     "FlashingDevice": "Wgrywanie oprogramowania na urządzenie"
   },
+  "FlashingStepper": {
+    "BuildOnlyDoneHint": "Firmware binary ready. Upload it through your device's WiFi web interface.",
+    "StockBlDoneHint": "Copy firmware.elrs to your radio's SD card and select 'flash ext. ELRS' on the radio.",
+    "ShowLog": "Show full log",
+    "Step": {
+      "VERIFYING_BUILD_SYSTEM": "Verifying build environment",
+      "DOWNLOADING_FIRMWARE": "Downloading firmware source",
+      "BUILDING_FIRMWARE": "Building firmware",
+      "FLASHING_FIRMWARE": "Flashing firmware to device"
+    },
+    "Status": {
+      "InstallingDependencies": "Installing build tools",
+      "CompilingFirmware": "Compiling",
+      "PackagingFirmware": "Packaging firmware binary",
+      "DetectingDevice": "Detecting device",
+      "ConnectingToDevice": "Connecting to device",
+      "ErasingFlash": "Erasing flash memory",
+      "WritingFirmware": "Writing firmware",
+      "VerifyingFirmware": "Verifying firmware",
+      "RestartingDevice": "Restarting device",
+      "UploadingFirmware": "Uploading firmware over Wi-Fi",
+      "TargetMismatch": "Wrong target selected"
+    },
+    "Failed": {
+      "InstallingDependencies": "Failed to install build tools",
+      "CompilingFirmware": "Compilation failed",
+      "PackagingFirmware": "Failed to package firmware binary",
+      "DetectingDevice": "Could not detect device",
+      "ConnectingToDevice": "Could not connect to device",
+      "ErasingFlash": "Failed to erase flash memory",
+      "WritingFirmware": "Failed to write firmware",
+      "VerifyingFirmware": "Firmware verification failed",
+      "RestartingDevice": "Failed to restart device",
+      "UploadingFirmware": "Failed to upload firmware over Wi-Fi",
+      "TargetMismatch": "Wrong target selected",
+      "Generic": "Something went wrong"
+    }
+  },
   "BuildResponse": {
     "Error": "Błąd",
     "GitDependencyError": "Błąd zależności Git",
