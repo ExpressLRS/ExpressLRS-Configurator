@@ -6,6 +6,44 @@
     "CompilingFirmware": "Compilazione firmware",
     "FlashingDevice": "Flash del dispositivo"
   },
+  "FlashingStepper": {
+    "BuildOnlyDoneHint": "Firmware binario pronto. Caricalo attraverso l'interfaccia web WiFi del tuo dispositivo.",
+    "StockBlDoneHint": "Copia firmware.elrs nella scheda SD della tua radio e seleziona 'flash ext. ELRS' sulla radio.",
+    "ShowLog": "Mostra il log completo",
+    "Step": {
+      "VERIFYING_BUILD_SYSTEM": "Verifica dell'ambiente di build",
+      "DOWNLOADING_FIRMWARE": "Scarico il firmware",
+      "BUILDING_FIRMWARE": "Compilazione firmware",
+      "FLASHING_FIRMWARE": "Flash del firmware sul dispositivo"
+    },
+    "Status": {
+      "InstallingDependencies": "Installazione degli strumenti di compilazione",
+      "CompilingFirmware": "Compilazione",
+      "PackagingFirmware": "Preparazione firmware",
+      "DetectingDevice": "Rilevamento dispositivo",
+      "ConnectingToDevice": "Connessione al dispositivo",
+      "ErasingFlash": "Cancellazione memoria flash",
+      "WritingFirmware": "Scrittura firmware",
+      "VerifyingFirmware": "Verifica firmware",
+      "RestartingDevice": "Riavvio dispositivo",
+      "UploadingFirmware": "Caricamento firmware tramite Wi-Fi",
+      "TargetMismatch": "Destinazione selezionata errata"
+    },
+    "Failed": {
+      "InstallingDependencies": "Impossibile installare strumenti di compilazione",
+      "CompilingFirmware": "Compilazione fallita",
+      "PackagingFirmware": "Impossibile preparare il firmware binario",
+      "DetectingDevice": "Impossibile rilevare il dispositivo",
+      "ConnectingToDevice": "Impossibile connettersi al dispositivo",
+      "ErasingFlash": "Impossibile cancellare la memoria flash",
+      "WritingFirmware": "Impossibile scrivere il firmware",
+      "VerifyingFirmware": "Verifica firmware fallita",
+      "RestartingDevice": "Riavvio del dispositivo fallito",
+      "UploadingFirmware": "Impossibile caricare il firmware da Wi-Fi",
+      "TargetMismatch": "Destinazione selezionata errata",
+      "Generic": "Si è verificato un errore"
+    }
+  },
   "BuildResponse": {
     "Error": "Errore",
     "GitDependencyError": "Errore di dipendenza Git",
@@ -104,8 +142,8 @@
     "SerialMonitor": "Monitor Seriale",
     "Settings": "Impostazioni",
     "Support": "Supporto",
-    "SwitchToLightTheme": "Switch to light theme",
-    "SwitchToDarkTheme": "Switch to dark theme"
+    "SwitchToLightTheme": "Passa al tema chiaro",
+    "SwitchToDarkTheme": "Passa al tema scuro"
   },
   "FlashingMethod": {
     "BetaflightPassthrough": "Passaggio tramite Betaflight",
@@ -256,10 +294,10 @@
     "ExpertMode": "Modalità esperto",
     "ApplicationOptions": "Opzioni applicazione",
     "ExpertModeDescription": "Abilita la Modalità Esperto per sbloccare funzionalità avanzate tra cui sorgenti firmware aggiuntive, la capacità di creare un firmware con parametri manuali definiti dall'utente e l'accesso allo schermo del monitor seriale per la diagnostica dettagliata.",
-    "ThemeSelector": "Theme",
-    "ThemeSystem": "System (follow OS preference)",
-    "ThemeLight": "Light",
-    "ThemeDark": "Dark"
+    "ThemeSelector": "Tema",
+    "ThemeSystem": "Sistema (segue la preferenza OS)",
+    "ThemeLight": "Chiaro",
+    "ThemeDark": "Scuro"
   },
   "SupportView": {
     "Support": "Supporto",
