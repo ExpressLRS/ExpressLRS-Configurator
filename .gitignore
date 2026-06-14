@@ -1,5 +1,6 @@
 # Logs
 /logs
+/log-samples
 *.log
 !src/api/src/services/FlashOutputParser/__fixtures__/*.log
 
