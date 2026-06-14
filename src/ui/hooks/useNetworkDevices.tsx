@@ -1,12 +1,27 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useQuery, useSubscription } from '@apollo/client/react';
 import {
+  DeviceType,
   MulticastDnsEventType,
   MulticastDnsInformation,
   AvailableMulticastDnsDevicesListDocument,
   MulticastDnsMonitorUpdatesDocument,
 } from '../gql/generated/types';
 import client from '../gql';
+
+/**
+ * Map an mDNS-advertised device `type` to the Configurator category it belongs
+ * to. Regular ExpressLRS transmitters/receivers advertise 'tx'/'rx'; every
+ * other type (backpacks: 'txbp', 'vrx', 'timer', ...) is treated as a Backpack
+ * so that newly added backpack types don't silently regress.
+ */
+export function mdnsTypeToDeviceType(mdnsType: string): DeviceType {
+  const normalized = mdnsType?.toUpperCase();
+  if (normalized === 'TX' || normalized === 'RX') {
+    return DeviceType.ExpressLRS;
+  }
+  return DeviceType.Backpack;
+}
 
 export default function useNetworkDevices() {
   const [networkDevices, setNetworkDevices] = useState<
