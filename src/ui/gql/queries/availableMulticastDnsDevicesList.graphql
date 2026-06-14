@@ -17,5 +17,6 @@ query availableMulticastDnsDevicesList{
       dns
       port
       deviceName
+      product
   }
 }

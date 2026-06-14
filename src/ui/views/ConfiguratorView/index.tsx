@@ -707,6 +707,16 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             return true;
           }
 
+          // backpacks advertise their full product name (rather than a lua
+          // name) in the mdns 'product' field, so match it against the device
+          // name to auto-select them.
+          if (
+            dnsDevice.product
+            && item.name?.toUpperCase() === dnsDevice.product.toUpperCase()
+          ) {
+            return true;
+          }
+
           return false;
         });
 

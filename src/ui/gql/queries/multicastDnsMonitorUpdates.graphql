@@ -19,6 +19,7 @@ subscription multicastDnsMonitorUpdates {
       dns
       port
       deviceName
+      product
     }
   }
 }
