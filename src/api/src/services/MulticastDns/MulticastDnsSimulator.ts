@@ -28,6 +28,7 @@ export default class MulticastDnsSimulatorService {
       vendor: 'elrs',
       port: 80,
       deviceName: 'HM ES24TX',
+      product: 'HappyModel ES24TX 2400 TX',
     };
     const hmRx = {
       name: 'elrs_rx_AAAAAAA',
@@ -48,6 +49,7 @@ export default class MulticastDnsSimulatorService {
       vendor: 'elrs',
       port: 80,
       deviceName: 'HM ES24RX',
+      product: 'HappyModel EP 2400 RX',
     };
     this.devices = {
       elrs_tx_AAAAAAA: hmTx,
