@@ -11,6 +11,7 @@ import LogsView from './views/LogsView';
 import SerialMonitorView from './views/SerialMonitorView';
 import SettingsView from './views/SettingsView';
 import SupportView from './views/SupportView';
+import HomeView from './views/HomeView';
 import { Config } from './config';
 import { DeviceType, MulticastDnsInformation } from './gql/generated/types';
 import useNetworkDevices, {
@@ -86,8 +87,9 @@ const App = () => {
             <Routes>
               <Route
                 path="/"
-                element={<Navigate replace to="/configurator" />}
+                element={<Navigate replace to="/home" />}
               />
+              <Route path="/home" element={<HomeView />} />
               <Route
                 path="/configurator"
                 element={(

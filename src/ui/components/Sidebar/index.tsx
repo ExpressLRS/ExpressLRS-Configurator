@@ -10,8 +10,9 @@ import {
   ListItemText,
   Tooltip,
 } from '@mui/material';
-import BuildIcon from '@mui/icons-material/Build';
+import SettingsInputAntennaIcon from '@mui/icons-material/SettingsInputAntenna';
 import HelpIcon from '@mui/icons-material/Help';
+import HomeIcon from '@mui/icons-material/Home';
 import DvrIcon from '@mui/icons-material/Dvr';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ListIcon from '@mui/icons-material/List';
@@ -62,6 +63,7 @@ const styles: Record<string, SxProps<Theme>> = {
 
 const Sidebar: FunctionComponent = () => {
   const location = useLocation();
+  const homeActive = matchPath(location.pathname, '/home') !== null;
   const configuratorActive
     = matchPath(location.pathname, '/configurator') !== null;
   const backpackActive = matchPath(location.pathname, '/backpack') !== null;
@@ -97,13 +99,25 @@ const Sidebar: FunctionComponent = () => {
           <List>
             <ListItemButton
               component={Link}
+              to="/home"
+              selected={homeActive}
+              sx={styles.menuItem}
+              disabled={!navigationEnabled}
+            >
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary={t('Sidebar.Home')} />
+            </ListItemButton>
+            <ListItemButton
+              component={Link}
               to="/configurator"
               selected={configuratorActive}
               sx={styles.menuItem}
               disabled={!navigationEnabled}
             >
               <ListItemIcon>
-                <BuildIcon />
+                <SettingsInputAntennaIcon />
               </ListItemIcon>
               <ListItemText primary={t('Sidebar.Configurator')} />
             </ListItemButton>
