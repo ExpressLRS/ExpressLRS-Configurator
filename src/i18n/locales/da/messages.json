@@ -7,41 +7,41 @@
     "FlashingDevice": "Brænding af enhed"
   },
   "FlashingStepper": {
-    "BuildOnlyDoneHint": "Firmware binary ready. Upload it through your device's WiFi web interface.",
-    "StockBlDoneHint": "Copy firmware.elrs to your radio's SD card and select 'flash ext. ELRS' on the radio.",
-    "ShowLog": "Show full log",
+    "BuildOnlyDoneHint": "Firmware er klar. Hent via din enheds WiFi webgrænseflade.",
+    "StockBlDoneHint": "Kopier firmware.elrs til din radios SD-kort og vælg på radio: \"Inst. ext. ELRS\" / \"Installer ekstern ELRS\".",
+    "ShowLog": "Vis komplet log",
     "Step": {
-      "VERIFYING_BUILD_SYSTEM": "Verifying build environment",
-      "DOWNLOADING_FIRMWARE": "Downloading firmware source",
-      "BUILDING_FIRMWARE": "Building firmware",
-      "FLASHING_FIRMWARE": "Flashing firmware to device"
+      "VERIFYING_BUILD_SYSTEM": "Verificerer byggemiljø",
+      "DOWNLOADING_FIRMWARE": "Henter firmware",
+      "BUILDING_FIRMWARE": "Bygger firmware",
+      "FLASHING_FIRMWARE": "Brænder firmware"
     },
     "Status": {
-      "InstallingDependencies": "Installing build tools",
-      "CompilingFirmware": "Compiling",
-      "PackagingFirmware": "Packaging firmware binary",
-      "DetectingDevice": "Detecting device",
-      "ConnectingToDevice": "Connecting to device",
-      "ErasingFlash": "Erasing flash memory",
-      "WritingFirmware": "Writing firmware",
-      "VerifyingFirmware": "Verifying firmware",
-      "RestartingDevice": "Restarting device",
-      "UploadingFirmware": "Uploading firmware over Wi-Fi",
-      "TargetMismatch": "Wrong target selected"
+      "InstallingDependencies": "Installerer bygge værktøjer",
+      "CompilingFirmware": "Kompilering",
+      "PackagingFirmware": "Pakker firmware binært",
+      "DetectingDevice": "Registrerer enhed",
+      "ConnectingToDevice": "Opretter forbindelse til enhed",
+      "ErasingFlash": "Sletter flash hukommelse",
+      "WritingFirmware": "Skriver firmware",
+      "VerifyingFirmware": "Bekræfter firmware",
+      "RestartingDevice": "Genstarter enhed",
+      "UploadingFirmware": "Henter firmware via Wi-Fi",
+      "TargetMismatch": "Forkert valg"
     },
     "Failed": {
-      "InstallingDependencies": "Failed to install build tools",
-      "CompilingFirmware": "Compilation failed",
-      "PackagingFirmware": "Failed to package firmware binary",
-      "DetectingDevice": "Could not detect device",
-      "ConnectingToDevice": "Could not connect to device",
-      "ErasingFlash": "Failed to erase flash memory",
-      "WritingFirmware": "Failed to write firmware",
-      "VerifyingFirmware": "Firmware verification failed",
-      "RestartingDevice": "Failed to restart device",
-      "UploadingFirmware": "Failed to upload firmware over Wi-Fi",
-      "TargetMismatch": "Wrong target selected",
-      "Generic": "Something went wrong"
+      "InstallingDependencies": "Installation af værktøjer mislykkedes",
+      "CompilingFirmware": "Kompilering mislykket",
+      "PackagingFirmware": "Kunne ikke pakke firmware binært",
+      "DetectingDevice": "Kunne ikke registrere enhed",
+      "ConnectingToDevice": "Kunne ikke oprette forbindelse til enhed",
+      "ErasingFlash": "Kunne ikke slette flash hukommelse",
+      "WritingFirmware": "Kunne ikke skrive firmware",
+      "VerifyingFirmware": "Bekræftelse af firmware mislykkedes",
+      "RestartingDevice": "Genstart af enhed mislykkedes",
+      "UploadingFirmware": "Kunne ikke hente firmware via Wi-Fi",
+      "TargetMismatch": "Forkert valg",
+      "Generic": "Noget gik galt"
     }
   },
   "BuildResponse": {
@@ -215,7 +215,7 @@
   },
   "WifiDeviceList": {
     "Name": "Navn",
-    "Target": "Destination",
+    "Target": "Mål",
     "Version": "Version",
     "Type": "Type",
     "DNS": "DNS",
@@ -248,7 +248,7 @@
   "ConfiguratorView": {
     "DownloadLUAScript": "Hent LUA script",
     "FirmwareVersion": "Firmware version",
-    "Target": "Destination",
+    "Target": "Mål",
     "Notice": "Bemærk",
     "SelectFirmwareVersionFirst": "Vælg først firmware version.",
     "DeviceOptions": "Enhed indstillinger",
@@ -262,7 +262,7 @@
     "Flash": "Brænd",
     "NetworkDevices": "Netværks enhed",
     "DeviceSelectError": "Fejl ved valg af enhed",
-    "DeviceCouldNotBeAutomaticallySelected": "Destination kunne ikke vælges automatisk, det skal gøres manuelt.",
+    "DeviceCouldNotBeAutomaticallySelected": "Mål kunne ikke vælges automatisk, du skal gøre det manuelt.",
     "Close": "Luk",
     "Logs": "Logfiler",
     "CopyLogToClipboard": "Kopier log til udklipsholder",
