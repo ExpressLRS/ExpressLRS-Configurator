@@ -20,6 +20,7 @@ export default tseslint.config(
       'dist/**',
       'dll/**',
       '.erb/**',
+      'scripts/**',
       '__snapshots__/**',
       'src/ui/gql/generated/types.ts',
       'assets/assets.d.ts',

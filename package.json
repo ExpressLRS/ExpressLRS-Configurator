@@ -29,7 +29,10 @@
   "main": "./src/main/main.ts",
   "build": {
     "productName": "ExpressLRS Configurator",
+    "afterPack": "./scripts/after-pack.js",
     "appId": "org.expresslrs.configurator",
+    "buildDependenciesFromSource": true,
+    "npmRebuild": true,
     "files": [
       "dist/",
       "release/app/dist/",
@@ -38,21 +41,24 @@
       "package.json",
       "devices/"
     ],
-    "afterSign": ".erb/scripts/notarize.js",
     "mac": {
+      "identity": null,
       "target": [
         "dmg"
       ],
       "type": "distribution",
-      "hardenedRuntime": true,
-      "entitlements": "assets/entitlements.mac.plist",
-      "entitlementsInherit": "assets/entitlements.mac.plist",
-      "gatekeeperAssess": false,
       "category": "public.app-category.developer-tools",
       "extraFiles": [
-        "dependencies/darwin_amd64",
-        "dependencies/get-platformio.py"
-      ]
+        {
+          "from": "mac-deps/portable-python",
+          "to": "dependencies/portable-python"
+        },
+        {
+          "from": "dependencies/get-platformio.py",
+          "to": "dependencies/get-platformio.py"
+        }
+      ],
+      "cscLink": null
     },
     "dmg": {
       "contents": [
@@ -191,15 +197,17 @@
   },
   "resolutions": {},
   "devDependencies": {
-    "@electron/notarize": "^3.1.0",
     "@electron/rebuild": "^4.0.0",
+    "@eslint/js": "^9.0.0",
     "@graphql-codegen/cli": "^6.0.0",
     "@graphql-codegen/introspection": "^5.0.0",
+    "@graphql-codegen/typed-document-node": "^5.0.0",
     "@graphql-codegen/typescript": "^5.0.0",
     "@graphql-codegen/typescript-operations": "^5.0.0",
-    "@graphql-codegen/typed-document-node": "^5.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
+    "@stylistic/eslint-plugin": "^4.0.0",
     "@teamsupercell/typings-for-css-modules-loader": "^2.5.2",
+    "@testing-library/dom": "^10.0.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^16.0.0",
     "@types/autosuggest-highlight": "^3.2.3",
@@ -218,9 +226,6 @@
     "@types/webpack-bundle-analyzer": "^4.6.3",
     "@types/webpack-env": "^1.18.4",
     "@types/webpack-node-externals": "^3.0.4",
-    "@eslint/js": "^9.0.0",
-    "@stylistic/eslint-plugin": "^4.0.0",
-    "typescript-eslint": "^8.0.0",
     "chalk": "^4.1.0",
     "concurrently": "^9.0.0",
     "core-js": "^3.35.0",
@@ -228,14 +233,16 @@
     "css-loader": "^7.0.0",
     "css-minimizer-webpack-plugin": "^7.0.0",
     "detect-port": "^2.0.0",
+    "dmg-builder": "^26.15.2",
     "electron": "^41.0.0",
-    "electron-builder": "^26.8.0",
+    "electron-builder": "^26.15.2",
+    "electron-builder-squirrel-windows": "^26.15.2",
     "eslint": "^9.0.0",
     "eslint-plugin-jsx-a11y": "^6.10.0",
     "eslint-plugin-react": "^7.37.0",
     "eslint-plugin-react-hooks": "^5.0.0",
-    "globals": "^16.0.0",
     "file-loader": "^6.0.0",
+    "globals": "^16.0.0",
     "html-webpack-plugin": "^5.6.0",
     "husky": "^9.0.0",
     "identity-obj-proxy": "^3.0.0",
@@ -251,8 +258,10 @@
     "ts-jest": "^29.1.1",
     "ts-loader": "^9.5.1",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "tslib": "^2.8.1",
     "tsx": "^4.21.0",
     "typescript": "^5.6.2",
+    "typescript-eslint": "^8.0.0",
     "url-loader": "^4.1.0",
     "webpack": "^5.73.0",
     "webpack-bundle-analyzer": "^5.0.0",
@@ -268,6 +277,7 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
+    "@graphql-yoga/subscription": "^5.0.0",
     "@mui/icons-material": "^7.0.0",
     "@mui/material": "^7.0.0",
     "@octokit/rest": "^22.0.0",
@@ -283,7 +293,6 @@
     "get-port": "^5.1.1",
     "graphql": "^16.7.1",
     "graphql-scalars": "^1.23.0",
-    "@graphql-yoga/subscription": "^5.0.0",
     "graphql-tag": "^2.12.6",
     "graphql-ws": "^6.0.6",
     "i18next": "^26.0.0",
@@ -301,6 +310,7 @@
     "react-router": "^7.0.0",
     "reflect-metadata": "^0.2.1",
     "regenerator-runtime": "^0.14.1",
+    "rxjs": "^7.8.2",
     "sanitize-filename": "^1.6.3",
     "semver": "^7.3.8",
     "simple-git": "^3.28.0",
@@ -310,11 +320,6 @@
     "typedi": "^0.10.0",
     "winston": "^3.11.0",
     "ws": "^8.16.0"
-  },
-  "devEngines": {
-    "node": ">=24.x",
-    "npm": ">=6.x",
-    "yarn": ">=1.21.3"
   },
   "browserslist": [],
   "renovate": {
