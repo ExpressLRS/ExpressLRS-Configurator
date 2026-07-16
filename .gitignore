@@ -61,3 +61,7 @@ patch_targets*
 patcher
 
 TODO.md
+dependencies/darwin_arm64/portable-python-*
+
+AGENTS.md
+pr-description.md
