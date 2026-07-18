@@ -37,6 +37,29 @@ interface UserDefinesListProps {
   onChange: (data: UserDefine) => void;
 }
 
+/*
+  Numeric user defines with an allowed range. AUTO_WIFI_ON_INTERVAL is in
+  seconds; the firmware keeps it in int32 milliseconds, hence the upper bound.
+*/
+const numericRanges: Partial<
+  Record<UserDefineKey, { min: number; max: number }>
+> = {
+  [UserDefineKey.AUTO_WIFI_ON_INTERVAL]: { min: 1, max: 2147483 },
+};
+
+const hasNumericRangeError = (item: UserDefine): boolean => {
+  const range = numericRanges[item.key];
+  if (range === undefined || !item.enabled) {
+    return false;
+  }
+  const value = (item.value ?? '').trim();
+  if (!/^-?\d+$/.test(value)) {
+    return true;
+  }
+  const parsed = Number(value);
+  return parsed < range.min || parsed > range.max;
+};
+
 const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
   const { options, onChange } = props;
   const { t } = useTranslation();
@@ -124,6 +147,27 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                     value={item.value}
                     fullWidth
                     label={inputLabel(item.key)}
+                    type={
+                      numericRanges[item.key] !== undefined ? 'number' : 'text'
+                    }
+                    inputProps={
+                      numericRanges[item.key] !== undefined
+                        ? {
+                            min: numericRanges[item.key]?.min,
+                            max: numericRanges[item.key]?.max,
+                            step: 1,
+                          }
+                        : undefined
+                    }
+                    error={hasNumericRangeError(item)}
+                    helperText={
+                      hasNumericRangeError(item)
+                        ? t('UserDefinesList.ValueOutOfRange', {
+                            min: numericRanges[item.key]?.min,
+                            max: numericRanges[item.key]?.max,
+                          })
+                        : undefined
+                    }
                   />
                 )}
                 {item.sensitive && (

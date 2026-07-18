@@ -214,7 +214,8 @@
   "UserDefinesList": {
     "CustomBindingPhrase": "Custom binding phrase",
     "MyStartupMelody": "My startup melody",
-    "Value": "Value"
+    "Value": "Value",
+    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}"
   },
   "WifiDeviceList": {
     "Name": "Name",
