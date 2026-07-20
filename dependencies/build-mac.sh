@@ -198,4 +198,4 @@ for dir in release/mac-"${EB_ARCH}" release/mac-"${EB_ARCH}".tmp; do
 done
 
 echo "▶ Running electron-builder --mac --${EB_ARCH}"
-exec npx electron-builder --mac --"${EB_ARCH}"
+exec yarn electron-builder --mac --"${EB_ARCH}"

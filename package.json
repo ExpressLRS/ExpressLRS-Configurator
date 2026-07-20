@@ -32,7 +32,7 @@
     "afterPack": "./scripts/after-pack.js",
     "appId": "org.expresslrs.configurator",
     "buildDependenciesFromSource": true,
-    "npmRebuild": true,
+    "npmRebuild": false,
     "files": [
       "dist/",
       "release/app/dist/",
@@ -330,7 +330,8 @@
     "ws": "^8.16.0"
   },
   "devEngines": {
-    "runtime": {"name": "node", "version": ">=24"}
+    "runtime": {"name": "node", "version": ">=24"},
+    "packageManager": {"name": "yarn", "version": ">=1.21.3"}
   },
   "browserslist": [],
   "renovate": {
