@@ -329,6 +329,10 @@
     "winston": "^3.11.0",
     "ws": "^8.16.0"
   },
+  "devEngines": {
+    "runtime": "node@24.x",
+    "packageManager": "yarn@>=1.21.3"
+  },
   "browserslist": [],
   "renovate": {
     "extends": [
