@@ -249,6 +249,7 @@ export default class BinaryConfigurator {
     flasherPath: string,
     flags: string[][],
     onUpdate: OnOutputFunc = NoOpFunc,
+    env: NodeJS.ProcessEnv = {},
   ) {
     this.logger.log('flags', {
       flags: maskSensitiveFlags(flags),
@@ -259,6 +260,7 @@ export default class BinaryConfigurator {
       flasherPath,
       binaryConfiguratorArgs,
       onUpdate,
+      { env },
     );
   }
 }

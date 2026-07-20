@@ -594,6 +594,18 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       await this.updateLogs(
         `> ${this.binaryConfigurator.formatCommand(flasherPath, flasherArgs)}`,
       );
+      // Make the firmware's vendored esptool win over an incompatible
+      // system-installed esptool in site-packages, see
+      // https://github.com/ExpressLRS/ExpressLRS-Configurator/issues/780
+      const vendoredEsptoolDir = path.join(
+        firmwareSourcePath,
+        'python',
+        'external',
+        'esptool',
+      );
+      const flasherEnv: NodeJS.ProcessEnv = fs.existsSync(vendoredEsptoolDir)
+        ? { PYTHONPATH: vendoredEsptoolDir }
+        : {};
       const binaryConfiguratorResult = await this.binaryConfigurator.run(
         flasherPath,
         flasherArgs,
@@ -601,6 +613,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           this.updateLogs(output);
           flashOutputParser(output);
         },
+        flasherEnv,
       );
       const finalStep = params.type === BuildJobType.Flash
         ? BuildFirmwareStep.FLASHING_FIRMWARE
