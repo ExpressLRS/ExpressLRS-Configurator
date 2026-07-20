@@ -78,6 +78,8 @@ function resolveHtmlPath(htmlFileName: string, qs?: string) {
 
 const isWindows = process.platform.startsWith('win');
 const isMacOS = process.platform.startsWith('darwin');
+const isArm64 = process.arch === 'arm64';
+const isX64 = process.arch === 'x64';
 logger.log(`platform: ${process.platform}`);
 logger.log(`os release: ${process.getSystemVersion()}`);
 
@@ -280,14 +282,14 @@ const createWindow = async () => {
     PATH = prependPATH(PATH, portablePythonLocation);
     PATH = prependPATH(PATH, portableGitLocation);
   }
-  if (isMacOS && process.arch === 'arm64') {
+  if (isMacOS && isArm64) {
     const portablePythonLocation = path.join(
       dependenciesPath,
       'portable-python-arm64/bin',
     );
     PATH = prependPATH(PATH, portablePythonLocation);
   }
-  if (isMacOS && process.arch === 'x64') {
+  if (isMacOS && isX64) {
     const portablePythonLocation = path.join(
       dependenciesPath,
       'portable-python-x64/bin',
