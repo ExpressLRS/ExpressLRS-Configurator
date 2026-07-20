@@ -330,8 +330,7 @@
     "ws": "^8.16.0"
   },
   "devEngines": {
-    "runtime": "node@24.x",
-    "packageManager": "yarn@>=1.21.3"
+    "runtime": {"name": "node", "version": ">=24"}
   },
   "browserslist": [],
   "renovate": {

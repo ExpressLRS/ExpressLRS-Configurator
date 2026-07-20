@@ -17,7 +17,7 @@
 #   5. On x64, portable-git is bundled and used at runtime from dependencies/.
 
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(cd "$(dirname "$0")/.." && pwd)"
 
 # ── Help ───────────────────────────────────────────────────────────────────
 usage() {
