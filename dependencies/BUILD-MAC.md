@@ -26,10 +26,12 @@ flowchart TD
         S1["Step 1: Detect arch"] --> S2["Step 2: Resolve dirs"]
         S2 --> S3["Step 3: Validate & auto-download"]
         S3 --> S4["Step 4: Create mac-deps/ symlinks"]
-        S4 --> S5["Step 5: electron-builder"]
+        S4 --> S5["Step 5: yarn install/build"]
+        S5 --> S6["Step 6: Clean stale release dirs"]
+        S6 --> S7["Step 7: electron-builder"]
     end
 
-    S5 --> AP["after-pack.js hook"]
+    S7 --> AP["after-pack.js hook"]
     AP --> App["ExpressLRS Configurator.app"]
 
     style buildmac fill:#f0f0f0,stroke:#666
@@ -57,9 +59,17 @@ Creates or refreshes the `mac-deps/` directory with symlinks pointing to the cor
 
 **Why portable-git is in extraFiles for both architectures:** The `extraFiles` config in `package.json` lists both `portable-python` and `portable-git` unconditionally. On arm64, `build-mac.sh` creates an empty `mac-deps/portable-git` placeholder directory so electron-builder doesn't fail. The `after-pack.js` hook then removes this placeholder from the final `.app` — only `portable-python` ends up bundled.
 
-### Step 5: electron-builder Invocation
+### Step 5: yarn install/build
 
-Runs `yarn install && yarn build` to compile the application, then delegates to `electron-builder --mac --${ARCH}` using `exec` so that Ctrl+C and other signals are forwarded directly (no orphaned processes).
+Conditionally runs `yarn install --frozen-lockfile` only if `node_modules/` is missing, then runs `yarn build` to compile the application.
+
+### Step 6: Clean Stale Release Directories
+
+Removes any stale `release/mac-${arch}` and `release/mac-${arch}.tmp` directories from a previous interrupted build. Without this cleanup, electron-builder can fail with `ENOTEMPTY`.
+
+### Step 7: electron-builder Invocation
+
+Delegates to `electron-builder --mac --${ARCH}` using `exec` so that Ctrl+C and other signals are forwarded directly (no orphaned processes).
 
 ## Architecture-Specific Behavior
 
