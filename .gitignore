@@ -63,5 +63,6 @@ patcher
 TODO.md
 dependencies/darwin_arm64/portable-python-*
 
+# Opencode configuration
 AGENTS.md
-pr-description.md
+.opencode
