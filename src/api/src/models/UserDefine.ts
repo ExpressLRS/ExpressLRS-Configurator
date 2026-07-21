@@ -23,6 +23,12 @@ export default class UserDefine {
   @Field(() => String, { nullable: true })
   value?: string;
 
+  @Field(() => Number, { nullable: true })
+  min?: number;
+
+  @Field(() => Number, { nullable: true })
+  max?: number;
+
   @Field(() => UserDefineOptionGroup, { nullable: true })
   optionGroup?: UserDefineOptionGroup;
 
@@ -98,5 +104,18 @@ export default class UserDefine {
     enabled = false,
   ): UserDefine {
     return new UserDefine(UserDefineKind.Enum, key, enabled, value, enumValues);
+  }
+
+  static Number(
+    key: UserDefineKey,
+    value = '',
+    enabled = false,
+    min?: number,
+    max?: number,
+  ): UserDefine {
+    const userDefine = new UserDefine(UserDefineKind.Number, key, enabled, value);
+    userDefine.min = min;
+    userDefine.max = max;
+    return userDefine;
   }
 }

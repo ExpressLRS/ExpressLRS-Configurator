@@ -9,6 +9,8 @@ subscription multicastDnsMonitorUpdates {
         enabled
         enumValues
         value
+        min
+        max
         sensitive
       }
       version
