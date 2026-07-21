@@ -38,18 +38,12 @@ interface UserDefinesListProps {
 }
 
 /*
-  Numeric user defines with an allowed range. AUTO_WIFI_ON_INTERVAL is in
-  seconds; the firmware keeps it in int32 milliseconds, hence the upper bound.
+  Numeric user defines carry their allowed range on the model (min/max), defined
+  in TargetUserDefinesFactory. AUTO_WIFI_ON_INTERVAL is in seconds; the firmware
+  keeps it in int32 milliseconds, hence the upper bound.
 */
-const numericRanges: Partial<
-  Record<UserDefineKey, { min: number; max: number }>
-> = {
-  [UserDefineKey.AUTO_WIFI_ON_INTERVAL]: { min: 1, max: 2147483 },
-};
-
 const hasNumericRangeError = (item: UserDefine): boolean => {
-  const range = numericRanges[item.key];
-  if (range === undefined || !item.enabled) {
+  if (item.type !== UserDefineKind.Number || !item.enabled) {
     return false;
   }
   const value = (item.value ?? '').trim();
@@ -57,7 +51,13 @@ const hasNumericRangeError = (item: UserDefine): boolean => {
     return true;
   }
   const parsed = Number(value);
-  return parsed < range.min || parsed > range.max;
+  if (item.min != null && parsed < item.min) {
+    return true;
+  }
+  if (item.max != null && parsed > item.max) {
+    return true;
+  }
+  return false;
 };
 
 const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
@@ -138,7 +138,9 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                 <UserDefineDescription userDefine={item.key} />
               </ListItemSecondaryAction>
             </ListItemButton>
-            {item.type === UserDefineKind.Text && item.enabled && (
+            {(item.type === UserDefineKind.Text
+              || item.type === UserDefineKind.Number)
+            && item.enabled && (
               <ListItem sx={styles.complimentaryItem}>
                 {!item.sensitive && (
                   <TextField
@@ -148,13 +150,13 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                     fullWidth
                     label={inputLabel(item.key)}
                     type={
-                      numericRanges[item.key] !== undefined ? 'number' : 'text'
+                      item.type === UserDefineKind.Number ? 'number' : 'text'
                     }
                     inputProps={
-                      numericRanges[item.key] !== undefined
+                      item.type === UserDefineKind.Number
                         ? {
-                            min: numericRanges[item.key]?.min,
-                            max: numericRanges[item.key]?.max,
+                            min: item.min ?? undefined,
+                            max: item.max ?? undefined,
                             step: 1,
                           }
                         : undefined
@@ -163,8 +165,8 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                     helperText={
                       hasNumericRangeError(item)
                         ? t('UserDefinesList.ValueOutOfRange', {
-                            min: numericRanges[item.key]?.min,
-                            max: numericRanges[item.key]?.max,
+                            min: item.min,
+                            max: item.max,
                           })
                         : undefined
                     }
