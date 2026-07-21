@@ -177,7 +177,7 @@ fi
 echo "▶ Running yarn install/build"
 if [ ! -d "node_modules" ]; then
     echo "▶ node_modules missing, running yarn install..."
-    yarn install
+    yarn install --frozen-lockfile
 fi
 yarn build
 
