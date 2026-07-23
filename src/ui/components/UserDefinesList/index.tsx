@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 import {
   UserDefine,
   UserDefineKey,
@@ -58,6 +59,23 @@ const hasNumericRangeError = (item: UserDefine): boolean => {
     return true;
   }
   return false;
+};
+
+/*
+  Helper text for numeric inputs: always show the allowed range so the user knows
+  the bounds up front; switch to the out-of-range message when the value is invalid.
+*/
+const numericHelperText = (
+  item: UserDefine,
+  t: TFunction,
+): string | undefined => {
+  if (item.type !== UserDefineKind.Number) {
+    return undefined;
+  }
+  const key = hasNumericRangeError(item)
+    ? 'UserDefinesList.ValueOutOfRange'
+    : 'UserDefinesList.AllowedRange';
+  return t(key, { min: item.min, max: item.max });
 };
 
 const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
@@ -162,14 +180,7 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                         : undefined
                     }
                     error={hasNumericRangeError(item)}
-                    helperText={
-                      hasNumericRangeError(item)
-                        ? t('UserDefinesList.ValueOutOfRange', {
-                            min: item.min,
-                            max: item.max,
-                          })
-                        : undefined
-                    }
+                    helperText={numericHelperText(item, t)}
                   />
                 )}
                 {item.sensitive && (
