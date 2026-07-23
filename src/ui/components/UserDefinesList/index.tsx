@@ -42,6 +42,9 @@ interface UserDefinesListProps {
   Numeric user defines carry their allowed range on the model (min/max), defined
   in TargetUserDefinesFactory. AUTO_WIFI_ON_INTERVAL is in seconds; the firmware
   keeps it in int32 milliseconds, hence the upper bound.
+
+  This drives only the field's visual error/helper text; the build-blocking
+  enforcement lives in UserDefinesValidator.validateNumericRanges.
 */
 const hasNumericRangeError = (item: UserDefine): boolean => {
   if (item.type !== UserDefineKind.Number || !item.enabled) {
