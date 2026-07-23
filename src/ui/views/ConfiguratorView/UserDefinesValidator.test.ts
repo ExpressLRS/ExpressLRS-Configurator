@@ -50,3 +50,14 @@ describe('UserDefinesValidator numeric ranges', () => {
     expect(validator.validateNumericRanges([numeric('42')])).toHaveLength(0);
   });
 });
+
+describe('UserDefinesValidator.validate() gate (blocks build)', () => {
+  it('surfaces -11111 through the full validate() gate', () => {
+    const errs = new UserDefinesValidator().validate([numeric('-11111', 1, 2147483)]);
+    expect(errs.length).toBeGreaterThan(0);
+    expect(errs.some((e) => e.message.includes('greater than or equal to 1'))).toBe(true);
+  });
+  it('lets a valid value pass the full gate', () => {
+    expect(new UserDefinesValidator().validate([numeric('60', 1, 2147483)])).toHaveLength(0);
+  });
+});
