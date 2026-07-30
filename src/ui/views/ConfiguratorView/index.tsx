@@ -193,7 +193,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     ViewState.Configuration,
   );
 
-  const { setAppStatus } = useAppState();
+  const { setAppStatus, isExpertModeEnabled } = useAppState();
 
   const [firmwareVersionData, setFirmwareVersionData]
     = useState<FirmwareVersionDataInput | null>(null);
@@ -518,16 +518,19 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     setWifiDevice(newWifiDevice);
   }, []);
 
-  const [logsExpanded, setLogsExpanded] = useState(false);
+  const [logsExpanded, setLogsExpanded] = useState(isExpertModeEnabled);
   const hasErrorInSession
     = buildProgressNotifications.some(
       (n) => n.type === BuildProgressNotificationType.Error,
     ) || (response?.buildFlashFirmware?.success === false);
+  // Logs are always shown in expert mode (#785); otherwise only once a build
+  // reported an error. Either event expands the panel, the user can still fold it.
+  const showLogs = hasErrorInSession || isExpertModeEnabled;
   useEffect(() => {
-    if (hasErrorInSession) {
+    if (hasErrorInSession || isExpertModeEnabled) {
       setLogsExpanded(true);
     }
-  }, [hasErrorInSession]);
+  }, [hasErrorInSession, isExpertModeEnabled]);
 
   const [erase, setErase] = useState<boolean>(false);
   const [forceFlash, setForceFlash] = useState<boolean>(false);
@@ -1159,7 +1162,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             <ShowAlerts severity="error" messages={buildFlashErrorResponse} />
           </CardContent>
 
-          {hasErrorInSession && (
+          {showLogs && (
             <Accordion
               expanded={logsExpanded}
               onChange={(_, isExpanded) => setLogsExpanded(isExpanded)}
