@@ -11,6 +11,7 @@ import 'reflect-metadata';
 import path from 'path';
 import { app, BrowserWindow, dialog, ipcMain, shell, session } from 'electron';
 import { mkdirp } from 'mkdirp';
+import sanitize from 'sanitize-filename';
 import winston from 'winston';
 import fs from 'fs';
 import { URL } from 'url';
@@ -580,10 +581,20 @@ ipcMain.handle(
 );
 
 /**
- * Name of the folder that is created for a single build, derived from the
- * canonical firmware filename, ie. "MyTX-3.5.6.bin.gz" -> "MyTX-3.5.6".
+ * Name of the folder that is created for a single build. The device target is
+ * used when the renderer knows it, because build artefacts are not always
+ * named after the target, ie. a WiFi build produces a plain "firmware.bin.gz".
+ * Otherwise the firmware filename is used, ie. "MyTX-3.5.6.bin.gz" ->
+ * "MyTX-3.5.6".
  */
-const buildOutputFolderName = (firmwareBinPath: string): string => {
+const buildOutputFolderName = (
+  firmwareBinPath: string,
+  requestedName?: string,
+): string => {
+  const sanitized = sanitize(requestedName ?? '', { replacement: '_' }).trim();
+  if (sanitized.length > 0) {
+    return sanitized;
+  }
   return path
     .basename(firmwareBinPath)
     .replace(/\.gz$/i, '')
@@ -630,7 +641,7 @@ ipcMain.handle(
 
       const outputDirectory = path.join(
         parentDirectory,
-        buildOutputFolderName(arg.firmwareBinPath),
+        buildOutputFolderName(arg.firmwareBinPath, arg.folderName),
       );
       await mkdirp(outputDirectory);
 

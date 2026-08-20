@@ -48,6 +48,11 @@ export interface SaveBuildOutputRequestBody {
    * user. When empty, a folder selection dialog is shown.
    */
   destinationDirectory?: string;
+  /**
+   * Name of the folder that is created for this build. Falls back to the
+   * firmware filename when empty.
+   */
+  folderName?: string;
   title?: string;
   message?: string;
 }

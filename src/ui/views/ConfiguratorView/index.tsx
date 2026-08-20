@@ -93,6 +93,7 @@ import GitRepository from '../../models/GitRepository';
 import ShowTimeoutAlerts from '../../components/ShowTimeoutAlerts';
 import useAppState from '../../hooks/useAppState';
 import FirmwareOutputMode from '../../models/enum/FirmwareOutputMode';
+import buildOutputFolderName from './buildOutputFolderName';
 import AppStatus from '../../models/enum/AppStatus';
 import MainLayout from '../../layouts/MainLayout';
 
@@ -459,6 +460,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     const saveBuildOutput = async () => {
       const body: SaveBuildOutputRequestBody = {
         firmwareBinPath,
+        folderName: buildOutputFolderName(deviceTarget, firmwareVersionData),
         destinationDirectory:
           firmwareOutputMode === FirmwareOutputMode.FixedFolder
             ? firmwareOutputFolder
