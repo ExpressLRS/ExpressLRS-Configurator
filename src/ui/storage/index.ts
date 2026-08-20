@@ -60,6 +60,14 @@ export interface IApplicationStorage {
 
   getThemeMode(): string | null;
 
+  setFirmwareOutputMode(value: string): void;
+
+  getFirmwareOutputMode(): string | null;
+
+  setFirmwareOutputFolder(value: string): void;
+
+  getFirmwareOutputFolder(): string | null;
+
   getBindingPhraseHistory(): Promise<string[]>;
 
   addBindingPhraseToHistory(phrase: string): Promise<void>;
@@ -72,6 +80,8 @@ const FIRMWARE_SOURCE_KEY = 'firmware_source';
 const UI_SHOW_FIRMWARE_PRE_RELEASES = 'ui_show_pre_releases';
 const EXPERT_MODE = 'expert_mode';
 const THEME_MODE_KEY = 'theme_mode';
+const FIRMWARE_OUTPUT_MODE_KEY = 'firmware_output_mode';
+const FIRMWARE_OUTPUT_FOLDER_KEY = 'firmware_output_folder';
 const BINDING_PHRASE_HISTORY_KEY = 'binding_phrase_history';
 const BINDING_PHRASE_HISTORY_LIMIT = 15;
 
@@ -274,6 +284,22 @@ export default class ApplicationStorage implements IApplicationStorage {
 
   getThemeMode(): string | null {
     return localStorage.getItem(THEME_MODE_KEY);
+  }
+
+  setFirmwareOutputMode(value: string): void {
+    localStorage.setItem(FIRMWARE_OUTPUT_MODE_KEY, value);
+  }
+
+  getFirmwareOutputMode(): string | null {
+    return localStorage.getItem(FIRMWARE_OUTPUT_MODE_KEY);
+  }
+
+  setFirmwareOutputFolder(value: string): void {
+    localStorage.setItem(FIRMWARE_OUTPUT_FOLDER_KEY, value);
+  }
+
+  getFirmwareOutputFolder(): string | null {
+    return localStorage.getItem(FIRMWARE_OUTPUT_FOLDER_KEY);
   }
 
   async getBindingPhraseHistory(): Promise<string[]> {

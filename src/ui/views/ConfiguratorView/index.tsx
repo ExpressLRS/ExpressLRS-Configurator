@@ -74,6 +74,8 @@ import {
   DownloadFileRequestBody,
   IpcRequest,
   OpenFileLocationRequestBody,
+  SaveBuildOutputRequestBody,
+  SaveBuildOutputResponseBody,
   SaveFileRequestBody,
   SaveFileResponseBody,
   UpdateBuildStatusRequestBody,
@@ -90,6 +92,7 @@ import WifiDeviceList from '../../components/WifiDeviceList';
 import GitRepository from '../../models/GitRepository';
 import ShowTimeoutAlerts from '../../components/ShowTimeoutAlerts';
 import useAppState from '../../hooks/useAppState';
+import FirmwareOutputMode from '../../models/enum/FirmwareOutputMode';
 import AppStatus from '../../models/enum/AppStatus';
 import MainLayout from '../../layouts/MainLayout';
 
@@ -193,7 +196,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     ViewState.Configuration,
   );
 
-  const { setAppStatus } = useAppState();
+  const { setAppStatus, firmwareOutputMode, firmwareOutputFolder }
+    = useAppState();
+  const [firmwareOutputError, setFirmwareOutputError] = useState<string | null>(
+    null,
+  );
 
   const [firmwareVersionData, setFirmwareVersionData]
     = useState<FirmwareVersionDataInput | null>(null);
@@ -425,17 +432,64 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     },
   ] = useMutation(BuildFlashFirmwareDocument);
 
+  const showInFileExplorer = useCallback((firmwareBinPath: string) => {
+    const body: OpenFileLocationRequestBody = {
+      path: firmwareBinPath,
+    };
+    window.electron.ipcRenderer.sendMessage(IpcRequest.OpenFileLocation, body);
+  }, []);
+
   useEffect(() => {
-    const arg = response?.buildFlashFirmware?.firmwareBinPath;
-    if (arg !== undefined && arg !== null && arg?.length > 0) {
-      const body: OpenFileLocationRequestBody = {
-        path: arg,
-      };
-      window.electron.ipcRenderer.sendMessage(
-        IpcRequest.OpenFileLocation,
-        body,
-      );
+    const firmwareBinPath = response?.buildFlashFirmware?.firmwareBinPath;
+    if (
+      firmwareBinPath === undefined
+      || firmwareBinPath === null
+      || firmwareBinPath.length === 0
+    ) {
+      return;
     }
+
+    // the firmware is built into a temporary folder, from there it is copied to
+    // wherever the user wants to keep it
+    if (firmwareOutputMode === FirmwareOutputMode.TemporaryFolder) {
+      showInFileExplorer(firmwareBinPath);
+      return;
+    }
+
+    const saveBuildOutput = async () => {
+      const body: SaveBuildOutputRequestBody = {
+        firmwareBinPath,
+        destinationDirectory:
+          firmwareOutputMode === FirmwareOutputMode.FixedFolder
+            ? firmwareOutputFolder
+            : '',
+        title: t('ConfiguratorView.FirmwareOutputFolderDialogTitle'),
+        message: t('ConfiguratorView.FirmwareOutputFolderDialogMessage'),
+      };
+      const result: SaveBuildOutputResponseBody
+        = await window.electron.ipcRenderer.invoke(
+          IpcRequest.SaveBuildOutput,
+          body,
+        );
+      if (result.success) {
+        setFirmwareOutputError(null);
+        showInFileExplorer(result.firmwareBinPath);
+        return;
+      }
+      if (result.canceled) {
+        // the user decided not to keep the firmware, it stays in the temporary
+        // folder until the operating system cleans it up
+        return;
+      }
+      setFirmwareOutputError(
+        result.message ?? t('ConfiguratorView.FirmwareOutputFolderError'),
+      );
+    };
+
+    saveBuildOutput().catch((err) => {
+      console.error('failed to save firmware output: ', err);
+      setFirmwareOutputError(`${err}`);
+    });
   }, [response]);
 
   const eraseSupported = useMemo(() => {
@@ -1157,6 +1211,7 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
             />
 
             <ShowAlerts severity="error" messages={buildFlashErrorResponse} />
+            <ShowAlerts severity="error" messages={firmwareOutputError} />
           </CardContent>
 
           {hasErrorInSession && (

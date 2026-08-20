@@ -17,10 +17,13 @@ import { URL } from 'url';
 import MenuBuilder from './menu';
 import ApiServer from '../api';
 import {
+  ChooseFolderRequestBody,
   ChooseFolderResponseBody,
   DownloadFileRequestBody,
   IpcRequest,
   OpenFileLocationRequestBody,
+  SaveBuildOutputRequestBody,
+  SaveBuildOutputResponseBody,
   SaveFileRequestBody,
   SaveFileResponseBody,
   UpdateBuildStatusRequestBody,
@@ -511,11 +514,16 @@ ipcMain.on(
 
 ipcMain.handle(
   IpcRequest.ChooseFolder,
-  async (): Promise<ChooseFolderResponseBody> => {
+  async (
+    _,
+    args?: [ChooseFolderRequestBody?],
+  ): Promise<ChooseFolderResponseBody> => {
+    const arg = args?.[0];
     const result = await dialog.showOpenDialog({
-      title: 'Select firmware source folder',
-      message: 'Folder must contain platformio.ini file',
-      properties: ['openDirectory'],
+      title: arg?.title ?? 'Select firmware source folder',
+      message: arg?.message ?? 'Folder must contain platformio.ini file',
+      defaultPath: arg?.defaultPath,
+      properties: ['openDirectory', 'createDirectory'],
     });
     if (result.canceled || result.filePaths.length === 0) {
       return {
@@ -568,6 +576,94 @@ ipcMain.handle(
       success: true,
       path: result.filePath,
     };
+  },
+);
+
+/**
+ * Name of the folder that is created for a single build, derived from the
+ * canonical firmware filename, ie. "MyTX-3.5.6.bin.gz" -> "MyTX-3.5.6".
+ */
+const buildOutputFolderName = (firmwareBinPath: string): string => {
+  return path
+    .basename(firmwareBinPath)
+    .replace(/\.gz$/i, '')
+    .replace(/\.(elrs|bin|hex)$/i, '');
+};
+
+ipcMain.handle(
+  IpcRequest.SaveBuildOutput,
+  async (
+    _,
+    args: [SaveBuildOutputRequestBody],
+  ): Promise<SaveBuildOutputResponseBody> => {
+    const arg = args[0];
+    const failure = (message: string, canceled = false) => ({
+      success: false,
+      canceled,
+      directoryPath: '',
+      firmwareBinPath: '',
+      message,
+    });
+    logger.log('received a request to save build output', {
+      firmwareBinPath: arg.firmwareBinPath,
+      destinationDirectory: arg.destinationDirectory,
+    });
+    try {
+      if (!fs.existsSync(arg.firmwareBinPath)) {
+        return failure(`Firmware binary not found: ${arg.firmwareBinPath}`);
+      }
+
+      let parentDirectory = arg.destinationDirectory ?? '';
+      if (parentDirectory.length === 0) {
+        const result = await dialog.showOpenDialog({
+          title: arg.title ?? 'Select firmware output folder',
+          message:
+            arg.message
+            ?? 'A folder for this build is created in the selected location',
+          properties: ['openDirectory', 'createDirectory'],
+        });
+        if (result.canceled || result.filePaths.length === 0) {
+          return failure('', true);
+        }
+        parentDirectory = result.filePaths[0];
+      }
+
+      const outputDirectory = path.join(
+        parentDirectory,
+        buildOutputFolderName(arg.firmwareBinPath),
+      );
+      await mkdirp(outputDirectory);
+
+      const sourceDirectory = path.dirname(arg.firmwareBinPath);
+      const artefacts = (
+        await fs.promises.readdir(sourceDirectory, { withFileTypes: true })
+      ).filter((item) => item.isFile());
+      await Promise.all(
+        artefacts.map((item) =>
+          fs.promises.copyFile(
+            path.join(sourceDirectory, item.name),
+            path.join(outputDirectory, item.name),
+          ),
+        ),
+      );
+
+      logger.log('build output saved', {
+        outputDirectory,
+        artefacts: artefacts.map((item) => item.name),
+      });
+      return {
+        success: true,
+        canceled: false,
+        directoryPath: outputDirectory,
+        firmwareBinPath: path.join(
+          outputDirectory,
+          path.basename(arg.firmwareBinPath),
+        ),
+      };
+    } catch (err) {
+      logger.error('failed to save build output', (err as Error)?.stack);
+      return failure(`Failed to save firmware files: ${err}`);
+    }
   },
 );
 
