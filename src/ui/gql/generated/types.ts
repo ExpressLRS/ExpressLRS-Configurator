@@ -54,6 +54,7 @@ export type BuildFlashFirmwareInput = {
   readonly firmware?: FirmwareVersionDataInput;
   readonly flashingMethod?: FlashingMethod;
   readonly forceFlash?: Scalars['Boolean']['input'];
+  readonly receiverConfiguration?: InputMaybe<ReceiverConfigurationInput>;
   readonly serialDevice?: InputMaybe<Scalars['String']['input']>;
   readonly target?: Scalars['String']['input'];
   readonly type?: BuildJobType;
@@ -255,6 +256,7 @@ export type Query = {
   readonly logFile: LogFile;
   readonly luaScript: LuaScript;
   readonly pullRequests: ReadonlyArray<PullRequestType>;
+  readonly receiverCapabilities: ReceiverCapabilities;
   readonly releases: ReadonlyArray<Release>;
   readonly targetDeviceOptions: ReadonlyArray<UserDefine>;
 };
@@ -310,6 +312,18 @@ export type QueryPullRequestsArgs = {
 };
 
 
+export type QueryReceiverCapabilitiesArgs = {
+  gitBranch?: Scalars['String']['input'];
+  gitCommit?: Scalars['String']['input'];
+  gitPullRequest?: InputMaybe<PullRequestInput>;
+  gitRepository: GitRepositoryInput;
+  gitTag?: Scalars['String']['input'];
+  localPath?: Scalars['String']['input'];
+  source?: FirmwareSource;
+  target?: Scalars['String']['input'];
+};
+
+
 export type QueryReleasesArgs = {
   owner: Scalars['String']['input'];
   repository: Scalars['String']['input'];
@@ -325,6 +339,35 @@ export type QueryTargetDeviceOptionsArgs = {
   localPath?: Scalars['String']['input'];
   source?: FirmwareSource;
   target?: Scalars['String']['input'];
+};
+
+export type ReceiverCapabilities = {
+  readonly __typename?: 'ReceiverCapabilities';
+  readonly dualRadio: Scalars['Boolean']['output'];
+  readonly hasAntennaSwitch: Scalars['Boolean']['output'];
+  readonly hasSerial1: Scalars['Boolean']['output'];
+  readonly powerDefault: Scalars['Int']['output'];
+  readonly powerMax: Scalars['Int']['output'];
+  readonly powerMin: Scalars['Int']['output'];
+  readonly pwmChannelCount: Scalars['Int']['output'];
+  readonly supported: Scalars['Boolean']['output'];
+};
+
+export type ReceiverConfigurationInput = {
+  readonly antennaMode?: InputMaybe<Scalars['Int']['input']>;
+  readonly bindStorage?: InputMaybe<Scalars['Int']['input']>;
+  readonly enabled?: Scalars['Boolean']['input'];
+  readonly failsafeMode?: InputMaybe<Scalars['Int']['input']>;
+  readonly forceTlmOff?: InputMaybe<Scalars['Boolean']['input']>;
+  readonly modelId?: InputMaybe<Scalars['Int']['input']>;
+  readonly power?: InputMaybe<Scalars['Int']['input']>;
+  readonly rateInitialIdx?: InputMaybe<Scalars['Int']['input']>;
+  readonly serial1Protocol?: InputMaybe<Scalars['Int']['input']>;
+  readonly serialProtocol?: InputMaybe<Scalars['Int']['input']>;
+  readonly sourceSysId?: InputMaybe<Scalars['Int']['input']>;
+  readonly targetSysId?: InputMaybe<Scalars['Int']['input']>;
+  readonly teamraceChannel?: InputMaybe<Scalars['Int']['input']>;
+  readonly teamracePosition?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Release = {
@@ -587,6 +630,20 @@ export type MulticastDnsMonitorUpdatesSubscriptionVariables = Exact<{ [key: stri
 
 export type MulticastDnsMonitorUpdatesSubscription = { readonly __typename?: 'Subscription', readonly multicastDnsMonitorUpdates: { readonly __typename?: 'MulticastDnsMonitorUpdate', readonly type: MulticastDnsEventType, readonly data: { readonly __typename?: 'MulticastDnsInformation', readonly name: string, readonly version: string, readonly target: string, readonly type: string, readonly vendor: string, readonly ip: string, readonly dns: string, readonly port: number, readonly deviceName: string, readonly product: string, readonly options: ReadonlyArray<{ readonly __typename?: 'UserDefine', readonly type: UserDefineKind, readonly key: UserDefineKey, readonly enabled: boolean, readonly enumValues?: ReadonlyArray<string> | null, readonly value?: string | null, readonly sensitive?: boolean | null }> } } };
 
+export type ReceiverCapabilitiesQueryVariables = Exact<{
+  target: Scalars['String']['input'];
+  source: FirmwareSource;
+  gitTag: Scalars['String']['input'];
+  gitBranch: Scalars['String']['input'];
+  gitCommit: Scalars['String']['input'];
+  localPath: Scalars['String']['input'];
+  gitPullRequest?: InputMaybe<PullRequestInput>;
+  gitRepository: GitRepositoryInput;
+}>;
+
+
+export type ReceiverCapabilitiesQuery = { readonly __typename?: 'Query', readonly receiverCapabilities: { readonly __typename?: 'ReceiverCapabilities', readonly supported: boolean, readonly powerMin: number, readonly powerMax: number, readonly powerDefault: number, readonly hasSerial1: boolean, readonly pwmChannelCount: number, readonly dualRadio: boolean, readonly hasAntennaSwitch: boolean } };
+
 export type GetTagsQueryVariables = Exact<{
   owner: Scalars['String']['input'];
   repository: Scalars['String']['input'];
@@ -624,6 +681,7 @@ export const GetReleasesDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const LogFileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"logFile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"numberOfLines"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logFile"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"numberOfLines"},"value":{"kind":"Variable","name":{"kind":"Name","value":"numberOfLines"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"level"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"context"}}]}}]}}]}}]} as unknown as DocumentNode<LogFileQuery, LogFileQueryVariables>;
 export const LuaScriptDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"luaScript"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"source"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FirmwareSource"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gitTag"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gitBranch"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gitCommit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"localPath"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gitPullRequest"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PullRequestInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gitRepository"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GitRepositoryInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"luaScript"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"source"},"value":{"kind":"Variable","name":{"kind":"Name","value":"source"}}},{"kind":"Argument","name":{"kind":"Name","value":"gitTag"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gitTag"}}},{"kind":"Argument","name":{"kind":"Name","value":"gitBranch"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gitBranch"}}},{"kind":"Argument","name":{"kind":"Name","value":"gitCommit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gitCommit"}}},{"kind":"Argument","name":{"kind":"Name","value":"localPath"},"value":{"kind":"Variable","name":{"kind":"Name","value":"localPath"}}},{"kind":"Argument","name":{"kind":"Name","value":"gitPullRequest"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gitPullRequest"}}},{"kind":"Argument","name":{"kind":"Name","value":"gitRepository"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gitRepository"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fileLocation"}}]}}]}}]} as unknown as DocumentNode<LuaScriptQuery, LuaScriptQueryVariables>;
 export const MulticastDnsMonitorUpdatesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"multicastDnsMonitorUpdates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"multicastDnsMonitorUpdates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"options"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"enabled"}},{"kind":"Field","name":{"kind":"Name","value":"enumValues"}},{"kind":"Field","name":{"kind":"Name","value":"value"}},{"kind":"Field","name":{"kind":"Name","value":"sensitive"}}]}},{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"target"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"vendor"}},{"kind":"Field","name":{"kind":"Name","value":"ip"}},{"kind":"Field","name":{"kind":"Name","value":"dns"}},{"kind":"Field","name":{"kind":"Name","value":"port"}},{"kind":"Field","name":{"kind":"Name","value":"deviceName"}},{"kind":"Field","name":{"kind":"Name","value":"product"}}]}}]}}]}}]} as unknown as DocumentNode<MulticastDnsMonitorUpdatesSubscription, MulticastDnsMonitorUpdatesSubscriptionVariables>;
+export const ReceiverCapabilitiesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"receiverCapabilities"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"target"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"source"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FirmwareSource"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gitTag"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gitBranch"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gitCommit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"localPath"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gitPullRequest"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PullRequestInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gitRepository"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GitRepositoryInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"receiverCapabilities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"target"},"value":{"kind":"Variable","name":{"kind":"Name","value":"target"}}},{"kind":"Argument","name":{"kind":"Name","value":"source"},"value":{"kind":"Variable","name":{"kind":"Name","value":"source"}}},{"kind":"Argument","name":{"kind":"Name","value":"gitTag"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gitTag"}}},{"kind":"Argument","name":{"kind":"Name","value":"gitBranch"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gitBranch"}}},{"kind":"Argument","name":{"kind":"Name","value":"gitCommit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gitCommit"}}},{"kind":"Argument","name":{"kind":"Name","value":"localPath"},"value":{"kind":"Variable","name":{"kind":"Name","value":"localPath"}}},{"kind":"Argument","name":{"kind":"Name","value":"gitPullRequest"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gitPullRequest"}}},{"kind":"Argument","name":{"kind":"Name","value":"gitRepository"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gitRepository"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"supported"}},{"kind":"Field","name":{"kind":"Name","value":"powerMin"}},{"kind":"Field","name":{"kind":"Name","value":"powerMax"}},{"kind":"Field","name":{"kind":"Name","value":"powerDefault"}},{"kind":"Field","name":{"kind":"Name","value":"hasSerial1"}},{"kind":"Field","name":{"kind":"Name","value":"pwmChannelCount"}},{"kind":"Field","name":{"kind":"Name","value":"dualRadio"}},{"kind":"Field","name":{"kind":"Name","value":"hasAntennaSwitch"}}]}}]}}]} as unknown as DocumentNode<ReceiverCapabilitiesQuery, ReceiverCapabilitiesQueryVariables>;
 export const GetTagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getTags"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"owner"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"repository"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gitTags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"owner"},"value":{"kind":"Variable","name":{"kind":"Name","value":"owner"}}},{"kind":"Argument","name":{"kind":"Name","value":"repository"},"value":{"kind":"Variable","name":{"kind":"Name","value":"repository"}}}]}]}}]} as unknown as DocumentNode<GetTagsQuery, GetTagsQueryVariables>;
 export const SerialMonitorEventsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"serialMonitorEvents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"serialMonitorEvents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]} as unknown as DocumentNode<SerialMonitorEventsSubscription, SerialMonitorEventsSubscriptionVariables>;
 export const SerialMonitorLogsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"serialMonitorLogs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"serialMonitorLogs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"}}]}}]}}]} as unknown as DocumentNode<SerialMonitorLogsSubscription, SerialMonitorLogsSubscriptionVariables>;

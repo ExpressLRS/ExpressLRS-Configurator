@@ -10,6 +10,7 @@ import {
 import { Service } from 'typedi';
 import UserDefine from '../../models/UserDefine';
 import BuildFlashFirmwareInput from '../inputs/BuildFlashFirmwareInput';
+import ReceiverCapabilities from '../objects/ReceiverCapabilities';
 import BuildFlashFirmwareResult from '../objects/BuildFlashFirmwareResult';
 import BuildProgressNotification from '../../models/BuildProgressNotification';
 import PubSubTopic from '../../pubsub/enum/PubSubTopic';
@@ -55,6 +56,21 @@ export default class FirmwareResolver {
       gitRepository,
     );
     return strategy.targetDeviceOptions(args, gitRepository);
+  }
+
+  @Query(() => ReceiverCapabilities)
+  async receiverCapabilities(
+    @Args(() => TargetDeviceOptionsArgs) args: TargetDeviceOptionsArgs,
+    @Arg('gitRepository', () => GitRepository) gitRepository: GitRepository,
+  ): Promise<ReceiverCapabilities> {
+    const strategy = await this.flashingStrategyLocatorService.locate(
+      args,
+      gitRepository,
+    );
+    if (!strategy.receiverCapabilities) {
+      return new ReceiverCapabilities(false);
+    }
+    return strategy.receiverCapabilities(args, gitRepository);
   }
 
   @Mutation(() => BuildFlashFirmwareResult)

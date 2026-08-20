@@ -48,6 +48,7 @@ import DeviceDescriptionsLoader from './src/services/BinaryFlashingStrategy/Devi
 import BinaryConfigurator from './src/services/BinaryFlashingStrategy/BinaryConfigurator';
 import CloudBinariesCache from './src/services/BinaryFlashingStrategy/CloudBinariesCache';
 import FlashOutputParserService from './src/services/FlashOutputParser';
+import ReceiverConfigurationService from './src/services/ReceiverConfiguration';
 
 export default class ApiServer {
   app: Express | undefined;
@@ -163,6 +164,7 @@ export default class ApiServer {
       config.firmwareCloudCachePath,
     );
     const binaryConfigurator = new BinaryConfigurator(python, logger);
+    const receiverConfiguration = new ReceiverConfigurationService(logger);
     const binaryFlashingStrategyService = new BinaryFlashingStrategyService(
       config.PATH,
       path.join(config.userDataPath, 'firmwares', 'binary'),
@@ -175,6 +177,7 @@ export default class ApiServer {
       targetStorageGitPath,
       logger,
       flashOutputParserService,
+      receiverConfiguration,
     );
 
     Container.set(

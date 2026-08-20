@@ -14,6 +14,11 @@ import {
 } from '../../../library/FirmwareDownloader';
 import Mutex from '../../../library/Mutex';
 import { DeviceDescription, TargetsJSONLoader } from '../TargetsJSONLoader';
+import {
+  applyLayoutOverlay,
+  layoutFileName,
+  loadTargetLayout,
+} from '../../ReceiverConfiguration/receiverHardware';
 import FlashingMethod from '../../../models/enum/FlashingMethod';
 import Target from '../../../models/Target';
 import DeviceType from '../../../models/enum/DeviceType';
@@ -300,6 +305,39 @@ export default class DeviceDescriptionsLoader {
     });
 
     return config;
+  }
+
+  /**
+   * The hardware layout of a target, which is what the firmware itself reads
+   * to learn the pins and the power range of the device.
+   */
+  async getTargetHardwareLayout(
+    args: UserDefineFilters,
+    gitRepository: GitRepository,
+  ): Promise<unknown | null> {
+    const config = await this.getDeviceConfig(args, gitRepository);
+    if (!config.layout_file) {
+      return null;
+    }
+    let targetsDataDirectory = '';
+    await this.deviceOptionsMutex.tryLockWithTimeout(15 * 60 * 1000);
+    try {
+      targetsDataDirectory = await this.loadTargetsData(
+        this.deviceOptionsGitPath,
+        args,
+        gitRepository,
+      );
+    } finally {
+      this.deviceOptionsMutex.unlock();
+    }
+    const layoutPath = path.join(
+      targetsDataDirectory,
+      layoutFileName(config.firmware, config.layout_file),
+    );
+    const layout = await loadTargetLayout(layoutPath);
+    // a device may adjust the layout of its board, which is how power limits
+    // and the pins of the second serial port differ between variants
+    return applyLayoutOverlay(layout, config.overlay);
   }
 
   async targetDeviceOptions(

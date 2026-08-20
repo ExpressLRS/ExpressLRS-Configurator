@@ -44,6 +44,9 @@ import DeviceOptionsForm, {
   cleanUserDefines,
   DeviceOptionsFormData,
 } from '../../components/DeviceOptionsForm';
+import ReceiverOptionsForm, {
+  ReceiverOptionsFormData,
+} from '../../components/ReceiverOptionsForm';
 import ShowAlerts from '../../components/ShowAlerts';
 import CardTitle from '../../components/CardTitle';
 import Logs from '../../components/Logs';
@@ -67,6 +70,7 @@ import {
   AvailableFirmwareTargetsDocument,
   BuildFlashFirmwareDocument,
   LuaScriptDocument,
+  ReceiverCapabilitiesDocument,
   TargetDeviceOptionsDocument,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
@@ -194,6 +198,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   );
 
   const { setAppStatus } = useAppState();
+  const [receiverOptions, setReceiverOptions]
+    = useState<ReceiverOptionsFormData>({
+      enabled: false,
+    });
 
   const [firmwareVersionData, setFirmwareVersionData]
     = useState<FirmwareVersionDataInput | null>(null);
@@ -235,6 +243,13 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       return d.targets.find((target) => target.id === deviceTarget?.id);
     });
   }, [deviceTarget, deviceTargets]);
+
+  const isTX = useMemo(() => {
+    if (deviceTarget) {
+      return deviceTarget.name?.toLocaleLowerCase().indexOf('tx_') > -1;
+    }
+    return false;
+  }, [deviceTarget]);
 
   useEffect(() => {
     if (
@@ -319,6 +334,11 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
     setDeviceOptionsFormData(userDefineOptions);
   };
+  const [fetchReceiverCapabilities, { data: receiverCapabilitiesResponse }]
+    = useLazyQuery(ReceiverCapabilitiesDocument, {
+      fetchPolicy: 'network-only',
+    });
+
   const [
     fetchOptions,
     {
@@ -342,6 +362,8 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
   }, [deviceOptionsResponse]);
 
   useEffect(() => {
+    // settings picked for one receiver must not ride along to the next one
+    setReceiverOptions({ enabled: false });
     if (
       deviceTarget === null
       || firmwareVersionData === null
@@ -351,6 +373,29 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         userDefineOptions: [],
       });
     } else {
+      // what the receiver supports decides which settings we may offer, a
+      // transmitter never gets any
+      if (!isTX) {
+        fetchReceiverCapabilities({
+          variables: {
+            target: deviceTarget.name,
+            source: firmwareVersionData.source as FirmwareSource,
+            gitBranch: firmwareVersionData.gitBranch!,
+            gitTag: firmwareVersionData.gitTag!,
+            gitCommit: firmwareVersionData.gitCommit!,
+            localPath: firmwareVersionData.localPath!,
+            gitPullRequest: firmwareVersionData.gitPullRequest,
+            gitRepository: {
+              url: gitRepository.url,
+              owner: gitRepository.owner,
+              repositoryName: gitRepository.repositoryName,
+              rawRepoUrl: gitRepository.rawRepoUrl,
+              srcFolder: gitRepository.srcFolder,
+              hardwareArtifactUrl: gitRepository.hardwareArtifactUrl,
+            },
+          },
+        });
+      }
       fetchOptions({
         variables: {
           target: deviceTarget.name,
@@ -371,7 +416,14 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
         },
       });
     }
-  }, [deviceTarget, firmwareVersionData, gitRepository, fetchOptions]);
+  }, [
+    deviceTarget,
+    firmwareVersionData,
+    gitRepository,
+    fetchOptions,
+    fetchReceiverCapabilities,
+    isTX,
+  ]);
 
   const onResetToDefaults = () => {
     const handleReset = async () => {
@@ -458,12 +510,41 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     return false;
   }, [deviceTarget, device]);
 
-  const isTX = useMemo(() => {
-    if (deviceTarget) {
-      return deviceTarget.name?.toLocaleLowerCase().indexOf('tx_') > -1;
+  /**
+   * The configuration is written alongside the firmware, which only works on
+   * ESP32 receivers and on the flashing methods that write the whole flash
+   * layout rather than the application alone.
+   */
+  const receiverConfigurationSupported = useMemo(() => {
+    if (!deviceTarget || !device || isTX) {
+      return false;
     }
-    return false;
-  }, [deviceTarget]);
+    // flashed as a transmitter it stores a transmitter configuration
+    const rxAsTx = deviceOptionsFormData.userDefineOptions.find(
+      (userDefine) =>
+        userDefine.key === UserDefineKey.RX_AS_TX && userDefine.enabled,
+    );
+    if (rxAsTx) {
+      return false;
+    }
+    if (!device.platform?.startsWith('esp32')) {
+      return false;
+    }
+    // nothing is offered until the capabilities of the target are known
+    if (!receiverCapabilitiesResponse?.receiverCapabilities.supported) {
+      return false;
+    }
+    return (
+      deviceTarget.flashingMethod === FlashingMethod.UART
+      || deviceTarget.flashingMethod === FlashingMethod.EdgeTxPassthrough
+    );
+  }, [
+    deviceTarget,
+    device,
+    isTX,
+    receiverCapabilitiesResponse,
+    deviceOptionsFormData,
+  ]);
 
   const hasLuaScript = useMemo(() => {
     return deviceType === DeviceType.ExpressLRS && isTX;
@@ -660,6 +741,10 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
       serialDevice: uploadPort,
       erase,
       forceFlash: force,
+      receiverConfiguration:
+        receiverConfigurationSupported && receiverOptions.enabled
+          ? receiverOptions
+          : undefined,
     };
     buildFlashFirmwareMutation({
       variables: {
@@ -979,6 +1064,26 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
               <Loader loading={loadingOptions} />
             </CardContent>
             <Divider />
+
+            {receiverConfigurationSupported && (
+              <>
+                <CardTitle
+                  icon={<SettingsIcon />}
+                  title={t('ConfiguratorView.ReceiverOptions')}
+                />
+                <Divider />
+                <CardContent>
+                  <ReceiverOptionsForm
+                    data={receiverOptions}
+                    capabilities={
+                      receiverCapabilitiesResponse?.receiverCapabilities ?? null
+                    }
+                    onChange={setReceiverOptions}
+                  />
+                </CardContent>
+                <Divider />
+              </>
+            )}
 
             <CardTitle
               icon={<SettingsIcon />}
