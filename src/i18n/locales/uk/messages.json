@@ -212,8 +212,8 @@
     "DisableUARTInvertedWarning": "Вимкнення UART_INVERTED є нетиповим. Будь ласка, переконайтеся, що ваш передавач підтримує це."
   },
   "UserDefinesList": {
-    "BindingPhraseHistory": "Recently used binding phrases",
-    "BindingPhraseHistoryRemove": "Remove from history",
+    "BindingPhraseHistory": "Нещодавно використані фрази для з'єднання",
+    "BindingPhraseHistoryRemove": "Видалити з історії",
     "CustomBindingPhrase": "Кодова фраза для з'єднання",
     "MyStartupMelody": "Особиста мелодія при запуску",
     "Value": "Значення"

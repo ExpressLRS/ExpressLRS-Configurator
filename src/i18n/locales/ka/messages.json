@@ -14,8 +14,8 @@
       "VERIFYING_BUILD_SYSTEM": "კომპილაციის გარემოს შემოწმება",
       "DOWNLOADING_FIRMWARE": "პროგრამული უზრუნველყოფის საწყისი კოდის ჩამოტვირთვა",
       "BUILDING_FIRMWARE": "პროგრამული უზრუნველყოფის კომპილაცია",
-      "INITIATING_PASSTHROUGH": "Initiating passthrough",
-      "INITIATING_PASSTHROUGH_completed": "Passthrough done",
+      "INITIATING_PASSTHROUGH": "პირდაპირი კავშირის ინიციალიზაცია",
+      "INITIATING_PASSTHROUGH_completed": "პირდაპირი კავშირი დასრულდა",
       "FLASHING_FIRMWARE": "პროგრამული უზრუნველყოფის ჩაწერა მოწყობილობაში"
     },
     "Status": {
@@ -212,8 +212,8 @@
     "DisableUARTInvertedWarning": "UART_INVERTED-ის გამორთვა იშვიათი შემთხვევაა. გთხოვთ დარწმუნდეთ, რომ თქვენი გადამცემი მხარს უჭერს ამ რეჟიმს."
   },
   "UserDefinesList": {
-    "BindingPhraseHistory": "Recently used binding phrases",
-    "BindingPhraseHistoryRemove": "Remove from history",
+    "BindingPhraseHistory": "ბოლოს გამოყენებული დაკავშირების ფრაზები",
+    "BindingPhraseHistoryRemove": "ისტორიიდან წაშლა",
     "CustomBindingPhrase": "მომხმარებლის დაკავშირების ფრაზა",
     "MyStartupMelody": "ჩემი ჩართვის მელოდია",
     "Value": "მნიშვნელობა"
