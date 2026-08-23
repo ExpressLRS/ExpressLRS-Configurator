@@ -401,6 +401,8 @@ export type UserDefine = {
   readonly enabled: Scalars['Boolean']['output'];
   readonly enumValues?: Maybe<ReadonlyArray<Scalars['String']['output']>>;
   readonly key: UserDefineKey;
+  readonly max?: Maybe<Scalars['Float']['output']>;
+  readonly min?: Maybe<Scalars['Float']['output']>;
   readonly optionGroup?: Maybe<UserDefineOptionGroup>;
   readonly sensitive?: Maybe<Scalars['Boolean']['output']>;
   readonly type: UserDefineKind;
@@ -444,6 +446,7 @@ export enum UserDefineKey {
 }
 
 export enum UserDefineKind {
+  Number = 'Number',
   Boolean = 'Boolean',
   Enum = 'Enum',
   Text = 'Text'
@@ -475,7 +478,7 @@ export type AvailableFirmwareTargetsQuery = { readonly __typename?: 'Query', rea
 export type AvailableMulticastDnsDevicesListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AvailableMulticastDnsDevicesListQuery = { readonly __typename?: 'Query', readonly availableMulticastDnsDevicesList: ReadonlyArray<{ readonly __typename?: 'MulticastDnsInformation', readonly name: string, readonly version: string, readonly target: string, readonly type: string, readonly vendor: string, readonly ip: string, readonly dns: string, readonly port: number, readonly deviceName: string, readonly product: string, readonly options: ReadonlyArray<{ readonly __typename?: 'UserDefine', readonly type: UserDefineKind, readonly key: UserDefineKey, readonly enabled: boolean, readonly enumValues?: ReadonlyArray<string> | null, readonly value?: string | null, readonly sensitive?: boolean | null }> }> };
+export type AvailableMulticastDnsDevicesListQuery = { readonly __typename?: 'Query', readonly availableMulticastDnsDevicesList: ReadonlyArray<{ readonly __typename?: 'MulticastDnsInformation', readonly name: string, readonly version: string, readonly target: string, readonly type: string, readonly vendor: string, readonly ip: string, readonly dns: string, readonly port: number, readonly deviceName: string, readonly product: string, readonly options: ReadonlyArray<{ readonly __typename?: 'UserDefine', readonly type: UserDefineKind, readonly key: UserDefineKey, readonly enabled: boolean, readonly enumValues?: ReadonlyArray<string> | null, readonly value?: string | null, readonly min?: number | null, readonly max?: number | null, readonly sensitive?: boolean | null }> }> };
 
 export type BuildFlashFirmwareMutationVariables = Exact<{
   input: BuildFlashFirmwareInput;
@@ -531,7 +534,7 @@ export type TargetDeviceOptionsQueryVariables = Exact<{
 }>;
 
 
-export type TargetDeviceOptionsQuery = { readonly __typename?: 'Query', readonly targetDeviceOptions: ReadonlyArray<{ readonly __typename?: 'UserDefine', readonly type: UserDefineKind, readonly key: UserDefineKey, readonly enabled: boolean, readonly enumValues?: ReadonlyArray<string> | null, readonly value?: string | null, readonly optionGroup?: UserDefineOptionGroup | null, readonly sensitive?: boolean | null }> };
+export type TargetDeviceOptionsQuery = { readonly __typename?: 'Query', readonly targetDeviceOptions: ReadonlyArray<{ readonly __typename?: 'UserDefine', readonly type: UserDefineKind, readonly key: UserDefineKey, readonly enabled: boolean, readonly enumValues?: ReadonlyArray<string> | null, readonly value?: string | null, readonly min?: number | null, readonly max?: number | null, readonly optionGroup?: UserDefineOptionGroup | null, readonly sensitive?: boolean | null }> };
 
 export type DisconnectFromSerialDeviceMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -585,7 +588,7 @@ export type LuaScriptQuery = { readonly __typename?: 'Query', readonly luaScript
 export type MulticastDnsMonitorUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MulticastDnsMonitorUpdatesSubscription = { readonly __typename?: 'Subscription', readonly multicastDnsMonitorUpdates: { readonly __typename?: 'MulticastDnsMonitorUpdate', readonly type: MulticastDnsEventType, readonly data: { readonly __typename?: 'MulticastDnsInformation', readonly name: string, readonly version: string, readonly target: string, readonly type: string, readonly vendor: string, readonly ip: string, readonly dns: string, readonly port: number, readonly deviceName: string, readonly product: string, readonly options: ReadonlyArray<{ readonly __typename?: 'UserDefine', readonly type: UserDefineKind, readonly key: UserDefineKey, readonly enabled: boolean, readonly enumValues?: ReadonlyArray<string> | null, readonly value?: string | null, readonly sensitive?: boolean | null }> } } };
+export type MulticastDnsMonitorUpdatesSubscription = { readonly __typename?: 'Subscription', readonly multicastDnsMonitorUpdates: { readonly __typename?: 'MulticastDnsMonitorUpdate', readonly type: MulticastDnsEventType, readonly data: { readonly __typename?: 'MulticastDnsInformation', readonly name: string, readonly version: string, readonly target: string, readonly type: string, readonly vendor: string, readonly ip: string, readonly dns: string, readonly port: number, readonly deviceName: string, readonly product: string, readonly options: ReadonlyArray<{ readonly __typename?: 'UserDefine', readonly type: UserDefineKind, readonly key: UserDefineKey, readonly enabled: boolean, readonly enumValues?: ReadonlyArray<string> | null, readonly value?: string | null, readonly min?: number | null, readonly max?: number | null, readonly sensitive?: boolean | null }> } } };
 
 export type GetTagsQueryVariables = Exact<{
   owner: Scalars['String']['input'];

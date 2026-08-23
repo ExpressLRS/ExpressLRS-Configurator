@@ -88,7 +88,13 @@ export default class TargetUserDefinesFactory {
           true,
         );
       case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
-        return UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '60', true);
+        return UserDefine.Number(
+          UserDefineKey.AUTO_WIFI_ON_INTERVAL,
+          '60',
+          true,
+          1,
+          2147483,
+        );
       case UserDefineKey.RX_AS_TX:
         let rxAxTxTypes: string[] = [];
         if (this.platform?.startsWith('esp32')) {

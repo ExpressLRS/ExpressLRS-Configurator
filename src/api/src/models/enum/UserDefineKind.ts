@@ -4,6 +4,7 @@ enum UserDefineKind {
   Boolean = 'Boolean',
   Text = 'Text',
   Enum = 'Enum',
+  Number = 'Number',
 }
 
 registerEnumType(UserDefineKind, {
