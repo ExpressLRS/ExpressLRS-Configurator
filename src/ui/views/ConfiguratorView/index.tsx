@@ -334,10 +334,17 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
 
     setDeviceOptionsFormData(userDefineOptions);
   };
-  const [fetchReceiverCapabilities, { data: receiverCapabilitiesResponse }]
-    = useLazyQuery(ReceiverCapabilitiesDocument, {
-      fetchPolicy: 'network-only',
-    });
+  const [
+    fetchReceiverCapabilities,
+    {
+      data: receiverCapabilitiesResponse,
+      loading: receiverCapabilitiesLoading,
+      error: receiverCapabilitiesError,
+      variables: receiverCapabilitiesVariables,
+    },
+  ] = useLazyQuery(ReceiverCapabilitiesDocument, {
+    fetchPolicy: 'network-only',
+  });
 
   const [
     fetchOptions,
@@ -530,8 +537,15 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     if (!device.platform?.startsWith('esp32')) {
       return false;
     }
-    // nothing is offered until the capabilities of the target are known
-    if (!receiverCapabilitiesResponse?.receiverCapabilities.supported) {
+    // nothing is offered until the capabilities of this very target are
+    // known; while their query is still running, or after it failed, the data
+    // at hand describes a previously selected target
+    if (
+      receiverCapabilitiesLoading
+      || receiverCapabilitiesError !== undefined
+      || receiverCapabilitiesVariables?.target !== deviceTarget.name
+      || !receiverCapabilitiesResponse?.receiverCapabilities.supported
+    ) {
       return false;
     }
     return (
@@ -543,6 +557,9 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     device,
     isTX,
     receiverCapabilitiesResponse,
+    receiverCapabilitiesLoading,
+    receiverCapabilitiesError,
+    receiverCapabilitiesVariables,
     deviceOptionsFormData,
   ]);
 
