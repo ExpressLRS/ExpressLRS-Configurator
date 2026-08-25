@@ -51,6 +51,20 @@ describe('readPartitionTable', () => {
     expect(readPartitionTable(Buffer.alloc(4096, 0xff))).toEqual([]);
   });
 
+  it('stops at the end of the table, like the firmware does', () => {
+    // bytes that happen to look like an entry after the table has ended, ie.
+    // inside an NVS image appended to partitions.bin, are not entries
+    const image = Buffer.concat([
+      table(),
+      entry(1, 2, 0xf000, 0x1000, 'phantom'),
+    ]);
+    expect(readPartitionTable(image).map((item) => item.label)).toEqual([
+      'nvs',
+      'otadata',
+      'app0',
+    ]);
+  });
+
   it('finds the nvs partition', () => {
     expect(findNvsPartition(readPartitionTable(table()))?.offset)
       .toEqual(0x9000);

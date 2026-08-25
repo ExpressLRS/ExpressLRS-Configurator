@@ -25,8 +25,12 @@ export interface Partition {
 export const readPartitionTable = (image: Buffer): Partition[] => {
   const partitions: Partition[] = [];
   for (let at = 0; at + ENTRY_SIZE <= image.length; at += ENTRY_SIZE) {
+    // entries are consecutive; the first one without the magic ends the table
+    // (the md5 checksum entry or erased flash), exactly how ESP-IDF reads it.
+    // Whatever sits after that, ie. an NVS image appended to partitions.bin,
+    // must not be mistaken for more entries.
     if (image.readUInt16LE(at) !== ENTRY_MAGIC) {
-      continue;
+      break;
     }
     partitions.push({
       type: image[at + 2],
