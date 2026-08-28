@@ -278,6 +278,7 @@ const ReceiverOptionsForm: FunctionComponent<ReceiverOptionsFormProps> = ({
             </ListItem>
           )}
           {capabilities?.hasAntennaSwitch
+            && !capabilities?.dualRadio
             && select(
               'antennaMode',
               t('ReceiverOptionsForm.AntennaMode'),

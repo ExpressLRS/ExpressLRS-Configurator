@@ -215,6 +215,16 @@ describe('buildRxConfig', () => {
     expect((config[20] >> 6) & 0x03).toEqual(2);
   });
 
+  it('ignores an antenna choice when a second radio overrides the switch', () => {
+    // SetDefaults() assigns 2 for the switch and then 0 for a second radio, so
+    // on a target with both the transmitter sets the mode and a choice made
+    // here must not be written
+    expect((buildRxConfig({
+      settings: { antennaMode: 1 },
+      hardware: { antennaControl: 9, dualRadio: true },
+    })[20] >> 6) & 0x03).toEqual(0);
+  });
+
   it('ignores an antenna choice on a target without the switch', () => {
     // dual radio and single antenna receivers take the firmware default
     expect((buildRxConfig({

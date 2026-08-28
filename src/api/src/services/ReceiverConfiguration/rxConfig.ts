@@ -221,9 +221,14 @@ export const buildRxConfig = ({
 
   const bindStorage = settings.bindStorage ?? 0;
   const power = resolvePower(settings.power, hardware);
-  // only a target with an antenna switch can be pointed at an antenna, for
-  // everything else the firmware default applies no matter what was asked
-  const antennaMode = hardware.antennaControl !== undefined
+  // Only a target with an antenna switch can be pointed at an antenna, and a
+  // second radio takes that choice away again: SetDefaults() assigns 2 for the
+  // switch and then 0 for a second radio, so on a target with both the mode is
+  // the transmitter's to set. For everything else the firmware default applies
+  // no matter what was asked.
+  const antennaModeSelectable
+    = hardware.antennaControl !== undefined && !hardware.dualRadio;
+  const antennaMode = antennaModeSelectable
     ? settings.antennaMode ?? defaultAntennaMode(hardware)
     : defaultAntennaMode(hardware);
   config[20] = (bindStorage & 0x03)
