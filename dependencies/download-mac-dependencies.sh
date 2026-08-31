@@ -133,6 +133,23 @@ EOF
     --target "${STAGING}/python/lib/python${PYTHON_VERSION%.*}/site-packages" \
     --requirement "${TMP_DIR}/requirements.txt"
 
+  # drop the Tcl/Tk GUI stack (tkinter, idle, turtle): neither the PlatformIO
+  # installer nor the flashing scripts ever open a window
+  rm -rf \
+    "${STAGING}/python/lib/tcl9.0" \
+    "${STAGING}/python/lib/tk9.0" \
+    "${STAGING}/python/lib/tcl9" \
+    "${STAGING}/python/lib/itcl"* \
+    "${STAGING}/python/lib/thread"* \
+    "${STAGING}/python/lib/libtcl"* \
+    "${STAGING}/python/lib/libtk"* \
+    "${STAGING}/python/lib/python${PYTHON_VERSION%.*}/idlelib" \
+    "${STAGING}/python/lib/python${PYTHON_VERSION%.*}/tkinter" \
+    "${STAGING}/python/lib/python${PYTHON_VERSION%.*}/turtledemo" \
+    "${STAGING}/python/lib/python${PYTHON_VERSION%.*}/turtle.py" \
+    "${STAGING}/python/lib/python${PYTHON_VERSION%.*}/lib-dynload/_tkinter"* \
+    "${STAGING}/python/bin/idle"*
+
   mv "${STAGING}/python" "$PYTHON_DEST"
   echo "Installed Python ${PYTHON_VERSION} to dependencies/${PYTHON_DEST}"
 fi
@@ -144,6 +161,16 @@ else
   archive="$(fetch "$GIT_URL" "$GIT_ARCHIVE" "$GIT_SHA256")"
   mkdir -p "${STAGING}/git-portable"
   tar xzf "$archive" -C "${STAGING}/git-portable"
+
+  # drop Git Credential Manager (a self contained .NET GUI runtime, ~100MB:
+  # every .dll and .dylib in git-core belongs to it, dugite's git is static)
+  # and git-lfs: the configurator only clones public repositories anonymously
+  rm -f \
+    "${STAGING}/git-portable/libexec/git-core/"*.dll \
+    "${STAGING}/git-portable/libexec/git-core/"*.dylib \
+    "${STAGING}/git-portable/libexec/git-core/git-credential-manager"* \
+    "${STAGING}/git-portable/libexec/git-core/git-lfs"
+
   mv "${STAGING}/git-portable" "$GIT_DEST"
   echo "Installed git ${GIT_VERSION} to dependencies/${GIT_DEST}"
 fi
