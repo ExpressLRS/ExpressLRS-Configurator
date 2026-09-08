@@ -39,6 +39,7 @@ export default class BinaryConfigurator {
     hardwareDefinitionsPath: string | null,
     firmwareArtifactsDirPath: string,
     params: BuildFlashFirmwareParams,
+    flashDiscriminator?: number,
   ): string[][] {
     const flags: string[][] = [];
 
@@ -57,6 +58,13 @@ export default class BinaryConfigurator {
     }
 
     flags.push(...this.userDefinesToFlags(params.userDefines));
+
+    // lets the flasher patch the firmware with the discriminator the
+    // receiver configuration already carries; a firmware that ignores the
+    // flag heals the difference on its first boot
+    if (flashDiscriminator !== undefined) {
+      flags.push(['--flash-discriminator', flashDiscriminator.toString()]);
+    }
 
     if (params.forceFlash) {
       flags.push(['--force']);

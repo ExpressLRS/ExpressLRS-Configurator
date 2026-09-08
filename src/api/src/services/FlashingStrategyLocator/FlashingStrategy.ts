@@ -7,6 +7,7 @@ import UserDefine from '../../models/UserDefine';
 import FirmwareSource from '../../models/enum/FirmwareSource';
 import PullRequest from '../../models/PullRequest';
 import BuildFlashFirmwareResult from '../../graphql/objects/BuildFlashFirmwareResult';
+import ReceiverCapabilities from '../../graphql/objects/ReceiverCapabilities';
 
 export interface IsCompatibleArgs {
   source: FirmwareSource;
@@ -39,6 +40,15 @@ export interface FlashingStrategy {
     input: UserDefineFilters,
     gitRepository: GitRepository
   ) => Promise<UserDefine[]>;
+
+  /**
+   * Optional, because it depends on hardware descriptions that only the
+   * prebuilt binary flow ships.
+   */
+  receiverCapabilities?: (
+    input: UserDefineFilters,
+    gitRepository: GitRepository
+  ) => Promise<ReceiverCapabilities>;
 
   clearFirmwareFiles(): Promise<void>;
 }
