@@ -90,7 +90,7 @@
     "NewerVersionAvailable": "Доступна более новая версия прошивки",
     "UpgradeToV3": "ExpressLRS 2.X больше не поддерживается. Обновите до ExpressLRS 3.X.",
     "DangerZoneTitle": "ОПАСНАЯ ЗОНА",
-    "DangerZoneContent": "Используйте эти исходники, только если вы знаете, что вы делаете или были проинструктированы разработчиками проекта",
+    "DangerZoneContent": "Use these sources only if you know what you are doing or were instructed by project developers",
     "GitBranches": "Ветки Git",
     "GitCommitHash": "Хэш коммита Git",
     "LocalPath": "Локальный путь",
@@ -212,8 +212,8 @@
     "DisableUARTInvertedWarning": "Отключение UART_INVERTED используется редко. Пожалуйста, убедитесь, что передатчик поддерживает это."
   },
   "UserDefinesList": {
-    "BindingPhraseHistory": "Recently used binding phrases",
-    "BindingPhraseHistoryRemove": "Remove from history",
+    "BindingPhraseHistory": "Использовавшиеся бинд фразы",
+    "BindingPhraseHistoryRemove": "Удалить из истории",
     "CustomBindingPhrase": "Пользовательская бинд фраза",
     "MyStartupMelody": "Стартовая мелодия",
     "Value": "Значение"

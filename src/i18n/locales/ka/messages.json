@@ -1,6 +1,6 @@
 {
   "BuildNotificationsList": {
-    "VerifyingBuildSystem": "\"კომპილაციის სისტემის შემოწმება\"",
+    "VerifyingBuildSystem": "კომპილაციის სისტემის შემოწმება",
     "DownloadingFirmware": "პროგრამული უზრუნველყოფის ჩამოტვირთვა",
     "BuildingUserDefinesTXT": "user_defines.txt ფაილის გენერირება",
     "CompilingFirmware": "პროგრამული უზრუნველყოფის კომპილაცია",
@@ -90,7 +90,7 @@
     "NewerVersionAvailable": "ხელმისაწვდომია პროგრამული უზრუნველყოფის ახალი ვერსია",
     "UpgradeToV3": "ExpressLRS 2.X ვერსია აღარ არის მხარდაჭერილი. გთხოვთ განაახლოთ ExpressLRS 3.X ვერსიაზე.",
     "DangerZoneTitle": "საშიში ზონა",
-    "DangerZoneContent": "გამოიყენეთ ეს წყაროები მხოლოდ იმ შემთხვევაში, თუ ზუსტად იცით, რას აკეთებთ, ან მიიღეთ მითითება პროექტის დეველოპერებისგან",
+    "DangerZoneContent": "ეს წყაროები მხოლოდ მაშინ გამოიყენეთ, თუ იცით, რას აკეთებთ, ან თუ პროექტის შემქმნელებისგან შესაბამისი მითითება მიიღეთ",
     "GitBranches": "Git ტოტები",
     "GitCommitHash": "Git კომიტის ჰეში (Hash)",
     "LocalPath": "ლოკალური გზა",
