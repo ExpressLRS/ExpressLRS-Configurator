@@ -112,7 +112,7 @@
     "UART": "Ta metoda pozwala na flashowanie odbiornika lub nadajnika przez port USB lub przez podłączone urządzenie FTDI.",
     "WIFI": "Ta metoda tworzy plik oprogramowania, który można przesłać do odbiornika lub nadajnika poprzez połączenie ze wbudowaną siecią WiFi.",
     "EdgeTxPassthrough": "Ta metoda pozwala na flashowanie modułu nadawczego, gdy jest on podłączony do twojego transmitera za pomocą funkcji passthrough oprogramowania EdgeTX.",
-    "Passthrough": "Ta metoda pozwala na flashowanie modułu, gdy jest on podłączony do twojego nadajnika za pomocą funkcji passthrough.",
+    "Passthrough": "This method flashes the backpack through the USB port on the TX module, by putting the module's MCU into passthrough mode. The radio is not involved.",
     "Zip": "Ta metoda tworzy archiwum ze wszystkich plików wymaganych dla Twojego urządzenia."
   },
   "FlashingMethodOptions": {

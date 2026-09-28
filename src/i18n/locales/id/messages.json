@@ -112,7 +112,7 @@
     "UART": "Cara ini membantu anda untuk menulis (Flash) receiver atau transmitter anda melalui kabel dari perangkat FTDI atau port USB.",
     "WIFI": "Cara ini menciptakan file firmware untuk anda unggah (upload) kepada receiver atau transmitter anda melalui wifi yang sudah tertanam.",
     "EdgeTxPassthrough": "Cara ini membantu anda untuk menulis (Flash) transmitter anda selagi terhubung melalui fitur passthrough dari firmware EdgeTX.",
-    "Passthrough": "Cara ini membantu anda untuk menulis (Flash) pada module anda selagi terhubung melalui fitur passthrough.",
+    "Passthrough": "This method flashes the backpack through the USB port on the TX module, by putting the module's MCU into passthrough mode. The radio is not involved.",
     "Zip": "This method creates an archive of all files required for your device."
   },
   "FlashingMethodOptions": {

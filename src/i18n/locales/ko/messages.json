@@ -112,7 +112,7 @@
     "UART": "이 방법을 사용하면 수신기 또는 송신기의 USB포트, 또는 FTDI 어댑터를 사용하여 장치를 플래시할 수 있습니다.",
     "WIFI": "이 방법은 내장 Wi-Fi에 연결하여 수신기 또는 송신기에 업로드할 수 있는 펌웨어 파일을 생성합니다.",
     "EdgeTxPassthrough": "이 방법을 사용하면 EdgeTX 펌웨어의 패스스루 기능을 사용하여 조종기에 내장된 송신기 모듈을 플래시할 수 있습니다.",
-    "Passthrough": "이 방법을 사용하면 패스스루 기능을 사용하여 조종기에 연결된 모듈을 플래시할 수 있습니다.",
+    "Passthrough": "This method flashes the backpack through the USB port on the TX module, by putting the module's MCU into passthrough mode. The radio is not involved.",
     "Zip": "이 방법을 선택하면, 장치에 필요한 모든 파일이 담긴 압축 파일을 생성합니다."
   },
   "FlashingMethodOptions": {

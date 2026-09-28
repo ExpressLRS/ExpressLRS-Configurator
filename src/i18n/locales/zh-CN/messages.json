@@ -112,7 +112,7 @@
     "UART": "这种方法允许您通过其 USB 端口或连接 FTDI 设备来刷写您的接收器或高频头。",
     "WIFI": "这种方法可以创建一个固件文件，您可以通过连接到接收器或高频头的内置 WiFi 上传。",
     "EdgeTxPassthrough": "这种方法允许您在遥控器与高频头连接时，利用 EdgeTX 固件的透传功能对其进行刷写。",
-    "Passthrough": "这种方法允许您在您的模块与遥控器连接时，通过使用透传功能进行刷写。",
+    "Passthrough": "This method flashes the backpack through the USB port on the TX module, by putting the module's MCU into passthrough mode. The radio is not involved.",
     "Zip": "此方法创建您设备所需的所有文件的归档。"
   },
   "FlashingMethodOptions": {
