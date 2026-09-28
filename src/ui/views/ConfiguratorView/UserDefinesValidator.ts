@@ -1,4 +1,8 @@
-import { UserDefine, UserDefineKey } from '../../gql/generated/types';
+import {
+  UserDefine,
+  UserDefineKey,
+  UserDefineKind,
+} from '../../gql/generated/types';
 
 export default class UserDefinesValidator {
   validateRegulatoryDomains(data: UserDefine[]): Error[] {
@@ -96,11 +100,52 @@ export default class UserDefinesValidator {
     return results;
   }
 
+  /*
+    Numeric user defines (UserDefineKind.Number) carry their allowed range on the
+    model as optional min/max (set in TargetUserDefinesFactory). Enforce it here so
+    an out-of-range value actually blocks the build — the input's visual error alone
+    does not prevent submission (e.g. a manually typed -11111).
+  */
+  validateNumericRanges(data: UserDefine[]): Error[] {
+    const results: Error[] = [];
+
+    data
+      .filter(
+        (option) =>
+          option.type === UserDefineKind.Number
+          && option.enabled
+          && option.value !== undefined
+          && option.value !== null,
+      )
+      .forEach((option) => {
+        const raw = (option.value ?? '').trim();
+        const label = option.key;
+        if (!/^-?\d+$/.test(raw)) {
+          results.push(new Error(`${label} must be a whole number`));
+          return;
+        }
+        const parsed = Number(raw);
+        if (option.min !== undefined && option.min !== null && parsed < option.min) {
+          results.push(
+            new Error(`${label} must be greater than or equal to ${option.min}`),
+          );
+        }
+        if (option.max !== undefined && option.max !== null && parsed > option.max) {
+          results.push(
+            new Error(`${label} must be less than or equal to ${option.max}`),
+          );
+        }
+      });
+
+    return results;
+  }
+
   validate(data: UserDefine[]): Error[] {
     return [
       ...this.validateRegulatoryDomains(data),
       ...this.validateBindingPhrase(data),
       ...this.validateStartupMelody(data),
+      ...this.validateNumericRanges(data),
     ];
   }
 }
