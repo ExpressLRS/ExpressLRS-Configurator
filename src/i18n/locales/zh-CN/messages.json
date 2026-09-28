@@ -90,7 +90,7 @@
     "NewerVersionAvailable": "有一个较新版本的固件可用",
     "UpgradeToV3": "ExpressLRS 2.X 已经不再被支持。请升级到ExpressLRS 3.X。",
     "DangerZoneTitle": "！！！危险区！！！",
-    "DangerZoneContent": "只有在你知道你在做什么或被项目开发人员指示的情况下，才使用这些来源。",
+    "DangerZoneContent": "只有在你知道你在做什么或在项目开发人员指导的情况下，才使用这些来源",
     "GitBranches": "Git 分支",
     "GitCommitHash": "Git 提交 hash",
     "LocalPath": "本地路径",

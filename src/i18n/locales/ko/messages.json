@@ -90,7 +90,7 @@
     "NewerVersionAvailable": "새로운 버전의 펌웨어를 이용할 수 있습니다.",
     "UpgradeToV3": "ExpressLRS 2.X는 더 이상 지원되지 않습니다. ExpressLRS 3.X로 업그레이드하세요.",
     "DangerZoneTitle": "위험 구역",
-    "DangerZoneContent": "이 기능은 지금 하고 계신 일이 무엇인지 정확히 알고 있거나, 프로젝트 개발자의 지시를 받은 경우에만 사용하세요.",
+    "DangerZoneContent": "Use these sources only if you know what you are doing or were instructed by project developers",
     "GitBranches": "Git 브랜치",
     "GitCommitHash": "Git 커밋 해쉬",
     "LocalPath": "파일 경로",

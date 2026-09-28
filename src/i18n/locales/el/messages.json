@@ -90,7 +90,7 @@
     "NewerVersionAvailable": "Υπάρχει μια νεότερη έκδοση του διαθέσιμου firmware",
     "UpgradeToV3": "Το ExpressLRS 2.X δεν υποστηρίζεται πλέον. Παρακαλώ αναβαθμίστε σε ExpressLRS 3.X.",
     "DangerZoneTitle": "ΖΩΝΗ ΚΙΝΔΥΝΟΥ",
-    "DangerZoneContent": "Χρησιμοποιήστε αυτές τις πηγές μόνο αν γνωρίζετε τι κάνετε ή σας δόθηκε εντολή από τους προγραμματιστές",
+    "DangerZoneContent": "Use these sources only if you know what you are doing or were instructed by project developers",
     "GitBranches": "Κλάδοι Git",
     "GitCommitHash": "Hash υποβολής Git",
     "LocalPath": "Τοπικός φάκελος",

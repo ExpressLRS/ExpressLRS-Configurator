@@ -90,7 +90,7 @@
     "NewerVersionAvailable": "Há uma versão mais recente do firmware disponível",
     "UpgradeToV3": "ExpressLRS 2.X não é mais suportado. Atualize para ExpressLRS 3.X.",
     "DangerZoneTitle": "ZONA DE PERIGO",
-    "DangerZoneContent": "Use essas fontes apenas se você sabe o que está fazendo ou foi instruído por desenvolvedores do projeto",
+    "DangerZoneContent": "Use these sources only if you know what you are doing or were instructed by project developers",
     "GitBranches": "Branches do Git",
     "GitCommitHash": "Hash de commit do Git",
     "LocalPath": "Caminho local",

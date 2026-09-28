@@ -90,7 +90,7 @@
     "NewerVersionAvailable": "Існує новіша версія прошивки",
     "UpgradeToV3": "ExpressLRS 2.X більше не підтримується. Будь ласка, оновіться до ExpressLRS 3.X.",
     "DangerZoneTitle": "НЕБЕЗПЕЧНА ЗОНА",
-    "DangerZoneContent": "Використовуйте цей вихідний код тільки якщо ви знаєте, що ви робите, або були проінструктовані розробниками проєкту",
+    "DangerZoneContent": "Use these sources only if you know what you are doing or were instructed by project developers",
     "GitBranches": "Гілки Git",
     "GitCommitHash": "Git хеш коміту",
     "LocalPath": "Локальний шлях",
