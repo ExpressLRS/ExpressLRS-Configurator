@@ -112,7 +112,7 @@
     "UART": "Este método te permite instalar el software en tu receptor o transmisor usando su puerto USB o conectado un dispositivo FTDI.",
     "WIFI": "Este método crea un archivo de firmware que puedes subir a tu receptor o transmisor conectándote a su wifi integrado.",
     "EdgeTxPassthrough": "Este método te permite instalar el software en tu receptor mientras está conectado a tu transmisor utilizando la característica passthrough del firmware EdgeTX.",
-    "Passthrough": "Este método te permite instalar el software en tu receptor mientras está conectado a tu transmisor utilizando la característica passthrough.",
+    "Passthrough": "This method flashes the backpack through the USB port on the TX module, by putting the module's MCU into passthrough mode. The radio is not involved.",
     "Zip": "Este método crea un archivo con todos los ficheros necesarios para tu dispositivo."
   },
   "FlashingMethodOptions": {

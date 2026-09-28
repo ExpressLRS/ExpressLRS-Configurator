@@ -112,7 +112,7 @@
     "UART": "Цей метод дозволяє прошивати приймач або передавач через його USB порт або під'єднавши FTDI пристрій.",
     "WIFI": "Цей метод створює файл прошивки, який можна завантажити на ваш приймач або передавач, підключившись до його вбудованого WiFi.",
     "EdgeTxPassthrough": "Цей спосіб дозволяє прошити ваш модуль передавача, доки він підключений до передавача за допомогою функції наскрізної прошивки passthrough від EdgeTX.",
-    "Passthrough": "Цей спосіб дозволяє прошити ваш модуль, доки він підключений до передавача за допомогою функції наскрізної прошивки passthrough.",
+    "Passthrough": "This method flashes the backpack through the USB port on the TX module, by putting the module's MCU into passthrough mode. The radio is not involved.",
     "Zip": "Цей метод створює архів усіх файлів, необхідних для вашого пристрою."
   },
   "FlashingMethodOptions": {

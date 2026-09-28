@@ -112,7 +112,7 @@
     "UART": "Denne metode giver dig mulighed for at brænde din modtager eller sender via USB port eller lednings forbinde en FTDI enhed.",
     "WIFI": "Denne metode opretter en firmware fil, du kan indlæse i din modtager eller sender, ved at forbinde til indbygget WiFi.",
     "EdgeTxPassthrough": "Denne metode giver dig mulighed for at brænde dit sende modul, mens det er forbundet til din sender ved hjælp af passthrough funktion i EdgeTX.",
-    "Passthrough": "Denne metode giver dig mulighed for at brænde dit modul, mens det er forbundet til din sender ved hjælp af passthrough funktionen.",
+    "Passthrough": "This method flashes the backpack through the USB port on the TX module, by putting the module's MCU into passthrough mode. The radio is not involved.",
     "Zip": "Denne konfiguration opretter et arkiv med alle de filer, der er nødvendige for din enhed."
   },
   "FlashingMethodOptions": {

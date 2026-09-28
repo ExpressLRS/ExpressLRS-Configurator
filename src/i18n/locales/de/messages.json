@@ -112,7 +112,7 @@
     "UART": "Mit dieser Methode können Sie Firmware auf Ihrem Empfänger oder Sender über dessen USB-Anschluss oder ein an diesen angeschlossenes FTDI-Gerät installieren.",
     "WIFI": "Diese Methode erzeugt eine Firmware-Datei, die Sie auf Ihren Empfänger übertragen können, indem Sie sich mit dessen WLAN Netzwerk verbinden.",
     "EdgeTxPassthrough": "Diese Methode ermöglicht es, Firmware auf dem Sendermodul zu installieren während es mit dem Sender verbunden ist, indem sie die passthrough-Funktion von EdgeTX nutzt.",
-    "Passthrough": "Diese Methode ermöglicht es, Firmware auf dem Sendermodul zu installieren während es mit dem Sender verbunden ist, indem sie die passthrough-Funktion von EdgeTX nutzt.",
+    "Passthrough": "This method flashes the backpack through the USB port on the TX module, by putting the module's MCU into passthrough mode. The radio is not involved.",
     "Zip": "Diese Methode erstellt ein Archiv aller für Ihr Gerät benötigten Dateien."
   },
   "FlashingMethodOptions": {

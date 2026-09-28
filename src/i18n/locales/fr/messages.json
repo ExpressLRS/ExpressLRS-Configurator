@@ -112,7 +112,7 @@
     "UART": "Cette méthode vous permet de mettre à jour votre récepteur ou transmetteur via son port USB ou en reliant un adaptateur FTDI.",
     "WIFI": "Cette méthode créée le fichier du firmware que vous pouvez ensuite envoyer sur votre récepteur ou transmetteur en vous y connectant en Wifi.",
     "EdgeTxPassthrough": "Cette méthode vous permet de mettre à jour votre transmetteur relié à votre radio commande en utilisant la fonction de passerelle d'EdgeTX.",
-    "Passthrough": "Cette méthode vous permet de mettre à jour votre module relié à votre radio commande en utilisant la fonction de passerelle.",
+    "Passthrough": "This method flashes the backpack through the USB port on the TX module, by putting the module's MCU into passthrough mode. The radio is not involved.",
     "Zip": "Cette méthode crée une archive contenant tous les fichiers requis pour votre appareil."
   },
   "FlashingMethodOptions": {
