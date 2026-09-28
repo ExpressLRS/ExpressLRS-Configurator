@@ -2,9 +2,14 @@ import { FunctionComponent, useCallback, useEffect, useMemo, useState } from 're
 import { Routes, Route, HashRouter, Navigate } from 'react-router';
 import CssBaseline from '@mui/material/CssBaseline';
 import '@fontsource/roboto';
-import { ThemeProvider, StyledEngineProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+import { prefixer } from 'stylis';
+import rtlPlugin from 'stylis-plugin-rtl';
+import { useTranslation } from 'react-i18next';
 import { ApolloProvider } from '@apollo/client/react';
-import { createAppTheme } from './theme';
+import { createAppTheme, ThemeDirection } from './theme';
 import client from './gql';
 import ConfiguratorView from './views/ConfiguratorView';
 import LogsView from './views/LogsView';
@@ -23,13 +28,31 @@ import useBuildProgressNotifications from './hooks/useBuildProgressNotifications
 import useBuildLogs from './hooks/useBuildLogs';
 import useResolvedThemeMode from './hooks/useResolvedThemeMode';
 
+// Emotion caches per text direction. The RTL cache flips left/right styles
+// (margins, paddings, positions) for right-to-left languages such as Arabic.
+// `prepend: true` replaces StyledEngineProvider's injectFirst.
+const emotionCaches: Record<ThemeDirection, ReturnType<typeof createCache>> = {
+  ltr: createCache({ key: 'mui', prepend: true }),
+  rtl: createCache({
+    key: 'muirtl',
+    prepend: true,
+    stylisPlugins: [prefixer, rtlPlugin],
+  }),
+};
+
 interface ThemeWrapperProps {
   children: React.ReactNode;
 }
 
 const ThemeWrapper: FunctionComponent<ThemeWrapperProps> = ({ children }) => {
   const resolvedMode = useResolvedThemeMode();
-  const theme = useMemo(() => createAppTheme(resolvedMode), [resolvedMode]);
+  const { i18n } = useTranslation();
+  const language = i18n.resolvedLanguage ?? i18n.language;
+  const direction: ThemeDirection = i18n.dir(language);
+  const theme = useMemo(
+    () => createAppTheme(resolvedMode, direction, language),
+    [resolvedMode, direction, language],
+  );
 
   // Sync the body/html background with the current theme.
   // The flash-prevention script in index.ejs sets an inline background-color
@@ -42,12 +65,12 @@ const ThemeWrapper: FunctionComponent<ThemeWrapperProps> = ({ children }) => {
   }, [theme]);
 
   return (
-    <StyledEngineProvider injectFirst>
+    <CacheProvider value={emotionCaches[direction]}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}
       </ThemeProvider>
-    </StyledEngineProvider>
+    </CacheProvider>
   );
 };
 

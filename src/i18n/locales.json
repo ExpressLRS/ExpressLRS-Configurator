@@ -62,5 +62,9 @@
   {
     "value": "ka",
     "label": "ქართული (Georgian)"
+  },
+  {
+    "value": "ar",
+    "label": "العربية (Arabic)"
   }
 ]

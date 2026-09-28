@@ -76,7 +76,7 @@ const SettingsView: FunctionComponent = () => {
           icon={<LanguageIcon />}
           title={t('SettingsView.LanguageSelector')}
         />
-        <CardContent style={{ paddingLeft: 26, marginTop: -18 }}>
+        <CardContent sx={{ paddingLeft: 3.25, marginTop: -2.25 }}>
           <Omnibox
             title={t('SettingsView.CurrentLanguage')}
             currentValue={currentLanguage}
@@ -89,7 +89,7 @@ const SettingsView: FunctionComponent = () => {
           icon={<Brightness6Icon />}
           title={t('SettingsView.ThemeSelector')}
         />
-        <CardContent style={{ paddingLeft: 26, marginTop: -18 }}>
+        <CardContent sx={{ paddingLeft: 3.25, marginTop: -2.25 }}>
           <FormControl>
             <RadioGroup
               value={appState.themeMode}
@@ -118,7 +118,7 @@ const SettingsView: FunctionComponent = () => {
           icon={<DeveloperModeIcon />}
           title={t('SettingsView.ApplicationOptions')}
         />
-        <CardContent style={{ paddingLeft: 26, marginTop: -18 }}>
+        <CardContent sx={{ paddingLeft: 3.25, marginTop: -2.25 }}>
           <FormControlLabel
             control={(
               <Checkbox
