@@ -2,6 +2,7 @@ import { Field, InputType } from 'type-graphql';
 import BuildJobType from '../../models/enum/BuildJobType';
 import FlashingMethod from '../../models/enum/FlashingMethod';
 import FirmwareVersionDataInput from './FirmwareVersionDataInput';
+import ReceiverConfigurationInput from './ReceiverConfigurationInput';
 import UserDefineInput from './UserDefineInput';
 
 @InputType('BuildFlashFirmwareInput')
@@ -29,6 +30,9 @@ export default class BuildFlashFirmwareInput {
 
   @Field(() => Boolean)
   forceFlash: boolean;
+
+  @Field(() => ReceiverConfigurationInput, { nullable: true })
+  receiverConfiguration?: ReceiverConfigurationInput;
 
   constructor() {
     this.type = BuildJobType.Build;
