@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useMemo, useState } from 'react';
 import AppState from '../models/AppState';
 import AppStatus from '../models/enum/AppStatus';
+import FirmwareOutputMode from '../models/enum/FirmwareOutputMode';
 import ThemeMode from '../models/enum/ThemeMode';
 import ApplicationStorage from '../storage';
 
@@ -12,6 +13,8 @@ export const AppStateContext = React.createContext<{
         appStatus: AppStatus.Interactive,
         isExpertModeEnabled: false,
         themeMode: ThemeMode.System,
+        firmwareOutputMode: FirmwareOutputMode.AskEveryTime,
+        firmwareOutputFolder: '',
       },
       setAppState: () => {},
     });
@@ -33,6 +36,19 @@ const parseThemeMode = (value: string | null): ThemeMode => {
   }
 };
 
+const parseFirmwareOutputMode = (value: string | null): FirmwareOutputMode => {
+  switch (value) {
+    case FirmwareOutputMode.AskEveryTime:
+      return FirmwareOutputMode.AskEveryTime;
+    case FirmwareOutputMode.FixedFolder:
+      return FirmwareOutputMode.FixedFolder;
+    case FirmwareOutputMode.TemporaryFolder:
+      return FirmwareOutputMode.TemporaryFolder;
+    default:
+      return FirmwareOutputMode.AskEveryTime;
+  }
+};
+
 const AppStateProvider: FunctionComponent<AppStateProviderContextProps> = ({
   children,
 }) => {
@@ -42,12 +58,18 @@ const AppStateProvider: FunctionComponent<AppStateProviderContextProps> = ({
       appStatus: AppStatus.Interactive,
       isExpertModeEnabled: storage.getExpertModeEnabled() ?? false,
       themeMode: parseThemeMode(storage.getThemeMode()),
+      firmwareOutputMode: parseFirmwareOutputMode(
+        storage.getFirmwareOutputMode(),
+      ),
+      firmwareOutputFolder: storage.getFirmwareOutputFolder() ?? '',
     };
   });
   const preSetAppState = (state: AppState) => {
     const storage = new ApplicationStorage();
     storage.setExpertModeEnabled(state.isExpertModeEnabled);
     storage.setThemeMode(state.themeMode);
+    storage.setFirmwareOutputMode(state.firmwareOutputMode);
+    storage.setFirmwareOutputFolder(state.firmwareOutputFolder);
     setAppState(state);
   };
   const value = useMemo(

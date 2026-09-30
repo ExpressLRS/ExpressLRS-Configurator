@@ -8,6 +8,7 @@ export type Channels =
   | IpcRequest.DownloadFile
   | IpcRequest.OpenFileLocation
   | IpcRequest.OpenLogsFolder
+  | IpcRequest.SaveBuildOutput
   | IpcRequest.SaveFile
   | IpcRequest.UpdateBuildStatus;
 
