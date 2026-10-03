@@ -16,6 +16,7 @@ import {
 import { Close, History } from '@mui/icons-material';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 import {
   UserDefine,
   UserDefineKey,
@@ -52,6 +53,49 @@ interface UserDefinesListProps {
   options: UserDefine[];
   onChange: (data: UserDefine) => void;
 }
+
+/*
+  Numeric user defines carry their allowed range on the model (min/max), defined
+  in TargetUserDefinesFactory. AUTO_WIFI_ON_INTERVAL is in seconds; the firmware
+  keeps it in int32 milliseconds, hence the upper bound.
+
+  This drives only the field's visual error/helper text; the build-blocking
+  enforcement lives in UserDefinesValidator.validateNumericRanges.
+*/
+const hasNumericRangeError = (item: UserDefine): boolean => {
+  if (item.type !== UserDefineKind.Number || !item.enabled) {
+    return false;
+  }
+  const value = (item.value ?? '').trim();
+  if (!/^-?\d+$/.test(value)) {
+    return true;
+  }
+  const parsed = Number(value);
+  if (item.min != null && parsed < item.min) {
+    return true;
+  }
+  if (item.max != null && parsed > item.max) {
+    return true;
+  }
+  return false;
+};
+
+/*
+  Helper text for numeric inputs: always show the allowed range so the user knows
+  the bounds up front; switch to the out-of-range message when the value is invalid.
+*/
+const numericHelperText = (
+  item: UserDefine,
+  t: TFunction,
+): string | undefined => {
+  if (item.type !== UserDefineKind.Number) {
+    return undefined;
+  }
+  const key = hasNumericRangeError(item)
+    ? 'UserDefinesList.ValueOutOfRange'
+    : 'UserDefinesList.AllowedRange';
+  return t(key, { min: item.min, max: item.max });
+};
 
 const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
   const { options, onChange } = props;
@@ -170,7 +214,9 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                 <UserDefineDescription userDefine={item.key} />
               </ListItemSecondaryAction>
             </ListItemButton>
-            {item.type === UserDefineKind.Text && item.enabled && (
+            {(item.type === UserDefineKind.Text
+              || item.type === UserDefineKind.Number)
+            && item.enabled && (
               <ListItem sx={styles.complimentaryItem}>
                 {!item.sensitive && (
                   <TextField
@@ -179,6 +225,20 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                     value={item.value}
                     fullWidth
                     label={inputLabel(item.key)}
+                    type={
+                      item.type === UserDefineKind.Number ? 'number' : 'text'
+                    }
+                    inputProps={
+                      item.type === UserDefineKind.Number
+                        ? {
+                            min: item.min ?? undefined,
+                            max: item.max ?? undefined,
+                            step: 1,
+                          }
+                        : undefined
+                    }
+                    error={hasNumericRangeError(item)}
+                    helperText={numericHelperText(item, t)}
                   />
                 )}
                 {item.sensitive && (
