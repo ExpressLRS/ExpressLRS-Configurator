@@ -66,12 +66,11 @@ import {
   UserDefineKind,
   AvailableFirmwareTargetsDocument,
   BuildFlashFirmwareDocument,
-  LuaScriptDocument,
   TargetDeviceOptionsDocument,
 } from '../../gql/generated/types';
 import Loader from '../../components/Loader';
+import LuaDownloadButton from '../../components/LuaDownloadButton';
 import {
-  DownloadFileRequestBody,
   IpcRequest,
   OpenFileLocationRequestBody,
   SaveFileRequestBody,
@@ -469,34 +468,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     return deviceType === DeviceType.ExpressLRS && isTX;
   }, [deviceType, isTX]);
 
-  const [
-    fetchLuaScript,
-    { data: luaScriptResponse, error: luaScriptResponseError },
-  ] = useLazyQuery(LuaScriptDocument);
-
-  useEffect(() => {
-    if (firmwareVersionData && isTX && hasLuaScript) {
-      fetchLuaScript({
-        variables: {
-          source: firmwareVersionData.source as FirmwareSource,
-          gitBranch: firmwareVersionData.gitBranch!,
-          gitTag: firmwareVersionData.gitTag!,
-          gitCommit: firmwareVersionData.gitCommit!,
-          localPath: firmwareVersionData.localPath!,
-          gitPullRequest: firmwareVersionData.gitPullRequest,
-          gitRepository: {
-            url: gitRepository.url,
-            owner: gitRepository.owner,
-            repositoryName: gitRepository.repositoryName,
-            rawRepoUrl: gitRepository.rawRepoUrl,
-            srcFolder: gitRepository.srcFolder,
-            hardwareArtifactUrl: gitRepository.hardwareArtifactUrl,
-          },
-        },
-      });
-    }
-  }, [gitRepository, firmwareVersionData, fetchLuaScript, isTX, hasLuaScript]);
-
   /*
     Display Electron.js confirmation dialog if user wants to shutdown the app
     when build is in progress.
@@ -818,36 +789,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDevice, deviceTargets]);
 
-  const luaDownloadButton = () => {
-    if (
-      hasLuaScript
-      && luaScriptResponse
-      && luaScriptResponse.luaScript.fileLocation
-      && luaScriptResponse.luaScript.fileLocation.length > 0
-    ) {
-      return (
-        <Button
-          sx={styles.button}
-          color="primary"
-          size="large"
-          variant="contained"
-          onClick={() => {
-            const downloadFileRequestBody: DownloadFileRequestBody = {
-              url: luaScriptResponse?.luaScript.fileLocation ?? '',
-            };
-            window.electron.ipcRenderer.sendMessage(
-              IpcRequest.DownloadFile,
-              downloadFileRequestBody,
-            );
-          }}
-        >
-          {t('ConfiguratorView.DownloadLUAScript')}
-        </Button>
-      );
-    }
-    return null;
-  };
-
   const handleDeviceSelectErrorDialogClose = useCallback(() => {
     setDeviceSelectErrorDialogOpen(false);
   }, []);
@@ -919,11 +860,12 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 />
               )}
               <Loader loading={loadingTargets} />
-              {!loadingTargets && luaDownloadButton()}
-              {hasLuaScript && (
-                <ShowAlerts
-                  severity="error"
-                  messages={luaScriptResponseError}
+              {!loadingTargets && (
+                <LuaDownloadButton
+                  hasLuaScript={hasLuaScript}
+                  firmwareVersionData={firmwareVersionData}
+                  gitRepository={gitRepository}
+                  showErrors
                 />
               )}
               <ShowAlerts severity="error" messages={targetsResponseError} />
@@ -1268,7 +1210,13 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   </Button>
                 )}
 
-                {response?.buildFlashFirmware.success && luaDownloadButton()}
+                {response?.buildFlashFirmware.success && (
+                  <LuaDownloadButton
+                    hasLuaScript={hasLuaScript}
+                    firmwareVersionData={firmwareVersionData}
+                    gitRepository={gitRepository}
+                  />
+                )}
               </CardContent>
             </>
           )}
