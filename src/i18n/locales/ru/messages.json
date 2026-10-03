@@ -90,7 +90,7 @@
     "NewerVersionAvailable": "Доступна более новая версия прошивки",
     "UpgradeToV3": "ExpressLRS 2.X больше не поддерживается. Обновите до ExpressLRS 3.X.",
     "DangerZoneTitle": "ОПАСНАЯ ЗОНА",
-    "DangerZoneContent": "Use these sources only if you know what you are doing or were instructed by project developers",
+    "DangerZoneContent": "Используйте эти исходники, только если вы знаете, что вы делаете или были проинструктированы разработчиками проекта",
     "GitBranches": "Ветки Git",
     "GitCommitHash": "Хэш коммита Git",
     "LocalPath": "Локальный путь",
@@ -112,7 +112,7 @@
     "UART": "Этот метод позволяет прошить приёмник или передатчик через его USB-порт или подключив к нему FTDI-устройство (USB-UART адаптер).",
     "WIFI": "Этот метод создаёт файл прошивки, который вы можете загрузить на ваш приёмник или передатчик, подключившись к его встроенному WiFi.",
     "EdgeTxPassthrough": "Этот метод позволяет прошить подключенный к передатчику модуль, используя функцию passthrough EdgeTX.",
-    "Passthrough": "This method flashes the backpack through the USB port on the TX module, by putting the module's MCU into passthrough mode. The radio is not involved.",
+    "Passthrough": "Этим способом можно прошить backpack через USB порт на модуле передатчика, переведя его MCU в режим passthrough. Сам передатчик в прошивке не задействуется.",
     "Zip": "Этот метод создает архив всех файлов, необходимых для вашего устройства."
   },
   "FlashingMethodOptions": {
