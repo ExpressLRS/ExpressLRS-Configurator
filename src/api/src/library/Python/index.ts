@@ -3,13 +3,20 @@ import path from 'path';
 import child_process from 'child_process';
 import Commander, { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 import { LoggerService } from '../../logger';
+import envFilter from '../envFilter';
 
 export default class Python {
+  private env: NodeJS.ProcessEnv;
+
   constructor(
     public PATH: string,
-    private env: NodeJS.ProcessEnv,
+    env: NodeJS.ProcessEnv,
     private logger: LoggerService,
-  ) {}
+  ) {
+    // Fix for https://github.com/ExpressLRS/ExpressLRS-Configurator/issues/440
+    const blacklistedEnvKeys = ['PYTHONPATH', 'PYTHONHOME'];
+    this.env = envFilter(env, blacklistedEnvKeys);
+  }
 
   async runPythonScript(
     script: string,
@@ -21,15 +28,10 @@ export default class Python {
     if (pyExec === null) {
       throw new Error('python executable not found');
     }
-    let spawnOptions = {
-      env: this.env,
+    const spawnOptions = {
+      ...options,
+      env: { ...this.env, ...(options.env ?? {}) },
     };
-    if (options !== undefined) {
-      spawnOptions = {
-        env: this.env,
-        ...options,
-      };
-    }
     return new Commander().runCommand(
       pyExec,
       [script, ...args],
