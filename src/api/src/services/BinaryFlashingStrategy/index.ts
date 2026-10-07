@@ -28,6 +28,15 @@ import GitRepository from '../../graphql/inputs/GitRepositoryInput';
 import Device from '../../models/Device';
 import { UserDefineFilters } from '../UserDefinesLoader';
 import BuildJobType from '../../models/enum/BuildJobType';
+import ReceiverConfigurationService, {
+  RX_CONFIG_VERSION,
+} from '../ReceiverConfiguration';
+import { generateUid } from '../ReceiverConfiguration/bindingPhrase';
+import {
+  parseReceiverCapabilities,
+  parseReceiverHardware,
+} from '../ReceiverConfiguration/receiverHardware';
+import ReceiverCapabilities from '../../graphql/objects/ReceiverCapabilities';
 import BuildFlashFirmwareResult from '../../graphql/objects/BuildFlashFirmwareResult';
 import {
   findGitExecutable,
@@ -67,6 +76,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     private targetStorageGitPath: string,
     private logger: LoggerService,
     private flashOutputParserService: FlashOutputParserService,
+    private receiverConfiguration: ReceiverConfigurationService,
   ) {
     this.mutex = new Mutex();
   }
@@ -422,6 +432,74 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     await Promise.all(jobs);
   }
 
+  /**
+   * The configuration is appended to the partition table image, which esptool
+   * writes in the same call as the firmware. Flashing methods that only write
+   * the application partition cannot carry it.
+   */
+  private canWriteReceiverConfiguration(
+    params: BuildFlashFirmwareParams,
+    config: DeviceDescription,
+  ): boolean {
+    if (params.type !== BuildJobType.Flash) {
+      return false;
+    }
+    if (!params.receiverConfiguration?.enabled) {
+      return false;
+    }
+    // a transmitter stores a tx_config, never write an rx_config onto it
+    if (!config.platform.startsWith('esp32') || config.firmware.includes('_TX')) {
+      return false;
+    }
+    // flashed as a transmitter it will not be a receiver either; passing a
+    // positional file would also keep the flasher from swapping in the TX image
+    const rxAsTx = params.userDefines.find(
+      (userDefine) => userDefine.key === UserDefineKey.RX_AS_TX && userDefine.enabled,
+    ) !== undefined;
+    if (rxAsTx) {
+      return false;
+    }
+    const [, , , uploadMethod] = params.target.split('.');
+    return uploadMethod === 'uart' || uploadMethod === 'etx';
+  }
+
+  /**
+   * Whether the firmware that is about to be flashed stores its configuration
+   * the way this service writes it. The version is read from the source tree
+   * of that firmware, so flashing an older release, an older commit or a
+   * future layout skips the configuration instead of having the firmware
+   * discard it on the first boot. ExpressLRS 4.0 is the first release with
+   * layout version RX_CONFIG_VERSION.
+   */
+  private async firmwareConfigLayoutVersion(
+    firmwareSourcePath: string,
+  ): Promise<number | null> {
+    try {
+      const configHeader = await fs.promises.readFile(
+        path.join(firmwareSourcePath, 'lib', 'CONFIG', 'config.h'),
+        'utf8',
+      );
+      const version = configHeader.match(
+        /#define[ \t]+RX_CONFIG_VERSION[ \t]+([0-9]+)/,
+      );
+      return version === null ? null : Number(version[1]);
+    } catch (e) {
+      this.logger?.log('could not read the config version of the firmware', {
+        firmwareSourcePath,
+        err: e,
+      });
+      return null;
+    }
+  }
+
+  /** exactly the phrase the flasher receives through --phrase, or nothing */
+  private bindingPhraseOf(params: BuildFlashFirmwareParams): string | undefined {
+    return params.userDefines.find(
+      (userDefine) =>
+        userDefine.key === UserDefineKey.BINDING_PHRASE && userDefine.enabled,
+    )?.value ?? undefined;
+  }
+
   async buildFlashFirmware(
     params: BuildFlashFirmwareParams,
     gitRepository: GitRepository,
@@ -567,6 +645,92 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         BuildFirmwareStep.BUILDING_FIRMWARE,
       );
 
+      let flashDiscriminator: number | undefined;
+      const configurationRequested = params.receiverConfiguration?.enabled
+        === true;
+      const configurationPossible = this.canWriteReceiverConfiguration(
+        params,
+        config,
+      );
+      const configLayoutVersion = configurationPossible
+        ? await this.firmwareConfigLayoutVersion(firmwareSourcePath)
+        : null;
+
+      if (configurationRequested && !configurationPossible) {
+        await this.updateLogs(
+          'The receiver configuration is not written for this target or flashing method, flashing the firmware only.',
+        );
+      } else if (
+        configurationPossible
+        && configLayoutVersion !== RX_CONFIG_VERSION
+      ) {
+        await this.updateLogs(
+          configLayoutVersion === null
+            ? 'Could not read the configuration layout of this firmware, flashing the firmware only.'
+            : `This firmware stores its configuration in layout version ${configLayoutVersion}, this version of the configurator writes version ${RX_CONFIG_VERSION} (ExpressLRS 4.0 or newer), flashing the firmware only.`,
+        );
+      } else if (configurationPossible) {
+        // esptool takes the other artifacts from the directory the firmware
+        // binary sits in, so they have to be somewhere we may modify
+        if (firmwareBinFile === '' && sourceFirmwareBinPath !== '') {
+          await this.copyFirmwareArtifacts(
+            path.dirname(sourceFirmwareBinPath),
+            workingDirectory,
+          );
+          firmwareBinFile = path.join(workingDirectory, 'firmware.bin');
+        }
+        // asked of the flasher so a firmware that honors it produces a
+        // matching pair right away; the current firmware ignores the flag and
+        // rolls its own, in which case the first boot syncs uid and
+        // discriminator from the firmware options and keeps everything else
+        flashDiscriminator = Math.floor(Math.random() * 0xfffffffe) + 1;
+        const bindingPhrase = this.bindingPhraseOf(params);
+        // the same source the capabilities shown in the user interface came
+        // from, so what was offered and what is written cannot diverge
+        const layout = config.layout_file
+          ? await this.deviceDescriptionsLoader.getTargetHardwareLayout(
+              {
+                ...params.firmware,
+                target: params.target,
+              },
+              {
+                url: gitRepositoryUrl,
+                srcFolder: gitRepositorySrcFolder,
+                hardwareArtifactUrl: gitRepository.hardwareArtifactUrl,
+              },
+            )
+          : null;
+        const hardware = layout === null || layout === undefined
+          ? null
+          : parseReceiverHardware(layout, config.platform);
+        // without the pin layout the default output modes cannot be derived,
+        // better to leave the receiver unconfigured than to guess them
+        const applied = hardware !== null
+          && (await this.receiverConfiguration.applyToArtifacts(
+            path.dirname(firmwareBinFile),
+            params.receiverConfiguration ?? {},
+            hardware,
+            {
+              // an empty phrase is still a phrase for the flasher, which
+              // hashes it, so the configuration has to carry the same uid
+              uid: bindingPhrase !== undefined
+                ? generateUid(bindingPhrase)
+                : undefined,
+              flashDiscriminator,
+            },
+          ));
+        if (applied) {
+          await this.updateLogs(
+            'Receiver configuration will be written together with the firmware, replacing everything the receiver has stored.',
+          );
+        } else {
+          flashDiscriminator = undefined;
+          await this.updateLogs(
+            'Receiver configuration could not be prepared for this target, flashing the firmware only.',
+          );
+        }
+      }
+
       let flasherArgs: string[][];
       if (
         gitRepository.hardwareArtifactUrl
@@ -581,6 +745,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           this.targetStorageGitPath,
           firmwareDescriptionsPath,
           params,
+          flashDiscriminator,
         );
       } else {
         flasherArgs = this.binaryConfigurator.buildBinaryConfigFlags(
@@ -589,6 +754,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
           null,
           firmwareDescriptionsPath,
           params,
+          flashDiscriminator,
         );
       }
       await this.updateLogs(
@@ -681,6 +847,51 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
       );
     } finally {
       this.mutex.unlock();
+    }
+  }
+
+  /**
+   * What the selected receiver supports, so the user interface can offer the
+   * settings the hardware can actually apply.
+   */
+  async receiverCapabilities(
+    args: UserDefineFilters,
+    gitRepository: GitRepository,
+  ): Promise<ReceiverCapabilities> {
+    try {
+      const config = await this.deviceDescriptionsLoader.getDeviceConfig(
+        args,
+        gitRepository,
+      );
+      // targets.json carries no device type, a target is a transmitter when
+      // its firmware name says so
+      const isTransmitter = config.firmware.includes('_TX');
+      if (!config.platform.startsWith('esp32') || isTransmitter) {
+        return new ReceiverCapabilities(false);
+      }
+      const layout = await this.deviceDescriptionsLoader.getTargetHardwareLayout(
+        args,
+        gitRepository,
+      );
+      if (layout === null) {
+        return new ReceiverCapabilities(false);
+      }
+      const capabilities = parseReceiverCapabilities(layout);
+      return new ReceiverCapabilities(
+        true,
+        capabilities.powerMin,
+        capabilities.powerMax,
+        capabilities.powerDefault,
+        capabilities.hasSerial1,
+        capabilities.pwmChannelCount,
+        capabilities.dualRadio,
+        capabilities.hasAntennaSwitch,
+      );
+    } catch (e) {
+      this.logger?.error('failed to read receiver capabilities', undefined, {
+        err: e,
+      });
+      return new ReceiverCapabilities(false);
     }
   }
 
