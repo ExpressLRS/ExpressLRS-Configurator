@@ -32,6 +32,11 @@ const UserDefineDescription: FunctionComponent<UserDefineDescriptionProps>
         case UserDefineKey.REGULATORY_DOMAIN_FCC_915:
         case UserDefineKey.REGULATORY_DOMAIN_EU_868:
         case UserDefineKey.REGULATORY_DOMAIN_IN_866:
+        case UserDefineKey.REGULATORY_DOMAIN_BR_902:
+        case UserDefineKey.REGULATORY_DOMAIN_BR_915:
+        case UserDefineKey.REGULATORY_DOMAIN_TH_920:
+        case UserDefineKey.REGULATORY_DOMAIN_FCC_433:
+        case UserDefineKey.REGULATORY_DOMAIN_FCC_433_WIDE:
           return (
             <div>
               <p>

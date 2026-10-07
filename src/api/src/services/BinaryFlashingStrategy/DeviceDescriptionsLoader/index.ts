@@ -368,6 +368,15 @@ export default class DeviceDescriptionsLoader {
       userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       );
+      userDefines.push(
+        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_BR_902),
+      );
+      userDefines.push(
+        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_BR_915),
+      );
+      userDefines.push(
+        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_TH_920),
+      );
     }
     if (config.upload_methods.includes('wifi')) {
       userDefines.push(
