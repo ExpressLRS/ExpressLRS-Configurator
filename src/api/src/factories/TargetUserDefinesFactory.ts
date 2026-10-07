@@ -52,19 +52,22 @@ export default class TargetUserDefinesFactory {
           UserDefineOptionGroup.RegulatoryDomain2400,
         );
       case UserDefineKey.REGULATORY_DOMAIN_BR_902:
-        return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_BR_902,
-           true,
-           UserDefineOptionGroup.RegulatoryDomain900
+        return UserDefine.Boolean(
+          UserDefineKey.REGULATORY_DOMAIN_BR_902,
+          true,
+          UserDefineOptionGroup.RegulatoryDomain900,
         );
       case UserDefineKey.REGULATORY_DOMAIN_BR_915:
-        return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_BR_915,
-           true,
-           UserDefineOptionGroup.RegulatoryDomain900
+        return UserDefine.Boolean(
+          UserDefineKey.REGULATORY_DOMAIN_BR_915,
+          true,
+          UserDefineOptionGroup.RegulatoryDomain900,
         );
       case UserDefineKey.REGULATORY_DOMAIN_TH_920:
-        return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_TH_920,
-           true,
-           UserDefineOptionGroup.RegulatoryDomain900
+        return UserDefine.Boolean(
+          UserDefineKey.REGULATORY_DOMAIN_TH_920,
+          true,
+          UserDefineOptionGroup.RegulatoryDomain900,
         );
       case UserDefineKey.REGULATORY_DOMAIN_FCC_433:
         return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_433);
