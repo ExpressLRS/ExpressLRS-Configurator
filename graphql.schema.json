@@ -3517,6 +3517,18 @@
             "deprecationReason": null
           },
           {
+            "name": "REGULATORY_DOMAIN_FCC_433",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REGULATORY_DOMAIN_FCC_433_WIDE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "REGULATORY_DOMAIN_FCC_915",
             "description": null,
             "isDeprecated": false,
@@ -3530,6 +3542,24 @@
           },
           {
             "name": "REGULATORY_DOMAIN_ISM_2400",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REGULATORY_DOMAIN_BR_902",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REGULATORY_DOMAIN_BR_915",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REGULATORY_DOMAIN_TH_920",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

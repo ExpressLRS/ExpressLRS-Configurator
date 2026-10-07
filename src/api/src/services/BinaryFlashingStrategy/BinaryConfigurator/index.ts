@@ -127,6 +127,16 @@ export default class BinaryConfigurator {
             flags.push(['--domain', 'eu_433']);
           }
           break;
+        case UserDefineKey.REGULATORY_DOMAIN_FCC_433:
+          if (userDefine.enabled) {
+            flags.push(['--domain', 'us_433']);
+          }
+          break;
+        case UserDefineKey.REGULATORY_DOMAIN_FCC_433_WIDE:
+          if (userDefine.enabled) {
+            flags.push(['--domain', 'us_433_wide']);
+          }
+          break;
         case UserDefineKey.REGULATORY_DOMAIN_AU_915:
           if (userDefine.enabled) {
             flags.push(['--domain', 'au_915']);
@@ -145,6 +155,21 @@ export default class BinaryConfigurator {
         case UserDefineKey.REGULATORY_DOMAIN_IN_866:
           if (userDefine.enabled) {
             flags.push(['--domain', 'in_866']);
+          }
+          break;
+        case UserDefineKey.REGULATORY_DOMAIN_BR_902:
+          if (userDefine.enabled) {
+            flags.push(['--domain', 'br_902']);
+          }
+          break;
+        case UserDefineKey.REGULATORY_DOMAIN_BR_915:
+          if (userDefine.enabled) {
+            flags.push(['--domain', 'br_915']);
+          }
+          break;
+        case UserDefineKey.REGULATORY_DOMAIN_TH_920:
+          if (userDefine.enabled) {
+            flags.push(['--domain', 'th_920']);
           }
           break;
         case UserDefineKey.REGULATORY_DOMAIN_ISM_2400:

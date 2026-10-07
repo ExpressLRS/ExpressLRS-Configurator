@@ -51,6 +51,25 @@ export default class TargetUserDefinesFactory {
           true,
           UserDefineOptionGroup.RegulatoryDomain2400,
         );
+      case UserDefineKey.REGULATORY_DOMAIN_BR_902:
+        return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_BR_902,
+           true,
+           UserDefineOptionGroup.RegulatoryDomain900
+        );
+      case UserDefineKey.REGULATORY_DOMAIN_BR_915:
+        return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_BR_915,
+           true,
+           UserDefineOptionGroup.RegulatoryDomain900
+        );
+      case UserDefineKey.REGULATORY_DOMAIN_TH_920:
+        return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_TH_920,
+           true,
+           UserDefineOptionGroup.RegulatoryDomain900
+        );
+      case UserDefineKey.REGULATORY_DOMAIN_FCC_433:
+        return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_433);
+      case UserDefineKey.REGULATORY_DOMAIN_FCC_433_WIDE:
+        return UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_433_WIDE);
       // Hybrid switches
       case UserDefineKey.TLM_REPORT_INTERVAL_MS:
         return UserDefine.Text(UserDefineKey.TLM_REPORT_INTERVAL_MS, '240LU');
