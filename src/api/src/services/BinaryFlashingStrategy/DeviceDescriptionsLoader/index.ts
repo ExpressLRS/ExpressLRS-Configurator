@@ -369,9 +369,6 @@ export default class DeviceDescriptionsLoader {
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_IN_866),
       );
       userDefines.push(
-        targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_BR_902),
-      );
-      userDefines.push(
         targetUserDefinesFactory.build(UserDefineKey.REGULATORY_DOMAIN_BR_915),
       );
       userDefines.push(

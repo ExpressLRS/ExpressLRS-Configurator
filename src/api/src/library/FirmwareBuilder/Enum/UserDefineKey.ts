@@ -12,7 +12,6 @@ enum UserDefineKey {
   REGULATORY_DOMAIN_EU_CE_2400 = 'DRegulatory_Domain_EU_CE_2400',
   REGULATORY_DOMAIN_FCC_433 = 'DRegulatory_Domain_US_433',
   REGULATORY_DOMAIN_FCC_433_WIDE = 'DRegulatory_Domain_US_433_WIDE',
-  REGULATORY_DOMAIN_BR_902 = 'DRegulatory_Domain_BR_902',
   REGULATORY_DOMAIN_BR_915 = 'DRegulatory_Domain_BR_915',
   REGULATORY_DOMAIN_TH_920 = 'DRegulatory_Domain_TH_920',
   // Hybrid switches

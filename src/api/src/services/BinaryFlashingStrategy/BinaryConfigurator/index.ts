@@ -157,11 +157,6 @@ export default class BinaryConfigurator {
             flags.push(['--domain', 'in_866']);
           }
           break;
-        case UserDefineKey.REGULATORY_DOMAIN_BR_902:
-          if (userDefine.enabled) {
-            flags.push(['--domain', 'br_902']);
-          }
-          break;
         case UserDefineKey.REGULATORY_DOMAIN_BR_915:
           if (userDefine.enabled) {
             flags.push(['--domain', 'br_915']);

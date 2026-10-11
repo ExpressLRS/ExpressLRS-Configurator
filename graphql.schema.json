@@ -3547,12 +3547,6 @@
             "deprecationReason": null
           },
           {
-            "name": "REGULATORY_DOMAIN_BR_902",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "REGULATORY_DOMAIN_BR_915",
             "description": null,
             "isDeprecated": false,

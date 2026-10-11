@@ -51,12 +51,6 @@ export default class TargetUserDefinesFactory {
           true,
           UserDefineOptionGroup.RegulatoryDomain2400,
         );
-      case UserDefineKey.REGULATORY_DOMAIN_BR_902:
-        return UserDefine.Boolean(
-          UserDefineKey.REGULATORY_DOMAIN_BR_902,
-          true,
-          UserDefineOptionGroup.RegulatoryDomain900,
-        );
       case UserDefineKey.REGULATORY_DOMAIN_BR_915:
         return UserDefine.Boolean(
           UserDefineKey.REGULATORY_DOMAIN_BR_915,
