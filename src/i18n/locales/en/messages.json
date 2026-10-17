@@ -251,6 +251,9 @@
     "ApplyUpdates": "A new version has been downloaded. Restart the application to apply the updates."
   },
   "ConfiguratorView": {
+    "FirmwareOutputFolderDialogTitle": "Select firmware output folder",
+    "FirmwareOutputFolderDialogMessage": "A folder for this build is created in the selected location",
+    "FirmwareOutputFolderError": "Failed to save the firmware files into the selected folder.",
     "DownloadLUAScript": "Download LUA script",
     "FirmwareVersion": "Firmware version",
     "Target": "Target",
@@ -302,7 +305,17 @@
     "ThemeSelector": "Theme",
     "ThemeSystem": "System (follow OS preference)",
     "ThemeLight": "Light",
-    "ThemeDark": "Dark"
+    "ThemeDark": "Dark",
+    "FirmwareOutput": "Firmware Output Folder",
+    "FirmwareOutputTemporaryFolder": "Temporary folder",
+    "FirmwareOutputAskEveryTime": "Ask me where to save after every build (default)",
+    "FirmwareOutputFixedFolder": "Always save into the same folder",
+    "FirmwareOutputFolder": "Output folder",
+    "FirmwareOutputFolderNotSet": "No folder selected yet",
+    "FirmwareOutputChooseFolder": "Choose folder",
+    "FirmwareOutputDescription": "Choose where firmware binaries are kept after a build. A folder named after the firmware is created in the selected location. Temporary folders are cleaned up by the operating system, so pick one of the other options if you want to keep your builds.",
+    "FirmwareOutputFolderDialogTitle": "Select firmware output folder",
+    "FirmwareOutputFolderDialogMessage": "A folder for every build is created in the selected location"
   },
   "SupportView": {
     "Support": "Support",

@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   Card,
   CardContent,
   Checkbox,
@@ -7,12 +9,14 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  TextField,
 } from '@mui/material';
 import { ChangeEvent, FunctionComponent } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LanguageIcon from '@mui/icons-material/Language';
 import DeveloperModeIcon from '@mui/icons-material/DeveloperMode';
 import Brightness6Icon from '@mui/icons-material/Brightness6';
+import FolderIcon from '@mui/icons-material/Folder';
 import { useTranslation } from 'react-i18next';
 import CardTitle from '../../components/CardTitle';
 import MainLayout from '../../layouts/MainLayout';
@@ -20,6 +24,8 @@ import Omnibox, { Option } from '../../components/Omnibox';
 import locales from '../../../i18n/locales.json';
 import useAppState from '../../hooks/useAppState';
 import ThemeMode from '../../models/enum/ThemeMode';
+import FirmwareOutputMode from '../../models/enum/FirmwareOutputMode';
+import { ChooseFolderResponseBody, IpcRequest } from '../../../ipc';
 
 const SettingsView: FunctionComponent = () => {
   const { t, i18n } = useTranslation();
@@ -67,6 +73,37 @@ const SettingsView: FunctionComponent = () => {
     });
   };
 
+  const onFirmwareOutputModeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setAppState({
+      ...appState,
+      firmwareOutputMode: event.target.value as FirmwareOutputMode,
+    });
+  };
+
+  const onChooseFirmwareOutputFolder = () => {
+    window.electron.ipcRenderer
+      .invoke(IpcRequest.ChooseFolder, {
+        title: t('SettingsView.FirmwareOutputFolderDialogTitle'),
+        message: t('SettingsView.FirmwareOutputFolderDialogMessage'),
+        defaultPath:
+          appState.firmwareOutputFolder.length > 0
+            ? appState.firmwareOutputFolder
+            : undefined,
+      })
+      .then((result: ChooseFolderResponseBody) => {
+        if (result.success) {
+          setAppState({
+            ...appState,
+            firmwareOutputFolder: result.directoryPath,
+          });
+        }
+        return null;
+      })
+      .catch((err) => {
+        console.error('failed to select firmware output folder: ', err);
+      });
+  };
+
   return (
     <MainLayout>
       <Card>
@@ -112,6 +149,61 @@ const SettingsView: FunctionComponent = () => {
               />
             </RadioGroup>
           </FormControl>
+        </CardContent>
+        <Divider />
+        <CardTitle
+          icon={<FolderIcon />}
+          title={t('SettingsView.FirmwareOutput')}
+        />
+        <CardContent style={{ paddingLeft: 26, marginTop: -18 }}>
+          <FormControl>
+            <RadioGroup
+              value={appState.firmwareOutputMode}
+              onChange={onFirmwareOutputModeChange}
+            >
+              <FormControlLabel
+                value={FirmwareOutputMode.TemporaryFolder}
+                control={<Radio />}
+                label={t('SettingsView.FirmwareOutputTemporaryFolder')}
+              />
+              <FormControlLabel
+                value={FirmwareOutputMode.AskEveryTime}
+                control={<Radio />}
+                label={t('SettingsView.FirmwareOutputAskEveryTime')}
+              />
+              <FormControlLabel
+                value={FirmwareOutputMode.FixedFolder}
+                control={<Radio />}
+                label={t('SettingsView.FirmwareOutputFixedFolder')}
+              />
+            </RadioGroup>
+          </FormControl>
+          {appState.firmwareOutputMode === FirmwareOutputMode.FixedFolder && (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2,
+                marginTop: 1,
+              }}
+            >
+              <TextField
+                size="small"
+                fullWidth
+                label={t('SettingsView.FirmwareOutputFolder')}
+                value={appState.firmwareOutputFolder}
+                slotProps={{ input: { readOnly: true } }}
+                placeholder={t('SettingsView.FirmwareOutputFolderNotSet')}
+              />
+              <Button
+                variant="contained"
+                onClick={onChooseFirmwareOutputFolder}
+              >
+                {t('SettingsView.FirmwareOutputChooseFolder')}
+              </Button>
+            </Box>
+          )}
+          <p>{t('SettingsView.FirmwareOutputDescription')}</p>
         </CardContent>
         <Divider />
         <CardTitle
