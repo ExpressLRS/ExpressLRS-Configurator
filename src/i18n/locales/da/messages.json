@@ -90,7 +90,7 @@
     "NewerVersionAvailable": "Der findes en nyere version",
     "UpgradeToV3": "ExpressLRS 2.X understøttes ikke længere. Opgrader venligst til ExpressLRS 3.X.",
     "DangerZoneTitle": "FARE ZONE",
-    "DangerZoneContent": "Use these sources only if you know what you are doing or were instructed by project developers",
+    "DangerZoneContent": "Brug kun disse byg, hvis du ved hvad du gør eller har fået en instruktion af udviklere",
     "GitBranches": "Git branch",
     "GitCommitHash": "Git commit hash",
     "LocalPath": "Lokal sti",
@@ -112,7 +112,7 @@
     "UART": "Denne metode giver dig mulighed for at brænde din modtager eller sender via USB port eller lednings forbinde en FTDI enhed.",
     "WIFI": "Denne metode opretter en firmware fil, du kan indlæse i din modtager eller sender, ved at forbinde til indbygget WiFi.",
     "EdgeTxPassthrough": "Denne metode giver dig mulighed for at brænde dit sende modul, mens det er forbundet til din sender ved hjælp af passthrough funktion i EdgeTX.",
-    "Passthrough": "This method flashes the backpack through the USB port on the TX module, by putting the module's MCU into passthrough mode. The radio is not involved.",
+    "Passthrough": "Denne metode brænder backpack software gennem USB port på TX modulet, ved at sætte TX modulets MCU i passthrough tilstand. Radioen indgår ikke i denne operation.",
     "Zip": "Denne konfiguration opretter et arkiv med alle de filer, der er nødvendige for din enhed."
   },
   "FlashingMethodOptions": {
