@@ -14,7 +14,7 @@ export default class Updater {
     const systemLocale = Intl.DateTimeFormat().resolvedOptions().locale;
 
     const loadPath = `${
-      this.baseUrl ?? 'http://localhost:3500/'
+      this.baseUrl ?? 'http://127.0.0.1:3500/'
     }/locales/{{lng}}/messages.json`;
 
     i18n

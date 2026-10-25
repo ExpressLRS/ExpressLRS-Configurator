@@ -1,11 +1,12 @@
 import { createServer } from 'http';
+import { timingSafeEqual } from 'crypto';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@as-integrations/express5';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { createPubSub } from '@graphql-yoga/subscription';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/use/ws';
-import express, { Express } from 'express';
+import express, { Express, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import * as http from 'http';
 import getPort from 'get-port';
@@ -54,8 +55,10 @@ export default class ApiServer {
 
   httpServer: http.Server | undefined;
 
+  static readonly host = '127.0.0.1';
+
   static async getPort(port: number | undefined): Promise<number> {
-    return getPort({ port });
+    return getPort({ port, host: ApiServer.host });
   }
 
   async buildContainer(config: IConfig, logger: LoggerService): Promise<void> {
@@ -193,14 +196,30 @@ export default class ApiServer {
     config: IConfig,
     logger: LoggerService,
     port: number,
+    authToken: string,
   ): Promise<http.Server> {
     await this.buildContainer(config, logger);
+    /*
+      Only the Configurator UI may talk to the API. Binding to loopback keeps other
+      hosts out, and the per-launch token keeps out web pages and other local clients.
+     */
+    const expectedToken = Buffer.from(authToken);
+    const isAuthorized = (authorization: unknown): boolean => {
+      if (typeof authorization !== 'string') {
+        return false;
+      }
+      const token = Buffer.from(authorization.replace(/^Bearer /, ''));
+      return (
+        token.length === expectedToken.length
+        && timingSafeEqual(token, expectedToken)
+      );
+    };
+
     this.app = express();
     this.app.use(
       '/',
       express.json(),
       cors<cors.CorsRequest>({
-        credentials: true,
         origin: true,
       }),
     );
@@ -236,7 +255,13 @@ export default class ApiServer {
 
     // not a React component
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const serverCleanup = useServer({ schema }, wsServer);
+    const serverCleanup = useServer(
+      {
+        schema,
+        onConnect: (ctx) => isAuthorized(ctx.connectionParams?.authorization),
+      },
+      wsServer,
+    );
 
     const apolloServer = new ApolloServer({
       schema,
@@ -260,9 +285,19 @@ export default class ApiServer {
     // You must `await server.start()` before calling `server.applyMiddleware()
     await apolloServer.start();
 
-    this.app.use('/graphql', expressMiddleware(apolloServer));
+    this.app.use(
+      '/graphql',
+      (req: Request, res: Response, next: NextFunction) => {
+        if (!isAuthorized(req.headers.authorization)) {
+          res.status(401).json({ error: 'Unauthorized' });
+          return;
+        }
+        next();
+      },
+      expressMiddleware(apolloServer),
+    );
 
-    this.httpServer = this.httpServer.listen({ port });
+    this.httpServer = this.httpServer.listen({ port, host: ApiServer.host });
 
     return this.httpServer;
   }

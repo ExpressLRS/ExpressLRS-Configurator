@@ -9,6 +9,7 @@
  */
 import 'reflect-metadata';
 import path from 'path';
+import { randomBytes } from 'crypto';
 import { app, BrowserWindow, dialog, ipcMain, shell, session } from 'electron';
 import { mkdirp } from 'mkdirp';
 import winston from 'winston';
@@ -170,6 +171,8 @@ if (app.commandLine.hasSwitch('disable-gpu')) {
 let mainWindow: BrowserWindow | null = null;
 let updater: Updater | null = null;
 const localServer: ApiServer = new ApiServer();
+// Per-launch secret shared only with our renderer, see ApiServer.start
+const apiAuthToken = randomBytes(32).toString('hex');
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -327,7 +330,7 @@ const createWindow = async () => {
       responseHeaders: {
         ...details.responseHeaders,
         'Content-Security-Policy': [
-          `script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:1212 http://localhost:${port}`,
+          `script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:1212 http://${ApiServer.host}:${port}`,
         ],
       },
     });
@@ -357,6 +360,7 @@ const createWindow = async () => {
     },
     logger,
     port,
+    apiAuthToken,
   );
   logger.log('server started');
 
@@ -389,9 +393,9 @@ const createWindow = async () => {
     }
   });
 
-  const baseUrl = `http://localhost:${port}`;
+  const baseUrl = `http://${ApiServer.host}:${port}`;
   const apiUrl = `${baseUrl}/graphql`;
-  const subscriptionsUrl = `ws://localhost:${port}/graphql`;
+  const subscriptionsUrl = `ws://${ApiServer.host}:${port}/graphql`;
   mainWindow.loadURL(
     resolveHtmlPath(
       'index.html',
@@ -529,6 +533,10 @@ ipcMain.handle(
     };
   },
 );
+
+ipcMain.on(IpcRequest.GetApiAuthToken, (event) => {
+  event.returnValue = apiAuthToken;
+});
 
 ipcMain.on(IpcRequest.OpenLogsFolder, () => {
   const logsLocation = path.join(logsPath, logsFilename);

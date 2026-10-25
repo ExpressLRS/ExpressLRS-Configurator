@@ -5,7 +5,7 @@ import Backend from 'i18next-http-backend'; // For loading translations from bac
 
 const searchParams = new URLSearchParams(window.location.search.slice(1));
 const loadPath = `${
-  searchParams.get('base_url') ?? 'http://localhost:3500/'
+  searchParams.get('base_url') ?? 'http://127.0.0.1:3500/'
 }/locales/{{lng}}/messages.json`;
 
 // Keep the document direction and language in sync (e.g. RTL for Arabic)
