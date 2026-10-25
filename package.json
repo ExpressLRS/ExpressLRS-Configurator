@@ -332,6 +332,7 @@
     "core-js": false,
     "core-js-pure": false,
     "@apollo/protobufjs": false,
-    "electron-winstaller": false
+    "electron-winstaller": false,
+    "fsevents": false
   }
 }
