@@ -3256,6 +3256,30 @@
             "deprecationReason": null
           },
           {
+            "name": "max",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "min",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "optionGroup",
             "description": null,
             "args": [],
@@ -3584,6 +3608,12 @@
           },
           {
             "name": "Enum",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "Number",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

@@ -111,11 +111,7 @@ export default class UserDefinesValidator {
 
     data
       .filter(
-        (option) =>
-          option.type === UserDefineKind.Number
-          && option.enabled
-          && option.value !== undefined
-          && option.value !== null,
+        (option) => option.type === UserDefineKind.Number && option.enabled,
       )
       .forEach((option) => {
         const raw = (option.value ?? '').trim();

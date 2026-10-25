@@ -217,8 +217,7 @@
     "CustomBindingPhrase": "Custom binding phrase",
     "MyStartupMelody": "My startup melody",
     "Value": "Value",
-    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}",
-    "AllowedRange": "Allowed range: {{min}}–{{max}}"
+    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}"
   },
   "WifiDeviceList": {
     "Name": "Name",

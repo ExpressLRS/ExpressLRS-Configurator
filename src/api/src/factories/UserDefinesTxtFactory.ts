@@ -10,7 +10,11 @@ export default class UserDefinesTxtFactory {
         if (opt.type === UserDefineKind.Boolean && opt.enabled) {
           return this.makeEntry(opt.key);
         }
-        if (opt.type === UserDefineKind.Text && opt.enabled) {
+        if (
+          (opt.type === UserDefineKind.Text
+            || opt.type === UserDefineKind.Number)
+          && opt.enabled
+        ) {
           return this.makeEntry(opt.key, opt.value);
         }
         if (opt.type === UserDefineKind.Enum && opt.enabled) {

@@ -26,6 +26,7 @@ import Omnibox from '../Omnibox';
 import UserDefineDescription from '../UserDefineDescription';
 import SensitiveTextField from '../SensitiveTextField';
 import ApplicationStorage from '../../storage';
+import UserDefinesValidator from '../../views/ConfiguratorView/UserDefinesValidator';
 
 const styles: Record<string, SxProps<Theme>> = {
   icon: {
@@ -56,45 +57,23 @@ interface UserDefinesListProps {
 
 /*
   Numeric user defines carry their allowed range on the model (min/max), defined
-  in TargetUserDefinesFactory. AUTO_WIFI_ON_INTERVAL is in seconds; the firmware
-  keeps it in int32 milliseconds, hence the upper bound.
+  in TargetUserDefinesFactory.
 
-  This drives only the field's visual error/helper text; the build-blocking
-  enforcement lives in UserDefinesValidator.validateNumericRanges.
+  The field uses the same check that blocks the build, so the error shown here and
+  the build validation can't disagree.
 */
-const hasNumericRangeError = (item: UserDefine): boolean => {
-  if (item.type !== UserDefineKind.Number || !item.enabled) {
-    return false;
-  }
-  const value = (item.value ?? '').trim();
-  if (!/^-?\d+$/.test(value)) {
-    return true;
-  }
-  const parsed = Number(value);
-  if (item.min != null && parsed < item.min) {
-    return true;
-  }
-  if (item.max != null && parsed > item.max) {
-    return true;
-  }
-  return false;
-};
+const hasNumericRangeError = (item: UserDefine): boolean =>
+  new UserDefinesValidator().validateNumericRanges([item]).length > 0;
 
-/*
-  Helper text for numeric inputs: always show the allowed range so the user knows
-  the bounds up front; switch to the out-of-range message when the value is invalid.
-*/
+// Helper text for numeric inputs, only shown when the value is invalid
 const numericHelperText = (
   item: UserDefine,
   t: TFunction,
 ): string | undefined => {
-  if (item.type !== UserDefineKind.Number) {
+  if (!hasNumericRangeError(item)) {
     return undefined;
   }
-  const key = hasNumericRangeError(item)
-    ? 'UserDefinesList.ValueOutOfRange'
-    : 'UserDefinesList.AllowedRange';
-  return t(key, { min: item.min, max: item.max });
+  return t('UserDefinesList.ValueOutOfRange', { min: item.min, max: item.max });
 };
 
 const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
