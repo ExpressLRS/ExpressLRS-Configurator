@@ -24,6 +24,8 @@ import FlashingStrategyLocatorService from '../../services/FlashingStrategyLocat
 import { BuildProgressNotificationPayload } from '../../services/FlashingStrategyLocator/BuildProgressNotificationPayload';
 import { BuildLogUpdatePayload } from '../../services/FlashingStrategyLocator/BuildLogUpdatePayload';
 import Platformio from '../../library/Platformio';
+import { isValidTargetName } from '../../library/TargetName';
+import BuildFirmwareErrorType from '../../models/enum/BuildFirmwareErrorType';
 
 @Service()
 @Resolver()
@@ -62,6 +64,13 @@ export default class FirmwareResolver {
     @Arg('input', () => BuildFlashFirmwareInput) input: BuildFlashFirmwareInput,
     @Arg('gitRepository', () => GitRepository) gitRepository: GitRepository,
   ): Promise<BuildFlashFirmwareResult> {
+    if (!isValidTargetName(input.target)) {
+      return new BuildFlashFirmwareResult(
+        false,
+        `Invalid target name: ${JSON.stringify(input.target)}`,
+        BuildFirmwareErrorType.GenericError,
+      );
+    }
     const strategy = await this.flashingStrategyLocatorService.locate(
       input.firmware,
       gitRepository,

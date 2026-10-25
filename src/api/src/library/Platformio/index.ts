@@ -7,6 +7,7 @@ import Commander, { CommandResult, NoOpFunc, OnOutputFunc } from '../Commander';
 import { LoggerService } from '../../logger';
 import UploadType from './Enum/UploadType';
 import Python from '../Python';
+import { assertValidTargetName } from '../TargetName';
 
 interface PlatformioCoreState {
   core_version: string;
@@ -140,14 +141,8 @@ export default class Platformio {
       });
     }
 
-    let { platformio_exe } = state;
-    // if using shell, surround exe in quotes in case path has a space in it
-    if (options.shell) {
-      platformio_exe = `"${platformio_exe}"`;
-    }
-
     return new Commander().runCommand(
-      platformio_exe,
+      state.platformio_exe,
       [...args],
       options,
       onOutput,
@@ -159,12 +154,18 @@ export default class Platformio {
     environment: string,
     onUpdate: OnOutputFunc = NoOpFunc,
   ) {
+    // Never run PlatformIO through a shell: arguments must be passed as-is,
+    // otherwise shell metacharacters in them get interpreted (see #817)
     return this.runPIOCommand(
-      ['run', '--project-dir', `"${projectDir}"`, '--environment', environment],
+      [
+        'run',
+        '--project-dir',
+        projectDir,
+        '--environment',
+        assertValidTargetName(environment),
+      ],
       {
         env: this.env,
-        shell: true,
-        windowsVerbatimArguments: true,
       },
       onUpdate,
     );
@@ -180,9 +181,9 @@ export default class Platformio {
     const params = [
       'run',
       '--project-dir',
-      `"${projectDir}"`,
+      projectDir,
       '--environment',
-      environment,
+      assertValidTargetName(environment),
       '--target',
       uploadType,
     ];
@@ -194,8 +195,6 @@ export default class Platformio {
       params,
       {
         env: this.env,
-        shell: true,
-        windowsVerbatimArguments: true,
       },
       onUpdate,
     );
