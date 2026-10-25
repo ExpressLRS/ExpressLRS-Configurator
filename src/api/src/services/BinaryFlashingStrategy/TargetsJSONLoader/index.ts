@@ -16,6 +16,8 @@ export interface DeviceDescription {
   frequency?: number;
   type?: string;
   min_version?: string;
+  // exclusive: the device is supported only by versions below max_version
+  max_version?: string;
 }
 
 export type TargetsJSONRaw = {
