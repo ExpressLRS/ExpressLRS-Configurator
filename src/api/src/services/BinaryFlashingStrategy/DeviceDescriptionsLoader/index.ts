@@ -117,6 +117,30 @@ export default class DeviceDescriptionsLoader {
     );
   }
 
+  /*
+    Version ranges can only be checked for git tags. For branches, commits,
+    pull requests and local sources we list every device.
+   */
+  private isSupportedByVersion(
+    config: DeviceDescription,
+    args: TargetArgs,
+  ): boolean {
+    if (args.source !== FirmwareSource.GitTag) {
+      return true;
+    }
+    const { min_version, max_version } = config;
+    if (min_version && semver.lt(args.gitTag, min_version)) {
+      return false;
+    }
+    // max_version is exclusive and compared without the pre-release part,
+    // so 4.0.0-RC1 does not list devices dropped in 4.0.0
+    const releaseVersion = semver.coerce(args.gitTag)?.version ?? args.gitTag;
+    if (max_version && semver.gte(releaseVersion, max_version)) {
+      return false;
+    }
+    return true;
+  }
+
   async loadTargetsList(
     args: TargetArgs,
     gitRepository: GitRepository,
@@ -140,12 +164,7 @@ export default class DeviceDescriptionsLoader {
     );
     const devices: Device[] = [];
     Object.keys(data).forEach((id) => {
-      const { min_version } = data[id].config;
-      if (
-        !min_version
-        || args.source !== FirmwareSource.GitTag
-        || semver.gte(args.gitTag, min_version)
-      ) {
+      if (this.isSupportedByVersion(data[id].config, args)) {
         devices.push(
           this.configToDevice(id, data[id].category, data[id].config),
         );
