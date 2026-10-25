@@ -3,21 +3,21 @@
   "productName": "ExpressLRS Configurator",
   "description": "Cross platform build & configuration tool for the ExpressLRS firmware",
   "scripts": {
-    "build": "concurrently \"yarn build:main\" \"yarn build:renderer\"",
+    "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
     "build-dll": "cross-env NODE_OPTIONS=\"--no-experimental-strip-types --import ts-node/esm --no-warnings\" NODE_ENV=development webpack --config .erb/configs/webpack.config.renderer.dev.dll.ts",
     "build:main": "cross-env NODE_OPTIONS=\"--no-experimental-strip-types --import ts-node/esm --no-warnings\" NODE_ENV=production webpack --config .erb/configs/webpack.config.main.prod.ts",
     "build:renderer": "cross-env NODE_OPTIONS=\"--no-experimental-strip-types --import ts-node/esm --no-warnings\" NODE_ENV=production webpack --config .erb/configs/webpack.config.renderer.prod.ts",
     "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir ./release/app",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --cache --fix",
-    "package": "yarn build && electron-builder build --publish never",
-    "postinstall": "ts-node .erb/scripts/check-native-deps.js && electron-builder install-app-deps && yarn build-dll && yarn-deduplicate yarn.lock",
-    "start": "ts-node .erb/scripts/check-port-in-use.js && cross-env yarn start:renderer",
+    "package": "npm run build && electron-builder build --publish never",
+    "postinstall": "ts-node .erb/scripts/check-native-deps.js && electron-builder install-app-deps && npm run build-dll",
+    "start": "ts-node .erb/scripts/check-port-in-use.js && cross-env npm run start:renderer",
     "start:main": "cross-env NODE_OPTIONS=\"--no-experimental-strip-types --no-warnings\" NODE_ENV=development electron ./.erb/scripts/start-main.js",
     "start:preload": "cross-env NODE_OPTIONS=\"--no-experimental-strip-types --import ts-node/esm --no-warnings\" NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_OPTIONS=\"--no-experimental-strip-types --import ts-node/esm --no-warnings\" NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
     "test": "jest --passWithNoTests",
-    "gql-codegen": "graphql-codegen --config codegen.yml && yarn lint:fix",
+    "gql-codegen": "graphql-codegen --config codegen.yml && npm run lint:fix",
     "prepare": "husky",
     "typecheck": "tsc --project tsconfig.json --noEmit --skipLibCheck"
   },
@@ -258,8 +258,7 @@
     "webpack-bundle-analyzer": "^5.0.0",
     "webpack-cli": "^6.0.0",
     "webpack-dev-server": "^5.0.0",
-    "webpack-merge": "^6.0.0",
-    "yarn-deduplicate": "^6.0.2"
+    "webpack-merge": "^6.0.0"
   },
   "dependencies": {
     "@apollo/client": "^4.0.0",
@@ -314,10 +313,8 @@
     "winston": "^3.11.0",
     "ws": "^8.16.0"
   },
-  "devEngines": {
-    "node": ">=24.x",
-    "npm": ">=6.x",
-    "yarn": ">=1.21.3"
+  "engines": {
+    "node": "24.22.1"
   },
   "browserslist": [],
   "renovate": {
@@ -327,5 +324,15 @@
     "baseBranches": [
       "next"
     ]
+  },
+  "allowScripts": {
+    "esbuild@0.27.7": true,
+    "@parcel/watcher@2.5.6": true,
+    "electron@41.2.0": true,
+    "core-js": false,
+    "core-js-pure": false,
+    "@apollo/protobufjs": false,
+    "electron-winstaller": false,
+    "fsevents": false
   }
 }

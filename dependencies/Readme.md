@@ -15,7 +15,7 @@ the repository. They are downloaded by:
 ```
 
 CI runs this before packaging. Run it once locally if you want the packaged
-app (or `yarn start`) to use the bundled tools instead of the system ones.
+app (or `npm start`) to use the bundled tools instead of the system ones.
 
 Sources, pinned by version and sha256 inside the script:
 

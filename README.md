@@ -181,7 +181,7 @@ runtime.
 
 Prerequisites
 
-- node >= 24 (see .nvmrc)
+- node 24 (see .nvmrc)
 - git >= 2.25
 - python >= 3.10
 
@@ -191,15 +191,15 @@ PlatformIO Core into its own virtual environment on first run.
 Start the app in the dev environment:
 
 ```bash
-yarn install --frozen-lockfile
-yarn start
+npm ci
+npm start
 ```
 
 In order to simulate WI-FI devices on your local network you can start application with
 `MULTICAST_DNS_SIMULATOR_ENABLED` environment variable:
 
 ```
-npx cross-env MULTICAST_DNS_SIMULATOR_ENABLED=true yarn start
+npx cross-env MULTICAST_DNS_SIMULATOR_ENABLED=true npm start
 ```
 
 ## Other useful cli commands
@@ -207,7 +207,7 @@ npx cross-env MULTICAST_DNS_SIMULATOR_ENABLED=true yarn start
 Generate TypeScript types from Graphql schema and Queries located in [src/ui/gql/queries](src/ui/gql/queries):
 
 ```bash
-yarn run gql-codegen
+npm run gql-codegen
 ```
 
 ## Legal disclaimer
