@@ -372,6 +372,42 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
     return target;
   }
 
+  /*
+    LR1121 and LR2021 firmware refuses to compile without a sub-GHz regulatory domain,
+    even for 2.4 GHz only devices (https://github.com/ExpressLRS/ExpressLRS-Configurator/issues/752).
+    Upstream CI builds these targets with FCC 915 set, so we do the same
+    when the user had no sub-GHz domain to choose from.
+   */
+  getCompileUserDefines(
+    config: DeviceDescription,
+    userDefines: UserDefine[],
+  ): UserDefine[] {
+    if (
+      !config.firmware.includes('LR1121')
+      && !config.firmware.includes('LR2021')
+    ) {
+      return userDefines;
+    }
+    const subGhzDomains = [
+      UserDefineKey.REGULATORY_DOMAIN_AU_915,
+      UserDefineKey.REGULATORY_DOMAIN_EU_868,
+      UserDefineKey.REGULATORY_DOMAIN_IN_866,
+      UserDefineKey.REGULATORY_DOMAIN_AU_433,
+      UserDefineKey.REGULATORY_DOMAIN_EU_433,
+      UserDefineKey.REGULATORY_DOMAIN_FCC_915,
+    ];
+    const hasSubGhzDomain = userDefines.some(
+      ({ key, enabled }) => enabled && subGhzDomains.includes(key),
+    );
+    if (hasSubGhzDomain) {
+      return userDefines;
+    }
+    return [
+      ...userDefines,
+      UserDefine.Boolean(UserDefineKey.REGULATORY_DOMAIN_FCC_915, true),
+    ];
+  }
+
   getFirmwareBinFiles(firmwareSearchPath: string): string[] {
     const binaryExtensions = ['.elrs', '.bin', '.gz'];
 
@@ -546,7 +582,7 @@ export default class BinaryFlashingStrategyService implements FlashingStrategy {
         sourceFirmwareBinPath = await this.compileBinary(
           target,
           firmwareSourcePath,
-          params.userDefines,
+          this.getCompileUserDefines(config, params.userDefines),
           flashOutputParser,
         );
         // In some cases we need to copy multiple artifacts, for example hdzero goggles contains
