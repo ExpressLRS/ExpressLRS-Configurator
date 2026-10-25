@@ -11,7 +11,11 @@ export type Channels =
   | IpcRequest.SaveFile
   | IpcRequest.UpdateBuildStatus;
 
+// Fetched over IPC rather than passed as a command line switch, which other users could read
+const apiAuthToken: string = ipcRenderer.sendSync(IpcRequest.GetApiAuthToken);
+
 const electronHandler = {
+  apiAuthToken,
   ipcRenderer: {
     sendMessage(channel: Channels, ...args: unknown[]) {
       ipcRenderer.send(channel, ...args);

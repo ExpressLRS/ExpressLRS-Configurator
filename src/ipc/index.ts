@@ -5,6 +5,7 @@ export enum IpcRequest {
   ChooseFolder = 'CHOOSE_FOLDER',
   SaveFile = 'SAVE_FILE',
   DownloadFile = 'DOWNLOAD_FILE',
+  GetApiAuthToken = 'GET_API_AUTH_TOKEN',
 }
 
 export interface OpenFileLocationRequestBody {

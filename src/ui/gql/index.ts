@@ -4,17 +4,19 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 
 const searchParams = new URLSearchParams(window.location.search.slice(1));
+const authorization = `Bearer ${window.electron.apiAuthToken}`;
 const httpLink = new HttpLink({
-  uri: searchParams.get('api_url') ?? 'http://localhost:3500/graphql',
-  credentials: 'include',
+  uri: searchParams.get('api_url') ?? 'http://127.0.0.1:3500/graphql',
   headers: {
     'Accept-Language': 'en',
+    Authorization: authorization,
   },
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: searchParams.get('subscriptions_url') ?? 'ws://localhost:3500/graphql',
+    url: searchParams.get('subscriptions_url') ?? 'ws://127.0.0.1:3500/graphql',
+    connectionParams: { authorization },
   }),
 );
 
