@@ -4,7 +4,7 @@
  * electron renderer process from here and communicate with the other processes
  * through IPC.
  *
- * When running `yarn build` or `yarn build-main`, this file is compiled to
+ * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import 'reflect-metadata';
@@ -172,7 +172,7 @@ let mainWindow: BrowserWindow | null = null;
 let updater: Updater | null = null;
 const localServer: ApiServer = new ApiServer();
 // Per-launch secret shared only with our renderer, see ApiServer.start.
-// Development builds can pin it with API_AUTH_TOKEN, e.g. for `yarn gql-codegen`.
+// Development builds can pin it with API_AUTH_TOKEN, e.g. for `npm run gql-codegen`.
 const devApiAuthToken = process.env.NODE_ENV === 'development'
   ? process.env.API_AUTH_TOKEN
   : undefined;

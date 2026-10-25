@@ -27,11 +27,14 @@ jobs:
       - name: Checkout git repo
         uses: actions/checkout@v6
 
-      - name: Install Node, NPM and Yarn
+      - name: Install Node and NPM
         uses: actions/setup-node@v6
         with:
-          node-version: 24
-          cache: 'yarn'
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            release/app/package-lock.json
 
       - uses: actions/setup-python@v6
         with:
@@ -42,19 +45,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          yarn install --network-timeout 180000
+          npm ci
 
-      - name: yarn lint
+      - name: npm run lint
         run: |
-          yarn lint
+          npm run lint
 
-      - name: yarn typecheck
+      - name: npm run typecheck
         run: |
-          yarn typecheck
+          npm run typecheck
 
-      - name: yarn test
+      - name: npm test
         run: |
-          yarn test
+          npm test
 
       - name: Download macOS portable dependencies
         if: matrix.os == 'macos-latest'
@@ -62,16 +65,16 @@ jobs:
           ./dependencies/download-mac-dependencies.sh x64
           ./dependencies/download-mac-dependencies.sh arm64
 
-      - name: yarn package
+      - name: npm run package
         if: matrix.os != 'macos-latest'
         run: |
-          yarn package
+          npm run package
 
-      - name: yarn package (macOS x64 + arm64)
+      - name: npm run package (macOS x64 + arm64)
         if: matrix.os == 'macos-latest'
         run: |
-          yarn build
-          yarn electron-builder build --publish never --x64 --arm64 --mac
+          npm run build
+          npx electron-builder build --publish never --x64 --arm64 --mac
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
