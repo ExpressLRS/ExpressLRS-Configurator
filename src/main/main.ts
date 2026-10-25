@@ -171,8 +171,12 @@ if (app.commandLine.hasSwitch('disable-gpu')) {
 let mainWindow: BrowserWindow | null = null;
 let updater: Updater | null = null;
 const localServer: ApiServer = new ApiServer();
-// Per-launch secret shared only with our renderer, see ApiServer.start
-const apiAuthToken = randomBytes(32).toString('hex');
+// Per-launch secret shared only with our renderer, see ApiServer.start.
+// Development builds can pin it with API_AUTH_TOKEN, e.g. for `yarn gql-codegen`.
+const devApiAuthToken = process.env.NODE_ENV === 'development'
+  ? process.env.API_AUTH_TOKEN
+  : undefined;
+const apiAuthToken = devApiAuthToken || randomBytes(32).toString('hex');
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');

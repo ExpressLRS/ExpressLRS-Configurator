@@ -1,5 +1,9 @@
 overwrite: true
-schema: 'http://localhost:3500/graphql'
+# Start the app with `API_AUTH_TOKEN=<token> yarn start` and run codegen with the same variable
+schema:
+  - 'http://127.0.0.1:3500/graphql':
+      headers:
+        Authorization: 'Bearer ${API_AUTH_TOKEN}'
 generates:
   src/ui/gql/generated/types.ts:
     documents:
