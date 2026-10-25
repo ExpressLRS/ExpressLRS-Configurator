@@ -14,6 +14,8 @@ export default class UserDefinesValidator {
         [
           UserDefineKey.REGULATORY_DOMAIN_EU_433,
           UserDefineKey.REGULATORY_DOMAIN_AU_433,
+          UserDefineKey.REGULATORY_DOMAIN_FCC_433,
+          UserDefineKey.REGULATORY_DOMAIN_FCC_433_WIDE,
         ],
       ],
       [
@@ -23,6 +25,8 @@ export default class UserDefinesValidator {
           UserDefineKey.REGULATORY_DOMAIN_EU_868,
           UserDefineKey.REGULATORY_DOMAIN_FCC_915,
           UserDefineKey.REGULATORY_DOMAIN_IN_866,
+          UserDefineKey.REGULATORY_DOMAIN_BR_915,
+          UserDefineKey.REGULATORY_DOMAIN_TH_920,
         ],
       ],
       [
