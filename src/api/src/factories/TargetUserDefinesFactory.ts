@@ -88,7 +88,15 @@ export default class TargetUserDefinesFactory {
           true,
         );
       case UserDefineKey.AUTO_WIFI_ON_INTERVAL:
-        return UserDefine.Text(UserDefineKey.AUTO_WIFI_ON_INTERVAL, '60', true);
+        // Seconds. 0 starts WiFi as soon as there is no connection; the firmware
+        // stores the value as int32 milliseconds, hence the upper bound.
+        return UserDefine.Number(
+          UserDefineKey.AUTO_WIFI_ON_INTERVAL,
+          '60',
+          true,
+          0,
+          2147483,
+        );
       case UserDefineKey.RX_AS_TX:
         let rxAxTxTypes: string[] = [];
         if (this.platform?.startsWith('esp32')) {

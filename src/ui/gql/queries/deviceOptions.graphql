@@ -23,6 +23,8 @@ query targetDeviceOptions(
     enabled
     enumValues
     value
+    min
+    max
     optionGroup
     sensitive
   }

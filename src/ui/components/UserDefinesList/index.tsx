@@ -16,6 +16,7 @@ import {
 import { Close, History } from '@mui/icons-material';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 import {
   UserDefine,
   UserDefineKey,
@@ -25,6 +26,7 @@ import Omnibox from '../Omnibox';
 import UserDefineDescription from '../UserDefineDescription';
 import SensitiveTextField from '../SensitiveTextField';
 import ApplicationStorage from '../../storage';
+import UserDefinesValidator from '../../views/ConfiguratorView/UserDefinesValidator';
 
 const styles: Record<string, SxProps<Theme>> = {
   icon: {
@@ -52,6 +54,27 @@ interface UserDefinesListProps {
   options: UserDefine[];
   onChange: (data: UserDefine) => void;
 }
+
+/*
+  Numeric user defines carry their allowed range on the model (min/max), defined
+  in TargetUserDefinesFactory.
+
+  The field uses the same check that blocks the build, so the error shown here and
+  the build validation can't disagree.
+*/
+const hasNumericRangeError = (item: UserDefine): boolean =>
+  new UserDefinesValidator().validateNumericRanges([item]).length > 0;
+
+// Helper text for numeric inputs, only shown when the value is invalid
+const numericHelperText = (
+  item: UserDefine,
+  t: TFunction,
+): string | undefined => {
+  if (!hasNumericRangeError(item)) {
+    return undefined;
+  }
+  return t('UserDefinesList.ValueOutOfRange', { min: item.min, max: item.max });
+};
 
 const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
   const { options, onChange } = props;
@@ -170,7 +193,9 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                 <UserDefineDescription userDefine={item.key} />
               </ListItemSecondaryAction>
             </ListItemButton>
-            {item.type === UserDefineKind.Text && item.enabled && (
+            {(item.type === UserDefineKind.Text
+              || item.type === UserDefineKind.Number)
+            && item.enabled && (
               <ListItem sx={styles.complimentaryItem}>
                 {!item.sensitive && (
                   <TextField
@@ -179,6 +204,20 @@ const UserDefinesList: FunctionComponent<UserDefinesListProps> = (props) => {
                     value={item.value}
                     fullWidth
                     label={inputLabel(item.key)}
+                    type={
+                      item.type === UserDefineKind.Number ? 'number' : 'text'
+                    }
+                    inputProps={
+                      item.type === UserDefineKind.Number
+                        ? {
+                            min: item.min ?? undefined,
+                            max: item.max ?? undefined,
+                            step: 1,
+                          }
+                        : undefined
+                    }
+                    error={hasNumericRangeError(item)}
+                    helperText={numericHelperText(item, t)}
                   />
                 )}
                 {item.sensitive && (
