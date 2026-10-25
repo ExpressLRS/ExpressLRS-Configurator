@@ -195,6 +195,14 @@ npm ci
 npm start
 ```
 
+On Linux distributions that restrict unprivileged user namespaces (e.g. Ubuntu 24.04+), Electron aborts with
+`The SUID sandbox helper binary was found, but is not configured correctly`. Give the sandbox helper the required
+permissions (repeat after every reinstall of `node_modules/electron`):
+
+```bash
+sudo chown root:root node_modules/electron/dist/chrome-sandbox && sudo chmod 4755 node_modules/electron/dist/chrome-sandbox
+```
+
 In order to simulate WI-FI devices on your local network you can start application with
 `MULTICAST_DNS_SIMULATOR_ENABLED` environment variable:
 
