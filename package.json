@@ -191,7 +191,7 @@
   },
   "resolutions": {},
   "devDependencies": {
-    "@electron/rebuild": "^4.0.0",
+    "@electron/rebuild": "^4.2.1",
     "@eslint/js": "^9.0.0",
     "@graphql-codegen/cli": "^6.0.0",
     "@graphql-codegen/introspection": "^5.0.0",
@@ -227,7 +227,7 @@
     "css-loader": "^7.0.0",
     "css-minimizer-webpack-plugin": "^7.0.0",
     "detect-port": "^2.0.0",
-    "electron": "^41.0.0",
+    "electron": "^44.7.0",
     "electron-builder": "^26.8.0",
     "eslint": "^9.0.0",
     "eslint-plugin-jsx-a11y": "^6.10.0",
@@ -328,7 +328,6 @@
   "allowScripts": {
     "esbuild@0.27.7": true,
     "@parcel/watcher@2.5.6": true,
-    "electron@41.2.0": true,
     "core-js": false,
     "core-js-pure": false,
     "@apollo/protobufjs": false,
