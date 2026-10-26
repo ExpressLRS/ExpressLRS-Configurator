@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { FunctionComponent, useEffect } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client/react';
 import { SxProps, Theme } from '@mui/system';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,8 @@ import {
   LuaScriptDocument,
 } from '../../gql/generated/types';
 import { DownloadFileRequestBody, IpcRequest } from '../../../ipc';
-import GitRepository from '../../models/GitRepository';
+import { Config } from '../../config';
+import LuaDownloadDialog from '../LuaDownloadDialog';
 import ShowAlerts from '../ShowAlerts';
 
 const styles: Record<string, SxProps<Theme>> = {
@@ -21,17 +22,16 @@ const styles: Record<string, SxProps<Theme>> = {
 interface LuaDownloadButtonProps {
   hasLuaScript: boolean;
   firmwareVersionData: FirmwareVersionDataInput | null;
-  gitRepository: GitRepository;
   showErrors?: boolean;
 }
 
 const LuaDownloadButton: FunctionComponent<LuaDownloadButtonProps> = ({
   hasLuaScript,
   firmwareVersionData,
-  gitRepository,
   showErrors = false,
 }) => {
   const { t } = useTranslation();
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const [
     fetchLuaScript,
@@ -43,47 +43,41 @@ const LuaDownloadButton: FunctionComponent<LuaDownloadButtonProps> = ({
       fetchLuaScript({
         variables: {
           source: firmwareVersionData.source as FirmwareSource,
-          gitBranch: firmwareVersionData.gitBranch!,
-          gitTag: firmwareVersionData.gitTag!,
-          gitCommit: firmwareVersionData.gitCommit!,
-          localPath: firmwareVersionData.localPath!,
-          gitPullRequest: firmwareVersionData.gitPullRequest,
-          gitRepository: {
-            url: gitRepository.url,
-            owner: gitRepository.owner,
-            repositoryName: gitRepository.repositoryName,
-            rawRepoUrl: gitRepository.rawRepoUrl,
-            srcFolder: gitRepository.srcFolder,
-            hardwareArtifactUrl: gitRepository.hardwareArtifactUrl,
-          },
+          gitTag: firmwareVersionData.gitTag ?? '',
         },
       });
     }
-  }, [gitRepository, firmwareVersionData, fetchLuaScript, hasLuaScript]);
+  }, [firmwareVersionData, fetchLuaScript, hasLuaScript]);
+
+  const onDownload = (url: string) => {
+    const downloadFileRequestBody: DownloadFileRequestBody = { url };
+    window.electron.ipcRenderer.sendMessage(
+      IpcRequest.DownloadFile,
+      downloadFileRequestBody,
+    );
+  };
 
   return (
     <>
-      {hasLuaScript
-        && luaScriptResponse
-        && luaScriptResponse.luaScript.fileLocation
-        && luaScriptResponse.luaScript.fileLocation.length > 0 && (
-        <Button
-          sx={styles.button}
-          color="primary"
-          size="large"
-          variant="contained"
-          onClick={() => {
-            const downloadFileRequestBody: DownloadFileRequestBody = {
-              url: luaScriptResponse?.luaScript.fileLocation ?? '',
-            };
-            window.electron.ipcRenderer.sendMessage(
-              IpcRequest.DownloadFile,
-              downloadFileRequestBody,
-            );
-          }}
-        >
-          {t('ConfiguratorView.DownloadLUAScript')}
-        </Button>
+      {hasLuaScript && luaScriptResponse && (
+        <>
+          <Button
+            sx={styles.button}
+            color="primary"
+            size="large"
+            variant="contained"
+            onClick={() => setDialogOpen(true)}
+          >
+            {t('ConfiguratorView.DownloadLUAScript')}
+          </Button>
+          <LuaDownloadDialog
+            open={dialogOpen}
+            luaScript={luaScriptResponse.luaScript}
+            releasesUrl={Config.luaScriptsUrl}
+            onDownload={onDownload}
+            onClose={() => setDialogOpen(false)}
+          />
+        </>
       )}
       {hasLuaScript && showErrors && (
         <ShowAlerts severity="error" messages={luaScriptResponseError} />
