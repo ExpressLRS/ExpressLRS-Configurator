@@ -216,7 +216,8 @@
     "BindingPhraseHistoryRemove": "Remove from history",
     "CustomBindingPhrase": "Frase penghubung custom",
     "MyStartupMelody": "Nada start-up saya",
-    "Value": "Nilai"
+    "Value": "Nilai",
+    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}"
   },
   "WifiDeviceList": {
     "Name": "Nama",

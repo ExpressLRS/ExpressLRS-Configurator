@@ -216,7 +216,8 @@
     "BindingPhraseHistoryRemove": "Remove from history",
     "CustomBindingPhrase": "Προσαρμοσμένη φράση binding",
     "MyStartupMelody": "Μελωδία εκκίνησης",
-    "Value": "Τιμή"
+    "Value": "Τιμή",
+    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}"
   },
   "WifiDeviceList": {
     "Name": "Όνομα",

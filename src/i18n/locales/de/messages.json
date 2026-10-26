@@ -216,7 +216,8 @@
     "BindingPhraseHistoryRemove": "Remove from history",
     "CustomBindingPhrase": "Benutzerdefinierte Bindphrase",
     "MyStartupMelody": "Meine Startmelodie",
-    "Value": "Wert"
+    "Value": "Wert",
+    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}"
   },
   "WifiDeviceList": {
     "Name": "Name",

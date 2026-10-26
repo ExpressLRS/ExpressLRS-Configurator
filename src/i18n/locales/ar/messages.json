@@ -216,7 +216,8 @@
     "BindingPhraseHistoryRemove": "احذف من السجل",
     "CustomBindingPhrase": "عبارة ربط مخصصة",
     "MyStartupMelody": "نغمة بدء التشغيل الخاصة بي",
-    "Value": "قيمة"
+    "Value": "قيمة",
+    "ValueOutOfRange": "أدخل عددًا صحيحًا بين {{min}} و{{max}}"
   },
   "WifiDeviceList": {
     "Name": "الاسم",

@@ -216,7 +216,8 @@
     "BindingPhraseHistoryRemove": "Видалити з історії",
     "CustomBindingPhrase": "Кодова фраза для з'єднання",
     "MyStartupMelody": "Особиста мелодія при запуску",
-    "Value": "Значення"
+    "Value": "Значення",
+    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}"
   },
   "WifiDeviceList": {
     "Name": "Назва",

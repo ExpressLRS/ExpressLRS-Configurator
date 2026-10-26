@@ -216,7 +216,8 @@
     "BindingPhraseHistoryRemove": "Remove from history",
     "CustomBindingPhrase": "Własna fraza parująca.",
     "MyStartupMelody": "Mój dźwięk uruchamiania.",
-    "Value": "Wartość"
+    "Value": "Wartość",
+    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}"
   },
   "WifiDeviceList": {
     "Name": "Nazwa",
