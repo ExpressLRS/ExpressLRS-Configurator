@@ -216,7 +216,8 @@
     "BindingPhraseHistoryRemove": "Удалить из истории",
     "CustomBindingPhrase": "Пользовательская бинд фраза",
     "MyStartupMelody": "Стартовая мелодия",
-    "Value": "Значение"
+    "Value": "Значение",
+    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}"
   },
   "WifiDeviceList": {
     "Name": "Имя",

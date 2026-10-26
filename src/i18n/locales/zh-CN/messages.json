@@ -216,7 +216,8 @@
     "BindingPhraseHistoryRemove": "从历史记录中移除",
     "CustomBindingPhrase": "自定义对频短语",
     "MyStartupMelody": "我的启动旋律",
-    "Value": "值"
+    "Value": "值",
+    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}"
   },
   "WifiDeviceList": {
     "Name": "名称",

@@ -216,7 +216,8 @@
     "BindingPhraseHistoryRemove": "Remove from history",
     "CustomBindingPhrase": "사용자 지정 바인딩 문구",
     "MyStartupMelody": "시작 멜로디 설정",
-    "Value": "값"
+    "Value": "값",
+    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}"
   },
   "WifiDeviceList": {
     "Name": "이름",

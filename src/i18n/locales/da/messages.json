@@ -216,7 +216,8 @@
     "BindingPhraseHistoryRemove": "Fjern fra historik",
     "CustomBindingPhrase": "Brugervalgt tilslutnings kode",
     "MyStartupMelody": "Min start melodi",
-    "Value": "Værdi"
+    "Value": "Værdi",
+    "ValueOutOfRange": "Angiv et helt tal mellem {{min}} og {{max}}"
   },
   "WifiDeviceList": {
     "Name": "Navn",

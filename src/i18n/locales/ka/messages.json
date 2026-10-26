@@ -216,7 +216,8 @@
     "BindingPhraseHistoryRemove": "ისტორიიდან წაშლა",
     "CustomBindingPhrase": "მომხმარებლის დაკავშირების ფრაზა",
     "MyStartupMelody": "ჩემი ჩართვის მელოდია",
-    "Value": "მნიშვნელობა"
+    "Value": "მნიშვნელობა",
+    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}"
   },
   "WifiDeviceList": {
     "Name": "სახელი",
