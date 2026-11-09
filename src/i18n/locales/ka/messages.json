@@ -217,7 +217,7 @@
     "CustomBindingPhrase": "მომხმარებლის დაკავშირების ფრაზა",
     "MyStartupMelody": "ჩემი ჩართვის მელოდია",
     "Value": "მნიშვნელობა",
-    "ValueOutOfRange": "Enter a whole number between {{min}} and {{max}}"
+    "ValueOutOfRange": "შეიყვანეთ მთელი რიცხვი {{min}}-სა და {{max}}-ს შორის"
   },
   "WifiDeviceList": {
     "Name": "სახელი",
