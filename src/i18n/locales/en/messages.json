@@ -285,6 +285,20 @@
     "FlashAnother": "Flash another",
     "Retry": "Retry"
   },
+  "LuaDownloadDialog": {
+    "Title": "Download Lua scripts",
+    "Recommended": "Recommended",
+    "LatestName": "ExpressLRS Lua",
+    "LatestFeatures": "Configuration tool, bind manager and widgets",
+    "LatestRequirement": "EdgeTX 2.12.1 or newer",
+    "LatestUnsupportedFirmware": "Needs ExpressLRS 3.5.4 or newer",
+    "LegacyName": "Legacy script",
+    "LegacyFeatures": "Configuration tool only",
+    "LegacyRequirement": "EdgeTX 2.11 or older, OpenTX",
+    "Download": "Download",
+    "InstallHint": "Extract the zip onto your radio's SD card root.",
+    "VersionHint": "Find your EdgeTX version under SYS → Version."
+  },
   "LogsView": {
     "Logs": "Logs",
     "OpenLogsFolder": "Open logs folder"

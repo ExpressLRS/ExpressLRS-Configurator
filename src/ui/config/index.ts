@@ -21,7 +21,7 @@ export const Config: IConfig = {
   openCollectiveUrl: 'https://opencollective.com/expresslrs',
   gettingStartedUrl: 'https://www.expresslrs.org/quick-start/getting-started/',
   productFinderUrl: 'https://www.expresslrs.org/product-finder/',
-  luaScriptsUrl: 'https://github.com/ExpressLRS/Lua-Scripts/',
+  luaScriptsUrl: 'https://github.com/ExpressLRS/Lua/releases/latest',
   expressLRSGit: {
     cloneUrl: 'https://github.com/ExpressLRS/ExpressLRS',
     url: 'https://github.com/ExpressLRS/ExpressLRS',

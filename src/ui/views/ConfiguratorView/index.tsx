@@ -867,7 +867,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                 <LuaDownloadButton
                   hasLuaScript={hasLuaScript}
                   firmwareVersionData={firmwareVersionData}
-                  gitRepository={gitRepository}
                   showErrors
                 />
               )}
@@ -1217,7 +1216,6 @@ const ConfiguratorView: FunctionComponent<ConfiguratorViewProps> = (props) => {
                   <LuaDownloadButton
                     hasLuaScript={hasLuaScript}
                     firmwareVersionData={firmwareVersionData}
-                    gitRepository={gitRepository}
                   />
                 )}
               </CardContent>
