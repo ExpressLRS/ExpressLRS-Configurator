@@ -285,6 +285,20 @@
     "FlashAnother": "Flash di un altro",
     "Retry": "Riprova"
   },
+  "LuaDownloadDialog": {
+    "Title": "Scarica Script Lua",
+    "Recommended": "Raccomandato",
+    "LatestName": "ExpressLRS Lua",
+    "LatestFeatures": "Strumento di configurazione, gestore dei binding e widget",
+    "LatestRequirement": "EdgeTX 2.12.1 o più recente",
+    "LatestUnsupportedFirmware": "Richiede ExpressLRS 3.5.4 o più recente",
+    "LegacyName": "Script obsoleto",
+    "LegacyFeatures": "Solo strumento configurazione",
+    "LegacyRequirement": "EdgeTX 2.11 o più vecchio, OpenTX",
+    "Download": "Scarica",
+    "InstallHint": "Estrai il file ZIP nella directory principale della scheda SD della tua radio.",
+    "VersionHint": "Trova la versione di EdgeTX in SYS → Versione."
+  },
   "LogsView": {
     "Logs": "Logs",
     "OpenLogsFolder": "Apri la cartella dei log"
