@@ -285,6 +285,20 @@
     "FlashAnother": "تحديث آخر",
     "Retry": "أعد المحاولة"
   },
+  "LuaDownloadDialog": {
+    "Title": "تحميل البرنامج النصي LUA",
+    "Recommended": "موصى به",
+    "LatestName": "البرنامج النصي للـExpressLRS ",
+    "LatestFeatures": "أداة الإعدادات، وإدارة الربط، وعناصر واجهة العرض.",
+    "LatestRequirement": "EdgeTX 2.12.1 أو أحدث",
+    "LatestUnsupportedFirmware": "يحتاج إلى ExsLRS 3.5.4 أو أحدث",
+    "LegacyName": "السكربت القديم",
+    "LegacyFeatures": "أداة الإعدادات فقط",
+    "LegacyRequirement": "EdgeTX 2.11 أو أقدم، OpenTX",
+    "Download": "تحميل",
+    "InstallHint": "استخرج محتويات الملف المضغوط (ZIP) إلى المجلد الجذري لبطاقة SD الخاصة بجهاز التحكم.",
+    "VersionHint": "ابحث عن إصدار EdgeTX الخاص بك تحت SYS → الإصدار."
+  },
   "LogsView": {
     "Logs": "السجلات",
     "OpenLogsFolder": "فتح مجلد السجلات"
